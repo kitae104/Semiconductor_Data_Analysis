@@ -1,84 +1,80 @@
 {
   "week": 4,
-  "title": "결측값과 이상한 데이터 정리하기",
+  "title": "Pandas 가장 기본적인 부분",
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "결측값(NaN)에 대한 설명으로 가장 알맞은 것은?",
+      "question": "DataFrame에서 열 두 개를 함께 선택하는 올바른 코드는?",
       "options": [
-        "값이 0으로 기록된 것",
-        "칸에 값이 전혀 입력되지 않은 것",
-        "정상 범위를 크게 벗어난 값",
-        "완전히 똑같은 행이 두 번 저장된 것"
+        "df[\"온도_섭씨\", \"압력_Pa\"]",
+        "df[[\"온도_섭씨\", \"압력_Pa\"]]",
+        "df(\"온도_섭씨\", \"압력_Pa\")",
+        "df.column(\"온도_섭씨\", \"압력_Pa\")"
       ],
       "answer": 1,
-      "explanation": "결측값은 칸이 비어 있는 것이다. 정상 범위를 크게 벗어난 값은 이상값, 완전히 똑같은 행이 두 번 저장된 것은 중복값이다."
+      "explanation": "여러 열을 선택할 때는 대괄호 안에 리스트(대괄호)를 한 번 더 감싸야 한다."
     },
     {
       "type": "multiple_choice",
-      "question": "열별 결측값 개수를 확인하는 코드로 알맞은 것은?",
+      "question": "CSV 파일을 읽어 DataFrame으로 만드는 Pandas 함수는?",
       "options": [
-        "df.dropna().sum()",
-        "df.duplicated().sum()",
-        "df.isna().sum()",
-        "df.fillna().sum()"
+        "pd.open_csv()",
+        "pd.load_csv()",
+        "pd.read_csv()",
+        "pd.import_csv()"
       ],
       "answer": 2,
-      "explanation": "df.isna()는 각 칸이 결측값인지 True/False로 알려주고, .sum()을 붙이면 열별 결측 개수가 나온다."
+      "explanation": "pd.read_csv()가 CSV 파일을 읽어 DataFrame으로 만드는 함수다."
     },
     {
       "type": "true_false",
-      "question": "df.dropna()를 실행하면 원본 df 자체가 바로 바뀐다.",
-      "answer": false,
-      "explanation": "dropna()나 fillna()는 결과를 새로 돌려줄 뿐 원본을 바꾸지 않는다. df = df.dropna()처럼 다시 저장해야 한다."
-    },
-    {
-      "type": "true_false",
-      "question": "이상값이 섞여 있을 가능성이 있는 열은 평균보다 중앙값으로 대체하는 것이 더 안전하다.",
+      "question": "df[df[\"설비번호\"] == \"EQ-02\"]는 설비번호가 EQ-02인 행만 골라낸다.",
       "answer": true,
-      "explanation": "평균은 극단값 하나에도 크게 흔들리지만, 중앙값은 값을 크기순으로 줄 세운 정가운데 값이라 극단값의 영향을 거의 받지 않는다."
+      "explanation": "조건식이 True인 행만 남기는 조건 검색(불리언 인덱싱)이다."
+    },
+    {
+      "type": "true_false",
+      "question": "df.sort_values(\"온도_섭씨\")는 기본적으로 온도가 높은 순서(내림차순)로 정렬한다.",
+      "answer": false,
+      "explanation": "ascending 옵션을 주지 않으면 기본값은 오름차순(작은 값이 먼저)이다. 내림차순은 ascending=False를 써야 한다."
     },
     {
       "type": "term_matching",
       "question": "용어와 설명을 연결하시오.",
       "pairs": [
-        {"term": "결측값", "definition": "칸에 값이 전혀 입력되지 않은 것"},
-        {"term": "중복값", "definition": "완전히 똑같은 행이 두 번 이상 저장된 것"},
-        {"term": "이상값", "definition": "정상 범위를 크게 벗어난 있을 수 없는 값"},
-        {"term": "입력 오류", "definition": "오타, 날짜 형식 불일치 등 사람이 입력하며 생긴 실수"}
+        {"term": "CSV", "definition": "쉼표로 값을 구분한 텍스트 표 파일"},
+        {"term": "DataFrame", "definition": "Pandas가 CSV를 읽어 만든 행·열 구조의 표"},
+        {"term": "조건 검색", "definition": "조건에 맞는 행만 골라내는 방법"},
+        {"term": "정렬", "definition": "특정 열을 기준으로 행 순서를 바꾸는 것"}
       ]
     },
     {
       "type": "fill_blank",
-      "question": "결측값이 있는 행을 제거하는 Pandas 메서드는 df.____()이다.",
-      "answer": "dropna"
+      "question": "값이 같은지 비교할 때 쓰는 연산자는 ____이다. (값을 저장할 때 쓰는 = 과 구분)",
+      "answer": "=="
     },
     {
       "type": "fill_blank",
-      "question": "결측값을 특정 값으로 채워 넣는 Pandas 메서드는 df.____()이다.",
-      "answer": "fillna"
-    },
-    {
-      "type": "fill_blank",
-      "question": "중복 행을 제거하는 Pandas 메서드는 df.____()이다.",
-      "answer": "drop_duplicates"
+      "question": "데이터를 정렬할 때 쓰는 Pandas 메서드는 df.____()이다.",
+      "answer": "sort_values"
     },
     {
       "type": "result_prediction",
-      "question": "원본 데이터가 113행이고, 완전 중복 행이 3건 있을 때 drop_duplicates() 실행 후 남는 행 개수는?",
-      "answer": "110행",
-      "explanation": "113 - 3 = 110행. 중복된 행 중 처음 것만 남고 나머지가 제거된다."
+      "question": "EQ-02 기록 25건 중 불합격이 5건일 때, EQ-02의 불합격 비율(%)은?",
+      "answer": "20%",
+      "explanation": "5 ÷ 25 × 100 = 20.0%"
     },
     {
-      "type": "result_prediction",
-      "question": "정제 전 평균 온도가 약 303.9℃, 정제 후 평균 온도가 약 299.7℃일 때 두 값의 차이는?",
-      "answer": "약 4.2℃",
-      "explanation": "303.9 - 299.7 = 약 4.2℃. 500℃가 넘는 극단 고온 이상값 2건이 정제 전 평균을 끌어올렸다."
+      "type": "chart_choice",
+      "question": "여러 조건(열)을 동시에 비교하는 표를 한눈에 훑어보기 좋은 방법은?",
+      "options": ["표(DataFrame) 미리보기", "소리로 듣기", "종이에 손으로 옮겨 적기"],
+      "answer": 0,
+      "explanation": "head()나 미리보기 표로 데이터를 눈으로 훑어보는 것이 가장 빠르고 정확하다."
     },
     {
       "type": "short_answer",
-      "question": "오늘 배운 내용을 바탕으로, 데이터 분석 전에 정제 과정이 왜 필요한지 한 문장으로 설명해보시오.",
-      "sample_answer": "결측값·중복값·이상값을 그대로 두면 평균 같은 요약값이 실제와 다르게 왜곡될 수 있으므로, 그래프나 통계를 계산하기 전에 반드시 데이터를 먼저 정제해야 한다."
+      "question": "3차시의 for+if 방식과 오늘 배운 Pandas 조건 검색의 차이를 한 문장으로 설명해보시오.",
+      "sample_answer": "3차시에는 반복문으로 값을 하나씩 확인하며 조건을 검사했지만, Pandas는 조건식 한 줄로 표 전체에서 한 번에 원하는 행을 골라낼 수 있다."
     }
   ]
 }

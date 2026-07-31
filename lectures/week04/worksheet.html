@@ -17,7 +17,7 @@
 <main class="page">
   <div class="hero">
     <span class="badge purple">4차시 실습지</span>
-    <h1>결측값과 이상한 데이터 정리하기 — 실습지</h1>
+    <h1>Pandas 가장 기본적인 부분 — 실습지</h1>
   </div>
 
   <section class="block">
@@ -25,13 +25,13 @@
     <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 결측값</td><td rowspan="4">A. 정상 범위를 크게 벗어난 값<br>B. 칸에 값이 전혀 입력되지 않은 것<br>C. 완전히 똑같은 행이 두 번 저장된 것<br>D. 사람이 입력하다가 생긴 실수(오타·형식 오류 등)</td></tr>
-      <tr><td>② 중복값</td></tr>
-      <tr><td>③ 입력 오류</td></tr>
-      <tr><td>④ 이상값</td></tr>
+      <tr><td>① CSV</td><td rowspan="4">A. 조건에 맞는 행만 골라내는 방법<br>B. 쉼표로 값을 구분한 텍스트 표 파일<br>C. 특정 열을 기준으로 행 순서를 바꾸는 것<br>D. Pandas가 CSV를 읽어 만든 행·열 구조의 표</td></tr>
+      <tr><td>② DataFrame</td></tr>
+      <tr><td>③ 조건 검색</td></tr>
+      <tr><td>④ 정렬</td></tr>
     </table>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① B  ② C  ③ D  ④ A</div>
+    <div class="answer-box">① B  ② D  ③ A  ④ C</div>
   </section>
 
   <section class="block">
@@ -40,42 +40,39 @@
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-df = pd.read_csv("week04_dirty_process_data.csv")
+df = pd.____________("week04_process_filtering.csv")
 
-print(df.____________().sum())        # 열별 결측값 개수 세기
+# 설비번호가 EQ-02인 행만 골라내기
+eq02 = df[df["설비번호"] ____ "EQ-02"]
 
-df_clean = df.____________()          # 결측값이 있는 행 제거
-
-print(df.____________().sum())        # 중복 행 개수 세기
-
-df_clean2 = df.____________()         # 중복 행 제거</code></pre>
+# 온도_섭씨 기준으로 내림차순 정렬하기
+df.____________("온도_섭씨", ascending=False)</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>isna</code>, <code>dropna</code>, <code>duplicated</code>, <code>drop_duplicates</code></div>
+    <div class="answer-box">순서대로 <code>read_csv</code>, <code>==</code>, <code>sort_values</code></div>
   </section>
 
   <section class="block">
-    <h2>3. 제거 vs 대체 선택 문제</h2>
-    <p>아래 각 상황에서 결측값을 "제거"하는 것이 나을지, "대체"하는 것이 나을지 골라보자.</p>
-    <table class="timetable">
-      <tr><th>상황</th><th>제거 / 대체</th></tr>
-      <tr><td>① 전체 113행 중 결측이 있는 행이 9행뿐이고, 나머지 데이터로도 충분히 분석 가능하다.</td><td>____________</td></tr>
-      <tr><td>② 범주형 값인 <code>합격여부</code>가 결측이라 평균·중앙값으로 채울 수 없다.</td><td>____________</td></tr>
-      <tr><td>③ 온도처럼 극단값이 섞여 있을 수 있는 숫자 열의 결측을 채우고 싶다.</td><td>____________</td></tr>
-    </table>
+    <h2>3. 열 선택 문제</h2>
+    <p>온도(<code>온도_섭씨</code>)와 압력(<code>압력_Pa</code>) 두 열을 함께 선택하는 코드로
+    올바른 것은?</p>
+    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
+      <li>① <code>df["온도_섭씨", "압력_Pa"]</code></li>
+      <li>② <code>df[["온도_섭씨", "압력_Pa"]]</code></li>
+      <li>③ <code>df.온도_섭씨.압력_Pa</code></li>
+    </ul>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① 제거해도 큰 손실이 없으므로 제거 가능 ② 제거(범주형은 평균/중앙값 대체가 불가능) ③ 대체(단, 평균이 아닌 중앙값 사용 권장 — 극단값에 덜 흔들리기 때문)</div>
+    <div class="answer-box">정답: ②. 여러 열을 선택할 때는 대괄호 안에 리스트를 한 번 더 감싸야 한다.</div>
   </section>
 
   <section class="block">
     <h2>4. 결과 해석 문제</h2>
-    <p>실습에서 아래와 같은 결과를 얻었다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">정제 전 평균 온도: 약 303.9℃ (113행, 이상값 2건 포함)
-정제 후 평균 온도: 약 299.7℃ (102행, 결측·중복·이상값 정리 완료)</pre>
-    <p>두 평균의 차이는 몇 ℃인지 계산하고, 왜 이런 차이가 생겼는지 한 문장으로 설명해보자.</p>
+    <p>실습에서 EQ-02 설비의 기록은 25건이었고, 이 중 불합격은 5건이었다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">eq02.shape → (25, 8)
+(eq02["합격여부"] == -1).sum() → 5</pre>
+    <p>EQ-02의 불합격 비율(%)을 계산해보자.</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">차이는 약 4.2℃(303.9 - 299.7). 정제 전 데이터에는 500℃가 넘는 극단 고온 이상값 2건이
-    섞여 있어 평균이 실제보다 높게 계산되었기 때문이다.</div>
+    <div class="answer-box">5 ÷ 25 × 100 = 20.0%. 즉 EQ-02 기록 25건 중 20.0%가 불합격이다.</div>
   </section>
 
   <section class="block">
@@ -83,8 +80,7 @@ df_clean2 = df.____________()         # 중복 행 제거</code></pre>
     <p>아래 빈칸을 채워 이번 차시 데이터를 한 문장으로 요약해보자.</p>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      "원본 데이터 ____행 중 중복 ____건, 이상값 ____건, 결측 ____건을 정리한 결과
-      최종 ____행이 남았으며, 정제 전후 평균 온도는 약 ____℃ 차이가 났다."
+      "EQ-02 설비의 공정 기록 ____건 중 ____건이 불합격했으며, 이는 전체의 약 ____%에 해당한다."
     </div>
   </section>
 
@@ -92,9 +88,9 @@ df_clean2 = df.____________()         # 중복 행 제거</code></pre>
     <h2>6. 도전 문제</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      <code>df["공정명"].unique()</code>를 실행해서 오타가 섞인 공정명을 모두 찾아 적어보자.
-      그리고 <code>str.strip()</code>과 <code>replace()</code>를 이용해 오타를 통일하는 코드를
-      직접 작성해보자.
+      <code>df[df["설비번호"] != "EQ-02"]</code>로 EQ-02가 아닌 나머지 설비의 기록만 골라내고,
+      그 안에서 불합격 비율을 계산해서 EQ-02(20.0%)와 비교해보자. 그리고
+      <code>df.sort_values("온도_섭씨")</code>로 온도가 가장 낮았던 하위 5건도 확인해보자.
     </div>
   </section>
 
