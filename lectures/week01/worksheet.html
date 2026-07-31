@@ -17,7 +17,7 @@
 <main class="page">
   <div class="hero">
     <span class="badge purple">1차시 실습지</span>
-    <h1>반도체 공정과 데이터 처음 만나기 — 실습지</h1>
+    <h1>반도체 공정과 데이터 처음 만나기 + 변수·출력 — 실습지</h1>
   </div>
 
   <section class="block">
@@ -86,6 +86,47 @@ print(df["합격여부"].____________())  # 값별 개수 세기</code></pre>
       <code>df["설비번호"].value_counts()</code>와 <code>df["공정명"].value_counts()</code>를
       각각 실행해서, 데이터에 가장 많이 등장한 설비와 공정을 찾아 적어보자.
     </div>
+  </section>
+
+  <section class="block">
+    <h2>7. 변수·자료형 빈칸 문제</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>pass_count ____ 34        # 34를 pass_count라는 이름에 저장
+equipment = "EQ-03"
+print(____(equipment))    # equipment의 자료형을 확인</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">순서대로 <code>=</code>, <code>type</code>. <code>equipment</code>는
+    따옴표로 감싼 문자열(str)이므로 <code>&lt;class 'str'&gt;</code>이 출력된다.</div>
+  </section>
+
+  <section class="block">
+    <h2>8. f-string 결과 예측 문제</h2>
+    <p>아래 코드를 실행하면 무엇이 출력될지 먼저 예측해보고 정답을 확인하자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>name = "하은"
+score = 92.345
+print(f"{name}님의 점수는 {score:.1f}점입니다.")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">정답: <code>하은님의 점수는 92.3점입니다.</code> —
+    <code>{score:.1f}</code>는 소수 첫째 자리까지만 반올림해 보여준다.</div>
+  </section>
+
+  <section class="block">
+    <h2>9. input() 오류 찾기 문제</h2>
+    <p>아래 코드는 실행하면 오류가 난다. 어디가 문제인지 찾아 고쳐보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 오류 있는 코드</span><button class="copy-btn">복사</button></div>
+      <pre><code>age = input("나이를 입력하세요: ")
+print(f"내년이면 {age + 1}살이 되네요!")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">문제: <code>age</code>는 <code>input()</code>이 돌려준 문자열(str)이라
+    숫자 <code>1</code>과 바로 더할 수 없다(<code>TypeError</code>). 수정:
+    <code>age = int(input("나이를 입력하세요: "))</code>처럼 <code>int()</code>로 변환해야 한다.</div>
   </section>
 
   <div class="nav-buttons">

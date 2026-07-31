@@ -6,6 +6,28 @@
 <title>1차시. 반도체 공정과 데이터 처음 만나기</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
+<style>
+  .var-box-svg,.flow-svg{display:block;margin:1.2rem auto;max-width:100%;height:auto;}
+  .var-box-svg{width:440px;}
+  .flow-svg{width:640px;}
+  .var-box-svg .box{fill:var(--blue-bg);stroke:var(--blue);stroke-width:2;}
+  .var-box-svg .value-text{fill:var(--blue);font-weight:800;font-family:'Courier New',monospace;}
+  .var-box-svg .label-text{fill:var(--blue);font-weight:700;font-family:'Courier New',monospace;}
+  .var-box-svg .arrow-line{stroke:var(--purple);stroke-width:3;stroke-dasharray:6 6;animation:dashMove 1.1s linear infinite;}
+  .var-box-svg .pulse{animation:pulseScale 1.6s ease-in-out infinite;transform-origin:315px 88px;}
+  @keyframes dashMove{to{stroke-dashoffset:-24;}}
+  @keyframes pulseScale{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+  .flow-svg .fbox{fill:#fff;stroke:var(--line);stroke-width:2;}
+  .flow-svg .fbox.active{stroke:var(--purple);fill:var(--purple-bg);}
+  .flow-svg .flabel{fill:#0f172a;font-weight:700;}
+  .flow-svg .fsub{fill:var(--muted);font-family:'Courier New',monospace;}
+  .flow-svg .farrow{stroke:var(--muted);stroke-width:2.5;}
+  .img-caption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:-.4rem;}
+  .photo-slot{
+    border:2px dashed var(--line); border-radius:12px; background:#f8fafc; color:var(--muted);
+    padding:1.6rem 1rem; text-align:center; font-size:.88rem; margin:1rem 0;
+  }
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -75,11 +97,19 @@
       웨이퍼는 커다란 피자 도우, 다이는 그 위에 자른 한 조각이라고 생각하면 된다.
       도우(웨이퍼) 하나로 여러 조각(다이)을 만들지만, 조각마다 굽는 상태(품질)가 다를 수 있다.
     </div>
+    <div class="photo-slot">
+      🖼️ <b>이미지 자리</b> — 실제 웨이퍼·다이·칩 사진(둥근 원판 위에 사각형 칩이 촘촘히 배열된
+      모습)을 강사가 추가하면 좋다. 검색 키워드 예시: "silicon wafer die chip photo".
+    </div>
 
     <h3>반도체 제조의 주요 공정</h3>
     <p>웨이퍼는 <b>산화 → 포토(노광) → 식각 → 이온 주입 → 증착 → 세정</b> 같은 공정을 수백 번
     반복하며 회로가 완성된다. 각 공정은 서로 다른 <b>설비(Equipment)</b>에서 진행되며,
     설비 안에는 온도·압력·가스유량 등을 측정하는 <b>센서(Sensor)</b>가 붙어 있다.</p>
+    <div class="photo-slot">
+      🖼️ <b>이미지 자리</b> — "산화 → 포토 → 식각 → 이온 주입 → 증착 → 세정" 공정 흐름을 화살표로
+      연결한 다이어그램이나 애니메이션(GIF)을 추가하면 순서를 기억하기 쉽다.
+    </div>
 
     <h3>FAB의 의미</h3>
     <p><b>FAB(팹, Fabrication의 줄임말)</b>은 반도체를 실제로 생산하는 공장을 말한다.
@@ -105,20 +135,242 @@
   </section>
 
   <section class="block">
-    <h2>🐍 파이썬 시작하기 — 변수와 출력(개요, 상세 내용 추가 예정)</h2>
-    <div class="callout warn">
-      <b class="tag">작성 상태</b>
-      이 절은 2차시 내용 중 "변수·출력" 부분을 1차시로 옮겨오면서 새로 추가된 절이다. 아래는 다룰
-      내용의 개요이며, 상세 설명·예제 코드는 추후 작성한다.
+    <h2>🐍 파이썬 시작하기 — 변수와 출력</h2>
+
+    <h3>변수란 무엇인가</h3>
+    <p>오늘 <code>value_counts()</code>로 확인한 "합격 34건, 불합격 6건"이라는 숫자를, 매번 코드를
+    다시 실행하지 않고 기억해두고 싶다면 어떻게 해야 할까? 파이썬에서는 <b>변수(Variable)</b>를 써서
+    값에 이름을 붙여 저장해둔다. 변수는 "이름표가 붙은 상자"라고 생각하면 쉽다 — 상자 안에 값을
+    넣고, 이름표(변수 이름)로 그 상자를 다시 찾아 쓸 수 있다.</p>
+
+    <svg class="var-box-svg" viewBox="0 0 440 170" role="img"
+         aria-label="변수 개념도: 34라는 값이 화살표를 따라 pass_count라는 이름의 상자 안에 저장된다">
+      <text x="55" y="98" font-size="30" text-anchor="middle" fill="var(--muted)" font-weight="700" font-family="'Courier New',monospace">34</text>
+      <line class="arrow-line" x1="100" y1="90" x2="175" y2="90"/>
+      <polygon points="175,80 195,90 175,100" fill="var(--purple)"/>
+      <rect class="box" x="205" y="35" width="220" height="105" rx="16"/>
+      <text x="315" y="26" font-size="15" text-anchor="middle" class="label-text">pass_count</text>
+      <text x="315" y="98" font-size="34" text-anchor="middle" class="value-text pulse">34</text>
+    </svg>
+    <p class="img-caption"><code>pass_count = 34</code> — 오른쪽 값(34)을 왼쪽 이름(<code>pass_count</code>)이라는
+    상자에 저장한다. 이때 <code>=</code>는 수학의 "같다"가 아니라 <b>"오른쪽 값을 왼쪽 이름에
+    저장하라"</b>는 뜻(대입 연산자)이다.</p>
+
+    <div class="code-block">
+      <div class="code-label"><span>Python — 변수 만들기</span><button class="copy-btn">복사</button></div>
+      <pre><code># 값에 이름을 붙여 저장한다(대입).
+pass_count = 34
+fail_count = 6
+
+# 이름(변수)만 적으면 그 안에 든 값을 다시 꺼내 쓸 수 있다.
+print(pass_count)
+print(fail_count)</code></pre>
     </div>
-    <p>오늘 관찰한 합격/불합격 개수 같은 값을 다음 차시부터는 매번 다시 세지 않고, <b>이름을 붙여
-    기억(변수)</b>해두고 필요할 때 <b>화면에 보여주는(<code>print()</code>) 출력)</b> 법을 배운다.</p>
-    <ul class="goal-list">
-      <li>변수란 무엇인가 — 값에 이름을 붙여 저장하기</li>
-      <li>숫자형(정수/실수), 문자열형, 불리언(참/거짓) 구분하기</li>
-      <li><code>print()</code>로 변수 값을 화면에 출력하기</li>
-      <li>오늘 계산한 합격 건수를 변수에 저장하고 문장으로 출력해보기</li>
-    </ul>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">34
+6</pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      Colab에 위 코드를 그대로 입력하고 실행해보자. 그다음 <code>pass_count</code> 값을 다른 숫자로
+      바꿔서 다시 실행하면 어떻게 되는지 확인해보자.
+    </div>
+
+    <h3>자료형 — 숫자형, 문자열형, 불리언</h3>
+    <p>변수에는 숫자뿐 아니라 문자, 참/거짓 값도 담을 수 있다. 값의 "종류"를 <b>자료형(Data
+    Type)</b>이라고 부른다. 이번 차시에서는 아래 세 가지만 기억해도 충분하다.</p>
+    <table class="timetable">
+      <tr><th>자료형</th><th>예시</th><th>설명</th></tr>
+      <tr><td><code>int</code> (정수)</td><td><code>6</code></td><td>소수점 없는 숫자</td></tr>
+      <tr><td><code>float</code> (실수)</td><td><code>300.1</code></td><td>소수점이 있는 숫자</td></tr>
+      <tr><td><code>str</code> (문자열)</td><td><code>"EQ-03"</code></td><td>따옴표로 감싼 글자</td></tr>
+      <tr><td><code>bool</code> (불리언)</td><td><code>True</code> / <code>False</code></td><td>참 또는 거짓</td></tr>
+    </table>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 자료형 확인하기</span><button class="copy-btn">복사</button></div>
+      <pre><code>temperature = 300.1        # 실수(float)
+equipment = "EQ-03"        # 문자열(str) — 따옴표로 감싼다
+is_pass = True              # 불리언(bool) — True/False만 가능
+
+print(type(temperature))
+print(type(equipment))
+print(type(is_pass))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">&lt;class 'float'&gt;
+&lt;class 'str'&gt;
+&lt;class 'bool'&gt;</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의</b>
+      문자열은 반드시 따옴표(<code>"..."</code> 또는 <code>'...'</code>)로 감싸야 한다.
+      <code>equipment = EQ-03</code>처럼 따옴표 없이 쓰면 파이썬은 이를 "EQ-03이라는 변수를 찾아라"는
+      뜻으로 오해해 <code>NameError</code>가 발생한다.
+    </div>
+
+    <h3>print()로 여러 값 한 번에 출력하기</h3>
+    <p><code>print()</code> 안에 콤마(<code>,</code>)로 여러 값을 나열하면, 값 사이에 공백을 하나씩
+    넣어 순서대로 이어서 출력해준다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print("합격:", pass_count, "불합격:", fail_count)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">합격: 34 불합격: 6</pre>
+    </div>
+
+    <h3>f-string으로 문장 속에 값 끼워 넣기</h3>
+    <p>콤마로 나열하면 값 사이에 원치 않는 공백이 생기고, 문장을 매끄럽게 쓰기 어렵다.
+    <b>f-string</b>(포맷 문자열)을 쓰면 문장 안에서 원하는 위치에 변수 값을 자연스럽게 끼워 넣을 수
+    있다. 방법은 간단하다 — 문자열 앞에 <code>f</code>를 붙이고, 변수를 넣고 싶은 자리에
+    중괄호 <code>{ }</code>로 감싼다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — f-string 기본</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(f"오늘 합격은 {pass_count}건, 불합격은 {fail_count}건입니다.")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">오늘 합격은 34건, 불합격은 6건입니다.</pre>
+    </div>
+    <p>중괄호 안에는 변수뿐 아니라 계산식도 바로 넣을 수 있다. 소수점 자리수를 정리하고 싶다면
+    <code>:.1f</code>처럼 콜론(<code>:</code>) 뒤에 서식을 적는다(<code>.1f</code> = 소수 첫째
+    자리까지).</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — f-string 안에서 계산하기</span><button class="copy-btn">복사</button></div>
+      <pre><code>total = pass_count + fail_count
+fail_rate = fail_count / total * 100
+
+print(f"전체 {total}건 중 불합격률은 {fail_rate:.1f}%입니다.")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">전체 40건 중 불합격률은 15.0%입니다.</pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      <code>equipment</code> 변수(EQ-03)와 <code>temperature</code> 변수(300.1)를 이용해
+      <code>f"{equipment} 설비의 온도는 {temperature}도입니다."</code> 같은 나만의 f-string 문장을
+      만들어 출력해보자.
+    </div>
+
+    <h3>input()으로 값 입력받기</h3>
+    <p>지금까지는 값을 코드에 직접 적었지만, <code>input()</code>을 쓰면 사람이 키보드로 입력한 값을
+    받아 사용할 수 있다. <code>input("질문")</code>을 실행하면 화면에 질문이 뜨고, 사람이 입력한
+    내용이 <code>input()</code>의 결과값이 된다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — input() 기본</span><button class="copy-btn">복사</button></div>
+      <pre><code>name = input("이름을 입력하세요: ")
+print(f"안녕하세요, {name}님! 반갑습니다.")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시(입력값: 지민)</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">이름을 입력하세요: 지민
+안녕하세요, 지민님! 반갑습니다.</pre>
+    </div>
+    <div class="callout danger">
+      <b class="tag">가장 중요한 주의사항</b>
+      <code>input()</code>이 돌려주는 값은 <b>항상 문자열(str)</b>이다. 숫자를 입력받아도 파이썬은
+      이를 글자로 취급하므로, 계산에 쓰려면 <code>int()</code>(정수) 또는 <code>float()</code>(실수)로
+      바꿔줘야 한다.
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 입력값을 숫자로 바꾸기</span><button class="copy-btn">복사</button></div>
+      <pre><code>age_text = input("나이를 입력하세요: ")   # age_text는 항상 문자열!
+age = int(age_text)                        # 문자열 → 정수로 변환
+
+print(f"내년이면 {age + 1}살이 되네요!")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시(입력값: 24)</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">나이를 입력하세요: 24
+내년이면 25살이 되네요!</pre>
+    </div>
+    <div class="callout danger">
+      <b class="tag">이렇게 하면 오류가 난다</b>
+      <code>age_text + 1</code>처럼 <b>변환 없이</b> 문자열과 숫자를 바로 더하면
+      <code>TypeError: can only concatenate str (not "int") to str</code> 오류가 발생한다.
+      "문자열끼리는 이어붙일 수 있지만, 문자열과 숫자는 더할 수 없다"는 규칙 때문이다.
+    </div>
+
+    <svg class="flow-svg" viewBox="0 0 660 140" role="img"
+         aria-label="input 함수로 값을 입력받아 변수에 저장한 뒤 f-string으로 출력하는 흐름도">
+      <rect class="fbox" x="10" y="35" width="190" height="72" rx="14"/>
+      <text x="105" y="66" text-anchor="middle" class="flabel" font-size="15">⌨️ input()</text>
+      <text x="105" y="88" text-anchor="middle" class="fsub" font-size="12">사용자 입력 받기</text>
+
+      <line class="farrow" x1="205" y1="71" x2="245" y2="71"/>
+      <polygon points="245,63 262,71 245,79" fill="var(--muted)"/>
+
+      <rect class="fbox" x="265" y="35" width="190" height="72" rx="14"/>
+      <text x="360" y="66" text-anchor="middle" class="flabel" font-size="15">📦 변수에 저장</text>
+      <text x="360" y="88" text-anchor="middle" class="fsub" font-size="12">name = "지민"</text>
+
+      <line class="farrow" x1="460" y1="71" x2="500" y2="71"/>
+      <polygon points="500,63 517,71 500,79" fill="var(--muted)"/>
+
+      <rect class="fbox active" x="520" y="35" width="130" height="72" rx="14"/>
+      <text x="585" y="60" text-anchor="middle" class="flabel" font-size="14">🖨️ f-string</text>
+      <text x="585" y="78" text-anchor="middle" class="flabel" font-size="14">출력</text>
+      <text x="585" y="98" text-anchor="middle" class="fsub" font-size="11">print(f"...")</text>
+    </svg>
+    <p class="img-caption">오늘 배운 세 가지(<code>input()</code> → 변수 저장 → <code>f-string</code> 출력)는
+    앞으로 10차시 내내 반복해서 쓰는 기본 패턴이다.</p>
+
+    <h3>종합 실습 — 나만의 자기소개 만들기</h3>
+    <p>지금까지 배운 변수·<code>input()</code>·f-string을 모두 합쳐 자기소개 문장을 만들어보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 종합 실습</span><button class="copy-btn">복사</button></div>
+      <pre><code>my_name = input("이름을 입력하세요: ")
+favorite_process = input("좋아하는 공정을 입력하세요(증착/식각/포토/세정/산화 중 하나): ")
+
+print(f"안녕하세요! 저는 {my_name}입니다.")
+print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 흥미로웠어요.")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시(입력값: 하은 / 식각)</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">이름을 입력하세요: 하은
+좋아하는 공정을 입력하세요(증착/식각/포토/세정/산화 중 하나): 식각
+안녕하세요! 저는 하은입니다.
+오늘 배운 공정 중에서는 '식각' 공정이 가장 흥미로웠어요.</pre>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🟣 파이썬 실습: 변수와 출력 따라 하기</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>새 코드 셀 열기</b> — 오늘 쓰던 Colab 노트북에 새 코드 셀을 추가한다
+      (셀 왼쪽에 마우스를 올리면 나타나는 <code>+ 코드</code> 버튼).</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>변수 만들기</b> — <code>pass_count = 34</code>, <code>fail_count = 6</code>을
+      입력하고 실행한 뒤, <code>print(pass_count)</code>로 값이 잘 저장됐는지 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>자료형 확인하기</b> — <code>temperature = 300.1</code>,
+      <code>equipment = "EQ-03"</code>을 만들고 각각 <code>type()</code>으로 자료형을 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>f-string 문장 만들기</b> — <code>print(f"합격 {pass_count}건, 불합격
+      {fail_count}건")</code>처럼 나만의 문장을 f-string으로 만들어본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>input()으로 입력받기</b> — <code>name = input("이름을 입력하세요: ")</code>를
+      실행하고, 화면에 뜬 입력창에 이름을 입력한 뒤 <code>print(f"안녕, {name}!")</code>로 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div class="content"><b>종합 실습 완성하기</b> — 위 "나만의 자기소개 만들기" 코드를 그대로
+      실행해 자신의 이름과 좋아하는 공정으로 자기소개 문장을 완성한다. (학생용 Notebook의 TODO로
+      이어짐)</div>
+    </div>
   </section>
 
   <section class="block">
@@ -194,6 +446,24 @@
           <dt>쉬운 비유</dt><dd>사과 100개 중 92개가 상품이면 수율은 92%.</dd>
           <dt>데이터에서의 예</dt><dd><code>합격여부</code> 열에서 <code>1</code>의 비율.</dd>
           <dt>자주 하는 오해</dt><dd>수율이 낮다고 항상 설비 문제인 것은 아니다(7~8차시에서 자세히 다룬다).</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>변수</h4><div class="en">Variable</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>값에 이름을 붙여 저장해두는 공간.</dd>
+          <dt>쉬운 비유</dt><dd>이름표가 붙은 상자.</dd>
+          <dt>데이터에서의 예</dt><dd><code>pass_count = 34</code>처럼 합격 건수를 이름 붙여 저장한다.</dd>
+          <dt>자주 하는 오해</dt><dd><code>=</code>를 수학의 "같다"로 착각하기 쉽다. 파이썬에서는 "저장하라"는 뜻이다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>f-string</h4><div class="en">Formatted String</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>문자열 앞에 f를 붙이고 { } 안에 변수를 넣어 문장 속에 값을 끼워 넣는 방법.</dd>
+          <dt>쉬운 비유</dt><dd>편지의 빈칸에 이름을 채워 넣는 것처럼, 문장의 빈칸에 값을 채워 넣는다.</dd>
+          <dt>데이터에서의 예</dt><dd><code>f"합격은 {pass_count}건입니다"</code></dd>
+          <dt>자주 하는 오해</dt><dd>문자열 앞의 <code>f</code>를 빼먹으면 중괄호가 그대로 글자로 출력된다.</dd>
         </dl>
       </div>
     </div>
@@ -322,15 +592,38 @@ Name: count, dtype: int64</pre>
       Colab에서 런타임이 초기화되면(연결이 끊기면) 이전에 실행한 코드 결과가 사라진다.
       파일을 다시 업로드하고 셀을 처음부터 다시 실행해야 한다.
     </div>
+    <div class="callout danger">
+      <b class="tag">오류 3</b>
+      <code>NameError: name 'EQ' is not defined</code> — 문자열에 따옴표를 빼먹은 경우다
+      (<code>equipment = EQ-03</code>처럼). 문자열은 항상 <code>"EQ-03"</code>처럼 따옴표로 감싼다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 4</b>
+      <code>TypeError: can only concatenate str (not "int") to str</code> —
+      <code>input()</code>으로 받은 문자열을 <code>int()</code>로 바꾸지 않고 바로 숫자와 더한
+      경우다. <code>age = int(input(...))</code>처럼 반드시 변환한다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — f-string 흔한 실수</b>
+      문자열 앞의 <code>f</code>를 빼먹으면 <code>{pass_count}</code>가 계산되지 않고 글자 그대로
+      출력된다(예: <code>"합격은 {pass_count}건"</code> → 화면에 <code>{pass_count}</code>가
+      그대로 찍힘). 항상 <code>f"..."</code> 형태인지 확인한다.
+    </div>
   </section>
 
   <section class="block">
     <h2>🚀 도전 실습</h2>
     <div class="callout practice">
-      <b class="tag">도전 문제</b>
+      <b class="tag">도전 문제 1 (Pandas)</b>
       <code>df["설비번호"].value_counts()</code>를 실행해 어떤 설비가 데이터에 가장 많이
       등장하는지 확인해보자. 그리고 <code>df["공정명"].value_counts()</code>로 어떤 공정이
       가장 많이 기록되었는지도 확인해보자.
+    </div>
+    <div class="callout practice">
+      <b class="tag">도전 문제 2 (파이썬)</b>
+      <code>total = pass_count + fail_count</code>로 전체 건수를 구하고,
+      <code>pass_rate = pass_count / total * 100</code>으로 합격률을 계산한 뒤,
+      <code>f"합격률은 {pass_rate:.1f}%입니다."</code>처럼 f-string으로 결과를 출력해보자.
     </div>
   </section>
 
@@ -362,6 +655,62 @@ Name: count, dtype: int64</pre>
       <button class="reveal-btn">예시 답안 보기</button>
       <div class="answer-box">예시 답안: "이번 공정 기록 40건 중 34건(85%)이 합격했고, 6건(15%)이 불합격했다.
       대부분의 웨이퍼는 정상적으로 만들어졌지만, 일부는 원인을 더 살펴볼 필요가 있다."</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q4. (객관식) <code>pass_count = 34</code>를 실행했을 때 <code>=</code>의 의미로
+      가장 알맞은 것은?</div>
+      <ul class="options">
+        <li>A. 왼쪽과 오른쪽이 수학적으로 같다는 뜻</li>
+        <li>B. 오른쪽 값을 왼쪽 이름의 변수에 저장하라는 뜻</li>
+        <li>C. 왼쪽 값을 오른쪽으로 옮기라는 뜻</li>
+        <li>D. 두 값을 비교해 참/거짓을 반환하라는 뜻</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: B. 파이썬의 <code>=</code>는 "대입 연산자"로, 오른쪽 값을 왼쪽 이름의
+      상자(변수)에 저장한다. (참고: "같다"를 비교할 때는 <code>==</code>를 쓴다 — 3차시에서 배운다.)</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q5. (빈칸) <code>name = "지민"</code>일 때, "안녕하세요 지민님"을 출력하는
+      f-string을 완성해보자: <code>print(f"안녕하세요 ______님")</code></div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: <code>{name}</code> → <code>print(f"안녕하세요 {name}님")</code>.
+      f-string은 중괄호 <code>{ }</code> 안에 변수를 넣으면 값이 그대로 문장 속에 끼워진다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q6. (참/거짓) <code>age = input("나이를 입력하세요: ")</code>를 실행하면
+      <code>age</code>는 항상 숫자(int)형으로 저장된다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 거짓. <code>input()</code>은 입력값을 항상 문자열(str)로 돌려준다.
+      숫자로 계산하려면 <code>int(age)</code> 또는 <code>float(age)</code>로 변환해야 한다.</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📝 과제(다음 차시까지)</h2>
+    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 <code>print()</code> 또는
+    f-string으로 확인할 수 있게 만들어 제출한다.</p>
+    <div class="callout practice">
+      <b class="tag">과제 1 — 나의 공정 데이터 요약하기</b>
+      오늘 데이터의 <code>합격여부</code> 결과(34, 6)를 <code>pass_count</code>, <code>fail_count</code>
+      변수에 저장하고, 전체 건수·합격률을 계산해 <code>"전체 ___건 중 합격률은 ___%입니다."</code>
+      형태의 문장을 f-string으로 출력한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 2 — 자기소개 카드 만들기</b>
+      <code>input()</code>으로 이름, 나이, 좋아하는 공정(증착/식각/포토/세정/산화 중 하나)을 각각
+      입력받아 변수에 저장한 뒤, f-string 세 줄로 자기소개 카드를 출력한다(이름, 나이, 좋아하는
+      공정이 각각 한 줄씩 들어가야 한다). 나이는 반드시 <code>int()</code>로 변환해 "내년 나이"도
+      함께 출력한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 3(도전) — 온도 판정 문장 만들기</b>
+      <code>temperature = 303.5</code> 변수를 만들고, 정상 범위(295~305℃)와 비교한 결과를
+      <code>is_normal</code>(True/False)이라는 변수에 저장한 뒤,
+      <code>f"온도 {temperature}도는 정상 범위 안에 있나요? {is_normal}"</code>처럼 출력해본다.
+      (비교 연산자 <code>&lt;=</code>는 3차시에서 자세히 배우지만, 미리 검색해서 써봐도 좋다.)
     </div>
   </section>
 
