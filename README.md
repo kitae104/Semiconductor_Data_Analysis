@@ -144,7 +144,7 @@ start index.html
 | 학생용 | `notebooks/student/` | 핵심 코드 일부가 `# TODO`로 비어 있어 직접 채워야 함 |
 | 강사용 | `notebooks/instructor/` | 완성된 코드 + 예상 결과 + 설명 포인트 + 오류 대처법 |
 | 정답 | `notebooks/solutions/` | 학생용의 모든 TODO가 채워진 완성본 |
-| 강의 운영안 | `lectures/weekXX/instructor-guide.md` | 2시간 수업 시간표, 발문, 예상 오개념, 난이도별 과제 |
+| 강의 운영안 | `lectures/weekXX/instructor-guide.md` | 수업 흐름, 발문, 예상 오개념, 난이도별 과제 |
 
 ## 11. 데이터 출처 및 교육용 가공 안내
 
