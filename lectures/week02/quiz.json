@@ -1,51 +1,51 @@
 {
   "week": 2,
-  "title": "파이썬과 데이터 분석의 기본",
+  "title": "리스트와 딕셔너리",
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "리스트 temps = [302.7, 300.1, 292.0]의 평균을 구하는 올바른 코드는?",
+      "question": "numbers = [10, 20, 30, 40]일 때 numbers[1]의 값은?",
       "options": [
-        "max(temps) / 3",
-        "sum(temps) / len(temps)",
-        "temps / 3",
-        "len(temps) / sum(temps)"
+        "10",
+        "20",
+        "30",
+        "오류가 난다"
       ],
       "answer": 1,
-      "explanation": "평균은 값의 합을 개수로 나눈 값이므로 sum(temps) / len(temps)가 맞다."
+      "explanation": "인덱스는 0부터 시작하므로 numbers[0]이 10, numbers[1]이 20이다."
     },
     {
       "type": "multiple_choice",
-      "question": "다음 중 '함수'에 대한 설명으로 가장 알맞은 것은?",
+      "question": "다음 중 '딕셔너리'에 대한 설명으로 가장 알맞은 것은?",
       "options": [
-        "값 하나를 저장하는 이름표",
-        "여러 값을 순서대로 담는 상자",
-        "자주 쓰는 계산에 이름을 붙여 재사용할 수 있게 만든 도구",
-        "데이터를 표 형태로 저장하는 파일"
+        "여러 값을 순서대로 담는 자료구조",
+        "값에 이름표(키)를 붙여 저장하는 자료구조",
+        "숫자만 저장할 수 있는 자료구조",
+        "값을 하나만 저장할 수 있는 자료구조"
       ],
-      "answer": 2,
-      "explanation": "함수는 sum(), max(), min()처럼 자주 하는 계산을 이름으로 불러 쓸 수 있게 만든 도구다."
+      "answer": 1,
+      "explanation": "딕셔너리는 키-값 쌍으로 값에 이름표를 붙여 저장한다. 순서 대신 이름(키)으로 값을 찾는다."
     },
     {
       "type": "true_false",
-      "question": "변수 하나에는 값을 여러 개 저장할 수 있다.",
+      "question": "numbers[1:3]은 인덱스 1, 2, 3의 값을 모두 포함한다.",
       "answer": false,
-      "explanation": "변수는 값을 하나만 담는다. 여러 값을 담으려면 리스트를 사용해야 한다."
+      "explanation": "슬라이싱의 끝 인덱스는 포함되지 않는다. numbers[1:3]은 인덱스 1, 2만 포함한다."
     },
     {
       "type": "true_false",
-      "question": "이번 차시 데이터에서 온도 최댓값(320.0℃)이 나온 로트는 불합격 처리되었다.",
-      "answer": false,
-      "explanation": "최댓값 320.0℃가 나온 LOT-0047은 오히려 합격 처리되었다. 실제 불합격 2건은 더 완만한 값에서 발생했다."
+      "question": "딕셔너리에 없는 키로 값을 꺼내려고 하면 KeyError가 발생한다.",
+      "answer": true,
+      "explanation": "딕셔너리는 정의된 키로만 값을 꺼낼 수 있다. 없는 키를 쓰면 KeyError가 발생한다."
     },
     {
       "type": "term_matching",
       "question": "용어와 설명을 연결하시오.",
       "pairs": [
-        {"term": "변수", "definition": "값 하나를 저장하는 이름표"},
-        {"term": "리스트", "definition": "여러 값을 순서대로 담는 상자"},
-        {"term": "함수", "definition": "자주 쓰는 계산에 이름을 붙인 도구"},
-        {"term": "평균", "definition": "값의 합을 개수로 나눈 요약값"}
+        {"term": "리스트", "definition": "여러 값을 순서대로 담는 자료구조"},
+        {"term": "인덱스", "definition": "리스트에서 값의 위치를 나타내는 순서 번호(0부터 시작)"},
+        {"term": "딕셔너리", "definition": "값에 이름표(키)를 붙여 저장하는 자료구조"},
+        {"term": "키-값 쌍", "definition": "딕셔너리를 이루는 '이름표'와 '내용'의 짝"}
       ]
     },
     {
@@ -66,14 +66,14 @@
     },
     {
       "type": "result_prediction",
-      "question": "25건 중 23건이 합격했을 때 수율(%)은?",
-      "answer": "92.0%",
-      "explanation": "23 ÷ 25 × 100 = 92.0%"
+      "question": "equipment = {\"설비번호\": \"EQ-01\", \"온도_섭씨\": 301.2}일 때 equipment[\"설비번호\"]의 값은?",
+      "answer": "EQ-01",
+      "explanation": "딕셔너리는 키(\"설비번호\")로 값을 꺼낸다."
     },
     {
       "type": "short_answer",
-      "question": "오늘 배운 내용을 바탕으로, 이번 배치의 평균 온도(301.9℃)와 수율(92.0%)을 한 문장으로 설명해보시오.",
-      "sample_answer": "이번 배치 25건의 평균 온도는 301.9℃였고, 수율은 92.0%(23/25건 합격)였다."
+      "question": "리스트와 딕셔너리를 각각 언제 사용하는 것이 더 알맞은지, 오늘 배운 예시를 들어 한 문장으로 설명해보시오.",
+      "sample_answer": "여러 온도 값을 순서대로 담을 때는 리스트가, 설비번호·공정명·온도처럼 값마다 의미(이름표)가 다를 때는 딕셔너리가 더 알맞다."
     }
   ]
 }

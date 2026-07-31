@@ -17,7 +17,7 @@
 <main class="page">
   <div class="hero">
     <span class="badge purple">2차시 실습지</span>
-    <h1>파이썬과 데이터 분석의 기본 — 실습지</h1>
+    <h1>리스트와 딕셔너리 — 실습지</h1>
   </div>
 
   <section class="block">
@@ -25,13 +25,13 @@
     <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 변수</td><td rowspan="4">A. 여러 값을 순서대로 담는 상자<br>B. 값의 합을 개수로 나눈 요약값<br>C. 값 하나를 저장하는 이름표<br>D. 자주 쓰는 계산에 이름을 붙인 도구</td></tr>
-      <tr><td>② 리스트</td></tr>
-      <tr><td>③ 함수</td></tr>
-      <tr><td>④ 평균</td></tr>
+      <tr><td>① 리스트</td><td rowspan="4">A. 값에 이름표(키)를 붙여 저장하는 자료구조<br>B. 리스트에서 값의 위치를 나타내는 순서 번호<br>C. 여러 값을 순서대로 담는 자료구조<br>D. 딕셔너리를 이루는 "이름표"와 "내용"의 짝</td></tr>
+      <tr><td>② 딕셔너리</td></tr>
+      <tr><td>③ 인덱스</td></tr>
+      <tr><td>④ 키-값 쌍</td></tr>
     </table>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① C  ② A  ③ D  ④ B</div>
+    <div class="answer-box">① C  ② A  ③ B  ④ D</div>
   </section>
 
   <section class="block">
@@ -40,14 +40,15 @@
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>temps = [302.7, 300.1, 292.0, 299.0, 291.9, 303.5]
 
-average = ____(temps) / ____(temps)   # 평균 계산
-maximum = ____(temps)                 # 최댓값
-minimum = ____(temps)                 # 최솟값
+print(temps[____])          # 첫 번째 값(302.7)을 출력하려면?
+print(temps[____])          # 마지막 값(303.5)을 인덱스 없이 뒤에서부터 출력하려면?
+print(temps[1:____])        # 두 번째~세 번째 값([300.1, 292.0])만 출력하려면?
 
-print(average, maximum, minimum)</code></pre>
+average = ____(temps) / ____(temps)   # 평균 계산</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>sum</code>, <code>len</code>, <code>max</code>, <code>min</code></div>
+    <div class="answer-box">순서대로 <code>0</code>, <code>-1</code>, <code>3</code>,
+    <code>sum</code>, <code>len</code>. <code>temps[1:3]</code>은 인덱스 1, 2만 포함한다(3은 포함 안 됨).</div>
   </section>
 
   <section class="block">
@@ -62,34 +63,46 @@ print(average, maximum, minimum)</code></pre>
   </section>
 
   <section class="block">
-    <h2>4. 결과 해석 문제</h2>
-    <p>2차시 데이터(25건)를 계산한 결과가 아래와 같았다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">전체 평균: 301.9
-전체 최댓값: 320.0  전체 최솟값: 289.3
-수율: 23/25 = 92.0%</pre>
-    <p>이 결과를 보고 "정상범위(295~305℃)를 벗어난 값이 있는가?"와 "수율이 몇 %인가?"를 한 문장씩 적어보자.</p>
+    <h2>4. 결과 예측 문제</h2>
+    <p>아래 코드를 실행하면 무엇이 출력될지 먼저 예측해보고 정답을 확인하자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>lot = {"로트번호": "LOT-0398", "설비번호": "EQ-03", "합격여부": 1}
+print(f"{lot['로트번호']}는 {lot['설비번호']}에서 처리되었다.")</code></pre>
+    </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">최댓값 320.0℃와 최솟값 289.3℃ 모두 정상범위(295~305℃)를 벗어났다.
-    수율은 92.0%로, 25건 중 23건이 합격했다.</div>
+    <div class="answer-box">정답: <code>LOT-0398는 EQ-03에서 처리되었다.</code> —
+    딕셔너리의 키로 값을 꺼내 f-string 문장 속에 그대로 끼워 넣는다.</div>
   </section>
 
   <section class="block">
-    <h2>5. 분석 문장 작성 문제</h2>
-    <p>아래 빈칸을 채워 이번 차시 데이터를 한 문장으로 요약해보자.</p>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "이번 배치의 평균 온도는 ____℃였고, 최댓값은 ____℃까지 올라갔다.
-      전체 ____건 중 ____건이 합격해 수율은 약 ____%였다."
+    <h2>5. 오류 찾기 문제</h2>
+    <p>아래 코드는 실행하면 오류가 난다. 어디가 문제인지 찾아 고쳐보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 오류 있는 코드</span><button class="copy-btn">복사</button></div>
+      <pre><code>equipment_list = [
+    {"설비번호": "EQ-01", "온도_섭씨": 301.2},
+    {"설비번호": "EQ-02", "온도_섭씨": 308.7},
+]
+print(equipment_list[2]["설비번호"])</code></pre>
     </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">문제: <code>equipment_list</code>에는 인덱스 0, 1의 딕셔너리 2개만
+    있는데 <code>[2]</code>에 접근해 <code>IndexError</code>가 발생한다. 수정:
+    <code>equipment_list[1]["설비번호"]</code>처럼 실제로 존재하는 인덱스를 사용해야 한다.</div>
   </section>
 
   <section class="block">
     <h2>6. 도전 문제</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      <code>df["압력_Pa"].tolist()</code>로 압력 리스트를 만들어 평균·최댓값·최솟값을 구해보자.
-      그리고 합격(<code>합격여부==1</code>) 그룹과 불합격(<code>합격여부==-1</code>) 그룹의
-      평균 온도를 각각 구해서 어느 쪽이 더 높은지 비교해보자.
+      아래처럼 로트 3개를 딕셔너리의 리스트로 만든 뒤, 세 로트의 <code>온도_섭씨</code> 값만
+      모은 새 리스트를 직접 만들어(<code>[lots[0]["온도_섭씨"], ...]</code>) 평균을 구해보자.
+      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;margin-top:.6rem;">lots = [
+    {"로트번호": "LOT-0101", "온도_섭씨": 299.5, "합격여부": 1},
+    {"로트번호": "LOT-0102", "온도_섭씨": 306.2, "합격여부": -1},
+    {"로트번호": "LOT-0103", "온도_섭씨": 301.0, "합격여부": 1},
+]</pre>
     </div>
   </section>
 

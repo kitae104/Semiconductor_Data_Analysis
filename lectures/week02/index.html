@@ -6,6 +6,28 @@
 <title>2차시. 리스트와 딕셔너리</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
+<style>
+  .list-svg,.dict-svg,.listdict-svg{display:block;margin:1.2rem auto;max-width:100%;height:auto;}
+  .list-svg{width:520px;}
+  .dict-svg{width:360px;}
+  .listdict-svg{width:560px;}
+  .list-svg .cell{fill:var(--blue-bg);stroke:var(--blue);stroke-width:2;}
+  .list-svg .cell.hot{fill:var(--purple-bg);stroke:var(--purple);}
+  .list-svg .cell.hot rect{animation:pulseScale2 1.6s ease-in-out infinite;}
+  .list-svg .val{fill:#0f172a;font-weight:700;font-family:'Courier New',monospace;}
+  .list-svg .idx{fill:var(--muted);font-family:'Courier New',monospace;}
+  @keyframes pulseScale2{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
+  .dict-svg .card{fill:#fff;stroke:var(--purple);stroke-width:2;}
+  .dict-svg .key{fill:var(--purple);font-weight:700;font-family:'Courier New',monospace;}
+  .dict-svg .val{fill:#0f172a;font-family:'Courier New',monospace;}
+  .dict-svg .row-hl rect{fill:var(--purple-bg);animation:fadeHL 1.8s ease-in-out infinite;}
+  @keyframes fadeHL{0%,100%{opacity:.5;}50%{opacity:1;}}
+  .listdict-svg .card{fill:#fff;stroke:var(--blue);stroke-width:2;}
+  .listdict-svg .idx{fill:var(--muted);font-family:'Courier New',monospace;font-weight:700;}
+  .listdict-svg .key{fill:var(--blue);font-family:'Courier New',monospace;font-size:11px;}
+  .listdict-svg .val{fill:#0f172a;font-family:'Courier New',monospace;font-size:11px;font-weight:700;}
+  .img-caption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:-.4rem;}
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -32,57 +54,520 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">2차시 · 개요(skeleton)</span>
+    <span class="badge blue">2차시</span>
     <h1>리스트와 딕셔너리</h1>
     <p class="today-question">💬 오늘의 질문: <b>"여러 개의 측정값을 한 번에 담고, 각 값에 이름표까지 붙이려면 어떻게 해야 할까?"</b></p>
   </div>
-
-  <section class="block">
-    <div class="callout warn">
-      <b class="tag">작성 상태</b>
-      이 페이지는 v2 커리큘럼 구성이 확정된 직후 작성된 <b>개요(skeleton)</b>입니다. 제목·학습
-      목표·다룰 내용·데이터까지는 확정되었지만, 상세 설명·예제 코드·단계별 실습·퀴즈는 아직 채워지지
-      않았습니다. 구성이 최종 확정되면 이어서 상세 내용을 작성합니다. 배경은
-      <a href="../../docs/restructure-plan.md">docs/restructure-plan.md</a> 참고.
-    </div>
-  </section>
 
   <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
       <li>리스트에 여러 값을 담고 인덱싱·슬라이싱으로 특정 값을 꺼낼 수 있다.</li>
       <li>리스트에 값을 추가(append)하고 길이(len)를 확인할 수 있다.</li>
+      <li>리스트 전체의 최댓값·최솟값·합계·평균을 내장 함수로 계산할 수 있다.</li>
       <li>딕셔너리로 값에 이름표를 붙여 하나의 레코드를 표현할 수 있다.</li>
-      <li>리스트 안에 딕셔너리를 담아 여러 설비 정보를 한 번에 표현할 수 있다.</li>
+      <li>리스트 안에 딕셔너리를 담아 여러 설비 정보를 한 번에 표현하고 꺼내 쓸 수 있다.</li>
     </ul>
     <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 1차시 — 변수·자료형·출력</p>
   </section>
 
   <section class="block">
-    <h2>📚 다룰 이론 주제(초안)</h2>
-    <ul class="goal-list">
-      <li>리스트 생성, 인덱싱, 슬라이싱</li>
-      <li>리스트에 값 추가하기(append), 길이(len)</li>
-      <li>딕셔너리 생성, 키로 값 접근, 값 수정</li>
-      <li>리스트 안에 딕셔너리 담기 — 여러 설비를 한 번에 표현</li>
-    </ul>
+    <h2>⏮️ 지난 시간 복습</h2>
+    <div class="callout concept">
+      <b class="tag">1차시 연결</b>
+      1차시에서는 값 하나를 변수 하나에 담았다 — <code>pass_count = 34</code>처럼 "이름표 하나에
+      값 하나"였다. 오늘은 이것을 두 방향으로 확장한다. 여러 값을 순서대로 한 번에 담고 싶다면
+      <b>리스트</b>, 값 하나하나에 각각 이름표를 붙이고 싶다면 <b>딕셔너리</b>를 쓴다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>🐍 다룰 실습 흐름(초안)</h2>
-    <ol style="padding-left:1.3rem;line-height:1.8;">
-      <li>온도 여러 개를 리스트에 담기</li>
-      <li>리스트에서 최댓값·최솟값·평균 직접 계산하기</li>
-      <li>설비 1대의 정보(설비번호·공정명·온도)를 딕셔너리로 표현하기</li>
-      <li>여러 설비를 '딕셔너리의 리스트'로 표현하기</li>
-      <li>리스트 안 딕셔너리에서 특정 설비의 값 꺼내기</li>
-    </ol>
+    <h2>📚 리스트 — 여러 값을 순서대로 담기</h2>
+    <h3>리스트란 무엇인가</h3>
+    <p>여러 개의 값을 순서대로 담아두고 싶을 때는 <b>리스트(List)</b>를 쓴다. 대괄호
+    <code>[ ]</code>로 값을 감싸고, 값 사이는 콤마(<code>,</code>)로 구분한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 리스트 만들기</span><button class="copy-btn">복사</button></div>
+      <pre><code>temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]
+print(temperatures)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">[295.4, 298.1, 312.6, 301.0, 296.8]</pre>
+    </div>
+
+    <svg class="list-svg" viewBox="0 0 520 130" role="img"
+         aria-label="temperatures 리스트: 인덱스 0부터 4까지 다섯 개의 온도 값이 순서대로 담겨 있고, 인덱스 2의 312.6이 가장 큰 값으로 강조되어 있다">
+      <g class="cell"><rect x="10" y="20" width="92" height="60" rx="10"/></g>
+      <g class="cell"><rect x="112" y="20" width="92" height="60" rx="10"/></g>
+      <g class="cell hot"><rect x="214" y="20" width="92" height="60" rx="10"/></g>
+      <g class="cell"><rect x="316" y="20" width="92" height="60" rx="10"/></g>
+      <g class="cell"><rect x="418" y="20" width="92" height="60" rx="10"/></g>
+      <text x="56" y="55" text-anchor="middle" class="val" font-size="14">295.4</text>
+      <text x="158" y="55" text-anchor="middle" class="val" font-size="14">298.1</text>
+      <text x="260" y="55" text-anchor="middle" class="val" font-size="14">312.6</text>
+      <text x="362" y="55" text-anchor="middle" class="val" font-size="14">301.0</text>
+      <text x="464" y="55" text-anchor="middle" class="val" font-size="14">296.8</text>
+      <text x="56" y="98" text-anchor="middle" class="idx" font-size="13">[0]</text>
+      <text x="158" y="98" text-anchor="middle" class="idx" font-size="13">[1]</text>
+      <text x="260" y="98" text-anchor="middle" class="idx" font-size="13">[2]</text>
+      <text x="362" y="98" text-anchor="middle" class="idx" font-size="13">[3]</text>
+      <text x="464" y="98" text-anchor="middle" class="idx" font-size="13">[4]</text>
+    </svg>
+    <p class="img-caption">인덱스(순서 번호)는 <b>0부터</b> 시작한다. 보라색으로 강조된 인덱스 2가
+    가장 큰 값(312.6) — 뒤에서 배울 <code>max()</code>가 찾아줄 값이다.</p>
+
+    <h3>인덱싱 — 순서로 값 꺼내기</h3>
+    <p>대괄호 안에 인덱스를 넣으면 그 위치의 값을 꺼낼 수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(temperatures[0])    # 첫 번째 값
+print(temperatures[2])    # 세 번째 값
+print(temperatures[-1])   # 마지막 값(음수 인덱스는 뒤에서부터)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">295.4
+312.6
+296.8</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">가장 흔한 함정</b>
+      리스트의 첫 번째 값은 인덱스 <b>0</b>이다(1이 아니다!). <code>temperatures[1]</code>은
+      "두 번째" 값(298.1)이라는 점을 꼭 기억하자.
+    </div>
+
+    <h3>슬라이싱 — 여러 값을 한 번에 잘라내기</h3>
+    <p>콜론(<code>:</code>)을 쓰면 리스트의 일부(구간)를 한 번에 꺼낼 수 있다.
+    <code>list[시작:끝]</code>은 시작 인덱스부터 <b>끝 인덱스 바로 앞까지</b>를 의미한다(끝 인덱스
+    자신은 포함되지 않는다).</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(temperatures[1:3])   # 인덱스 1~2 (3은 포함 안 됨)
+print(temperatures[:2])    # 처음부터 인덱스 1까지
+print(temperatures[2:])    # 인덱스 2부터 끝까지</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">[298.1, 312.6]
+[295.4, 298.1]
+[312.6, 301.0, 296.8]</pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      <code>temperatures[-2:]</code>를 실행해보고, 음수 인덱스와 슬라이싱을 함께 쓰면 어떤 값이
+      나오는지 확인해보자.
+    </div>
+
+    <h3>리스트 다루기 — 길이와 추가</h3>
+    <p><code>len()</code>으로 리스트에 담긴 값의 개수를 셀 수 있고, <code>append()</code>로
+    리스트 끝에 새 값을 추가할 수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(len(temperatures))     # 리스트 길이(값 개수)
+
+temperatures.append(303.2)   # 끝에 새 값 추가
+print(temperatures)
+print(len(temperatures))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">5
+[295.4, 298.1, 312.6, 301.0, 296.8, 303.2]
+6</pre>
+    </div>
+
+    <h3>리스트에서 최댓값·최솟값·평균 구하기</h3>
+    <p>파이썬은 리스트 전체를 계산하는 내장 함수를 기본으로 제공한다 —
+    <code>max()</code>(최댓값), <code>min()</code>(최솟값), <code>sum()</code>(합계). 평균은
+    "합계 ÷ 개수"이므로 <code>sum()</code>과 <code>len()</code>을 조합하면 된다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(max(temperatures))     # 최댓값
+print(min(temperatures))     # 최솟값
+print(sum(temperatures))     # 합계
+
+average = sum(temperatures) / len(temperatures)
+print(f"평균 온도는 {round(average, 1)}도입니다.")   # round()로 소수점 정리 + 1차시 f-string 복습</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">312.6
+295.4
+1806.9
+평균 온도는 301.2도입니다.</pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      <code>max(temperatures) - min(temperatures)</code>로 "온도 편차"를 계산하고, f-string으로
+      <code>f"온도 편차는 {편차}도입니다."</code> 같은 문장을 출력해보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 딕셔너리 — 값에 이름표 붙이기</h2>
+    <h3>딕셔너리란 무엇인가</h3>
+    <p>리스트는 순서로 값을 구분하지만, "이 값이 무엇을 의미하는지" 이름이 없다. 설비 1대가 가진
+    여러 정보(번호, 공정, 온도)처럼 값마다 이름표를 붙여 관리하고 싶을 때는
+    <b>딕셔너리(Dictionary)</b>를 쓴다. 중괄호 <code>{ }</code> 안에 <code>키(key): 값(value)</code>
+    쌍을 콤마로 나열한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 딕셔너리 만들기</span><button class="copy-btn">복사</button></div>
+      <pre><code>equipment = {
+    "설비번호": "EQ-01",
+    "공정명": "식각",
+    "온도_섭씨": 301.2,
+}
+print(equipment)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">{'설비번호': 'EQ-01', '공정명': '식각', '온도_섭씨': 301.2}</pre>
+    </div>
+
+    <svg class="dict-svg" viewBox="0 0 360 140" role="img"
+         aria-label="equipment 딕셔너리를 신분증 카드처럼 표현: 설비번호 EQ-01, 공정명 식각, 온도_섭씨 301.2가 각각 키-값 쌍으로 적혀 있다">
+      <rect class="card" x="10" y="10" width="340" height="120" rx="14"/>
+      <g class="row-hl"><rect x="20" y="20" width="320" height="30" rx="6"/></g>
+      <text x="30" y="40" class="key" font-size="14">설비번호</text>
+      <text x="330" y="40" text-anchor="end" class="val" font-size="14">"EQ-01"</text>
+      <text x="30" y="75" class="key" font-size="14">공정명</text>
+      <text x="330" y="75" text-anchor="end" class="val" font-size="14">"식각"</text>
+      <text x="30" y="110" class="key" font-size="14">온도_섭씨</text>
+      <text x="330" y="110" text-anchor="end" class="val" font-size="14">301.2</text>
+    </svg>
+    <p class="img-caption">딕셔너리는 "신분증 카드"와 비슷하다 — 각 항목에 이름표(키)가 붙어 있어,
+    순서를 몰라도 이름으로 바로 값을 찾을 수 있다.</p>
+
+    <h3>키로 값 접근하기</h3>
+    <p>딕셔너리는 인덱스(순서 번호) 대신 <b>키(이름표)</b>로 값을 꺼낸다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(equipment["설비번호"])
+print(equipment["온도_섭씨"])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">EQ-01
+301.2</pre>
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 주의</b>
+      딕셔너리에 없는 키를 쓰면 <code>KeyError</code>가 발생한다. 예를 들어
+      <code>equipment["압력_Pa"]</code>는 이 딕셔너리에 <code>"압력_Pa"</code>라는 키가 없으므로
+      오류가 난다. 오타가 없는지, 키를 먼저 만들었는지 확인해야 한다.
+    </div>
+
+    <h3>값 수정하기 / 새 키 추가하기</h3>
+    <p>이미 있는 키에 새 값을 대입하면 값이 바뀌고, <b>없던 키에 값을 대입하면 새 항목이
+    추가된다</b>.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>equipment["온도_섭씨"] = 305.5     # 기존 값 수정
+equipment["압력_Pa"] = 1012.3      # 새 키 추가
+
+print(equipment)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">{'설비번호': 'EQ-01', '공정명': '식각', '온도_섭씨': 305.5, '압력_Pa': 1012.3}</pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      나만의 <code>equipment</code> 딕셔너리를 만들고, f-string으로
+      <code>f"설비 {equipment['설비번호']}은(는) {equipment['공정명']} 공정이며 온도는
+      {equipment['온도_섭씨']}도입니다."</code> 같은 문장을 출력해보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 리스트 안에 딕셔너리 담기 — 여러 설비를 한 번에 표현하기</h2>
+    <p>설비 하나는 딕셔너리로 표현했다. 그런데 설비가 여러 대라면 어떻게 할까? 답은 간단하다 —
+    <b>리스트 안에 딕셔너리를 여러 개 넣으면 된다.</b> 이를 "딕셔너리의 리스트"라고 부르며, 앞으로
+    표(DataFrame) 데이터를 이해하는 데 중요한 기초가 된다(4차시 Pandas 예고).</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 딕셔너리의 리스트</span><button class="copy-btn">복사</button></div>
+      <pre><code>equipment_list = [
+    {"설비번호": "EQ-01", "공정명": "식각", "온도_섭씨": 301.2},
+    {"설비번호": "EQ-02", "공정명": "증착", "온도_섭씨": 308.7},
+    {"설비번호": "EQ-03", "공정명": "포토", "온도_섭씨": 297.5},
+]
+
+print(len(equipment_list))              # 설비 개수
+print(equipment_list[0])                # 첫 번째 설비(딕셔너리 하나)
+print(equipment_list[0]["온도_섭씨"])    # 첫 번째 설비의 온도
+print(equipment_list[1]["설비번호"])     # 두 번째 설비의 번호</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">3
+{'설비번호': 'EQ-01', '공정명': '식각', '온도_섭씨': 301.2}
+301.2
+EQ-02</pre>
+    </div>
+
+    <svg class="listdict-svg" viewBox="0 0 560 150" role="img"
+         aria-label="equipment_list 리스트: 인덱스 0, 1, 2에 각각 딕셔너리 카드가 하나씩 담겨 있다">
+      <text x="90" y="18" text-anchor="middle" class="idx" font-size="13">[0]</text>
+      <text x="280" y="18" text-anchor="middle" class="idx" font-size="13">[1]</text>
+      <text x="470" y="18" text-anchor="middle" class="idx" font-size="13">[2]</text>
+
+      <rect class="card" x="10" y="28" width="160" height="100" rx="12"/>
+      <text x="20" y="52" class="key">설비번호</text><text x="150" y="52" text-anchor="end" class="val">"EQ-01"</text>
+      <text x="20" y="76" class="key">공정명</text><text x="150" y="76" text-anchor="end" class="val">"식각"</text>
+      <text x="20" y="100" class="key">온도_섭씨</text><text x="150" y="100" text-anchor="end" class="val">301.2</text>
+
+      <rect class="card" x="200" y="28" width="160" height="100" rx="12"/>
+      <text x="210" y="52" class="key">설비번호</text><text x="340" y="52" text-anchor="end" class="val">"EQ-02"</text>
+      <text x="210" y="76" class="key">공정명</text><text x="340" y="76" text-anchor="end" class="val">"증착"</text>
+      <text x="210" y="100" class="key">온도_섭씨</text><text x="340" y="100" text-anchor="end" class="val">308.7</text>
+
+      <rect class="card" x="390" y="28" width="160" height="100" rx="12"/>
+      <text x="400" y="52" class="key">설비번호</text><text x="530" y="52" text-anchor="end" class="val">"EQ-03"</text>
+      <text x="400" y="76" class="key">공정명</text><text x="530" y="76" text-anchor="end" class="val">"포토"</text>
+      <text x="400" y="100" class="key">온도_섭씨</text><text x="530" y="100" text-anchor="end" class="val">297.5</text>
+    </svg>
+    <p class="img-caption">리스트가 카드 3장을 순서대로 들고 있고, 카드 각각(딕셔너리)이 자기만의
+    이름표-값 쌍을 가지고 있다. <code>equipment_list[1]["온도_섭씨"]</code>처럼 "몇 번째 카드"와
+    "무슨 이름표"를 순서대로 지정하면 원하는 값을 정확히 꺼낼 수 있다.</p>
+
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      <code>equipment_list[2]["공정명"]</code>을 출력해 세 번째 설비의 공정명을 확인해보자.
+    </div>
+
+    <h3>종합 실습 — 나만의 설비 목록 만들기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 종합 실습</span><button class="copy-btn">복사</button></div>
+      <pre><code>my_equipment = [
+    {"설비번호": "EQ-04", "공정명": "세정", "온도_섭씨": 299.0},
+    {"설비번호": "EQ-05", "공정명": "산화", "온도_섭씨": 302.4},
+]
+
+print(f"{my_equipment[0]['설비번호']} 설비는 {my_equipment[0]['공정명']} 공정, "
+      f"온도는 {my_equipment[0]['온도_섭씨']}도입니다.")
+print(f"{my_equipment[1]['설비번호']} 설비는 {my_equipment[1]['공정명']} 공정, "
+      f"온도는 {my_equipment[1]['온도_섭씨']}도입니다.")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">EQ-04 설비는 세정 공정, 온도는 299.0도입니다.
+EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">따옴표 규칙</b>
+      f-string 바깥은 큰따옴표(<code>"..."</code>)를 썼으므로, 딕셔너리 키 안쪽은 작은따옴표
+      (<code>'설비번호'</code>)를 써야 한다. 같은 종류의 따옴표를 겹쳐 쓰면 문자열이 예상보다
+      일찍 끝나버려 <code>SyntaxError</code>가 날 수 있다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🟣 실습: 리스트와 딕셔너리 따라 하기</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>리스트 만들기</b> — <code>temperatures = [295.4, 298.1, 312.6, 301.0,
+      296.8]</code>을 만들고 <code>print(temperatures)</code>로 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>인덱싱·슬라이싱 연습</b> — <code>temperatures[0]</code>,
+      <code>temperatures[-1]</code>, <code>temperatures[1:3]</code>을 각각 출력해본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>최댓값·최솟값·평균 계산</b> — <code>max()</code>, <code>min()</code>,
+      <code>sum()</code>, <code>len()</code>을 조합해 평균을 구하고 f-string으로 출력한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>딕셔너리 만들기</b> — 설비 1대의 정보를 <code>equipment</code>
+      딕셔너리로 만들고, 키로 값을 하나씩 꺼내본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>딕셔너리의 리스트 만들기</b> — <code>equipment_list</code>에 설비 3개를
+      담고, <code>equipment_list[1]["온도_섭씨"]</code>처럼 원하는 값을 정확히 꺼내본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div class="content"><b>종합 실습 완성하기</b> — 나만의 설비 2개를 딕셔너리의 리스트로 만들고,
+      f-string으로 각 설비를 소개하는 문장을 출력한다. (학생용 Notebook의 TODO로 이어짐)</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 핵심 용어 카드</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>리스트</h4><div class="en">List</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>여러 값을 순서대로 담는 자료구조. 대괄호 <code>[ ]</code>로 만든다.</dd>
+          <dt>쉬운 비유</dt><dd>번호가 매겨진 칸이 줄지어 있는 서랍장.</dd>
+          <dt>데이터에서의 예</dt><dd><code>temperatures = [295.4, 298.1, 312.6]</code></dd>
+          <dt>자주 하는 오해</dt><dd>인덱스가 1부터 시작한다고 착각하기 쉽다. 실제로는 0부터 시작한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>인덱스</h4><div class="en">Index</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>리스트에서 값의 위치를 나타내는 순서 번호(0부터 시작).</dd>
+          <dt>쉬운 비유</dt><dd>서랍장의 몇 번째 칸인지를 나타내는 번호표.</dd>
+          <dt>데이터에서의 예</dt><dd><code>temperatures[0]</code> → 첫 번째 값.</dd>
+          <dt>자주 하는 오해</dt><dd>음수 인덱스(<code>-1</code>)는 "오류"가 아니라 "뒤에서부터 세기"라는 정상 기능이다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>슬라이싱</h4><div class="en">Slicing</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>리스트의 일부 구간을 한 번에 잘라내는 방법.</dd>
+          <dt>쉬운 비유</dt><dd>김밥을 통째로 자르지 않고 원하는 구간만 잘라내는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>temperatures[1:3]</code> → 인덱스 1, 2만.</dd>
+          <dt>자주 하는 오해</dt><dd><code>[1:3]</code>에 인덱스 3의 값까지 포함된다고 착각하기 쉽다(포함 안 됨).</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>딕셔너리</h4><div class="en">Dictionary</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>키-값 쌍으로 값에 이름표를 붙여 저장하는 자료구조. 중괄호 <code>{ }</code>로 만든다.</dd>
+          <dt>쉬운 비유</dt><dd>이름표가 붙은 신분증 카드.</dd>
+          <dt>데이터에서의 예</dt><dd><code>{"설비번호": "EQ-01", "온도_섭씨": 301.2}</code></dd>
+          <dt>자주 하는 오해</dt><dd>딕셔너리도 리스트처럼 <code>[0]</code>으로 접근할 수 있다고 착각하기 쉽다(키로만 접근 가능).</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>키-값 쌍</h4><div class="en">Key-Value Pair</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>딕셔너리를 이루는 "이름표(키)"와 "내용(값)"의 짝.</dd>
+          <dt>쉬운 비유</dt><dd>택배 상자에 붙은 "받는 사람" 이름표와 그 안의 물건.</dd>
+          <dt>데이터에서의 예</dt><dd><code>"공정명": "식각"</code>에서 키는 <code>공정명</code>, 값은 <code>식각</code>.</dd>
+          <dt>자주 하는 오해</dt><dd>키에는 반드시 따옴표가 필요하지만(문자열 키의 경우), 값은 숫자면 따옴표가 필요 없다는 점을 헷갈리기 쉽다.</dd>
+        </dl>
+      </div>
+    </div>
   </section>
 
   <section class="block">
     <h2>📁 데이터</h2>
     <p><code>data/weekly/week02/week02_python_basics_1.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">20행 5열 — 리스트/딕셔너리 실습용 소량 데이터(정상범위 이탈 온도 2~3건 포함)</p>
+    <p style="color:var(--muted);font-size:.9rem;">20행 5열 — 리스트/딕셔너리 실습용 소량 데이터(정상범위 이탈 온도 2~3건 포함).
+    오늘은 이 CSV를 Pandas로 읽지 않고, 강의 중 리스트/딕셔너리 리터럴로 직접 옮겨 적어 사용한다
+    (Pandas는 4차시부터 배운다).</p>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout danger">
+      <b class="tag">오류 1</b>
+      <code>IndexError: list index out of range</code> — 리스트에 없는 인덱스에 접근한 경우다
+      (예: 값이 5개뿐인 리스트에서 <code>temperatures[10]</code>). <code>len()</code>으로 리스트
+      길이를 먼저 확인하는 습관을 들이자.
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 2</b>
+      <code>KeyError: '압력_Pa'</code> — 딕셔너리에 없는 키에 접근한 경우다. 오타가 없는지,
+      <code>print(equipment)</code>로 전체 키를 먼저 확인해보자.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — 대괄호 vs 중괄호</b>
+      리스트는 <code>[ ]</code>, 딕셔너리는 <code>{ }</code>를 쓴다. 자주 헷갈리는 실수이니
+      "순서만 있으면 대괄호, 이름표가 있으면 중괄호"로 기억해두자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🚀 도전 실습</h2>
+    <div class="callout practice">
+      <b class="tag">도전 문제 1</b>
+      <code>equipment_list</code>의 세 설비 중 <code>온도_섭씨</code>가 가장 높은 값을
+      <code>max()</code>로 직접 구해보자. 힌트: <code>[equipment_list[0]["온도_섭씨"],
+      equipment_list[1]["온도_섭씨"], equipment_list[2]["온도_섭씨"]]</code>처럼 온도만 모은 새
+      리스트를 만든 뒤 <code>max()</code>를 적용하면 된다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">도전 문제 2</b>
+      딕셔너리에 <code>"합격여부": 1</code> 같은 새 키를 추가해보고, 전체 딕셔너리를 다시
+      출력해 잘 추가됐는지 확인해보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. (객관식) <code>numbers = [10, 20, 30, 40]</code>일 때
+      <code>numbers[1]</code>의 값은?</div>
+      <ul class="options">
+        <li>A. 10</li>
+        <li>B. 20</li>
+        <li>C. 30</li>
+        <li>D. 오류가 난다</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: B. 인덱스는 0부터 시작하므로 <code>numbers[0]</code>이 10,
+      <code>numbers[1]</code>이 20이다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (참/거짓) <code>numbers[1:3]</code>은 인덱스 1, 2, 3의 값을 모두 포함한다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 거짓. 슬라이싱의 끝 인덱스는 포함되지 않는다.
+      <code>numbers[1:3]</code>은 인덱스 1, 2만 포함한다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. (빈칸) <code>equipment = {"설비번호": "EQ-01"}</code>일 때, 설비번호
+      값을 출력하려면? <code>print(equipment[______])</code></div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: <code>"설비번호"</code> → <code>print(equipment["설비번호"])</code>.
+      딕셔너리는 키(문자열)로 값을 꺼낸다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q4. (객관식) 리스트와 딕셔너리의 차이를 가장 잘 설명한 것은?</div>
+      <ul class="options">
+        <li>A. 리스트는 순서로, 딕셔너리는 이름표(키)로 값을 구분한다</li>
+        <li>B. 리스트는 숫자만, 딕셔너리는 문자만 담을 수 있다</li>
+        <li>C. 딕셔너리는 값을 하나만 담을 수 있다</li>
+        <li>D. 리스트와 딕셔너리는 완전히 같은 기능을 한다</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: A. 리스트는 순서(인덱스)로, 딕셔너리는 이름표(키)로 값을
+      구분해 관리한다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q5. (서술) <code>equipment_list[1]["공정명"]</code>이 무엇을 의미하는지
+      말로 설명해보자.</div>
+      <button class="reveal-btn">예시 답안 보기</button>
+      <div class="answer-box">예시 답안: "equipment_list 리스트의 두 번째(인덱스 1) 딕셔너리에서,
+      '공정명'이라는 키에 해당하는 값을 꺼낸다."</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📝 과제(다음 차시까지)</h2>
+    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 <code>print()</code> 또는
+    f-string으로 확인할 수 있게 만들어 제출한다.</p>
+    <div class="callout practice">
+      <b class="tag">과제 1 — 나만의 측정값 리스트</b>
+      본인이 정한 온도 값 6개를 <code>my_temps</code> 리스트로 만들고, 최댓값·최솟값·평균을 계산해
+      <code>"최댓값: ___, 최솟값: ___, 평균: ___"</code> 형태의 문장을 f-string으로 출력한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 2 — 설비 3대 만들기</b>
+      설비번호·공정명·온도_섭씨를 가진 딕셔너리 3개를 만들어 <code>my_equipment_list</code>라는
+      리스트에 담는다. 인덱싱으로 각 설비의 정보를 하나씩 꺼내 f-string 문장으로 출력한다(설비당
+      한 줄씩, 총 3줄).
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 3(도전) — 온도만 모은 리스트 만들기</b>
+      <code>my_equipment_list</code>의 세 온도 값을 <code>[my_equipment_list[0]["온도_섭씨"], ...]</code>
+      형태로 새 리스트에 옮겨 담고, 그 리스트의 최댓값을 가진 설비가 몇 번째(인덱스)인지 직접
+      눈으로 확인해 문장으로 적어본다. (반복문 없이 하나씩 확인해도 충분하다 — 자동으로 찾는
+      방법은 3차시에서 배운다.)
+    </div>
   </section>
 
   <section class="block">
@@ -92,7 +577,12 @@
 
   <section class="block">
     <h2>🔜 다음 차시 예고</h2>
-    <div class="callout concept">3차시에는 오늘 만든 리스트·딕셔너리를 조건문·반복문·함수로 직접 판정해본다.</div>
+    <div class="callout concept">
+      <b class="tag">3차시 예고</b>
+      다음 차시에는 오늘 만든 리스트·딕셔너리를 <code>if</code>(조건문)와 <code>for</code>(반복문)로
+      직접 판정하고 순회하는 법을 배운다. 지금은 인덱스를 하나씩 손으로 확인했다면, 다음 차시부터는
+      "반복문이 대신 확인해주는" 감각을 익힌다.
+    </div>
   </section>
 
   <div class="nav-buttons">
@@ -104,8 +594,9 @@
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 2차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 2차시 · 교육용 자료(가상 데이터 사용)</footer>
 
 <script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
 </body>
 </html>
