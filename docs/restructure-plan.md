@@ -135,7 +135,28 @@
 - `python scripts/validate_datasets.py`(43/43)와 `python scripts/validate_notebooks.py`(63/63) 모두
   0건 실패로 재확인했다.
 
-`data/data_dictionary/`와 각 차시의 `worksheet.html`·`quiz.json`·`instructor-guide.md`는 **아직 v1
-상태 그대로**다(용어 변경만 반영되고 내용은 예전 구성). 다음 단계는 이번에 배치한 lectures/notebooks
-개요(skeleton)를 사용자가 검토·확정한 뒤, 그 확정된 목차를 기준으로 상세 설명·예제 코드·퀴즈·데이터
-설명서를 실제로 채우는 것이다.
+`data/data_dictionary/`와 3~10차시(1·2차시 제외)의 `worksheet.html`·`quiz.json`·
+`instructor-guide.md`는 **아직 v1 상태 그대로**다(용어 변경만 반영되고 내용은 예전 구성). 다음
+단계는 이번에 배치한 lectures/notebooks 개요(skeleton)를 사용자가 검토·확정한 뒤, 그 확정된
+목차를 기준으로 상세 설명·예제 코드·퀴즈·데이터 설명서를 실제로 채우는 것이다.
+
+### 후속 진행 — 1·2차시 상세 콘텐츠 완성 + 시간 정보 제거 정책
+
+- **1차시**: `lectures/week01/index.html`의 "파이썬 시작하기" 절을 개요에서 전체 내용으로
+  확장했다(변수·자료형·print·f-string·input(), SVG 다이어그램 2개, 실습 섹션, 퀴즈 3문항 추가,
+  과제 섹션 신설). `worksheet.html`에 3문제, `notebooks/*/week01_*.ipynb`에 7~10단계 실습 셀
+  추가, `instructor-guide.md` 갱신 — 1차시는 이제 lectures/worksheet/notebooks/instructor-guide
+  모두 상세 콘텐츠 완료 상태다.
+- **2차시**: `lectures/week02/index.html`을 개요에서 전체 내용으로 교체했다(리스트/딕셔너리 개념,
+  SVG 다이어그램 3개, 실습 섹션, 퀴즈 5문항, 과제 섹션). `worksheet.html`·`quiz.json`(v1의
+  Pandas 섞인 내용 → 리스트/딕셔너리 전용으로 전면 재작성), `notebooks/*/week02_*.ipynb`(11단계
+  실제 코드 노트북으로 전면 교체), `instructor-guide.md`(v1의 다른 주제 내용 → 실제 2차시 범위로
+  전면 재작성)까지 모두 완료 — 2차시도 1차시와 동일하게 전 영역 완료 상태다.
+- **시간 정보 제거 정책(전체 적용)**: "N차시 · 2시간 수업" 배지, `instructor-guide.md`의
+  "N~M분" 시간표를 모든 차시(1~10)에서 제거했다(배지는 즉시 제거, 시간표는 시간 없는
+  "## 수업 흐름" 번호 목록으로 전환). `docs/curriculum.md`, `docs/instructor-operation-guide.md`,
+  `README.md`, `index.html`의 시간 관련 문구도 함께 정리했다. **앞으로 작성하는 모든 차시 콘텐츠는
+  처음부터 시간/분 정보를 포함하지 않는다.**
+- 3~10차시는 여전히 개요(skeleton) 또는 v1 상태다. 다음 차시를 요청받으면 1·2차시와 동일한
+  패턴(lectures 전체 내용 + worksheet + quiz.json + notebooks 3종 + instructor-guide, 시간 정보
+  없이)으로 진행한다.
