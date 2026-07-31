@@ -17,7 +17,7 @@
 <main class="page">
   <div class="hero">
     <span class="badge purple">3차시 실습지</span>
-    <h1>Pandas로 공정 데이터 읽고 선택하기 — 실습지</h1>
+    <h1>조건문, 반복문, 함수 — 실습지</h1>
   </div>
 
   <section class="block">
@@ -25,73 +25,93 @@
     <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① CSV</td><td rowspan="4">A. 조건에 맞는 행만 골라내는 방법<br>B. 쉼표로 값을 구분한 텍스트 표 파일<br>C. 특정 열을 기준으로 행 순서를 바꾸는 것<br>D. Pandas가 CSV를 읽어 만든 행·열 구조의 표</td></tr>
-      <tr><td>② DataFrame</td></tr>
-      <tr><td>③ 조건 검색</td></tr>
-      <tr><td>④ 정렬</td></tr>
+      <tr><td>① 조건문</td><td rowspan="4">A. 리스트의 값을 하나씩 꺼내 반복 실행하는 구문<br>B. 조건이 참일 때만 특정 코드를 실행하는 구문<br>C. def로 정의해 이름 붙여 재사용하는 코드 묶음<br>D. 함수의 결과값을 호출한 곳으로 돌려주는 키워드</td></tr>
+      <tr><td>② 반복문</td></tr>
+      <tr><td>③ 함수</td></tr>
+      <tr><td>④ return</td></tr>
     </table>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① B  ② D  ③ A  ④ C</div>
+    <div class="answer-box">① B  ② A  ③ C  ④ D</div>
   </section>
 
   <section class="block">
     <h2>2. 코드 빈칸 문제</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>import pandas as pd
+      <pre><code>temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]
+count = 0
 
-df = pd.____________("week03_process_filtering.csv")
+____ temp in temperatures:
+    ____ 295 <= temp <= 305:
+        count ____ 1
 
-# 설비번호가 EQ-02인 행만 골라내기
-eq02 = df[df["설비번호"] ____ "EQ-02"]
-
-# 온도_섭씨 기준으로 내림차순 정렬하기
-df.____________("온도_섭씨", ascending=False)</code></pre>
+print(count)</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>read_csv</code>, <code>==</code>, <code>sort_values</code></div>
+    <div class="answer-box">순서대로 <code>for</code>, <code>if</code>, <code>+=</code>. 결과는 4다
+    (312.6만 정상범위를 벗어난다).</div>
   </section>
 
   <section class="block">
-    <h2>3. 열 선택 문제</h2>
-    <p>온도(<code>온도_섭씨</code>)와 압력(<code>압력_Pa</code>) 두 열을 함께 선택하는 코드로
-    올바른 것은?</p>
-    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
-      <li>① <code>df["온도_섭씨", "압력_Pa"]</code></li>
-      <li>② <code>df[["온도_섭씨", "압력_Pa"]]</code></li>
-      <li>③ <code>df.온도_섭씨.압력_Pa</code></li>
-    </ul>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">정답: ②. 여러 열을 선택할 때는 대괄호 안에 리스트를 한 번 더 감싸야 한다.</div>
-  </section>
+    <h2>3. 결과 예측 문제</h2>
+    <p>아래 코드를 실행하면 무엇이 출력될지 먼저 예측해보고 정답을 확인하자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>def judge(temp):
+    if temp > 305:
+        return "고온"
+    elif temp < 295:
+        return "저온"
+    else:
+        return "정상"
 
-  <section class="block">
-    <h2>4. 결과 해석 문제</h2>
-    <p>실습에서 EQ-02 설비의 기록은 32건이었고, 이 중 불합격은 8건이었다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">eq02.shape → (32, 8)
-(eq02["합격여부"] == -1).sum() → 8</pre>
-    <p>EQ-02의 불합격 비율(%)을 계산해보자.</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">8 ÷ 32 × 100 = 25.0%. 즉 EQ-02 기록 32건 중 25.0%가 불합격이다.</div>
-  </section>
-
-  <section class="block">
-    <h2>5. 분석 문장 작성 문제</h2>
-    <p>아래 빈칸을 채워 이번 차시 데이터를 한 문장으로 요약해보자.</p>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "EQ-02 설비의 공정 기록 ____건 중 ____건이 불합격했으며, 이는 전체의 약 ____%에 해당한다.
-      이는 나머지 설비 평균(약 5.9%)보다 ____(높다/낮다)."
+print(judge(310.0))
+print(judge(290.0))
+print(judge(300.0))</code></pre>
     </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">정답: <code>고온</code>, <code>저온</code>, <code>정상</code>. 위에서부터
+    순서대로 조건을 검사하다가 처음 참인 곳에서 멈춘다.</div>
+  </section>
+
+  <section class="block">
+    <h2>4. 오류 찾기 문제</h2>
+    <p>아래 코드는 실행하면 오류가 난다. 어디가 문제인지 찾아 고쳐보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 오류 있는 코드</span><button class="copy-btn">복사</button></div>
+      <pre><code>temperature = 301.0
+if temperature > 305:
+print("고온입니다.")
+else:
+print("정상입니다.")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">문제: <code>if</code>/<code>else</code> 다음 줄이 들여쓰기 되어 있지
+    않아 <code>IndentationError</code>가 발생한다. 수정: <code>print(...)</code> 앞에 공백 4칸을
+    추가해야 한다.</div>
+  </section>
+
+  <section class="block">
+    <h2>5. 계산 문제</h2>
+    <p>설비 3대의 딕셔너리 리스트가 아래와 같다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">equipment_list = [
+    {"설비번호": "EQ-01", "온도_섭씨": 301.2},
+    {"설비번호": "EQ-02", "온도_섭씨": 308.7},
+    {"설비번호": "EQ-03", "온도_섭씨": 297.5},
+]</pre>
+    <p><code>for</code>와 <code>if</code>를 사용해 온도가 305도를 넘는 설비가 몇 대인지 세는
+    코드를 손으로 적어보자(직접 실행하지 않고 코드만 작성).</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>count = 0<br>for eq in equipment_list:<br>&nbsp;&nbsp;&nbsp;&nbsp;if eq["온도_섭씨"] > 305:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count += 1<br>print(count)</code> → 결과는 1(EQ-02만 해당).</div>
   </section>
 
   <section class="block">
     <h2>6. 도전 문제</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      <code>df[df["설비번호"] != "EQ-02"]</code>로 EQ-02가 아닌 나머지 설비의 기록만 골라내고,
-      그 안에서 불합격 비율을 계산해서 EQ-02와 비교해보자. 그리고
-      <code>df.sort_values("온도_섭씨")</code>로 온도가 가장 낮았던 하위 5건도 확인해보자.
+      매개변수를 2개 받는 함수 <code>judge_range(value, limit)</code>를 만들어, <code>value</code>가
+      <code>limit</code>를 넘으면 <code>"초과"</code>, 아니면 <code>"정상"</code>을 반환하도록
+      작성해보자. 그리고 이 함수를 온도 리스트와 압력 리스트 양쪽에 재사용해보자.
     </div>
   </section>
 

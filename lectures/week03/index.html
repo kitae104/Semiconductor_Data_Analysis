@@ -6,6 +6,21 @@
 <title>3차시. 리스트·딕셔너리로 배우는 조건문, 반복문, 함수</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
+<style>
+  .flow-svg2,.loop-svg{display:block;margin:1.2rem auto;max-width:100%;height:auto;}
+  .flow-svg2{width:420px;}
+  .loop-svg{width:520px;}
+  .flow-svg2 .diamond{fill:var(--purple-bg);stroke:var(--purple);stroke-width:2;}
+  .flow-svg2 .box{fill:var(--blue-bg);stroke:var(--blue);stroke-width:2;}
+  .flow-svg2 text{fill:#0f172a;font-size:13px;}
+  .flow-svg2 .lbl{fill:var(--muted);font-size:11px;}
+  .flow-svg2 .arrow{stroke:var(--muted);stroke-width:2;fill:none;}
+  .loop-svg .cell{fill:var(--blue-bg);stroke:var(--blue);stroke-width:2;}
+  .loop-svg .val{fill:#0f172a;font-weight:700;font-family:'Courier New',monospace;font-size:13px;}
+  .loop-svg .marker{fill:var(--purple);opacity:.85;animation:walkMove 3s steps(5) infinite;}
+  @keyframes walkMove{0%{transform:translateX(0);}20%{transform:translateX(102px);}40%{transform:translateX(204px);}60%{transform:translateX(306px);}80%{transform:translateX(408px);}100%{transform:translateX(408px);}}
+  .img-caption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:-.4rem;}
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -32,58 +47,533 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">3차시 · 개요(skeleton)</span>
+    <span class="badge blue">3차시</span>
     <h1>리스트·딕셔너리로 배우는 조건문, 반복문, 함수</h1>
     <p class="today-question">💬 오늘의 질문: <b>"리스트에 담긴 여러 설비 정보를 하나씩 살펴보며, 조건에 맞는 것만 컴퓨터가 골라내게 할 수 있을까?"</b></p>
   </div>
 
   <section class="block">
-    <div class="callout warn">
-      <b class="tag">작성 상태</b>
-      이 페이지는 v2 커리큘럼 구성이 확정된 직후 작성된 <b>개요(skeleton)</b>입니다. 제목·학습
-      목표·다룰 내용·데이터까지는 확정되었지만, 상세 설명·예제 코드·단계별 실습·퀴즈는 아직 채워지지
-      않았습니다. 구성이 최종 확정되면 이어서 상세 내용을 작성합니다. 배경은
-      <a href="../../docs/restructure-plan.md">docs/restructure-plan.md</a> 참고.
-    </div>
-  </section>
-
-  <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
-      <li>if/elif/else로 조건에 따라 다르게 판단하는 코드를 작성할 수 있다.</li>
-      <li>for로 리스트와 딕셔너리를 순회할 수 있다.</li>
-      <li>def로 반복되는 계산을 함수로 만들어 재사용할 수 있다.</li>
-      <li>2차시에서 만든 리스트·딕셔너리 예제로 합격/불합격을 직접 판정할 수 있다.</li>
+      <li>비교 연산자와 <code>if</code>/<code>elif</code>/<code>else</code>로 조건에 따라 다르게 판단할 수 있다.</li>
+      <li><code>for</code>로 리스트와 딕셔너리의 리스트를 순회할 수 있다.</li>
+      <li><code>for</code>와 <code>if</code>를 함께 써서 조건에 맞는 값만 골라낼 수 있다.</li>
+      <li><code>def</code>로 반복되는 계산을 함수로 만들어 재사용할 수 있다.</li>
+      <li>함수와 반복문을 결합해 여러 로트를 한 번에 판정할 수 있다.</li>
     </ul>
     <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 2차시 — 리스트·딕셔너리</p>
   </section>
 
   <section class="block">
-    <h2>📚 다룰 이론 주제(초안)</h2>
-    <ul class="goal-list">
-      <li>비교 연산자(>, <, ==)</li>
-      <li>if / elif / else</li>
-      <li>for로 리스트·딕셔너리 순회하기</li>
-      <li>누적 합·개수 세기</li>
-      <li>함수 정의와 호출, 매개변수와 반환값</li>
-    </ul>
+    <h2>⏮️ 지난 시간 복습</h2>
+    <div class="callout concept">
+      <b class="tag">2차시 연결</b>
+      2차시에서는 <code>equipment_list[0]["온도_섭씨"]</code>, <code>equipment_list[1]["온도_섭씨"]</code>처럼
+      인덱스를 손으로 하나씩 바꿔가며 값을 확인했다. 설비가 3대면 그럭저럭 할 만하지만, 300대라면
+      어떨까? 오늘은 이 반복적인 "하나씩 확인하기"를 컴퓨터가 대신하게 만드는 법( <b>반복문</b>)과,
+      값에 따라 다르게 판단하는 법(<b>조건문</b>), 반복되는 코드를 이름 붙여 재사용하는 법
+      (<b>함수</b>)을 배운다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>🐍 다룰 실습 흐름(초안)</h2>
-    <ol style="padding-left:1.3rem;line-height:1.8;">
-      <li>온도 하나를 조건문으로 정상/비정상 판정하기</li>
-      <li>for로 리스트 전체를 순회하며 정상 개수 세기</li>
-      <li>'딕셔너리의 리스트'를 순회하며 조건에 맞는 설비만 골라내기</li>
-      <li>평균 계산을 함수로 만들기</li>
-      <li>합격/불합격 판정을 함수로 만들어 여러 로트에 반복 적용하기</li>
-    </ol>
+    <h2>📚 조건문 — 값에 따라 다르게 판단하기</h2>
+    <h3>비교 연산자</h3>
+    <p>조건문을 만들려면 먼저 값을 비교하는 방법이 필요하다.</p>
+    <table class="timetable">
+      <tr><th>연산자</th><th>의미</th><th>예시</th></tr>
+      <tr><td><code>&gt;</code> / <code>&lt;</code></td><td>크다 / 작다</td><td><code>temp &gt; 305</code></td></tr>
+      <tr><td><code>&gt;=</code> / <code>&lt;=</code></td><td>크거나 같다 / 작거나 같다</td><td><code>temp &lt;= 305</code></td></tr>
+      <tr><td><code>==</code></td><td>같다(비교)</td><td><code>equipment == "EQ-01"</code></td></tr>
+      <tr><td><code>!=</code></td><td>같지 않다</td><td><code>equipment != "EQ-01"</code></td></tr>
+    </table>
+    <div class="callout warn">
+      <b class="tag">1차시 복습 + 주의</b>
+      <code>=</code>는 "저장하라"(대입), <code>==</code>는 "같은가?"(비교)다. 조건문에서
+      <code>if temp = 305:</code>처럼 등호를 하나만 쓰면 <code>SyntaxError</code>가 난다.
+    </div>
+
+    <h3>if — 조건에 맞을 때만 실행하기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>temperature = 312.6
+
+if temperature > 305:
+    print("온도가 너무 높습니다!")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">온도가 너무 높습니다!</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">들여쓰기(indentation) 규칙</b>
+      <code>if</code> 다음 줄부터, 조건이 참일 때 실행할 코드는 <b>4칸(또는 Tab 1번)</b> 들여써야
+      한다. 들여쓰기가 다르면 <code>IndentationError</code>가 발생한다.
+    </div>
+
+    <h3>if / else — 두 갈래로 나누기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>temperature = 301.0
+
+if temperature > 305 or temperature < 295:
+    print("비정상 범위입니다.")
+else:
+    print("정상 범위입니다.")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">정상 범위입니다.</pre>
+    </div>
+
+    <svg class="flow-svg2" viewBox="0 0 420 230" role="img"
+         aria-label="조건문 흐름도: 온도가 305 초과 또는 295 미만인지 판단해 비정상/정상 문장을 출력한다">
+      <rect class="diamond" x="120" y="10" width="180" height="60" rx="14" transform="skewX(0)"/>
+      <text x="210" y="35" text-anchor="middle">temperature &gt; 305 또는</text>
+      <text x="210" y="53" text-anchor="middle">temperature &lt; 295 ?</text>
+
+      <line class="arrow" x1="150" y1="70" x2="70" y2="120"/>
+      <polygon points="63,112 70,120 78,112" fill="var(--muted)"/>
+      <text x="95" y="100" class="lbl">참(True)</text>
+
+      <line class="arrow" x1="270" y1="70" x2="350" y2="120"/>
+      <polygon points="343,112 350,120 358,112" fill="var(--muted)"/>
+      <text x="320" y="100" class="lbl">거짓(False)</text>
+
+      <rect class="box" x="10" y="130" width="140" height="55" rx="10"/>
+      <text x="80" y="153" text-anchor="middle">"비정상 범위</text>
+      <text x="80" y="171" text-anchor="middle">입니다." 출력</text>
+
+      <rect class="box" x="280" y="130" width="140" height="55" rx="10"/>
+      <text x="350" y="153" text-anchor="middle">"정상 범위</text>
+      <text x="350" y="171" text-anchor="middle">입니다." 출력</text>
+    </svg>
+    <p class="img-caption">조건문은 갈림길과 같다 — 조건이 참이면 왼쪽 길로, 거짓이면 오른쪽
+    길로 간다.</p>
+
+    <h3>if / elif / else — 여러 갈래로 나누기</h3>
+    <p>조건이 셋 이상일 때는 <code>elif</code>(else if의 줄임말)를 추가로 쓴다. 위에서부터
+    순서대로 조건을 검사하다가 처음으로 참인 곳에서 멈춘다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>score = 75
+
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+else:
+    grade = "D"
+
+print(f"점수 {score}는 {grade}등급입니다.")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">점수 75는 C등급입니다.</pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      <code>score</code>를 65로 바꿔서 다시 실행해보자. 어떤 등급이 나오는가?
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 반복문 — for로 여러 값을 한 번에 처리하기</h2>
+    <h3>for로 리스트 순회하기</h3>
+    <p><code>for 변수 in 리스트:</code> 형태로 쓰면, 리스트의 값을 처음부터 끝까지 하나씩 꺼내
+    <code>변수</code>에 담아 반복 실행한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]
+
+for temp in temperatures:
+    print(temp)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">295.4
+298.1
+312.6
+301.0
+296.8</pre>
+    </div>
+
+    <svg class="loop-svg" viewBox="0 0 520 110" role="img"
+         aria-label="for 반복문이 리스트의 다섯 상자를 왼쪽부터 순서대로 하나씩 방문하는 모습">
+      <g class="cell"><rect x="0" y="20" width="92" height="60" rx="10"/></g>
+      <g class="cell"><rect x="102" y="20" width="92" height="60" rx="10"/></g>
+      <g class="cell"><rect x="204" y="20" width="92" height="60" rx="10"/></g>
+      <g class="cell"><rect x="306" y="20" width="92" height="60" rx="10"/></g>
+      <g class="cell"><rect x="408" y="20" width="92" height="60" rx="10"/></g>
+      <text x="46" y="55" text-anchor="middle" class="val">295.4</text>
+      <text x="148" y="55" text-anchor="middle" class="val">298.1</text>
+      <text x="250" y="55" text-anchor="middle" class="val">312.6</text>
+      <text x="352" y="55" text-anchor="middle" class="val">301.0</text>
+      <text x="454" y="55" text-anchor="middle" class="val">296.8</text>
+      <g class="marker"><polygon points="46,5 36,15 56,15"/></g>
+    </svg>
+    <p class="img-caption">보라색 화살표(<code>temp</code>)가 리스트를 왼쪽부터 한 칸씩 이동하며,
+    매번 그 자리의 값을 꺼내 코드 블록을 실행한다.</p>
+
+    <h3>for + if — 조건에 맞는 것만 세기</h3>
+    <p>반복문 안에 조건문을 넣으면, 조건에 맞을 때만 특정 동작을 하게 만들 수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>normal_count = 0
+
+for temp in temperatures:
+    if 295 <= temp <= 305:
+        normal_count += 1     # normal_count = normal_count + 1 과 같은 뜻
+
+print(f"정상 범위인 값은 {normal_count}개입니다.")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">정상 범위인 값은 4개입니다.</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">누적 변수는 반복문 "밖"에서 0으로 시작한다</b>
+      <code>normal_count = 0</code>을 <code>for</code> 안에 넣으면 매번 0으로 초기화되어 항상
+      0 또는 1만 나온다. 누적할 변수는 반드시 반복문 시작 전에 한 번만 만든다.
+    </div>
+
+    <h3>for로 "딕셔너리의 리스트" 순회하기</h3>
+    <p>2차시에서 만든 <code>equipment_list</code>처럼 딕셔너리가 담긴 리스트도 <code>for</code>로
+    순회할 수 있다. 매 반복마다 변수에는 딕셔너리 하나가 통째로 들어온다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>equipment_list = [
+    {"설비번호": "EQ-01", "공정명": "식각", "온도_섭씨": 301.2},
+    {"설비번호": "EQ-02", "공정명": "증착", "온도_섭씨": 308.7},
+    {"설비번호": "EQ-03", "공정명": "포토", "온도_섭씨": 297.5},
+]
+
+for eq in equipment_list:
+    print(eq["설비번호"], eq["온도_섭씨"])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">EQ-01 301.2
+EQ-02 308.7
+EQ-03 297.5</pre>
+    </div>
+
+    <h3>조건에 맞는 것만 새 리스트로 골라내기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>hot_equipment = []   # 2차시에서 배운 빈 리스트 + append() 조합
+
+for eq in equipment_list:
+    if eq["온도_섭씨"] > 305:
+        hot_equipment.append(eq["설비번호"])
+
+print(f"온도가 305도를 넘는 설비: {hot_equipment}")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">온도가 305도를 넘는 설비: ['EQ-02']</pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      조건을 <code>eq["온도_섭씨"] &lt; 300</code>으로 바꿔서, 온도가 300도 미만인 설비 목록을
+      만들어보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 함수 — 반복되는 계산에 이름 붙이기</h2>
+    <p>지금까지 평균을 구할 때마다 <code>sum(...) / len(...)</code>을 매번 새로 썼다. 자주 쓰는
+    계산은 <b>함수(Function)</b>로 한 번 만들어두면, 이름만 불러서 재사용할 수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 함수 정의와 호출</span><button class="copy-btn">복사</button></div>
+      <pre><code>def calculate_average(numbers):
+    return sum(numbers) / len(numbers)
+
+avg1 = calculate_average(temperatures)
+avg2 = calculate_average([1000.0, 1010.0, 1020.0, 990.0])
+
+print(avg1)
+print(avg2)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">300.78
+1005.0</pre>
+    </div>
+    <div class="explain-list">
+      <b>코드 한 줄씩 설명</b>
+      <ul>
+        <li><code>def 함수이름(매개변수):</code>: 함수를 "정의"하는 문장. 아직 실행되지 않는다.</li>
+        <li><code>numbers</code>: 매개변수(parameter) — 함수를 호출할 때 전달받는 값의 이름표.</li>
+        <li><code>return</code>: 함수의 결과값을 돌려준다. <code>return</code>을 만나면 함수가
+        즉시 끝난다.</li>
+        <li><code>calculate_average(temperatures)</code>: 함수 "호출" — 이때 비로소 코드가 실행된다.</li>
+      </ul>
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — 정의만 하고 호출을 잊는 실수</b>
+      <code>def</code>로 함수를 만들기만 하고 <code>calculate_average(...)</code>처럼 괄호를 붙여
+      호출하지 않으면 아무 일도 일어나지 않는다. 함수는 "레시피를 적어두는 것"이고, 호출은
+      "그 레시피대로 요리하는 것"이다.
+    </div>
+
+    <h3>조건문 + 함수 — 판정 함수 만들기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>def judge_pass(temp):
+    if 295 <= temp <= 305:
+        return "합격"
+    else:
+        return "불합격"
+
+for temp in temperatures:
+    result = judge_pass(temp)
+    print(f"{temp}도 → {result}")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">295.4도 → 합격
+298.1도 → 합격
+312.6도 → 불합격
+301.0도 → 합격
+296.8도 → 합격</pre>
+    </div>
+
+    <h3>종합 실습 — 함수로 여러 로트 한 번에 판정하기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 종합 실습</span><button class="copy-btn">복사</button></div>
+      <pre><code>lots = [
+    {"로트번호": "LOT-0101", "온도_섭씨": 299.5},
+    {"로트번호": "LOT-0102", "온도_섭씨": 306.2},
+    {"로트번호": "LOT-0103", "온도_섭씨": 301.0},
+]
+
+fail_count = 0
+for lot in lots:
+    result = judge_pass(lot["온도_섭씨"])
+    print(f"{lot['로트번호']}: {result}")
+    if result == "불합격":
+        fail_count += 1
+
+print(f"불합격 로트 수: {fail_count}개")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">LOT-0101: 합격
+LOT-0102: 불합격
+LOT-0103: 합격
+불합격 로트 수: 1개</pre>
+    </div>
+    <div class="callout concept">
+      <b class="tag">4차시 예고</b>
+      오늘 <code>for</code>와 <code>if</code>로 한 줄씩 직접 짠 이 판정 로직을, 4차시부터는
+      Pandas가 <code>df[df["온도_섭씨"] &gt; 305]</code> 같은 한 줄로 대신 처리해준다. 오늘
+      만든 <code>judge_pass</code> 함수가 왜 필요했는지 그때 다시 비교해본다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🟣 실습: 조건문·반복문·함수 따라 하기</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>조건문 연습</b> — 온도 하나를 변수에 저장하고 <code>if</code>/<code>else</code>로
+      정상/비정상을 판정해본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>if/elif/else 연습</b> — 점수 등급 예제를 나만의 기준으로 바꿔 실행해본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>for로 리스트 순회</b> — <code>temperatures</code> 리스트를 <code>for</code>로
+      출력하고, <code>if</code>를 추가해 정상 개수를 세어본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>딕셔너리의 리스트 필터링</b> — <code>equipment_list</code>에서 조건에
+      맞는 설비만 새 리스트로 골라낸다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>함수 만들기</b> — <code>calculate_average</code>와 <code>judge_pass</code>
+      함수를 직접 정의하고 호출해본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div class="content"><b>종합 실습 완성하기</b> — <code>lots</code> 리스트를 순회하며 함수로
+      판정하고, 불합격 개수를 세어 출력한다. (학생용 Notebook의 TODO로 이어짐)</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 핵심 용어 카드</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>조건문</h4><div class="en">if statement</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>조건이 참(True)일 때만 특정 코드를 실행하게 만드는 구문.</dd>
+          <dt>쉬운 비유</dt><dd>갈림길에서 표지판을 보고 방향을 정하는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>if temp &gt; 305: print("고온")</code></dd>
+          <dt>자주 하는 오해</dt><dd><code>if</code> 다음 줄의 들여쓰기를 생략해도 된다고 착각하기 쉽다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>비교 연산자</h4><div class="en">Comparison Operator</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>두 값을 비교해 참/거짓을 돌려주는 기호(<code>&gt;, &lt;, ==</code> 등).</dd>
+          <dt>쉬운 비유</dt><dd>저울에 두 값을 올려 어느 쪽이 무거운지 재는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>equipment == "EQ-01"</code></dd>
+          <dt>자주 하는 오해</dt><dd><code>=</code>(대입)과 <code>==</code>(비교)를 혼동하기 쉽다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>반복문</h4><div class="en">for loop</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>리스트의 값을 처음부터 끝까지 하나씩 꺼내 반복 실행하는 구문.</dd>
+          <dt>쉬운 비유</dt><dd>줄지어 선 사람들을 한 명씩 순서대로 호명하는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>for temp in temperatures: ...</code></dd>
+          <dt>자주 하는 오해</dt><dd>반복 변수(<code>temp</code>)의 이름이 리스트 이름과 같아야 한다고 착각하기 쉽다(아무 이름이나 가능).</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>함수</h4><div class="en">Function</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd><code>def</code>로 정의해 이름을 붙여 재사용하는 코드 묶음.</dd>
+          <dt>쉬운 비유</dt><dd>레시피 — 정의는 "레시피 적기", 호출은 "그대로 요리하기".</dd>
+          <dt>데이터에서의 예</dt><dd><code>def judge_pass(temp): ...</code></dd>
+          <dt>자주 하는 오해</dt><dd>함수를 정의만 하고 호출(괄호로 실행)하는 것을 잊기 쉽다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>return</h4><div class="en">Return Value</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>함수가 계산한 결과값을 호출한 쪽으로 돌려주는 키워드.</dd>
+          <dt>쉬운 비유</dt><dd>자판기에 돈을 넣으면(호출) 물건이 나오는 것(return 값).</dd>
+          <dt>데이터에서의 예</dt><dd><code>return sum(numbers) / len(numbers)</code></dd>
+          <dt>자주 하는 오해</dt><dd><code>print()</code>와 <code>return</code>을 혼동하기 쉽다. <code>print</code>는 "보여주기", <code>return</code>은 "값을 돌려주기"다.</dd>
+        </dl>
+      </div>
+    </div>
   </section>
 
   <section class="block">
     <h2>📁 데이터</h2>
     <p><code>data/weekly/week03/week03_python_basics_2.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">30행 5열 — 2차시와 동일 계열, 정상범위 이탈 온도 4~5건 포함(for+if 실습량 확보)</p>
+    <p style="color:var(--muted);font-size:.9rem;">30행 5열 — 2차시와 동일 계열, 정상범위 이탈 온도 4~5건 포함(for+if 실습량 확보).
+    오늘도 CSV를 Pandas로 읽지 않고, 리스트/딕셔너리 리터럴로 옮겨 적어 사용한다(Pandas는 4차시부터).</p>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout danger">
+      <b class="tag">오류 1</b>
+      <code>IndentationError: expected an indented block</code> — <code>if</code>나
+      <code>for</code> 다음 줄을 들여쓰지 않은 경우다. 콜론(<code>:</code>) 다음 줄은 반드시
+      들여써야 한다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 2</b>
+      <code>SyntaxError</code> — 조건문에서 <code>=</code>을 <code>==</code> 대신 쓴 경우다.
+      "비교"는 항상 등호 두 개다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — 함수는 정의와 호출이 다르다</b>
+      <code>def judge_pass(temp): ...</code>만 실행하면 함수가 "준비"만 될 뿐, 실제로 판정하려면
+      <code>judge_pass(295.4)</code>처럼 괄호를 붙여 "호출"해야 한다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🚀 도전 실습</h2>
+    <div class="callout practice">
+      <b class="tag">도전 문제 1</b>
+      <code>lots</code> 리스트를 순회하며, 합격/불합격 개수를 각각 세는 <code>pass_count</code>,
+      <code>fail_count</code> 두 변수를 동시에 누적해보자. 마지막에 합격률(%)도 f-string으로
+      출력해보자.
+    </div>
+    <div class="callout practice">
+      <b class="tag">도전 문제 2</b>
+      매개변수를 2개 받는 함수 <code>judge_range(value, low, high)</code>를 만들어, 정상 범위를
+      온도(295~305)뿐 아니라 압력 등 다른 값에도 재사용할 수 있게 만들어보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. (객관식) 다음 중 문법 오류가 있는 코드는?</div>
+      <ul class="options">
+        <li>A. <code>if temp &gt; 305:</code></li>
+        <li>B. <code>if temp = 305:</code></li>
+        <li>C. <code>if temp == 305:</code></li>
+        <li>D. <code>if temp &gt;= 305:</code></li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: B. 조건문에서 비교는 <code>==</code>를 써야 한다. <code>=</code>는
+      대입 연산자라서 조건 자리에 그대로 쓰면 <code>SyntaxError</code>가 난다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (참/거짓) <code>for temp in temperatures:</code>에서 <code>temp</code>라는
+      이름은 반드시 <code>temperatures</code>와 관련된 이름이어야 한다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 거짓. <code>temp</code>는 그냥 변수 이름이므로 <code>x</code>,
+      <code>t</code> 등 어떤 이름을 써도 동작은 같다. 다만 읽기 쉬운 이름을 쓰는 것이 좋은 습관이다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. (빈칸) 누적 변수 <code>count</code>를 1씩 늘리는 코드를 완성해보자:
+      <code>count ______ 1</code></div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: <code>+=</code> → <code>count += 1</code>. <code>count = count + 1</code>과
+      완전히 같은 뜻이다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q4. (객관식) <code>def</code>로 함수를 정의만 하고 호출하지 않으면 어떻게 되는가?</div>
+      <ul class="options">
+        <li>A. 자동으로 한 번 실행된다</li>
+        <li>B. 오류가 난다</li>
+        <li>C. 아무 일도 일어나지 않는다(함수가 "준비"만 된다)</li>
+        <li>D. 파이썬이 알아서 매개변수를 채워 실행한다</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: C. 함수는 정의만으로는 실행되지 않는다. 괄호를 붙여
+      <code>함수이름(값)</code>처럼 호출해야 실제로 코드가 실행된다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q5. (서술) <code>print()</code>와 <code>return</code>의 차이를 한 문장으로
+      설명해보자.</div>
+      <button class="reveal-btn">예시 답안 보기</button>
+      <div class="answer-box">예시 답안: "print()는 화면에 값을 보여주기만 하고, return은 함수의
+      결과값을 호출한 곳으로 돌려줘서 다른 변수에 저장하거나 다시 계산에 쓸 수 있게 한다."</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📝 과제(다음 차시까지)</h2>
+    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 <code>print()</code> 또는
+    f-string으로 확인할 수 있게 만들어 제출한다.</p>
+    <div class="callout practice">
+      <b class="tag">과제 1 — 나만의 판정 함수</b>
+      압력값을 받아 정상 범위(995~1025 Pa)인지 판정하는 <code>judge_pressure(pressure)</code>
+      함수를 만들고, 압력 5개짜리 리스트를 <code>for</code>로 순회하며 판정 결과를 출력한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 2 — 설비별 개수 세기</b>
+      2차시에서 만든 <code>equipment_list</code>(또는 새로 만든 딕셔너리의 리스트)를 순회하며
+      <code>"식각"</code> 공정인 설비가 몇 개인지 <code>for</code>+<code>if</code>로 세어 출력한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 3(도전) — 불량 로트 목록 만들기</b>
+      로트 5개(로트번호·온도_섭씨)를 딕셔너리의 리스트로 만들고, <code>judge_pass</code> 함수를
+      재사용해 불합격 로트의 <b>로트번호만</b> 모은 새 리스트를 만들어 출력한다.
+    </div>
   </section>
 
   <section class="block">
@@ -105,8 +595,9 @@
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 3차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 3차시 · 교육용 자료(가상 데이터 사용)</footer>
 
 <script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
 </body>
 </html>
