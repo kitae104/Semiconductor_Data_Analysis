@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>10주차. 반도체 공정 데이터 분석 미니 프로젝트</title>
+<title>10차시. 모델 평가와 새 데이터 예측</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10차시 과정
       <small>Semiconductor Process Data Analysis</small>
     </a>
     <nav class="week-nav">
-      <a href="../week01/index.html">1주</a>
-      <a href="../week02/index.html">2주</a>
-      <a href="../week03/index.html">3주</a>
-      <a href="../week04/index.html">4주</a>
-      <a href="../week05/index.html">5주</a>
-      <a href="../week06/index.html">6주</a>
-      <a href="../week07/index.html">7주</a>
-      <a href="../week08/index.html">8주</a>
-      <a href="../week09/index.html">9주</a>
-      <a href="../week10/index.html" class="current">10주</a>
+      <a href="../week01/index.html">1차시</a>
+      <a href="../week02/index.html">2차시</a>
+      <a href="../week03/index.html">3차시</a>
+      <a href="../week04/index.html">4차시</a>
+      <a href="../week05/index.html">5차시</a>
+      <a href="../week06/index.html">6차시</a>
+      <a href="../week07/index.html">7차시</a>
+      <a href="../week08/index.html">8차시</a>
+      <a href="../week09/index.html">9차시</a>
+      <a href="../week10/index.html" class="current">10차시</a>
     </nav>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="10"></div></div>
@@ -32,9 +32,9 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">10주차 · 2시간 수업 · 개요(skeleton)</span>
-    <h1>반도체 공정 데이터 분석 미니 프로젝트</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"내가 정한 질문에 이 데이터로 답할 수 있을까?"</b></p>
+    <span class="badge blue">10차시 · 2시간 수업 · 개요(skeleton)</span>
+    <h1>모델 평가와 새 데이터 예측</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"내가 만든 모델은 처음 보는 새로운 데이터에서도 믿을 만할까?"</b></p>
   </div>
 
   <section class="block">
@@ -50,65 +50,72 @@
   <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
-      <li>분석 질문을 스스로 설정할 수 있다.</li>
-      <li>필요한 도구(Pandas/Matplotlib/scikit-learn/Orange3)를 선택해 분석을 수행할 수 있다.</li>
-      <li>결과를 해석하고 개선 제안까지 문장으로 정리할 수 있다.</li>
+      <li>학습된 모델로 새 로트의 합격/불합격을 predict()로 예측할 수 있다.</li>
+      <li>Orange3 Predictions 위젯으로 같은 새 데이터를 예측하고 결과를 비교할 수 있다.</li>
+      <li>1~9차시에서 배운 내용을 한 문장씩 정리할 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 1~9주차 전체 — 조회·정제·시각화·비교·수율·이상탐지·예측 종합</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 9차시 — 학습된 모델</p>
   </section>
 
   <section class="block">
-    <h2>📚 다룰 이론 주제(초안)</h2>
+    <h2>📚 ② 파이썬으로 확인하기 — 다룰 이론 주제(초안)</h2>
     <ul class="goal-list">
-      <li>지금까지 배운 내용 되짚어보기(1~9주차 한눈에)</li>
-      <li>좋은 분석 질문의 조건</li>
-      <li>보고서에 들어갈 요소(질문 → 방법 → 결과 → 해석 → 제안)</li>
+      <li>새 데이터에 대한 예측 — predict()</li>
+      <li>학습 데이터와 새 데이터의 차이</li>
+      <li>모델 결과를 문장으로 정리하는 법</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>🧪 프로젝트 주제 예시(택 1, 초안)</h2>
-    <p>아래 주제 중 하나를 선택(또는 직접 정의)해 스스로 분석을 진행한다. 원하면 Orange3만으로, Pandas/scikit-learn 코드로, 또는 두 방식을 섞어서 진행 가능.</p>
+    <h2>🐍 다룰 실습 흐름(초안)</h2>
+    <p>9차시에서 학습한 모델을 그대로 이어서 사용한다.</p>
 <ol style="padding-left:1.3rem;line-height:1.8;">
-      <li>설비별 불량률 비교</li>
-      <li>저수율 로트 찾기</li>
-      <li>온도 이상 구간 탐지</li>
-      <li>진공도-불량 관계</li>
-      <li>냉각수온도-공정온도 관계</li>
-      <li>막두께 불량 원인 후보</li>
-      <li>9주차 예측 모델을 새 조건으로 재실험하기</li>
-      <li>설비·시간대별 변화</li>
+      <li>week09_new_lots_to_predict.csv의 새 로트 불러오기</li>
+      <li>predict()로 새 로트의 합격/불합격 예측하기</li>
+      <li>예측 결과를 표로 정리하기</li>
+      <li>1~9차시 핵심 내용을 한 문장씩 되짚기</li>
+      <li>(시간이 남으면) 다른 Feature 조합으로 재실험해보기</li>
     </ol>
   </section>
 
   <section class="block">
+    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <div class="callout practice">
+      <b class="tag">위젯</b> Predictions
+      <p style="margin:.5rem 0 0;">9차시에서 Orange3로 만든 모델에 같은 새 로트 데이터를 넣어 Predictions 위젯으로 예측하고, scikit-learn의 predict() 결과와 같은지 비교한다.</p>
+    </div>
+  </section>
+
+  <section class="block">
     <h2>📁 데이터</h2>
-    <p><code>data/weekly/week10/week10_mini_project_dataset.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">600행 16열 — 1~9주차 핵심 열을 종합한 통합형 데이터(fab.csv 관련 열 없음)</p>
+    <p><code>data/weekly/week10/week09_new_lots_to_predict.csv</code></p>
+    <p style="color:var(--muted);font-size:.9rem;">예측 실습용 새 로트 9행(정답 라벨 없음). 학습은 9차시의 week09_pass_fail_train.csv를 그대로 재사용한다.</p>
+  </section>
+
+  <section class="block">
+    <h2>❓ 핵심 질문 → 데이터 연결</h2>
+    <div class="callout concept">두 방식(scikit-learn/Orange3)의 예측이 같은가? 다르다면 왜 다를 수 있는가?</div>
   </section>
 
   <section class="block">
     <h2>📦 산출물</h2>
     <ul class="goal-list">
-      <li>실행 가능한 Notebook(또는 Orange3 워크플로 파일)</li>
-      <li>HTML 보고서</li>
-      <li>3~5분 발표 요약</li>
-      <li>그래프 3개 이상</li>
-      <li>결과 문장 5개 이상</li>
-      <li>개선안 2개 이상</li>
+      <li>새 로트 예측 결과 정리 문장</li>
+      <li>1~9차시 핵심 내용 한 줄 회고</li>
+      <li>(선택) 다른 조건으로 재실험한 결과</li>
     </ul>
   </section>
 
   <div class="nav-buttons">
-    <a href="../week09/index.html">← 이전 주차: 9주차</a>
+    <a href="../week09/index.html">← 이전 차시: 9차시</a>
     <a class="home" href="../../index.html">🏠 전체 목차</a>
-    <a class="disabled">다음 주차 없음(마지막 주차)</a>
+    <a class="disabled">다음 차시 없음(마지막 차시)</a>
   </div>
 
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 10주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 10차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
 </body>

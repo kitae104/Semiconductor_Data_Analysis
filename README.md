@@ -1,6 +1,6 @@
-# 반도체 및 반도체 공정 데이터 분석 10주 과정
+# 반도체 및 반도체 공정 데이터 분석 10차시 과정
 
-프로그래밍 경험이 거의 없는 일반인을 위한, 반도체 공정과 데이터 분석을 함께 배우는 10주 교육 과정입니다.
+프로그래밍 경험이 거의 없는 일반인을 위한, 반도체 공정과 데이터 분석을 함께 배우는 10차시 교육 과정입니다.
 모든 실습 데이터는 교육용으로 생성한 **가상 데이터**이며, 실제 기업의 생산 데이터가 아닙니다.
 
 전체 목차는 [`index.html`](index.html)에서 확인할 수 있습니다.
@@ -13,7 +13,7 @@
 
 ## 2. 교육 목표
 
-10주 과정을 마치면 다음을 할 수 있습니다.
+10차시 과정을 마치면 다음을 할 수 있습니다.
 
 - 반도체·웨이퍼·공정의 기본 개념을 설명한다.
 - 변수·리스트·딕셔너리·조건문·반복문·함수 등 파이썬 기초를 익힌다.
@@ -25,13 +25,13 @@
 - Orange3로 같은 분석을 코드 없이 다시 확인하며 개념을 다진다.
 - 분석 결과를 비전공자도 이해할 수 있는 문장으로 설명한다.
 
-## 3. 10주 전체 목차 (v2)
+## 3. 10차시 전체 목차 (v2)
 
-> 최초 설계(v1) 대비 앞부분에 파이썬 기초 2주를 추가하고, 마지막 예측 실습은 `fab.csv` 대신
+> 최초 설계(v1) 대비 앞부분에 파이썬 기초 2차시를 추가하고, 마지막 예측 실습은 `fab.csv` 대신
 > `반도체_공정_샘플.csv` 계열 데이터로 단순화했다. 변경 배경과 v1→v2 매핑은
 > [`docs/restructure-plan.md`](docs/restructure-plan.md)를 참고하세요.
 
-| 주차 | 제목 | 핵심 주제 |
+| 차시 | 제목 | 핵심 주제 |
 | --- | --- | --- |
 | 1 | 반도체 공정과 데이터 처음 만나기 | 반도체/웨이퍼 개념, Colab, Pandas 첫 조회 |
 | 2 | 파이썬 기초 Ⅰ | 변수·자료형·리스트·딕셔너리 |
@@ -58,8 +58,8 @@ semiconductor-data-analysis-course/
 ├─ data/
 │  ├─ raw/                    # 원본 CSV(읽기 전용, 수정 금지)
 │  ├─ processed/
-│  ├─ weekly/week01~week10/   # 주차별 실습 데이터
-│  └─ data_dictionary/        # 주차별 데이터 설명서
+│  ├─ weekly/week01~week10/   # 차시별 실습 데이터
+│  └─ data_dictionary/        # 차시별 데이터 설명서
 ├─ notebooks/
 │  ├─ student/                # 학생용(TODO 포함)
 │  ├─ instructor/             # 강사 시연용(완성본 + 설명)
@@ -82,7 +82,7 @@ pip install -r requirements.txt
 python -m ipykernel install --user --name python3 --display-name "Python 3"
 ```
 
-### Orange3 설치 (5·6·8·9주차용)
+### Orange3 설치 (5·6·8·9차시용)
 
 Orange3는 클릭만으로 데이터를 분석하는 별도 데스크톱 프로그램으로, 파이썬 패키지와는 독립적으로
 설치합니다.
@@ -93,7 +93,7 @@ python -m Orange.canvas   # 설치 후 실행
 ```
 
 또는 [orangedatamining.com](https://orangedatamining.com)에서 운영체제별 설치 파일을 내려받아 설치할
-수도 있습니다. 주차별 Orange3 실습 내용은 [`docs/curriculum.md`](docs/curriculum.md)의 5·6·8·9주차
+수도 있습니다. 차시별 Orange3 실습 내용은 [`docs/curriculum.md`](docs/curriculum.md)의 5·6·8·9차시
 설명을 참고하세요(세부 강의 자료는 재작성 예정, 진행 상황은
 [`docs/restructure-plan.md`](docs/restructure-plan.md) 참고).
 
@@ -101,7 +101,7 @@ python -m Orange.canvas   # 설치 후 실행
 
 1. [colab.research.google.com](https://colab.research.google.com)에 접속해 새 노트북을 만들거나,
    `notebooks/student/weekXX_student.ipynb`를 업로드합니다(파일 → 노트북 업로드).
-2. 왼쪽 폴더 아이콘 → 업로드 아이콘을 눌러 해당 주차의 CSV
+2. 왼쪽 폴더 아이콘 → 업로드 아이콘을 눌러 해당 차시의 CSV
    (`data/weekly/weekXX/*.csv`)를 업로드합니다.
 3. 노트북 안의 `pd.read_csv("../../data/weekly/...")` 경로를 Colab에서는
    파일명만 있는 상대경로(예: `"week01_semiconductor_process_overview.csv"`)로 바꿔서 실행하세요.
@@ -117,12 +117,12 @@ jupyter notebook notebooks/student/week01_student.ipynb
 
 ## 8. 실습 데이터 생성 방법
 
-모든 주차 데이터는 시드가 고정된 스크립트로 재현 가능하게 생성됩니다. 원본 CSV(`data/raw/`)는
+모든 차시 데이터는 시드가 고정된 스크립트로 재현 가능하게 생성됩니다. 원본 CSV(`data/raw/`)는
 절대 덮어쓰지 않습니다.
 
 ```bash
 python scripts/inspect_raw_data.py       # 원본 데이터 프로파일링(읽기 전용)
-python scripts/generate_weekly_data.py   # 주차별 실습 데이터 재생성(data/weekly/*)
+python scripts/generate_weekly_data.py   # 차시별 실습 데이터 재생성(data/weekly/*)
 python scripts/validate_datasets.py      # 데이터 검증
 python scripts/validate_notebooks.py     # 노트북 실행 검증
 ```
@@ -150,14 +150,14 @@ start index.html
 
 - 원본 참고 자료: `반도체_공정_샘플.csv`(200행), `fab.csv`(1,567행 × 590센서, SECOM 유형의
   고차원 센서 데이터)를 `data/raw/`에 원본 그대로 보존했습니다.
-- 1~10주차 핵심 데이터는 모두 `반도체_공정_샘플.csv`의 열 구조·값 범위를 참고해 **완전히 새로
-  생성한 가상 데이터**입니다. 특히 9주차 머신러닝 예측 실습도 `반도체_공정_샘플.csv` 계열 데이터를
+- 1~10차시 핵심 데이터는 모두 `반도체_공정_샘플.csv`의 열 구조·값 범위를 참고해 **완전히 새로
+  생성한 가상 데이터**입니다. 특히 9차시 머신러닝 예측 실습도 `반도체_공정_샘플.csv` 계열 데이터를
   사용합니다(v1에서 사용하던 `fab.csv` 파생 데이터는 v2에서 핵심 경로에서 제외 — 배경은
   [`docs/restructure-plan.md`](docs/restructure-plan.md) 참고).
-- `fab.csv`는 원할 경우 강사가 9주차 이후 선택 심화 부록으로만 다룰 수 있으며, 이 경우에도 센서
+- `fab.csv`는 원할 경우 강사가 9차시 이후 선택 심화 부록으로만 다룰 수 있으며, 이 경우에도 센서
   이름에는 실제 의미가 확인되지 않았다는 점을 반드시 명시해야 합니다(`CLAUDE.md` 참고).
 - 반도체_공정_샘플.csv의 합격/불합격 부호(1=합격/-1=불합격)와 fab.csv의 부호(-1=정상/1=이상)가
-  서로 다르다는 점은 1주차와 용어집에서 설명합니다.
+  서로 다르다는 점은 1차시와 용어집에서 설명합니다.
 
 ## 12. 주의사항
 

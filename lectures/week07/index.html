@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>7주차. 설비·공정 비교와 수율·불량 분석</title>
+<title>7차시. 설비·공정 비교와 수율·불량 분석</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10차시 과정
       <small>Semiconductor Process Data Analysis</small>
     </a>
     <nav class="week-nav">
-      <a href="../week01/index.html">1주</a>
-      <a href="../week02/index.html">2주</a>
-      <a href="../week03/index.html">3주</a>
-      <a href="../week04/index.html">4주</a>
-      <a href="../week05/index.html">5주</a>
-      <a href="../week06/index.html">6주</a>
-      <a href="../week07/index.html" class="current">7주</a>
-      <a href="../week08/index.html">8주</a>
-      <a href="../week09/index.html">9주</a>
-      <a href="../week10/index.html">10주</a>
+      <a href="../week01/index.html">1차시</a>
+      <a href="../week02/index.html">2차시</a>
+      <a href="../week03/index.html">3차시</a>
+      <a href="../week04/index.html">4차시</a>
+      <a href="../week05/index.html">5차시</a>
+      <a href="../week06/index.html">6차시</a>
+      <a href="../week07/index.html" class="current">7차시</a>
+      <a href="../week08/index.html">8차시</a>
+      <a href="../week09/index.html">9차시</a>
+      <a href="../week10/index.html">10차시</a>
     </nav>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="7"></div></div>
@@ -32,9 +32,9 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">7주차 · 2시간 수업 · 개요(skeleton)</span>
+    <span class="badge blue">7차시 · 2시간 수업 · 개요(skeleton)</span>
     <h1>설비·공정 비교와 수율·불량 분석</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"설비마다 정말 다르게 동작하는가? 그리고 그 차이가 수율에도 그대로 나타날까?"</b></p>
+    <p class="today-question">💬 오늘의 질문: <b>"설비마다 차이가 있어 보이는데, 숫자로 계산해도 정말 그럴까?"</b></p>
   </div>
 
   <section class="block">
@@ -50,16 +50,24 @@
   <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
+      <li>Orange3로 먼저 설비별 분포 차이가 있어 보이는지 훑어볼 수 있다.</li>
       <li>groupby로 설비별/공정별 평균값과 합격률을 비교할 수 있다.</li>
       <li>로트 단위 수율을 계산할 수 있다(단순 평균과의 차이 포함).</li>
       <li>불량 유형을 집계하고 파레토 관점에서 가장 큰 원인을 찾을 수 있다.</li>
-      <li>가장 불안정한 설비와 가장 저수율인 로트를 데이터로 찾을 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 6주차 — 그래프로 관찰한 차이</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 6차시 — 그래프로 관찰한 차이</p>
   </section>
 
   <section class="block">
-    <h2>📚 다룰 이론 주제(초안)</h2>
+    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <div class="callout practice">
+      <b class="tag">위젯</b> Box Plot · Bar Chart
+      <p style="margin:.5rem 0 0;">groupby 코드를 쓰기 전에 Orange3 Box Plot/Bar Chart 위젯으로 설비별 온도·합격 여부 분포를 먼저 살펴보고, 차이가 있어 보이는 설비를 미리 짐작해본다. 이어서 groupby로 실제 수치를 계산해 확인한다.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 ② 파이썬으로 확인하기 — 다룰 이론 주제(초안)</h2>
     <ul class="goal-list">
       <li>그룹화(groupby)와 집계(평균/합계)</li>
       <li>합격률과 수율의 차이</li>
@@ -69,7 +77,7 @@
   </section>
 
   <section class="block">
-    <h2>🧪 다룰 실습 흐름(초안)</h2>
+    <h2>🐍 다룰 실습 흐름(초안)</h2>
     <ol style="padding-left:1.3rem;line-height:1.8;">
       <li>설비별 평균 온도/압력 비교하기</li>
       <li>설비별 합격률 비교하기</li>
@@ -87,24 +95,24 @@
 
   <section class="block">
     <h2>❓ 핵심 질문 → 데이터 연결</h2>
-    <div class="callout concept">불량률이 가장 높은 설비와 수율이 가장 낮은 로트는 같은 설비에서 나왔는가?</div>
+    <div class="callout concept">Orange3에서 받은 인상과 groupby로 계산한 수치가 일치하는가? 불량률이 가장 높은 설비와 수율이 가장 낮은 로트는 같은 설비에서 나왔는가?</div>
   </section>
 
   <section class="block">
-    <h2>🔜 다음 주 예고</h2>
-    <div class="callout concept">8주차에는 이상값과 불량의 관계를 상관관계로 살펴보고, Orange3 Correlations로 재확인한다.</div>
+    <h2>🔜 다음 차시 예고</h2>
+    <div class="callout concept">8차시에도 Orange3 Correlations로 먼저 변수 간 관계를 훑어본 뒤, 상관계수를 직접 계산해 원인 후보를 찾는다.</div>
   </section>
 
   <div class="nav-buttons">
-    <a href="../week06/index.html">← 이전 주차: 6주차</a>
+    <a href="../week06/index.html">← 이전 차시: 6차시</a>
     <a class="home" href="../../index.html">🏠 전체 목차</a>
-    <a href="../week08/index.html">다음 주차: 8주차 →</a>
+    <a href="../week08/index.html">다음 차시: 8차시 →</a>
   </div>
 
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 7주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 7차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
 </body>

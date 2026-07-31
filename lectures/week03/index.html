@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3주차. 파이썬 기초 Ⅱ — 조건문, 반복문, 함수</title>
+<title>3차시. 리스트·딕셔너리로 배우는 조건문, 반복문, 함수</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10차시 과정
       <small>Semiconductor Process Data Analysis</small>
     </a>
     <nav class="week-nav">
-      <a href="../week01/index.html">1주</a>
-      <a href="../week02/index.html">2주</a>
-      <a href="../week03/index.html" class="current">3주</a>
-      <a href="../week04/index.html">4주</a>
-      <a href="../week05/index.html">5주</a>
-      <a href="../week06/index.html">6주</a>
-      <a href="../week07/index.html">7주</a>
-      <a href="../week08/index.html">8주</a>
-      <a href="../week09/index.html">9주</a>
-      <a href="../week10/index.html">10주</a>
+      <a href="../week01/index.html">1차시</a>
+      <a href="../week02/index.html">2차시</a>
+      <a href="../week03/index.html" class="current">3차시</a>
+      <a href="../week04/index.html">4차시</a>
+      <a href="../week05/index.html">5차시</a>
+      <a href="../week06/index.html">6차시</a>
+      <a href="../week07/index.html">7차시</a>
+      <a href="../week08/index.html">8차시</a>
+      <a href="../week09/index.html">9차시</a>
+      <a href="../week10/index.html">10차시</a>
     </nav>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="3"></div></div>
@@ -32,9 +32,9 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">3주차 · 2시간 수업 · 개요(skeleton)</span>
-    <h1>파이썬 기초 Ⅱ — 조건문, 반복문, 함수</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"온도가 정상 범위를 벗어났는지, 사람이 눈으로 보지 않고 컴퓨터가 대신 판단하게 하려면 어떻게 해야 할까?"</b></p>
+    <span class="badge blue">3차시 · 2시간 수업 · 개요(skeleton)</span>
+    <h1>리스트·딕셔너리로 배우는 조건문, 반복문, 함수</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"리스트에 담긴 여러 설비 정보를 하나씩 살펴보며, 조건에 맞는 것만 컴퓨터가 골라내게 할 수 있을까?"</b></p>
   </div>
 
   <section class="block">
@@ -51,11 +51,11 @@
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
       <li>if/elif/else로 조건에 따라 다르게 판단하는 코드를 작성할 수 있다.</li>
-      <li>for로 리스트의 모든 값을 반복 처리할 수 있다.</li>
+      <li>for로 리스트와 딕셔너리를 순회할 수 있다.</li>
       <li>def로 반복되는 계산을 함수로 만들어 재사용할 수 있다.</li>
-      <li>직접 만든 판정 함수로 합격/불합격을 걸러낼 수 있다.</li>
+      <li>2차시에서 만든 리스트·딕셔너리 예제로 합격/불합격을 직접 판정할 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 2주차 — 변수·리스트·딕셔너리</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 2차시 — 리스트·딕셔너리</p>
   </section>
 
   <section class="block">
@@ -63,27 +63,27 @@
     <ul class="goal-list">
       <li>비교 연산자(>, <, ==)</li>
       <li>if / elif / else</li>
-      <li>for로 리스트 순회하기</li>
+      <li>for로 리스트·딕셔너리 순회하기</li>
       <li>누적 합·개수 세기</li>
       <li>함수 정의와 호출, 매개변수와 반환값</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>🧪 다룰 실습 흐름(초안)</h2>
+    <h2>🐍 다룰 실습 흐름(초안)</h2>
     <ol style="padding-left:1.3rem;line-height:1.8;">
       <li>온도 하나를 조건문으로 정상/비정상 판정하기</li>
       <li>for로 리스트 전체를 순회하며 정상 개수 세기</li>
+      <li>'딕셔너리의 리스트'를 순회하며 조건에 맞는 설비만 골라내기</li>
       <li>평균 계산을 함수로 만들기</li>
       <li>합격/불합격 판정을 함수로 만들어 여러 로트에 반복 적용하기</li>
-      <li>내가 만든 함수 결과를 4주차에 배울 Pandas 결과와 비교 예고</li>
     </ol>
   </section>
 
   <section class="block">
     <h2>📁 데이터</h2>
     <p><code>data/weekly/week03/week03_python_basics_2.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">30행 5열 — 2주차와 동일 계열, 정상범위 이탈 온도 4~5건 포함(for+if 실습량 확보)</p>
+    <p style="color:var(--muted);font-size:.9rem;">30행 5열 — 2차시와 동일 계열, 정상범위 이탈 온도 4~5건 포함(for+if 실습량 확보)</p>
   </section>
 
   <section class="block">
@@ -92,20 +92,20 @@
   </section>
 
   <section class="block">
-    <h2>🔜 다음 주 예고</h2>
-    <div class="callout concept">4주차에는 오늘 for+if로 한 줄씩 했던 일을 Pandas가 한 줄로 처리하는 것을 확인한다.</div>
+    <h2>🔜 다음 차시 예고</h2>
+    <div class="callout concept">4차시에는 오늘 for+if로 한 줄씩 했던 일을 Pandas가 한 줄로 처리하는 것을 확인한다.</div>
   </section>
 
   <div class="nav-buttons">
-    <a href="../week02/index.html">← 이전 주차: 2주차</a>
+    <a href="../week02/index.html">← 이전 차시: 2차시</a>
     <a class="home" href="../../index.html">🏠 전체 목차</a>
-    <a href="../week04/index.html">다음 주차: 4주차 →</a>
+    <a href="../week04/index.html">다음 차시: 4차시 →</a>
   </div>
 
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 3주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 3차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
 </body>

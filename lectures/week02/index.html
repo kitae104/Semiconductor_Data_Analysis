@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2주차. 파이썬 기초 Ⅰ — 변수, 자료형, 리스트, 딕셔너리</title>
+<title>2차시. 리스트와 딕셔너리</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10차시 과정
       <small>Semiconductor Process Data Analysis</small>
     </a>
     <nav class="week-nav">
-      <a href="../week01/index.html">1주</a>
-      <a href="../week02/index.html" class="current">2주</a>
-      <a href="../week03/index.html">3주</a>
-      <a href="../week04/index.html">4주</a>
-      <a href="../week05/index.html">5주</a>
-      <a href="../week06/index.html">6주</a>
-      <a href="../week07/index.html">7주</a>
-      <a href="../week08/index.html">8주</a>
-      <a href="../week09/index.html">9주</a>
-      <a href="../week10/index.html">10주</a>
+      <a href="../week01/index.html">1차시</a>
+      <a href="../week02/index.html" class="current">2차시</a>
+      <a href="../week03/index.html">3차시</a>
+      <a href="../week04/index.html">4차시</a>
+      <a href="../week05/index.html">5차시</a>
+      <a href="../week06/index.html">6차시</a>
+      <a href="../week07/index.html">7차시</a>
+      <a href="../week08/index.html">8차시</a>
+      <a href="../week09/index.html">9차시</a>
+      <a href="../week10/index.html">10차시</a>
     </nav>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="2"></div></div>
@@ -32,9 +32,9 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">2주차 · 2시간 수업 · 개요(skeleton)</span>
-    <h1>파이썬 기초 Ⅰ — 변수, 자료형, 리스트, 딕셔너리</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"측정값 하나하나를 어떻게 이름 붙여 기억하고, 여러 개를 한 번에 담을 수 있을까?"</b></p>
+    <span class="badge blue">2차시 · 2시간 수업 · 개요(skeleton)</span>
+    <h1>리스트와 딕셔너리</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"여러 개의 측정값을 한 번에 담고, 각 값에 이름표까지 붙이려면 어떻게 해야 할까?"</b></p>
   </div>
 
   <section class="block">
@@ -50,33 +50,32 @@
   <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
-      <li>변수에 값을 저장하고 숫자형/문자열형/불리언을 구분할 수 있다.</li>
-      <li>리스트에 여러 값을 담고 인덱싱으로 특정 값을 꺼낼 수 있다.</li>
-      <li>딕셔너리로 하나의 레코드(설비 정보 등)에 이름표를 붙여 표현할 수 있다.</li>
-      <li>리스트와 딕셔너리를 언제 각각 쓰는지 구분할 수 있다.</li>
+      <li>리스트에 여러 값을 담고 인덱싱·슬라이싱으로 특정 값을 꺼낼 수 있다.</li>
+      <li>리스트에 값을 추가(append)하고 길이(len)를 확인할 수 있다.</li>
+      <li>딕셔너리로 값에 이름표를 붙여 하나의 레코드를 표현할 수 있다.</li>
+      <li>리스트 안에 딕셔너리를 담아 여러 설비 정보를 한 번에 표현할 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 1주차 — Colab 사용법</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 1차시 — 변수·자료형·출력</p>
   </section>
 
   <section class="block">
     <h2>📚 다룰 이론 주제(초안)</h2>
     <ul class="goal-list">
-      <li>변수와 대입</li>
-      <li>숫자형 · 문자열형 · 불리언</li>
-      <li>리스트 — 순서 있는 여러 값, 인덱싱</li>
-      <li>딕셔너리 — 키-값 쌍</li>
-      <li>리스트 vs 딕셔너리, 언제 무엇을 쓰는가</li>
+      <li>리스트 생성, 인덱싱, 슬라이싱</li>
+      <li>리스트에 값 추가하기(append), 길이(len)</li>
+      <li>딕셔너리 생성, 키로 값 접근, 값 수정</li>
+      <li>리스트 안에 딕셔너리 담기 — 여러 설비를 한 번에 표현</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>🧪 다룰 실습 흐름(초안)</h2>
+    <h2>🐍 다룰 실습 흐름(초안)</h2>
     <ol style="padding-left:1.3rem;line-height:1.8;">
-      <li>온도 값 하나를 변수에 저장해보기</li>
-      <li>하루치 온도 여러 개를 리스트에 저장하기</li>
-      <li>리스트 길이(len)와 특정 위치 값 꺼내기(인덱싱)</li>
+      <li>온도 여러 개를 리스트에 담기</li>
+      <li>리스트에서 최댓값·최솟값·평균 직접 계산하기</li>
       <li>설비 1대의 정보(설비번호·공정명·온도)를 딕셔너리로 표현하기</li>
-      <li>여러 설비를 '딕셔너리의 리스트'로 표현해보기</li>
+      <li>여러 설비를 '딕셔너리의 리스트'로 표현하기</li>
+      <li>리스트 안 딕셔너리에서 특정 설비의 값 꺼내기</li>
     </ol>
   </section>
 
@@ -88,24 +87,24 @@
 
   <section class="block">
     <h2>❓ 핵심 질문 → 데이터 연결</h2>
-    <div class="callout concept">이 리스트에서 가장 높은 온도와 가장 낮은 온도는 몇 번째 값인가?</div>
+    <div class="callout concept">이 리스트에서 가장 높은 온도와 가장 낮은 온도를 가진 값은 몇 번째인가?</div>
   </section>
 
   <section class="block">
-    <h2>🔜 다음 주 예고</h2>
-    <div class="callout concept">3주차에는 오늘 만든 리스트를 조건문·반복문·함수로 직접 판정해본다.</div>
+    <h2>🔜 다음 차시 예고</h2>
+    <div class="callout concept">3차시에는 오늘 만든 리스트·딕셔너리를 조건문·반복문·함수로 직접 판정해본다.</div>
   </section>
 
   <div class="nav-buttons">
-    <a href="../week01/index.html">← 이전 주차: 1주차</a>
+    <a href="../week01/index.html">← 이전 차시: 1차시</a>
     <a class="home" href="../../index.html">🏠 전체 목차</a>
-    <a href="../week03/index.html">다음 주차: 3주차 →</a>
+    <a href="../week03/index.html">다음 차시: 3차시 →</a>
   </div>
 
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 2주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 2차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
 </body>

@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4주차. Pandas로 공정 데이터 읽고 선택하기</title>
+<title>4차시. Pandas 가장 기본적인 부분</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10차시 과정
       <small>Semiconductor Process Data Analysis</small>
     </a>
     <nav class="week-nav">
-      <a href="../week01/index.html">1주</a>
-      <a href="../week02/index.html">2주</a>
-      <a href="../week03/index.html">3주</a>
-      <a href="../week04/index.html" class="current">4주</a>
-      <a href="../week05/index.html">5주</a>
-      <a href="../week06/index.html">6주</a>
-      <a href="../week07/index.html">7주</a>
-      <a href="../week08/index.html">8주</a>
-      <a href="../week09/index.html">9주</a>
-      <a href="../week10/index.html">10주</a>
+      <a href="../week01/index.html">1차시</a>
+      <a href="../week02/index.html">2차시</a>
+      <a href="../week03/index.html">3차시</a>
+      <a href="../week04/index.html" class="current">4차시</a>
+      <a href="../week05/index.html">5차시</a>
+      <a href="../week06/index.html">6차시</a>
+      <a href="../week07/index.html">7차시</a>
+      <a href="../week08/index.html">8차시</a>
+      <a href="../week09/index.html">9차시</a>
+      <a href="../week10/index.html">10차시</a>
     </nav>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="4"></div></div>
@@ -32,9 +32,9 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">4주차 · 2시간 수업 · 개요(skeleton)</span>
-    <h1>Pandas로 공정 데이터 읽고 선택하기</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"수백 행 중에서 내가 원하는 조건의 데이터만, 반복문 없이 한 번에 골라낼 수 있을까?"</b></p>
+    <span class="badge blue">4차시 · 2시간 수업 · 개요(skeleton)</span>
+    <h1>Pandas 가장 기본적인 부분</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"3차시에 반복문으로 한 줄씩 처리했던 일을, Pandas는 어떻게 한 번에 처리할까?"</b></p>
   </div>
 
   <section class="block">
@@ -55,7 +55,7 @@
       <li>조건 검색(불리언 인덱싱)으로 원하는 행만 골라낼 수 있다.</li>
       <li>정렬로 값이 높은/낮은 순서를 확인할 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 3주차 — 리스트·조건문·반복문</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 3차시 — 반복문·함수</p>
   </section>
 
   <section class="block">
@@ -65,19 +65,19 @@
       <li>열 선택</li>
       <li>조건 검색(불리언 인덱싱)</li>
       <li>정렬</li>
-      <li>데이터 형식(dtype)</li>
+      <li>head / shape / columns 로 기본 정보 확인하기</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>🧪 다룰 실습 흐름(초안)</h2>
+    <h2>🐍 다룰 실습 흐름(초안)</h2>
     <ol style="padding-left:1.3rem;line-height:1.8;">
       <li>read_csv()로 데이터 읽기</li>
       <li>온도 열만 보기, 온도+압력 함께 보기</li>
       <li>특정 설비(EQ-02)만 찾기</li>
       <li>불합격 데이터만 찾기</li>
       <li>온도 내림차순 정렬</li>
-      <li>3주차 함수로 짠 결과와 Pandas 조건 검색 결과 개수 맞춰보기</li>
+      <li>3차시 함수로 짠 결과와 Pandas 조건 검색 결과 개수 맞춰보기</li>
     </ol>
   </section>
 
@@ -93,20 +93,20 @@
   </section>
 
   <section class="block">
-    <h2>🔜 다음 주 예고</h2>
-    <div class="callout concept">5주차에는 지저분한 데이터를 정제하는 방법을 배우고, Orange3로도 같은 데이터를 열어본다.</div>
+    <h2>🔜 다음 차시 예고</h2>
+    <div class="callout concept">5차시에는 Orange3로 먼저 데이터를 훑어본 뒤, 지저분한 데이터를 정제하는 방법을 배운다.</div>
   </section>
 
   <div class="nav-buttons">
-    <a href="../week03/index.html">← 이전 주차: 3주차</a>
+    <a href="../week03/index.html">← 이전 차시: 3차시</a>
     <a class="home" href="../../index.html">🏠 전체 목차</a>
-    <a href="../week05/index.html">다음 주차: 5주차 →</a>
+    <a href="../week05/index.html">다음 차시: 5차시 →</a>
   </div>
 
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 4주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 4차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
 </body>

@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1주차. 반도체 공정과 데이터 처음 만나기</title>
+<title>1차시. 반도체 공정과 데이터 처음 만나기</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10차시 과정
       <small>Semiconductor Process Data Analysis</small>
     </a>
     <nav class="week-nav">
-      <a href="../week01/index.html" class="current">1주</a>
-      <a href="../week02/index.html">2주</a>
-      <a href="../week03/index.html">3주</a>
-      <a href="../week04/index.html">4주</a>
-      <a href="../week05/index.html">5주</a>
-      <a href="../week06/index.html">6주</a>
-      <a href="../week07/index.html">7주</a>
-      <a href="../week08/index.html">8주</a>
-      <a href="../week09/index.html">9주</a>
-      <a href="../week10/index.html">10주</a>
+      <a href="../week01/index.html" class="current">1차시</a>
+      <a href="../week02/index.html">2차시</a>
+      <a href="../week03/index.html">3차시</a>
+      <a href="../week04/index.html">4차시</a>
+      <a href="../week05/index.html">5차시</a>
+      <a href="../week06/index.html">6차시</a>
+      <a href="../week07/index.html">7차시</a>
+      <a href="../week08/index.html">8차시</a>
+      <a href="../week09/index.html">9차시</a>
+      <a href="../week10/index.html">10차시</a>
     </nav>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="1"></div></div>
@@ -32,7 +32,7 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">1주차 · 2시간 수업</span>
+    <span class="badge blue">1차시 · 2시간 수업</span>
     <h1>반도체 공정과 데이터 처음 만나기</h1>
     <p class="today-question">💬 오늘의 질문: <b>"반도체는 어떻게 만들어지고, 그 과정은 어떤 기록을 남길까?"</b></p>
   </div>
@@ -45,6 +45,7 @@
       <li>공정에서 데이터가 왜 발생하는지 설명할 수 있다.</li>
       <li>Google Colab에서 CSV 파일을 열고 Pandas로 처음 조회해본다.</li>
       <li>합격/불합격 데이터를 세어보고 의미를 해석할 수 있다.</li>
+      <li>(신규) 파이썬 변수에 값을 저장하고 <code>print()</code>로 출력할 수 있다.</li>
     </ul>
   </section>
 
@@ -52,9 +53,9 @@
     <h2>⏮️ 지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">첫 시간 안내</b>
-      1주차이므로 복습할 이전 내용은 없다. 대신 10주 전체 과정이 어떻게 이어지는지 먼저 살펴본다.
-      1~3주차는 데이터를 "보는" 법, 4~5주차는 데이터를 "정리하고 그리는" 법, 6~8주차는 데이터를
-      "비교하고 이상을 찾는" 법, 9~10주차는 "예측하고 종합하는" 법을 배운다.
+      1차시이므로 복습할 이전 내용은 없다. 대신 10차시 전체 과정이 어떻게 이어지는지 먼저 살펴본다.
+      1~3차시는 데이터를 "보는" 법, 4~5차시는 데이터를 "정리하고 그리는" 법, 6~8차시는 데이터를
+      "비교하고 이상을 찾는" 법, 9~10차시는 "예측하고 종합하는" 법을 배운다.
     </div>
   </section>
 
@@ -100,7 +101,24 @@
     <p>공정을 마친 웨이퍼는 검사를 거쳐 <b>합격(양품)</b>과 <b>불합격(불량)</b>으로 나뉜다.
     이 과정에서는 <code>합격여부</code> 열의 값이 <code>1</code>이면 합격, <code>-1</code>이면
     불합격을 의미하도록 정했다. (뒤에서 다룰 다른 원본 데이터인 fab.csv는 반대 부호를 쓰는데,
-    이는 9주차에서 자세히 설명한다.)</p>
+    이는 9차시에서 자세히 설명한다.)</p>
+  </section>
+
+  <section class="block">
+    <h2>🐍 파이썬 시작하기 — 변수와 출력(개요, 상세 내용 추가 예정)</h2>
+    <div class="callout warn">
+      <b class="tag">작성 상태</b>
+      이 절은 2차시 내용 중 "변수·출력" 부분을 1차시로 옮겨오면서 새로 추가된 절이다. 아래는 다룰
+      내용의 개요이며, 상세 설명·예제 코드는 추후 작성한다.
+    </div>
+    <p>오늘 관찰한 합격/불합격 개수 같은 값을 다음 차시부터는 매번 다시 세지 않고, <b>이름을 붙여
+    기억(변수)</b>해두고 필요할 때 <b>화면에 보여주는(<code>print()</code>) 출력)</b> 법을 배운다.</p>
+    <ul class="goal-list">
+      <li>변수란 무엇인가 — 값에 이름을 붙여 저장하기</li>
+      <li>숫자형(정수/실수), 문자열형, 불리언(참/거짓) 구분하기</li>
+      <li><code>print()</code>로 변수 값을 화면에 출력하기</li>
+      <li>오늘 계산한 합격 건수를 변수에 저장하고 문장으로 출력해보기</li>
+    </ul>
   </section>
 
   <section class="block">
@@ -175,7 +193,7 @@
           <dt>한 줄 설명</dt><dd>생산한 것 중 정상 제품이 차지하는 비율.</dd>
           <dt>쉬운 비유</dt><dd>사과 100개 중 92개가 상품이면 수율은 92%.</dd>
           <dt>데이터에서의 예</dt><dd><code>합격여부</code> 열에서 <code>1</code>의 비율.</dd>
-          <dt>자주 하는 오해</dt><dd>수율이 낮다고 항상 설비 문제인 것은 아니다(7~8주차에서 자세히 다룬다).</dd>
+          <dt>자주 하는 오해</dt><dd>수율이 낮다고 항상 설비 문제인 것은 아니다(7~8차시에서 자세히 다룬다).</dd>
         </dl>
       </div>
     </div>
@@ -245,7 +263,7 @@ Name: count, dtype: int64</pre>
       <b class="tag">결과 해석</b>
       이 데이터는 40행 8열로 이루어져 있고, 합격이 34건(85%), 불합격이 6건(15%)이다.
       즉 10개 중 8~9개는 정상적으로 만들어졌다는 뜻이다. 다만 이 수치만으로는
-      "어떤 설비에서, 어떤 공정에서" 불합격이 발생했는지는 알 수 없다 — 이는 3주차 이후에 배운다.
+      "어떤 설비에서, 어떤 공정에서" 불합격이 발생했는지는 알 수 없다 — 이는 3차시 이후에 배운다.
     </div>
   </section>
 
@@ -348,24 +366,24 @@ Name: count, dtype: int64</pre>
   </section>
 
   <section class="block">
-    <h2>🔜 다음 주 예고</h2>
+    <h2>🔜 다음 차시 예고</h2>
     <div class="callout concept">
-      <b class="tag">2주차 예고</b>
-      다음 주에는 파이썬의 변수·리스트를 배우고, 평균·최댓값·최솟값을 직접 계산해본다.
-      오늘 계산한 합격률을 "수율"이라는 개념으로 더 깊이 다뤄볼 것이다.
+      <b class="tag">2차시 예고</b>
+      다음 차시에는 오늘 배운 변수를 확장해 파이썬 리스트와 딕셔너리를 배우고, 여러 개의 측정값을
+      한 번에 담아 평균·최댓값·최솟값을 직접 계산해본다.
     </div>
   </section>
 
   <div class="nav-buttons">
-    <a class="disabled">← 이전 주차 없음</a>
+    <a class="disabled">← 이전 차시 없음</a>
     <a class="home" href="../../index.html">🏠 전체 목차</a>
-    <a href="../week02/index.html">다음 주차: 2주차 →</a>
+    <a href="../week02/index.html">다음 차시: 2차시 →</a>
   </div>
 
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 1주차 · 교육용 자료(가상 데이터 사용)</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 1차시 · 교육용 자료(가상 데이터 사용)</footer>
 
 <script src="../../assets/js/common.js"></script>
 <script src="../../assets/js/quiz.js"></script>

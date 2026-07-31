@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>5주차. 결측값과 이상한 데이터 정리하기</title>
+<title>5차시. 데이터 훑어보기와 정리(EDA)</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10차시 과정
       <small>Semiconductor Process Data Analysis</small>
     </a>
     <nav class="week-nav">
-      <a href="../week01/index.html">1주</a>
-      <a href="../week02/index.html">2주</a>
-      <a href="../week03/index.html">3주</a>
-      <a href="../week04/index.html">4주</a>
-      <a href="../week05/index.html" class="current">5주</a>
-      <a href="../week06/index.html">6주</a>
-      <a href="../week07/index.html">7주</a>
-      <a href="../week08/index.html">8주</a>
-      <a href="../week09/index.html">9주</a>
-      <a href="../week10/index.html">10주</a>
+      <a href="../week01/index.html">1차시</a>
+      <a href="../week02/index.html">2차시</a>
+      <a href="../week03/index.html">3차시</a>
+      <a href="../week04/index.html">4차시</a>
+      <a href="../week05/index.html" class="current">5차시</a>
+      <a href="../week06/index.html">6차시</a>
+      <a href="../week07/index.html">7차시</a>
+      <a href="../week08/index.html">8차시</a>
+      <a href="../week09/index.html">9차시</a>
+      <a href="../week10/index.html">10차시</a>
     </nav>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="5"></div></div>
@@ -32,9 +32,9 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">5주차 · 2시간 수업 · 개요(skeleton)</span>
-    <h1>결측값과 이상한 데이터 정리하기</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"빈 칸이 있거나 말이 안 되는 값이 있으면 분석 결과가 어떻게 달라질까? 코드 없이도 이런 문제를 확인할 수 있을까?"</b></p>
+    <span class="badge blue">5차시 · 2시간 수업 · 개요(skeleton)</span>
+    <h1>데이터 훑어보기와 정리(EDA)</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"코드를 한 줄도 쓰기 전에, 이 데이터에 어떤 문제가 있어 보이는지 먼저 확인할 수 있을까?"</b></p>
   </div>
 
   <section class="block">
@@ -50,25 +50,32 @@
   <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
-      <li>결측값·중복값·이상값을 찾을 수 있다.</li>
+      <li>Orange3로 CSV를 열어 결측값·이상값이 있어 보이는 곳을 먼저 확인할 수 있다.</li>
+      <li>결측값·중복값·이상값을 Pandas 코드로 직접 찾을 수 있다.</li>
       <li>결측값을 제거하거나 대체할 수 있다.</li>
       <li>정제 전후 데이터를 비교해 차이를 설명할 수 있다.</li>
-      <li>Orange3로 같은 CSV를 코드 없이 열어 결측/이상값을 재확인할 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 4주차 — 조건 검색</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 4차시 — 조건 검색</p>
   </section>
 
   <section class="block">
-    <h2>📚 다룰 이론 주제(초안)</h2>
+    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <div class="callout practice">
+      <b class="tag">위젯</b> File → Data Table → Feature Statistics
+      <p style="margin:.5rem 0 0;">파이썬 코드를 쓰기 전에 Orange3로 같은 CSV를 먼저 열어, Data Table에서 결측 셀을, Feature Statistics에서 최댓값/최솟값(이상값)을 눈으로 확인한다. 이어서 파이썬으로 같은 문제를 직접 찾아 정제한다.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 ② 파이썬으로 확인하기 — 다룰 이론 주제(초안)</h2>
     <ul class="goal-list">
       <li>결측값, 중복값, 입력 오류, 이상값</li>
       <li>평균/중앙값 대체 vs 제거</li>
-      <li>Orange3 소개 — File → Data Table → Feature Statistics</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>🧪 다룰 실습 흐름(초안)</h2>
+    <h2>🐍 다룰 실습 흐름(초안)</h2>
     <ol style="padding-left:1.3rem;line-height:1.8;">
       <li>isna().sum()으로 결측값 개수 확인하기</li>
       <li>dropna(), fillna()로 결측값 처리하기</li>
@@ -79,14 +86,6 @@
   </section>
 
   <section class="block">
-    <h2>🟠 Orange3 실습(추가 예정)</h2>
-    <div class="callout practice">
-      <b class="tag">위젯</b> File → Data Table → Feature Statistics
-      <p style="margin:.5rem 0 0;">같은 CSV를 Orange3로 불러와 Data Table에서 결측 셀을, Feature Statistics에서 최댓값/최솟값(이상값)을 확인한다. Pandas로 계산한 값과 같은지 맞춰본다.</p>
-    </div>
-  </section>
-
-  <section class="block">
     <h2>📁 데이터</h2>
     <p><code>data/weekly/week05/week05_dirty_process_data.csv</code></p>
     <p style="color:var(--muted);font-size:.9rem;">113행 9열 — 결측값·중복행·이상값이 의도적으로 섞여 있는 정제 실습용 데이터</p>
@@ -94,24 +93,24 @@
 
   <section class="block">
     <h2>❓ 핵심 질문 → 데이터 연결</h2>
-    <div class="callout concept">정제 전후 평균 온도는 얼마나 달라지는가? Orange3에서 본 값과 Pandas 계산 값이 같은가?</div>
+    <div class="callout concept">Orange3에서 눈으로 확인한 문제와 Pandas로 찾은 문제가 같은가? 정제 전후 평균 온도는 얼마나 달라지는가?</div>
   </section>
 
   <section class="block">
-    <h2>🔜 다음 주 예고</h2>
-    <div class="callout concept">6주차에는 정제된 데이터를 그래프로 그려보고, Orange3 시각화 위젯과 비교한다.</div>
+    <h2>🔜 다음 차시 예고</h2>
+    <div class="callout concept">6차시에도 Orange3로 먼저 그래프를 그려본 뒤, Matplotlib 코드로 같은 그래프를 그려본다.</div>
   </section>
 
   <div class="nav-buttons">
-    <a href="../week04/index.html">← 이전 주차: 4주차</a>
+    <a href="../week04/index.html">← 이전 차시: 4차시</a>
     <a class="home" href="../../index.html">🏠 전체 목차</a>
-    <a href="../week06/index.html">다음 주차: 6주차 →</a>
+    <a href="../week06/index.html">다음 차시: 6차시 →</a>
   </div>
 
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 5주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 5차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
 </body>

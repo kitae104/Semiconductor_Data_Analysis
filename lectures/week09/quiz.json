@@ -34,9 +34,9 @@
     },
     {
       "type": "true_false",
-      "question": "week09_fab_selected_sensors.csv의 Pass_Fail 열은 1주차의 합격여부 열과 부호가 같다(1=합격).",
+      "question": "week09_fab_selected_sensors.csv의 Pass_Fail 열은 1차시의 합격여부 열과 부호가 같다(1=합격).",
       "answer": false,
-      "explanation": "Pass_Fail은 -1=정상/합격, 1=이상/불합격으로, 1주차 합격여부(1=합격, -1=불합격)와 부호가 반대다. 이 과정에서는 검사결과(0=정상, 1=이상) 열로 통일해서 사용한다."
+      "explanation": "Pass_Fail은 -1=정상/합격, 1=이상/불합격으로, 1차시 합격여부(1=합격, -1=불합격)와 부호가 반대다. 이 과정에서는 검사결과(0=정상, 1=이상) 열로 통일해서 사용한다."
     },
     {
       "type": "true_false",

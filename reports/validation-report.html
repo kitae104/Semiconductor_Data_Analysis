@@ -26,7 +26,7 @@
 <body>
 <header>
   <h1>✅ 최종 검증 리포트</h1>
-  <p>반도체 및 반도체 공정 데이터 분석 10주 과정 — 전체 산출물 검증 결과</p>
+  <p>반도체 및 반도체 공정 데이터 분석 10차시 과정 — 전체 산출물 검증 결과</p>
 </header>
 <main>
 
@@ -36,12 +36,12 @@
   <div class="stat"><b>63 / 63</b>Notebook 검증 통과</div>
   <div class="stat"><b>0</b>깨진 내부 링크(index.html의 README.md 링크는 이 문서 작성 시점 이후 README 추가로 해결됨)</div>
   <div class="stat"><b>10 / 10</b>quiz.json 정상 파싱</div>
-  <div class="stat"><b>10 / 10</b>주차 7종(10주차는 8종) 산출물 전체 완비</div>
+  <div class="stat"><b>10 / 10</b>차시 7종(10차시는 8종) 산출물 전체 완비</div>
 </section>
 
 <section class="card">
   <h2>2. 데이터 검증 (scripts/validate_datasets.py)</h2>
-  <p>모든 주차 CSV에 대해 파일 존재, UTF-8 with BOM 인코딩 정상 로드, 필수 열 존재,
+  <p>모든 차시 CSV에 대해 파일 존재, UTF-8 with BOM 인코딩 정상 로드, 필수 열 존재,
   합격/불합격 값 범위, 의도된 결측값·이상값·패턴(예: week04 결측/중복/음수압력,
   week06 EQ-04 최고불량률, week07 수율 계산 일치, week09/10 검사결과 0/1 범위)을 확인했다.</p>
   <table>
@@ -77,12 +77,12 @@
   (외부 URL과 앵커 링크는 제외).</p>
   <ul>
     <li>공통 CSS(<code>assets/css/common.css</code>, <code>print.css</code>)와 JS
-      (<code>assets/js/common.js</code>, <code>quiz.js</code>) 연결: 10개 주차 전체 정상.</li>
-    <li>이전/다음 주차 내비게이션: 1주차(이전 없음)와 10주차(다음 없음, "과정 완료" 표시)를
+      (<code>assets/js/common.js</code>, <code>quiz.js</code>) 연결: 10개 차시 전체 정상.</li>
+    <li>이전/다음 차시 내비게이션: 1차시(이전 없음)와 10차시(다음 없음, "과정 완료" 표시)를
       제외하고 모두 정상 연결.</li>
     <li>맨 위로 이동 버튼, 코드 복사 버튼, 퀴즈 정답 버튼: 공통 JS(<code>common.js</code>,
-      <code>quiz.js</code>)로 전 주차 동일하게 동작.</li>
-    <li>실제 데이터 기반 차트 이미지(5·7·8·10주차, <code>assets/images/weekXX/</code>): 총 8개 파일,
+      <code>quiz.js</code>)로 전 차시 동일하게 동작.</li>
+    <li>실제 데이터 기반 차트 이미지(5·7·8·10차시, <code>assets/images/weekXX/</code>): 총 8개 파일,
       모두 matplotlib으로 실제 CSV에서 생성되었으며 링크 정상.</li>
     <li>발견된 문제 1건: <code>index.html</code>이 아직 작성되지 않은 <code>README.md</code>를 참조 —
       이 리포트 작성 직후 README.md를 작성해 해결.</li>
@@ -92,13 +92,13 @@
 <section class="card">
   <h2>5. 콘텐츠 정합성 확인</h2>
   <ul>
-    <li>모든 주차 HTML에 등장하는 통계 수치(평균, 실패율, 상관계수, 수율 등)는 실제 생성된 CSV를
+    <li>모든 차시 HTML에 등장하는 통계 수치(평균, 실패율, 상관계수, 수율 등)는 실제 생성된 CSV를
       pandas로 직접 계산한 값이며, 임의로 지어낸 수치가 아니다.</li>
-    <li>9주차는 <code>fab.csv</code> 원본을 절대 수정하지 않고, 파생 파일 2종만 사용했다.
+    <li>9차시는 <code>fab.csv</code> 원본을 절대 수정하지 않고, 파생 파일 2종만 사용했다.
       센서 별칭이 "교육용 가상 명칭"이며 실제 물리적 의미를 단정하지 않는다는 문구를 반복 명시했다.</li>
-    <li>8주차·10주차는 "상관관계는 원인을 증명하지 않는다"는 메시지를 퀴즈·결과 해석에 일관되게 포함했다.</li>
+    <li>8차시·10차시는 "상관관계는 원인을 증명하지 않는다"는 메시지를 퀴즈·결과 해석에 일관되게 포함했다.</li>
     <li>합격/불합격 부호 차이(<code>반도체_공정_샘플.csv</code>는 1=합격/-1=불합격,
-      <code>fab.csv</code>는 -1=정상/1=이상)는 1주차와 9주차, 그리고 <code>docs/glossary.md</code>에서
+      <code>fab.csv</code>는 -1=정상/1=이상)는 1차시와 9차시, 그리고 <code>docs/glossary.md</code>에서
       명시적으로 설명했다.</li>
   </ul>
 </section>

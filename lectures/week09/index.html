@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>9주차. 머신러닝으로 합격/불합격 예측하기</title>
+<title>9차시. 머신러닝 예측 모델 만들기</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10차시 과정
       <small>Semiconductor Process Data Analysis</small>
     </a>
     <nav class="week-nav">
-      <a href="../week01/index.html">1주</a>
-      <a href="../week02/index.html">2주</a>
-      <a href="../week03/index.html">3주</a>
-      <a href="../week04/index.html">4주</a>
-      <a href="../week05/index.html">5주</a>
-      <a href="../week06/index.html">6주</a>
-      <a href="../week07/index.html">7주</a>
-      <a href="../week08/index.html">8주</a>
-      <a href="../week09/index.html" class="current">9주</a>
-      <a href="../week10/index.html">10주</a>
+      <a href="../week01/index.html">1차시</a>
+      <a href="../week02/index.html">2차시</a>
+      <a href="../week03/index.html">3차시</a>
+      <a href="../week04/index.html">4차시</a>
+      <a href="../week05/index.html">5차시</a>
+      <a href="../week06/index.html">6차시</a>
+      <a href="../week07/index.html">7차시</a>
+      <a href="../week08/index.html">8차시</a>
+      <a href="../week09/index.html" class="current">9차시</a>
+      <a href="../week10/index.html">10차시</a>
     </nav>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="9"></div></div>
@@ -32,9 +32,9 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">9주차 · 2시간 수업 · 개요(skeleton)</span>
-    <h1>머신러닝으로 합격/불합격 예측하기</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"온도·압력 같은 측정값만 보고, 이 로트가 합격일지 불합격일지 미리 알 수 있을까?"</b></p>
+    <span class="badge blue">9차시 · 2시간 수업 · 개요(skeleton)</span>
+    <h1>머신러닝 예측 모델 만들기</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"코드를 쓰기 전에, Orange3로 먼저 이 데이터가 얼마나 잘 예측되는지 확인해볼 수 있을까?"</b></p>
   </div>
 
   <section class="block">
@@ -50,72 +50,69 @@
   <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
+      <li>Orange3로 먼저 이 데이터가 얼마나 잘 예측되는지 확인할 수 있다.</li>
       <li>Feature(특징)와 Label(정답)의 의미를 설명할 수 있다.</li>
       <li>train/test로 데이터를 나누고 분류 모델을 학습시킬 수 있다.</li>
       <li>정확도·혼동행렬로 모델 성능을 확인할 수 있다.</li>
-      <li>새 측정값을 입력해 predict()로 합격/불합격을 예측할 수 있다.</li>
-      <li>Orange3로 같은 데이터를 코드 없이 학습·예측해보고 결과를 비교할 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 1~8주차 전체 — 특히 3주차(직접 판정)와 8주차(상관관계)</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 1~8차시 전체 — 특히 3차시(직접 판정)와 8차시(원인 후보)</p>
   </section>
 
   <section class="block">
-    <h2>📚 다룰 이론 주제(초안)</h2>
+    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <div class="callout practice">
+      <b class="tag">위젯</b> File → Tree → Test and Score
+      <p style="margin:.5rem 0 0;">scikit-learn 코드를 쓰기 전에 Orange3 File → Tree → Test and Score 위젯으로 코드 없이 모델을 먼저 만들어보고 정확도를 확인한다. 이어서 같은 데이터를 scikit-learn 코드로 직접 학습시켜 비교한다.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 ② 파이썬으로 확인하기 — 다룰 이론 주제(초안)</h2>
     <ul class="goal-list">
       <li>Feature(특징)와 Label(정답)</li>
       <li>train/test 분리</li>
       <li>분류(classification), 정확도, 혼동행렬</li>
       <li>'정상이 대부분인 데이터'에서 정확도만 보면 안 되는 이유</li>
-      <li>새 데이터에 대한 예측 — predict()</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>🧪 다룰 실습 흐름(초안)</h2>
+    <h2>🐍 다룰 실습 흐름(초안)</h2>
     <ol style="padding-left:1.3rem;line-height:1.8;">
-      <li>week09_pass_fail_train.csv 불러오기 → 결측치 처리(4~5주차 복습)</li>
+      <li>week09_pass_fail_train.csv 불러오기 → 결측치 처리(4~5차시 복습)</li>
       <li>Feature/Label 나누기</li>
       <li>train_test_split으로 학습/평가 데이터 나누기</li>
       <li>DecisionTreeClassifier 학습</li>
       <li>정확도 · 혼동행렬 확인</li>
-      <li>week09_new_lots_to_predict.csv의 새 로트에 대해 predict()로 예측</li>
     </ol>
   </section>
 
   <section class="block">
-    <h2>🟠 Orange3 실습(추가 예정)</h2>
-    <div class="callout practice">
-      <b class="tag">위젯</b> File → Tree(또는 다른 분류기) → Test and Score → Predictions
-      <p style="margin:.5rem 0 0;">동일한 학습/예측 데이터를 Orange3로 불러와 코드 없이 모델을 만들고, scikit-learn 결과와 정확도·예측을 비교한다.</p>
-    </div>
-  </section>
-
-  <section class="block">
     <h2>📁 데이터</h2>
-    <p><code>data/weekly/week09/week09_pass_fail_train.csv, week09_new_lots_to_predict.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">학습용 750행 9열(검사결과 포함) + 예측 실습용 새 로트 9행(정답 라벨 없음). 반도체_공정_샘플.csv 계열 신규 생성 데이터, fab.csv 미사용.</p>
+    <p><code>data/weekly/week09/week09_pass_fail_train.csv</code></p>
+    <p style="color:var(--muted);font-size:.9rem;">학습용 750행 9열(검사결과 포함). 반도체_공정_샘플.csv 계열 신규 생성 데이터, fab.csv 미사용.</p>
   </section>
 
   <section class="block">
     <h2>❓ 핵심 질문 → 데이터 연결</h2>
-    <div class="callout concept">내가 새로 입력한 측정값에 대해 두 방식(scikit-learn/Orange3)의 예측이 같은가? 다르다면 왜 다를 수 있는가?</div>
+    <div class="callout concept">Orange3가 보여준 정확도와 내가 학습시킨 모델의 정확도가 비슷한가?</div>
   </section>
 
   <section class="block">
-    <h2>🔜 다음 주 예고</h2>
-    <div class="callout concept">10주차에는 지금까지 배운 것을 모두 활용해 스스로 질문을 정하고 미니 프로젝트를 수행한다.</div>
+    <h2>🔜 다음 차시 예고</h2>
+    <div class="callout concept">10차시에는 오늘 만든 모델로 새 로트를 예측하고, Orange3 Predictions로 다시 확인한다.</div>
   </section>
 
   <div class="nav-buttons">
-    <a href="../week08/index.html">← 이전 주차: 8주차</a>
+    <a href="../week08/index.html">← 이전 차시: 8차시</a>
     <a class="home" href="../../index.html">🏠 전체 목차</a>
-    <a href="../week10/index.html">다음 주차: 10주차 →</a>
+    <a href="../week10/index.html">다음 차시: 10차시 →</a>
   </div>
 
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 9주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 9차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
 </body>
