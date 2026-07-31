@@ -1,4 +1,10 @@
-# week10_mini_project_dataset.csv 데이터 설명서
+# week10_mini_project_dataset.csv 데이터 설명서 (선택 심화용)
+
+> **참고**: v2 커리큘럼(`docs/curriculum.md`)에서 10차시의 핵심 데이터는 9차시에서 학습한
+> 모델로 예측을 수행하는 `week09_new_lots_to_predict.csv`다(설명은
+> `week09_dictionary.md` 참고). 이 파일(`week10_mini_project_dataset.csv`)은 8개 프로젝트
+> 주제 중 하나를 골라 더 깊이 파보고 싶은 학습자를 위한 **선택 심화 자료**로 남겨둔 것이며,
+> 10차시 core 진행에는 사용하지 않는다.
 
 ## 목적
 1~9차시에서 배운 모든 기법(조회, 정제, 시각화, 그룹 비교, 수율, 이상탐지, 예측적 사고)을
