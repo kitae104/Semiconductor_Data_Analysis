@@ -17,7 +17,7 @@
 <main class="page">
   <div class="hero">
     <span class="badge purple">7차시 실습지</span>
-    <h1>반도체 수율과 불량 분석 — 실습지</h1>
+    <h1>설비·공정 비교와 수율·불량 분석 — 실습지</h1>
   </div>
 
   <section class="block">
@@ -61,22 +61,31 @@
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-df = pd.read_csv("week07_yield_defect_analysis.csv")
+df = pd.read_csv("week07_equipment_yield.csv")
 
-# 전체 수율 계산
-overall_yield = df["양품수량"].____() / df["검사수량"].____() * 100
+# 설비별 평균 온도
+print(df.____________("설비번호")["온도_섭씨"].mean())
 
-# 로트별 합산 집계
-lot_summary = df.____________("로트번호").agg(
-    검사수량=("검사수량", "sum"),
-    양품수량=("양품수량", "sum"),
+# 로트별 합산 집계(검사수량=행 개수, 양품수량=합격 개수)
+lot_summary = df.groupby("로트번호").____(
+    검사수량=("합격여부", "count"),
+    양품수량=("합격여부", lambda s: (s == 1).sum()),
 )
 
 # 불량 유형별 발생 빈도
 df["불량유형"].____________()</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>sum</code>, <code>sum</code>, <code>groupby</code>, <code>value_counts</code></div>
+    <div class="answer-box">순서대로 <code>groupby</code>, <code>agg</code>, <code>value_counts</code></div>
+  </section>
+
+  <section class="block">
+    <h2>4-1. 설비 비교 문제</h2>
+    <p>설비별 합격률을 계산했더니 EQ-01 98.1%, EQ-02 86.5%, EQ-03 91.1%, EQ-04 75.0%였다.
+    가장 "확인이 필요한" 설비는 어디이며, 그 이유는 무엇인가?</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">EQ-04. 네 설비 중 합격률이 가장 낮아(75.0%) 다른 설비보다 불량이 자주
+    발생하고 있다는 뜻이다.</div>
   </section>
 
   <section class="block">
@@ -93,15 +102,15 @@ df["불량유형"].____________()</code></pre>
 
   <section class="block">
     <h2>6. 결과 해석 문제</h2>
-    <p>실습에서 수율 하위 5개 로트가 모두 EQ-04였고, 불량 유형 상위 3개(정렬 불량,
-    전기적 특성 불량, 식각 부족)가 전체 불량의 43.1%를 차지했다. 이 두 결과를 보고
-    "다음 단계로 무엇을 확인해야 할지" 한 문장으로 적어보자.</p>
+    <p>실습에서 수율 하위 5개 로트 중 4개가 EQ-04였고, 불량 유형 상위 3개(두께 불량, 패턴 불량,
+    파티클)가 전체 불량의 약 61.1%를 차지했다. 이 두 결과를 보고 "다음 단계로 무엇을 확인해야
+    할지" 한 문장으로 적어보자.</p>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
       "____________________________________________________________"
     </div>
     <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">예시 답안: "EQ-04의 저수율 5개 로트에서 어떤 불량 유형이 특히 많이
+    <div class="answer-box">예시 답안: "EQ-04의 저수율 로트에서 어떤 불량 유형이 특히 많이
     발생했는지, 그리고 그 로트들의 온도·압력 등 센서 값이 다른 로트와 어떻게 달랐는지 확인해야 한다."</div>
   </section>
 

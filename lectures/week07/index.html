@@ -6,6 +6,14 @@
 <title>7차시. 설비·공정 비교와 수율·불량 분석</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
+<style>
+  .chart-img{max-width:100%;border-radius:8px;border:1px solid var(--line);display:block;margin:0 auto;}
+  .img-caption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:.4rem;}
+  .photo-slot{
+    border:2px dashed var(--line); border-radius:12px; background:#f8fafc; color:var(--muted);
+    padding:1.6rem 1rem; text-align:center; font-size:.88rem; margin:1rem 0;
+  }
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -32,20 +40,10 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">7차시 · 개요(skeleton)</span>
+    <span class="badge blue">7차시</span>
     <h1>설비·공정 비교와 수율·불량 분석</h1>
     <p class="today-question">💬 오늘의 질문: <b>"설비마다 차이가 있어 보이는데, 숫자로 계산해도 정말 그럴까?"</b></p>
   </div>
-
-  <section class="block">
-    <div class="callout warn">
-      <b class="tag">작성 상태</b>
-      이 페이지는 v2 커리큘럼 구성이 확정된 직후 작성된 <b>개요(skeleton)</b>입니다. 제목·학습
-      목표·다룰 내용·데이터까지는 확정되었지만, 상세 설명·예제 코드·단계별 실습·퀴즈는 아직 채워지지
-      않았습니다. 구성이 최종 확정되면 이어서 상세 내용을 작성합니다. 배경은
-      <a href="../../docs/restructure-plan.md">docs/restructure-plan.md</a> 참고.
-    </div>
-  </section>
 
   <section class="block">
     <h2>🎯 학습 목표</h2>
@@ -59,38 +57,325 @@
   </section>
 
   <section class="block">
-    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
-    <div class="callout practice">
-      <b class="tag">위젯</b> Box Plot · Bar Chart
-      <p style="margin:.5rem 0 0;">groupby 코드를 쓰기 전에 Orange3 Box Plot/Bar Chart 위젯으로 설비별 온도·합격 여부 분포를 먼저 살펴보고, 차이가 있어 보이는 설비를 미리 짐작해본다. 이어서 groupby로 실제 수치를 계산해 확인한다.</p>
+    <h2>⏮️ 지난 시간 복습</h2>
+    <div class="callout concept">
+      <b class="tag">6차시 연결</b>
+      6차시에서는 박스플롯으로 "EQ-02의 온도가 유독 넓게 퍼져 있다"는 것을 그림으로 확인했다.
+      그림은 인상을 주지만 정확한 숫자를 알려주지는 않는다. 오늘은 <code>groupby</code>로 그
+      인상을 정확한 숫자로 바꾸고, 수율·불량 분석까지 연결한다.
     </div>
   </section>
 
   <section class="block">
-    <h2>📚 ② 파이썬으로 확인하기 — 다룰 이론 주제(초안)</h2>
-    <ul class="goal-list">
-      <li>그룹화(groupby)와 집계(평균/합계)</li>
-      <li>합격률과 수율의 차이</li>
-      <li>불량 유형</li>
-      <li>파레토 분석 기초 — '소수의 원인이 대부분의 불량을 만든다'</li>
-    </ul>
+    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <div class="callout practice">
+      <b class="tag">위젯</b> Box Plot · Bar Chart
+      <p style="margin:.5rem 0 0;">groupby 코드를 쓰기 전에 Orange3 Box Plot/Bar Chart 위젯으로
+      설비별 온도·합격 여부 분포를 먼저 살펴보고, 차이가 있어 보이는 설비를 미리 짐작해본다.</p>
+    </div>
+    <div class="photo-slot">
+      🖼️ <b>이미지 자리</b> — 실제 Orange3 화면 캡처(설비번호별 Box Plot, 합격여부 Bar Chart)를
+      강사가 추가하면 좋다.
+    </div>
+    <p style="color:var(--muted);font-size:.9rem;">이제 Orange3로 미리 살펴본 인상을, 아래에서
+    <code>groupby</code>로 정확한 숫자로 확인해본다.</p>
   </section>
 
   <section class="block">
-    <h2>🐍 다룰 실습 흐름(초안)</h2>
-    <ol style="padding-left:1.3rem;line-height:1.8;">
-      <li>설비별 평균 온도/압력 비교하기</li>
-      <li>설비별 합격률 비교하기</li>
-      <li>로트 단위 수율 계산하기(groupby 합계 후 나누기)</li>
-      <li>불량 유형 집계와 파레토 차트 그리기</li>
-      <li>가장 불안정한 설비 · 가장 저수율인 로트 찾기</li>
-    </ol>
+    <h2>🐍 ② 파이썬으로 확인하기 — groupby로 설비별 비교하기</h2>
+    <p><code>groupby()</code>는 특정 열의 값(예: 설비번호)이 같은 행끼리 묶어주는 기능이다.
+    그 자체로는 결과를 보여주지 않으며, 반드시 <code>.mean()</code>, <code>.std()</code> 같은
+    집계 함수를 뒤에 붙여야 숫자가 나온다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 설비별 평균 온도</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+
+df = pd.read_csv("week07_equipment_yield.csv")
+print(df.groupby("설비번호")["온도_섭씨"].mean())</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">설비번호
+EQ-01    300.21
+EQ-02    300.07
+EQ-03    299.35
+EQ-04    301.65
+Name: 온도_섭씨, dtype: float64</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">평균만 봐서는 안 되는 이유</b>
+      네 설비의 평균 온도는 모두 299~302℃로 비슷해 보인다. 하지만 평균이 비슷하다고 "똑같이
+      안정적"이라는 뜻은 아니다 — 6차시에서 본 것처럼 EQ-02는 표준편차(퍼짐)가 더 크다.
+      평균과 표준편차는 함께 봐야 한다.
+    </div>
+
+    <h3>설비별 합격률 비교</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>pass_rate = df.groupby("설비번호")["합격여부"].apply(lambda s: (s == 1).mean() * 100)
+print(pass_rate)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">설비번호
+EQ-01    98.1
+EQ-02    86.5
+EQ-03    91.1
+EQ-04    75.0
+Name: 합격여부, dtype: float64</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      EQ-04의 합격률(75.0%)이 네 설비 중 가장 낮다 — "확인이 필요한 설비"로 볼 수 있다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 로트 단위 수율 계산하기</h2>
+    <p>합격률(웨이퍼 단위 단순 비율)과 <b>수율(로트 단위로 양품수량÷검사수량)</b>은 계산 방식이
+    다르다. 이번 데이터는 로트 하나당 웨이퍼 4장으로 구성되어 있으므로, 로트별로 묶어 수율을
+    계산해보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 로트별 수율 계산</span><button class="copy-btn">복사</button></div>
+      <pre><code>lot_summary = df.groupby("로트번호").agg(
+    설비번호=("설비번호", "first"),
+    검사수량=("합격여부", "count"),
+    양품수량=("합격여부", lambda s: (s == 1).sum()),
+)
+lot_summary["수율_pct"] = (lot_summary["양품수량"] / lot_summary["검사수량"] * 100).round(1)
+
+print(lot_summary.head())</code></pre>
+    </div>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>로트번호</th><th>설비번호</th><th>검사수량</th><th>양품수량</th><th>수율_pct</th></tr>
+        <tr><td>LOT-0001</td><td>EQ-01</td><td>4</td><td>4</td><td>100.0</td></tr>
+        <tr><td>LOT-0005</td><td>EQ-04</td><td>4</td><td>4</td><td>100.0</td></tr>
+        <tr><td>LOT-0006</td><td>EQ-04</td><td>4</td><td>3</td><td>75.0</td></tr>
+        <tr><td>LOT-0008</td><td>EQ-04</td><td>4</td><td>0</td><td>0.0</td></tr>
+      </table>
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — 단순 평균과 다르다</b>
+      "전체 합격률"은 300건 전체를 한 번에 나눈 값이지만, "로트별 수율"은 로트 하나하나를 따로
+      계산한다. 로트 하나가 통째로 저조하면(예: LOT-0008은 4건 중 0건 합격, 수율 0%) 전체
+      합격률만 봐서는 놓칠 수 있다.
+    </div>
+
+    <h3>저수율 로트 찾기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>low_yield_lots = lot_summary[lot_summary["수율_pct"] < 80]
+print(len(low_yield_lots), "개 로트가 수율 80% 미만")
+print(low_yield_lots["설비번호"].value_counts())</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">21 개 로트가 수율 80% 미만
+설비번호
+EQ-04    11
+EQ-03     5
+EQ-02     4
+EQ-01     1
+Name: count, dtype: int64</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      저수율 로트 21개 중 11개(절반 이상)가 EQ-04에서 나왔다 — 합격률이 가장 낮았던 설비와
+      저수율 로트가 가장 많이 나온 설비가 <b>일치</b>한다. 두 가지 다른 방법(합격률, 로트별
+      수율)이 같은 결론을 가리킨다는 것은 그 결론이 우연이 아닐 가능성을 높여준다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 불량 유형 집계와 파레토 분석</h2>
+    <p><b>파레토 분석</b>은 "소수의 원인이 대부분의 결과를 만든다"는 관점으로 문제를 우선순위화하는
+    방법이다. 불량 유형을 집계해 어떤 유형이 가장 많은지 확인해보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>defect_counts = df[df["합격여부"] == -1]["불량유형"].value_counts()
+print(defect_counts)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">두께 불량        11
+패턴 불량         6
+파티클           5
+오염            5
+정렬 불량         4
+식각 부족         4
+전기적 특성 불량     1
+Name: count, dtype: int64</pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week07/pareto_defects.png" alt="불량유형 파레토 차트. 두께 불량이 가장 많고, 누적 비율 막대와 선이 함께 표시되어 있다.">
+    <p class="img-caption">"두께 불량"이 전체 불량(36건)의 약 31%를 차지하는 가장 큰 원인이다.
+    상위 2개 유형(두께 불량, 패턴 불량)만 해결해도 전체 불량의 절반 가까이를 줄일 수 있다.</p>
+  </section>
+
+  <section class="block">
+    <h2>🟣 실습: groupby와 수율 분석 따라 하기</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>Orange3로 먼저 훑어보기</b> — Box Plot, Bar Chart로 설비별 차이를
+      미리 짐작해본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>설비별 평균·합격률</b> — <code>groupby("설비번호")</code>로 평균
+      온도와 합격률을 계산한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>로트별 수율 계산</b> — <code>groupby("로트번호").agg(...)</code>로
+      로트마다 검사수량·양품수량·수율을 계산한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>저수율 로트 찾기</b> — 수율 80% 미만 로트를 조건 검색으로 찾고,
+      어느 설비에 몰려 있는지 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>불량 유형 파레토</b> — <code>value_counts()</code>로 불량 유형을
+      집계하고, 가장 큰 원인을 찾는다.</div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div class="content"><b>종합 정리</b> — 합격률이 가장 낮은 설비와 저수율 로트가 몰린
+      설비가 같은지 확인하고 문장으로 정리한다. (학생용 Notebook의 TODO로 이어짐)</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 핵심 용어 카드</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>groupby</h4><div class="en">Group By</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>특정 열의 값이 같은 행끼리 묶는 기능. 집계 함수와 함께 써야 결과가 나온다.</dd>
+          <dt>쉬운 비유</dt><dd>학생들을 반별로 줄 세운 뒤, 반마다 평균 점수를 내는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>df.groupby("설비번호")["온도_섭씨"].mean()</code></dd>
+          <dt>자주 하는 오해</dt><dd><code>groupby()</code>만 쓰면 결과가 바로 보인다고 착각하기 쉽다. 집계 함수를 붙여야 한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>합격률 vs 수율</h4><div class="en">Pass Rate vs Yield</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>합격률은 전체를 한 번에 나눈 비율, 수율은 로트처럼 묶음 단위로 계산한 비율.</dd>
+          <dt>쉬운 비유</dt><dd>학년 전체 평균 vs 반별 평균처럼, 어떤 단위로 나누느냐에 따라 다른 그림이 보인다.</dd>
+          <dt>데이터에서의 예</dt><dd>전체 합격률과 로트별 수율이 다른 결론을 보여줄 수 있다.</dd>
+          <dt>자주 하는 오해</dt><dd>둘이 항상 같은 결과를 준다고 착각하기 쉽다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>파레토 분석</h4><div class="en">Pareto Analysis</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>소수의 원인이 대부분의 결과를 만든다는 관점으로 우선순위를 정하는 분석법.</dd>
+          <dt>쉬운 비유</dt><dd>옷장 정리할 때 자주 입는 옷 20%가 착용 횟수의 80%를 차지하는 것.</dd>
+          <dt>데이터에서의 예</dt><dd>"두께 불량" 하나가 전체 불량의 약 31%를 차지.</dd>
+          <dt>자주 하는 오해</dt><dd>모든 불량 유형을 동시에 해결하려 하기 쉽다. 가장 큰 것부터 우선순위를 정하는 것이 효율적이다.</dd>
+        </dl>
+      </div>
+    </div>
   </section>
 
   <section class="block">
     <h2>📁 데이터</h2>
     <p><code>data/weekly/week07/week07_equipment_yield.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">300행(75로트×4웨이퍼) 11열 — 설비별 특성 + 저수율 로트(5개) + 불량유형 파레토 패턴 병합</p>
+    <p style="color:var(--muted);font-size:.9rem;">300행(75로트×4웨이퍼) 11열 — 설비별 특성과
+    불량유형 패턴이 포함된 데이터. 자세한 설명은
+    <a href="../../data/data_dictionary/week07_dictionary.md">데이터 설명서</a> 참고.</p>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout danger">
+      <b class="tag">오류 1</b>
+      <code>TypeError: agg function failed</code> — 문자열 열(로트번호 등)에 <code>.mean()</code>을
+      적용하려 한 경우다. 숫자 열에만 평균/표준편차를 적용해야 한다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 2</b>
+      <code>groupby("설비번호", "온도_섭씨")</code>처럼 콤마로 열을 나열하는 실수가 흔하다.
+      올바른 형태는 <code>groupby("설비번호")["온도_섭씨"]</code>다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의</b>
+      <code>KeyError</code>가 나면 <code>df.columns</code>로 정확한 열 이름을 먼저 확인하자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🚀 도전 실습</h2>
+    <div class="callout practice">
+      <b class="tag">도전 문제</b>
+      <code>df.groupby(["설비번호", "작업조"])["합격여부"].apply(lambda s: (s==1).mean()*100)</code>처럼
+      설비와 작업조 <b>두 기준</b>을 동시에 그룹화해보자. 특정 설비+작업조 조합이 유독 낮은
+      합격률을 보이는지 확인해본다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. (객관식) <code>df.groupby("설비번호")["온도_섭씨"]</code>만 실행하고
+      아무 메서드도 붙이지 않으면 어떻게 되는가?</div>
+      <ul class="options">
+        <li>A. 설비별 평균이 자동으로 출력된다</li>
+        <li>B. 오류가 난다</li>
+        <li>C. groupby 객체만 만들어질 뿐, 집계 함수를 붙여야 결과가 보인다</li>
+        <li>D. 전체 평균이 출력된다</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: C. <code>.mean()</code>, <code>.std()</code> 같은 집계
+      함수를 뒤에 붙여야 실제 숫자 결과를 볼 수 있다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (참/거짓) 두 설비의 평균 온도가 같으면, 두 설비는 똑같이 안정적으로
+      운영되고 있다고 말할 수 있다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 거짓. 평균이 같아도 표준편차(퍼짐)가 다르면 안정성이 다르다.
+      평균과 표준편차를 함께 봐야 한다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. (빈칸) 값이 몇 번 나왔는지 세는 파이썬/Pandas 메서드는
+      <code>______()</code>이다 (불량유형 집계에 사용).</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: <code>value_counts</code></div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q4. (서술) 파레토 분석이 왜 유용한지, 오늘 데이터(두께 불량이 전체
+      불량의 약 31%)를 예로 들어 한 문장으로 설명해보자.</div>
+      <button class="reveal-btn">예시 답안 보기</button>
+      <div class="answer-box">예시 답안: "파레토 분석은 가장 큰 원인부터 우선순위를 정할 수
+      있게 해주는데, 오늘 데이터에서는 '두께 불량' 하나만 해결해도 전체 불량의 약 31%를 줄일
+      수 있어 어디부터 개선해야 할지 명확해진다."</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📝 과제(다음 차시까지)</h2>
+    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 확인할 수 있게 만들어 제출한다.</p>
+    <div class="callout practice">
+      <b class="tag">과제 1 — 공정별 비교</b>
+      <code>groupby("공정명")</code>으로 공정별 평균 처리시간(<code>처리시간_sec</code>)과
+      합격률을 계산하고, 어느 공정이 가장 오래 걸리는지 확인한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 2 — 작업조별 비교</b>
+      <code>groupby("작업조")</code>로 작업조(A/B/C조)별 합격률을 비교하고, 결과를 f-string으로
+      정리한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 3(도전) — 중앙값 비교</b>
+      <code>groupby("설비번호")["온도_섭씨"].median()</code>으로 중앙값을 계산해 평균과 비교해보고,
+      두 값이 크게 다른 설비가 있는지 확인한다.
+    </div>
   </section>
 
   <section class="block">
@@ -112,8 +397,9 @@
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 7차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 7차시 · 교육용 자료(가상 데이터 사용)</footer>
 
 <script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
 </body>
 </html>
