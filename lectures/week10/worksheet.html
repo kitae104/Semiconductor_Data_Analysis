@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10주차 실습지 — 프로젝트 기획서</title>
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정</a>
+    <nav class="week-nav"><a href="index.html">← 10주차 강의로</a></nav>
+  </div>
+</header>
+<main class="page">
+  <div class="hero">
+    <span class="badge purple">10주차 실습지</span>
+    <h1>반도체 공정 데이터 분석 미니 프로젝트 — 프로젝트 기획서</h1>
+    <p class="today-question">이 실습지는 오늘 프로젝트를 시작하기 전, 생각을 정리하는 "기획서"다.
+    빈칸을 채운 뒤 Notebook 실습으로 넘어가자.</p>
+  </div>
+
+  <section class="block">
+    <h2>1. 주제 선택 체크리스트</h2>
+    <p>아래 8가지 주제 중 하나에 표시(✔)하자.</p>
+    <table class="timetable">
+      <tr><th>선택</th><th>주제</th><th>주로 쓰는 열</th></tr>
+      <tr><td>☐</td><td>① 설비별 불량률 비교</td><td>설비번호, 검사결과</td></tr>
+      <tr><td>☐</td><td>② 저수율 로트 찾기</td><td>로트번호, 검사결과</td></tr>
+      <tr><td>☐</td><td>③ 온도 이상 구간 탐지</td><td>측정시간, 온도_섭씨</td></tr>
+      <tr><td>☐</td><td>④ 진공도-불량 관계</td><td>진공도_mTorr, 검사결과</td></tr>
+      <tr><td>☐</td><td>⑤ 냉각수온도-공정온도 관계</td><td>냉각수온도_섭씨, 온도_섭씨</td></tr>
+      <tr><td>☐</td><td>⑥ 막두께 불량 원인 후보</td><td>두께_nm, 불량유형</td></tr>
+      <tr><td>☐</td><td>⑦ 주요 센서 불량 예측</td><td>수치형 센서 열 전체, 검사결과</td></tr>
+      <tr><td>☐</td><td>⑧ 설비 시간대별 변화</td><td>측정시간, 설비번호</td></tr>
+    </table>
+  </section>
+
+  <section class="block">
+    <h2>2. 분석 질문 적어보기</h2>
+    <p>선택한 주제를 "~와 ~는 관계가 있을까?" 또는 "어느 ~가 가장 ~한가?" 형태의 구체적인 질문으로 바꿔보자.</p>
+    <div class="callout practice">
+      <b class="tag">질문 작성</b>
+      "나의 분석 질문: ________________________________________________?"
+    </div>
+    <div class="callout concept">
+      <b class="tag">좋은 질문의 예</b>
+      "설비별 불량률에 차이가 있을까?", "진공도가 정상 범위를 벗어나면 불량률이 올라갈까?"처럼
+      데이터의 열 이름을 넣어 구체적으로 쓰면 좋다. "데이터를 분석해보자"는 질문이 아니다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>3. 사용할 데이터 열 고르기</h2>
+    <p>내 질문에 답하기 위해 필요한 열을 최소 3개 적어보자.</p>
+    <table class="timetable">
+      <tr><th>번호</th><th>열 이름</th><th>이 열이 필요한 이유</th></tr>
+      <tr><td>1</td><td>________________</td><td>________________________________</td></tr>
+      <tr><td>2</td><td>________________</td><td>________________________________</td></tr>
+      <tr><td>3</td><td>________________</td><td>________________________________</td></tr>
+    </table>
+  </section>
+
+  <section class="block">
+    <h2>4. 10단계 진행 체크리스트</h2>
+    <p>진행하면서 완료한 단계에 표시하자.</p>
+    <table class="timetable">
+      <tr><th>단계</th><th>내용</th><th>완료</th></tr>
+      <tr><td>1</td><td>질문 정하기</td><td>☐</td></tr>
+      <tr><td>2</td><td>관련 데이터 열 파악하기</td><td>☐</td></tr>
+      <tr><td>3</td><td>데이터 불러오고 구조 확인하기</td><td>☐</td></tr>
+      <tr><td>4</td><td>결측값·이상값 점검하고 정리하기</td><td>☐</td></tr>
+      <tr><td>5</td><td>그래프로 먼저 살펴보기</td><td>☐</td></tr>
+      <tr><td>6</td><td>설비·공정·작업조별로 비교하기</td><td>☐</td></tr>
+      <tr><td>7</td><td>수율·불량률 계산하기</td><td>☐</td></tr>
+      <tr><td>8</td><td>이상 구간·원인 후보 찾기</td><td>☐</td></tr>
+      <tr><td>9</td><td>(선택) 예측 모델로 확인해보기</td><td>☐</td></tr>
+      <tr><td>10</td><td>결과 정리 + 개선안 작성 → 발표자료 만들기</td><td>☐</td></tr>
+    </table>
+    <button class="reveal-btn">순서가 맞는지 확인하기</button>
+    <div class="answer-box">10단계의 핵심은 순서다: 질문 → 데이터 확인 → 정제 → 시각화 → 비교 →
+    수율 → 원인탐색 → (예측) → 정리/발표. 순서를 건너뛰고 바로 "원인 후보"부터 찾으면
+    엉뚱한 결론에 빠지기 쉽다.</div>
+  </section>
+
+  <section class="block">
+    <h2>5. 예상 그래프 스케치</h2>
+    <p>어떤 그래프를 그릴지 미리 계획해보자. 최소 3개를 채운다.</p>
+    <table class="timetable">
+      <tr><th>번호</th><th>그래프 종류</th><th>x축</th><th>y축(또는 범주)</th></tr>
+      <tr><td>1</td><td>☐선 ☐막대 ☐히스토그램 ☐산점도 ☐박스플롯</td><td>____________</td><td>____________</td></tr>
+      <tr><td>2</td><td>☐선 ☐막대 ☐히스토그램 ☐산점도 ☐박스플롯</td><td>____________</td><td>____________</td></tr>
+      <tr><td>3</td><td>☐선 ☐막대 ☐히스토그램 ☐산점도 ☐박스플롯</td><td>____________</td><td>____________</td></tr>
+    </table>
+  </section>
+
+  <section class="block">
+    <h2>6. 결과 해석 문장 초안 작성</h2>
+    <p>아래 문장 틀을 참고해 결과가 나오는 대로 채워보자. (Notebook 실습 후 다시 돌아와 완성해도 된다.)</p>
+    <div class="callout practice">
+      <b class="tag">문장 틀 1 — 관찰</b>
+      "____________별로 비교한 결과, ____________의 ____________이(가) ___%로 가장 (높았다/낮았다)."
+    </div>
+    <div class="callout practice">
+      <b class="tag">문장 틀 2 — 경향</b>
+      "데이터에서 이러한 경향이 관찰되었다: ________________________________."
+    </div>
+    <div class="callout practice">
+      <b class="tag">문장 틀 3 — 원인 후보(신중하게)</b>
+      "____________이(가) 불량과 관련 있을 가능성이 있다. 다만 상관관계만으로 원인이라고
+      단정할 수 없으며, 정확한 원인 확인을 위해 추가 데이터가 필요하다."
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>7. 개선 제안 아이디어 적어보기</h2>
+    <p>최소 2개의 개선 제안을 적어보자. "더 잘하자" 같은 막연한 말 대신 구체적인 행동으로 쓴다.</p>
+    <div class="callout practice">
+      <b class="tag">개선 제안 1</b>
+      "________________________________________________________________"
+    </div>
+    <div class="callout practice">
+      <b class="tag">개선 제안 2</b>
+      "________________________________________________________________"
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>8. 발표자료 준비 체크리스트</h2>
+    <table class="timetable">
+      <tr><th>항목</th><th>완료</th></tr>
+      <tr><td>분석 질문을 한 문장으로 말할 수 있다</td><td>☐</td></tr>
+      <tr><td>핵심 그래프 1~2개를 골랐다</td><td>☐</td></tr>
+      <tr><td>결과 문장을 숫자와 함께 말할 수 있다</td><td>☐</td></tr>
+      <tr><td>원인 후보와 한계를 구분해서 말할 수 있다</td><td>☐</td></tr>
+      <tr><td>개선 제안 2개를 말할 수 있다</td><td>☐</td></tr>
+      <tr><td>3~5분 안에 끝나는지 연습했다</td><td>☐</td></tr>
+    </table>
+  </section>
+
+  <div class="nav-buttons">
+    <a class="home" href="index.html">← 10주차 강의로 돌아가기</a>
+    <a href="project-report-template.html">최종 보고서 양식 열기 →</a>
+  </div>
+</main>
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 10주차 실습지</footer>
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+/* 인쇄용 스타일: 내비게이션/버튼/퀴즈 정답 버튼 등 인터랙션 요소를 숨긴다 */
+@media print{
+  .site-header, .week-nav, #backToTop, .nav-buttons, .copy-btn, .reveal-btn{
+    display:none !important;
+  }
+  body{background:#fff; font-size:12pt; color:#000;}
+  main.page{max-width:100%; padding:0;}
+  section.block{box-shadow:none; border:1px solid #999; break-inside:avoid; margin-bottom:.8rem;}
+  .code-block pre{white-space:pre-wrap; word-break:break-word;}
+  a{color:#000; text-decoration:underline;}
+  .answer-box{display:block !important; background:#f3f3f3;}
+}

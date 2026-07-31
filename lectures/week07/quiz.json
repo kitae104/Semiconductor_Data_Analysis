@@ -1,0 +1,81 @@
+{
+  "week": 7,
+  "title": "반도체 수율과 불량 분석",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "검사수량 25개 중 양품이 20개일 때 수율은?",
+      "options": ["20%", "25%", "80%", "125%"],
+      "answer": 2,
+      "explanation": "20 ÷ 25 × 100 = 80%."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "다음 중 '불량률'을 구하는 식으로 알맞은 것은?",
+      "options": [
+        "양품수량 ÷ 검사수량 × 100",
+        "불량수량 ÷ 검사수량 × 100",
+        "불량수량 ÷ 양품수량 × 100",
+        "검사수량 ÷ 불량수량 × 100"
+      ],
+      "answer": 1,
+      "explanation": "불량률(%) = 불량수량 ÷ 검사수량 × 100 = 100 − 수율(%)."
+    },
+    {
+      "type": "true_false",
+      "question": "로트 수율을 구할 때는 웨이퍼별 수율_pct를 그냥 평균 내면 정확하다.",
+      "answer": false,
+      "explanation": "웨이퍼마다 검사수량이 다르므로, 검사수량과 양품수량을 먼저 합산한 뒤 나누어야 정확하다."
+    },
+    {
+      "type": "true_false",
+      "question": "이번 주 데이터에서 수율 하위 5개 로트는 모두 EQ-04에서 생산되었다.",
+      "answer": true,
+      "explanation": "LOT-0053, LOT-0050, LOT-0006, LOT-0037, LOT-0029 모두 EQ-04 설비에서 생산되었다(수율 66.3~68.5%)."
+    },
+    {
+      "type": "true_false",
+      "question": "EQ-04에서 생산된 모든 로트는 수율이 낮다.",
+      "answer": false,
+      "explanation": "EQ-04의 18개 로트 중 5개만 수율이 낮고(66.3~68.5%), 나머지 13개는 89.7~97.1%로 오히려 우수하다."
+    },
+    {
+      "type": "term_matching",
+      "question": "용어와 설명을 연결하시오.",
+      "pairs": [
+        {"term": "수율", "definition": "검사수량 중 양품이 차지하는 비율"},
+        {"term": "불량률", "definition": "검사수량 중 불량이 차지하는 비율"},
+        {"term": "불량 유형", "definition": "불량이 발생한 원인을 분류한 이름"},
+        {"term": "파레토 분석", "definition": "빈도가 많은 순서로 소수의 주요 원인을 찾는 분석법"}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "question": "특정 열의 값별 등장 횟수를 세고 자동으로 많은 순 정렬해주는 Pandas 메서드는 df['열이름'].____()이다.",
+      "answer": "value_counts"
+    },
+    {
+      "type": "fill_blank",
+      "question": "여러 행을 그룹으로 묶어 집계할 때 사용하는 Pandas 메서드는 df.____('로트번호')이다.",
+      "answer": "groupby"
+    },
+    {
+      "type": "result_prediction",
+      "question": "검사수량 합 200개, 양품수량 합 178개인 로트의 수율(%)은?",
+      "answer": "89.0%",
+      "explanation": "178 ÷ 200 × 100 = 89.0%"
+    },
+    {
+      "type": "chart_choice",
+      "question": "불량 유형별 발생 빈도와 누적 비율을 함께 보여주는 그래프 조합은?",
+      "options": ["히스토그램만", "막대그래프 + 누적선 그래프(파레토 차트)", "산점도만"],
+      "answer": 1,
+      "explanation": "막대그래프로 빈도를, 누적선 그래프로 누적 비율을 함께 표현한 것이 파레토 차트다."
+    },
+    {
+      "type": "short_answer",
+      "question": "오늘 배운 내용을 바탕으로, 수율이 낮은 로트들의 공통점을 한 문장으로 설명해보시오.",
+      "sample_answer": "수율 하위 5개 로트는 모두 EQ-04에서 생산되었지만, EQ-04의 나머지 로트는 오히려 수율이 높아서 설비 전체보다는 특정 로트들이 문제였다고 볼 수 있다."
+    }
+  ]
+}

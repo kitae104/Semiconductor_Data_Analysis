@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8주차. 공정 이상과 원인 후보 찾기</title>
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+      <small>Semiconductor Process Data Analysis</small>
+    </a>
+    <nav class="week-nav">
+      <a href="../week01/index.html">1주</a>
+      <a href="../week02/index.html">2주</a>
+      <a href="../week03/index.html">3주</a>
+      <a href="../week04/index.html">4주</a>
+      <a href="../week05/index.html">5주</a>
+      <a href="../week06/index.html">6주</a>
+      <a href="../week07/index.html">7주</a>
+      <a href="../week08/index.html" class="current">8주</a>
+      <a href="../week09/index.html">9주</a>
+      <a href="../week10/index.html">10주</a>
+    </nav>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="8"></div></div>
+</header>
+
+<main class="page">
+
+  <div class="hero">
+    <span class="badge blue">8주차 · 2시간 수업</span>
+    <h1>공정 이상과 원인 후보 찾기</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"온도가 이상했던 시점과 불량이 발생한 시점이 겹칠까?"</b></p>
+  </div>
+
+  <section class="block">
+    <h2>🎯 학습 목표</h2>
+    <ul class="goal-list">
+      <li>임계값(기준값)을 이용해 이상치(비정상 데이터)를 찾아낼 수 있다.</li>
+      <li>평균과 표준편차로 "정상 범위"를 판단하는 직관을 이해한다.</li>
+      <li>두 변수 사이의 상관관계를 산점도와 상관계수로 확인할 수 있다.</li>
+      <li>"상관관계가 있다고 해서 원인이라고 단정할 수 없다"는 원칙을 설명할 수 있다.</li>
+      <li>"원인"이 아니라 "원인 후보"라는 표현을 써야 하는 이유를 설명할 수 있다.</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2>⏮️ 지난 시간 복습</h2>
+    <div class="callout concept">
+      <b class="tag">4주차 + 7주차 연결</b>
+      4주차에서는 결측값·중복값과 함께 "말이 안 되는 이상값(예: 500℃ 이상)"을 찾아 정리해봤다.
+      7주차에서는 로트별 수율을 계산하고, 수율이 낮은 로트가 특정 설비에 몰리는지 살펴봤다.
+      이번 8주차는 두 내용을 합친다 — "이상값이 있었던 시점"과 "불합격이 발생한 시점"이
+      실제로 겹치는지를 데이터로 확인하고, 그 관계가 정말 원인이라고 말할 수 있는지까지 따져본다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 이상치, 관리 상한/하한, 표준편차</h2>
+    <h3>이상치(Outlier)란?</h3>
+    <p>대부분의 측정값은 평소와 비슷한 범위 안에 모여 있다. 이 범위를 크게 벗어난 값을
+    <b>이상치(Outlier)</b> 또는 <b>이상 데이터</b>라고 부른다. 이상치가 항상 "고장"을 의미하지는
+    않지만, 불량이나 설비 이상과 함께 나타나는 경우가 많아 먼저 찾아볼 가치가 있다.</p>
+
+    <h3>정상 범위를 정하는 두 가지 방법</h3>
+    <p>정상 범위(관리 범위)를 정하는 방법은 크게 두 가지다.</p>
+    <div class="callout concept">
+      <b class="tag">방법 1. 공정 규격(Spec) 기준</b>
+      설비 설계자나 공정 엔지니어가 "이 값은 몇~몇 사이여야 정상"이라고 미리 정해둔 기준이다.
+      이번 데이터에서는 온도 <b>295~305℃</b>, 진공도 <b>4.5~5.5 mTorr</b>가 이 기준(교육용 예시)이다.
+    </div>
+    <div class="callout concept">
+      <b class="tag">방법 2. 통계적 기준 — 평균 ± 표준편차</b>
+      데이터 자체의 <b>평균(mean)</b>과 <b>표준편차(std, 흩어진 정도)</b>를 이용해
+      "평균에서 표준편차의 2배 이상 벗어난 값"을 이상치로 보는 방법이다. 이를 관리 상한(UCL,
+      Upper Control Limit) · 관리 하한(LCL, Lower Control Limit)이라고 부른다.
+      <br><br>
+      <code>관리 상한 = 평균 + 2×표준편차</code>, <code>관리 하한 = 평균 − 2×표준편차</code>
+    </div>
+    <p>실제로 이번 데이터의 온도_섭씨 열은 평균 <b>300.10℃</b>, 표준편차 <b>3.97℃</b>다.
+    이 값을 넣으면 관리 상한은 <b>308.05℃</b>, 관리 하한은 <b>292.15℃</b>이고, 이 범위를 벗어난
+    행은 450건 중 <b>25건(5.6%)</b>이다. 같은 데이터를 규격 기준(295~305℃)으로 보면
+    <b>92건(20.4%)</b>이 벗어난다 — 기준을 어떻게 정하느냐에 따라 "이상치로 잡히는 개수"가
+    달라진다는 점이 중요하다.</p>
+  </section>
+
+  <section class="block">
+    <h2>📚 상관관계, 직관적으로 이해하기</h2>
+    <p><b>상관관계(Correlation)</b>는 두 변수가 "함께 움직이는 정도"를 말한다. 한쪽이 커질 때
+    다른 쪽도 커지면 <b>양의 상관</b>, 한쪽이 커질 때 다른 쪽이 작아지면 <b>음의 상관</b>,
+    아무 관계가 없으면 <b>상관관계 없음</b>이라고 한다.</p>
+    <p>상관관계의 세기는 <b>상관계수(r)</b>라는 숫자로 표현하며, −1 ~ 1 사이의 값을 가진다.
+    1에 가까울수록 강한 양의 상관, −1에 가까울수록 강한 음의 상관, 0에 가까울수록 관계가 없다는
+    뜻이다. Pandas에서는 <code>df["A"].corr(df["B"])</code>로 계산한다.</p>
+    <table class="timetable">
+      <tr><th>상관계수 r</th><th>해석(교육용 기준)</th></tr>
+      <tr><td>0.7 이상</td><td>강한 양의 상관</td></tr>
+      <tr><td>0.3 ~ 0.7</td><td>약한~중간 양의 상관</td></tr>
+      <tr><td>-0.3 ~ 0.3</td><td>뚜렷한 관계 없음(대조군 포함)</td></tr>
+      <tr><td>-0.7 이하</td><td>강한 음의 상관</td></tr>
+    </table>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 상관관계 ≠ 인과관계 — "원인 후보"라는 표현</h2>
+    <div class="callout danger">
+      <b class="tag">가장 중요한 원칙</b>
+      <b>상관관계가 있다고 해서 원인이라고 단정할 수 없다.</b> 두 변수가 함께 움직인다는 것은
+      "관련이 있어 보인다"는 뜻일 뿐, "하나가 다른 하나를 일으켰다"는 증명이 아니다.
+    </div>
+    <p>예를 들어 아이스크림 판매량과 익사 사고 건수는 여름철에 함께 증가해 강한 상관관계를 보인다.
+    하지만 아이스크림이 익사 사고의 원인은 아니다. "더운 날씨"라는 제3의 원인이 둘 다에
+    영향을 주었을 뿐이다. 공정 데이터도 마찬가지다 — 두 열의 상관계수가 높게 나와도, 그 관계가
+    진짜 원인-결과인지, 아니면 제3의 요인(시간, 설비, 계절 등) 때문에 우연히 함께 움직인 것인지는
+    상관계수만으로는 알 수 없다.</p>
+    <div class="callout warn">
+      <b class="tag">그래서 우리는 "원인 후보"라는 표현을 쓴다</b>
+      이 과정에서는 상관관계가 확인된 변수를 "원인"이라고 부르지 않고 <b>"원인 후보"</b>라고
+      부른다. "원인 후보"는 "더 조사해볼 가치가 있는 유력한 용의자"라는 뜻이다. 진짜 원인인지
+      확인하려면 실험(예: 그 조건을 실제로 바꿔보고 결과가 달라지는지 확인)이 필요하며, 이는
+      데이터 분석만으로는 완전히 증명할 수 없다.
+    </div>
+    <p>오늘 실습에서는 온도-두께, 진공도-불합격, 냉각수온도-공정온도, 습도-불합격 네 가지 관계를
+    살펴본다. 이 중 일부는 "원인 후보"로 삼을 만하고, 일부는 "관계없음(대조군)"으로 확인된다 —
+    두 결과 모두 정상적인 분석 결과다.</p>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 핵심 용어 카드</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>이상치</h4><div class="en">Outlier / Anomaly</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>정상 범위를 크게 벗어난 측정값.</dd>
+          <dt>쉬운 비유</dt><dd>반 평균 키가 165cm인데 혼자 210cm인 학생.</dd>
+          <dt>데이터에서의 예</dt><dd>온도_섭씨가 310.6℃처럼 정상 범위(295~305)를 벗어난 행.</dd>
+          <dt>자주 하는 오해</dt><dd>이상치 = 무조건 불량이라고 오해하기 쉽지만, 이상치이면서 합격인 경우도 있다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>관리 상한 / 하한</h4><div class="en">UCL / LCL</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>정상으로 보는 값의 위쪽/아래쪽 경계선.</dd>
+          <dt>쉬운 비유</dt><dd>체온계에서 "정상 체온" 범위의 위·아래 끝.</dd>
+          <dt>데이터에서의 예</dt><dd>진공도 4.5~5.5 mTorr, 온도 295~305℃.</dd>
+          <dt>자주 하는 오해</dt><dd>관리 한계는 절대적인 물리 법칙이 아니라, 사람이 정한 기준(교육용 예시)이다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>표준편차</h4><div class="en">Standard Deviation</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>데이터가 평균에서 평균적으로 얼마나 흩어져 있는지 나타내는 수.</dd>
+          <dt>쉬운 비유</dt><dd>과녁에 화살이 얼마나 넓게 퍼져 맞았는지의 정도.</dd>
+          <dt>데이터에서의 예</dt><dd>온도_섭씨의 표준편차 약 3.97℃.</dd>
+          <dt>자주 하는 오해</dt><dd>표준편차가 크다고 무조건 "나쁘다"는 뜻은 아니다. 변동이 크다는 사실만 알려준다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>상관관계</h4><div class="en">Correlation</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>두 변수가 함께 움직이는 정도(-1~1).</dd>
+          <dt>쉬운 비유</dt><dd>키와 몸무게처럼, 하나가 크면 다른 하나도 대체로 큰 관계.</dd>
+          <dt>데이터에서의 예</dt><dd>온도_섭씨와 두께_nm의 상관계수 r ≈ 0.71.</dd>
+          <dt>자주 하는 오해</dt><dd>상관계수가 높으면 곧 원인이라고 오해하기 쉽다. 아래 "인과관계" 카드 참고.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>인과관계</h4><div class="en">Causation</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>한 변수의 변화가 실제로 다른 변수의 변화를 "일으키는" 관계.</dd>
+          <dt>쉬운 비유</dt><dd>불을 붙이면(원인) 물이 끓는다(결과) — 순서와 메커니즘이 분명하다.</dd>
+          <dt>데이터에서의 예</dt><dd>데이터의 상관계수만으로는 인과관계를 증명할 수 없다.</dd>
+          <dt>자주 하는 오해</dt><dd>"상관관계 = 인과관계"라고 착각하는 것이 데이터 분석에서 가장 흔한 오류다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>원인 후보</h4><div class="en">Root-cause Candidate</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>상관관계가 확인되어 더 조사해볼 가치가 있는 변수.</dd>
+          <dt>쉬운 비유</dt><dd>범죄 수사에서 아직 확정되지 않은 "용의자".</dd>
+          <dt>데이터에서의 예</dt><dd>진공도 이탈은 불합격의 원인 후보로 삼을 만하다(실험으로 추가 검증 필요).</dd>
+          <dt>자주 하는 오해</dt><dd>원인 후보를 곧바로 "원인"이라고 보고서에 단정적으로 적는 경우가 많다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>대조군</h4><div class="en">Control Variable</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>비교를 위해 일부러 포함한, 결과와 무관하다고 예상되는 변수.</dd>
+          <dt>쉬운 비유</dt><dd>신약 효과를 검증할 때 가짜 약(위약)을 먹는 대조군.</dd>
+          <dt>데이터에서의 예</dt><dd>습도_pct는 불합격과 상관관계가 거의 없도록(대조군으로) 설계되었다.</dd>
+          <dt>자주 하는 오해</dt><dd>"상관관계 없음"이라는 결과가 나오면 분석이 실패했다고 오해하기 쉽다. 이것도 유효한 결론이다.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📁 데이터 미리보기</h2>
+    <p>오늘 사용할 데이터: <code>data/weekly/week08/week08_anomaly_root_cause.csv</code>
+    (450행 12열). 자세한 설명은
+    <a href="../../data/data_dictionary/week08_dictionary.md">데이터 설명서</a> 참고.</p>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>측정시간</th><th>로트번호</th><th>설비번호</th><th>공정명</th><th>온도_섭씨</th><th>압력_Pa</th><th>진공도_mTorr</th><th>두께_nm</th><th>진동_mm_s</th><th>냉각수온도_섭씨</th><th>습도_pct</th><th>합격여부</th></tr>
+        <tr><td>2024-03-01 00:00</td><td>LOT-0404</td><td>EQ-02</td><td>식각</td><td>303.4</td><td>1017.3</td><td>4.92</td><td>104.66</td><td>0.682</td><td>19.52</td><td>47.4</td><td>1</td></tr>
+        <tr><td>2024-03-01 04:00</td><td>LOT-0094</td><td>EQ-04</td><td>증착</td><td>302.1</td><td>1016.5</td><td>5.12</td><td>100.03</td><td>0.472</td><td>20.90</td><td>50.4</td><td>1</td></tr>
+        <tr><td>2024-03-01 07:00</td><td>LOT-0408</td><td>EQ-02</td><td>증착</td><td>295.6</td><td>1018.4</td><td>5.24</td><td>98.62</td><td>0.636</td><td>19.00</td><td>45.7</td><td>-1</td></tr>
+        <tr><td>2024-03-01 22:00</td><td>LOT-0721</td><td>EQ-04</td><td>식각</td><td>298.4</td><td>1010.8</td><td>4.55</td><td>93.92</td><td>0.499</td><td>19.26</td><td>43.3</td><td>1</td></tr>
+        <tr><td>2024-03-02 08:00</td><td>LOT-0455</td><td>EQ-02</td><td>산화</td><td>300.1</td><td>1015.9</td><td>5.27</td><td>101.28</td><td>0.728</td><td>20.43</td><td>43.0</td><td>1</td></tr>
+        <tr><td>2024-03-02 13:00</td><td>LOT-0123</td><td>EQ-04</td><td>세정</td><td>293.4</td><td>999.7</td><td>5.01</td><td>94.29</td><td>0.505</td><td>20.41</td><td>52.5</td><td>1</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>👩‍🏫 강사 코드 시연 ① — 정상 범위 설정과 이탈 데이터 찾기</h2>
+    <p>먼저 진공도_mTorr 열에서 정상 범위(4.5~5.5 mTorr)를 벗어난 행을 조건 검색으로 찾아본다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — Colab / Jupyter</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+
+df = pd.read_csv("week08_anomaly_root_cause.csv")
+
+# 1. 정상 범위 경계값을 변수로 정한다.
+vac_low, vac_high = 4.5, 5.5
+
+# 2. 조건 검색으로 정상 범위를 벗어난 행을 찾는다.
+vac_outlier = df[(df["진공도_mTorr"] < vac_low) | (df["진공도_mTorr"] > vac_high)]
+
+print("전체 행 수:", len(df))
+print("진공도 이탈 행 수:", len(vac_outlier))
+print("이탈 비율(%):", round(len(vac_outlier) / len(df) * 100, 2))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">전체 행 수: 450
+진공도 이탈 행 수: 78
+이탈 비율(%): 17.33</pre>
+    </div>
+    <div class="explain-list">
+      <b>코드 한 줄씩 설명</b>
+      <ul>
+        <li><code>vac_low, vac_high = 4.5, 5.5</code>: 정상 범위의 아래·위 경계를 변수로 저장해 코드를 읽기 쉽게 만든다.</li>
+        <li><code>(조건1) | (조건2)</code>: <code>|</code>는 "또는(OR)"을 의미한다 — 아래 조건 또는 위 조건 중 하나만 맞아도 선택된다.</li>
+        <li><code>len(df)</code>: 데이터프레임의 행 개수를 센다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>👩‍🏫 강사 코드 시연 ② — 진공도 이탈과 불합격률 비교</h2>
+    <p>진공도가 정상 범위 안에 있을 때와 벗어났을 때, 불합격률이 실제로 다른지 비교한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>vac_in = df[(df["진공도_mTorr"] >= vac_low) & (df["진공도_mTorr"] <= vac_high)]
+
+fail_rate_in = (vac_in["합격여부"] == -1).mean() * 100
+fail_rate_out = (vac_outlier["합격여부"] == -1).mean() * 100
+
+print("정상 범위 안 불합격률(%):", round(fail_rate_in, 2))
+print("정상 범위 밖 불합격률(%):", round(fail_rate_out, 2))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">정상 범위 안 불합격률(%): 8.06
+정상 범위 밖 불합격률(%): 25.64</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      진공도가 정상 범위를 벗어나면 불합격률이 8.06%에서 25.64%로 약 3배 이상 뛴다.
+      이 정도로 뚜렷한 차이는 우연이라고 보기 어렵다. 진공도 이탈은 불합격의
+      <b>원인 후보</b>로 삼을 만하다 — 다만 "원인으로 확정"하려면 실제로 진공도를 조절하며
+      결과가 달라지는지 확인하는 실험이 추가로 필요하다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>👩‍🏫 강사 코드 시연 ③ — 온도와 두께의 산점도, 상관계수</h2>
+    <p>온도_섭씨와 두께_nm 두 숫자 열의 관계를 산점도로 그리고, 상관계수로 세기를 확인한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>import matplotlib.pyplot as plt
+
+r = df["온도_섭씨"].corr(df["두께_nm"])
+print("상관계수 r =", round(r, 2))
+
+plt.scatter(df["온도_섭씨"], df["두께_nm"], alpha=0.6)
+plt.xlabel("온도_섭씨")
+plt.ylabel("두께_nm")
+plt.title(f"온도와 두께의 관계 (r = {r:.2f})")
+plt.show()</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">상관계수 r = 0.71</pre>
+    </div>
+    <div class="tablewrap">
+      <img src="../../assets/images/week08/temp_thickness_scatter.png" alt="온도와 두께의 산점도, 상관계수 0.71의 강한 양의 상관을 보여줌" style="display:block;width:100%;">
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      r = 0.71은 "강한 양의 상관"에 해당한다. 온도가 높을수록 두께도 함께 커지는
+      경향이 뚜렷하다 — 온도는 두께의 원인 후보로 볼 수 있다(실제로 증착 공정에서 챔버 온도가
+      높으면 증착 속도가 빨라져 막이 더 두껍게 쌓이는 경우가 흔하다).
+    </div>
+    <div class="callout danger">
+      <b class="tag">주의 — 그렇다고 온도가 "불합격의" 원인 후보는 아니다</b>
+      온도는 두께와는 강한 상관관계를 보이지만, 온도 정상 범위(295~305℃)를 벗어난 행만
+      따로 모아 불합격률을 계산해보면 오히려 9.78%로, 정상 범위 안(11.45%)보다 낮게 나온다.
+      즉 "A와 B가 상관관계가 있다"와 "A와 C가 상관관계가 있다"는 별개의 이야기이며,
+      한 관계에서 원인 후보였다고 해서 다른 결과에서도 원인 후보인 것은 아니다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>👩‍🏫 강사 코드 시연 ④ — 다른 이상 신호: 설비 진동과 시차 패턴</h2>
+    <h3>EQ-02 설비의 진동은 유독 높을까?</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.groupby("설비번호")["진동_mm_s"].mean().round(3))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">설비번호
+EQ-01    0.507
+EQ-02    0.678
+EQ-03    0.503
+EQ-04    0.501
+Name: 진동_mm_s, dtype: float64</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      EQ-02의 평균 진동은 0.678mm/s로 다른 설비(약 0.50mm/s)보다 뚜렷하게 높다. EQ-02는
+      진동 관점에서 "확인이 필요한 설비"이자 원인 후보로 볼 수 있다(6주차에서 EQ-02가
+      온도 변동이 큰 설비로 소개된 것과도 이어진다).
+    </div>
+
+    <h3>냉각수온도가 오르면 공정 온도가 뒤따라 오를까? — 이상 전후 비교</h3>
+    <p>데이터 전체로 보면 냉각수온도와 공정온도의 상관계수는 <b>r ≈ 0.06</b>으로 거의 0에 가깝다.
+    하지만 전체 평균만 보면 특정 구간에서 벌어지는 일을 놓칠 수 있다. 냉각수온도가 오르기
+    시작한 구간 하나를 골라 "오르기 전 10건"과 "오르는 동안 10건"을 직접 비교해보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code># 데이터가 이미 측정시간 순으로 저장되어 있으므로, 행 번호로 구간을 나눌 수 있다.
+before = df.iloc[321:331]   # 냉각수온도가 오르기 전 10건
+during = df.iloc[331:341]   # 냉각수온도가 오르는 구간 10건
+
+print("이전 냉각수온도 평균:", round(before["냉각수온도_섭씨"].mean(), 2))
+print("이후 냉각수온도 평균:", round(during["냉각수온도_섭씨"].mean(), 2))
+print("이전 공정온도 평균:", round(before["온도_섭씨"].mean(), 2))
+print("이후 공정온도 평균:", round(during["온도_섭씨"].mean(), 2))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">이전 냉각수온도 평균: 19.73
+이후 냉각수온도 평균: 22.47
+이전 공정온도 평균: 300.68
+이후 공정온도 평균: 301.31</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      냉각수온도가 평균 2.74℃ 오르는 구간 동안, 공정온도도 평균 0.63℃ 함께 올랐다.
+      전체 데이터의 상관계수(0.06)만 봤다면 놓쳤을 패턴이다. 이 데이터에는 이런 구간이
+      3곳 있도록 설계되었다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">그래도 인과관계로 단정할 수 없다</b>
+      "냉각수온도가 먼저 오르고 공정온도가 나중에 올랐다"는 시간 순서가 있다고 해서 곧
+      인과관계가 증명되는 것은 아니다. 예를 들어 클린룸 전체의 냉방 시스템 부하가
+      냉각수온도와 공정온도 모두에 영향을 주는 "제3의 원인"일 수도 있다. 냉각수온도는
+      공정온도의 원인 후보로 삼아 추가 점검할 가치가 있는 수준이다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>👩‍🏫 강사 코드 시연 ⑤ — 습도(대조군)로 "상관관계 없음" 확인하기</h2>
+    <p>습도_pct는 처음부터 불합격과 무관하게 설계된 대조군 변수다. 실제로 그런지 확인해보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>df["불합격여부_숫자"] = (df["합격여부"] == -1).astype(int)  # 불합격이면 1, 합격이면 0
+
+r_humid = df["습도_pct"].corr(df["불합격여부_숫자"])
+print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">습도-불합격 상관계수 r = -0.13</pre>
+    </div>
+    <div class="callout concept">
+      <b class="tag">결과 해석</b>
+      r = -0.13은 "뚜렷한 관계 없음" 구간에 해당한다. 습도는 불합격의 원인 후보로 보기 어렵다.
+      "상관관계가 없다"는 결과도 실패한 분석이 아니라, 그 변수는 이번 문제와 무관하다는
+      정상적이고 유용한 결론이다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🙋 실생활 비유로 정리하기</h2>
+    <p>이상 탐지와 원인 후보 찾기는 "몸이 아플 때 원인을 찾는 과정"과 비슷하다. 체온이
+    평소보다 훨씬 높으면(이상치) 병원에 가서 검사를 받는다. 검사에서 특정 수치가 체온과 함께
+    높게 나오면(상관관계) 의사는 "관련이 있어 보인다"고 말하지만, 정확한 원인은 추가 검사를
+    거쳐야 확정한다(원인 후보 → 원인). 반대로 아무 관련 없는 수치(예: 발 사이즈)는 아무리
+    확인해도 체온과 관계가 없다고 나올 것이다 — 이것이 오늘 배운 대조군과 같은 역할이다.</p>
+  </section>
+
+  <section class="block">
+    <h2>🟣 단계별 따라 하기 실습</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>데이터 불러오기</b> — <code>week08_anomaly_root_cause.csv</code>를
+      업로드하고 <code>read_csv</code>로 읽는다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>정상 범위 설정</b> — 진공도의 정상 범위(4.5~5.5)를 변수로 만들고,
+      조건 검색으로 이탈 행을 찾는다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>불합격률 비교</b> — 정상 범위 안/밖 각각의 불합격률을 계산해 비교한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>온도-두께 관계 확인</b> — 산점도를 그리고 <code>.corr()</code>로
+      상관계수를 계산한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>대조군 확인</b> — 습도와 불합격의 상관계수를 계산해 관계가 없음을 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div class="content"><b>원인 후보 문장 쓰기</b> — "OO은 XX의 원인 후보로 보인다. 근거는 ___이다."
+      형식으로 한 문장을 완성한다. (학생용 Notebook의 TODO로 이어짐)</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout danger">
+      <b class="tag">오류 1</b>
+      <code>SyntaxError</code> — 조건 검색에서 <code>and</code>/<code>or</code>를 그대로 쓰면
+      오류가 난다. Pandas 조건식에서는 <code>&amp;</code>(그리고), <code>|</code>(또는)을 사용하고,
+      각 조건을 반드시 괄호로 감싸야 한다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 2</b>
+      상관계수를 계산할 때 문자열 열(예: 설비번호)에 <code>.corr()</code>를 쓰면 오류가 난다.
+      상관계수는 숫자 열끼리만 계산할 수 있다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — 가장 흔한 착각</b>
+      "상관계수가 높다 = 원인이다"라고 성급하게 결론 내리지 않는다. 오늘 배운 대로
+      "원인 후보"라는 표현을 사용하고, 왜 후보인지 근거(수치)를 함께 적는 습관을 들인다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🚀 도전 실습</h2>
+    <div class="callout practice">
+      <b class="tag">도전 문제</b>
+      압력_Pa 열에도 진공도와 같은 방식(정상 범위 밖 vs 안)으로 불합격률을 비교해보자.
+      진공도만큼 차이가 크게 나는지, 아니면 큰 차이가 없는지 확인하고, 압력을 원인 후보로
+      볼 수 있을지 자신의 문장으로 정리해보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. (객관식) 다음 중 "상관관계가 있다고 해서 원인이라고 단정할 수 없다"는
+      원칙을 가장 잘 설명한 것은?</div>
+      <ul class="options">
+        <li>A. 상관계수가 0.9 이상이면 항상 인과관계로 봐도 된다</li>
+        <li>B. 두 변수가 함께 움직여도, 제3의 요인 때문일 수 있어 추가 확인이 필요하다</li>
+        <li>C. 상관관계는 데이터가 100건 이상일 때만 의미가 있다</li>
+        <li>D. 상관관계가 없으면 두 변수는 항상 무관하다</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: B. 상관관계는 "관련이 있어 보인다"는 단서일 뿐, 인과관계를 증명하지 않는다.
+      (아이스크림 판매량과 익사 사고 사례 참고)</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (참/거짓) 이번 데이터에서 습도_pct와 불합격 사이의 상관계수는 약 -0.13으로,
+      뚜렷한 관계가 있다고 보기 어렵다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 참. 습도는 대조군으로 설계되어 불합격과 뚜렷한 관계가 없다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. (서술) 진공도 이탈과 불합격률 비교 결과(정상 범위 안 8.06% vs 밖 25.64%)를
+      바탕으로, "원인 후보" 표현을 사용해 결과 문장을 완성해보자.</div>
+      <button class="reveal-btn">예시 답안 보기</button>
+      <div class="answer-box">예시 답안: "진공도가 정상 범위(4.5~5.5 mTorr)를 벗어나면 불합격률이
+      8.06%에서 25.64%로 크게 높아진다. 이 차이가 뚜렷하므로 진공도 이탈은 불합격의 원인 후보로
+      볼 수 있으나, 확정하려면 추가 검증이 필요하다."</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🔜 다음 주 예고</h2>
+    <div class="callout concept">
+      <b class="tag">9주차 예고</b>
+      다음 주에는 이번 주에 찾은 "원인 후보"들을 더 확장해, 수백 개의 센서 데이터를 한 번에
+      다루는 법을 배운다. 대표 센서를 고르고, train/test로 나눠 간단한 분류 모델로
+      합격/불합격을 예측해본다.
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <a href="../week07/index.html">← 이전 주차: 7주차</a>
+    <a class="home" href="../../index.html">🏠 전체 목차</a>
+    <a href="../week09/index.html">다음 주차: 9주차 →</a>
+  </div>
+
+</main>
+
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 8주차 · 교육용 자료(가상 데이터 사용)</footer>
+
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+</body>
+</html>

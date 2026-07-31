@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1주차. 반도체 공정과 데이터 처음 만나기</title>
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+      <small>Semiconductor Process Data Analysis</small>
+    </a>
+    <nav class="week-nav">
+      <a href="../week01/index.html" class="current">1주</a>
+      <a href="../week02/index.html">2주</a>
+      <a href="../week03/index.html">3주</a>
+      <a href="../week04/index.html">4주</a>
+      <a href="../week05/index.html">5주</a>
+      <a href="../week06/index.html">6주</a>
+      <a href="../week07/index.html">7주</a>
+      <a href="../week08/index.html">8주</a>
+      <a href="../week09/index.html">9주</a>
+      <a href="../week10/index.html">10주</a>
+    </nav>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="1"></div></div>
+</header>
+
+<main class="page">
+
+  <div class="hero">
+    <span class="badge blue">1주차 · 2시간 수업</span>
+    <h1>반도체 공정과 데이터 처음 만나기</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"반도체는 어떻게 만들어지고, 그 과정은 어떤 기록을 남길까?"</b></p>
+  </div>
+
+  <section class="block">
+    <h2>🎯 학습 목표</h2>
+    <ul class="goal-list">
+      <li>반도체, 웨이퍼, 칩의 차이를 설명할 수 있다.</li>
+      <li>반도체 제조 공정의 전체 흐름을 이해한다.</li>
+      <li>공정에서 데이터가 왜 발생하는지 설명할 수 있다.</li>
+      <li>Google Colab에서 CSV 파일을 열고 Pandas로 처음 조회해본다.</li>
+      <li>합격/불합격 데이터를 세어보고 의미를 해석할 수 있다.</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2>⏮️ 지난 시간 복습</h2>
+    <div class="callout concept">
+      <b class="tag">첫 시간 안내</b>
+      1주차이므로 복습할 이전 내용은 없다. 대신 10주 전체 과정이 어떻게 이어지는지 먼저 살펴본다.
+      1~3주차는 데이터를 "보는" 법, 4~5주차는 데이터를 "정리하고 그리는" 법, 6~8주차는 데이터를
+      "비교하고 이상을 찾는" 법, 9~10주차는 "예측하고 종합하는" 법을 배운다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 반도체 개념 이해하기</h2>
+    <h3>반도체란 무엇인가</h3>
+    <p><b>반도체(Semiconductor)</b>는 전기가 "잘 통하는 도체"와 "전혀 통하지 않는 부도체"의
+    중간 성질을 가진 물질이다. 이 성질 덕분에 전류를 켜고 끄는 스위치처럼 동작시킬 수 있고,
+    이 스위치를 수십억 개 모아 계산과 저장을 수행하는 칩을 만든다.</p>
+
+    <h3>웨이퍼에서 칩이 만들어지는 과정</h3>
+    <p>둥근 원판 모양의 <b>웨이퍼(Wafer)</b> 위에 여러 공정을 반복해서 회로를 새기면,
+    웨이퍼 하나에 작은 사각형 회로 조각인 <b>다이(Die)</b>가 수백~수천 개 만들어진다.
+    다이를 자르고 포장(패키징)하면 우리가 아는 <b>칩(Chip)</b>이 된다.</p>
+    <div class="callout concept">
+      <b class="tag">비유</b>
+      웨이퍼는 커다란 피자 도우, 다이는 그 위에 자른 한 조각이라고 생각하면 된다.
+      도우(웨이퍼) 하나로 여러 조각(다이)을 만들지만, 조각마다 굽는 상태(품질)가 다를 수 있다.
+    </div>
+
+    <h3>반도체 제조의 주요 공정</h3>
+    <p>웨이퍼는 <b>산화 → 포토(노광) → 식각 → 이온 주입 → 증착 → 세정</b> 같은 공정을 수백 번
+    반복하며 회로가 완성된다. 각 공정은 서로 다른 <b>설비(Equipment)</b>에서 진행되며,
+    설비 안에는 온도·압력·가스유량 등을 측정하는 <b>센서(Sensor)</b>가 붙어 있다.</p>
+
+    <h3>FAB의 의미</h3>
+    <p><b>FAB(팹, Fabrication의 줄임말)</b>은 반도체를 실제로 생산하는 공장을 말한다.
+    하나의 FAB 안에는 수백~수천 대의 설비가 24시간 돌아간다.</p>
+  </section>
+
+  <section class="block">
+    <h2>📊 데이터 분석 개념 이해하기</h2>
+    <h3>공정 데이터의 행과 열</h3>
+    <p>설비의 센서는 몇 초~몇 시간 간격으로 값을 기록한다. 이 기록을 표로 정리하면,
+    <b>한 행(row)은 "한 번의 측정 기록"</b>, <b>한 열(column)은 "측정한 항목(온도, 압력 등)"</b>이 된다.</p>
+    <div class="callout concept">
+      <b class="tag">개념</b>
+      표(table) = 여러 개의 행과 열로 이루어진 데이터. 오늘 우리가 열어볼 CSV 파일도
+      결국 엑셀처럼 행과 열로 이루어진 표다.
+    </div>
+
+    <h3>합격과 불합격 데이터</h3>
+    <p>공정을 마친 웨이퍼는 검사를 거쳐 <b>합격(양품)</b>과 <b>불합격(불량)</b>으로 나뉜다.
+    이 과정에서는 <code>합격여부</code> 열의 값이 <code>1</code>이면 합격, <code>-1</code>이면
+    불합격을 의미하도록 정했다. (뒤에서 다룰 다른 원본 데이터인 fab.csv는 반대 부호를 쓰는데,
+    이는 9주차에서 자세히 설명한다.)</p>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 핵심 용어 카드</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>반도체</h4><div class="en">Semiconductor</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>전기가 잘 통하는 것과 안 통하는 것의 중간 성질을 가진 물질.</dd>
+          <dt>쉬운 비유</dt><dd>필요할 때만 문을 여닫는 스위치.</dd>
+          <dt>데이터에서의 예</dt><dd>이 과정에서 다루는 모든 공정 데이터는 반도체를 만드는 과정에서 나온다.</dd>
+          <dt>자주 하는 오해</dt><dd>반도체를 특정 "제품 이름"으로 오해하는 경우가 많다. 반도체는 재료의 성질을 말한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>웨이퍼</h4><div class="en">Wafer</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>반도체 칩을 만드는 둥근 원판 모양의 얇은 판.</dd>
+          <dt>쉬운 비유</dt><dd>여러 조각으로 자를 큰 피자 도우.</dd>
+          <dt>데이터에서의 예</dt><dd><code>웨이퍼번호</code> 열이 웨이퍼 한 장 한 장을 구분한다.</dd>
+          <dt>자주 하는 오해</dt><dd>웨이퍼 1장 = 칩 1개가 아니다. 웨이퍼 1장에서 칩이 수백~수천 개 나온다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>FAB(팹)</h4><div class="en">Fabrication</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>반도체를 생산하는 공장.</dd>
+          <dt>쉬운 비유</dt><dd>수백 대의 기계가 쉬지 않고 돌아가는 초정밀 공장.</dd>
+          <dt>데이터에서의 예</dt><dd>이 과정의 모든 실습 데이터는 가상의 FAB에서 나온 것으로 가정한다.</dd>
+          <dt>자주 하는 오해</dt><dd>FAB은 회사 이름이 아니라 "생산 시설"을 뜻하는 일반 용어다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>로트</h4><div class="en">Lot</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>함께 관리되는 웨이퍼의 묶음(보통 25장 내외).</dd>
+          <dt>쉬운 비유</dt><dd>같은 상자에 담겨 함께 이동하는 물건 묶음.</dd>
+          <dt>데이터에서의 예</dt><dd><code>로트번호</code> 열(예: LOT-0398).</dd>
+          <dt>자주 하는 오해</dt><dd>로트와 웨이퍼를 같은 것으로 착각하기 쉽다. 로트는 여러 웨이퍼의 묶음이다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>공정</h4><div class="en">Process</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>웨이퍼에 특정 처리를 하는 작업 단계(증착, 식각 등).</dd>
+          <dt>쉬운 비유</dt><dd>요리에서 "굽기", "볶기"처럼 각각의 조리 단계.</dd>
+          <dt>데이터에서의 예</dt><dd><code>공정명</code> 열(예: 식각, 포토, 세정).</dd>
+          <dt>자주 하는 오해</dt><dd>하나의 공정만 거치면 칩이 완성된다고 오해하기 쉽지만, 실제로는 수백 번 반복된다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>설비</h4><div class="en">Equipment</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>공정을 실제로 수행하는 기계.</dd>
+          <dt>쉬운 비유</dt><dd>주방의 오븐, 가스레인지처럼 각 조리를 담당하는 기계.</dd>
+          <dt>데이터에서의 예</dt><dd><code>설비번호</code> 열(예: EQ-01~EQ-04).</dd>
+          <dt>자주 하는 오해</dt><dd>설비 하나가 모든 공정을 다 한다고 생각하기 쉽지만, 설비마다 담당 공정이 다르다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>센서</h4><div class="en">Sensor</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>온도, 압력 등 물리량을 측정해 숫자로 기록하는 장치.</dd>
+          <dt>쉬운 비유</dt><dd>체온계처럼 상태를 숫자로 알려주는 장치.</dd>
+          <dt>데이터에서의 예</dt><dd><code>온도_섭씨</code>, <code>압력_Pa</code> 열이 센서 측정값이다.</dd>
+          <dt>자주 하는 오해</dt><dd>센서 값은 항상 정확하다고 생각하기 쉽지만, 고장이나 노이즈로 이상값이 생길 수 있다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>수율</h4><div class="en">Yield</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>생산한 것 중 정상 제품이 차지하는 비율.</dd>
+          <dt>쉬운 비유</dt><dd>사과 100개 중 92개가 상품이면 수율은 92%.</dd>
+          <dt>데이터에서의 예</dt><dd><code>합격여부</code> 열에서 <code>1</code>의 비율.</dd>
+          <dt>자주 하는 오해</dt><dd>수율이 낮다고 항상 설비 문제인 것은 아니다(7~8주차에서 자세히 다룬다).</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📁 데이터 미리보기</h2>
+    <p>오늘 사용할 데이터: <code>data/weekly/week01/week01_semiconductor_process_overview.csv</code>
+    (약 40행 8열). 자세한 설명은
+    <a href="../../data/data_dictionary/week01_dictionary.md">데이터 설명서</a> 참고.</p>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>측정시간</th><th>로트번호</th><th>웨이퍼번호</th><th>공정명</th><th>설비번호</th><th>온도_섭씨</th><th>압력_Pa</th><th>합격여부</th></tr>
+        <tr><td>2024-03-01 08:00</td><td>LOT-0398</td><td>4</td><td>산화</td><td>EQ-03</td><td>295.0</td><td>1019.7</td><td>1</td></tr>
+        <tr><td>2024-03-01 20:00</td><td>LOT-0227</td><td>4</td><td>식각</td><td>EQ-04</td><td>300.1</td><td>995.6</td><td>1</td></tr>
+        <tr><td>2024-03-02 04:00</td><td>LOT-0462</td><td>17</td><td>포토</td><td>EQ-03</td><td>301.4</td><td>1013.2</td><td>1</td></tr>
+        <tr><td>2024-03-02 11:00</td><td>LOT-0175</td><td>2</td><td>세정</td><td>EQ-03</td><td>301.7</td><td>1015.5</td><td>1</td></tr>
+        <tr><td>2024-03-02 13:00</td><td>LOT-0093</td><td>1</td><td>포토</td><td>EQ-04</td><td>299.0</td><td>1005.3</td><td>-1</td></tr>
+        <tr><td>2024-03-03 14:00</td><td>LOT-0254</td><td>9</td><td>산화</td><td>EQ-01</td><td>295.7</td><td>1016.6</td><td>1</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>👩‍🏫 강사 코드 시연</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python — Colab / Jupyter</span><button class="copy-btn">복사</button></div>
+      <pre><code># 1. 데이터 분석 도구인 Pandas를 불러옵니다.
+import pandas as pd
+
+# 2. CSV 파일을 읽어 표(DataFrame) 형태로 저장합니다.
+df = pd.read_csv("week01_semiconductor_process_overview.csv")
+
+# 3. 데이터의 앞부분 5개 행을 확인합니다.
+df.head()
+
+# 4. 행 개수와 열 개수를 확인합니다. (행, 열) 순서로 나옵니다.
+print(df.shape)
+
+# 5. 열 이름 목록을 확인합니다.
+print(df.columns)
+
+# 6. 합격(1)과 불합격(-1)이 각각 몇 건인지 세어봅니다.
+print(df["합격여부"].value_counts())</code></pre>
+    </div>
+    <div class="explain-list">
+      <b>코드 한 줄씩 설명</b>
+      <ul>
+        <li><code>import pandas as pd</code>: 표 형태의 데이터를 다루는 도구 Pandas를 <code>pd</code>라는 별명으로 불러온다.</li>
+        <li><code>pd.read_csv(...)</code>: CSV 파일을 읽어서 <code>DataFrame</code>이라는 표 형태로 만든다.</li>
+        <li><code>df</code>: 읽어들인 데이터를 저장해두는 이름(변수)이다.</li>
+        <li><code>df.head()</code>: 데이터의 맨 앞 5개 행만 보여준다(전체를 다 보면 복잡하기 때문).</li>
+        <li><code>df.shape</code>: (행 개수, 열 개수)를 튜플로 알려준다.</li>
+        <li><code>df.columns</code>: 모든 열의 이름을 알려준다.</li>
+        <li><code>df["합격여부"].value_counts()</code>: <code>합격여부</code> 열에서 값별 개수를 센다.</li>
+      </ul>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(40, 8)
+Index(['측정시간', '로트번호', '웨이퍼번호', '공정명', '설비번호', '온도_섭씨', '압력_Pa', '합격여부'], dtype='object')
+ 1    34
+-1     6
+Name: count, dtype: int64</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      이 데이터는 40행 8열로 이루어져 있고, 합격이 34건(85%), 불합격이 6건(15%)이다.
+      즉 10개 중 8~9개는 정상적으로 만들어졌다는 뜻이다. 다만 이 수치만으로는
+      "어떤 설비에서, 어떤 공정에서" 불합격이 발생했는지는 알 수 없다 — 이는 3주차 이후에 배운다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🙋 실생활 비유로 정리하기</h2>
+    <p>공정 데이터를 처음 본다면 "학교 성적표"를 떠올려보자. 학생(웨이퍼) 한 명 한 명의
+    시험 점수(센서 측정값)를 기록한 표가 성적표이듯, 공정 데이터도 웨이퍼 한 장 한 장의
+    측정값을 기록한 표다. 성적표에서 "평균 점수", "합격/불합격 인원수"를 계산하듯,
+    공정 데이터에서도 같은 방식으로 요약할 수 있다.</p>
+  </section>
+
+  <section class="block">
+    <h2>🟣 단계별 따라 하기 실습</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>Google Colab 열기</b> — <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a>에 접속해 "새 노트북"을 만든다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>CSV 업로드하기</b> — 왼쪽 폴더 아이콘 클릭 → 업로드 아이콘 클릭 →
+      <code>week01_semiconductor_process_overview.csv</code> 선택.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>Pandas 불러오고 파일 읽기</b> — 위 코드의 1~2번 줄을 그대로 입력하고 실행(▶) 버튼을 누른다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>앞부분 확인</b> — <code>df.head()</code>를 실행해 표가 잘 보이는지 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>행/열 개수, 열 이름 확인</b> — <code>df.shape</code>, <code>df.columns</code>를 각각 실행해본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div class="content"><b>합격/불합격 세어보기</b> — <code>df["합격여부"].value_counts()</code>를 실행하고,
+      결과를 한 문장으로 적어본다. (학생용 Notebook의 TODO로 이어짐)</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout danger">
+      <b class="tag">오류 1</b>
+      <code>FileNotFoundError</code> — CSV 파일 이름을 잘못 입력했거나 업로드하지 않은 경우다.
+      왼쪽 파일 목록에 파일이 보이는지, 이름의 대소문자·확장자가 정확한지 확인한다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 2</b>
+      <code>KeyError: '합격여부'</code> — 열 이름을 잘못 입력한 경우다. <code>df.columns</code>로
+      정확한 열 이름을 먼저 확인한다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의</b>
+      Colab에서 런타임이 초기화되면(연결이 끊기면) 이전에 실행한 코드 결과가 사라진다.
+      파일을 다시 업로드하고 셀을 처음부터 다시 실행해야 한다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🚀 도전 실습</h2>
+    <div class="callout practice">
+      <b class="tag">도전 문제</b>
+      <code>df["설비번호"].value_counts()</code>를 실행해 어떤 설비가 데이터에 가장 많이
+      등장하는지 확인해보자. 그리고 <code>df["공정명"].value_counts()</code>로 어떤 공정이
+      가장 많이 기록되었는지도 확인해보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. (객관식) 다음 중 "웨이퍼"에 대한 설명으로 가장 알맞은 것은?</div>
+      <ul class="options">
+        <li>A. 반도체 칩을 만드는 둥근 원판 모양의 판</li>
+        <li>B. 반도체 공장의 다른 이름</li>
+        <li>C. 공정에서 사용하는 가스의 종류</li>
+        <li>D. 불량품을 검사하는 사람</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: A. 웨이퍼는 칩을 만드는 원판이다. FAB은 공장, 다이는 웨이퍼를 잘라 만든 조각이다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (참/거짓) <code>df.shape</code>는 데이터의 (행 개수, 열 개수)를 알려준다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 참. 예를 들어 (40, 8)은 40행 8열이라는 뜻이다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. (서술) 오늘 실습에서 계산한 합격/불합격 개수를 바탕으로,
+      이 데이터를 처음 보는 사람에게 한 문장으로 설명해보자.</div>
+      <button class="reveal-btn">예시 답안 보기</button>
+      <div class="answer-box">예시 답안: "이번 공정 기록 40건 중 34건(85%)이 합격했고, 6건(15%)이 불합격했다.
+      대부분의 웨이퍼는 정상적으로 만들어졌지만, 일부는 원인을 더 살펴볼 필요가 있다."</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🔜 다음 주 예고</h2>
+    <div class="callout concept">
+      <b class="tag">2주차 예고</b>
+      다음 주에는 파이썬의 변수·리스트를 배우고, 평균·최댓값·최솟값을 직접 계산해본다.
+      오늘 계산한 합격률을 "수율"이라는 개념으로 더 깊이 다뤄볼 것이다.
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <a class="disabled">← 이전 주차 없음</a>
+    <a class="home" href="../../index.html">🏠 전체 목차</a>
+    <a href="../week02/index.html">다음 주차: 2주차 →</a>
+  </div>
+
+</main>
+
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 1주차 · 교육용 자료(가상 데이터 사용)</footer>
+
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+</body>
+</html>

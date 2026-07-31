@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5주차 실습지</title>
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정</a>
+    <nav class="week-nav"><a href="index.html">← 5주차 강의로</a></nav>
+  </div>
+</header>
+<main class="page">
+  <div class="hero">
+    <span class="badge purple">5주차 실습지</span>
+    <h1>그래프로 공정 상태 이해하기 — 실습지</h1>
+  </div>
+
+  <section class="block">
+    <h2>1. 그래프 종류 연결 문제</h2>
+    <p>왼쪽 상황과 오른쪽 그래프 종류를 알맞게 연결해보자.</p>
+    <table class="timetable">
+      <tr><th>상황</th><th>그래프 후보</th></tr>
+      <tr><td>① 시간에 따른 온도 변화를 보고 싶다</td><td rowspan="5">A. 히스토그램<br>B. 박스플롯<br>C. 산점도<br>D. 막대그래프<br>E. 선 그래프</td></tr>
+      <tr><td>② 설비별 측정 건수를 비교하고 싶다</td></tr>
+      <tr><td>③ 온도 값이 어느 구간에 몰려 있는지 보고 싶다</td></tr>
+      <tr><td>④ 온도와 두께의 관계를 보고 싶다</td></tr>
+      <tr><td>⑤ 설비별 온도의 퍼짐(변동)을 비교하고 싶다</td></tr>
+    </table>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① E  ② D  ③ A  ④ C  ⑤ B</div>
+  </section>
+
+  <section class="block">
+    <h2>2. 코드 빈칸 문제</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("week05_process_visualization.csv")
+df["측정시간"] = pd.____________(df["측정시간"])   # 문자열을 날짜 형식으로 변환
+
+plt.____________(df["온도_섭씨"], bins=18)   # 히스토그램 그리기
+plt.title("온도 분포 히스토그램")
+plt.show()
+
+df.____________(column="온도_섭씨", by="설비번호")   # 설비별 박스플롯 그리기
+plt.show()</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">순서대로 <code>to_datetime</code>, <code>hist</code>, <code>boxplot</code></div>
+  </section>
+
+  <section class="block">
+    <h2>3. 그래프 해석</h2>
+    <p>아래는 5주차 강의에서 실제 데이터로 그린 박스플롯이다 (<code>index.html</code>의
+    "실행 결과 예시 — 박스플롯" 절과 동일한 이미지).</p>
+    <div class="tablewrap" style="border:none;">
+      <img src="../../assets/images/week05/box_temperature_by_equipment.png"
+           alt="설비별 온도 박스플롯" style="max-width:100%;border-radius:8px;border:1px solid var(--line);">
+    </div>
+    <p>이 그래프를 보고 다음 질문에 답해보자.</p>
+    <ol>
+      <li>네 설비 중 상자(box)와 수염이 가장 넓게 퍼져 있는 설비는 어디인가?</li>
+      <li>그 설비의 온도가 불안정하다면, 합격률에는 어떤 영향을 줄 것으로 예상하는가?</li>
+    </ol>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      1) EQ-02. 다른 설비의 온도 표준편차가 약 2.9~3.2℃인 것에 비해 EQ-02는 약 4.29℃로 가장 크게 퍼져 있다.<br>
+      2) 온도가 불안정할수록 정상범위(295~305℃)를 벗어날 가능성이 높아 불합격이 늘어날 것으로 예상된다.
+      실제로 EQ-02의 불합격 비율은 약 24.4%로, 다른 설비(약 3.6~6.7%)보다 훨씬 높다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>4. 결과 해석 문제</h2>
+    <p>실습에서 <code>df["온도_섭씨"].corr(df["두께_nm"])</code>를 계산했더니 결과가
+    <code>0.82</code>였다.</p>
+    <p>이 숫자를 보고 온도와 두께의 관계를 설명해보자.</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">상관계수가 1에 가까울수록 강한 양의 상관관계다. 0.82는 비교적 강한 양의
+    상관관계로, 온도가 높을수록 두께도 두꺼워지는 경향이 있다는 뜻이다. 다만 상관관계가
+    있다고 해서 온도가 두께의 "원인"이라고 단정할 수는 없다.</div>
+  </section>
+
+  <section class="block">
+    <h2>5. 분석 문장 작성 문제</h2>
+    <p>아래 빈칸을 채워 이번 주 데이터를 한 문장으로 요약해보자.</p>
+    <div class="callout practice">
+      <b class="tag">문장 작성</b>
+      "설비 ____의 온도 표준편차는 약 ____℃로 가장 크며, 불합격 비율도 약 ____%로 다른
+      설비보다 높다. 온도와 두께 사이에는 상관계수 약 ____의 관계가 있다."
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>6. 도전 문제</h2>
+    <div class="callout practice">
+      <b class="tag">도전</b>
+      <code>df.boxplot(column="진동_mm_s", by="설비번호")</code>를 실행해 설비별 진동 값의
+      박스플롯을 직접 그려보자. 온도 박스플롯과 같은 설비가 가장 넓게 퍼져 있는지 확인하고,
+      그 이유를 한 문장으로 적어보자.
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <a class="home" href="index.html">← 5주차 강의로 돌아가기</a>
+  </div>
+</main>
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 5주차 실습지</footer>
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+</body>
+</html>

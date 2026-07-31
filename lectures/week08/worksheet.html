@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8주차 실습지</title>
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정</a>
+    <nav class="week-nav"><a href="index.html">← 8주차 강의로</a></nav>
+  </div>
+</header>
+<main class="page">
+  <div class="hero">
+    <span class="badge purple">8주차 실습지</span>
+    <h1>공정 이상과 원인 후보 찾기 — 실습지</h1>
+  </div>
+
+  <section class="block">
+    <h2>1. 용어 연결 문제</h2>
+    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <table class="timetable">
+      <tr><th>용어</th><th>설명 후보</th></tr>
+      <tr><td>① 이상치</td><td rowspan="4">A. 두 변수가 함께 움직이는 정도(-1~1)<br>B. 상관관계는 확인됐지만 아직 원인으로 확정되지 않은 변수<br>C. 정상 범위를 크게 벗어난 측정값<br>D. 한 변수의 변화가 실제로 다른 변수를 일으키는 관계</td></tr>
+      <tr><td>② 상관관계</td></tr>
+      <tr><td>③ 인과관계</td></tr>
+      <tr><td>④ 원인 후보</td></tr>
+    </table>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① C  ② A  ③ D  ④ B</div>
+  </section>
+
+  <section class="block">
+    <h2>2. 코드 빈칸 문제</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>vac_low, vac_high = 4.5, 5.5
+
+# 정상 범위를 벗어난 행 찾기
+vac_outlier = df[(df["진공도_mTorr"] ____ vac_low) | (df["진공도_mTorr"] ____ vac_high)]
+
+# 온도와 두께의 상관계수 계산
+r = df["온도_섭씨"].____(df["두께_nm"])</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">순서대로 <code>&lt;</code>, <code>&gt;</code>, <code>corr</code></div>
+  </section>
+
+  <section class="block">
+    <h2>3. 그래프 선택 문제</h2>
+    <p>두 숫자 변수(온도, 두께) 사이의 관계를 한눈에 확인하려면 어떤 그래프가 가장 적합할까?</p>
+    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
+      <li>① 막대그래프</li><li>② 산점도</li><li>③ 원 그래프</li>
+    </ul>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">정답: ② 산점도. 산점도는 두 숫자 변수의 관계(양의 상관/음의 상관/무관)를
+    점의 흩어진 모양으로 보여준다.</div>
+  </section>
+
+  <section class="block">
+    <h2>4. 결과 해석 문제</h2>
+    <p>실습에서 얻은 결과가 아래와 같았다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">정상 범위 안 불합격률: 8.06%
+정상 범위 밖 불합격률: 25.64%</pre>
+    <p>이 결과를 보고, 진공도 이탈이 불합격의 원인 후보가 될 수 있는지 이유와 함께 적어보자.</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">불합격률이 8.06%에서 25.64%로 약 3배 이상 높아졌으므로, 진공도 이탈은
+    불합격의 원인 후보로 볼 수 있다. 다만 이것만으로 "원인"이라고 단정할 수는 없고, 추가 검증이
+    필요하다.</div>
+  </section>
+
+  <section class="block">
+    <h2>5. 상관관계 vs 인과관계 판별 문제</h2>
+    <p>다음 중 "상관관계는 있지만 인과관계라고 단정할 수 없는" 예시를 모두 골라보자.</p>
+    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
+      <li>① 아이스크림 판매량과 익사 사고 건수가 여름철에 함께 늘어난다</li>
+      <li>② 불을 붙이면 물이 끓기 시작한다</li>
+      <li>③ 냉각수온도가 오른 뒤 공정온도가 뒤따라 오르는 것처럼 보인다</li>
+      <li>④ 습도와 불합격 사이에는 뚜렷한 상관관계가 없다</li>
+    </ul>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">정답: ①, ③. 둘 다 상관관계(또는 시간 순서)는 보이지만 제3의 요인 가능성이
+    있어 원인으로 단정할 수 없다. ②는 물리적 메커니즘이 분명한 인과관계의 예시이고, ④는 애초에
+    상관관계 자체가 거의 없는 대조군 사례다.</div>
+  </section>
+
+  <section class="block">
+    <h2>6. 분석 문장 작성 문제</h2>
+    <p>아래 빈칸을 채워 이번 주 분석 결과를 한 문장으로 요약해보자.</p>
+    <div class="callout practice">
+      <b class="tag">문장 작성</b>
+      "____가 정상 범위를 벗어나면 불합격률이 ____%에서 ____%로 높아진다. 따라서 ____는
+      불합격의 원인 후보로 볼 수 있으나, 확정하려면 추가 ____이(가) 필요하다."
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>7. 도전 문제</h2>
+    <div class="callout practice">
+      <b class="tag">도전</b>
+      압력_Pa 열에 대해서도 정상 범위 안/밖 불합격률을 비교해보고, 진공도만큼 원인 후보로
+      볼 수 있는지 자신의 근거를 들어 판단해보자.
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <a class="home" href="index.html">← 8주차 강의로 돌아가기</a>
+  </div>
+</main>
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 8주차 실습지</footer>
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+</body>
+</html>

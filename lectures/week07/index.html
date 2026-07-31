@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7주차. 반도체 수율과 불량 분석</title>
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정
+      <small>Semiconductor Process Data Analysis</small>
+    </a>
+    <nav class="week-nav">
+      <a href="../week01/index.html">1주</a>
+      <a href="../week02/index.html">2주</a>
+      <a href="../week03/index.html">3주</a>
+      <a href="../week04/index.html">4주</a>
+      <a href="../week05/index.html">5주</a>
+      <a href="../week06/index.html">6주</a>
+      <a href="../week07/index.html" class="current">7주</a>
+      <a href="../week08/index.html">8주</a>
+      <a href="../week09/index.html">9주</a>
+      <a href="../week10/index.html">10주</a>
+    </nav>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="7"></div></div>
+</header>
+
+<main class="page">
+
+  <div class="hero">
+    <span class="badge blue">7주차 · 2시간 수업</span>
+    <h1>반도체 수율과 불량 분석</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"수율이 낮은 로트에는 공통점이 있을까?"</b></p>
+  </div>
+
+  <section class="block">
+    <h2>🎯 학습 목표</h2>
+    <ul class="goal-list">
+      <li>양품·불량·수율·불량률의 의미를 구분해서 설명할 수 있다.</li>
+      <li>전체/공정별/설비별/로트별로 수율을 계산할 수 있다.</li>
+      <li>"웨이퍼 단위 수율의 단순 평균"과 "로트 단위 수율"의 차이를 설명할 수 있다.</li>
+      <li>불량 유형별 발생 빈도를 세고, 파레토 차트로 표현할 수 있다.</li>
+      <li>수율이 가장 낮은 로트들의 공통 설비를 데이터로 찾아낼 수 있다.</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2>⏮️ 지난 시간 복습</h2>
+    <div class="callout concept">
+      <b class="tag">6주차 복습</b>
+      지난주에는 <code>groupby()</code>로 설비별 평균 온도·압력·합격률을 비교했다.
+      "EQ-04는 불량률이 높은 편"이라는 결과를 봤는데, 이번 주에는 그 관찰을
+      <b>수율(收率)</b>이라는 정식 지표로 다시 계산하고, 한 걸음 더 나아가
+      "그 설비 전체가 나쁜 것인지, 특정 로트 몇 개만 나쁜 것인지"까지 확인해본다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 오늘의 개념 이해하기 — 양품·불량·수율·불량률</h2>
+    <h3>양품과 불량</h3>
+    <p>검사를 마친 웨이퍼(또는 다이)는 <b>양품(良品)</b>과 <b>불량(不良)</b>으로 나뉜다.
+    한 웨이퍼 안에는 여러 개의 다이가 있고, 검사 결과 정상으로 판정된 개수가 <code>양품수량</code>,
+    비정상으로 판정된 개수가 <code>불량수량</code>이다.</p>
+
+    <h3>수율(Yield)이란</h3>
+    <p><b>수율</b>은 검사한 것 중 양품이 차지하는 비율이다. 계산식은 다음과 같다.</p>
+    <div class="callout concept">
+      <b class="tag">공식</b>
+      수율(%) = 양품수량 ÷ 검사수량 × 100
+    </div>
+    <p>예를 들어 24개를 검사해서 22개가 양품이면 수율은 22 ÷ 24 × 100 ≈ 91.7%다.</p>
+
+    <h3>불량률이란</h3>
+    <p><b>불량률</b>은 수율의 반대 개념으로, 불량이 차지하는 비율이다.</p>
+    <div class="callout concept">
+      <b class="tag">공식</b>
+      불량률(%) = 불량수량 ÷ 검사수량 × 100 = 100 − 수율(%)
+    </div>
+
+    <h3>수율은 어느 단위로도 계산할 수 있다</h3>
+    <p>수율은 "전체", "공정별", "설비별", "로트별"처럼 <b>어떤 범위로 묶어서 보느냐</b>에 따라
+    다른 숫자가 나온다. 오늘은 이 네 가지 단위를 모두 계산해보고, 그중에서도
+    "로트별 수율"을 이용해 문제가 되는 로트를 찾아낼 것이다.</p>
+  </section>
+
+  <section class="block">
+    <h2>📚 오늘의 개념 이해하기 — 파레토 분석 기초</h2>
+    <h3>불량 유형</h3>
+    <p>불량이 발생하면 원인을 분류한 <b>불량 유형</b>(예: 파티클, 두께 불량, 패턴 불량 등)을
+    함께 기록해둔다. 어떤 불량 유형이 가장 자주 발생하는지 알면, 무엇을 먼저 개선해야
+    효과가 큰지 판단할 수 있다.</p>
+
+    <h3>파레토 분석이란</h3>
+    <p><b>파레토(Pareto) 분석</b>은 "전체 문제의 대부분은 소수의 원인에서 발생한다"는
+    경험 법칙(파레토 법칙, 흔히 80/20 법칙)을 데이터로 확인하는 방법이다. 불량 유형을
+    발생 빈도가 많은 순서로 막대그래프로 그리고, 누적 비율을 함께 표시하면
+    "상위 몇 개 유형이 전체 불량의 몇 %를 차지하는지" 한눈에 볼 수 있다.</p>
+    <div class="callout concept">
+      <b class="tag">기초 개념</b>
+      오늘은 파레토 차트를 "그리고 읽는" 수준까지만 다룬다. 각 원인의 실제 개선 우선순위를
+      정하는 것은 현업에서 추가 정보(비용, 난이도 등)를 함께 고려해야 하는 더 복잡한 문제다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 핵심 용어 카드</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>양품 / 불량</h4><div class="en">Good / Defective</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>검사 결과 정상으로 판정된 것(양품)과 비정상으로 판정된 것(불량).</dd>
+          <dt>쉬운 비유</dt><dd>사과 상자를 열어 상품과 흠집 난 것을 골라내는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>양품수량</code>, <code>불량수량</code> 열.</dd>
+          <dt>자주 하는 오해</dt><dd>불량 = 완전히 작동하지 않는 것이라고 오해하기 쉽지만, 기준을 벗어나면 모두 불량으로 분류한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>수율</h4><div class="en">Yield</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>검사수량 중 양품이 차지하는 비율(%).</dd>
+          <dt>쉬운 비유</dt><dd>사과 100개 중 92개가 상품이면 수율 92%.</dd>
+          <dt>데이터에서의 예</dt><dd><code>양품수량 ÷ 검사수량 × 100</code>.</dd>
+          <dt>자주 하는 오해</dt><dd>수율_pct 열을 그냥 평균 내면 로트 수율이 된다고 착각하기 쉽다(아래 참고).</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>불량률</h4><div class="en">Defect Rate</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>검사수량 중 불량이 차지하는 비율(%). 100 − 수율.</dd>
+          <dt>쉬운 비유</dt><dd>사과 100개 중 8개가 흠집이면 불량률 8%.</dd>
+          <dt>데이터에서의 예</dt><dd><code>불량수량 ÷ 검사수량 × 100</code>.</dd>
+          <dt>자주 하는 오해</dt><dd>수율과 불량률을 더로 잘못 더하는 게 아니라, 항상 합이 100%가 되어야 한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>불량 유형</h4><div class="en">Defect Type</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>불량이 발생한 원인을 분류한 이름(파티클, 두께 불량 등).</dd>
+          <dt>쉬운 비유</dt><dd>병원 진단명처럼 불량의 "종류"를 붙인 이름표.</dd>
+          <dt>데이터에서의 예</dt><dd><code>불량유형</code> 열(불량이 없으면 빈 값).</dd>
+          <dt>자주 하는 오해</dt><dd>불량 유형이 같다고 원인도 항상 같은 것은 아니다(원인 추정은 8주차에서 다룬다).</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>파레토 분석</h4><div class="en">Pareto Analysis</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>빈도가 많은 순서로 정렬해 소수의 주요 원인을 찾는 분석법.</dd>
+          <dt>쉬운 비유</dt><dd>옷장 정리할 때 가장 자주 입는 옷 몇 벌부터 정리하는 것.</dd>
+          <dt>데이터에서의 예</dt><dd>불량 유형별 <code>value_counts()</code> 결과를 막대그래프로 표현.</dd>
+          <dt>자주 하는 오해</dt><dd>파레토 분석이 항상 정확히 "20%가 80%를 차지한다"는 뜻은 아니다. 대략적인 경향을 보는 도구다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>로트별 수율</h4><div class="en">Lot Yield</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>한 로트에 속한 모든 웨이퍼의 검사수량·양품수량을 합산해 계산한 수율.</dd>
+          <dt>쉬운 비유</dt><dd>반 전체 평균 점수를 낼 때, 학생별 점수를 단순 평균하지 않고 총점/총문항수로 계산하는 것과 같은 원리.</dd>
+          <dt>데이터에서의 예</dt><dd><code>groupby("로트번호")</code> 후 합산 → 수율 계산.</dd>
+          <dt>자주 하는 오해</dt><dd>웨이퍼별 <code>수율_pct</code>를 그냥 평균 내도 된다고 생각하기 쉽다(다음 섹션에서 자세히 설명).</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📁 데이터 미리보기</h2>
+    <p>오늘 사용할 데이터: <code>data/weekly/week07/week07_yield_defect_analysis.csv</code>
+    (421행 9열, 60개 로트 × 로트당 6~8장의 웨이퍼). 자세한 설명은
+    <a href="../../data/data_dictionary/week07_dictionary.md">데이터 설명서</a> 참고.
+    <b>한 행 = 한 로트의 웨이퍼 한 장에 대한 검사 결과</b>다.</p>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>로트번호</th><th>웨이퍼번호</th><th>설비번호</th><th>공정명</th><th>검사수량</th><th>양품수량</th><th>불량수량</th><th>불량유형</th><th>수율_pct</th></tr>
+        <tr><td>LOT-0001</td><td>1</td><td>EQ-02</td><td>포토</td><td>20</td><td>20</td><td>0</td><td>-</td><td>100.0</td></tr>
+        <tr><td>LOT-0001</td><td>2</td><td>EQ-02</td><td>포토</td><td>22</td><td>20</td><td>2</td><td>식각 과다</td><td>90.9</td></tr>
+        <tr><td>LOT-0001</td><td>3</td><td>EQ-02</td><td>포토</td><td>24</td><td>22</td><td>2</td><td>패턴 불량</td><td>91.7</td></tr>
+        <tr><td>LOT-0003</td><td>1</td><td>EQ-03</td><td>포토</td><td>20</td><td>18</td><td>2</td><td>패턴 불량</td><td>90.0</td></tr>
+        <tr><td>LOT-0053</td><td>1</td><td>EQ-04</td><td>식각</td><td>20</td><td>15</td><td>5</td><td>두께 불량</td><td>75.0</td></tr>
+        <tr><td>LOT-0053</td><td>3</td><td>EQ-04</td><td>식각</td><td>25</td><td>14</td><td>11</td><td>정렬 불량</td><td>56.0</td></tr>
+      </table>
+    </div>
+    <div class="callout warn">
+      <b class="tag">데이터 확인</b>
+      하나의 로트는 항상 하나의 설비, 하나의 공정에서만 진행된 것으로 구성되어 있다
+      (<code>df.groupby("로트번호")["설비번호"].nunique()</code>를 해보면 모두 1이 나온다).
+      즉 "이 로트가 어느 설비에서 나왔는가"는 로트당 하나로 정해져 있다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 함정 주의 — 웨이퍼 단위 수율 vs 로트 단위 수율</h2>
+    <p>이 데이터의 <code>수율_pct</code> 열은 <b>웨이퍼 한 장 단위</b>로 이미 계산되어 있다.
+    그런데 "이 로트의 수율은 얼마인가?"를 구할 때, 초보자가 가장 많이 하는 실수는
+    웨이퍼별 <code>수율_pct</code> 값을 그냥 <code>mean()</code>으로 평균 내는 것이다.
+    이렇게 하면 <b>웨이퍼마다 검사수량이 다르다는 사실</b>이 무시된다.</p>
+    <div class="callout danger">
+      <b class="tag">틀리기 쉬운 방법</b>
+      <code>df.groupby("로트번호")["수율_pct"].mean()</code> → 웨이퍼 8장이면 8개의 %를 단순히
+      더해서 8로 나눈 값. 검사수량이 20개인 웨이퍼와 25개인 웨이퍼를 "똑같은 비중"으로 취급한다.
+    </div>
+    <div class="callout success">
+      <b class="tag">올바른 방법</b>
+      <code>검사수량</code>과 <code>양품수량</code>을 먼저 <b>합산</b>한 다음 나누기를 해야 한다.
+      <code>lot_수율 = 로트의 양품수량 합 ÷ 로트의 검사수량 합 × 100</code>
+    </div>
+    <p>LOT-0053(가장 수율이 낮은 로트)의 웨이퍼 8장을 보면 차이가 드러난다.</p>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>웨이퍼번호</th><th>검사수량</th><th>양품수량</th><th>불량수량</th><th>수율_pct</th></tr>
+        <tr><td>1</td><td>20</td><td>15</td><td>5</td><td>75.0</td></tr>
+        <tr><td>2</td><td>24</td><td>18</td><td>6</td><td>75.0</td></tr>
+        <tr><td>3</td><td>25</td><td>14</td><td>11</td><td>56.0</td></tr>
+        <tr><td>4</td><td>24</td><td>17</td><td>7</td><td>70.8</td></tr>
+        <tr><td>5</td><td>23</td><td>14</td><td>9</td><td>60.9</td></tr>
+        <tr><td>6</td><td>23</td><td>13</td><td>10</td><td>56.5</td></tr>
+        <tr><td>7</td><td>22</td><td>16</td><td>6</td><td>72.7</td></tr>
+        <tr><td>8</td><td>23</td><td>15</td><td>8</td><td>65.2</td></tr>
+      </table>
+    </div>
+    <div class="callout warn">
+      <b class="tag">계산 비교</b>
+      웨이퍼별 <code>수율_pct</code>를 단순 평균하면 <b>66.51%</b>가 나온다. 하지만 검사수량·양품수량을
+      먼저 합산(검사수량 합 184개, 양품수량 합 122개)해서 계산하면 122 ÷ 184 × 100 =
+      <b>66.3%</b>가 정확한 로트 수율이다. 이 예시는 차이가 0.2%p로 작지만, 웨이퍼마다
+      검사수량 차이가 더 크면 오차도 더 커질 수 있다. <b>항상 "합산 후 나누기" 순서를 지키자.</b>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>👩‍🏫 강사 코드 시연 — 전체 / 공정별 / 설비별 수율</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python — Colab / Jupyter</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+
+df = pd.read_csv("week07_yield_defect_analysis.csv")
+
+# 1. 전체 수율 = 전체 양품수량 합 ÷ 전체 검사수량 합 × 100
+overall_yield = df["양품수량"].sum() / df["검사수량"].sum() * 100
+print(f"전체 수율: {overall_yield:.1f}%")
+
+# 2. 공정별 수율 (공정명으로 묶은 뒤, 합산 후 나누기)
+process_yield = df.groupby("공정명").apply(
+    lambda g: g["양품수량"].sum() / g["검사수량"].sum() * 100
+)
+print(process_yield.round(1))
+
+# 3. 설비별 수율
+equipment_yield = df.groupby("설비번호").apply(
+    lambda g: g["양품수량"].sum() / g["검사수량"].sum() * 100
+)
+print(equipment_yield.round(1))</code></pre>
+    </div>
+    <div class="explain-list">
+      <b>코드 한 줄씩 설명</b>
+      <ul>
+        <li><code>df["양품수량"].sum()</code>: <code>양품수량</code> 열 전체의 합계.</li>
+        <li><code>df.groupby("공정명")</code>: 공정명이 같은 행끼리 묶는다(6주차 복습).</li>
+        <li><code>.apply(lambda g: ...)</code>: 묶인 그룹(<code>g</code>)마다 "합산 후 나누기" 계산을 반복 적용한다.</li>
+        <li>주의: <code>groupby("공정명")["수율_pct"].mean()</code>이 아니라, 위처럼
+        <code>양품수량</code>·<code>검사수량</code>을 각각 합산한 뒤 나누는 방식을 써야 정확하다.</li>
+      </ul>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">전체 수율: 91.4%
+
+공정명
+산화    93.4
+세정    93.7
+식각    91.5
+증착    93.5
+포토    87.1
+dtype: float64
+
+설비번호
+EQ-01    93.2
+EQ-02    93.5
+EQ-03    93.8
+EQ-04    86.1
+dtype: float64</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      전체 수율은 91.4%(검사 9,454개 중 양품 8,637개)다. 공정별로는 <b>포토(87.1%)</b>가
+      가장 낮고, 설비별로는 <b>EQ-04(86.1%)</b>가 가장 낮다. 6주차에서 "EQ-04가 불량률이
+      높다"고 관찰했던 것이 이번 주 수율 계산으로도 다시 확인된다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>👩‍🏫 강사 코드 시연 — 로트별 수율과 저수율 로트 찾기</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code># 로트번호로 묶어서 검사수량·양품수량·불량수량을 먼저 합산합니다.
+lot_summary = df.groupby("로트번호").agg(
+    검사수량=("검사수량", "sum"),
+    양품수량=("양품수량", "sum"),
+    불량수량=("불량수량", "sum"),
+    설비번호=("설비번호", "first"),   # 로트당 설비는 하나뿐이므로 첫 값만 가져옴
+)
+
+# 합산된 값으로 로트 수율을 계산합니다.
+lot_summary["수율_pct"] = (lot_summary["양품수량"] / lot_summary["검사수량"] * 100).round(1)
+
+# 수율이 낮은 순서로 정렬해 하위 5개 로트를 확인합니다.
+lot_summary.sort_values("수율_pct").head(5)</code></pre>
+    </div>
+    <div class="explain-list">
+      <b>코드 한 줄씩 설명</b>
+      <ul>
+        <li><code>.agg(검사수량=("검사수량","sum"), ...)</code>: 여러 열을 한 번에 원하는 이름으로 합산한다.</li>
+        <li><code>("설비번호","first")</code>: 그룹의 첫 번째 값만 가져온다. 로트당 설비가 하나뿐이라 안전하게 쓸 수 있다.</li>
+        <li><code>.sort_values("수율_pct")</code>: 기본은 오름차순(작은 값부터)이라 수율이 낮은 로트가 위로 온다.</li>
+        <li><code>.head(5)</code>: 정렬된 결과에서 상위 5개 행만 본다.</li>
+      </ul>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시 — 수율 하위 5개 로트</b>
+      <div class="tablewrap">
+        <table class="data-preview">
+          <tr><th>로트번호</th><th>검사수량</th><th>양품수량</th><th>불량수량</th><th>설비번호</th><th>수율_pct</th></tr>
+          <tr><td>LOT-0053</td><td>184</td><td>122</td><td>62</td><td>EQ-04</td><td>66.3</td></tr>
+          <tr><td>LOT-0050</td><td>160</td><td>108</td><td>52</td><td>EQ-04</td><td>67.5</td></tr>
+          <tr><td>LOT-0006</td><td>183</td><td>125</td><td>58</td><td>EQ-04</td><td>68.3</td></tr>
+          <tr><td>LOT-0037</td><td>133</td><td>91</td><td>42</td><td>EQ-04</td><td>68.4</td></tr>
+          <tr><td>LOT-0029</td><td>181</td><td>124</td><td>57</td><td>EQ-04</td><td>68.5</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      전체 60개 로트 중 수율이 가장 낮은 5개 로트(66.3%~68.5%)는 <b>모두 EQ-04</b>에서
+      생산되었다. 정상 로트의 수율이 대체로 88~99%인 것과 비교하면 뚜렷하게 낮은 수치다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>👩‍🏫 강사 코드 시연 — 불량 유형 빈도와 파레토 차트</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>import matplotlib.pyplot as plt
+
+# 불량유형별 발생 빈도 (개수 많은 순으로 자동 정렬됨)
+defect_counts = df["불량유형"].value_counts()
+print(defect_counts)
+
+# 누적 비율 계산 (파레토 차트의 핵심)
+cum_pct = defect_counts.cumsum() / defect_counts.sum() * 100
+print(cum_pct.round(1))
+
+# 막대그래프 + 누적선 그래프로 파레토 차트 그리기
+fig, ax1 = plt.subplots(figsize=(9, 5))
+ax1.bar(defect_counts.index, defect_counts.values, color="#ea580c")
+ax1.set_ylabel("발생 빈도(건)")
+
+ax2 = ax1.twinx()
+ax2.plot(defect_counts.index, cum_pct.values, color="#2563eb", marker="o")
+ax2.set_ylabel("누적 비율(%)")
+plt.title("불량 유형별 파레토 차트")
+plt.show()</code></pre>
+    </div>
+    <div class="explain-list">
+      <b>코드 한 줄씩 설명</b>
+      <ul>
+        <li><code>df["불량유형"].value_counts()</code>: 불량유형별 등장 횟수를 세고, 개수 많은 순으로 자동 정렬한다(빈 값은 제외).</li>
+        <li><code>.cumsum()</code>: 위에서부터 누적으로 더한다. 총합으로 나누면 "누적 비율(%)"이 된다.</li>
+        <li><code>ax1.bar(...)</code>: 발생 빈도를 막대그래프로 그린다.</li>
+        <li><code>ax1.twinx()</code>: 같은 x축을 공유하는 오른쪽 y축을 하나 더 만든다(누적 비율용).</li>
+        <li><code>ax2.plot(...)</code>: 누적 비율을 선 그래프로 겹쳐 그린다. 이 둘을 합친 것이 파레토 차트다.</li>
+      </ul>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">불량유형
+정렬 불량        57
+전기적 특성 불량    57
+식각 부족        48
+파티클          46
+패턴 불량        45
+식각 과다        42
+오염           41
+두께 불량        40
+Name: count, dtype: int64</pre>
+    </div>
+    <figure style="margin:1rem 0;">
+      <img src="../../assets/images/week07/pareto_defects.png" alt="7주차 불량 유형별 파레토 차트: 정렬 불량 57건, 전기적 특성 불량 57건, 식각 부족 48건, 파티클 46건, 패턴 불량 45건, 식각 과다 42건, 오염 41건, 두께 불량 40건이 막대로 표시되고 누적 비율 선이 함께 표시된 그래프">
+      <figcaption style="font-size:.85rem;color:var(--muted);text-align:center;margin-top:.4rem;">
+        전체 불량 376건(전체 421건 중 불량유형이 있는 행) 기준 파레토 차트
+      </figcaption>
+    </figure>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      가장 많이 발생한 불량 유형은 <b>정렬 불량(57건)</b>과 <b>전기적 특성 불량(57건)</b>으로 공동 1위다.
+      상위 3개 유형(정렬 불량 + 전기적 특성 불량 + 식각 부족 = 162건)만으로도 전체 불량의
+      약 <b>43.1%</b>를 차지한다. 여덟 가지 불량 유형이 비교적 고르게 분포되어 있어서,
+      "딱 한 가지만 고치면 대부분 해결된다"고 보기는 어렵다는 점도 이번 데이터의 특징이다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📊 결과 표 — 저수율 로트와 설비 요약</h2>
+    <p>수율 하위 5개 로트가 모두 EQ-04라는 것을 확인했으니, EQ-04 안에서도 어떤 로트가
+    문제인지 더 자세히 살펴보자.</p>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>구분</th><th>로트 수</th><th>평균 수율</th></tr>
+        <tr><td>EQ-04 전체 18개 로트</td><td>18</td><td>86.8%</td></tr>
+        <tr><td>&nbsp;&nbsp;└ 그중 저수율 5개 로트(66.3~68.5%)</td><td>5</td><td>67.8%</td></tr>
+        <tr><td>&nbsp;&nbsp;└ 그중 나머지 13개 로트</td><td>13</td><td>93.4%</td></tr>
+        <tr><td>EQ-04를 제외한 나머지 로트(EQ-01·02·03)</td><td>42</td><td>93.5%</td></tr>
+      </table>
+    </div>
+    <div class="callout danger">
+      <b class="tag">중요한 발견</b>
+      EQ-04에서 만든 로트가 <b>전부</b> 나쁜 것은 아니다! EQ-04의 18개 로트 중 13개는
+      오히려 89.7~97.1%로 평균보다도 우수하다. 문제는 EQ-04 로트 <b>18개 중 5개</b>에서만
+      집중적으로 발생했다. 이 5개 로트가 EQ-04 전체 평균(86.8%)을 끌어내린 것이다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🧭 결과 해석 — 저수율 로트의 공통점</h2>
+    <p>오늘의 질문 "수율이 낮은 로트에는 공통점이 있을까?"에 대한 답을 데이터로 정리해보면
+    다음과 같다.</p>
+    <div class="callout success">
+      <b class="tag">데이터로 확인한 사실</b>
+      <ol style="margin:.3rem 0 0; padding-left:1.2rem;">
+        <li>전체 수율은 91.4%이고, 정상 로트의 수율은 대체로 88~99% 범위에 있다.</li>
+        <li>수율 하위 5개 로트(LOT-0053, LOT-0050, LOT-0006, LOT-0037, LOT-0029)는
+        전부 <b>EQ-04</b>에서 생산되었고, 수율은 66.3~68.5%로 뚜렷하게 낮다.</li>
+        <li>그러나 EQ-04에서 만든 나머지 13개 로트는 오히려 수율이 높다. 즉
+        <b>"EQ-04 설비 자체"보다 "EQ-04에서 만든 특정 로트들"</b>이 공통점이라고
+        더 정확히 말할 수 있다.</li>
+      </ol>
+    </div>
+    <div class="callout concept">
+      <b class="tag">한 걸음 더(8주차 예고)</b>
+      "EQ-04라서 나쁘다"고 성급히 결론 내리면 안 된다. 지금은 "저수율 로트와 EQ-04 사이에
+      관계가 있어 보인다"는 관찰까지만 할 수 있다. 왜 하필 그 5개 로트만 낮은지(온도, 진공도
+      등 다른 원인이 있는지)는 8주차 "공정 이상과 원인 후보 찾기"에서 더 파헤쳐 본다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🙋 실생활 비유로 정리하기</h2>
+    <p>수율 계산은 "반 평균 점수"를 내는 것과 비슷하다. 학생 30명의 점수를 단순히
+    더해 30으로 나누면 반 평균이 되듯, 로트의 웨이퍼들을 "검사수량 합"과 "양품수량 합"으로
+    먼저 더한 뒤 나누어야 정확한 로트 수율이 나온다. 그리고 "우리 반 평균이 낮다"고
+    학생 전원을 탓할 수 없듯, "EQ-04 평균이 낮다"고 EQ-04에서 만든 모든 로트를 의심할
+    수는 없다 — 실제로는 일부 로트(학생)만 유독 낮았기 때문이다.</p>
+  </section>
+
+  <section class="block">
+    <h2>🟣 단계별 따라 하기 실습</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>데이터 읽기</b> — <code>week07_yield_defect_analysis.csv</code>를
+      업로드하고 <code>pd.read_csv()</code>로 읽는다. <code>df.head()</code>, <code>df.shape</code>로
+      데이터를 먼저 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>전체 수율 계산</b> — <code>df["양품수량"].sum() / df["검사수량"].sum() * 100</code>을
+      계산한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>공정별·설비별 수율</b> — <code>groupby()</code> 뒤 "합산 후 나누기"로 계산한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>로트별 수율과 저수율 로트 찾기</b> — <code>groupby("로트번호").agg(...)</code>로
+      로트별 합계를 만들고, <code>sort_values("수율_pct")</code>로 낮은 순 정렬한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>불량 유형 빈도와 파레토 차트</b> — <code>value_counts()</code>로 세고,
+      막대그래프 + 누적선 그래프로 그린다.</div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div class="content"><b>결과 문장 작성</b> — 저수율 로트가 어느 설비에 몰려 있는지 한 문장으로 정리한다.</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout danger">
+      <b class="tag">오류 1</b>
+      <code>groupby("로트번호")["수율_pct"].mean()</code>을 로트 수율이라고 잘못 사용하는 경우.
+      반드시 <code>양품수량</code>과 <code>검사수량</code>을 각각 합산한 뒤 나누어야 한다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 2</b>
+      <code>value_counts()</code>는 결측값(빈 <code>불량유형</code>)을 기본적으로 세지 않는다.
+      "전체 421행"과 "불량유형이 있는 376행"을 혼동하지 않도록 주의한다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의</b>
+      "EQ-04 평균 수율이 낮다"는 결과만 보고 "EQ-04에서 만든 모든 로트가 문제"라고
+      성급히 결론 내리지 않도록 한다. 반드시 로트별로 다시 확인하는 습관을 들이자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🚀 도전 실습</h2>
+    <div class="callout practice">
+      <b class="tag">도전 문제 1</b>
+      수율이 가장 <b>높은</b> 5개 로트도 <code>sort_values("수율_pct", ascending=False).head(5)</code>로
+      찾아보자. 어느 설비에서 나왔는지 확인하고, 저수율 로트와 비교해보자.
+      (힌트: 놀랍게도 같은 설비일 수 있다!)
+    </div>
+    <div class="callout practice">
+      <b class="tag">도전 문제 2(심화)</b>
+      저수율 5개 로트(LOT-0053 등)만 따로 골라 <code>불량유형</code>의 <code>value_counts()</code>를
+      내보자. 전체 데이터의 파레토 순위와 같은지, 다른지 비교해보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. (객관식) 검사수량 25개 중 양품이 20개일 때 수율은?</div>
+      <ul class="options">
+        <li>A. 20%</li>
+        <li>B. 25%</li>
+        <li>C. 80%</li>
+        <li>D. 125%</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: C. 20 ÷ 25 × 100 = 80%.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (참/거짓) 로트 수율을 구할 때는 웨이퍼별 수율_pct를 그냥 평균 내면 된다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 거짓. 웨이퍼마다 검사수량이 다르므로, 검사수량과 양품수량을
+      먼저 합산한 뒤 나누어야 정확하다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. (서술) 오늘 실습 결과를 바탕으로, 수율이 낮은 로트들의 공통점을 한 문장으로 설명해보자.</div>
+      <button class="reveal-btn">예시 답안 보기</button>
+      <div class="answer-box">예시 답안: "수율 하위 5개 로트(LOT-0053, LOT-0050, LOT-0006, LOT-0037, LOT-0029)는
+      모두 EQ-04에서 생산되었지만, EQ-04의 나머지 13개 로트는 오히려 수율이 높아서
+      설비 전체보다는 그 설비의 특정 로트들이 문제였다고 볼 수 있다."</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🔜 다음 주 예고</h2>
+    <div class="callout concept">
+      <b class="tag">8주차 예고</b>
+      다음 주에는 "왜 하필 그 로트들만 낮았을까?"라는 질문에 답하기 위해 온도·진공도 같은
+      센서 값을 함께 살펴본다. 이상치 탐지, 상관관계 읽는 법, 그리고 "상관관계 ≠ 인과관계"라는
+      중요한 원칙을 배운다.
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <a href="../week06/index.html">← 이전 주차: 6주차</a>
+    <a class="home" href="../../index.html">🏠 전체 목차</a>
+    <a href="../week08/index.html">다음 주차: 8주차 →</a>
+  </div>
+
+</main>
+
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 7주차 · 교육용 자료(가상 데이터 사용)</footer>
+
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+</body>
+</html>

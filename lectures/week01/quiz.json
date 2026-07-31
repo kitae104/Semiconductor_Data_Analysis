@@ -1,0 +1,80 @@
+{
+  "week": 1,
+  "title": "반도체 공정과 데이터 처음 만나기",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "다음 중 '웨이퍼'에 대한 설명으로 가장 알맞은 것은?",
+      "options": [
+        "반도체 칩을 만드는 둥근 원판 모양의 판",
+        "반도체 공장의 다른 이름",
+        "공정에서 사용하는 가스의 종류",
+        "불량품을 검사하는 사람"
+      ],
+      "answer": 0,
+      "explanation": "웨이퍼는 칩을 만드는 원판이다. FAB은 공장, 다이는 웨이퍼를 잘라 만든 조각이다."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "공정 데이터에서 '한 행(row)'이 의미하는 것은?",
+      "options": [
+        "측정한 항목의 종류",
+        "한 번의 측정 기록",
+        "설비의 이름",
+        "전체 데이터의 개수"
+      ],
+      "answer": 1,
+      "explanation": "행은 한 번의 측정(관측) 기록이고, 열은 측정한 항목(온도, 압력 등)을 의미한다."
+    },
+    {
+      "type": "true_false",
+      "question": "df.shape는 데이터의 (행 개수, 열 개수)를 알려준다.",
+      "answer": true,
+      "explanation": "예를 들어 (40, 8)은 40행 8열이라는 뜻이다."
+    },
+    {
+      "type": "true_false",
+      "question": "이 과정에서 '합격여부' 열의 값 1은 불합격을 의미한다.",
+      "answer": false,
+      "explanation": "이 과정에서는 1=합격, -1=불합격으로 정의한다."
+    },
+    {
+      "type": "term_matching",
+      "question": "용어와 설명을 연결하시오.",
+      "pairs": [
+        {"term": "웨이퍼", "definition": "칩을 만드는 둥근 원판"},
+        {"term": "FAB", "definition": "반도체를 생산하는 공장"},
+        {"term": "로트", "definition": "함께 관리되는 웨이퍼 묶음"},
+        {"term": "설비", "definition": "공정을 수행하는 기계"}
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "question": "CSV 파일을 읽어 DataFrame으로 만드는 Pandas 함수는 pd.____()이다.",
+      "answer": "read_csv"
+    },
+    {
+      "type": "fill_blank",
+      "question": "특정 열에서 값별 개수를 세는 메서드는 df['열이름'].____()이다.",
+      "answer": "value_counts"
+    },
+    {
+      "type": "result_prediction",
+      "question": "합격 34건, 불합격 6건일 때 불합격 비율(%)은?",
+      "answer": "15%",
+      "explanation": "6 ÷ 40 × 100 = 15%"
+    },
+    {
+      "type": "chart_choice",
+      "question": "합격/불합격처럼 범주별 개수를 비교하기에 가장 알맞은 그래프는?",
+      "options": ["선 그래프", "막대그래프", "산점도"],
+      "answer": 1,
+      "explanation": "막대그래프는 범주형 데이터의 개수 비교에 적합하다."
+    },
+    {
+      "type": "short_answer",
+      "question": "오늘 배운 내용을 바탕으로, 이 데이터를 처음 보는 사람에게 한 문장으로 설명해보시오.",
+      "sample_answer": "이번 공정 기록 40건 중 34건(85%)이 합격했고, 6건(15%)이 불합격했다."
+    }
+  ]
+}

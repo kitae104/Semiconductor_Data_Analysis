@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10주차 최종 보고서 양식 — 반도체 공정 데이터 분석 미니 프로젝트</title>
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정</a>
+    <nav class="week-nav"><a href="index.html">← 10주차 강의로</a></nav>
+  </div>
+</header>
+<main class="page">
+  <div class="hero">
+    <span class="badge purple">10주차 · 최종 보고서 양식</span>
+    <h1>반도체 공정 데이터 분석 미니 프로젝트 — 최종 보고서</h1>
+    <p class="today-question">이 문서는 빈 양식이다. 각 항목의 안내 문구를 지우고, 여러분의
+    분석 내용으로 채워 넣으면 하나의 완성된 보고서가 된다.</p>
+  </div>
+
+  <section class="block">
+    <h2>1. 프로젝트 제목</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [여기에 프로젝트 제목을 한 줄로 작성하세요. 예: "설비별 불량률 비교를 통한 관리 우선순위 설정"]
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>2. 분석 배경</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [여기에 분석 배경을 2~3문장으로 작성하세요. 왜 이 주제를 선택했는지, 어떤 문제의식에서
+      출발했는지를 적습니다. 예: "6주차에서 설비별로 불량률 차이가 있다고 배웠는데, 더 큰 규모의
+      데이터에서도 같은 패턴이 나타나는지 확인하고 싶었다."]
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>3. 분석 질문</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [여기에 데이터로 답하고자 하는 구체적인 질문을 한 문장으로 작성하세요. "~와 ~는 관계가
+      있을까?", "어느 ~가 가장 ~한가?" 형태를 권장합니다. 예: "설비별로 불량률에 차이가 있을까?"]
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>4. 사용 데이터</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [사용한 데이터 파일명과 크기(행/열)를 적으세요. 예: "week10_mini_project_dataset.csv
+      (600행 16열)"]
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>5. 데이터 설명</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [분석에 사용한 주요 열(컬럼)이 무엇을 의미하는지 2~4개 정도 짧게 설명하세요. 예: "설비번호는
+      공정을 수행한 설비 ID(EQ-01~EQ-04)이고, 검사결과는 0=정상/1=이상을 의미한다."]
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>6. 데이터 정리 과정</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [결측값·이상값을 어떻게 확인하고 처리했는지 적으세요. 처리한 것이 없다면 "결측값과
+      이상값을 확인했으나 특별한 처리가 필요하지 않았다"처럼 확인 사실 자체를 적어도 됩니다.
+      예: "isna().sum()으로 확인한 결과 불량유형 열에만 결측값(541건)이 있었으며, 이는 정상
+      판정이라 불량 유형을 기록하지 않은 경우였다."]
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>7. 핵심 그래프</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [분석 질문에 대한 답을 가장 잘 보여주는 그래프를 최소 1개(권장 3개 이상) 붙여넣으세요.
+      각 그래프 아래에는 무엇을 그린 그래프인지 한 줄 설명을 남기세요.]
+    </div>
+    <div style="border:2px dashed var(--line); border-radius:10px; padding:2.5rem 1rem; text-align:center; color:var(--muted); margin:1rem 0;">
+      📊 [여기에 그래프 이미지를 붙여넣으세요 — 예: Notebook에서 저장한 PNG 파일을 드래그하거나
+      스크린샷을 붙여넣기]
+    </div>
+    <p style="font-size:.9rem; color:var(--muted);">[그래프 설명: 이 그래프는 ____________을(를)
+    보여준다.]</p>
+    <div style="border:2px dashed var(--line); border-radius:10px; padding:2.5rem 1rem; text-align:center; color:var(--muted); margin:1rem 0;">
+      📊 [그래프 2 — 필요하다면 그래프를 추가로 붙여넣으세요]
+    </div>
+    <div style="border:2px dashed var(--line); border-radius:10px; padding:2.5rem 1rem; text-align:center; color:var(--muted); margin:1rem 0;">
+      📊 [그래프 3 — 필요하다면 그래프를 추가로 붙여넣으세요]
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>8. 분석 결과</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [숫자를 포함한 결과 해석 문장을 5개 이상 작성하세요. "데이터에서 이러한 경향이
+      관찰되었다"와 같은 표현을 활용하면 좋습니다.]
+      <ol>
+        <li>[결과 문장 1: 예 — "설비별 불량률을 비교한 결과, ○○의 불량률이 __%로 가장 높았다."]</li>
+        <li>[결과 문장 2]</li>
+        <li>[결과 문장 3]</li>
+        <li>[결과 문장 4]</li>
+        <li>[결과 문장 5]</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>9. 원인 후보</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [불량과 관련 있어 보이는 변수를 "원인 후보"로 조심스럽게 제시하세요. 다음과 같은 표현을
+      권장합니다: "해당 변수가 불량과 관련 있을 가능성이 있다.", "상관관계만으로 원인이라고
+      단정할 수 없다.", "정확한 원인 확인을 위해 추가 데이터가 필요하다."]
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>10. 개선 제안</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [분석 결과를 바탕으로 실제로 해볼 수 있는 구체적인 행동을 2개 이상 제안하세요. "더
+      잘 관리하자" 같은 막연한 제안보다, "○○ 설비의 점검 주기를 단축한다"처럼 구체적으로 씁니다.]
+      <ol>
+        <li>[개선 제안 1]</li>
+        <li>[개선 제안 2]</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>11. 분석의 한계</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [이번 분석이 답하지 못한 부분, 데이터의 제약을 솔직하게 적으세요. 다음 문장을 참고할 수
+      있습니다: "분석 결과는 교육용 데이터에 한정된다.", "표본 수가 적어 결과를 일반화하기
+      어렵다.", "시간 관계상 ○단계까지만 진행했다."]
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>12. 느낀 점</h2>
+    <div class="callout practice">
+      <b class="tag">작성 안내</b>
+      [10주 과정 전체를 돌아보며, 이번 프로젝트를 진행하면서 느낀 점을 자유롭게 2~3문장으로
+      작성하세요. 어려웠던 점, 새롭게 알게 된 점, 앞으로 더 해보고 싶은 것 등을 적어도 좋습니다.]
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <a class="home" href="index.html">← 10주차 강의로 돌아가기</a>
+    <a href="worksheet.html">실습지(기획서) 보기 →</a>
+  </div>
+</main>
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 10주차 최종 보고서 양식</footer>
+<script src="../../assets/js/common.js"></script>
+</body>
+</html>

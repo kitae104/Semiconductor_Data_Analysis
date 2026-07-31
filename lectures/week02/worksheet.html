@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2주차 실습지</title>
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정</a>
+    <nav class="week-nav"><a href="index.html">← 2주차 강의로</a></nav>
+  </div>
+</header>
+<main class="page">
+  <div class="hero">
+    <span class="badge purple">2주차 실습지</span>
+    <h1>파이썬과 데이터 분석의 기본 — 실습지</h1>
+  </div>
+
+  <section class="block">
+    <h2>1. 용어 연결 문제</h2>
+    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <table class="timetable">
+      <tr><th>용어</th><th>설명 후보</th></tr>
+      <tr><td>① 변수</td><td rowspan="4">A. 여러 값을 순서대로 담는 상자<br>B. 값의 합을 개수로 나눈 요약값<br>C. 값 하나를 저장하는 이름표<br>D. 자주 쓰는 계산에 이름을 붙인 도구</td></tr>
+      <tr><td>② 리스트</td></tr>
+      <tr><td>③ 함수</td></tr>
+      <tr><td>④ 평균</td></tr>
+    </table>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① C  ② A  ③ D  ④ B</div>
+  </section>
+
+  <section class="block">
+    <h2>2. 코드 빈칸 문제</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>temps = [302.7, 300.1, 292.0, 299.0, 291.9, 303.5]
+
+average = ____(temps) / ____(temps)   # 평균 계산
+maximum = ____(temps)                 # 최댓값
+minimum = ____(temps)                 # 최솟값
+
+print(average, maximum, minimum)</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">순서대로 <code>sum</code>, <code>len</code>, <code>max</code>, <code>min</code></div>
+  </section>
+
+  <section class="block">
+    <h2>3. 계산 문제</h2>
+    <p>어느 공정의 압력 측정값 리스트가 아래와 같다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">pressures = [1000.0, 1010.0, 1020.0, 990.0]</pre>
+    <p>이 리스트의 평균, 최댓값, 최솟값을 각각 계산해보자.</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">합계 = 1000.0+1010.0+1020.0+990.0 = 4020.0, 개수 = 4<br>
+    평균 = 4020.0 ÷ 4 = 1005.0<br>
+    최댓값 = 1020.0, 최솟값 = 990.0</div>
+  </section>
+
+  <section class="block">
+    <h2>4. 결과 해석 문제</h2>
+    <p>2주차 데이터(25건)를 계산한 결과가 아래와 같았다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">전체 평균: 301.9
+전체 최댓값: 320.0  전체 최솟값: 289.3
+수율: 23/25 = 92.0%</pre>
+    <p>이 결과를 보고 "정상범위(295~305℃)를 벗어난 값이 있는가?"와 "수율이 몇 %인가?"를 한 문장씩 적어보자.</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">최댓값 320.0℃와 최솟값 289.3℃ 모두 정상범위(295~305℃)를 벗어났다.
+    수율은 92.0%로, 25건 중 23건이 합격했다.</div>
+  </section>
+
+  <section class="block">
+    <h2>5. 분석 문장 작성 문제</h2>
+    <p>아래 빈칸을 채워 이번 주 데이터를 한 문장으로 요약해보자.</p>
+    <div class="callout practice">
+      <b class="tag">문장 작성</b>
+      "이번 배치의 평균 온도는 ____℃였고, 최댓값은 ____℃까지 올라갔다.
+      전체 ____건 중 ____건이 합격해 수율은 약 ____%였다."
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>6. 도전 문제</h2>
+    <div class="callout practice">
+      <b class="tag">도전</b>
+      <code>df["압력_Pa"].tolist()</code>로 압력 리스트를 만들어 평균·최댓값·최솟값을 구해보자.
+      그리고 합격(<code>합격여부==1</code>) 그룹과 불합격(<code>합격여부==-1</code>) 그룹의
+      평균 온도를 각각 구해서 어느 쪽이 더 높은지 비교해보자.
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <a class="home" href="index.html">← 2주차 강의로 돌아가기</a>
+  </div>
+</main>
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 2주차 실습지</footer>
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>원본 데이터 분석 리포트</title>
+<style>
+  :root{--blue:#2563eb;--green:#16a34a;--orange:#ea580c;--red:#dc2626;--purple:#7c3aed;--bg:#f8fafc;--card:#ffffff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;}
+  *{box-sizing:border-box;}
+  body{font-family:"Segoe UI","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);margin:0;padding:0 0 4rem;line-height:1.6;}
+  header{background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;padding:2.5rem 1.5rem;}
+  header h1{margin:0 0 .5rem;font-size:1.8rem;}
+  header p{margin:0;opacity:.9;}
+  main{max-width:980px;margin:-2rem auto 0;padding:0 1.5rem;}
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.75rem;margin-bottom:1.5rem;box-shadow:0 4px 14px rgba(15,23,42,.06);}
+  h2{color:var(--blue);border-bottom:2px solid var(--line);padding-bottom:.5rem;margin-top:0;}
+  h3{color:#0f172a;}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem;}
+  th,td{border:1px solid var(--line);padding:.5rem .7rem;text-align:left;}
+  th{background:#eff6ff;color:var(--blue);}
+  .tablewrap{overflow-x:auto;}
+  .tag{display:inline-block;padding:.2rem .6rem;border-radius:999px;font-size:.8rem;font-weight:600;}
+  .tag.blue{background:#dbeafe;color:#1e40af;}
+  .tag.green{background:#dcfce7;color:#166534;}
+  .tag.orange{background:#ffedd5;color:#9a3412;}
+  .tag.red{background:#fee2e2;color:#991b1b;}
+  .tag.purple{background:#ede9fe;color:#5b21b6;}
+  .note{background:#fff7ed;border-left:4px solid var(--orange);padding:.9rem 1.1rem;border-radius:8px;margin:1rem 0;}
+  .warn{background:#fef2f2;border-left:4px solid var(--red);padding:.9rem 1.1rem;border-radius:8px;margin:1rem 0;}
+  .ok{background:#f0fdf4;border-left:4px solid var(--green);padding:.9rem 1.1rem;border-radius:8px;margin:1rem 0;}
+  code{background:#f1f5f9;padding:.1rem .35rem;border-radius:4px;font-size:.9em;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media (max-width:700px){.grid2{grid-template-columns:1fr;}}
+  .stat{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem;}
+  .stat b{display:block;font-size:1.4rem;color:var(--blue);}
+  footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:2rem;}
+</style>
+</head>
+<body>
+<header>
+  <h1>📊 원본 데이터 분석 리포트</h1>
+  <p>반도체_공정_샘플.csv &amp; fab.csv — 2단계: 원본 데이터 분석 결과 (실행일 2026-07-31)</p>
+</header>
+<main>
+
+<section class="card">
+  <h2>1. 반도체_공정_샘플.csv</h2>
+  <div class="grid2">
+    <div class="stat"><b>200행 × 12열</b>공정 기록 수 / 열 수</div>
+    <div class="stat"><b>90% / 10%</b>합격(180) / 불합격(20) 비율</div>
+  </div>
+  <h3>열 구성</h3>
+  <div class="tablewrap">
+  <table>
+    <tr><th>열 이름</th><th>데이터 형식</th><th>결측 개수</th><th>비고</th></tr>
+    <tr><td>측정시간</td><td>문자열</td><td>0</td><td>일정하지 않은 순서의 타임스탬프</td></tr>
+    <tr><td>온도_섭씨</td><td>실수</td><td>12</td><td>평균 300.7, 최대 332.5(이상 고온 포함)</td></tr>
+    <tr><td>압력_Pa</td><td>실수</td><td>9</td><td>평균 1013.0, 최소 963.1(이상 저압 포함)</td></tr>
+    <tr><td>가스유량_slm</td><td>실수</td><td>7</td><td>평균 50.1</td></tr>
+    <tr><td>전력_W</td><td>실수</td><td>10</td><td>평균 2004.1</td></tr>
+    <tr><td>진공도_mTorr</td><td>실수</td><td>9</td><td>평균 5.08</td></tr>
+    <tr><td>두께_nm</td><td>실수</td><td>8</td><td>평균 100.4</td></tr>
+    <tr><td>습도_pct</td><td>실수</td><td>13</td><td>평균 44.8</td></tr>
+    <tr><td>진동_mm_s</td><td>실수</td><td>8</td><td>평균 0.50</td></tr>
+    <tr><td>처리시간_sec</td><td>실수</td><td>10</td><td>평균 120.1</td></tr>
+    <tr><td>냉각수온도_섭씨</td><td>실수</td><td>6</td><td>평균 20.14</td></tr>
+    <tr><td>합격여부</td><td>정수</td><td>0</td><td><code>1</code>=합격, <code>-1</code>=불합격</td></tr>
+  </table>
+  </div>
+  <div class="note"><b>결측값 패턴:</b> 모든 숫자 열에 3~6.5% 수준의 결측이 고르게 분포되어 있어,
+  4주차 "결측값과 이상한 데이터 정리하기" 실습의 근거 데이터로 적합하다.</div>
+  <div class="warn"><b>이상값 관찰:</b> 온도 최댓값 332.5℃(정상대 약 295~305℃), 압력 최솟값 963 Pa 등
+  일부 행이 정상 범위를 크게 벗어난다. 8주차 이상 탐지 실습에서 이런 값을 다루는 방법을 학습한다.</div>
+  <p><span class="tag blue">활용</span> 1~8주차 기본 데이터의 원형. 그대로 사용하지 않고
+  로트번호·설비번호·공정명 등 교육용 열을 추가하거나 주차 목적에 맞게 재구성한다.</p>
+</section>
+
+<section class="card">
+  <h2>2. fab.csv</h2>
+  <div class="grid2">
+    <div class="stat"><b>1,567행 × 592열</b>SensorTime 1 + Sensor0~589 + Pass_Fail</div>
+    <div class="stat"><b>93.4% / 6.6%</b>정상(-1, 1,463건) / 이상(1, 104건)</div>
+  </div>
+  <h3>센서 품질 분포</h3>
+  <div class="tablewrap">
+  <table>
+    <tr><th>지표</th><th>값</th><th>의미</th></tr>
+    <tr><td>결측률 평균</td><td>4.5%</td><td>센서 대부분은 결측이 적음</td></tr>
+    <tr><td>결측률 50% 초과 센서</td><td>28개</td><td>교육용 후보에서 제외</td></tr>
+    <tr><td>결측률 90% 초과 센서</td><td>4개</td><td>사실상 사용 불가</td></tr>
+    <tr><td>값이 거의 변하지 않는 센서(표준편차 0 또는 고유값 1개)</td><td>116개</td><td>정보량이 없어 제외</td></tr>
+    <tr><td>결측률&lt;5% · 표준편차&gt;0 · 고유값&gt;10인 "정상 후보" 센서</td><td>415개</td><td>9주차 대표 센서 선정 모집단</td></tr>
+  </table>
+  </div>
+  <h3>Pass_Fail과의 단순 상관계수 상위 센서(참고용)</h3>
+  <div class="tablewrap">
+  <table>
+    <tr><th>센서</th><th>상관계수(절댓값)</th></tr>
+    <tr><td>Sensor59</td><td>0.156</td></tr>
+    <tr><td>Sensor103</td><td>0.151</td></tr>
+    <tr><td>Sensor510</td><td>0.132</td></tr>
+    <tr><td>Sensor348</td><td>0.130</td></tr>
+    <tr><td>Sensor431</td><td>0.121</td></tr>
+  </table>
+  </div>
+  <div class="warn"><b>핵심 발견:</b> 상관계수가 가장 높은 센서조차 절댓값 0.16 수준으로,
+  <b>단 하나의 센서만으로는 합격/불합격을 명확히 구분할 수 없다.</b>
+  이는 9주차에서 "예측 모델이 불량 원인을 자동으로 증명하는 것은 아니다"라는 메시지를
+  실제 데이터로 뒷받침하는 근거가 된다.</div>
+  <div class="note"><b>센서 이름의 의미:</b> 원본 파일에는 Sensor0~Sensor589가 실제로 어떤 물리량을
+  측정하는지에 대한 정보가 없다. 따라서 교육 자료에서는 절대로 실제 장비 의미를 단정하지 않고,
+  "교육용 가상 별칭"(예: Chamber_Temperature, 주요센서_A 등)임을 명시한다.</div>
+  <p><span class="tag purple">활용</span> 9주차에서만, 그것도 대표 센서 10~20개로 축소한
+  <code>week09_fab_selected_sensors.csv</code>, <code>week09_fab_beginner.csv</code> 형태로 제한적으로 사용한다.
+  590개 센서 전체를 초보자에게 직접 분석하게 하지 않는다.</p>
+</section>
+
+<section class="card">
+  <h2>3. 두 데이터의 차이 및 통일 기준</h2>
+  <table>
+    <tr><th>파일</th><th>합격</th><th>불합격</th></tr>
+    <tr><td>반도체_공정_샘플.csv (합격여부)</td><td><code>1</code></td><td><code>-1</code></td></tr>
+    <tr><td>fab.csv (Pass_Fail)</td><td><code>-1</code></td><td><code>1</code></td></tr>
+  </table>
+  <div class="ok"><b>교육 자료 통일 기준:</b> 혼란을 막기 위해 모든 주차별 교육용 데이터는
+  <code>0</code>=정상/합격, <code>1</code>=이상/불합격으로 통일한다. 원본 두 파일의 부호가
+  서로 반대라는 사실은 1주차와 9주차 강의에서 명시적으로 설명한다.</div>
+</section>
+
+<section class="card">
+  <h2>4. 다음 단계에서 참고할 결론</h2>
+  <ul>
+    <li>1~8주차는 <code>반도체_공정_샘플.csv</code>의 열 구조와 정상 범위를 참고해 교육용으로 재구성한다.</li>
+    <li>9주차만 <code>fab.csv</code>에서 선별한 10~20개 센서를 다룬다.</li>
+    <li>결측값·중복값·이상값은 4주차, 상관관계와 원인 후보 구분은 8주차의 핵심 소재로 삼는다.</li>
+    <li>모든 생성 데이터는 <code>data/data_dictionary</code>에 설명서를 동반한다.</li>
+  </ul>
+</section>
+
+</main>
+<footer>반도체 및 반도체 공정 데이터 분석 10주 과정 · 원본 데이터 분석 리포트 · 교육용 자료</footer>
+</body>
+</html>

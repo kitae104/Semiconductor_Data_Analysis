@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7주차 실습지</title>
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html">🔬 반도체 데이터 분석 10주 과정</a>
+    <nav class="week-nav"><a href="index.html">← 7주차 강의로</a></nav>
+  </div>
+</header>
+<main class="page">
+  <div class="hero">
+    <span class="badge purple">7주차 실습지</span>
+    <h1>반도체 수율과 불량 분석 — 실습지</h1>
+  </div>
+
+  <section class="block">
+    <h2>1. 용어 연결 문제</h2>
+    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <table class="timetable">
+      <tr><th>용어</th><th>설명 후보</th></tr>
+      <tr><td>① 수율</td><td rowspan="4">A. 검사수량 중 불량이 차지하는 비율<br>B. 빈도가 많은 순서로 소수의 주요 원인을 찾는 분석법<br>C. 검사수량 중 양품이 차지하는 비율<br>D. 불량이 발생한 원인을 분류한 이름</td></tr>
+      <tr><td>② 불량률</td></tr>
+      <tr><td>③ 불량 유형</td></tr>
+      <tr><td>④ 파레토 분석</td></tr>
+    </table>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① C  ② A  ③ D  ④ B</div>
+  </section>
+
+  <section class="block">
+    <h2>2. 계산 문제 — 수율 구하기</h2>
+    <p>어느 로트를 검사했더니 검사수량 200개 중 양품이 178개였다. 이 로트의 수율(%)과
+    불량률(%)을 각각 계산해보자.</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">수율 = 178 ÷ 200 × 100 = 89.0%, 불량률 = 100 − 89.0 = 11.0%
+    (또는 불량 22개 ÷ 200 × 100 = 11.0%)</div>
+  </section>
+
+  <section class="block">
+    <h2>3. 함정 찾기 문제 — 웨이퍼 단위 vs 로트 단위 수율</h2>
+    <p>어떤 로트에 웨이퍼가 2장 있다. 웨이퍼 A는 검사수량 10개 중 양품 9개(수율 90.0%),
+    웨이퍼 B는 검사수량 40개 중 양품 28개(수율 70.0%)다.</p>
+    <p>(1) 두 웨이퍼의 <code>수율_pct</code>를 단순 평균하면 얼마인가?<br>
+    (2) 검사수량·양품수량을 합산한 뒤 계산한 올바른 로트 수율은 얼마인가?</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">(1) (90.0 + 70.0) ÷ 2 = 80.0% (단순 평균, <b>틀린 방법</b>)<br>
+    (2) 검사수량 합 50개, 양품수량 합 37개 → 37 ÷ 50 × 100 = <b>74.0%</b> (올바른 방법)<br>
+    → 웨이퍼 B의 검사수량이 훨씬 많은데 단순 평균은 이를 반영하지 못해 실제보다 높게(80.0%) 나온다.</div>
+  </section>
+
+  <section class="block">
+    <h2>4. 코드 빈칸 문제</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+
+df = pd.read_csv("week07_yield_defect_analysis.csv")
+
+# 전체 수율 계산
+overall_yield = df["양품수량"].____() / df["검사수량"].____() * 100
+
+# 로트별 합산 집계
+lot_summary = df.____________("로트번호").agg(
+    검사수량=("검사수량", "sum"),
+    양품수량=("양품수량", "sum"),
+)
+
+# 불량 유형별 발생 빈도
+df["불량유형"].____________()</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">순서대로 <code>sum</code>, <code>sum</code>, <code>groupby</code>, <code>value_counts</code></div>
+  </section>
+
+  <section class="block">
+    <h2>5. 그래프 선택 문제</h2>
+    <p>불량 유형별 발생 빈도를 많은 순서대로 비교하고, 누적 비율도 함께 보고 싶다면
+    어떤 그래프 조합이 가장 적합할까?</p>
+    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
+      <li>① 히스토그램만</li><li>② 막대그래프 + 누적선 그래프(파레토 차트)</li><li>③ 산점도만</li>
+    </ul>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">정답: ② 막대그래프 + 누적선 그래프. 이 조합이 바로 파레토 차트이며,
+    "어떤 유형이 많이 나오는지"와 "상위 몇 개가 전체의 몇 %인지"를 동시에 보여준다.</div>
+  </section>
+
+  <section class="block">
+    <h2>6. 결과 해석 문제</h2>
+    <p>실습에서 수율 하위 5개 로트가 모두 EQ-04였고, 불량 유형 상위 3개(정렬 불량,
+    전기적 특성 불량, 식각 부족)가 전체 불량의 43.1%를 차지했다. 이 두 결과를 보고
+    "다음 단계로 무엇을 확인해야 할지" 한 문장으로 적어보자.</p>
+    <div class="callout practice">
+      <b class="tag">문장 작성</b>
+      "____________________________________________________________"
+    </div>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">예시 답안: "EQ-04의 저수율 5개 로트에서 어떤 불량 유형이 특히 많이
+    발생했는지, 그리고 그 로트들의 온도·압력 등 센서 값이 다른 로트와 어떻게 달랐는지 확인해야 한다."</div>
+  </section>
+
+  <section class="block">
+    <h2>7. 도전 문제</h2>
+    <div class="callout practice">
+      <b class="tag">도전</b>
+      수율이 가장 높은 5개 로트를 찾아 어느 설비에서 나왔는지 확인해보자. 저수율 로트와
+      같은 설비라면, "설비 탓"이라고 말하기 어려운 이유를 스스로 설명해보자.
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <a class="home" href="index.html">← 7주차 강의로 돌아가기</a>
+  </div>
+</main>
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 7주차 실습지</footer>
+<script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+</body>
+</html>
