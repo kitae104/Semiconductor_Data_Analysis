@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2주차. 파이썬과 데이터 분석의 기본</title>
+<title>2주차. 파이썬 기초 Ⅰ — 변수, 자료형, 리스트, 딕셔너리</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
@@ -32,354 +32,68 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">2주차 · 2시간 수업</span>
-    <h1>파이썬과 데이터 분석의 기본</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"숫자 여러 개를 어떻게 하나의 요약값으로 만들 수 있을까?"</b></p>
+    <span class="badge blue">2주차 · 2시간 수업 · 개요(skeleton)</span>
+    <h1>파이썬 기초 Ⅰ — 변수, 자료형, 리스트, 딕셔너리</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"측정값 하나하나를 어떻게 이름 붙여 기억하고, 여러 개를 한 번에 담을 수 있을까?"</b></p>
   </div>
+
+  <section class="block">
+    <div class="callout warn">
+      <b class="tag">작성 상태</b>
+      이 페이지는 v2 커리큘럼 구성이 확정된 직후 작성된 <b>개요(skeleton)</b>입니다. 제목·학습
+      목표·다룰 내용·데이터까지는 확정되었지만, 상세 설명·예제 코드·단계별 실습·퀴즈는 아직 채워지지
+      않았습니다. 구성이 최종 확정되면 이어서 상세 내용을 작성합니다. 배경은
+      <a href="../../docs/restructure-plan.md">docs/restructure-plan.md</a> 참고.
+    </div>
+  </section>
 
   <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
-      <li>변수(variable)와 리스트(list)가 무엇인지 설명하고 직접 만들 수 있다.</li>
-      <li>함수(function)가 무엇이고 왜 사용하는지 이해한다.</li>
-      <li>여러 개의 온도 값으로 평균·최댓값·최솟값을 직접 계산할 수 있다.</li>
-      <li>정상범위(295~305℃)를 벗어난 값이 있는지 조건문으로 확인할 수 있다.</li>
-      <li>합격/불합격 데이터를 바탕으로 수율(%)을 직접 계산할 수 있다.</li>
+      <li>변수에 값을 저장하고 숫자형/문자열형/불리언을 구분할 수 있다.</li>
+      <li>리스트에 여러 값을 담고 인덱싱으로 특정 값을 꺼낼 수 있다.</li>
+      <li>딕셔너리로 하나의 레코드(설비 정보 등)에 이름표를 붙여 표현할 수 있다.</li>
+      <li>리스트와 딕셔너리를 언제 각각 쓰는지 구분할 수 있다.</li>
+    </ul>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 1주차 — Colab 사용법</p>
+  </section>
+
+  <section class="block">
+    <h2>📚 다룰 이론 주제(초안)</h2>
+    <ul class="goal-list">
+      <li>변수와 대입</li>
+      <li>숫자형 · 문자열형 · 불리언</li>
+      <li>리스트 — 순서 있는 여러 값, 인덱싱</li>
+      <li>딕셔너리 — 키-값 쌍</li>
+      <li>리스트 vs 딕셔너리, 언제 무엇을 쓰는가</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>⏮️ 지난 시간 복습</h2>
-    <div class="callout concept">
-      <b class="tag">1주차 복습</b>
-      지난주에는 반도체·웨이퍼·칩의 차이, FAB과 공정·설비·센서의 의미를 배우고,
-      Colab에서 <code>pandas</code>로 CSV를 열어 <code>head()</code>, <code>shape</code>,
-      <code>columns</code>, <code>value_counts()</code>로 데이터를 처음 조회해 보았다.
-      또한 이 과정에서는 <code>합격여부</code> 열의 값이 <code>1</code>이면 합격, <code>-1</code>이면
-      불합격이라는 규칙도 확인했다.
-    </div>
-    <p>오늘은 그 <code>value_counts()</code> 같은 Pandas 함수 "안에서" 실제로 어떤 계산이
-    일어나는지 파이썬 기본 문법(변수·리스트·함수)으로 직접 손으로 계산해본다.
-    이렇게 계산 원리를 이해해두면 이후 주차에서 Pandas 함수가 왜 그런 결과를 주는지 더 잘 이해할 수 있다.</p>
+    <h2>🧪 다룰 실습 흐름(초안)</h2>
+    <ol style="padding-left:1.3rem;line-height:1.8;">
+      <li>온도 값 하나를 변수에 저장해보기</li>
+      <li>하루치 온도 여러 개를 리스트에 저장하기</li>
+      <li>리스트 길이(len)와 특정 위치 값 꺼내기(인덱싱)</li>
+      <li>설비 1대의 정보(설비번호·공정명·온도)를 딕셔너리로 표현하기</li>
+      <li>여러 설비를 '딕셔너리의 리스트'로 표현해보기</li>
+    </ol>
   </section>
 
   <section class="block">
-    <h2>📊 데이터 분석 개념 이해하기</h2>
-
-    <h3>변수(Variable) — 값을 담는 이름표</h3>
-    <p><b>변수</b>는 숫자나 문자 같은 값을 저장해두고 나중에 다시 쓸 수 있게 이름을 붙인 상자다.
-    예를 들어 <code>temp1 = 302.7</code>이라고 쓰면, <code>temp1</code>이라는 이름의 상자에
-    302.7이라는 값을 저장한 것이다.</p>
-
-    <h3>숫자와 문자열 — 값의 종류(자료형)</h3>
-    <p>파이썬은 값의 종류(자료형)를 구분한다. <code>302.7</code>처럼 소수점이 있는 숫자는
-    <b>실수(float)</b>, <code>25</code>처럼 소수점이 없는 숫자는 <b>정수(int)</b>,
-    <code>"증착"</code>처럼 따옴표로 감싼 글자는 <b>문자열(str)</b>이라고 부른다.
-    자료형에 따라 할 수 있는 계산이 다르다(숫자끼리는 더할 수 있지만, 숫자와 문자열은 그냥 더할 수 없다).</p>
-    <div class="callout concept">
-      <b class="tag">개념</b>
-      <code>type(temp1)</code>을 실행하면 변수에 담긴 값의 자료형을 확인할 수 있다.
-    </div>
-
-    <h3>리스트(List) — 여러 값을 한 번에 담는 상자</h3>
-    <p>변수 하나에는 값을 하나만 담을 수 있지만, <b>리스트</b>를 쓰면 여러 개의 값을 순서대로
-    한 번에 담을 수 있다. <code>temps = [302.7, 300.1, 292.0]</code>처럼 대괄호 <code>[]</code>
-    안에 값을 쉼표로 나열하면 리스트가 된다.</p>
-
-    <h3>함수(Function) — 반복 작업에 이름을 붙인 것</h3>
-    <p><b>함수</b>는 자주 하는 계산을 미리 만들어두고 이름으로 불러 쓰는 도구다.
-    <code>sum(temps)</code>는 "리스트 안 숫자를 모두 더하라"는 계산을, <code>len(temps)</code>는
-    "리스트 안에 값이 몇 개 있는지 세라"는 계산을 대신 해준다. 매번 더하기 계산을 직접 풀어 쓰지
-    않아도 되므로 편리하다.</p>
-
-    <h3>평균과 최댓값·최솟값 — 여러 숫자를 하나의 요약값으로</h3>
-    <p>측정값이 여러 개일 때, 그 값들을 대표하는 <b>요약값</b>을 구하면 전체 상황을 한눈에
-    파악할 수 있다.</p>
-    <ul class="explain-list" style="list-style:disc;padding-left:1.4rem;">
-      <li><b>평균(average)</b> = 모든 값의 합 ÷ 개수 → 파이썬에서는 <code>sum(리스트) / len(리스트)</code></li>
-      <li><b>최댓값(max)</b> = 값 중 가장 큰 것 → <code>max(리스트)</code></li>
-      <li><b>최솟값(min)</b> = 값 중 가장 작은 것 → <code>min(리스트)</code></li>
-    </ul>
-
-    <h3>왜 계산이 필요한가 — 공정 데이터와 연결</h3>
-    <p>공정 온도를 25번 측정했다면, 25개의 숫자를 하나하나 눈으로 보는 것보다
-    "평균 몇 도였는지", "가장 높았던 온도는 몇 도였는지"를 계산해서 보는 것이 훨씬 빠르게
-    상태를 판단할 수 있게 해준다. 오늘 배우는 평균·최댓값·최솟값·수율 계산은 앞으로 10주 내내
-    반복해서 쓰이는 가장 기본적인 도구다.</p>
+    <h2>📁 데이터</h2>
+    <p><code>data/weekly/week02/week02_python_basics_1.csv</code></p>
+    <p style="color:var(--muted);font-size:.9rem;">20행 5열 — 리스트/딕셔너리 실습용 소량 데이터(정상범위 이탈 온도 2~3건 포함)</p>
   </section>
 
   <section class="block">
-    <h2>🗂️ 핵심 용어 카드</h2>
-    <div class="term-grid">
-      <div class="term-card">
-        <h4>변수</h4><div class="en">Variable</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>값을 저장해두고 이름으로 불러 쓸 수 있게 하는 상자.</dd>
-          <dt>쉬운 비유</dt><dd>이름표가 붙은 서랍 하나에 물건 하나를 넣어두는 것.</dd>
-          <dt>데이터에서의 예</dt><dd><code>temp1 = 302.7</code> — 온도 값 하나를 담은 변수.</dd>
-          <dt>자주 하는 오해</dt><dd>변수 이름 자체가 값이라고 착각하기 쉽지만, 이름은 값을 가리키는 표시일 뿐이다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>리스트</h4><div class="en">List</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>여러 값을 순서대로 한 번에 담는 상자.</dd>
-          <dt>쉬운 비유</dt><dd>여러 칸이 있는 서랍장에 물건을 순서대로 넣는 것.</dd>
-          <dt>데이터에서의 예</dt><dd><code>temps = [302.7, 300.1, 292.0, ...]</code></dd>
-          <dt>자주 하는 오해</dt><dd>리스트와 변수를 혼동하기 쉽다. 변수는 값 1개, 리스트는 값 여러 개를 담는다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>함수</h4><div class="en">Function</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>자주 쓰는 계산에 이름을 붙여 재사용할 수 있게 만든 도구.</dd>
-          <dt>쉬운 비유</dt><dd>버튼 하나로 원하는 작업을 대신 해주는 자판기.</dd>
-          <dt>데이터에서의 예</dt><dd><code>sum()</code>, <code>len()</code>, <code>max()</code>, <code>min()</code></dd>
-          <dt>자주 하는 오해</dt><dd><code>max</code>처럼 괄호 없이 쓰면 함수를 "실행"한 것이 아니라 함수 자체를 가리킨다. 실행하려면 <code>max(temps)</code>처럼 괄호가 꼭 필요하다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>평균</h4><div class="en">Average / Mean</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>여러 값을 대표하는 하나의 요약값(합 ÷ 개수).</dd>
-          <dt>쉬운 비유</dt><dd>이번 주 매일 낮 기온을 다 더해 7로 나눈 "이번 주 평균 기온".</dd>
-          <dt>데이터에서의 예</dt><dd><code>sum(temps) / len(temps)</code></dd>
-          <dt>자주 하는 오해</dt><dd>평균이 정상이라고 모든 값이 정상인 것은 아니다. 평균 뒤에 숨은 최댓값·최솟값도 함께 봐야 한다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>최댓값·최솟값</h4><div class="en">Max / Min</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>여러 값 중 가장 크거나 가장 작은 값.</dd>
-          <dt>쉬운 비유</dt><dd>일주일 중 가장 더웠던 날, 가장 추웠던 날의 기온.</dd>
-          <dt>데이터에서의 예</dt><dd><code>max(temps)</code>, <code>min(temps)</code></dd>
-          <dt>자주 하는 오해</dt><dd>최댓값이 곧바로 "불합격"을 의미하지는 않는다. 오늘 데이터에서도 확인해본다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>정상범위</h4><div class="en">Normal Range</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>공정이 정상적으로 동작한다고 보는 값의 범위.</dd>
-          <dt>쉬운 비유</dt><dd>체온이 36~37℃면 정상, 그 밖이면 이상 신호로 보는 것과 같다.</dd>
-          <dt>데이터에서의 예</dt><dd>이번 주 데이터의 온도 정상범위는 <b>295~305℃</b>(교육용 예시).</dd>
-          <dt>자주 하는 오해</dt><dd>정상범위 밖 값이 항상 불합격으로 이어진다고 오해하기 쉽다. 실제로는 다른 요인도 함께 작용한다.</dd>
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>📁 데이터 미리보기</h2>
-    <p>오늘 사용할 데이터: <code>data/weekly/week02/week02_basic_process_values.csv</code>
-    (25행 6열). 자세한 설명은
-    <a href="../../data/data_dictionary/week02_dictionary.md">데이터 설명서</a> 참고.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>측정시간</th><th>로트번호</th><th>공정명</th><th>온도_섭씨</th><th>압력_Pa</th><th>합격여부</th></tr>
-        <tr><td>2024-03-01 10:00</td><td>LOT-0139</td><td>증착</td><td>302.7</td><td>1005.9</td><td>1</td></tr>
-        <tr><td>2024-03-01 16:00</td><td>LOT-0088</td><td>식각</td><td>300.1</td><td>1001.3</td><td>1</td></tr>
-        <tr><td>2024-03-01 21:00</td><td>LOT-0045</td><td>증착</td><td>292.0</td><td>998.9</td><td>1</td></tr>
-        <tr><td>2024-03-02 04:00</td><td>LOT-0170</td><td>포토</td><td>299.0</td><td>1021.4</td><td>1</td></tr>
-        <tr><td>2024-03-02 07:00</td><td>LOT-0138</td><td>식각</td><td>291.9</td><td>1011.8</td><td>1</td></tr>
-        <tr><td>2024-03-02 19:00</td><td>LOT-0122</td><td>세정</td><td>303.5</td><td>1015.5</td><td>1</td></tr>
-        <tr><td>2024-03-02 23:00</td><td>LOT-0013</td><td>세정</td><td>307.6</td><td>1027.7</td><td>1</td></tr>
-        <tr><td>2024-03-03 04:00</td><td>LOT-0013</td><td>증착</td><td>306.0</td><td>1017.9</td><td>-1</td></tr>
-      </table>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>👩‍🏫 강사 코드 시연</h2>
-    <div class="code-block">
-      <div class="code-label"><span>Python — Colab / Jupyter</span><button class="copy-btn">복사</button></div>
-      <pre><code># 1. 온도 변수 하나 만들기 (첫 번째 측정값)
-temp1 = 302.7
-print(temp1, type(temp1))
-
-# 2. 여러 온도를 리스트에 저장하기 (앞의 6개 측정값)
-temps = [302.7, 300.1, 292.0, 299.0, 291.9, 303.5]
-print(temps)
-print("측정 개수:", len(temps))
-
-# 3. 평균/최댓값/최솟값 계산하기 (순수 파이썬)
-average = sum(temps) / len(temps)
-maximum = max(temps)
-minimum = min(temps)
-print("평균:", round(average, 1), "최댓값:", maximum, "최솟값:", minimum)
-
-# 4. 정상범위(295~305) 조건 확인하기
-if maximum > 305 or minimum < 295:
-    print("정상범위를 벗어난 값이 있습니다.")
-else:
-    print("모든 값이 정상범위 안에 있습니다.")
-
-# 5. 전체 25건 데이터를 Pandas로 불러와 리스트로 바꾸기
-import pandas as pd
-df = pd.read_csv("week02_basic_process_values.csv")
-all_temps = df["온도_섭씨"].tolist()
-print("전체 평균:", round(sum(all_temps) / len(all_temps), 1))
-print("전체 최댓값:", max(all_temps), " 전체 최솟값:", min(all_temps))
-
-# 6. 수율(합격 비율) 계산하기
-pass_count = len(df[df["합격여부"] == 1])
-total_count = len(df)
-yield_pct = pass_count / total_count * 100
-print(f"수율: {pass_count}/{total_count} = {round(yield_pct, 1)}%")</code></pre>
-    </div>
-    <div class="explain-list">
-      <b>코드 한 줄씩 설명</b>
-      <ul>
-        <li><code>temp1 = 302.7</code>: <code>temp1</code>이라는 이름의 변수에 302.7이라는 실수(float) 값을 저장한다.</li>
-        <li><code>type(temp1)</code>: 변수에 담긴 값의 자료형을 확인한다.</li>
-        <li><code>temps = [ ... ]</code>: 대괄호로 여러 온도 값을 리스트에 담는다.</li>
-        <li><code>len(temps)</code>: 리스트 안에 값이 몇 개 들어있는지 센다.</li>
-        <li><code>sum(temps) / len(temps)</code>: 합을 개수로 나누어 평균을 계산한다.</li>
-        <li><code>max(temps)</code>, <code>min(temps)</code>: 리스트에서 가장 큰 값과 가장 작은 값을 찾는다.</li>
-        <li><code>if maximum &gt; 305 or minimum &lt; 295:</code>: 조건문으로 정상범위(295~305)를 벗어난 값이 있는지 확인한다.</li>
-        <li><code>df["온도_섭씨"].tolist()</code>: Pandas의 열(Series)을 파이썬 리스트로 바꾼다. 그러면 지금까지 배운 <code>sum()</code>, <code>max()</code>, <code>min()</code>을 그대로 쓸 수 있다.</li>
-        <li><code>df[df["합격여부"] == 1]</code>: 합격(1)인 행만 골라낸다. <code>len(...)</code>으로 그 행의 개수를 센다.</li>
-        <li><code>pass_count / total_count * 100</code>: 합격 건수를 전체 건수로 나누고 100을 곱해 수율(%)을 계산한다.</li>
-      </ul>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과 예시</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">302.7 &lt;class 'float'&gt;
-[302.7, 300.1, 292.0, 299.0, 291.9, 303.5]
-측정 개수: 6
-평균: 298.2 최댓값: 303.5 최솟값: 291.9
-모든 값이 정상범위 안에 있습니다.
-전체 평균: 301.9
-전체 최댓값: 320.0  전체 최솟값: 289.3
-수율: 23/25 = 92.0%</pre>
-    </div>
-    <div class="callout warn">
-      <b class="tag">결과 해석</b>
-      앞의 6개 값만 보면 정상범위 안에 있었지만(298.2℃, 291.9~303.5℃), 25건 전체를 보면
-      최댓값이 320.0℃로 정상 상한(305℃)보다 15℃나 높다. 이 값은 <code>LOT-0047</code>
-      (식각 공정, 2024-03-08 23:00)에서 나왔는데, 흥미롭게도 이 로트는 <b>합격</b> 처리됐다.
-      반대로 실제 불합격 2건(<code>LOT-0013</code> 306.0℃, <code>LOT-0167</code> 289.3℃)은
-      오히려 완만하게 정상범위를 벗어난 값이었다. 즉 "극단적으로 높은 온도 = 무조건 불합격"이
-      아니라는 것을 데이터로 확인할 수 있다. 전체 수율은 23/25 = <b>92.0%</b>였다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🙋 실생활 비유로 정리하기</h2>
-    <p>평균·최댓값·최솟값 계산은 일기예보를 떠올리면 쉽다. 일주일 동안 매일 낮 기온을 적어두면
-    "이번 주 평균 기온", "가장 더웠던 날", "가장 추웠던 날"을 계산할 수 있다. 공정 데이터도
-    마찬가지다. 하루 동안 여러 번 측정한 온도를 리스트에 모아두면, 그 리스트로 평균 온도와
-    가장 뜨거웠던·차가웠던 순간을 계산할 수 있다. 그리고 시험에 합격한 학생 수를 전체 학생 수로
-    나누면 "합격률"이 되듯, 합격한 웨이퍼 수를 전체 웨이퍼 수로 나누면 "수율"이 된다.</p>
-  </section>
-
-  <section class="block">
-    <h2>🟣 단계별 따라 하기 실습</h2>
-    <div class="step">
-      <div class="num">1</div>
-      <div class="content"><b>온도 변수 만들기</b> — <code>temp1 = 302.7</code>처럼 변수 하나를 만들고 <code>print(temp1)</code>로 확인한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">2</div>
-      <div class="content"><b>리스트 만들기</b> — 데이터 미리보기 표에서 온도 값 6개를 골라 리스트 <code>temps</code>를 직접 만들어본다.</div>
-    </div>
-    <div class="step">
-      <div class="num">3</div>
-      <div class="content"><b>평균/최댓값/최솟값 계산</b> — <code>sum(temps) / len(temps)</code>, <code>max(temps)</code>, <code>min(temps)</code>를 각각 실행한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">4</div>
-      <div class="content"><b>정상범위 확인</b> — <code>if</code> 문으로 295~305를 벗어난 값이 있는지 확인한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">5</div>
-      <div class="content"><b>전체 데이터 불러오기</b> — <code>pd.read_csv("week02_basic_process_values.csv")</code>로 25건 전체를 불러오고, <code>df["온도_섭씨"].tolist()</code>로 리스트를 만든다.</div>
-    </div>
-    <div class="step">
-      <div class="num">6</div>
-      <div class="content"><b>전체 평균/최댓값/최솟값</b> — 3단계와 같은 함수로 전체 25건의 평균·최댓값·최솟값을 계산하고 6개짜리 리스트 결과와 비교한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">7</div>
-      <div class="content"><b>수율 계산</b> — <code>df[df["합격여부"] == 1]</code>의 행 개수를 전체 행 개수로 나누고 100을 곱해 수율(%)을 구한다.</div>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
-    <div class="callout danger">
-      <b class="tag">오류 1</b>
-      <code>NameError: name 'temps' is not defined</code> — 리스트를 만드는 코드를 실행하지
-      않고 <code>temps</code>를 먼저 사용하면 발생한다. 셀을 위에서부터 순서대로 실행했는지 확인한다.
-    </div>
-    <div class="callout danger">
-      <b class="tag">오류 2</b>
-      <code>TypeError: unsupported operand type(s)</code> — 숫자와 문자열을 더하려고 할 때 발생한다.
-      <code>"온도는 " + 302.7</code>처럼 쓰면 오류가 난다. <code>str(302.7)</code>로 문자열로
-      바꾸거나 <code>f"온도는 {302.7}"</code>처럼 f-문자열을 쓴다.
-    </div>
-    <div class="callout danger">
-      <b class="tag">오류 3</b>
-      <code>ZeroDivisionError</code> — 평균을 구할 때 리스트가 비어 있으면(<code>len()</code>이 0이면)
-      나누기를 할 수 없어 오류가 난다. 리스트에 값이 잘 들어갔는지 먼저 <code>print()</code>로 확인하는 습관을 들인다.
-    </div>
-    <div class="callout warn">
-      <b class="tag">주의</b>
-      <code>max</code>와 <code>max()</code>는 다르다. 괄호 <code>()</code>가 있어야 함수가
-      "실행"된다. 괄호를 빼먹으면 계산 결과가 아니라 함수 자체가 출력되어 원하는 값을 얻을 수 없다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🚀 도전 실습</h2>
-    <div class="callout practice">
-      <b class="tag">도전 문제</b>
-      <code>df["압력_Pa"].tolist()</code>로 압력 리스트를 만들고, 같은 방법으로 평균·최댓값·최솟값을
-      계산해보자. 그리고 <code>df[df["합격여부"] == 1]["온도_섭씨"]</code>와
-      <code>df[df["합격여부"] == -1]["온도_섭씨"]</code>의 평균을 각각 구해서, 합격 그룹과
-      불합격 그룹의 평균 온도가 다른지 비교해보자.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
-    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
-
-    <div class="quiz-item">
-      <div class="q">Q1. (객관식) 리스트 <code>temps = [302.7, 300.1, 292.0]</code>의 평균을 구하는 올바른 코드는?</div>
-      <ul class="options">
-        <li>A. <code>max(temps) / 3</code></li>
-        <li>B. <code>sum(temps) / len(temps)</code></li>
-        <li>C. <code>temps / 3</code></li>
-        <li>D. <code>len(temps) / sum(temps)</code></li>
-      </ul>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. 평균은 "값의 합 ÷ 개수"이므로 <code>sum(temps) / len(temps)</code>가 맞다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q2. (참/거짓) 이번 주 데이터에서 온도 최댓값이 정상범위를 벗어났다고 해서, 그 로트가 항상 불합격 처리된 것은 아니다.</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 참. 최댓값 320.0℃가 나온 LOT-0047은 오히려 합격 처리되었다. 반면 실제 불합격 2건은 더 완만한 값에서 발생했다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q3. (서술) 오늘 계산한 전체 평균 온도(301.9℃), 최댓값(320.0℃), 수율(92.0%)을 바탕으로
-      이 데이터를 처음 보는 사람에게 한 문장으로 설명해보자.</div>
-      <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">예시 답안: "이번 배치 25건의 평균 온도는 301.9℃로 정상범위 안이었지만, 최댓값은 320.0℃까지
-      올라간 경우도 있었다. 전체 수율은 92.0%(23/25건 합격)였다."</div>
-    </div>
+    <h2>❓ 핵심 질문 → 데이터 연결</h2>
+    <div class="callout concept">이 리스트에서 가장 높은 온도와 가장 낮은 온도는 몇 번째 값인가?</div>
   </section>
 
   <section class="block">
     <h2>🔜 다음 주 예고</h2>
-    <div class="callout concept">
-      <b class="tag">3주차 예고</b>
-      다음 주에는 오늘 리스트로 직접 했던 계산을 Pandas의 DataFrame으로 훨씬 빠르게 하는 법을
-      배운다. <code>read_csv()</code>로 큰 데이터를 불러와 원하는 열만 선택하고,
-      <code>df[df[...] == ...]</code> 형태의 조건 검색으로 원하는 조건의 데이터만 골라내며,
-      정렬까지 해본다. 오늘 배운 <code>len()</code>, 조건문, 평균 개념이 그대로 이어져 쓰인다.
-    </div>
+    <div class="callout concept">3주차에는 오늘 만든 리스트를 조건문·반복문·함수로 직접 판정해본다.</div>
   </section>
 
   <div class="nav-buttons">
@@ -391,9 +105,8 @@ print(f"수율: {pass_count}/{total_count} = {round(yield_pct, 1)}%")</code></pr
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 2주차 · 교육용 자료(가상 데이터 사용)</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 2주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
-<script src="../../assets/js/quiz.js"></script>
 </body>
 </html>

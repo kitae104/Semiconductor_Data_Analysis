@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>6주차. 공정별·설비별 데이터 비교</title>
+<title>6주차. 그래프로 공정 상태 이해하기</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
@@ -32,423 +32,75 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">6주차 · 2시간 수업</span>
-    <h1>공정별·설비별 데이터 비교</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"설비마다 정말 다르게 동작하는가, 아니면 우연일까?"</b></p>
+    <span class="badge blue">6주차 · 2시간 수업 · 개요(skeleton)</span>
+    <h1>그래프로 공정 상태 이해하기</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"표만 보고도 이상을 알 수 있을까, 그림으로 보면 무엇이 달라질까?"</b></p>
   </div>
+
+  <section class="block">
+    <div class="callout warn">
+      <b class="tag">작성 상태</b>
+      이 페이지는 v2 커리큘럼 구성이 확정된 직후 작성된 <b>개요(skeleton)</b>입니다. 제목·학습
+      목표·다룰 내용·데이터까지는 확정되었지만, 상세 설명·예제 코드·단계별 실습·퀴즈는 아직 채워지지
+      않았습니다. 구성이 최종 확정되면 이어서 상세 내용을 작성합니다. 배경은
+      <a href="../../docs/restructure-plan.md">docs/restructure-plan.md</a> 참고.
+    </div>
+  </section>
 
   <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
-      <li><code>groupby</code>로 데이터를 그룹별로 나누어 집계할 수 있다.</li>
-      <li>평균과 중앙값의 차이를 설명할 수 있다.</li>
-      <li>표준편차로 "값이 얼마나 들쭉날쭉한가(변동성)"를 직관적으로 이해한다.</li>
-      <li>평균만 보고 판단할 때 생기는 함정을 예시로 설명할 수 있다.</li>
-      <li>설비별·작업조별 합격률을 비교하고 결과를 문장으로 해석할 수 있다.</li>
+      <li>선/막대/히스토그램/산점도/박스플롯을 구분하고 해석할 수 있다.</li>
+      <li>상황에 맞는 그래프 종류를 선택할 수 있다.</li>
+      <li>Orange3 위젯으로 같은 그래프를 클릭만으로 그려보고 비교할 수 있다.</li>
+    </ul>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 4~5주차 — 정제된 데이터</p>
+  </section>
+
+  <section class="block">
+    <h2>📚 다룰 이론 주제(초안)</h2>
+    <ul class="goal-list">
+      <li>선 그래프 — 시간에 따른 변화</li>
+      <li>막대그래프 — 범주별 비교</li>
+      <li>히스토그램 — 값의 분포</li>
+      <li>산점도 — 두 변수의 관계</li>
+      <li>박스플롯 — 그룹별 분포와 이상값</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>⏮️ 지난 시간 복습</h2>
-    <div class="callout concept">
-      <b class="tag">5주차 복습</b>
-      지난 시간에는 선/막대/히스토그램/산점도/박스플롯으로 데이터를 "그림"으로 살펴보았다.
-      박스플롯에서 어떤 설비의 상자가 유난히 넓게 퍼져 있으면 "그 설비의 값이 들쭉날쭉하다"는
-      뜻이었다. 이번 시간에는 그 관찰을 <b>정확한 숫자(평균, 표준편차, 합격률)</b>로 확인해본다.
-      즉 "그림으로 본 차이"를 "표로 계산한 차이"로 바꾸는 시간이다.
-    </div>
+    <h2>🧪 다룰 실습 흐름(초안)</h2>
+    <ol style="padding-left:1.3rem;line-height:1.8;">
+      <li>시간-온도 선그래프 그리기</li>
+      <li>설비별 생산량 막대그래프 그리기</li>
+      <li>온도 히스토그램 그리기</li>
+      <li>온도-두께 산점도 그리기</li>
+      <li>설비별 온도 박스플롯 그리기</li>
+    </ol>
   </section>
 
   <section class="block">
-    <h2>📚 오늘의 핵심 개념 ① — 그룹화(Group By)란?</h2>
-    <p>지금까지는 데이터 전체의 평균을 한 번에 구했다. 하지만 "설비마다", "작업조마다"처럼
-    <b>기준을 정해 데이터를 여러 묶음(그룹)으로 나눈 뒤</b>, 묶음마다 따로 계산하고 싶을 때가 많다.
-    이렇게 기준에 따라 데이터를 나누는 것을 <b>그룹화(Group By)</b>라고 한다.</p>
-    <div class="callout concept">
-      <b class="tag">비유</b>
-      한 학교 전체 학생의 평균 키를 구하는 것과, <b>학년별로</b> 평균 키를 따로 구하는 것은 다르다.
-      "학년"이라는 기준으로 학생을 나눈 뒤 학년별 평균을 계산하는 것이 바로 그룹화다.
-      우리 데이터에서는 "설비번호"나 "작업조"가 학년에 해당하는 기준이 된다.
-    </div>
-    <p>Pandas에서는 <code>df.groupby("기준열")["계산할열"].mean()</code>처럼 작성한다.
-    "기준열로 나눈 뒤, 계산할열의 평균을 각 그룹마다 구하라"는 뜻이다.</p>
-  </section>
-
-  <section class="block">
-    <h2>📚 오늘의 핵심 개념 ② — 집계(Aggregation)</h2>
-    <p>그룹으로 나눈 뒤 각 그룹을 하나의 숫자로 요약하는 계산을 <b>집계</b>라고 한다.
-    자주 쓰는 집계 함수는 다음과 같다.</p>
-    <table class="timetable">
-      <tr><th>집계 함수</th><th>의미</th><th>예시</th></tr>
-      <tr><td><code>.mean()</code></td><td>평균</td><td>설비별 평균 온도</td></tr>
-      <tr><td><code>.median()</code></td><td>중앙값(가운데 값)</td><td>설비별 중앙 온도</td></tr>
-      <tr><td><code>.std()</code></td><td>표준편차(퍼짐 정도)</td><td>설비별 온도 변동성</td></tr>
-      <tr><td><code>.count()</code></td><td>개수</td><td>설비별 기록 건수</td></tr>
-      <tr><td><code>.sum()</code></td><td>합계</td><td>공정별 총 처리시간</td></tr>
-    </table>
-  </section>
-
-  <section class="block">
-    <h2>📚 오늘의 핵심 개념 ③ — 평균과 중앙값의 차이</h2>
-    <p><b>평균(mean)</b>은 모든 값을 더해 개수로 나눈 값이고, <b>중앙값(median)</b>은 값을
-    크기순으로 줄 세웠을 때 정확히 가운데에 있는 값이다. 평소에는 두 값이 비슷하지만,
-    극단적으로 크거나 작은 값(이상값)이 섞여 있으면 평균만 크게 흔들린다.</p>
-    <div class="callout concept">
-      <b class="tag">비유</b>
-      직원 9명의 월급이 비슷한데 사장님 1명의 월급이 매우 높다면, "평균 월급"은 실제 직원들의
-      체감보다 훨씬 높게 나온다. 이럴 때는 "중앙값 월급"이 현실을 더 잘 보여준다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>📚 오늘의 핵심 개념 ④ — 표준편차로 "들쭉날쭉함" 재기</h2>
-    <p><b>표준편차(standard deviation)</b>는 값들이 평균에서 평균적으로 얼마나 떨어져 있는지를
-    나타내는 숫자다. 표준편차가 <b>작으면</b> 값들이 평균 근처에 모여 있어 "안정적"이고,
-    표준편차가 <b>크면</b> 값들이 넓게 흩어져 있어 "들쭉날쭉(불안정)"하다.</p>
-    <div class="callout concept">
-      <b class="tag">직관적으로 이해하기</b>
-      두 양궁 선수가 있다. 두 선수 모두 평균적으로는 과녁 중앙에 화살이 꽂히지만, A 선수는
-      항상 중앙 근처에만 꽂히고(표준편차 작음), B 선수는 중앙에서 멀리 벗어난 화살도 섞여
-      있다(표준편차 큼). "평균 점수"만 보면 두 선수가 비슷해 보여도, 표준편차를 보면
-      <b>B 선수가 훨씬 불안정하다</b>는 것을 알 수 있다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>⚠️ 오늘의 핵심 개념 ⑤ — 평균만 봐서는 안 되는 이유</h2>
-    <p>오늘 사용할 데이터에서 설비별 <b>평균 온도</b>는 아래와 같이 계산된다.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>설비번호</th><th>평균 온도(℃)</th><th>온도 표준편차</th></tr>
-        <tr><td>EQ-01</td><td>299.78</td><td>2.39</td></tr>
-        <tr><td>EQ-02</td><td>299.08</td><td>7.16</td></tr>
-        <tr><td>EQ-03</td><td>299.75</td><td>2.67</td></tr>
-        <tr><td>EQ-04</td><td>301.14</td><td>4.12</td></tr>
-      </table>
-    </div>
-    <div class="callout danger">
-      <b class="tag">주목할 점</b>
-      평균 온도만 보면 EQ-02(299.08℃)는 가장 낮아서 오히려 가장 "정상적"으로 보인다.
-      하지만 표준편차를 보면 EQ-02가 7.16으로 다른 설비(2~4대)보다 훨씬 크다. 즉
-      <b>EQ-02는 평균은 평범하지만 실제로는 값이 넓게 요동치는, 가장 불안정한 설비</b>다.
-      이것이 바로 "평균만 보면 위험한 설비를 놓칠 수 있다"는 실제 사례다.
-    </div>
-    <p>결론적으로 설비를 비교할 때는 <b>평균(어디쯤 있는가)</b>과
-    <b>표준편차(얼마나 흔들리는가)</b>를 함께 봐야 한다.</p>
-  </section>
-
-  <section class="block">
-    <h2>🗂️ 핵심 용어 카드</h2>
-    <div class="term-grid">
-      <div class="term-card">
-        <h4>그룹화</h4><div class="en">Group By</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>기준이 되는 열의 값에 따라 데이터를 여러 묶음으로 나누는 것.</dd>
-          <dt>쉬운 비유</dt><dd>학생을 학년별로 줄 세우는 것.</dd>
-          <dt>데이터에서의 예</dt><dd><code>df.groupby("설비번호")</code> — 설비번호별로 데이터를 묶는다.</dd>
-          <dt>자주 하는 오해</dt><dd>그룹화 자체만으로는 결과가 안 보인다. 뒤에 집계 함수를 붙여야 숫자가 나온다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>집계</h4><div class="en">Aggregation</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>여러 값을 하나의 요약값(평균, 합계, 개수 등)으로 계산하는 것.</dd>
-          <dt>쉬운 비유</dt><dd>반 학생 30명의 점수를 "반 평균 82점"이라는 숫자 하나로 요약하는 것.</dd>
-          <dt>데이터에서의 예</dt><dd><code>.mean()</code>, <code>.std()</code>, <code>.count()</code> 등.</dd>
-          <dt>자주 하는 오해</dt><dd>집계는 원본 데이터를 바꾸지 않는다. 요약한 새 결과만 보여준다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>평균</h4><div class="en">Mean</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>모든 값을 더해 개수로 나눈 값.</dd>
-          <dt>쉬운 비유</dt><dd>여러 사람이 낸 돈을 인원수만큼 똑같이 나눠 갖는 것.</dd>
-          <dt>데이터에서의 예</dt><dd>설비별 평균 온도, 평균 압력.</dd>
-          <dt>자주 하는 오해</dt><dd>평균이 비슷하면 두 그룹이 "똑같이 안정적"이라고 오해하기 쉽다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>중앙값</h4><div class="en">Median</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>크기순으로 줄 세웠을 때 정확히 가운데에 있는 값.</dd>
-          <dt>쉬운 비유</dt><dd>줄을 선 사람들 중 정가운데에 선 사람의 키.</dd>
-          <dt>데이터에서의 예</dt><dd><code>df["온도_섭씨"].median()</code>.</dd>
-          <dt>자주 하는 오해</dt><dd>중앙값과 평균이 항상 같다고 생각하기 쉽지만, 이상값이 있으면 달라진다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>표준편차</h4><div class="en">Standard Deviation</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>값들이 평균에서 평균적으로 얼마나 떨어져 있는지를 나타내는 숫자.</dd>
-          <dt>쉬운 비유</dt><dd>양궁 화살이 과녁 중앙에서 얼마나 흩어져 꽂혔는가.</dd>
-          <dt>데이터에서의 예</dt><dd><code>df.groupby("설비번호")["온도_섭씨"].std()</code>.</dd>
-          <dt>자주 하는 오해</dt><dd>표준편차가 0에 가까우면 무조건 좋다고 생각하기 쉽지만, 상황에 따라 정상 범위 자체가 넓을 수도 있다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>합격률 / 불량률</h4><div class="en">Pass / Fail Rate</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>전체 중 합격(또는 불합격)이 차지하는 비율.</dd>
-          <dt>쉬운 비유</dt><dd>반 전체 학생 중 시험에 통과한 학생의 비율.</dd>
-          <dt>데이터에서의 예</dt><dd>설비별 <code>합격여부</code> 값을 이용해 계산한 비율(%).</dd>
-          <dt>자주 하는 오해</dt><dd>기록 건수가 다른 그룹끼리 "건수"만 비교하면 오해할 수 있다. 반드시 "비율(%)"로 비교해야 공정하다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>변동성 / 편차</h4><div class="en">Variability</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>값이 평균 주변에 모여 있는지, 넓게 흩어져 있는지의 정도.</dd>
-          <dt>쉬운 비유</dt><dd>매일 등교 시간이 항상 비슷한 학생과, 어떤 날은 일찍·어떤 날은 지각인 학생의 차이.</dd>
-          <dt>데이터에서의 예</dt><dd>EQ-02는 온도 변동성(표준편차)이 다른 설비보다 2~3배 크다.</dd>
-          <dt>자주 하는 오해</dt><dd>변동성이 큰 설비가 항상 불량률도 가장 높다고 생각하기 쉽지만, 오늘 데이터에서는 그렇지 않다.</dd>
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>📁 데이터 미리보기</h2>
-    <p>오늘 사용할 데이터: <code>data/weekly/week06/week06_equipment_comparison.csv</code>
-    (240행 9열). 4대 설비(EQ-01~EQ-04)가 3개 작업조(A/B/C조)로 운영되며 남긴 기록이다.
-    자세한 설명은 <a href="../../data/data_dictionary/week06_dictionary.md">데이터 설명서</a> 참고.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>로트번호</th><th>설비번호</th><th>공정명</th><th>작업조</th><th>온도_섭씨</th><th>압력_Pa</th><th>진공도_mTorr</th><th>처리시간_sec</th><th>합격여부</th></tr>
-        <tr><td>LOT-0722</td><td>EQ-04</td><td>산화</td><td>C조</td><td>(결측)</td><td>1003.7</td><td>5.63</td><td>117.2</td><td>1</td></tr>
-        <tr><td>LOT-0331</td><td>EQ-01</td><td>증착</td><td>B조</td><td>298.1</td><td>1010.0</td><td>5.28</td><td>116.5</td><td>1</td></tr>
-        <tr><td>LOT-0106</td><td>EQ-01</td><td>식각</td><td>C조</td><td>(결측)</td><td>1003.7</td><td>4.69</td><td>123.8</td><td>1</td></tr>
-        <tr><td>LOT-0656</td><td>EQ-02</td><td>산화</td><td>A조</td><td>300.1</td><td>1013.7</td><td>5.05</td><td>117.5</td><td>1</td></tr>
-        <tr><td>LOT-0778</td><td>EQ-04</td><td>포토</td><td>B조</td><td>300.5</td><td>1007.6</td><td>5.05</td><td>128.9</td><td>-1</td></tr>
-        <tr><td>LOT-0873</td><td>EQ-01</td><td>식각</td><td>A조</td><td>295.5</td><td>1015.2</td><td>4.92</td><td>117.6</td><td>1</td></tr>
-      </table>
-    </div>
-    <div class="callout warn">
-      <b class="tag">참고</b>
-      <code>온도_섭씨</code> 열에는 결측값(빈 칸) 10건이 있으며, 전부 야간 근무(C조) 기록에서
-      발생했다(현장에서 야간에 기록이 누락되기 쉬운 상황을 재현). <code>groupby</code>로 평균을
-      계산할 때 Pandas는 결측값을 자동으로 제외하고 계산한다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>📊 실제 집계 결과 — 설비별 비교</h2>
-    <p>아래 표는 실제로 <code>df.groupby("설비번호")</code>를 실행해 얻은 결과다.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>설비번호</th><th>기록 건수</th><th>평균 온도(℃)</th><th>온도 표준편차</th><th>평균 압력(Pa)</th><th>합격률(%)</th></tr>
-        <tr><td>EQ-01</td><td>62</td><td>299.78</td><td>2.39</td><td>1009.18</td><td>93.5</td></tr>
-        <tr><td>EQ-02</td><td>57</td><td>299.08</td><td>7.16</td><td>1009.37</td><td>89.5</td></tr>
-        <tr><td>EQ-03</td><td>57</td><td>299.75</td><td>2.67</td><td>1027.39</td><td>93.0</td></tr>
-        <tr><td>EQ-04</td><td>64</td><td>301.14</td><td>4.12</td><td>1012.27</td><td>78.1</td></tr>
-      </table>
-    </div>
-    <div class="callout success">
-      <b class="tag">결과 해석</b>
-      <ul style="margin:.3rem 0 0;padding-left:1.2rem;">
-        <li><b>불량률이 가장 높은 설비</b>는 EQ-04(불량률 21.9%, 합격률 78.1%)다.</li>
-        <li><b>가장 불안정한(온도 표준편차가 가장 큰) 설비</b>는 EQ-02(7.16)다.</li>
-        <li><b>압력이 가장 높은 설비</b>는 EQ-03(평균 1027.39 Pa, 다른 설비보다 약 18~20 Pa 높음)다.</li>
-        <li>즉 <b>"불량률이 가장 높은 설비"와 "가장 불안정한 설비"는 서로 다르다.</b>
-        오늘의 질문에 대한 답: 설비마다 확실히 다르게 동작하지만, 그 "다름"의 종류(온도 변동 vs 압력 상승 vs 불량률)도 설비마다 다르다.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>📊 실제 집계 결과 — 공정별·작업조별 비교</h2>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>공정명</th><th>평균 처리시간(sec)</th></tr>
-        <tr><td>산화</td><td>118.80</td></tr>
-        <tr><td>식각</td><td>119.11</td></tr>
-        <tr><td>포토</td><td>119.97</td></tr>
-        <tr><td>증착</td><td>120.07</td></tr>
-        <tr><td>세정</td><td>120.29</td></tr>
-      </table>
-    </div>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>작업조</th><th>기록 건수</th><th>불량률(%)</th></tr>
-        <tr><td>A조(주간)</td><td>86</td><td>8.1</td></tr>
-        <tr><td>B조(오후)</td><td>78</td><td>17.9</td></tr>
-        <tr><td>C조(야간)</td><td>76</td><td>9.2</td></tr>
-      </table>
-    </div>
-    <div class="callout warn">
-      <b class="tag">결과 해석</b>
-      공정별 평균 처리시간은 118~120초로 큰 차이가 없다. 반면 작업조별 불량률은
-      B조(오후)가 17.9%로 A조(8.1%)나 C조(9.2%)보다 뚜렷하게 높다. 다만 이 결과만으로
-      "B조 사람들의 실수"라고 단정할 수는 없다 — 같은 시간대에 불량률이 높은 EQ-04가
-      더 많이 배정되었을 수도 있기 때문이다. "왜 그런가"는 8주차(원인 후보 찾기)에서 더 다룬다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>👩‍🏫 강사 코드 시연</h2>
-    <div class="code-block">
-      <div class="code-label"><span>Python — Colab / Jupyter</span><button class="copy-btn">복사</button></div>
-      <pre><code># 1. Pandas를 불러오고 데이터를 읽습니다.
-import pandas as pd
-df = pd.read_csv("week06_equipment_comparison.csv")
-
-# 2. 설비별 평균 온도를 계산합니다.
-print(df.groupby("설비번호")["온도_섭씨"].mean().round(2))
-
-# 3. 설비별 온도 표준편차를 계산합니다. (값이 클수록 들쭉날쭉함)
-print(df.groupby("설비번호")["온도_섭씨"].std().round(2))
-
-# 4. 설비별 평균 압력을 계산합니다.
-print(df.groupby("설비번호")["압력_Pa"].mean().round(2))
-
-# 5. 공정별 평균 처리시간을 계산합니다.
-print(df.groupby("공정명")["처리시간_sec"].mean().round(2))
-
-# 6. 설비별 불량률(%)을 계산합니다. 합격여부가 -1이면 불량입니다.
-print(((df["합격여부"] == -1).groupby(df["설비번호"]).mean() * 100).round(1))
-
-# 7. 작업조별 불량률(%)을 계산합니다.
-print(((df["합격여부"] == -1).groupby(df["작업조"]).mean() * 100).round(1))</code></pre>
-    </div>
-    <div class="explain-list">
-      <b>코드 한 줄씩 설명</b>
-      <ul>
-        <li><code>df.groupby("설비번호")</code>: <code>설비번호</code> 값이 같은 행끼리 하나의 그룹으로 묶는다.</li>
-        <li><code>["온도_섭씨"]</code>: 묶인 그룹에서 <code>온도_섭씨</code> 열만 선택한다.</li>
-        <li><code>.mean()</code> / <code>.std()</code>: 각 그룹의 평균 / 표준편차를 계산한다.</li>
-        <li><code>.round(2)</code>: 소수점 둘째 자리까지만 보이도록 반올림한다(읽기 쉽게).</li>
-        <li><code>df["합격여부"] == -1</code>: 불합격이면 <code>True</code>, 합격이면 <code>False</code>가 되는 조건식이다.</li>
-        <li><code>(조건식).groupby(df["설비번호"]).mean()</code>: <code>True</code>는 1, <code>False</code>는 0으로 취급되므로,
-        그룹별 평균을 구하면 곧 "그 그룹에서 불합격 비율"이 된다. 여기에 100을 곱하면 %가 된다.</li>
-      </ul>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과 예시 (설비별 평균 온도)</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">설비번호
-EQ-01    299.78
-EQ-02    299.08
-EQ-03    299.75
-EQ-04    301.14
-Name: 온도_섭씨, dtype: float64</pre>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🙋 실생활 비유로 정리하기</h2>
-    <p>이번 시간 배운 것을 학교 반 비유로 정리해보자. "학교 전체 평균 점수"만 보면 어느 반이
-    잘하고 못하는지 알 수 없다. <b>반별로 그룹화</b>해서 <b>반별 평균</b>을 구해야 비교할 수 있다.
-    그런데 어떤 반은 평균은 비슷해도 점수가 들쭉날쭉(잘하는 학생과 못하는 학생 차이가 큼)할 수
-    있는데, 이는 <b>표준편차</b>로 확인한다. 오늘 EQ-02가 딱 그런 경우였다 — 평균은 평범했지만
-    표준편차가 커서 실제로는 가장 불안정한 반(설비)이었다.</p>
-  </section>
-
-  <section class="block">
-    <h2>🟣 단계별 따라 하기 실습</h2>
-    <div class="step">
-      <div class="num">1</div>
-      <div class="content"><b>데이터 읽기</b> — <code>week06_equipment_comparison.csv</code>를
-      업로드하고 <code>pd.read_csv()</code>로 읽는다.</div>
-    </div>
-    <div class="step">
-      <div class="num">2</div>
-      <div class="content"><b>설비별 평균 온도/압력 구하기</b> —
-      <code>df.groupby("설비번호")["온도_섭씨"].mean()</code>과
-      <code>df.groupby("설비번호")["압력_Pa"].mean()</code>을 각각 실행한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">3</div>
-      <div class="content"><b>설비별 표준편차 구하기</b> — <code>.mean()</code>을
-      <code>.std()</code>로 바꾸어 다시 실행하고, 어느 설비가 가장 큰지 확인한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">4</div>
-      <div class="content"><b>공정별 평균 처리시간 구하기</b> —
-      <code>df.groupby("공정명")["처리시간_sec"].mean()</code>을 실행한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">5</div>
-      <div class="content"><b>설비별·작업조별 불량률 구하기</b> — 강사 시연 코드의 6~7번 줄을
-      그대로 따라 입력하고 실행한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">6</div>
-      <div class="content"><b>결과 비교하기</b> — "불량률이 가장 높은 설비"와 "표준편차가 가장
-      큰 설비"가 같은지 다른지 확인하고 한 문장으로 적어본다.</div>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
-    <div class="callout danger">
-      <b class="tag">오류 1</b>
-      <code>TypeError: agg function failed</code> — 문자열로 이루어진 열(예: 로트번호)에
-      <code>.mean()</code>을 적용하려고 할 때 발생한다. 반드시 숫자로 된 열에만
-      평균/표준편차를 계산해야 한다.
-    </div>
-    <div class="callout danger">
-      <b class="tag">오류 2</b>
-      <code>KeyError</code> — <code>groupby()</code> 안에 넣은 열 이름의 철자가 틀린 경우다.
-      <code>df.columns</code>로 정확한 열 이름을 먼저 확인한다.
-    </div>
-    <div class="callout warn">
-      <b class="tag">주의</b>
-      결측값(NaN)이 있는 행은 <code>.mean()</code>, <code>.std()</code> 계산에서 자동으로
-      제외된다. 그래서 그룹마다 "계산에 사용된 실제 개수"가 <code>.count()</code> 결과와
-      다를 수 있다는 점을 기억하자(온도_섭씨 열에서 특히 그렇다).
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🚀 도전 실습</h2>
+    <h2>🟠 Orange3 실습(추가 예정)</h2>
     <div class="callout practice">
-      <b class="tag">도전 문제</b>
-      <code>df.groupby("설비번호")["온도_섭씨"].median()</code>을 실행해 설비별 <b>중앙값</b>을
-      구해보고, 앞서 구한 <b>평균</b>과 비교해보자. 두 값의 차이가 가장 큰 설비는 어디인가?
-      또한 <code>df.groupby(["설비번호","작업조"])["합격여부"].count()</code>처럼 <b>기준을
-      2개(설비번호, 작업조) 동시에</b> 넣어 그룹화하면 어떤 결과가 나오는지도 확인해보자.
+      <b class="tag">위젯</b> Scatter Plot · Box Plot · Distributions
+      <p style="margin:.5rem 0 0;">Matplotlib로 그린 산점도/박스플롯/히스토그램을 Orange3 위젯으로 다시 그려보고 같은 결론이 나오는지 비교한다.</p>
     </div>
   </section>
 
   <section class="block">
-    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
-    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+    <h2>📁 데이터</h2>
+    <p><code>data/weekly/week06/week06_process_visualization.csv</code></p>
+    <p style="color:var(--muted);font-size:.9rem;">180행 10열 — 온도 드리프트, 설비별(EQ-02) 분산 확대 패턴 포함</p>
+  </section>
 
-    <div class="quiz-item">
-      <div class="q">Q1. (객관식) 데이터를 기준 열의 값에 따라 여러 묶음으로 나누는 것을 무엇이라 하는가?</div>
-      <ul class="options">
-        <li>A. 정렬(sort)</li>
-        <li>B. 그룹화(groupby)</li>
-        <li>C. 결측값 처리</li>
-        <li>D. 시각화</li>
-      </ul>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. <code>groupby</code>는 기준 열의 값이 같은 행끼리 묶는다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q2. (참/거짓) 평균이 비슷한 두 설비는 항상 똑같이 안정적이라고 볼 수 있다.</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 거짓. 오늘 데이터의 EQ-02처럼 평균은 낮아도(299.08℃) 표준편차(7.16)가
-      훨씬 커서 실제로는 더 불안정할 수 있다. 평균과 표준편차를 함께 봐야 한다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q3. (서술) 오늘 실습에서 계산한 "불량률이 가장 높은 설비"와 "표준편차가 가장 큰
-      설비"의 결과를 바탕으로, 이 데이터를 처음 보는 사람에게 한 문장으로 설명해보자.</div>
-      <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">예시 답안: "불량률이 가장 높은 설비는 EQ-04(21.9%)이고, 온도가 가장 들쭉날쭉한
-      설비는 EQ-02(표준편차 7.16)로 서로 다르다. 즉 불량 문제와 온도 변동 문제는 각각 다른 설비에서
-      나타나고 있어, 두 가지를 따로 확인해야 한다."</div>
-    </div>
+  <section class="block">
+    <h2>❓ 핵심 질문 → 데이터 연결</h2>
+    <div class="callout concept">어느 설비의 온도 변동이 가장 큰가? 두 도구(Matplotlib/Orange3)에서 같은 결론이 나오는가?</div>
   </section>
 
   <section class="block">
     <h2>🔜 다음 주 예고</h2>
-    <div class="callout concept">
-      <b class="tag">7주차 예고</b>
-      다음 주에는 오늘 배운 그룹별 집계를 "수율/불량률" 계산에 본격적으로 응용한다. 로트별
-      수율을 계산하고, 불량 유형별 빈도를 파레토 차트로 살펴보며 "수율이 낮은 로트에는
-      공통점이 있을까?"라는 질문에 답해본다.
-    </div>
+    <div class="callout concept">7주차에는 그래프에서 본 차이를 groupby로 수치화하고, 수율·불량률까지 계산한다.</div>
   </section>
 
   <div class="nav-buttons">
@@ -460,9 +112,8 @@ Name: 온도_섭씨, dtype: float64</pre>
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 6주차 · 교육용 자료(가상 데이터 사용)</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 6주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
-<script src="../../assets/js/quiz.js"></script>
 </body>
 </html>

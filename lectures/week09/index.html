@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>9주차. 대규모 센서 데이터와 간단한 불량 예측</title>
+<title>9주차. 머신러닝으로 합격/불합격 예측하기</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 </head>
@@ -32,517 +32,78 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">9주차 · 2시간 수업</span>
-    <h1>대규모 센서 데이터와 간단한 불량 예측</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"센서 값만 보고 합격/불합격을 미리 알 수 있을까?"</b></p>
+    <span class="badge blue">9주차 · 2시간 수업 · 개요(skeleton)</span>
+    <h1>머신러닝으로 합격/불합격 예측하기</h1>
+    <p class="today-question">💬 오늘의 질문: <b>"온도·압력 같은 측정값만 보고, 이 로트가 합격일지 불합격일지 미리 알 수 있을까?"</b></p>
   </div>
+
+  <section class="block">
+    <div class="callout warn">
+      <b class="tag">작성 상태</b>
+      이 페이지는 v2 커리큘럼 구성이 확정된 직후 작성된 <b>개요(skeleton)</b>입니다. 제목·학습
+      목표·다룰 내용·데이터까지는 확정되었지만, 상세 설명·예제 코드·단계별 실습·퀴즈는 아직 채워지지
+      않았습니다. 구성이 최종 확정되면 이어서 상세 내용을 작성합니다. 배경은
+      <a href="../../docs/restructure-plan.md">docs/restructure-plan.md</a> 참고.
+    </div>
+  </section>
 
   <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
-      <li>센서 개수가 매우 많은 "고차원 데이터"가 무엇인지 설명할 수 있다.</li>
-      <li>Feature(입력 값)와 Label(정답 값)의 차이를 구분할 수 있다.</li>
-      <li>train(학습용)/test(평가용) 데이터를 왜 나누어야 하는지 설명할 수 있다.</li>
-      <li>간단한 분류 모델을 직접 실행하고 정확도를 계산할 수 있다.</li>
-      <li>정확도 하나만으로 모델을 판단하면 안 되는 이유를 혼동행렬로 설명할 수 있다.</li>
-      <li>"예측이 잘 된다"와 "원인을 알아냈다"는 다른 말임을 설명할 수 있다.</li>
+      <li>Feature(특징)와 Label(정답)의 의미를 설명할 수 있다.</li>
+      <li>train/test로 데이터를 나누고 분류 모델을 학습시킬 수 있다.</li>
+      <li>정확도·혼동행렬로 모델 성능을 확인할 수 있다.</li>
+      <li>새 측정값을 입력해 predict()로 합격/불합격을 예측할 수 있다.</li>
+      <li>Orange3로 같은 데이터를 코드 없이 학습·예측해보고 결과를 비교할 수 있다.</li>
+    </ul>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 1~8주차 전체 — 특히 3주차(직접 판정)와 8주차(상관관계)</p>
+  </section>
+
+  <section class="block">
+    <h2>📚 다룰 이론 주제(초안)</h2>
+    <ul class="goal-list">
+      <li>Feature(특징)와 Label(정답)</li>
+      <li>train/test 분리</li>
+      <li>분류(classification), 정확도, 혼동행렬</li>
+      <li>'정상이 대부분인 데이터'에서 정확도만 보면 안 되는 이유</li>
+      <li>새 데이터에 대한 예측 — predict()</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>⏮️ 지난 시간 복습</h2>
-    <div class="callout concept">
-      <b class="tag">8주차 연결</b>
-      8주차에서는 "온도가 이상했던 시점"과 "불량이 발생한 시점"이 겹치는지 확인하고,
-      상관관계가 있어 보이는 변수를 <b>원인 후보</b>라고 불렀다. 9주차는 여기서 한 단계 더 나아가,
-      여러 개의 변수(센서)를 동시에 보고 "합격/불합격을 미리 맞혀볼 수 있는가"를 실험한다.
-      다만 지난 시간에 배운 원칙은 그대로 이어진다 — <b>상관관계(또는 예측이 잘 되는 것)는 원인을
-      증명하지 않는다.</b>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>📚 오늘의 소재 — fab.csv</h2>
-    <p>이번 주부터는 이 교육과정에서 유일하게 <b>실제 반도체 공정에서 수집된 원본 데이터</b>인
-    <code>fab.csv</code>를 다룬다. 이 파일은 <b>1,567번의 측정 기록(행)</b>과
-    <b>Sensor0 ~ Sensor589, 총 590개의 센서 열(열)</b>, 그리고 판정 결과 열로 이루어져 있다.
-    지금까지 다룬 데이터가 많아야 10여 개 열이었던 것과 비교하면 훨씬 "차원"이 높은 데이터다.</p>
-    <div class="callout warn">
-      <b class="tag">⚠️ 왜 fab.csv 전체를 나눠주지 않는가</b>
-      <code>fab.csv</code>는 센서가 590개나 되지만, <b>Sensor0~Sensor589라는 이름만 있을 뿐 각
-      센서가 실제로 어떤 장비의 어떤 물리량(온도인지 압력인지 등)을 측정하는지에 대한 설명이
-      전혀 없다.</b> 초보자가 590개 열을 한 번에 다루면 어떤 열이 중요한지조차 알 수 없어
-      압도되기 쉽다. 그래서 이번 주에는 <b>미리 골라둔 10~15개의 센서만</b> 사용한다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>📊 대표 센서는 어떻게 골랐을까 — 고차원 데이터와 Feature</h2>
-    <p><b>고차원 데이터(High-dimensional Data)</b>란 한 행을 설명하는 열(변수)의 개수가 아주 많은
-    데이터를 말한다. <code>fab.csv</code>처럼 열이 590개나 되면, 사람이 하나하나 눈으로 살펴보며
-    "이 센서가 중요하겠다"라고 판단하기 어렵다. 그래서 데이터 자체의 성질을 이용해 후보를 추렸다.</p>
-    <p>이번 실습에 쓰이는 <code>week09_fab_selected_sensors.csv</code>는 다음 네 가지 기준으로
-    590개 중 15개만 골라낸 것이다.</p>
-    <ol>
-      <li>결측률(값이 비어 있는 비율)이 5% 미만인 센서만 남긴다.</li>
-      <li>표준편차가 0보다 커야 한다 — 값이 항상 똑같다면 분석할 이유가 없다.</li>
-      <li>고유값(서로 다른 값)이 10개를 초과해야 한다 — 사실상 상수에 가까운 센서를 제외한다.</li>
-      <li>위 조건을 만족하는 415개 센서 중, 판정 결과와의 단순 상관계수 절댓값이 가장 큰
-      15개만 선택한다.</li>
+    <h2>🧪 다룰 실습 흐름(초안)</h2>
+    <ol style="padding-left:1.3rem;line-height:1.8;">
+      <li>week09_pass_fail_train.csv 불러오기 → 결측치 처리(4~5주차 복습)</li>
+      <li>Feature/Label 나누기</li>
+      <li>train_test_split으로 학습/평가 데이터 나누기</li>
+      <li>DecisionTreeClassifier 학습</li>
+      <li>정확도 · 혼동행렬 확인</li>
+      <li>week09_new_lots_to_predict.csv의 새 로트에 대해 predict()로 예측</li>
     </ol>
-    <p>여기서 <b>Feature(특징, 입력 값)</b>는 예측에 사용하는 센서 값들이고,
-    <b>Label(정답, 출력 값)</b>은 우리가 맞히고 싶은 값 — 즉 합격/불합격 결과다.
-    데이터가 아무리 많아도 "무엇이 Feature이고 무엇이 Label인가"를 먼저 정하지 않으면
-    예측을 시작할 수 없다.</p>
-    <div class="callout concept">
-      <b class="tag">비유</b>
-      학생 한 명의 시험 성적을 맞히려면 "출석일수, 숙제 제출률, 수면시간" 같은 여러 정보(Feature)를
-      보고 "합격/불합격"(Label)을 예측하는 것과 같다. 정보가 590개나 있다면 그중 정말 성적과
-      관련 있어 보이는 몇 개만 골라 쓰는 편이 훨씬 다루기 쉽다.
-    </div>
   </section>
 
   <section class="block">
-    <h2>🏷️ 교육용 별칭 — 오늘 실습에서 쓰는 이름들</h2>
-    <p>선별된 15개 센서 중 10개는 <code>week09_fab_beginner.csv</code>에서
-    <code>Chamber_Temperature_edu</code>, <code>RF_Power_edu</code>처럼 개념과 연결하기 쉬운
-    이름(별칭)으로 바뀌어 있다.</p>
-    <div class="callout danger">
-      <b class="tag">⚠️ 매우 중요 — 별칭은 "진짜 의미"가 아니다</b>
-      <code>fab.csv</code>에는 Sensor0~Sensor589가 실제로 무엇을 측정하는지에 대한 정보가
-      전혀 없다. <code>Chamber_Temperature_edu</code>(챔버 온도), <code>RF_Power_edu</code>(RF 전력)
-      같은 이름은 <b>학습자가 코드와 개념을 연결해 이해하도록 돕기 위해 이번 과정에서 임의로
-      붙인 "교육용 가상 별칭"</b>이며, 실제로 그 센서가 챔버 온도나 RF 전력을 측정한다는
-      근거는 전혀 없다. 특히 상관관계 상위 센서 중 의미를 추정할 근거가 전혀 없는 2개는
-      <code>주요센서_A</code>(Sensor21), <code>주요센서_B</code>(Sensor28)라는 이름으로 남겨두었다 —
-      이 두 센서는 <b>이름조차 붙이지 못했다는 사실 자체가 "이름을 안다고 실제 의미를 아는 것은
-      아니다"</b>라는 것을 보여주기 위함이다. 오늘 배우는 모든 별칭은 실제 장비 스펙이 아니라
-      가상의 학습 도구로만 취급해야 한다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🔀 부호가 반대로 바뀐 이유 — 합격여부 vs 검사결과</h2>
-    <p>1주차부터 써온 <code>합격여부</code> 열은 <code>1=합격</code>, <code>-1=불합격</code>이었다.
-    그런데 <code>fab.csv</code>의 원본 판정 열인 <code>Pass_Fail</code>은 그 반대로
-    <code>-1=정상/합격</code>, <code>1=이상/불합격</code>을 의미한다. 두 데이터의 출처가 다르기
-    때문에 생긴 자연스러운 차이다.</p>
-    <p>이런 혼동을 줄이기 위해 이번 과정에서는 <b><code>검사결과</code></b>라는 이름의 통일된 열을
-    새로 만들었다: <code>0=정상/합격</code>, <code>1=이상/불합격</code>. 오늘 실습에서 쓰는
-    <code>week09_fab_beginner.csv</code>는 이미 <code>검사결과</code> 기준으로 변환되어 있으므로
-    바로 사용하면 된다. 다만 <code>week09_fab_selected_sensors.csv</code>는 원본 부호
-    (<code>Pass_Fail</code>, -1/1)를 그대로 유지하고 있으니 두 파일을 섞어 쓸 때는 반드시
-    부호를 확인해야 한다.</p>
-    <div class="callout warn">
-      <b class="tag">주의</b>
-      "1이니까 합격이겠지"라는 습관적인 판단은 이번 주 데이터에서는 틀릴 수 있다.
-      항상 어떤 파일의 어떤 열을 쓰는지 먼저 확인하는 습관을 들이자.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🧠 핵심 개념 ① train / test 분리와 분류(Classification)</h2>
-    <p>모델이 정말 "새로운 데이터"에서도 잘 맞히는지 확인하려면, 가지고 있는 데이터를 미리
-    두 덩어리로 나눠야 한다.</p>
-    <ul>
-      <li><b>train(학습용) 데이터</b>: 모델이 패턴을 "배우는" 데 사용한다.</li>
-      <li><b>test(평가용) 데이터</b>: 모델이 한 번도 보지 않은 데이터로, 실제 성능을 "시험"하는 데
-      사용한다.</li>
-    </ul>
-    <p>시험공부에 비유하면, train 데이터는 "연습 문제", test 데이터는 "실제 시험 문제"다.
-    연습 문제만 잘 푸는 학생이 실제 시험도 잘 본다는 보장은 없다.</p>
-    <p><b>분류(Classification)</b>는 데이터를 몇 개의 정해진 범주(오늘은 "정상" 또는 "이상")
-    중 하나로 나누는 예측 방법이다. 오늘은 여러 분류 모델 중 이해하기 쉬운
-    <b><code>DecisionTreeClassifier</code>(의사결정나무)</b> 하나만 사용한다. 의사결정나무는
-    "이 센서 값이 얼마 이상이면 → 이 쪽, 아니면 → 저 쪽"과 같은 질문을 여러 번 반복해서
-    정상/이상을 나누는 모델이다. 오늘은 세부 옵션을 조정(튜닝)하지 않고
-    <code>max_depth=4</code>(질문을 최대 4단계까지만 함) 정도의 기본값에 가까운 설정만 사용한다.</p>
-  </section>
-
-  <section class="block">
-    <h2>🧠 핵심 개념 ② 정확도와 그 함정</h2>
-    <p><b>정확도(Accuracy)</b>는 전체 예측 중 맞힌 비율이다. 언뜻 보면 정확도가 높을수록 좋은
-    모델처럼 보이지만, <b>정상과 이상의 개수 차이가 클 때(데이터 불균형)</b>는 정확도만으로
-    판단하면 크게 속을 수 있다.</p>
-    <div class="callout danger">
-      <b class="tag">직접 확인한 숫자 — "무조건 정상"이라고만 예측해도?</b>
-      <code>week09_fab_beginner.csv</code>의 <code>검사결과</code>는 정상(0)이 1,462건,
-      이상(1)이 103건이다(전체 1,565건 중 이상은 약 6.58%뿐). 만약 아무 계산도 하지 않고
-      <b>모든 행에 대해 무조건 "정상(0)"이라고만 예측</b>해도 정확도는
-      <code>1462 ÷ 1565 = 약 93.42%</code>가 나온다. 뒤에서 실제로 train/test를 나눈 test
-      데이터(392건)만 놓고 계산해도 이 "무조건 정상" 방식의 정확도는 <code>366 ÷ 392 = 약 93.37%</code>다.
-      숫자만 보면 매우 훌륭한 모델처럼 보이지만, 이 예측은 <b>이상(불량)을 단 한 건도 찾아내지
-      못한다</b> — 즉 실제로는 아무 쓸모가 없다. 이것이 "정확도의 함정"이다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🧠 핵심 개념 ③ 혼동행렬(Confusion Matrix)</h2>
-    <p>정확도의 함정을 피하려면 "무엇을 맞혔고 무엇을 틀렸는지"를 종류별로 나눠서 봐야 한다.
-    이를 표로 정리한 것이 <b>혼동행렬</b>이다.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th></th><th>예측: 정상(0)</th><th>예측: 이상(1)</th></tr>
-        <tr><td><b>실제: 정상(0)</b></td><td>TN (정상을 정상으로)</td><td>FP (정상을 이상으로, 오탐)</td></tr>
-        <tr><td><b>실제: 이상(1)</b></td><td>FN (이상을 정상으로, 놓침)</td><td>TP (이상을 이상으로, 적중)</td></tr>
-      </table>
-    </div>
-    <p>이번 실습에서 <code>DecisionTreeClassifier(max_depth=4, random_state=42)</code>를 test
-    데이터(392건)에 대해 실행한 실제 결과는 다음과 같다.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th></th><th>예측: 정상(0)</th><th>예측: 이상(1)</th></tr>
-        <tr><td><b>실제: 정상(0)</b> (366건)</td><td>362 (TN)</td><td>4 (FP)</td></tr>
-        <tr><td><b>실제: 이상(1)</b> (26건)</td><td>24 (FN)</td><td>2 (TP)</td></tr>
-      </table>
-    </div>
-    <p>이 모델의 정확도는 <code>(362+2) ÷ 392 = 약 92.86%</code>로, 오히려 "무조건 정상"
-    방식(93.37%)보다 <b>숫자상으로는 더 낮다.</b> 하지만 "무조건 정상"은 이상을 0건 맞혔고,
-    이 모델은 실제 이상 26건 중 2건(TP)을 맞혔다. 즉 <b>정확도 숫자 하나만 비교하면 반대의
-    결론을 내릴 수도 있다</b> — 그래서 혼동행렬을 함께 봐야 한다.</p>
-  </section>
-
-  <section class="block">
-    <h2>🧠 핵심 개념 ④ 데이터 불균형(Class Imbalance)</h2>
-    <p><b>데이터 불균형</b>은 예측하려는 범주(클래스)의 개수 차이가 클 때를 말한다. 오늘 데이터는
-    정상 1,462건 대 이상 103건으로, 이상 사례가 전체의 약 6.6%뿐이다. 이런 상황에서는
-    "정확도"라는 숫자 자체가 정상 쪽으로 크게 치우치기 쉽다.</p>
-    <p>그래서 train/test로 나눌 때도 <code>train_test_split(..., stratify=y)</code>처럼
-    <b>정상/이상의 비율을 train과 test에 똑같이 유지</b>하도록 나누는 것이 중요하다.
-    그렇지 않으면 우연히 test 데이터에 이상 사례가 하나도 안 들어가는 등 평가 자체가
-    의미 없어질 수 있다.</p>
-  </section>
-
-  <section class="block">
-    <h2>🧠 핵심 개념 ⑤ 과적합(Overfitting) — 쉬운 설명</h2>
-    <p><b>과적합</b>은 모델이 train(연습 문제)을 "이해"한 것이 아니라 "통째로 외워버려서",
-    정작 test(실제 시험)나 새로운 데이터에서는 오히려 잘 못 맞히는 상태를 말한다.</p>
-    <div class="callout concept">
-      <b class="tag">비유</b>
-      기출문제를 풀이 원리 없이 답만 통째로 암기한 학생은 똑같은 문제가 나오면 100점을 받지만,
-      숫자만 살짝 바뀐 새 문제에는 전혀 대응하지 못한다. 모델도 마찬가지로 train 데이터의
-      사소한 특징까지 너무 세밀하게 외워버리면, test처럼 처음 보는 데이터에서 성능이 뚝
-      떨어질 수 있다. 오늘 <code>max_depth=4</code>처럼 나무의 깊이를 제한하는 것도 모델이
-      데이터를 통째로 외우지 못하도록 막는 간단한 방법 중 하나다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🔎 어떤 센서가 중요했을까 — 그리고 그것이 증명하는 것은 아무것도 없다</h2>
-    <p>의사결정나무 모델은 <code>.feature_importances_</code>라는 값으로 "예측할 때 어떤 센서를
-    더 많이 참고했는지"를 알려준다. 오늘 실습 결과, <code>Gas_Flow_edu</code>(약 0.249),
-    <code>Chamber_Temperature_edu</code>(약 0.205), <code>RF_Power_edu</code>(약 0.166),
-    <code>주요센서_A</code>(약 0.132) 순으로 중요도가 높게 나왔다.</p>
-    <div class="callout danger">
-      <b class="tag">⚠️ 반드시 기억할 것</b>
-      이 순위는 <b>"모델이 예측할 때 많이 참고한 값"일 뿐, "실제로 불량을 일으킨 원인"이라는
-      뜻이 아니다.</b> 데이터 설명서에 따르면 가장 상관관계가 높은 센서(Sensor59,
-      <code>Chamber_Temperature_edu</code>)조차 판정 결과와의 단순 상관계수 절댓값이 약 0.16에
-      불과하다 — 어떤 센서 하나만으로는 합격/불합격을 명확히 구분할 수 없다는 뜻이다. 게다가
-      <code>주요센서_A</code>는 이름조차 모르는 센서다. <b>예측이 잘 되는 것과 원인을 증명하는
-      것은 전혀 다른 문제다.</b> 실제 원인을 밝히려면 설비 엔지니어의 도메인 지식과 추가 실험이
-      반드시 필요하며, 오늘 배운 모델은 "확인이 필요한 후보"를 좁혀주는 도구일 뿐이다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🗂️ 핵심 용어 카드</h2>
-    <div class="term-grid">
-      <div class="term-card">
-        <h4>고차원 데이터</h4><div class="en">High-dimensional Data</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>한 행을 설명하는 열(변수)의 개수가 매우 많은 데이터.</dd>
-          <dt>쉬운 비유</dt><dd>문항이 590개인 매우 긴 설문지.</dd>
-          <dt>데이터에서의 예</dt><dd><code>fab.csv</code>의 Sensor0~Sensor589 (590개 열).</dd>
-          <dt>자주 하는 오해</dt><dd>열이 많을수록 무조건 더 정확한 예측이 가능하다고 생각하기 쉽지만, 관련 없는 열이 많으면 오히려 방해가 된다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>Feature / Label</h4><div class="en">특징 / 정답</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>Feature는 예측에 쓰는 입력 값, Label은 맞히고 싶은 정답 값.</dd>
-          <dt>쉬운 비유</dt><dd>Feature=문제, Label=정답지.</dd>
-          <dt>데이터에서의 예</dt><dd>10개 별칭 센서 열=Feature, <code>검사결과</code>=Label.</dd>
-          <dt>자주 하는 오해</dt><dd>Label 열도 그냥 하나의 데이터 열이라고 착각해 Feature에 함께 넣어버리는 실수가 흔하다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>train / test 분리</h4><div class="en">Train/Test Split</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>학습용 데이터와 평가용 데이터를 미리 나누는 것.</dd>
-          <dt>쉬운 비유</dt><dd>연습 문제(train)와 실제 시험 문제(test).</dd>
-          <dt>데이터에서의 예</dt><dd><code>train_test_split(X, y, stratify=y, random_state=42)</code>.</dd>
-          <dt>자주 하는 오해</dt><dd>train 데이터에서 성능이 좋으면 무조건 좋은 모델이라고 오해하기 쉽다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>분류(Classification)</h4><div class="en">Classification</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>데이터를 정해진 범주 중 하나로 나누는 예측 방법.</dd>
-          <dt>쉬운 비유</dt><dd>메일을 "정상" 또는 "스팸"으로 분류하는 것.</dd>
-          <dt>데이터에서의 예</dt><dd>센서 값을 보고 "정상(0)" 또는 "이상(1)"으로 나누기.</dd>
-          <dt>자주 하는 오해</dt><dd>분류와 숫자 예측(회귀)을 같은 것으로 혼동하기 쉽다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>정확도</h4><div class="en">Accuracy</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>전체 예측 중 맞힌 비율.</dd>
-          <dt>쉬운 비유</dt><dd>시험 100문제 중 맞힌 문제 수의 비율.</dd>
-          <dt>데이터에서의 예</dt><dd>"무조건 정상" 예측도 정확도 약 93.4%가 나온다.</dd>
-          <dt>자주 하는 오해</dt><dd>정확도가 높으면 무조건 좋은 모델이라고 생각하기 쉽지만, 불균형 데이터에서는 함정이 있다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>혼동행렬</h4><div class="en">Confusion Matrix</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>실제값과 예측값의 조합별 개수를 정리한 표.</dd>
-          <dt>쉬운 비유</dt><dd>정답과 내 답을 항목별로 대조한 채점표.</dd>
-          <dt>데이터에서의 예</dt><dd>오늘 모델은 실제 이상 26건 중 2건만 맞혔다(TP=2).</dd>
-          <dt>자주 하는 오해</dt><dd>정확도만 보고 혼동행렬은 확인하지 않아도 된다고 생각하기 쉽다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>데이터 불균형</h4><div class="en">Class Imbalance</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>예측하려는 범주 간 개수 차이가 큰 상태.</dd>
-          <dt>쉬운 비유</dt><dd>정상 학생 1,462명과 유급 위기 학생 103명처럼 한쪽이 훨씬 적은 경우.</dd>
-          <dt>데이터에서의 예</dt><dd><code>검사결과</code> 0(정상) 1,462건 vs 1(이상) 103건.</dd>
-          <dt>자주 하는 오해</dt><dd>데이터가 많으면 불균형은 문제 되지 않는다고 오해하기 쉽다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>과적합</h4><div class="en">Overfitting</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>모델이 train 데이터를 이해하지 않고 통째로 외워버린 상태.</dd>
-          <dt>쉬운 비유</dt><dd>기출문제 답만 암기해 새 문제에는 대응하지 못하는 학생.</dd>
-          <dt>데이터에서의 예</dt><dd><code>max_depth</code>를 제한해 나무가 너무 세밀해지는 것을 막는다.</dd>
-          <dt>자주 하는 오해</dt><dd>train 정확도가 100%면 무조건 좋은 모델이라고 착각하기 쉽다.</dd>
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>📁 데이터 미리보기</h2>
-    <p>오늘 사용할 데이터: <code>data/weekly/week09/week09_fab_beginner.csv</code>
-    (1,565행 × 12열, <code>fab.csv</code>에서 선별·재구성한 실제 값). 부호가 원본과 다른
-    <code>week09_fab_selected_sensors.csv</code>(1,567행 × 17열)도 함께 살펴본다. 자세한 설명은
-    <a href="../../data/data_dictionary/week09_dictionary.md">데이터 설명서</a> 참고.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr>
-          <th>SensorTime</th><th>Chamber_Temperature_edu</th><th>Gas_Flow_edu</th>
-          <th>RF_Power_edu</th><th>주요센서_A</th><th>주요센서_B</th><th>검사결과</th>
-        </tr>
-        <tr><td>2008-07-19 11:55</td><td>-1.73</td><td>66.13</td><td>0.02</td><td>-5341.15</td><td>64.23</td><td>0</td></tr>
-        <tr><td>2008-07-19 12:32</td><td>0.81</td><td>64.14</td><td>0.02</td><td>-5406.98</td><td>68.42</td><td>0</td></tr>
-        <tr><td>2008-07-19 13:17</td><td>23.82</td><td>67.35</td><td>0.03</td><td>-5424.35</td><td>67.13</td><td>1</td></tr>
-        <tr><td>2008-07-19 14:43</td><td>24.38</td><td>67.86</td><td>0.03</td><td>-5451.12</td><td>62.93</td><td>0</td></tr>
-      </table>
-    </div>
-    <div class="callout warn">
-      <b class="tag">주의</b>
-      값의 크기와 부호(음수 포함)는 실제 센서 원본 값 그대로다. "숫자가 크거나 작다고 이상하다"고
-      단정할 수 없다 — 센서마다 측정 단위와 기준이 다르기 때문이다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>👩‍🏫 강사 코드 시연</h2>
-    <div class="code-block">
-      <div class="code-label"><span>Python — Colab / Jupyter</span><button class="copy-btn">복사</button></div>
-      <pre><code># 1. 필요한 도구를 불러옵니다.
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix
-
-# 2. 교육용 재구성 데이터를 읽습니다.
-df = pd.read_csv("week09_fab_beginner.csv")
-print(df.shape)                       # (1565, 12)
-print(df["검사결과"].value_counts())   # 0: 1462건, 1: 103건
-
-# 3. Feature(입력 값)와 Label(정답 값)을 나눕니다.
-feature_cols = ["Chamber_Temperature_edu", "Chamber_Pressure_edu", "Gas_Flow_edu",
-                 "RF_Power_edu", "Vacuum_Level_edu", "Cooling_Water_Temperature_edu",
-                 "Vibration_edu", "Process_Time_edu", "주요센서_A", "주요센서_B"]
-X = df[feature_cols].fillna(df[feature_cols].mean())   # 결측치는 평균값으로 채움
-y = df["검사결과"]
-
-# 4. train/test로 나눕니다. stratify=y로 정상/이상 비율을 유지합니다.
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.25, random_state=42, stratify=y
-)
-
-# 5. 의사결정나무 모델을 학습시킵니다.
-model = DecisionTreeClassifier(max_depth=4, random_state=42)
-model.fit(X_train, y_train)
-pred = model.predict(X_test)
-
-# 6. 정확도와 혼동행렬을 확인합니다.
-print("정확도:", accuracy_score(y_test, pred))
-print("혼동행렬:\n", confusion_matrix(y_test, pred))</code></pre>
-    </div>
-    <div class="explain-list">
-      <b>코드 한 줄씩 설명</b>
-      <ul>
-        <li><code>fillna(df[feature_cols].mean())</code>: 결측치가 있는 센서 값을 그 센서의
-        평균값으로 채운다. 결측 비율이 낮아(대부분 2% 이하) 행을 통째로 지우기(dropna)보다
-        평균 대체가 데이터를 더 많이 살릴 수 있다.</li>
-        <li><code>train_test_split(..., stratify=y)</code>: train과 test에 정상/이상 비율을
-        동일하게 유지하며 나눈다. 데이터 불균형이 심할 때 특히 중요하다.</li>
-        <li><code>DecisionTreeClassifier(max_depth=4, random_state=42)</code>: 의사결정나무
-        모델을 만든다. <code>max_depth=4</code>는 나무의 최대 깊이를 4단계로 제한해 과적합을
-        줄인다. <code>random_state=42</code>는 결과를 항상 똑같이 재현하기 위한 난수 고정값이다.</li>
-        <li><code>accuracy_score(y_test, pred)</code>: test 데이터에서 실제값과 예측값을 비교해
-        정확도를 계산한다.</li>
-        <li><code>confusion_matrix(y_test, pred)</code>: 실제/예측 조합별 개수를 표로 만든다.</li>
-      </ul>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과 예시(실제 실행 값)</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">정확도: 0.9285714285714286
-혼동행렬:
- [[362   4]
- [ 24   2]]</pre>
-    </div>
-    <div class="callout warn">
-      <b class="tag">결과 해석</b>
-      test 데이터 392건 중 364건을 맞혀 정확도 약 92.86%다. 그런데 "무조건 정상"이라고만
-      예측해도 정확도가 약 93.37%였다는 사실을 떠올려보자. 이 모델은 숫자상 정확도는 오히려
-      낮지만, 실제 이상 26건 중 2건(TP)을 찾아냈다 — "무조건 정상" 방식은 이상을 0건도 찾지
-      못한다. 정확도 하나만 보면 잘못된 결론에 이를 수 있다는 것을 다시 확인할 수 있다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🙋 실생활 비유로 정리하기</h2>
-    <p>공항 보안 검색대를 떠올려보자. 승객 대부분(예: 93%)은 아무 문제가 없다. 검색대가
-    "모든 사람을 무조건 통과시킨다"고 해도 정확도는 93%가 넘는다. 하지만 그렇게 하면 실제
-    위험 물품을 가진 극소수(약 7%)를 단 한 건도 걸러내지 못한다. 우리가 진짜 원하는 것은
-    "정확도가 높은 검색대"가 아니라 "위험한 소수를 실제로 찾아내는 검색대"다. 오늘 배운
-    혼동행렬은 바로 이 "소수를 얼마나 잘 찾아냈는가"를 보여주는 도구다.</p>
-  </section>
-
-  <section class="block">
-    <h2>🟣 단계별 따라 하기 실습</h2>
-    <div class="step">
-      <div class="num">1</div>
-      <div class="content"><b>데이터 불러오기</b> — <code>week09_fab_beginner.csv</code>를 읽고
-      <code>df.shape</code>, <code>df["검사결과"].value_counts()</code>로 크기와 불균형 정도를
-      확인한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">2</div>
-      <div class="content"><b>결측치 확인 및 처리</b> — <code>df.isna().sum()</code>으로 센서별
-      결측 개수를 확인하고, <code>fillna(df[feature_cols].mean())</code>으로 평균값을 채운다.</div>
-    </div>
-    <div class="step">
-      <div class="num">3</div>
-      <div class="content"><b>Feature/Label 나누기</b> — 10개 별칭 센서 열을 <code>X</code>,
-      <code>검사결과</code> 열을 <code>y</code>로 지정한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">4</div>
-      <div class="content"><b>train/test 분리</b> — <code>train_test_split(X, y, test_size=0.25,
-      random_state=42, stratify=y)</code>를 실행한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">5</div>
-      <div class="content"><b>"무조건 정상" 기준선 계산</b> — test 데이터에서 모두 0으로만
-      예측했을 때의 정확도를 직접 계산해본다.</div>
-    </div>
-    <div class="step">
-      <div class="num">6</div>
-      <div class="content"><b>모델 학습과 평가</b> — <code>DecisionTreeClassifier(max_depth=4,
-      random_state=42)</code>를 학습시키고, 정확도와 혼동행렬을 출력한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">7</div>
-      <div class="content"><b>중요 센서 확인</b> — <code>model.feature_importances_</code>를 확인하고,
-      "이것이 원인을 증명하지 않는다"는 문장을 직접 적어본다.</div>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
-    <div class="callout danger">
-      <b class="tag">오류 1</b>
-      <code>ValueError: Input contains NaN</code> — 결측치를 처리하지 않고 바로
-      <code>model.fit()</code>을 실행하면 발생한다. <code>fillna()</code> 또는 <code>dropna()</code>를
-      먼저 실행했는지 확인한다.
-    </div>
-    <div class="callout danger">
-      <b class="tag">오류 2</b>
-      <code>ValueError: The least populated class...</code> — <code>stratify=y</code>를 쓸 때
-      한쪽 범주 데이터가 너무 적으면 발생할 수 있다. 오늘 데이터는 이상 사례가 103건으로
-      충분하므로 정상적으로 동작한다.
-    </div>
-    <div class="callout warn">
-      <b class="tag">주의</b>
-      <code>random_state</code> 값을 바꾸면 train/test로 나뉘는 행이 달라져 정확도와 혼동행렬
-      숫자도 조금씩 달라진다. 오늘은 결과를 서로 비교하기 위해 항상 <code>random_state=42</code>로
-      고정한다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>🚀 도전 실습</h2>
+    <h2>🟠 Orange3 실습(추가 예정)</h2>
     <div class="callout practice">
-      <b class="tag">도전 문제</b>
-      <code>max_depth</code> 값을 4에서 2로, 또는 8로 바꿔 다시 학습시켜보자. 정확도와 혼동행렬이
-      어떻게 달라지는가? 나무 깊이가 너무 깊어지면(예: <code>max_depth=None</code>) train
-      정확도는 매우 높아지지만 test 정확도는 오히려 나빠질 수 있다 — 이것이 바로 과적합의
-      실제 사례다.
+      <b class="tag">위젯</b> File → Tree(또는 다른 분류기) → Test and Score → Predictions
+      <p style="margin:.5rem 0 0;">동일한 학습/예측 데이터를 Orange3로 불러와 코드 없이 모델을 만들고, scikit-learn 결과와 정확도·예측을 비교한다.</p>
     </div>
   </section>
 
   <section class="block">
-    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
-    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+    <h2>📁 데이터</h2>
+    <p><code>data/weekly/week09/week09_pass_fail_train.csv, week09_new_lots_to_predict.csv</code></p>
+    <p style="color:var(--muted);font-size:.9rem;">학습용 750행 9열(검사결과 포함) + 예측 실습용 새 로트 9행(정답 라벨 없음). 반도체_공정_샘플.csv 계열 신규 생성 데이터, fab.csv 미사용.</p>
+  </section>
 
-    <div class="quiz-item">
-      <div class="q">Q1. (객관식) "모두 정상이라고만 예측"해도 정확도가 93%를 넘는 가장 근본적인
-      이유는?</div>
-      <ul class="options">
-        <li>A. 모델이 매우 똑똑하기 때문에</li>
-        <li>B. 정상 사례가 이상 사례보다 압도적으로 많은 데이터 불균형 때문에</li>
-        <li>C. 센서 개수가 너무 많기 때문에</li>
-        <li>D. train/test를 나누지 않았기 때문에</li>
-      </ul>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. 정상(1,462건)이 이상(103건)보다 훨씬 많아서, 무조건 정상만
-      찍어도 정확도가 높게 나온다. 이런 예측은 실제로는 이상을 하나도 찾아내지 못해 쓸모가 없다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q2. (참/거짓) 오늘 만든 모델에서 <code>주요센서_A</code>의 중요도가 높게
-      나왔다면, 이는 <code>주요센서_A</code>가 불량의 실제 원인이라는 것을 증명한다.</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 거짓. 중요도는 "모델이 예측할 때 많이 참고한 값"일 뿐이며,
-      실제 인과관계를 증명하지 않는다. 게다가 <code>주요센서_A</code>는 이름의 실제 의미조차
-      알 수 없는 센서다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q3. (서술) 오늘 실습에서 계산한 정확도와 혼동행렬을 바탕으로, 이 모델을
-      처음 보는 사람에게 한 문장으로 설명해보자.</div>
-      <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">예시 답안: "이 모델의 정확도는 약 92.86%로 '무조건 정상' 예측(약
-      93.37%)보다 오히려 낮지만, 실제 이상 26건 중 2건을 찾아냈다는 점에서 무조건 정상 예측보다
-      실질적으로 더 쓸모 있다. 다만 아직 대부분의 이상(24건)을 놓치고 있어 개선이 필요하다."</div>
-    </div>
+  <section class="block">
+    <h2>❓ 핵심 질문 → 데이터 연결</h2>
+    <div class="callout concept">내가 새로 입력한 측정값에 대해 두 방식(scikit-learn/Orange3)의 예측이 같은가? 다르다면 왜 다를 수 있는가?</div>
   </section>
 
   <section class="block">
     <h2>🔜 다음 주 예고</h2>
-    <div class="callout concept">
-      <b class="tag">10주차 예고</b>
-      다음 주는 마지막 주차로, 1~9주차에서 배운 조회·정제·시각화·비교·수율·이상탐지·예측을
-      모두 종합해 미니 프로젝트를 직접 수행한다. 오늘 배운 "정확도만으로 판단하지 않기",
-      "예측과 원인 증명은 다르다"는 원칙은 프로젝트 결과를 해석할 때도 그대로 이어진다.
-    </div>
+    <div class="callout concept">10주차에는 지금까지 배운 것을 모두 활용해 스스로 질문을 정하고 미니 프로젝트를 수행한다.</div>
   </section>
 
   <div class="nav-buttons">
@@ -554,9 +115,8 @@ print("혼동행렬:\n", confusion_matrix(y_test, pred))</code></pre>
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 9주차 · 교육용 자료(fab.csv는 실제 값, 별칭은 교육용 가상 명칭)</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10주 과정 · 9주차 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
 
 <script src="../../assets/js/common.js"></script>
-<script src="../../assets/js/quiz.js"></script>
 </body>
 </html>
