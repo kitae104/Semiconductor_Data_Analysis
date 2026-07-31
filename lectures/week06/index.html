@@ -6,6 +6,14 @@
 <title>6차시. 그래프로 공정 상태 이해하기</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
+<style>
+  .chart-img{max-width:100%;border-radius:8px;border:1px solid var(--line);display:block;margin:0 auto;}
+  .img-caption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:.4rem;}
+  .photo-slot{
+    border:2px dashed var(--line); border-radius:12px; background:#f8fafc; color:var(--muted);
+    padding:1.6rem 1rem; text-align:center; font-size:.88rem; margin:1rem 0;
+  }
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -32,20 +40,10 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">6차시 · 개요(skeleton)</span>
+    <span class="badge blue">6차시</span>
     <h1>그래프로 공정 상태 이해하기</h1>
     <p class="today-question">💬 오늘의 질문: <b>"그림으로 미리 본 패턴을, 코드로 그대로 재현할 수 있을까?"</b></p>
   </div>
-
-  <section class="block">
-    <div class="callout warn">
-      <b class="tag">작성 상태</b>
-      이 페이지는 v2 커리큘럼 구성이 확정된 직후 작성된 <b>개요(skeleton)</b>입니다. 제목·학습
-      목표·다룰 내용·데이터까지는 확정되었지만, 상세 설명·예제 코드·단계별 실습·퀴즈는 아직 채워지지
-      않았습니다. 구성이 최종 확정되면 이어서 상세 내용을 작성합니다. 배경은
-      <a href="../../docs/restructure-plan.md">docs/restructure-plan.md</a> 참고.
-    </div>
-  </section>
 
   <section class="block">
     <h2>🎯 학습 목표</h2>
@@ -58,39 +56,328 @@
   </section>
 
   <section class="block">
-    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
-    <div class="callout practice">
-      <b class="tag">위젯</b> Scatter Plot · Box Plot · Distributions
-      <p style="margin:.5rem 0 0;">Matplotlib 코드를 쓰기 전에 Orange3 위젯으로 온도-두께 산점도, 설비별 온도 박스플롯을 먼저 그려 패턴을 확인한다. 이어서 같은 그래프를 Matplotlib 코드로 그려 같은 결론이 나오는지 비교한다.</p>
+    <h2>⏮️ 지난 시간 복습</h2>
+    <div class="callout concept">
+      <b class="tag">5차시 연결</b>
+      5차시에서는 결측값·중복값·이상값을 정리해 데이터를 깨끗하게 만들었다. 표(숫자)만 봐서는
+      "어느 설비가 불안정한지" 감이 잘 오지 않는다. 오늘은 같은 데이터를 그래프로 그려서, 표로는
+      보이지 않던 패턴을 눈으로 확인하는 법을 배운다.
     </div>
   </section>
 
   <section class="block">
-    <h2>📚 ② 파이썬으로 확인하기 — 다룰 이론 주제(초안)</h2>
-    <ul class="goal-list">
-      <li>선 그래프 — 시간에 따른 변화</li>
-      <li>막대그래프 — 범주별 비교</li>
-      <li>히스토그램 — 값의 분포</li>
-      <li>산점도 — 두 변수의 관계</li>
-      <li>박스플롯 — 그룹별 분포와 이상값</li>
-    </ul>
+    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <div class="callout practice">
+      <b class="tag">위젯</b> Scatter Plot · Box Plot · Distributions
+      <p style="margin:.5rem 0 0;">Matplotlib 코드를 쓰기 전에 Orange3 위젯으로 온도-두께
+      산점도, 설비별 온도 박스플롯을 먼저 그려본다. 어떤 설비의 상자가 가장 넓게 퍼져 있는지,
+      온도와 두께가 관계가 있어 보이는지 눈으로 먼저 짐작해본다.</p>
+    </div>
+    <div class="photo-slot">
+      🖼️ <b>이미지 자리</b> — 실제 Orange3 화면 캡처(Scatter Plot으로 그린 온도-두께 산점도,
+      Box Plot으로 그린 설비별 온도 분포)를 강사가 추가하면 좋다.
+    </div>
+    <p style="color:var(--muted);font-size:.9rem;">이제 Orange3로 미리 살펴본 그래프를, 아래에서
+    Matplotlib 코드로 직접 그려 같은 결론이 나오는지 확인해본다.</p>
   </section>
 
   <section class="block">
-    <h2>🐍 다룰 실습 흐름(초안)</h2>
-    <ol style="padding-left:1.3rem;line-height:1.8;">
-      <li>시간-온도 선그래프 그리기</li>
-      <li>설비별 생산량 막대그래프 그리기</li>
-      <li>온도 히스토그램 그리기</li>
-      <li>온도-두께 산점도 그리기</li>
-      <li>설비별 온도 박스플롯 그리기</li>
-    </ol>
+    <h2>🐍 ② 파이썬으로 확인하기 — 다섯 가지 그래프</h2>
+    <p>먼저 <code>측정시간</code> 열을 진짜 날짜/시간 형식으로 바꿔야 시간 순서대로 그래프를 그릴
+    수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 데이터 준비</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("week06_process_visualization.csv")
+df["측정시간"] = pd.to_datetime(df["측정시간"])   # 문자열 → 날짜/시간 형식
+df = df.sort_values("측정시간")</code></pre>
+    </div>
+
+    <h3>1. 선 그래프 — 시간에 따른 변화</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>plt.plot(df["측정시간"], df["온도_섭씨"])
+plt.title("시간에 따른 온도 변화")
+plt.xlabel("측정시간")
+plt.ylabel("온도_섭씨")
+plt.show()</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/line_temperature_over_time.png" alt="시간에 따른 온도 변화 선 그래프. 시간이 지날수록 온도가 완만하게 상승하는 드리프트 패턴이 보인다.">
+    <p class="img-caption">시간이 지날수록 온도가 완만하게 올라가는 "드리프트" 패턴이 보인다.</p>
+
+    <h3>2. 막대그래프 — 범주별 비교</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>df["설비번호"].value_counts().sort_index().plot(kind="bar")
+plt.title("설비별 측정 건수")
+plt.xlabel("설비번호")
+plt.ylabel("건수")
+plt.show()</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/bar_records_per_equipment.png" alt="설비별 측정 건수 막대그래프">
+    <p class="img-caption">설비 4대의 측정 건수를 한눈에 비교할 수 있다.</p>
+
+    <h3>3. 히스토그램 — 값의 분포</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>plt.hist(df["온도_섭씨"], bins=18)
+plt.title("온도 분포 히스토그램")
+plt.xlabel("온도_섭씨")
+plt.ylabel("빈도")
+plt.show()</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/hist_temperature.png" alt="온도 분포 히스토그램. 300도 근처에 값이 몰려 있는 종 모양 분포.">
+    <p class="img-caption">대부분의 값이 300℃ 근처에 몰려 있는 것을 알 수 있다.</p>
+
+    <h3>4. 산점도 — 두 변수의 관계</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>plt.scatter(df["온도_섭씨"], df["두께_nm"])
+plt.title("온도-두께 산점도")
+plt.xlabel("온도_섭씨")
+plt.ylabel("두께_nm")
+plt.show()
+
+print(df["온도_섭씨"].corr(df["두께_nm"]))</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/scatter_temp_thickness.png" alt="온도-두께 산점도. 온도가 높을수록 두께도 대체로 두꺼워지는 우상향 경향.">
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">0.81</pre>
+    </div>
+    <p class="img-caption">점들이 오른쪽 위로 향하는 경향이 보인다 — 온도가 높을수록 두께도
+    두꺼워지는 관계(상관계수 약 0.81).</p>
+
+    <h3>5. 박스플롯 — 그룹별 분포와 이상값</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>df.boxplot(column="온도_섭씨", by="설비번호")
+plt.title("설비별 온도 박스플롯")
+plt.suptitle("")   # 자동으로 붙는 부제목 제거
+plt.xlabel("설비번호")
+plt.ylabel("온도_섭씨")
+plt.show()</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/box_temperature_by_equipment.png" alt="설비별 온도 박스플롯. EQ-02의 상자와 수염이 다른 설비보다 넓게 퍼져 있다.">
+    <p class="img-caption">EQ-02의 상자(사분위 범위)와 수염이 다른 설비보다 눈에 띄게 넓게
+    퍼져 있다 — 온도가 가장 불안정한 설비라는 뜻이다.</p>
+  </section>
+
+  <section class="block">
+    <h2>📚 그래프 선택 가이드</h2>
+    <table class="timetable">
+      <tr><th>알고 싶은 것</th><th>알맞은 그래프</th></tr>
+      <tr><td>시간에 따른 변화</td><td>선 그래프</td></tr>
+      <tr><td>범주(설비 등)별 개수·크기 비교</td><td>막대그래프</td></tr>
+      <tr><td>값이 어느 구간에 몰려 있는지</td><td>히스토그램</td></tr>
+      <tr><td>두 숫자 변수의 관계</td><td>산점도</td></tr>
+      <tr><td>그룹별 값의 퍼짐(분산) 비교</td><td>박스플롯</td></tr>
+    </table>
+  </section>
+
+  <section class="block">
+    <h2>📚 숫자로 다시 확인하기 — groupby로 검증</h2>
+    <p>그래프에서 본 "EQ-02가 가장 불안정하다"는 인상을 숫자로도 확인해보자(7차시 groupby 예고).</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.groupby("설비번호")["온도_섭씨"].std())</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">설비번호
+EQ-01    3.22
+EQ-02    5.37
+EQ-03    3.05
+EQ-04    3.02
+Name: 온도_섭씨, dtype: float64</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      EQ-02의 온도 표준편차(약 5.37)는 다른 설비(약 3.0~3.2)보다 뚜렷하게 크다. 그래프로 본
+      "퍼짐"이 숫자로도 확인된다 — 그림과 숫자가 서로를 검증해주는 관계다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🟣 실습: 그래프 다섯 종 따라 그리기</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>Orange3로 먼저 훑어보기</b> — Scatter Plot, Box Plot 위젯으로
+      패턴을 미리 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>데이터 준비</b> — <code>read_csv()</code>로 읽고
+      <code>pd.to_datetime()</code>으로 측정시간을 변환한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>선 그래프·막대그래프</b> — 시간-온도 선그래프, 설비별 건수
+      막대그래프를 그려본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>히스토그램·산점도</b> — 온도 히스토그램, 온도-두께 산점도를 그리고
+      상관계수를 계산한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>박스플롯</b> — 설비별 온도 박스플롯을 그리고, 어느 설비가 가장
+      넓게 퍼져 있는지 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div class="content"><b>숫자로 검증하기</b> — <code>groupby().std()</code>로 그래프에서 본
+      결과를 숫자로 다시 확인한다. (학생용 Notebook의 TODO로 이어짐)</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 핵심 용어 카드</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>선 그래프</h4><div class="en">Line Chart</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>시간처럼 순서가 있는 값의 변화를 잇는 그래프.</dd>
+          <dt>쉬운 비유</dt><dd>키 성장 기록표처럼 시간에 따라 변하는 값을 이어 그린 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>plt.plot(df["측정시간"], df["온도_섭씨"])</code></dd>
+          <dt>자주 하는 오해</dt><dd>범주(설비 이름 등) 비교에도 선 그래프를 쓰면 순서가 없는데도 이어져 오해를 부른다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>히스토그램</h4><div class="en">Histogram</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>값을 구간(bin)으로 나눠 각 구간에 몇 개가 있는지 보여주는 그래프.</dd>
+          <dt>쉬운 비유</dt><dd>키를 5cm 단위로 나눠 학생 수를 세는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>plt.hist(df["온도_섭씨"], bins=18)</code></dd>
+          <dt>자주 하는 오해</dt><dd>히스토그램의 x축을 범주로 착각하기 쉽다. 실제로는 연속된 값의 구간이다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>산점도</h4><div class="en">Scatter Plot</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>두 숫자 변수를 각각 x축, y축에 놓고 점으로 찍어 관계를 보는 그래프.</dd>
+          <dt>쉬운 비유</dt><dd>키와 몸무게를 한 사람당 점 하나로 찍어 관계를 보는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>plt.scatter(df["온도_섭씨"], df["두께_nm"])</code></dd>
+          <dt>자주 하는 오해</dt><dd>점들이 오른쪽 위로 향한다고 곧바로 "원인"이라 단정하기 쉽다(8차시에서 자세히 다룬다).</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>박스플롯</h4><div class="en">Box Plot</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>그룹별로 값이 어디에 몰려 있고 얼마나 퍼져 있는지 상자 모양으로 보여주는 그래프.</dd>
+          <dt>쉬운 비유</dt><dd>반별 시험 점수의 "대체로 이 구간"과 "튀는 학생"을 한눈에 보여주는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>df.boxplot(column="온도_섭씨", by="설비번호")</code></dd>
+          <dt>자주 하는 오해</dt><dd>상자 위아래 점(이상치 표시)을 그래프 오류로 착각하기 쉽다. 실제로는 통계적으로 튀는 값을 강조해주는 기능이다.</dd>
+        </dl>
+      </div>
+    </div>
   </section>
 
   <section class="block">
     <h2>📁 데이터</h2>
     <p><code>data/weekly/week06/week06_process_visualization.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">180행 10열 — 온도 드리프트, 설비별(EQ-02) 분산 확대 패턴 포함</p>
+    <p style="color:var(--muted);font-size:.9rem;">180행 10열 — 온도 드리프트, 설비별(EQ-02) 분산 확대 패턴 포함.
+    자세한 설명은 <a href="../../data/data_dictionary/week06_dictionary.md">데이터 설명서</a> 참고.</p>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout danger">
+      <b class="tag">오류 1</b>
+      <code>TypeError</code> — <code>측정시간</code>을 <code>pd.to_datetime()</code>으로 변환하지
+      않고 선 그래프를 그리면 시간 순서가 문자열 순서로 뒤엉킬 수 있다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — boxplot의 suptitle</b>
+      <code>df.boxplot(by=...)</code>는 자동으로 부제목을 붙인다. <code>plt.suptitle("")</code>로
+      지워주지 않으면 제목이 두 줄로 겹쳐 보인다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🚀 도전 실습</h2>
+    <div class="callout practice">
+      <b class="tag">도전 문제</b>
+      <code>df.boxplot(column="진동_mm_s", by="설비번호")</code>를 실행해 설비별 진동 값의
+      박스플롯을 직접 그려보자. 온도 박스플롯과 같은 설비(EQ-02)가 가장 넓게 퍼져 있는지
+      확인하고, 그 이유를 한 문장으로 적어보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. (객관식) 설비별 온도 값이 얼마나 넓게 퍼져 있는지 비교하기에 가장
+      알맞은 그래프는?</div>
+      <ul class="options">
+        <li>A. 선 그래프</li>
+        <li>B. 박스플롯</li>
+        <li>C. 산점도</li>
+        <li>D. 막대그래프</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: B. 박스플롯은 그룹별 분산(퍼짐)을 한눈에 비교하기에 가장 알맞다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (참/거짓) 이번 차시 데이터에서 EQ-02는 온도 표준편차가 다른 설비보다 크다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 참. EQ-02의 온도 표준편차는 약 5.37로, 다른 설비(약 3.0~3.2)보다 크다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. (빈칸) 문자열로 저장된 시간 값을 날짜/시간 형식으로 바꾸는 Pandas
+      함수는 <code>pd.______()</code>이다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: <code>to_datetime</code></div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q4. (객관식) 온도와 두께처럼 두 숫자 변수 사이의 관계를 확인하기에 가장
+      알맞은 그래프는?</div>
+      <ul class="options">
+        <li>A. 선 그래프</li>
+        <li>B. 히스토그램</li>
+        <li>C. 산점도</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: C. 산점도는 두 변수를 각각 x축, y축에 놓고 점으로 찍어 관계를
+      확인하는 데 적합하다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q5. (서술) 오늘 그린 다섯 그래프의 결과를 바탕으로, 이번 차시 공정
+      데이터의 특징을 한 문장으로 설명해보자.</div>
+      <button class="reveal-btn">예시 답안 보기</button>
+      <div class="answer-box">예시 답안: "시간이 지날수록 온도가 서서히 상승하는 드리프트가
+      있고, EQ-02는 온도 표준편차(약 5.37)가 다른 설비보다 높으며, 온도가 높을수록 두께도
+      두꺼워지는 상관관계(r≈0.81)가 관찰된다."</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📝 과제(다음 차시까지)</h2>
+    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 그래프와 결과를 확인할 수 있게 만들어 제출한다.</p>
+    <div class="callout practice">
+      <b class="tag">과제 1 — 압력 히스토그램</b>
+      <code>압력_Pa</code> 열의 히스토그램을 그리고, 값이 어느 구간에 가장 많이 몰려 있는지
+      문장으로 설명한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 2 — 공정별 막대그래프</b>
+      <code>공정명</code>별 측정 건수를 막대그래프로 그리고, 가장 많이 측정된 공정과 가장 적게
+      측정된 공정을 확인한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 3(도전) — 처리시간 박스플롯</b>
+      <code>처리시간_sec</code>을 설비별 박스플롯으로 그려보고, 온도·진동과 같은 설비(EQ-02)가
+      가장 넓게 퍼져 있는지 비교해본다.
+    </div>
   </section>
 
   <section class="block">
@@ -112,8 +399,9 @@
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 6차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 6차시 · 교육용 자료(가상 데이터 사용)</footer>
 
 <script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
 </body>
 </html>

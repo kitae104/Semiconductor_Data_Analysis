@@ -17,21 +17,22 @@
 <main class="page">
   <div class="hero">
     <span class="badge purple">6차시 실습지</span>
-    <h1>공정별·설비별 데이터 비교 — 실습지</h1>
+    <h1>그래프로 공정 상태 이해하기 — 실습지</h1>
   </div>
 
   <section class="block">
-    <h2>1. 용어 연결 문제</h2>
-    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <h2>1. 그래프 종류 연결 문제</h2>
+    <p>왼쪽 상황과 오른쪽 그래프 종류를 알맞게 연결해보자.</p>
     <table class="timetable">
-      <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 그룹화(groupby)</td><td rowspan="4">A. 값들이 평균에서 얼마나 떨어져 있는지를 나타내는 수<br>B. 기준 열의 값에 따라 데이터를 여러 묶음으로 나누는 것<br>C. 크기순으로 줄 세웠을 때 정가운데 값<br>D. 여러 값을 하나의 요약값으로 계산하는 것</td></tr>
-      <tr><td>② 집계(aggregation)</td></tr>
-      <tr><td>③ 중앙값(median)</td></tr>
-      <tr><td>④ 표준편차(std)</td></tr>
+      <tr><th>상황</th><th>그래프 후보</th></tr>
+      <tr><td>① 시간에 따른 온도 변화를 보고 싶다</td><td rowspan="5">A. 히스토그램<br>B. 박스플롯<br>C. 산점도<br>D. 막대그래프<br>E. 선 그래프</td></tr>
+      <tr><td>② 설비별 측정 건수를 비교하고 싶다</td></tr>
+      <tr><td>③ 온도 값이 어느 구간에 몰려 있는지 보고 싶다</td></tr>
+      <tr><td>④ 온도와 두께의 관계를 보고 싶다</td></tr>
+      <tr><td>⑤ 설비별 온도의 퍼짐(변동)을 비교하고 싶다</td></tr>
     </table>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① B  ② D  ③ C  ④ A</div>
+    <div class="answer-box">① E  ② D  ③ A  ④ C  ⑤ B</div>
   </section>
 
   <section class="block">
@@ -39,47 +40,52 @@
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
-df = pd.read_csv("week06_equipment_comparison.csv")
+import matplotlib.pyplot as plt
 
-# 설비별 평균 온도
-print(df.____________("설비번호")["온도_섭씨"].mean())
+df = pd.read_csv("week06_process_visualization.csv")
+df["측정시간"] = pd.____________(df["측정시간"])   # 문자열을 날짜 형식으로 변환
 
-# 설비별 온도 표준편차(들쭉날쭉한 정도)
-print(df.groupby("설비번호")["온도_섭씨"].____________())
+plt.____________(df["온도_섭씨"], bins=18)   # 히스토그램 그리기
+plt.title("온도 분포 히스토그램")
+plt.show()
 
-# 공정별 평균 처리시간
-print(df.groupby("____________")["처리시간_sec"].mean())</code></pre>
+df.____________(column="온도_섭씨", by="설비번호")   # 설비별 박스플롯 그리기
+plt.show()</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>groupby</code>, <code>std</code>, <code>공정명</code></div>
+    <div class="answer-box">순서대로 <code>to_datetime</code>, <code>hist</code>, <code>boxplot</code></div>
   </section>
 
   <section class="block">
-    <h2>3. 그래프 선택 문제</h2>
-    <p>여러 설비의 온도 값이 "얼마나 넓게 퍼져 있는지(변동성)"를 한눈에 비교하려면
-    어떤 그래프가 가장 적합할까?</p>
-    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
-      <li>① 선 그래프</li><li>② 박스플롯</li><li>③ 원그래프</li>
-    </ul>
+    <h2>3. 그래프 해석</h2>
+    <p>아래는 6차시 강의에서 실제 데이터로 그린 박스플롯이다 (<code>index.html</code>의
+    "박스플롯 — 그룹별 분포와 이상값" 절과 동일한 이미지).</p>
+    <div class="tablewrap" style="border:none;">
+      <img src="../../assets/images/week06/box_temperature_by_equipment.png"
+           alt="설비별 온도 박스플롯" style="max-width:100%;border-radius:8px;border:1px solid var(--line);">
+    </div>
+    <p>이 그래프를 보고 다음 질문에 답해보자.</p>
+    <ol>
+      <li>네 설비 중 상자(box)와 수염이 가장 넓게 퍼져 있는 설비는 어디인가?</li>
+      <li>그 설비의 온도가 불안정하다면, 합격률에는 어떤 영향을 줄 것으로 예상하는가?</li>
+    </ol>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">정답: ② 박스플롯. 박스플롯은 값의 중앙값과 퍼짐 정도(사분위, 이상값)를
-    그룹별로 한눈에 비교할 수 있다(5차시에서 배운 내용과 연결된다).</div>
+    <div class="answer-box">
+      1) EQ-02. 다른 설비의 온도 표준편차가 약 3.0~3.2℃인 것에 비해 EQ-02는 약 5.37℃로 가장 크게 퍼져 있다.<br>
+      2) 온도가 불안정할수록 정상범위(295~305℃)를 벗어날 가능성이 높아 불합격이 늘어날 것으로 예상된다.
+      실제로 EQ-02의 불합격 비율은 약 21.6%로, 다른 설비(약 4.3~16.0%)보다 훨씬 높다.
+    </div>
   </section>
 
   <section class="block">
     <h2>4. 결과 해석 문제</h2>
-    <p>실습에서 설비별 온도 <code>mean()</code>과 <code>std()</code> 결과가 아래와 같았다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">설비번호   평균     표준편차
-EQ-01   299.78    2.39
-EQ-02   299.08    7.16
-EQ-03   299.75    2.67
-EQ-04   301.14    4.12</pre>
-    <p>평균만 보고 "EQ-02가 가장 정상적인 설비"라고 말할 수 있을까? 표준편차까지 고려하면
-    결론이 어떻게 달라지는지 적어보자.</p>
+    <p>실습에서 <code>df["온도_섭씨"].corr(df["두께_nm"])</code>를 계산했더니 결과가
+    <code>0.81</code>이었다.</p>
+    <p>이 숫자를 보고 온도와 두께의 관계를 설명해보자.</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">평균만 보면 EQ-02(299.08℃)가 가장 낮아 정상적으로 보이지만, 표준편차가
-    7.16으로 다른 설비(2~4대)보다 훨씬 크다. 즉 EQ-02는 값이 넓게 흔들리는 가장 불안정한
-    설비이므로 "정상적"이라고 단정할 수 없다.</div>
+    <div class="answer-box">상관계수가 1에 가까울수록 강한 양의 상관관계다. 0.81은 비교적 강한 양의
+    상관관계로, 온도가 높을수록 두께도 두꺼워지는 경향이 있다는 뜻이다. 다만 상관관계가
+    있다고 해서 온도가 두께의 "원인"이라고 단정할 수는 없다.</div>
   </section>
 
   <section class="block">
@@ -87,8 +93,8 @@ EQ-04   301.14    4.12</pre>
     <p>아래 빈칸을 채워 이번 차시 데이터를 한 문장으로 요약해보자.</p>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      "불량률이 가장 높은 설비는 ____번(불량률 약 ____%)이고, 온도가 가장 들쭉날쭉한(표준편차가
-      가장 큰) 설비는 ____번(표준편차 약 ____)이다. 두 설비는 서로 ____다(같다/다르다)."
+      "설비 ____의 온도 표준편차는 약 ____℃로 가장 크며, 불합격 비율도 약 ____%로 다른
+      설비보다 높다. 온도와 두께 사이에는 상관계수 약 ____의 관계가 있다."
     </div>
   </section>
 
@@ -96,9 +102,9 @@ EQ-04   301.14    4.12</pre>
     <h2>6. 도전 문제</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      <code>df.groupby("설비번호")["온도_섭씨"].median()</code>을 실행해서 평균과 중앙값을
-      비교해보자. 그리고 <code>df.groupby(["설비번호","작업조"])["합격여부"].count()</code>처럼
-      기준을 2개 넣어 그룹화하면 결과가 어떻게 달라지는지 확인해보자.
+      <code>df.boxplot(column="진동_mm_s", by="설비번호")</code>를 실행해 설비별 진동 값의
+      박스플롯을 직접 그려보자. 온도 박스플롯과 같은 설비가 가장 넓게 퍼져 있는지 확인하고,
+      그 이유를 한 문장으로 적어보자.
     </div>
   </section>
 
