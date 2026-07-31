@@ -6,6 +6,12 @@
 <title>10차시. 모델 평가와 새 데이터 예측</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
+<style>
+  .photo-slot{
+    border:2px dashed var(--line); border-radius:12px; background:#f8fafc; color:var(--muted);
+    padding:1.6rem 1rem; text-align:center; font-size:.88rem; margin:1rem 0;
+  }
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -32,25 +38,16 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">10차시 · 개요(skeleton)</span>
+    <span class="badge blue">10차시 · 마지막 차시</span>
     <h1>모델 평가와 새 데이터 예측</h1>
     <p class="today-question">💬 오늘의 질문: <b>"내가 만든 모델은 처음 보는 새로운 데이터에서도 믿을 만할까?"</b></p>
   </div>
 
   <section class="block">
-    <div class="callout warn">
-      <b class="tag">작성 상태</b>
-      이 페이지는 v2 커리큘럼 구성이 확정된 직후 작성된 <b>개요(skeleton)</b>입니다. 제목·학습
-      목표·다룰 내용·데이터까지는 확정되었지만, 상세 설명·예제 코드·단계별 실습·퀴즈는 아직 채워지지
-      않았습니다. 구성이 최종 확정되면 이어서 상세 내용을 작성합니다. 배경은
-      <a href="../../docs/restructure-plan.md">docs/restructure-plan.md</a> 참고.
-    </div>
-  </section>
-
-  <section class="block">
     <h2>🎯 학습 목표</h2>
     <ul class="goal-list">
       <li>학습된 모델로 새 로트의 합격/불합격을 predict()로 예측할 수 있다.</li>
+      <li>predict_proba()로 예측의 확신 정도(확률)까지 확인할 수 있다.</li>
       <li>Orange3 Predictions 위젯으로 같은 새 데이터를 예측하고 결과를 비교할 수 있다.</li>
       <li>1~9차시에서 배운 내용을 한 문장씩 정리할 수 있다.</li>
     </ul>
@@ -58,38 +55,294 @@
   </section>
 
   <section class="block">
-    <h2>📚 ② 파이썬으로 확인하기 — 다룰 이론 주제(초안)</h2>
-    <ul class="goal-list">
-      <li>새 데이터에 대한 예측 — predict()</li>
-      <li>학습 데이터와 새 데이터의 차이</li>
-      <li>모델 결과를 문장으로 정리하는 법</li>
-    </ul>
+    <h2>⏮️ 지난 시간 복습</h2>
+    <div class="callout concept">
+      <b class="tag">9차시 연결</b>
+      9차시에서는 <code>week09_pass_fail_train.csv</code>로 모델을 학습시켜 정확도(78.2%)와
+      혼동행렬을 확인했고, 온도_섭씨가 가장 중요한 특징이라는 것을 알았다. 오늘은 이 모델을
+      한 번도 본 적 없는 <b>새 로트 9건</b>에 적용해보고, 10차시에 걸쳐 배운 내용을 마무리한다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>🐍 다룰 실습 흐름(초안)</h2>
-    <p>9차시에서 학습한 모델을 그대로 이어서 사용한다.</p>
-<ol style="padding-left:1.3rem;line-height:1.8;">
-      <li>week09_new_lots_to_predict.csv의 새 로트 불러오기</li>
-      <li>predict()로 새 로트의 합격/불합격 예측하기</li>
-      <li>예측 결과를 표로 정리하기</li>
-      <li>1~9차시 핵심 내용을 한 문장씩 되짚기</li>
-      <li>(시간이 남으면) 다른 Feature 조합으로 재실험해보기</li>
-    </ol>
+    <h2>🐍 ① 파이썬으로 새 로트 예측하기</h2>
+    <p>9차시와 똑같은 방식으로 모델을 다시 학습시킨 뒤(같은 <code>random_state</code>를 쓰면 항상
+    같은 모델이 만들어진다), 정답이 없는 새 로트에 적용해본다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 9차시 모델 다시 만들기</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+df = pd.read_csv("week09_pass_fail_train.csv").dropna()
+feature_cols = ["온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]
+X = df[feature_cols]
+y = df["검사결과"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+model = DecisionTreeClassifier(max_depth=4, random_state=42)
+model.fit(X_train, y_train)</code></pre>
+    </div>
+
+    <h3>새 로트 불러와서 예측하기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>new_lots = pd.read_csv("week09_new_lots_to_predict.csv")
+X_new = new_lots[feature_cols]
+
+new_lots["예측_검사결과"] = model.predict(X_new)
+print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결과"]])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">  공정명   설비번호  온도_섭씨  예측_검사결과
+0  식각  EQ-02  294.5          0
+1  산화  EQ-02  301.5          0
+2  식각  EQ-04  289.8          0
+3  포토  EQ-04  295.6          0
+4  식각  EQ-04  299.1          0
+5  포토  EQ-03  302.0          0
+6  산화  EQ-01  305.2          0
+7  산화  EQ-03  299.1          0
+8  세정  EQ-01  300.6          0</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      9개 로트 모두 "합격(0)"으로 예측되었다. 정답을 모르는 진짜 새 데이터이므로 지금 당장은
+      맞았는지 확인할 수 없다 — 실제 공정이라면 시간이 지나 검사 결과가 나와야 비교할 수 있다.
+      이것이 현업에서 예측 모델을 쓸 때의 현실이다.
+    </div>
+
+    <h3>확률까지 함께 보기 — predict_proba()</h3>
+    <p>모두 "합격"으로 예측됐다고 해서 모델이 모든 로트를 똑같이 확신하는 것은 아니다.
+    <code>predict_proba()</code>로 "불합격일 확률"까지 확인해보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>proba = model.predict_proba(X_new)   # [합격일 확률, 불합격일 확률]
+new_lots["불합격_확률"] = proba[:, 1].round(3)
+
+print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결과", "불합격_확률"]])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">  공정명   설비번호  온도_섭씨  예측_검사결과  불합격_확률
+0  식각  EQ-02  294.5          0      0.364
+1  산화  EQ-02  301.5          0      0.067
+2  식각  EQ-04  289.8          0      0.158
+3  포토  EQ-04  295.6          0      0.067
+4  식각  EQ-04  299.1          0      0.067
+5  포토  EQ-03  302.0          0      0.067
+6  산화  EQ-01  305.2          0      0.364
+7  산화  EQ-03  299.1          0      0.067
+8  세정  EQ-01  300.6          0      0.067</pre>
+    </div>
+    <div class="callout concept">
+      <b class="tag">결과 해석</b>
+      0번(온도 294.5, 정상범위 하단 근처)과 6번(온도 305.2, 정상범위 상단 근처) 로트는 불합격
+      확률이 36.4%로 다른 로트(6.7~15.8%)보다 눈에 띄게 높다. 두 로트 모두 온도가 정상범위
+      (295~305℃)의 경계에 가깝다는 공통점이 있다 — "예측은 같아도 확신의 정도는 다르다"는
+      것을 보여주는 좋은 예다. 실무라면 이런 "애매한" 로트를 우선 재검사 대상으로 삼을 수 있다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <h2>🟠 ② Orange3로 재확인하기</h2>
     <div class="callout practice">
       <b class="tag">위젯</b> Predictions
-      <p style="margin:.5rem 0 0;">9차시에서 Orange3로 만든 모델에 같은 새 로트 데이터를 넣어 Predictions 위젯으로 예측하고, scikit-learn의 predict() 결과와 같은지 비교한다.</p>
+      <p style="margin:.5rem 0 0;">9차시에서 Orange3로 만든 Tree 모델에 같은 새 로트
+      (<code>week09_new_lots_to_predict.csv</code>)를 연결해 <b>Predictions</b> 위젯으로
+      예측해본다. scikit-learn 결과(9개 모두 합격)와 같은지, 확률(Probability) 값도 비슷한
+      경향을 보이는지 비교한다.</p>
+    </div>
+    <div class="photo-slot">
+      🖼️ <b>이미지 자리</b> — 실제 Orange3 화면 캡처(Predictions 위젯에 새 로트를 넣어 예측한
+      결과 표, 확률 컬럼 포함)를 강사가 추가하면 좋다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">두 방식이 다르게 나온다면?</b>
+      Orange3의 기본 Tree 설정과 오늘 코드의 <code>max_depth=4</code>가 다르면 결과가 달라질 수
+      있다. 두 도구가 "같은 문제를 다른 방식으로 푸는 도구"라는 점을 다시 한번 확인하는
+      기회로 삼는다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 10차시 되짚기 — 우리가 배운 것들</h2>
+    <table class="timetable">
+      <tr><th>차시</th><th>핵심 내용</th></tr>
+      <tr><td>1</td><td>반도체·웨이퍼·공정 개념, 변수와 print() 출력</td></tr>
+      <tr><td>2</td><td>리스트와 딕셔너리로 여러 값·이름표 붙은 값 다루기</td></tr>
+      <tr><td>3</td><td>조건문·반복문·함수로 직접 판정 로직 만들기</td></tr>
+      <tr><td>4</td><td>Pandas로 표 데이터 읽고 조건 검색하기</td></tr>
+      <tr><td>5</td><td>결측값·중복값·이상값 정제(EDA) + Orange3</td></tr>
+      <tr><td>6</td><td>다섯 가지 그래프로 데이터 패턴 확인 + Orange3</td></tr>
+      <tr><td>7</td><td>groupby로 설비 비교, 로트별 수율과 불량 파레토 + Orange3</td></tr>
+      <tr><td>8</td><td>상관관계로 원인 후보 찾기("원인 후보" ≠ "원인") + Orange3</td></tr>
+      <tr><td>9</td><td>머신러닝 분류 모델 학습, 정확도의 함정과 혼동행렬 + Orange3</td></tr>
+      <tr><td>10</td><td>새 데이터 예측, 확률로 확신 정도 확인, 전체 과정 회고 + Orange3</td></tr>
+    </table>
+    <p>1차시의 <code>print(pass_count)</code> 한 줄에서 시작해, 오늘은 데이터를 스스로 정제하고
+    시각화하고 원인 후보를 찾아 예측 모델까지 직접 만들었다. 앞으로 새로운 공정 데이터를 받아도
+    오늘까지 배운 순서(읽기 → 정제 → 시각화 → 비교 → 원인 탐색 → 예측)를 그대로 적용해볼 수 있다.</p>
+  </section>
+
+  <section class="block">
+    <h2>🟣 실습: 새 로트 예측과 전체 회고 따라 하기</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>모델 다시 만들기</b> — 9차시와 동일한 코드로 모델을 학습시킨다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>새 로트 예측</b> — <code>week09_new_lots_to_predict.csv</code>를
+      불러와 <code>predict()</code>로 예측한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>확률 확인</b> — <code>predict_proba()</code>로 불합격 확률을
+      함께 확인하고, 어떤 로트가 더 애매한지 찾아본다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>Orange3로 재확인</b> — Predictions 위젯으로 같은 예측을 코드 없이
+      다시 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>전체 회고 작성</b> — 1~9차시 표를 보며 가장 인상 깊었던 차시와
+      이유를 한 문장씩 적는다. (학생용 Notebook의 TODO로 이어짐)</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 핵심 용어 카드</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>predict()</h4><div class="en">Predict</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>학습된 모델에 새 데이터를 넣어 예측값을 얻는 메서드.</dd>
+          <dt>쉬운 비유</dt><dd>공부를 마친 학생에게 새 문제를 풀어보라고 하는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>model.predict(X_new)</code></dd>
+          <dt>자주 하는 오해</dt><dd>새 데이터의 열 순서·이름이 학습 때와 달라도 된다고 착각하기 쉽다. 반드시 같은 Feature 열이어야 한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>predict_proba()</h4><div class="en">Predict Probability</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>예측 결과 대신(또는 함께) 각 클래스일 확률을 돌려주는 메서드.</dd>
+          <dt>쉬운 비유</dt><dd>"합격"이라고 답은 같아도 "70% 확신" vs "99% 확신"은 다른 것과 같다.</dd>
+          <dt>데이터에서의 예</dt><dd><code>model.predict_proba(X_new)</code></dd>
+          <dt>자주 하는 오해</dt><dd>predict()의 결과만 보고 모든 예측이 똑같이 확실하다고 생각하기 쉽다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>일반화</h4><div class="en">Generalization</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>학습에 쓰지 않은 새로운 데이터에서도 모델이 잘 동작하는 능력.</dd>
+          <dt>쉬운 비유</dt><dd>문제집만 외운 게 아니라 응용문제도 풀 수 있는 학생.</dd>
+          <dt>데이터에서의 예</dt><dd>새 로트 9건에 대한 예측이 이에 해당한다.</dd>
+          <dt>자주 하는 오해</dt><dd>train 데이터에서 정확도가 높으면 새 데이터에서도 항상 잘 맞을 거라고 착각하기 쉽다.</dd>
+        </dl>
+      </div>
     </div>
   </section>
 
   <section class="block">
     <h2>📁 데이터</h2>
-    <p><code>data/weekly/week10/week09_new_lots_to_predict.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">예측 실습용 새 로트 9행(정답 라벨 없음). 학습은 9차시의 week09_pass_fail_train.csv를 그대로 재사용한다.</p>
+    <p><code>data/weekly/week09/week09_new_lots_to_predict.csv</code></p>
+    <p style="color:var(--muted);font-size:.9rem;">예측 실습용 새 로트 9행(정답 라벨 없음). 학습은
+    9차시의 <code>week09_pass_fail_train.csv</code>를 그대로 재사용한다.</p>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout danger">
+      <b class="tag">오류 1</b>
+      <code>ValueError: columns are missing</code> — 새 데이터의 Feature 열 이름·개수가 학습
+      때와 다른 경우다. <code>feature_cols</code> 리스트를 그대로 재사용하면 안전하다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — 정답 없는 예측의 한계</b>
+      새 로트는 정답(검사결과)이 없으므로, 오늘 당장 "모델이 맞았는지"는 확인할 수 없다.
+      예측은 참고 자료일 뿐, 실제 검사를 대체하지 않는다는 점을 항상 기억하자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🚀 도전 실습</h2>
+    <div class="callout practice">
+      <b class="tag">도전 문제</b>
+      9차시의 모델을 <code>max_depth=8</code>로 다시 학습시킨 뒤, 같은 새 로트 9건에 대해
+      다시 예측해보자. 예측 결과나 확률이 달라지는가? 더 복잡한 모델이 항상 더 좋은 것은
+      아니라는 점을 9차시에서 배운 내용과 연결해 설명해보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. (객관식) <code>predict_proba()</code>가 돌려주는 값에 대한 설명으로
+      가장 알맞은 것은?</div>
+      <ul class="options">
+        <li>A. 예측이 맞았는지 틀렸는지를 알려준다</li>
+        <li>B. 각 클래스(합격/불합격)일 확률을 알려준다</li>
+        <li>C. 데이터에 결측값이 있는지 알려준다</li>
+        <li>D. 모델의 정확도를 다시 계산해준다</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: B. predict_proba()는 예측 결과 대신(또는 함께) 각 클래스일
+      확률을 돌려준다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (참/거짓) 새 로트 9건은 정답(검사결과)이 있어서 예측이 맞았는지 바로
+      확인할 수 있다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 거짓. 새 로트는 정답 라벨이 없는 진짜 새 데이터이므로,
+      지금 당장은 예측이 맞았는지 확인할 수 없다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. (서술) 9개 로트 모두 "합격"으로 예측되었지만, 그중 두 로트의 불합격
+      확률이 다른 로트보다 높게 나왔다. 이 정보가 왜 유용한지 한 문장으로 설명해보자.</div>
+      <button class="reveal-btn">예시 답안 보기</button>
+      <div class="answer-box">예시 답안: "예측 결과(합격/불합격)만 보면 다 똑같아 보이지만,
+      확률을 함께 보면 상대적으로 더 위험한 로트를 골라 우선적으로 재검사하는 등 실무적으로
+      활용할 수 있다."</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q4. (서술) 10차시 동안 배운 내용 중 가장 기억에 남는 개념 하나를 골라,
+      그 이유를 두세 문장으로 적어보자.</div>
+      <button class="reveal-btn">작성 팁 보기</button>
+      <div class="answer-box">팁: "무엇을 배웠는지"보다 "어떤 순간에 이해가 확 되었는지"를
+      구체적으로 적으면 더 좋은 회고가 된다(예: 3차시에서 for+if를 직접 짜봤을 때 반복문이
+      왜 필요한지 체감했다 등).</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📝 과제 — 나만의 재실험</h2>
+    <p>과정을 마무리하며, 지금까지 배운 도구로 스스로 질문을 정하고 답해보는 마지막 과제다.</p>
+    <div class="callout practice">
+      <b class="tag">과제 1 — 조건 바꿔 재실험하기</b>
+      9차시 모델의 Feature 조합, <code>max_depth</code>, <code>test_size</code> 중 하나 이상을
+      바꿔 다시 학습시키고, 정확도·혼동행렬이 어떻게 달라지는지 비교한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 2 — 나만의 새 로트 만들어 예측하기</b>
+      본인이 직접 값을 정한 가상의 로트 1~2개를 딕셔너리로 만들고(2차시 복습), DataFrame으로
+      바꿔 <code>predict()</code>와 <code>predict_proba()</code>로 예측해본다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 3(도전) — 10차시 회고 정리하기</b>
+      "1~10차시 되짚기" 표를 참고해, 이 과정을 처음 듣는 사람에게 5문장 이내로 소개하는 글을
+      작성한다. 가장 유용했던 개념과 다음에 더 공부하고 싶은 주제를 한 가지씩 포함한다.
+    </div>
   </section>
 
   <section class="block">
@@ -106,6 +359,18 @@
     </ul>
   </section>
 
+  <section class="block">
+    <h2>🎓 과정을 마치며</h2>
+    <div class="callout success">
+      <b class="tag">수고하셨습니다!</b>
+      10차시 동안 프로그래밍 경험이 없는 상태에서 시작해 변수·리스트·조건문·반복문·함수 같은
+      파이썬 기초부터, Pandas로 데이터를 다루고, 그래프로 패턴을 확인하고, 원인 후보를 찾고,
+      마지막에는 머신러닝 모델까지 직접 만들어 새 데이터를 예측해봤다. 여기서 배운 순서
+      (읽기 → 정제 → 시각화 → 비교 → 원인 탐색 → 예측)는 반도체 공정뿐 아니라 다른 어떤
+      데이터를 만나도 그대로 적용할 수 있는 뼈대다.
+    </div>
+  </section>
+
   <div class="nav-buttons">
     <a href="../week09/index.html">← 이전 차시: 9차시</a>
     <a class="home" href="../../index.html">🏠 전체 목차</a>
@@ -115,8 +380,9 @@
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 10차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 10차시 · 교육용 자료(가상 데이터 사용)</footer>
 
 <script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
 </body>
 </html>
