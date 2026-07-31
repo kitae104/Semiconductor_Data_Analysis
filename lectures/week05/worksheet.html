@@ -17,22 +17,21 @@
 <main class="page">
   <div class="hero">
     <span class="badge purple">5차시 실습지</span>
-    <h1>그래프로 공정 상태 이해하기 — 실습지</h1>
+    <h1>데이터 훑어보기와 정리(EDA) — 실습지</h1>
   </div>
 
   <section class="block">
-    <h2>1. 그래프 종류 연결 문제</h2>
-    <p>왼쪽 상황과 오른쪽 그래프 종류를 알맞게 연결해보자.</p>
+    <h2>1. 용어 연결 문제</h2>
+    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
     <table class="timetable">
-      <tr><th>상황</th><th>그래프 후보</th></tr>
-      <tr><td>① 시간에 따른 온도 변화를 보고 싶다</td><td rowspan="5">A. 히스토그램<br>B. 박스플롯<br>C. 산점도<br>D. 막대그래프<br>E. 선 그래프</td></tr>
-      <tr><td>② 설비별 측정 건수를 비교하고 싶다</td></tr>
-      <tr><td>③ 온도 값이 어느 구간에 몰려 있는지 보고 싶다</td></tr>
-      <tr><td>④ 온도와 두께의 관계를 보고 싶다</td></tr>
-      <tr><td>⑤ 설비별 온도의 퍼짐(변동)을 비교하고 싶다</td></tr>
+      <tr><th>용어</th><th>설명 후보</th></tr>
+      <tr><td>① 결측값</td><td rowspan="4">A. 정상 범위를 크게 벗어난 값<br>B. 칸에 값이 전혀 입력되지 않은 것<br>C. 완전히 똑같은 행이 두 번 저장된 것<br>D. 사람이 입력하다가 생긴 실수(오타·형식 오류 등)</td></tr>
+      <tr><td>② 중복값</td></tr>
+      <tr><td>③ 입력 오류</td></tr>
+      <tr><td>④ 이상값</td></tr>
     </table>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① E  ② D  ③ A  ④ C  ⑤ B</div>
+    <div class="answer-box">① B  ② C  ③ D  ④ A</div>
   </section>
 
   <section class="block">
@@ -40,52 +39,43 @@
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
-import matplotlib.pyplot as plt
 
-df = pd.read_csv("week05_process_visualization.csv")
-df["측정시간"] = pd.____________(df["측정시간"])   # 문자열을 날짜 형식으로 변환
+df = pd.read_csv("week05_dirty_process_data.csv")
 
-plt.____________(df["온도_섭씨"], bins=18)   # 히스토그램 그리기
-plt.title("온도 분포 히스토그램")
-plt.show()
+print(df.____________().sum())        # 열별 결측값 개수 세기
 
-df.____________(column="온도_섭씨", by="설비번호")   # 설비별 박스플롯 그리기
-plt.show()</code></pre>
+df_clean = df.____________()          # 결측값이 있는 행 제거
+
+print(df.____________().sum())        # 중복 행 개수 세기
+
+df_clean2 = df.____________()         # 중복 행 제거</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>to_datetime</code>, <code>hist</code>, <code>boxplot</code></div>
+    <div class="answer-box">순서대로 <code>isna</code>, <code>dropna</code>, <code>duplicated</code>, <code>drop_duplicates</code></div>
   </section>
 
   <section class="block">
-    <h2>3. 그래프 해석</h2>
-    <p>아래는 5차시 강의에서 실제 데이터로 그린 박스플롯이다 (<code>index.html</code>의
-    "실행 결과 예시 — 박스플롯" 절과 동일한 이미지).</p>
-    <div class="tablewrap" style="border:none;">
-      <img src="../../assets/images/week05/box_temperature_by_equipment.png"
-           alt="설비별 온도 박스플롯" style="max-width:100%;border-radius:8px;border:1px solid var(--line);">
-    </div>
-    <p>이 그래프를 보고 다음 질문에 답해보자.</p>
-    <ol>
-      <li>네 설비 중 상자(box)와 수염이 가장 넓게 퍼져 있는 설비는 어디인가?</li>
-      <li>그 설비의 온도가 불안정하다면, 합격률에는 어떤 영향을 줄 것으로 예상하는가?</li>
-    </ol>
+    <h2>3. 제거 vs 대체 선택 문제</h2>
+    <p>아래 각 상황에서 결측값을 "제거"하는 것이 나을지, "대체"하는 것이 나을지 골라보자.</p>
+    <table class="timetable">
+      <tr><th>상황</th><th>제거 / 대체</th></tr>
+      <tr><td>① 전체 113행 중 결측이 있는 행이 9행뿐이고, 나머지 데이터로도 충분히 분석 가능하다.</td><td>____________</td></tr>
+      <tr><td>② 범주형 값인 <code>합격여부</code>가 결측이라 평균·중앙값으로 채울 수 없다.</td><td>____________</td></tr>
+      <tr><td>③ 온도처럼 극단값이 섞여 있을 수 있는 숫자 열의 결측을 채우고 싶다.</td><td>____________</td></tr>
+    </table>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      1) EQ-02. 다른 설비의 온도 표준편차가 약 2.9~3.2℃인 것에 비해 EQ-02는 약 4.29℃로 가장 크게 퍼져 있다.<br>
-      2) 온도가 불안정할수록 정상범위(295~305℃)를 벗어날 가능성이 높아 불합격이 늘어날 것으로 예상된다.
-      실제로 EQ-02의 불합격 비율은 약 24.4%로, 다른 설비(약 3.6~6.7%)보다 훨씬 높다.
-    </div>
+    <div class="answer-box">① 제거해도 큰 손실이 없으므로 제거 가능 ② 제거(범주형은 평균/중앙값 대체가 불가능) ③ 대체(단, 평균이 아닌 중앙값 사용 권장 — 극단값에 덜 흔들리기 때문)</div>
   </section>
 
   <section class="block">
     <h2>4. 결과 해석 문제</h2>
-    <p>실습에서 <code>df["온도_섭씨"].corr(df["두께_nm"])</code>를 계산했더니 결과가
-    <code>0.82</code>였다.</p>
-    <p>이 숫자를 보고 온도와 두께의 관계를 설명해보자.</p>
+    <p>실습에서 아래와 같은 결과를 얻었다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">정제 전 평균 온도: 약 304.9℃ (113행, 이상값 2건 포함)
+정제 후 평균 온도: 약 300.6℃ (102행, 결측·중복·이상값 정리 완료)</pre>
+    <p>두 평균의 차이는 몇 ℃인지 계산하고, 왜 이런 차이가 생겼는지 한 문장으로 설명해보자.</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">상관계수가 1에 가까울수록 강한 양의 상관관계다. 0.82는 비교적 강한 양의
-    상관관계로, 온도가 높을수록 두께도 두꺼워지는 경향이 있다는 뜻이다. 다만 상관관계가
-    있다고 해서 온도가 두께의 "원인"이라고 단정할 수는 없다.</div>
+    <div class="answer-box">차이는 약 4.3℃(304.9 - 300.6). 정제 전 데이터에는 500℃가 넘는 극단 고온 이상값 2건이
+    섞여 있어 평균이 실제보다 높게 계산되었기 때문이다.</div>
   </section>
 
   <section class="block">
@@ -93,8 +83,8 @@ plt.show()</code></pre>
     <p>아래 빈칸을 채워 이번 차시 데이터를 한 문장으로 요약해보자.</p>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      "설비 ____의 온도 표준편차는 약 ____℃로 가장 크며, 불합격 비율도 약 ____%로 다른
-      설비보다 높다. 온도와 두께 사이에는 상관계수 약 ____의 관계가 있다."
+      "원본 데이터 ____행 중 중복 ____건, 이상값 ____건, 결측 ____건을 정리한 결과
+      최종 ____행이 남았으며, 정제 전후 평균 온도는 약 ____℃ 차이가 났다."
     </div>
   </section>
 
@@ -102,9 +92,9 @@ plt.show()</code></pre>
     <h2>6. 도전 문제</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      <code>df.boxplot(column="진동_mm_s", by="설비번호")</code>를 실행해 설비별 진동 값의
-      박스플롯을 직접 그려보자. 온도 박스플롯과 같은 설비가 가장 넓게 퍼져 있는지 확인하고,
-      그 이유를 한 문장으로 적어보자.
+      <code>df["공정명"].unique()</code>를 실행해서 오타가 섞인 공정명을 모두 찾아 적어보자.
+      그리고 <code>str.strip()</code>과 <code>replace()</code>를 이용해 오타를 통일하는 코드를
+      직접 작성해보자.
     </div>
   </section>
 

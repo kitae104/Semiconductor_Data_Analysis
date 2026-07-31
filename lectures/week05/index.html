@@ -6,6 +6,12 @@
 <title>5차시. 데이터 훑어보기와 정리(EDA)</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
+<style>
+  .photo-slot{
+    border:2px dashed var(--line); border-radius:12px; background:#f8fafc; color:var(--muted);
+    padding:1.6rem 1rem; text-align:center; font-size:.88rem; margin:1rem 0;
+  }
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -32,20 +38,10 @@
 <main class="page">
 
   <div class="hero">
-    <span class="badge blue">5차시 · 개요(skeleton)</span>
+    <span class="badge blue">5차시</span>
     <h1>데이터 훑어보기와 정리(EDA)</h1>
     <p class="today-question">💬 오늘의 질문: <b>"코드를 한 줄도 쓰기 전에, 이 데이터에 어떤 문제가 있어 보이는지 먼저 확인할 수 있을까?"</b></p>
   </div>
-
-  <section class="block">
-    <div class="callout warn">
-      <b class="tag">작성 상태</b>
-      이 페이지는 v2 커리큘럼 구성이 확정된 직후 작성된 <b>개요(skeleton)</b>입니다. 제목·학습
-      목표·다룰 내용·데이터까지는 확정되었지만, 상세 설명·예제 코드·단계별 실습·퀴즈는 아직 채워지지
-      않았습니다. 구성이 최종 확정되면 이어서 상세 내용을 작성합니다. 배경은
-      <a href="../../docs/restructure-plan.md">docs/restructure-plan.md</a> 참고.
-    </div>
-  </section>
 
   <section class="block">
     <h2>🎯 학습 목표</h2>
@@ -59,36 +55,352 @@
   </section>
 
   <section class="block">
-    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
-    <div class="callout practice">
-      <b class="tag">위젯</b> File → Data Table → Feature Statistics
-      <p style="margin:.5rem 0 0;">파이썬 코드를 쓰기 전에 Orange3로 같은 CSV를 먼저 열어, Data Table에서 결측 셀을, Feature Statistics에서 최댓값/최솟값(이상값)을 눈으로 확인한다. 이어서 파이썬으로 같은 문제를 직접 찾아 정제한다.</p>
+    <h2>⏮️ 지난 시간 복습</h2>
+    <div class="callout concept">
+      <b class="tag">4차시 연결</b>
+      4차시에서는 Pandas로 원하는 행·열을 골라내는 법을 배웠다. 그런데 현실의 데이터에는 빈 칸
+      (<b>결측값</b>), 같은 내용이 두 번 저장된 행(<b>중복값</b>), 말이 안 되는 값(<b>이상값</b>)이
+      섞여 있는 경우가 많다. 이런 문제를 그대로 두고 분석하면 평균 같은 요약값이 왜곡된다. 오늘은
+      Orange3로 먼저 문제를 눈으로 확인한 뒤, Pandas로 직접 찾아 정제하는 법을 배운다.
     </div>
   </section>
 
   <section class="block">
-    <h2>📚 ② 파이썬으로 확인하기 — 다룰 이론 주제(초안)</h2>
-    <ul class="goal-list">
-      <li>결측값, 중복값, 입력 오류, 이상값</li>
-      <li>평균/중앙값 대체 vs 제거</li>
-    </ul>
+    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <div class="callout practice">
+      <b class="tag">위젯</b> File → Data Table → Feature Statistics
+      <p style="margin:.5rem 0 0;">파이썬 코드를 쓰기 전에 Orange3로 같은 CSV를 먼저 열어본다.
+      <b>File</b> 위젯으로 <code>week05_dirty_process_data.csv</code>를 불러오고, <b>Data
+      Table</b> 위젯을 연결하면 빈 칸(결측 셀)이 표에 그대로 보인다. <b>Feature Statistics</b>
+      위젯을 연결하면 각 열의 최댓값·최솟값이 한눈에 표로 나오는데, 온도_섭씨 열에 500이 넘는
+      값이 있다면 눈으로 바로 "뭔가 이상하다"는 것을 알아챌 수 있다.</p>
+    </div>
+    <div class="photo-slot">
+      🖼️ <b>이미지 자리</b> — 실제 Orange3 화면 캡처(File → Data Table → Feature Statistics를
+      연결한 워크플로 화면, 결측 셀이 강조된 Data Table 화면)를 강사가 추가하면 좋다.
+    </div>
+    <p style="color:var(--muted);font-size:.9rem;">이제 Orange3로 미리 살펴본 문제를, 아래에서
+    파이썬 코드로 하나씩 직접 찾아 정제해본다.</p>
   </section>
 
   <section class="block">
-    <h2>🐍 다룰 실습 흐름(초안)</h2>
-    <ol style="padding-left:1.3rem;line-height:1.8;">
-      <li>isna().sum()으로 결측값 개수 확인하기</li>
-      <li>dropna(), fillna()로 결측값 처리하기</li>
-      <li>duplicated()로 중복 행 찾기</li>
-      <li>음수 압력·비정상 온도 같은 이상값 찾기</li>
-      <li>정제 전후 행 개수·평균값 비교하기</li>
-    </ol>
+    <h2>🐍 ② 파이썬으로 확인하기 — 결측값 찾고 처리하기</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 데이터 읽기와 결측값 확인</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+
+df = pd.read_csv("week05_dirty_process_data.csv")
+print(df.shape)
+print(df.isna().sum())</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(113, 9)
+측정시간        0
+로트번호        0
+설비번호        0
+공정명         0
+온도_섭씨       3
+압력_Pa       2
+가스유량_slm    3
+처리시간_sec    0
+합격여부        2
+dtype: int64</pre>
+    </div>
+    <div class="explain-list">
+      <b>코드 설명</b>
+      <ul>
+        <li><code>isna()</code>: 각 칸이 결측값(NaN)인지 True/False로 판단한다.</li>
+        <li><code>.sum()</code>: True를 1로 세어 열별 결측 개수를 더한다.</li>
+      </ul>
+    </div>
+
+    <h3>결측값 처리 — 제거 vs 대체</h3>
+    <p><code>합격여부</code>처럼 범주형(1 또는 -1) 값은 평균이나 중앙값으로 채울 수 없으므로
+    <b>제거</b>한다. <code>온도_섭씨</code>처럼 숫자형 값은 <b>중앙값으로 대체</b>하는 것이
+    안전하다(극단값의 영향을 덜 받기 때문).</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code># 합격여부가 결측인 행은 제거(범주형은 대체 불가)
+df = df.dropna(subset=["합격여부"])
+
+# 숫자형 열은 중앙값으로 대체
+for col in ["온도_섭씨", "압력_Pa", "가스유량_slm"]:
+    median_value = df[col].median()
+    df[col] = df[col].fillna(median_value)
+
+print(df.isna().sum().sum())   # 남은 결측값 총합</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">0</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — dropna/fillna는 원본을 바꾸지 않는다</b>
+      <code>df.dropna(...)</code>와 <code>df[col].fillna(...)</code>는 모두 새 결과를 돌려줄 뿐
+      원본을 바꾸지 않는다. <code>df = df.dropna(...)</code>처럼 다시 저장해야 실제로 반영된다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🐍 중복값 찾고 제거하기</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.duplicated().sum())   # 중복 행 개수
+
+df = df.drop_duplicates()
+print(df.shape)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">3
+(108, 9)</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — 3건이 사라지면 행이 몇 개 줄어들까?</b>
+      완전 중복 행이 3건이면, 각 중복 쌍에서 "여분" 1개만 제거되므로 정확히 3행만 줄어든다
+      (6행이 줄어드는 것이 아니다).
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🐍 이상값 찾기 — 4차시 조건 검색 재활용</h2>
+    <p>이상값은 "값이 없는 것"이 아니라 "값은 있지만 말이 안 되는 것"이므로 <code>isna()</code>로는
+    잡히지 않는다. 4차시에서 배운 조건 검색으로 직접 찾아야 한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>hot_outlier = df[df["온도_섭씨"] > 400]
+neg_pressure = df[df["압력_Pa"] < 0]
+bad_gas = df[(df["가스유량_slm"] < 0) | (df["가스유량_slm"] >= 200)]
+
+print("고온 이상값:", len(hot_outlier), "건")
+print("음수 압력:", len(neg_pressure), "건")
+print("비정상 가스유량:", len(bad_gas), "건")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">고온 이상값: 2 건
+음수 압력: 2 건
+비정상 가스유량: 2 건</pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      <code>df["공정명"].unique()</code>를 실행해 공정명 열에 어떤 값들이 있는지 확인해보자.
+      <code>중착</code>, <code>포토공정</code>처럼 오타가 섞여 있는 것이 보이는가?
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 이상값 제거</span><button class="copy-btn">복사</button></div>
+      <pre><code>df = df[df["온도_섭씨"] <= 400]
+df = df[df["압력_Pa"] >= 0]
+df = df[(df["가스유량_slm"] >= 0) & (df["가스유량_slm"] < 200)]
+
+print(df.shape)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(102, 9)</pre>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📚 정제 전후 비교하기</h2>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(f"정제 전 평균 온도: {304.9:.1f}도 (113행)")   # 정제 전 값(위에서 미리 계산)
+print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}행)")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">정제 전 평균 온도: 304.9도 (113행)
+정제 후 평균 온도: 300.6도 (102행)</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">결과 해석</b>
+      정제 전후 평균 온도가 약 4.3도 차이 난다. 500도가 넘는 극단 고온 이상값 2건이 정제 전
+      평균을 실제보다 높게 끌어올렸기 때문이다 — "이상값 하나가 전체 평균을 왜곡할 수 있다"는
+      것을 보여주는 좋은 예다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🟣 실습: 데이터 정제 따라 하기</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>Orange3로 먼저 훑어보기</b> — File → Data Table → Feature
+      Statistics로 결측 셀과 극단값을 눈으로 확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>결측값 확인</b> — <code>isna().sum()</code>으로 열별 결측 개수를
+      확인한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>결측값 처리</b> — 범주형은 <code>dropna()</code>, 숫자형은
+      <code>fillna(중앙값)</code>으로 처리한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>중복 제거</b> — <code>duplicated().sum()</code>으로 개수를 확인하고
+      <code>drop_duplicates()</code>로 제거한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>이상값 찾기·제거</b> — 조건 검색으로 고온·음수 압력·비정상
+      가스유량을 찾아 제거한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div class="content"><b>정제 전후 비교</b> — 행 개수와 평균 온도를 비교해 문장으로
+      정리한다. (학생용 Notebook의 TODO로 이어짐)</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 핵심 용어 카드</h2>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>결측값</h4><div class="en">Missing Value</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>칸에 값이 전혀 입력되지 않은 것(NaN).</dd>
+          <dt>쉬운 비유</dt><dd>설문지에서 응답하지 않고 비워둔 칸.</dd>
+          <dt>데이터에서의 예</dt><dd><code>df["온도_섭씨"].isna()</code></dd>
+          <dt>자주 하는 오해</dt><dd>결측값(NaN)과 값 0을 혼동하기 쉽다. 0은 "측정된 값이 0"이고 NaN은 "측정 자체가 안 됨"이다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>중복값</h4><div class="en">Duplicate</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>완전히 똑같은 행이 두 번 이상 저장된 것.</dd>
+          <dt>쉬운 비유</dt><dd>같은 사진을 실수로 두 번 저장한 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>df.duplicated().sum()</code></dd>
+          <dt>자주 하는 오해</dt><dd>중복 3건을 제거하면 6행이 사라진다고 착각하기 쉽다. 실제로는 여분만 제거되어 3행만 줄어든다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>이상값</h4><div class="en">Outlier</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>정상 범위를 크게 벗어난, 있을 수 없는 값.</dd>
+          <dt>쉬운 비유</dt><dd>사람 키가 300cm로 기록된 것처럼 말이 안 되는 값.</dd>
+          <dt>데이터에서의 예</dt><dd>온도_섭씨 540℃(정상 범위 295~305℃)</dd>
+          <dt>자주 하는 오해</dt><dd>이상값도 결측값처럼 <code>isna()</code>로 잡힌다고 착각하기 쉽다. 값이 "존재"하므로 조건 검색으로 찾아야 한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>제거 vs 대체</h4><div class="en">Drop vs Fill</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>결측값을 없애는 두 가지 방법 — 행을 지우거나(제거), 값을 채우거나(대체).</dd>
+          <dt>쉬운 비유</dt><dd>빈칸이 많은 시험지는 버리고(제거), 빈칸이 적으면 평균 점수로 채워 넣는(대체) 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>dropna()</code> vs <code>fillna(중앙값)</code></dd>
+          <dt>자주 하는 오해</dt><dd>항상 평균으로 채우면 된다고 생각하기 쉽지만, 극단값이 있으면 중앙값이 더 안전하다.</dd>
+        </dl>
+      </div>
+    </div>
   </section>
 
   <section class="block">
     <h2>📁 데이터</h2>
     <p><code>data/weekly/week05/week05_dirty_process_data.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">113행 9열 — 결측값·중복행·이상값이 의도적으로 섞여 있는 정제 실습용 데이터</p>
+    <p style="color:var(--muted);font-size:.9rem;">113행 9열 — 결측값·중복행·이상값이 의도적으로 섞여 있는
+    정제 실습용 데이터. 자세한 설명은
+    <a href="../../data/data_dictionary/week05_dictionary.md">데이터 설명서</a> 참고.</p>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout danger">
+      <b class="tag">오류 1</b>
+      <code>KeyError</code> — 열 이름에 오타나 공백이 있는 경우다. <code>df.columns</code>로
+      정확한 열 이름을 먼저 확인하자(특히 <code>가스유량_slm</code>, <code>처리시간_sec</code>).
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — fillna 대상 지정</b>
+      <code>df.fillna(값)</code>을 열 지정 없이 통째로 쓰면 모든 열이 같은 값으로 채워질 수 있다.
+      반드시 <code>df["열이름"] = df["열이름"].fillna(값)</code>처럼 열을 지정해야 한다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🚀 도전 실습</h2>
+    <div class="callout practice">
+      <b class="tag">도전 문제 1</b>
+      <code>df["공정명"].unique()</code>로 찾은 오타(<code>중착</code>, <code>포토공정</code>,
+      공백이 붙은 <code>식각 </code>)를 <code>str.strip()</code>과 <code>replace()</code>로
+      통일해보자.
+    </div>
+    <div class="callout practice">
+      <b class="tag">도전 문제 2</b>
+      <code>측정시간</code> 열에서 형식이 다른 날짜(<code>2024/03/05</code>,
+      <code>03-05-2024 10:00</code>) 2건을 조건 검색이나 <code>str.len()</code>으로 찾아보자
+      (6차시 시계열 그래프 예고).
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. (객관식) 결측값(NaN)에 대한 설명으로 가장 알맞은 것은?</div>
+      <ul class="options">
+        <li>A. 값이 0으로 기록된 것</li>
+        <li>B. 칸에 값이 전혀 입력되지 않은 것</li>
+        <li>C. 정상 범위를 크게 벗어난 값</li>
+        <li>D. 완전히 똑같은 행이 두 번 저장된 것</li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: B. 결측값은 칸이 비어 있는 것이다. C는 이상값, D는 중복값에 대한 설명이다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (참/거짓) <code>df.dropna()</code>를 실행하면 원본 <code>df</code> 자체가
+      바로 바뀐다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 거짓. 결과를 새로 돌려줄 뿐 원본은 바뀌지 않는다.
+      <code>df = df.dropna()</code>처럼 다시 저장해야 한다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. (참/거짓) 이상값이 섞여 있을 가능성이 있는 열은 평균보다 중앙값으로
+      대체하는 것이 더 안전하다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 참. 평균은 극단값 하나에도 크게 흔들리지만, 중앙값은 크기순
+      정가운데 값이라 극단값의 영향을 거의 받지 않는다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q4. (빈칸) 중복 행을 제거하는 Pandas 메서드는 <code>df.______()</code>이다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: <code>drop_duplicates</code></div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q5. (서술) Orange3에서 눈으로 확인한 문제와 Pandas 코드로 찾은 문제가
+      같았는지, 각각 어떤 장단점이 있었는지 한 문장으로 비교해보자.</div>
+      <button class="reveal-btn">예시 답안 보기</button>
+      <div class="answer-box">예시 답안: "Orange3는 클릭만으로 빠르게 문제를 훑어볼 수 있지만
+      정확한 개수나 비율은 알기 어렵고, Pandas 코드는 정확한 수치와 자동화된 정제까지 가능하다."</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>📝 과제(다음 차시까지)</h2>
+    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 확인할 수 있게 만들어 제출한다.</p>
+    <div class="callout practice">
+      <b class="tag">과제 1 — 정제 파이프라인 완성하기</b>
+      오늘 배운 순서(결측 처리 → 중복 제거 → 이상값 제거)를 모두 적용한 뒤, 최종 행 개수와
+      정제 전후 평균 압력(<code>압력_Pa</code>)의 차이를 f-string으로 출력한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 2 — 공정명 오타 통일</b>
+      <code>str.strip()</code>과 <code>replace()</code>로 공정명 오타를 통일하고, 정제 전/후
+      <code>value_counts()</code> 결과가 어떻게 달라졌는지 비교한다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 3(도전) — Orange3로 재확인</b>
+      정제가 끝난 CSV를 다시 저장(<code>df.to_csv(...)</code>)한 뒤 Orange3로 열어, Feature
+      Statistics의 최댓값·최솟값이 파이썬 결과와 같은지 확인해본다.
+    </div>
   </section>
 
   <section class="block">
@@ -110,8 +422,9 @@
 </main>
 
 <button id="backToTop" title="맨 위로">↑</button>
-<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 5차시 · 교육용 자료(가상 데이터 사용) · 개요(skeleton) 단계</footer>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 5차시 · 교육용 자료(가상 데이터 사용)</footer>
 
 <script src="../../assets/js/common.js"></script>
+<script src="../../assets/js/quiz.js"></script>
 </body>
 </html>

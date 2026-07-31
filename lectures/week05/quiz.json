@@ -1,81 +1,84 @@
 {
   "week": 5,
-  "title": "그래프로 공정 상태 이해하기",
+  "title": "데이터 훑어보기와 정리(EDA)",
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "설비별 온도 값이 얼마나 넓게 퍼져 있는지 비교하기에 가장 알맞은 그래프는?",
+      "question": "결측값(NaN)에 대한 설명으로 가장 알맞은 것은?",
       "options": [
-        "선 그래프",
-        "박스플롯",
-        "산점도",
-        "막대그래프"
+        "값이 0으로 기록된 것",
+        "칸에 값이 전혀 입력되지 않은 것",
+        "정상 범위를 크게 벗어난 값",
+        "완전히 똑같은 행이 두 번 저장된 것"
       ],
       "answer": 1,
-      "explanation": "박스플롯은 그룹별 분산(퍼짐)을 한눈에 비교하기에 가장 알맞다."
+      "explanation": "결측값은 칸이 비어 있는 것이다. 정상 범위를 크게 벗어난 값은 이상값, 완전히 똑같은 행이 두 번 저장된 것은 중복값이다."
     },
     {
       "type": "multiple_choice",
-      "question": "시간에 따른 온도 변화를 확인하기에 가장 알맞은 그래프는?",
+      "question": "열별 결측값 개수를 확인하는 코드로 알맞은 것은?",
       "options": [
-        "히스토그램",
-        "막대그래프",
-        "선 그래프",
-        "박스플롯"
+        "df.dropna().sum()",
+        "df.duplicated().sum()",
+        "df.isna().sum()",
+        "df.fillna().sum()"
       ],
       "answer": 2,
-      "explanation": "선 그래프는 시간처럼 순서가 있는 값의 변화를 보여주는 데 가장 적합하다."
+      "explanation": "df.isna()는 각 칸이 결측값인지 True/False로 알려주고, .sum()을 붙이면 열별 결측 개수가 나온다."
     },
     {
       "type": "true_false",
-      "question": "이번 차시 데이터에서 EQ-02는 온도 표준편차가 다른 설비보다 크다.",
-      "answer": true,
-      "explanation": "EQ-02의 온도 표준편차는 약 4.29℃로, 다른 설비(약 2.9~3.2℃)보다 크다."
-    },
-    {
-      "type": "true_false",
-      "question": "히스토그램의 x축은 항상 범주(카테고리) 이름이다.",
+      "question": "df.dropna()를 실행하면 원본 df 자체가 바로 바뀐다.",
       "answer": false,
-      "explanation": "히스토그램의 x축은 범주가 아니라 값의 구간(bin)이다. 범주별 비교는 막대그래프를 사용한다."
+      "explanation": "dropna()나 fillna()는 결과를 새로 돌려줄 뿐 원본을 바꾸지 않는다. df = df.dropna()처럼 다시 저장해야 한다."
+    },
+    {
+      "type": "true_false",
+      "question": "이상값이 섞여 있을 가능성이 있는 열은 평균보다 중앙값으로 대체하는 것이 더 안전하다.",
+      "answer": true,
+      "explanation": "평균은 극단값 하나에도 크게 흔들리지만, 중앙값은 값을 크기순으로 줄 세운 정가운데 값이라 극단값의 영향을 거의 받지 않는다."
     },
     {
       "type": "term_matching",
-      "question": "그래프 종류와 쓰임을 연결하시오.",
+      "question": "용어와 설명을 연결하시오.",
       "pairs": [
-        {"term": "선 그래프", "definition": "시간에 따른 값의 변화를 본다"},
-        {"term": "막대그래프", "definition": "범주별 개수나 크기를 비교한다"},
-        {"term": "히스토그램", "definition": "값이 어느 구간에 몰려 있는지 본다"},
-        {"term": "산점도", "definition": "두 변수 사이의 관계를 본다"},
-        {"term": "박스플롯", "definition": "그룹별 값의 퍼짐을 비교한다"}
+        {"term": "결측값", "definition": "칸에 값이 전혀 입력되지 않은 것"},
+        {"term": "중복값", "definition": "완전히 똑같은 행이 두 번 이상 저장된 것"},
+        {"term": "이상값", "definition": "정상 범위를 크게 벗어난 있을 수 없는 값"},
+        {"term": "입력 오류", "definition": "오타, 날짜 형식 불일치 등 사람이 입력하며 생긴 실수"}
       ]
     },
     {
       "type": "fill_blank",
-      "question": "문자열로 저장된 시간 값을 날짜/시간 형식으로 바꾸는 Pandas 함수는 pd.____()이다.",
-      "answer": "to_datetime"
+      "question": "결측값이 있는 행을 제거하는 Pandas 메서드는 df.____()이다.",
+      "answer": "dropna"
     },
     {
       "type": "fill_blank",
-      "question": "설비별로 온도 값의 박스플롯을 그리는 코드는 df.____(column='온도_섭씨', by='설비번호')이다.",
-      "answer": "boxplot"
+      "question": "결측값을 특정 값으로 채워 넣는 Pandas 메서드는 df.____()이다.",
+      "answer": "fillna"
+    },
+    {
+      "type": "fill_blank",
+      "question": "중복 행을 제거하는 Pandas 메서드는 df.____()이다.",
+      "answer": "drop_duplicates"
     },
     {
       "type": "result_prediction",
-      "question": "온도와 두께의 상관계수가 0.82로 나왔다면, 두 변수의 관계는 어떻게 설명할 수 있는가?",
-      "answer": "비교적 강한 양의 상관관계",
-      "explanation": "상관계수가 1에 가까울수록 강한 양의 상관관계이며, 0.82는 온도가 높을수록 두께도 대체로 두꺼워지는 경향을 뜻한다."
+      "question": "원본 데이터가 113행이고, 완전 중복 행이 3건 있을 때 drop_duplicates() 실행 후 남는 행 개수는?",
+      "answer": "110행",
+      "explanation": "113 - 3 = 110행. 중복된 행 중 처음 것만 남고 나머지가 제거된다."
     },
     {
-      "type": "chart_choice",
-      "question": "온도와 두께처럼 두 숫자 변수 사이의 관계를 확인하기에 가장 알맞은 그래프는?",
-      "options": ["선 그래프", "히스토그램", "산점도"],
-      "answer": 2,
-      "explanation": "산점도는 두 변수를 각각 x축, y축에 놓고 점으로 찍어 관계를 확인하는 데 적합하다."
+      "type": "result_prediction",
+      "question": "정제 전 평균 온도가 약 304.9℃, 정제 후 평균 온도가 약 300.6℃일 때 두 값의 차이는?",
+      "answer": "약 4.3℃",
+      "explanation": "304.9 - 300.6 = 약 4.3℃. 500℃가 넘는 극단 고온 이상값 2건이 정제 전 평균을 끌어올렸다."
     },
     {
       "type": "short_answer",
-      "question": "오늘 그린 다섯 그래프(선/막대/히스토그램/산점도/박스플롯)의 결과를 바탕으로, 이번 차시 공정 데이터의 특징을 한 문장으로 설명해보시오.",
-      "sample_answer": "시간이 지날수록 온도가 서서히 상승하는 드리프트가 있고, EQ-02는 온도 표준편차(약 4.29℃)와 불합격 비율(약 24.4%)이 다른 설비보다 높으며, 온도가 높을수록 두께도 두꺼워지는 상관관계(r≈0.82)가 관찰된다."
+      "question": "오늘 배운 내용을 바탕으로, 데이터 분석 전에 정제 과정이 왜 필요한지 한 문장으로 설명해보시오.",
+      "sample_answer": "결측값·중복값·이상값을 그대로 두면 평균 같은 요약값이 실제와 다르게 왜곡될 수 있으므로, 그래프나 통계를 계산하기 전에 반드시 데이터를 먼저 정제해야 한다."
     }
   ]
 }
