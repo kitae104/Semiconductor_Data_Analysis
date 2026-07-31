@@ -160,3 +160,34 @@
 - 3~10차시는 여전히 개요(skeleton) 또는 v1 상태다. 다음 차시를 요청받으면 1·2차시와 동일한
   패턴(lectures 전체 내용 + worksheet + quiz.json + notebooks 3종 + instructor-guide, 시간 정보
   없이)으로 진행한다.
+
+### 후속 진행 — 3~10차시 전체 상세 콘텐츠 완성 (2026-07-31)
+
+- **3~7·9·10차시**: 1·2차시와 동일한 패턴(lectures 전체 내용 + worksheet.html + quiz.json +
+  notebooks 3종 + instructor-guide.md, 시간 정보 없이)으로 전부 상세 콘텐츠를 완성했다. 8차시는
+  이전 세션에 이미 완료 상태임을 재확인했다. 이로써 **1~10차시 전 구간이 skeleton이 아닌 상세
+  콘텐츠 완료 상태**가 되었다.
+  - 모든 수치(합격률, 표준편차, 상관계수, 결측값 개수, 모델 정확도/혼동행렬/특성 중요도 등)는
+    `scripts/generate_weekly_data.py`로 재생성한 현재 CSV를 직접 pandas/sklearn/matplotlib로
+    계산해 검증한 실제 값이며, 예전 v1 문서에 남아 있던 근사치·오기(예: 5차시 결측값 "약 8건"→
+    실제 10건, 7차시 "저수율 로트가 모두 EQ-04"→실제로는 5개 중 4개)는 발견 즉시 바로잡았다.
+  - 6차시는 matplotlib 차트 5종을 실제로 생성해 `assets/images/week06/`에 PNG로 커밋했고, 7차시는
+    구 v1 파레토 이미지를 실제 데이터로 재생성해 `assets/images/week07/pareto_defects.png`를
+    덮어썼다.
+  - 7차시는 구 v1의 6차시(설비 비교)와 7차시(수율·파레토) 두 데이터/문서를 하나로 병합했다.
+  - 9~10차시는 fab.csv(590센서) 경로를 완전히 폐기하고 `week09_pass_fail_train.csv` +
+    `week09_new_lots_to_predict.csv` 기반으로 전면 재작성했다 — 9차시는 "정확도의 함정"(모델
+    정확도 78.2% < 항상-합격 기준선 78.9%)을 의도적 교훈으로 제시했고, 10차시는 `predict_proba()`로
+    "예측은 같아도 확신의 정도는 다르다"를 보여준 뒤 10개 차시 전체를 되짚는 표와 "과정을 마치며"
+    절로 마무리했다(마지막 차시이므로 "다음 차시 예고" 없음).
+  - `lectures/week10/project-report-template.html`은 구 미니 프로젝트용 파일로, 현재는 어떤
+    페이지에서도 참조하지 않는 고아 파일로 남아 있다(삭제하지 않고 보존, 필요 시 정리 대상).
+- **`data/data_dictionary/*.md` 재정비** — worksheet.html 등과 동일하게 차시 번호가 밀린 채
+  방치돼 있던 것을 발견해 2·3·4·5·6·7·9·10차시 전부 다시 썼다(TODO 6 완료). 8차시는 이미
+  정확해 손대지 않았다. 10차시 파일은 삭제하지 않고 "선택 심화용" 안내문을 추가해, v2의 실제
+  10차시 핵심 데이터가 `week09_new_lots_to_predict.csv`임을 명확히 했다.
+- `python scripts/validate_datasets.py`(43/43)와 `python scripts/validate_notebooks.py`(63/63)
+  모두 0건 실패로 최종 재확인했다.
+- **남은 항목**: `index.html`의 "진행 안내" 배너가 아직 "skeleton" 단계 문구를 담고 있다면
+  갱신 필요(전 차시 상세 완료를 반영). `lectures/week10/project-report-template.html` 고아 파일
+  정리 여부는 사용자 판단 필요.
