@@ -37,8 +37,16 @@
      `반도체_공정_샘플.csv` 계열, fab.csv 미사용, seed 규칙 유지)
    - 10주차 데이터에서 fab.csv 기반 열/패턴 제거(원래도 fab.csv 열을 쓰지 않았으므로 명시만 추가)
    - **아직 안 한 것**: 이 스펙대로 실제 CSV를 생성하는 스크립트 작업(TODO 2)은 착수 전.
-2. **`scripts/generate_weekly_data.py` 개정** — 위 스펙에 맞게 `gen_week02()`~`gen_week10()` 재작성.
-   기존 시드 규칙(`seed = 100 + 주차번호`)과 `utf-8-sig` 저장 규칙은 그대로 유지.
+2. ~~**`scripts/generate_weekly_data.py` 개정**~~ — ✅ 완료. `gen_week02()`~`gen_week09()`를 v2 스펙에
+   맞게 재작성하고 `python scripts/generate_weekly_data.py`로 `data/weekly/`를 재생성했다. 기존 시드
+   규칙(`seed = 100 + 주차번호`)과 `utf-8-sig` 저장 규칙은 그대로 유지했다.
+   - **과도기 상태(의도적)**: `week02`~`week07`, `week09` 폴더에는 v1 시절 파일명(예:
+     `week02_basic_process_values.csv`, `week06_equipment_comparison.csv`,
+     `week09_fab_beginner.csv` 등)이 새 v2 파일과 **함께 남아 있다**. `lectures/`·`notebooks/`가
+     아직 v1 파일명을 참조하므로, 지금 지우면 기존 강의자료가 바로 깨진다. TODO 3·5에서 해당 주차의
+     강의자료·노트북을 v2로 재작성한 뒤 옛 파일을 정리한다.
+   - fab.csv 기반 `SELECTED_SENSORS`/`BEGINNER_ALIAS`/`gen_week09()`의 fab 파생 로직은 스크립트에서
+     완전히 제거했다(9주차는 이제 `반도체_공정_샘플.csv` 계열 신규 데이터만 생성).
 3. **`lectures/weekXX/` 재작성** — v2 순서에 맞게 각 주차 HTML(18섹션)·worksheet·quiz·instructor-guide를
    다시 쓴다. 기존 v1 8주차(`instructor-guide.md`, `quiz.json`)는 새 8주차와 내용이 거의 겹치므로
    재사용 비중이 크다.
@@ -46,15 +54,19 @@
    별도 부록 문서)이 필요하다. 설치 방법, 기본 화면 구성, File/Data Table/Scatter Plot/Correlations/
    Test and Score/Predictions 위젯 사용법을 다룬다.
 5. **`notebooks/{student,instructor,solutions}/` 재작성** — 주차 번호와 내용이 바뀌므로 전체 재작성이
-   필요하다. 9주차는 `fab.csv` 대신 새 데이터로 `train_test_split`~`predict()`까지 다시 구성한다.
+   필요하다. 9주차는 `fab.csv` 대신 새 데이터(`week09_pass_fail_train.csv`,
+   `week09_new_lots_to_predict.csv`)로 `train_test_split`~`predict()`까지 다시 구성한다.
 6. **`data/data_dictionary/weekXX_dictionary.md` 재작성** — 데이터가 바뀌는 2·3·7·9·10주차는 새로
    쓰고, 나머지는 주차 번호만 맞춰 재배치한다.
 7. **`fab.csv` 취급 방침** — `data/raw/fab.csv`는 삭제하지 않고 그대로 둔다(원본 읽기 전용 원칙
    유지). 다만 핵심 10주 경로에서는 참조하지 않으며, 원할 경우 강사용 "9주차 이후 심화 부록"으로만
    별도 언급한다. 이 부록을 다룰 때도 `CLAUDE.md`의 "Sensor0~589 실제 의미 단정 금지" 규칙은 그대로
-   적용한다.
-8. **검증 스크립트 갱신** — `scripts/validate_datasets.py`, `scripts/validate_notebooks.py`의 주차별
-   체크 항목을 새 데이터/노트북 구성에 맞게 갱신한다.
+   적용한다. (`generate_weekly_data.py`에는 더 이상 fab.csv 파생 로직이 없으므로, 부록을 만들려면
+   별도 스크립트/노트북에서 `data/raw/fab.csv`를 직접 읽어야 한다.)
+8. **검증 스크립트 갱신** — 🔶 부분 완료. `scripts/validate_datasets.py`는 v2 파일명·스펙 기준으로
+   갱신해 43건 모두 통과 확인했다(`python scripts/validate_datasets.py`). `scripts/validate_notebooks.py`는
+   아직 손대지 않았다 — 노트북 자체가 v1 그대로라 지금은 v1 파일 기준으로 63건 모두 통과 중이며,
+   TODO 5에서 노트북을 v2로 재작성할 때 함께 갱신해야 한다.
 9. **`README.md` / `index.html` / `CLAUDE.md`** — 이번 세션에서 curriculum.md와 함께 1차 갱신했다.
    실제 콘텐츠가 재작성되는 대로 세부 문구(파일명, 통계 수치 등)를 다시 맞춘다.
 
@@ -66,7 +78,11 @@
 - `index.html` — 주차 카드 제목/설명 갱신
 - `CLAUDE.md` — fab.csv/9주차 관련 규칙을 v2 기준으로 일반화
 - `docs/data-design.md` — v2 주차 구성에 맞게 전체 재작성(TODO 1 완료)
+- `scripts/generate_weekly_data.py` — v2 스펙대로 재작성(TODO 2 완료)
+- `data/weekly/week02`~`week10`(9주차 포함) — v2 스펙 CSV 생성(v1 파일은 과도기 동안 함께 보존)
+- `scripts/validate_datasets.py` — v2 파일명·스펙 기준으로 갱신(TODO 8 중 데이터셋 검증만 완료)
+- 저장소를 git으로 초기화하고(`git init`) v1 상태를 첫 커밋으로 보존(안전한 되돌리기용)
 
-`lectures/`, `notebooks/`, `data/weekly/`, `data/data_dictionary/`, `scripts/generate_weekly_data.py`는
-**아직 v1 상태 그대로**다. 다음 단계는 TODO 2(`scripts/generate_weekly_data.py` 개정 및 실제 CSV
-재생성)이며, 그 다음 세션에서 이어서 진행한다.
+`lectures/`, `notebooks/`, `data/data_dictionary/`는 **아직 v1 상태 그대로**다. 다음 단계는 TODO 3
+(`lectures/weekXX/` 재작성)과 TODO 5(`notebooks/` 재작성)이며, 이 둘이 끝나야 v1 파일 정리와
+`validate_notebooks.py` 갱신(TODO 8 나머지)을 마무리할 수 있다.

@@ -55,45 +55,46 @@ def main():
     if w1 is not None:
         check("week01 합격여부 값 범위", set(w1["합격여부"].unique()) <= {1, -1})
 
-    validate_week("week02", "week02_basic_process_values.csv",
-                  ["측정시간", "로트번호", "공정명", "온도_섭씨", "압력_Pa", "합격여부"])
+    validate_week("week02", "week02_python_basics_1.csv",
+                  ["로트번호", "공정명", "설비번호", "온도_섭씨", "합격여부"])
 
-    validate_week("week03", "week03_process_filtering.csv",
+    validate_week("week03", "week03_python_basics_2.csv",
+                  ["로트번호", "공정명", "설비번호", "온도_섭씨", "합격여부"])
+
+    validate_week("week04", "week04_process_filtering.csv",
                   ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "가스유량_slm", "합격여부"])
 
-    w4 = validate_week("week04", "week04_dirty_process_data.csv",
+    w5 = validate_week("week05", "week05_dirty_process_data.csv",
                         ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "가스유량_slm", "처리시간_sec", "합격여부"])
-    if w4 is not None:
-        check("week04 결측값 존재(의도된 패턴)", w4.isna().sum().sum() > 0)
-        check("week04 중복 행 존재(의도된 패턴)", w4.duplicated().sum() > 0)
-        check("week04 음수 압력 존재(의도된 이상값)", (w4["압력_Pa"] < 0).sum() > 0)
+    if w5 is not None:
+        check("week05 결측값 존재(의도된 패턴)", w5.isna().sum().sum() > 0)
+        check("week05 중복 행 존재(의도된 패턴)", w5.duplicated().sum() > 0)
+        check("week05 음수 압력 존재(의도된 이상값)", (w5["압력_Pa"] < 0).sum() > 0)
 
-    w5 = validate_week("week05", "week05_process_visualization.csv",
+    w6 = validate_week("week06", "week06_process_visualization.csv",
                         ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "두께_nm", "진동_mm_s", "처리시간_sec", "합격여부"])
 
-    w6 = validate_week("week06", "week06_equipment_comparison.csv",
-                        ["로트번호", "설비번호", "공정명", "작업조", "온도_섭씨", "압력_Pa", "진공도_mTorr", "처리시간_sec", "합격여부"])
-    if w6 is not None:
-        rate = w6.groupby("설비번호")["합격여부"].apply(lambda s: (s == -1).mean())
-        check("week06 EQ-04 불량률이 가장 높음(의도된 패턴)", rate.idxmax() == "EQ-04", str(rate.to_dict()))
-
-    w7 = validate_week("week07", "week07_yield_defect_analysis.csv",
-                        ["로트번호", "웨이퍼번호", "설비번호", "공정명", "검사수량", "양품수량", "불량수량", "불량유형", "수율_pct"])
+    w7 = validate_week("week07", "week07_equipment_yield.csv",
+                        ["로트번호", "웨이퍼번호", "설비번호", "공정명", "작업조", "온도_섭씨", "압력_Pa", "진공도_mTorr", "처리시간_sec", "불량유형", "합격여부"])
     if w7 is not None:
-        recomputed = (w7["양품수량"] / w7["검사수량"] * 100).round(1)
-        check("week07 수율_pct 계산 일치", (recomputed == w7["수율_pct"]).all())
-        check("week07 검사수량 = 양품+불량", (w7["검사수량"] == w7["양품수량"] + w7["불량수량"]).all())
+        rate = w7.groupby("설비번호")["합격여부"].apply(lambda s: (s == -1).mean())
+        check("week07 EQ-04 불량률이 가장 높음(의도된 패턴)", rate.idxmax() == "EQ-04", str(rate.to_dict()))
+        yield_by_lot = w7.groupby("로트번호")["합격여부"].apply(lambda s: (s == 1).mean())
+        check("week07 저수율(80% 미만) 로트 존재(의도된 패턴)", (yield_by_lot < 0.8).sum() >= 5, str((yield_by_lot < 0.8).sum()))
 
     w8 = validate_week("week08", "week08_anomaly_root_cause.csv",
                         ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "진공도_mTorr", "두께_nm", "진동_mm_s", "냉각수온도_섭씨", "습도_pct", "합격여부"])
 
-    w9a = validate_week("week09", "week09_fab_selected_sensors.csv", ["SensorTime", "Pass_Fail"])
-    if w9a is not None:
-        check("week09_selected Pass_Fail 값 범위(-1/1)", set(w9a["Pass_Fail"].unique()) <= {-1, 1})
+    w9train = validate_week("week09", "week09_pass_fail_train.csv",
+                             ["공정명", "설비번호", "온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct", "검사결과"])
+    if w9train is not None:
+        check("week09_train 검사결과 값 범위(0/1)", set(w9train["검사결과"].unique()) <= {0, 1})
+        check("week09_train 결측값 존재(정제 복습용, 의도된 패턴)", w9train.isna().sum().sum() > 0)
 
-    w9b = validate_week("week09", "week09_fab_beginner.csv", ["SensorTime", "검사결과"])
-    if w9b is not None:
-        check("week09_beginner 검사결과 값 범위(0/1)", set(w9b["검사결과"].unique()) <= {0, 1})
+    w9new = validate_week("week09", "week09_new_lots_to_predict.csv",
+                           ["공정명", "설비번호", "온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"])
+    if w9new is not None:
+        check("week09_new 정답 레이블(검사결과) 미포함", "검사결과" not in w9new.columns)
 
     w10 = validate_week("week10", "week10_mini_project_dataset.csv",
                          ["측정시간", "로트번호", "웨이퍼번호", "설비번호", "공정명", "작업조", "온도_섭씨", "압력_Pa",

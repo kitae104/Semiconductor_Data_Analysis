@@ -65,34 +65,54 @@ def gen_week01():
 
 
 # ---------------------------------------------------------------------------
-# Week 02
+# Week 02 (신규) — 파이썬 기초 Ⅰ: 변수·리스트·딕셔너리
 # ---------------------------------------------------------------------------
 def gen_week02():
     rng = np.random.default_rng(102)
-    n = 25
-    ts = timestamps(rng, n, periods_hours=200)
+    n = 20
     temp = rng.normal(300, 4, size=n)
-    # 최댓값 실습을 위해 이상 고온 2~3건 삽입
+    # 리스트 최댓값/최솟값 실습을 위해 정상범위(295~305) 이탈 온도 2~3건 삽입
     idx = rng.choice(n, size=3, replace=False)
     temp[idx] = rng.uniform(312, 320, size=3)
-    pressure = rng.normal(1012, 9, size=n)
+
     df = pd.DataFrame({
-        "측정시간": [t.strftime("%Y-%m-%d %H:%M") for t in ts],
         "로트번호": [f"LOT-{i:04d}" for i in rng.integers(1, 200, size=n)],
         "공정명": rng.choice(PROCESS, size=n),
+        "설비번호": rng.choice(EQUIPMENT, size=n),
         "온도_섭씨": np.round(temp, 1),
-        "압력_Pa": np.round(pressure, 1),
     })
     df["합격여부"] = rng.choice([1, -1], size=n, p=[0.84, 0.16])
-    save_csv(df, "week02", "week02_basic_process_values.csv")
+    save_csv(df, "week02", "week02_python_basics_1.csv")
     return df
 
 
 # ---------------------------------------------------------------------------
-# Week 03
+# Week 03 (신규) — 파이썬 기초 Ⅱ: 조건문·반복문·함수
 # ---------------------------------------------------------------------------
 def gen_week03():
     rng = np.random.default_rng(103)
+    n = 30
+    temp = rng.normal(300, 4, size=n)
+    # for + if 실습량 확보를 위해 2주차보다 조금 더 많은 이탈 온도(4~5건) 삽입
+    idx = rng.choice(n, size=5, replace=False)
+    temp[idx] = rng.uniform(311, 322, size=5)
+
+    df = pd.DataFrame({
+        "로트번호": [f"LOT-{i:04d}" for i in rng.integers(1, 200, size=n)],
+        "공정명": rng.choice(PROCESS, size=n),
+        "설비번호": rng.choice(EQUIPMENT, size=n),
+        "온도_섭씨": np.round(temp, 1),
+    })
+    df["합격여부"] = rng.choice([1, -1], size=n, p=[0.82, 0.18])
+    save_csv(df, "week03", "week03_python_basics_2.csv")
+    return df
+
+
+# ---------------------------------------------------------------------------
+# Week 04 — Pandas로 읽고 선택하기 (= v1 week03)
+# ---------------------------------------------------------------------------
+def gen_week04():
+    rng = np.random.default_rng(104)
     n = 100
     ts = timestamps(rng, n, periods_hours=800)
     equip = rng.choice(EQUIPMENT, size=n, p=[0.28, 0.28, 0.24, 0.20])
@@ -113,15 +133,15 @@ def gen_week03():
         "가스유량_slm": np.round(gas, 2),
         "합격여부": passfail,
     })
-    save_csv(df, "week03", "week03_process_filtering.csv")
+    save_csv(df, "week04", "week04_process_filtering.csv")
     return df
 
 
 # ---------------------------------------------------------------------------
-# Week 04 (의도적으로 지저분한 데이터)
+# Week 05 (의도적으로 지저분한 데이터) — 결측값 정리 + Orange3 (= v1 week04)
 # ---------------------------------------------------------------------------
-def gen_week04():
-    rng = np.random.default_rng(104)
+def gen_week05():
+    rng = np.random.default_rng(105)
     n = 110
     ts = timestamps(rng, n, periods_hours=900)
     equip = rng.choice(EQUIPMENT, size=n)
@@ -175,15 +195,15 @@ def gen_week04():
     df.loc[miss_label_idx, "합격여부"] = np.nan
 
     df = df.reset_index(drop=True)
-    save_csv(df, "week04", "week04_dirty_process_data.csv")
+    save_csv(df, "week05", "week05_dirty_process_data.csv")
     return df
 
 
 # ---------------------------------------------------------------------------
-# Week 05
+# Week 06 — 그래프 + Orange3 시각화 (= v1 week05)
 # ---------------------------------------------------------------------------
-def gen_week05():
-    rng = np.random.default_rng(105)
+def gen_week06():
+    rng = np.random.default_rng(106)
     n = 180
     ts = sorted(pd.Timestamp("2024-03-01") + pd.to_timedelta(rng.choice(range(0, 1400), size=n, replace=False), unit="h"))
     equip = rng.choice(EQUIPMENT, size=n)
@@ -214,103 +234,69 @@ def gen_week05():
         "처리시간_sec": np.round(proc_time, 1),
         "합격여부": passfail,
     })
-    save_csv(df, "week05", "week05_process_visualization.csv")
+    save_csv(df, "week06", "week06_process_visualization.csv")
     return df
 
 
 # ---------------------------------------------------------------------------
-# Week 06
-# ---------------------------------------------------------------------------
-def gen_week06():
-    rng = np.random.default_rng(106)
-    n = 240
-    equip = rng.choice(EQUIPMENT, size=n, p=[0.25, 0.25, 0.25, 0.25])
-    shift = rng.choice(SHIFT, size=n)
-
-    temp = np.empty(n)
-    pressure = np.empty(n)
-    fail_prob = np.empty(n)
-    for i, e in enumerate(equip):
-        if e == "EQ-01":
-            temp[i] = rng.normal(300, 2.5)
-            pressure[i] = rng.normal(1010, 7)
-            fail_prob[i] = 0.05
-        elif e == "EQ-02":
-            temp[i] = rng.normal(300, 7.5)  # 변동 큼
-            pressure[i] = rng.normal(1010, 7)
-            fail_prob[i] = 0.10
-        elif e == "EQ-03":
-            temp[i] = rng.normal(300, 3)
-            pressure[i] = rng.normal(1028, 7)  # 압력 다소 높음
-            fail_prob[i] = 0.08
-        else:  # EQ-04
-            temp[i] = rng.normal(301, 4)
-            pressure[i] = rng.normal(1012, 9)
-            fail_prob[i] = 0.20  # 불량률 높음
-
-    vacuum = rng.normal(5.0, 0.3, size=n)
-    proc_time = rng.normal(120, 5, size=n)
-    passfail = np.array([rng.choice([1, -1], p=[1 - p, p]) for p in fail_prob])
-    # 야간(C조)은 결측이 살짝 더 많다는 패턴
-    night_extra_na = (shift == "C조")
-
-    df = pd.DataFrame({
-        "로트번호": [f"LOT-{i:04d}" for i in rng.integers(1, 900, size=n)],
-        "설비번호": equip,
-        "공정명": rng.choice(PROCESS, size=n),
-        "작업조": shift,
-        "온도_섭씨": np.round(temp, 1),
-        "압력_Pa": np.round(pressure, 1),
-        "진공도_mTorr": np.round(vacuum, 2),
-        "처리시간_sec": np.round(proc_time, 1),
-        "합격여부": passfail,
-    })
-
-    na_pool = df.index[night_extra_na]
-    na_idx = rng.choice(na_pool, size=min(10, len(na_pool)), replace=False)
-    df.loc[na_idx, "온도_섭씨"] = np.nan
-
-    save_csv(df, "week06", "week06_equipment_comparison.csv")
-    return df
-
-
-# ---------------------------------------------------------------------------
-# Week 07
+# Week 07 (신규 병합) — 설비 비교 + 수율·불량 분석 (= v1 week06 + week07 압축)
 # ---------------------------------------------------------------------------
 def gen_week07():
     rng = np.random.default_rng(107)
-    n_lots = 60
+    n_lots = 75
+    wafers_per_lot = 4
     lots = [f"LOT-{i:04d}" for i in range(1, n_lots + 1)]
     low_yield_lots = set(rng.choice(lots, size=5, replace=False))
+    eq04_defects = ["두께 불량", "파티클", "패턴 불량"]
+
+    equip_profile = {
+        "EQ-01": dict(temp_mean=300, temp_std=2.5, pressure_mean=1010, pressure_std=7, fail_prob=0.05),
+        "EQ-02": dict(temp_mean=300, temp_std=7.5, pressure_mean=1010, pressure_std=7, fail_prob=0.10),
+        "EQ-03": dict(temp_mean=300, temp_std=3.0, pressure_mean=1028, pressure_std=7, fail_prob=0.08),
+        "EQ-04": dict(temp_mean=301, temp_std=4.0, pressure_mean=1012, pressure_std=9, fail_prob=0.20),
+    }
 
     rows = []
     for lot in lots:
-        equip = "EQ-04" if lot in low_yield_lots else rng.choice(EQUIPMENT)
+        equip = "EQ-04" if lot in low_yield_lots else rng.choice(EQUIPMENT, p=[0.28, 0.26, 0.24, 0.22])
         process = rng.choice(PROCESS)
-        n_wafers = rng.integers(6, 9)
-        for w in range(1, n_wafers + 1):
-            insp_qty = int(rng.integers(20, 26))
+        shift = rng.choice(SHIFT)
+        prof = equip_profile[equip]
+
+        for w in range(1, wafers_per_lot + 1):
+            temp = rng.normal(prof["temp_mean"], prof["temp_std"])
+            pressure = rng.normal(prof["pressure_mean"], prof["pressure_std"])
+            vacuum = rng.normal(5.0, 0.3)
+            proc_time = rng.normal(120, 5)
+
             if lot in low_yield_lots:
-                yield_pct = rng.uniform(55, 78)
+                # 로트 수율 80% 미만을 보장하기 위해 4장 중 최소 2장은 강제 불합격
+                fail = True if w <= 2 else (rng.random() < 0.3)
             else:
-                yield_pct = rng.uniform(88, 99)
-            good_qty = int(round(insp_qty * yield_pct / 100))
-            good_qty = min(good_qty, insp_qty)
-            bad_qty = insp_qty - good_qty
-            defect = rng.choice(DEFECT_TYPES) if bad_qty > 0 else ""
+                fail = rng.random() < prof["fail_prob"]
+
+            if fail:
+                passfail = -1
+                defect = rng.choice(eq04_defects) if (equip == "EQ-04" and rng.random() < 0.6) else rng.choice(DEFECT_TYPES)
+            else:
+                passfail = 1
+                defect = ""
+
             rows.append({
                 "로트번호": lot,
                 "웨이퍼번호": w,
                 "설비번호": equip,
                 "공정명": process,
-                "검사수량": insp_qty,
-                "양품수량": good_qty,
-                "불량수량": bad_qty,
+                "작업조": shift,
+                "온도_섭씨": round(temp, 1),
+                "압력_Pa": round(pressure, 1),
+                "진공도_mTorr": round(vacuum, 2),
+                "처리시간_sec": round(proc_time, 1),
                 "불량유형": defect,
-                "수율_pct": round(good_qty / insp_qty * 100, 1),
+                "합격여부": passfail,
             })
     df = pd.DataFrame(rows)
-    save_csv(df, "week07", "week07_yield_defect_analysis.csv")
+    save_csv(df, "week07", "week07_equipment_yield.csv")
     return df
 
 
@@ -368,47 +354,70 @@ def gen_week08():
 
 
 # ---------------------------------------------------------------------------
-# Week 09 (fab.csv 파생)
+# Week 09 (전면 교체) — 머신러닝 예측 + Orange3 (반도체_공정_샘플.csv 계열, fab.csv 미사용)
 # ---------------------------------------------------------------------------
-SELECTED_SENSORS = [
-    "Sensor59", "Sensor103", "Sensor510", "Sensor348", "Sensor431",
-    "Sensor434", "Sensor430", "Sensor435", "Sensor21", "Sensor28",
-    "Sensor436", "Sensor129", "Sensor210", "Sensor298", "Sensor163",
-]
-
-BEGINNER_ALIAS = {
-    "Sensor59": "Chamber_Temperature_edu",
-    "Sensor103": "Chamber_Pressure_edu",
-    "Sensor510": "Gas_Flow_edu",
-    "Sensor348": "RF_Power_edu",
-    "Sensor431": "Vacuum_Level_edu",
-    "Sensor434": "Cooling_Water_Temperature_edu",
-    "Sensor430": "Vibration_edu",
-    "Sensor435": "Process_Time_edu",
-    "Sensor21": "주요센서_A",
-    "Sensor28": "주요센서_B",
-}
+def _week09_features(rng, n):
+    equip = rng.choice(EQUIPMENT, size=n)
+    process = rng.choice(PROCESS, size=n)
+    temp = rng.normal(300, 5, size=n)
+    pressure = rng.normal(1012, 10, size=n)
+    vacuum = rng.normal(5.0, 0.4, size=n)
+    gas = rng.normal(50, 3, size=n)          # 검사결과와 무관/약한 변수(대조군)
+    humidity = rng.normal(45, 4, size=n)     # 검사결과와 무관/약한 변수(대조군)
+    thickness = 100 + (temp - 300) * 0.55 + rng.normal(0, 2.0, size=n)
+    return equip, process, temp, pressure, vacuum, gas, humidity, thickness
 
 
 def gen_week09():
-    fab_path = os.path.join(RAW, "fab.csv")
-    fab = pd.read_csv(fab_path, encoding="utf-8-sig")
+    rng = np.random.default_rng(109)
+    n = 750
+    equip, process, temp, pressure, vacuum, gas, humidity, thickness = _week09_features(rng, n)
 
-    selected = fab[["SensorTime"] + SELECTED_SENSORS + ["Pass_Fail"]].copy()
-    for c in SELECTED_SENSORS:
-        selected[c] = selected[c].round(3)
-    save_csv(selected, "week09", "week09_fab_selected_sensors.csv")
+    # 온도/압력/진공도/두께가 정상범위를 벗어날수록 불합격 확률 상승(8주차 패턴과 동일한 감각)
+    risk = (
+        (np.abs(temp - 300) > 6).astype(float) * 0.20
+        + (np.abs(pressure - 1012) > 18).astype(float) * 0.15
+        + ((vacuum < 4.5) | (vacuum > 5.5)).astype(float) * 0.25
+        + (np.abs(thickness - 100) > 5).astype(float) * 0.15
+    )
+    fail_prob = np.clip(0.06 + risk, 0.03, 0.85)
+    result = np.array([rng.choice([0, 1], p=[1 - p, p]) for p in fail_prob])  # 0=합격, 1=불합격
 
-    beginner_cols = list(BEGINNER_ALIAS.keys())
-    beginner = fab[["SensorTime"] + beginner_cols + ["Pass_Fail"]].copy()
-    beginner = beginner.dropna(subset=beginner_cols, thresh=len(beginner_cols) - 2)
-    beginner = beginner.rename(columns=BEGINNER_ALIAS)
-    for alias in BEGINNER_ALIAS.values():
-        beginner[alias] = beginner[alias].round(2)
-    beginner["검사결과"] = (beginner["Pass_Fail"] == 1).astype(int)  # 0=정상/합격, 1=이상/불합격
-    beginner = beginner.drop(columns=["Pass_Fail"])
-    save_csv(beginner, "week09", "week09_fab_beginner.csv")
-    return selected, beginner
+    df = pd.DataFrame({
+        "공정명": process,
+        "설비번호": equip,
+        "온도_섭씨": np.round(temp, 1),
+        "압력_Pa": np.round(pressure, 1),
+        "가스유량_slm": np.round(gas, 2),
+        "두께_nm": np.round(thickness, 2),
+        "진공도_mTorr": np.round(vacuum, 2),
+        "습도_pct": np.round(humidity, 1),
+        "검사결과": result,
+    })
+
+    # 결측치 소량 삽입(4~5주차 정제 복습용)
+    na_targets = rng.choice(n, size=15, replace=False)
+    na_cols = rng.choice(["온도_섭씨", "압력_Pa", "가스유량_slm", "습도_pct"], size=15)
+    for i, col in zip(na_targets, na_cols):
+        df.loc[i, col] = np.nan
+
+    save_csv(df, "week09", "week09_pass_fail_train.csv")
+
+    # 예측 실습용 새 로트(정답 라벨 없음)
+    n_new = 9
+    equip_n, process_n, temp_n, pressure_n, vacuum_n, gas_n, humidity_n, thickness_n = _week09_features(rng, n_new)
+    new_df = pd.DataFrame({
+        "공정명": process_n,
+        "설비번호": equip_n,
+        "온도_섭씨": np.round(temp_n, 1),
+        "압력_Pa": np.round(pressure_n, 1),
+        "가스유량_slm": np.round(gas_n, 2),
+        "두께_nm": np.round(thickness_n, 2),
+        "진공도_mTorr": np.round(vacuum_n, 2),
+        "습도_pct": np.round(humidity_n, 1),
+    })
+    save_csv(new_df, "week09", "week09_new_lots_to_predict.csv")
+    return df, new_df
 
 
 # ---------------------------------------------------------------------------
