@@ -355,6 +355,14 @@ print(cm)</code></pre>
       다시 학습시켜보자. 정확도와 혼동행렬이 어떻게 달라지는지 비교하고, 어떤 값이 가장
       균형 잡힌 결과를 주는지 찾아보자.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — train 정확도만 보면 착각하기 쉽다</b>
+      <code>max_depth</code>를 키우면 <code>model.score(X_train, y_train)</code>(학습에 쓴
+      데이터로 잰 정확도)은 거의 항상 계속 올라간다 — 심지어 100%에 가까워질 수도 있다. 진짜
+      실력은 반드시 <code>model.score(X_test, y_test)</code>로 확인해야 한다. train 정확도와
+      test 정확도의 차이가 크게 벌어진다면, 모델이 학습 데이터를 "외워버린"(과대적합,
+      overfitting) 신호다.
+    </div>
   </section>
 
   <section class="block">

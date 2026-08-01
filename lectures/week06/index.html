@@ -110,6 +110,13 @@ df = pd.read_csv("week06_process_visualization.csv")
 df["측정시간"] = pd.to_datetime(df["측정시간"])   # 문자열 → 날짜/시간 형식
 df = df.sort_values("측정시간")</code></pre>
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — 그래프가 겹쳐 보인다면</b>
+      아래 다섯 그래프를 각각 <b>서로 다른 코드 셀</b>에 나눠 실행하자. 한 셀 안에 여러 그래프
+      코드를 이어서 쓰면 <code>plt.show()</code>를 만나기 전까지는 같은 그림 위에 계속 겹쳐
+      그려진다. 그래프가 이상하게 겹쳐 보인다면 셀을 나누거나, 그래프마다 새로 시작하기 전에
+      <code>plt.show()</code>를 실행했는지 확인하자.
+    </div>
 
     <h3>1. 선 그래프 — 시간에 따른 변화</h3>
     <div class="code-block">

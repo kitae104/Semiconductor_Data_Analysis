@@ -173,6 +173,13 @@ print(f"점수 {score}는 {grade}등급입니다.")</code></pre>
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">점수 75는 C등급입니다.</pre>
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — elif 순서가 중요하다</b>
+      <code>if</code>/<code>elif</code>는 위에서부터 검사하다가 <b>처음으로 참인 곳에서 멈춘다.</b>
+      만약 <code>elif score &gt;= 70:</code>을 <code>elif score &gt;= 80:</code>보다 먼저 쓰면,
+      점수 85도 "C등급"으로 먼저 걸려버려 "B등급"까지 도달하지 못한다. 조건은 항상
+      "가장 까다로운(높은) 조건 → 가장 느슨한(낮은) 조건" 순서로 써야 한다.
+    </div>
     <div class="callout practice">
       <b class="tag">🙋 직접 해보기</b>
       <code>score</code>를 65로 바꿔서 다시 실행해보자. 어떤 등급이 나오는가?

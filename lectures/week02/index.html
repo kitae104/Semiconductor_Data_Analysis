@@ -176,6 +176,13 @@ print(len(temperatures))</code></pre>
 [295.4, 298.1, 312.6, 301.0, 296.8, 303.2]
 6</pre>
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — append()는 아무것도 돌려주지 않는다</b>
+      <code>append()</code>는 리스트 자체를 바로 바꿔줄 뿐, 결과값(리턴값)은 없다(정확히는
+      <code>None</code>). <code>temperatures = temperatures.append(303.2)</code>처럼 다시
+      대입하면 <code>temperatures</code>가 <code>None</code>이 되어버려 이후 코드가 모두 오류가
+      난다. 그냥 <code>temperatures.append(303.2)</code>만 한 줄로 쓰면 된다.
+    </div>
 
     <h3>리스트에서 최댓값·최솟값·평균 구하기</h3>
     <p>파이썬은 리스트 전체를 계산하는 내장 함수를 기본으로 제공한다 —

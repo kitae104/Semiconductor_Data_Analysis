@@ -214,6 +214,13 @@ print(df.shape)</code></pre>
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(102, 9)</pre>
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — 필터링 후 인덱스에 구멍이 생긴다</b>
+      <code>dropna()</code>·<code>drop_duplicates()</code>·조건 검색으로 행을 걸러내면, 남은 행의
+      인덱스 번호(맨 왼쪽 숫자)는 0, 1, 2, ...처럼 다시 매겨지지 않고 원래 번호 그대로 남아
+      중간중간 번호가 빠지게 된다. 리스트처럼 "몇 번째 행"으로 순서대로 접근하고 싶다면
+      <code>df = df.reset_index(drop=True)</code>를 추가로 실행해 인덱스를 새로 매겨야 한다.
+    </div>
   </section>
 
   <section class="block">

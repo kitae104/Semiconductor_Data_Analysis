@@ -244,6 +244,13 @@ print(fail_count)</code></pre>
       Colab에 위 코드를 그대로 입력하고 실행해보자. 그다음 <code>pass_count</code> 값을 다른 숫자로
       바꿔서 다시 실행하면 어떻게 되는지 확인해보자.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — 변수 이름 규칙</b>
+      변수 이름은 영문자·숫자·밑줄(<code>_</code>)만 쓸 수 있고 숫자로 시작할 수 없다. 띄어쓰기나
+      하이픈(<code>-</code>)도 쓸 수 없다(예: <code>pass count</code>, <code>1st_lot</code>,
+      <code>my-name</code>은 모두 오류가 난다). 또한 대문자와 소문자는 서로 다른 변수로
+      취급되므로 <code>Pass_Count</code>와 <code>pass_count</code>는 완전히 다른 이름이다.
+    </div>
 
     <h3>자료형 — 숫자형, 문자열형, 불리언</h3>
     <p>변수에는 숫자뿐 아니라 문자, 참/거짓 값도 담을 수 있다. 값의 "종류"를 <b>자료형(Data
@@ -408,6 +415,13 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
 
   <section class="block">
     <h2>🟣 파이썬 실습: 변수와 출력 따라 하기</h2>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — 셀 실행 순서</b>
+      Colab은 클릭해서 실행한 순서대로 코드를 기억하며, 꼭 "위에서 아래로" 실행해야 하는 것은
+      아니다. 하지만 순서를 뒤섞어 실행하면 <code>NameError</code>가 나거나 예상과 다른 값이
+      나올 수 있다. 결과가 이상하면 상단 메뉴의 "런타임 → 모두 실행"으로 맨 위 셀부터 순서대로
+      다시 실행해보자.
+    </div>
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>새 코드 셀 열기</b> — 오늘 쓰던 Colab 노트북에 새 코드 셀을 추가한다
