@@ -6,12 +6,6 @@
 <title>10차시. 모델 평가와 새 데이터 예측</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
-<style>
-  .photo-slot{
-    border:2px dashed var(--line); border-radius:12px; background:#f8fafc; color:var(--muted);
-    padding:1.6rem 1rem; text-align:center; font-size:.88rem; margin:1rem 0;
-  }
-</style>
 </head>
 <body>
 <header class="site-header">
@@ -156,9 +150,35 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
       예측해본다. scikit-learn 결과(9개 모두 합격)와 같은지, 확률(Probability) 값도 비슷한
       경향을 보이는지 비교한다.</p>
     </div>
-    <div class="photo-slot">
-      🖼️ <b>이미지 자리</b> — 실제 Orange3 화면 캡처(Predictions 위젯에 새 로트를 넣어 예측한
-      결과 표, 확률 컬럼 포함)를 강사가 추가하면 좋다.
+    <div class="oflow-wrap">
+      <svg class="oflow-svg" viewBox="0 0 860 190" role="img"
+           aria-label="9차시 Tree 모델과 새 로트 CSV가 Predictions 위젯으로 모여 예측 결과를 만드는 Orange3 워크플로 다이어그램">
+        <rect class="obox" x="10" y="15" width="230" height="56" rx="12"/>
+        <text x="125" y="38" text-anchor="middle" class="olabel" font-size="14">🌳 9차시 Tree 모델</text>
+        <text x="125" y="58" text-anchor="middle" class="osub" font-size="10">Orange3에서 학습된 모델</text>
+
+        <rect class="obox" x="10" y="119" width="230" height="56" rx="12"/>
+        <text x="125" y="142" text-anchor="middle" class="olabel" font-size="14">📁 새 로트 CSV</text>
+        <text x="125" y="162" text-anchor="middle" class="osub" font-size="10">week09_new_lots_to_predict.csv</text>
+
+        <path class="oarrow" d="M240,43 H270 V95 H306" fill="none"/>
+        <path class="oarrow" d="M240,147 H270 V95 H306" fill="none"/>
+        <polygon class="oarrowhead" points="306,87 323,95 306,103"/>
+
+        <rect class="obox accent" x="310" y="61" width="220" height="68" rx="14"/>
+        <text x="420" y="90" text-anchor="middle" class="olabel" font-size="15">🔮 Predictions</text>
+        <text x="420" y="112" text-anchor="middle" class="osub" font-size="11">새 로트 예측 실행</text>
+
+        <line class="oarrow" x1="530" y1="95" x2="552" y2="95"/>
+        <polygon class="oarrowhead" points="552,87 569,95 552,103"/>
+
+        <rect class="obox" x="570" y="45" width="280" height="100" rx="14"/>
+        <text x="710" y="76" text-anchor="middle" class="olabel" font-size="15">📋 예측 결과</text>
+        <text x="710" y="98" text-anchor="middle" class="osub" font-size="11">합격 / 불합격</text>
+        <text x="710" y="118" text-anchor="middle" class="osub" font-size="11">확률(Probability) 포함</text>
+      </svg>
+      <p class="oflow-note">💡 실제 Orange3 화면 캡처(Predictions 위젯에 새 로트를 넣어 예측한
+      결과 표, 확률 컬럼 포함)를 강사가 추가하면 더 좋다.</p>
     </div>
     <div class="callout warn">
       <b class="tag">두 방식이 다르게 나온다면?</b>

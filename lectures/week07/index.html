@@ -6,14 +6,6 @@
 <title>7차시. 설비·공정 비교와 수율·불량 분석</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
-<style>
-  .chart-img{max-width:100%;border-radius:8px;border:1px solid var(--line);display:block;margin:0 auto;}
-  .img-caption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:.4rem;}
-  .photo-slot{
-    border:2px dashed var(--line); border-radius:12px; background:#f8fafc; color:var(--muted);
-    padding:1.6rem 1rem; text-align:center; font-size:.88rem; margin:1rem 0;
-  }
-</style>
 </head>
 <body>
 <header class="site-header">
@@ -73,9 +65,27 @@
       <p style="margin:.5rem 0 0;">groupby 코드를 쓰기 전에 Orange3 Box Plot/Bar Chart 위젯으로
       설비별 온도·합격 여부 분포를 먼저 살펴보고, 차이가 있어 보이는 설비를 미리 짐작해본다.</p>
     </div>
-    <div class="photo-slot">
-      🖼️ <b>이미지 자리</b> — 실제 Orange3 화면 캡처(설비번호별 Box Plot, 합격여부 Bar Chart)를
-      강사가 추가하면 좋다.
+    <div class="oflow-wrap">
+      <svg class="oflow-svg" viewBox="0 0 760 190" role="img"
+           aria-label="File 위젯에서 Box Plot과 Bar Chart 두 위젯으로 갈라지는 Orange3 워크플로 다이어그램">
+        <rect class="obox" x="10" y="61" width="180" height="68" rx="14"/>
+        <text x="100" y="89" text-anchor="middle" class="olabel" font-size="15">📁 File</text>
+        <text x="100" y="111" text-anchor="middle" class="osub" font-size="11">week07_...csv</text>
+
+        <path class="oarrow" d="M190,95 H230 V43 H272" fill="none"/>
+        <polygon class="oarrowhead" points="272,35 289,43 272,51"/>
+        <rect class="obox" x="280" y="15" width="270" height="56" rx="12"/>
+        <text x="415" y="38" text-anchor="middle" class="olabel" font-size="14">📦 Box Plot</text>
+        <text x="415" y="58" text-anchor="middle" class="osub" font-size="10">설비별 온도 분포</text>
+
+        <path class="oarrow" d="M190,95 H230 V147 H272" fill="none"/>
+        <polygon class="oarrowhead" points="272,139 289,147 272,155"/>
+        <rect class="obox accent" x="280" y="119" width="270" height="56" rx="12"/>
+        <text x="415" y="142" text-anchor="middle" class="olabel" font-size="14">📊 Bar Chart</text>
+        <text x="415" y="162" text-anchor="middle" class="osub" font-size="10">설비별 합격/불합격</text>
+      </svg>
+      <p class="oflow-note">💡 실제 Orange3 화면 캡처(설비번호별 Box Plot, 합격여부 Bar Chart)를
+      강사가 추가하면 더 좋다.</p>
     </div>
     <p style="color:var(--muted);font-size:.9rem;">이제 Orange3로 미리 살펴본 인상을, 아래에서
     <code>groupby</code>로 정확한 숫자로 확인해본다.</p>

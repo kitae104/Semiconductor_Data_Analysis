@@ -6,12 +6,6 @@
 <title>5차시. 데이터 훑어보기와 정리(EDA)</title>
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
-<style>
-  .photo-slot{
-    border:2px dashed var(--line); border-radius:12px; background:#f8fafc; color:var(--muted);
-    padding:1.6rem 1rem; text-align:center; font-size:.88rem; margin:1rem 0;
-  }
-</style>
 </head>
 <body>
 <header class="site-header">
@@ -75,9 +69,29 @@
       위젯을 연결하면 각 열의 최댓값·최솟값이 한눈에 표로 나오는데, 온도_섭씨 열에 500이 넘는
       값이 있다면 눈으로 바로 "뭔가 이상하다"는 것을 알아챌 수 있다.</p>
     </div>
-    <div class="photo-slot">
-      🖼️ <b>이미지 자리</b> — 실제 Orange3 화면 캡처(File → Data Table → Feature Statistics를
-      연결한 워크플로 화면, 결측 셀이 강조된 Data Table 화면)를 강사가 추가하면 좋다.
+    <div class="oflow-wrap">
+      <svg class="oflow-svg" viewBox="0 0 860 140" role="img"
+           aria-label="File, Data Table, Feature Statistics 위젯을 순서대로 연결한 Orange3 워크플로 다이어그램">
+        <rect class="obox" x="10" y="25" width="230" height="90" rx="14"/>
+        <text x="125" y="62" text-anchor="middle" class="olabel" font-size="15">📁 File</text>
+        <text x="125" y="86" text-anchor="middle" class="osub" font-size="11">week05_dirty_process_data.csv</text>
+
+        <line class="oarrow" x1="240" y1="70" x2="262" y2="70"/>
+        <polygon class="oarrowhead" points="262,62 279,70 262,78"/>
+
+        <rect class="obox" x="280" y="25" width="230" height="90" rx="14"/>
+        <text x="395" y="62" text-anchor="middle" class="olabel" font-size="15">📋 Data Table</text>
+        <text x="395" y="86" text-anchor="middle" class="osub" font-size="11">빈 칸(결측 셀) 그대로 표시</text>
+
+        <line class="oarrow" x1="510" y1="70" x2="532" y2="70"/>
+        <polygon class="oarrowhead" points="532,62 549,70 532,78"/>
+
+        <rect class="obox accent" x="550" y="25" width="300" height="90" rx="14"/>
+        <text x="700" y="62" text-anchor="middle" class="olabel" font-size="15">📊 Feature Statistics</text>
+        <text x="700" y="86" text-anchor="middle" class="osub" font-size="11">온도_섭씨 최댓값 500↑ 발견!</text>
+      </svg>
+      <p class="oflow-note">💡 실제 Orange3 화면 캡처(위 워크플로를 연결한 캔버스 화면, 결측 셀이
+      강조된 Data Table 화면)를 강사가 추가하면 더 좋다.</p>
     </div>
     <p style="color:var(--muted);font-size:.9rem;">이제 Orange3로 미리 살펴본 문제를, 아래에서
     파이썬 코드로 하나씩 직접 찾아 정제해본다.</p>

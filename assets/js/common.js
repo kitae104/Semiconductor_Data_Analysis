@@ -42,4 +42,25 @@ document.addEventListener("DOMContentLoaded", function () {
     var pct = Math.min(100, Math.round((week / 10) * 100));
     progressFill.style.width = pct + "%";
   }
+
+  // 스크롤 등장 애니메이션: section.block / .hero / .hero-home이 화면에 들어오면 서서히 나타남
+  if ("IntersectionObserver" in window) {
+    var revealTargets = document.querySelectorAll("section.block, .hero, .hero-home");
+    var revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+    );
+    revealTargets.forEach(function (el, i) {
+      el.classList.add("reveal-init");
+      el.style.transitionDelay = Math.min(i * 40, 160) + "ms";
+      revealObserver.observe(el);
+    });
+  }
 });

@@ -219,11 +219,34 @@
   <section class="block">
     <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
     <div class="callout practice">
-      <b class="tag">위젯</b> Correlations
+      <b class="tag">위젯</b> File → Correlations
       <p style="margin:.5rem 0 0;">Pandas 코드를 쓰기 전에, 같은 CSV(<code>week08_anomaly_root_cause.csv</code>)를
       Orange3로 불러와 Correlations 위젯으로 모든 숫자 변수 쌍의 상관관계를 먼저 자동 정렬해 확인한다.
-      어떤 변수 쌍이 관계 있어 보이고, 어떤 변수는 관계가 없어 보이는지 미리 짐작해본다. 상세
-      단계별 화면 설명은 추후 작성 예정.</p>
+      어떤 변수 쌍이 관계 있어 보이고, 어떤 변수는 관계가 없어 보이는지 미리 짐작해본다.</p>
+    </div>
+    <div class="oflow-wrap">
+      <svg class="oflow-svg" viewBox="0 0 860 140" role="img"
+           aria-label="File, Correlations 위젯을 연결해 상관관계 순위표를 얻는 Orange3 워크플로 다이어그램">
+        <rect class="obox" x="10" y="25" width="230" height="90" rx="14"/>
+        <text x="125" y="62" text-anchor="middle" class="olabel" font-size="15">📁 File</text>
+        <text x="125" y="86" text-anchor="middle" class="osub" font-size="11">week08_anomaly_root_cause.csv</text>
+
+        <line class="oarrow" x1="240" y1="70" x2="262" y2="70"/>
+        <polygon class="oarrowhead" points="262,62 279,70 262,78"/>
+
+        <rect class="obox accent" x="280" y="25" width="230" height="90" rx="14"/>
+        <text x="395" y="62" text-anchor="middle" class="olabel" font-size="15">🔗 Correlations</text>
+        <text x="395" y="86" text-anchor="middle" class="osub" font-size="11">모든 숫자 쌍 자동 정렬</text>
+
+        <line class="oarrow" x1="510" y1="70" x2="532" y2="70"/>
+        <polygon class="oarrowhead" points="532,62 549,70 532,78"/>
+
+        <rect class="obox" x="550" y="25" width="300" height="90" rx="14"/>
+        <text x="700" y="62" text-anchor="middle" class="olabel" font-size="15">📋 상관관계 순위표</text>
+        <text x="700" y="86" text-anchor="middle" class="osub" font-size="11">관계 있어 보이는 쌍 먼저 표시</text>
+      </svg>
+      <p class="oflow-note">💡 실제 Orange3 화면 캡처(Correlations 위젯의 정렬된 결과 화면)를
+      강사가 추가하면 더 좋다.</p>
     </div>
     <p style="color:var(--muted);font-size:.9rem;">이제 Orange3로 미리 살펴본 관계를, 아래에서 파이썬
     코드로 하나씩 직접 계산해 확인해본다.</p>

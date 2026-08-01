@@ -22,10 +22,15 @@
   .flow-svg .flabel{fill:#0f172a;font-weight:700;}
   .flow-svg .fsub{fill:var(--muted);font-family:'Courier New',monospace;}
   .flow-svg .farrow{stroke:var(--muted);stroke-width:2.5;}
+  .flow-svg.wide{width:900px;}
   .img-caption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:-.4rem;}
-  .photo-slot{
-    border:2px dashed var(--line); border-radius:12px; background:#f8fafc; color:var(--muted);
-    padding:1.6rem 1rem; text-align:center; font-size:.88rem; margin:1rem 0;
+  .wafer-svg{width:700px;}
+  .wafer-circle{fill:var(--blue-bg);stroke:var(--blue);stroke-width:3;}
+  .die-cell{fill:#fff;stroke:var(--blue-line);stroke-width:1;}
+  .die-cell.hot{fill:var(--purple-bg);stroke:var(--purple);stroke-width:2;}
+  .wafer-svg .pulse{animation:pulseScale 1.6s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){
+    .var-box-svg .arrow-line,.wafer-svg .pulse,.var-box-svg .pulse{animation:none;}
   }
 </style>
 </head>
@@ -97,19 +102,82 @@
       웨이퍼는 커다란 피자 도우, 다이는 그 위에 자른 한 조각이라고 생각하면 된다.
       도우(웨이퍼) 하나로 여러 조각(다이)을 만들지만, 조각마다 굽는 상태(품질)가 다를 수 있다.
     </div>
-    <div class="photo-slot">
-      🖼️ <b>이미지 자리</b> — 실제 웨이퍼·다이·칩 사진(둥근 원판 위에 사각형 칩이 촘촘히 배열된
-      모습)을 강사가 추가하면 좋다. 검색 키워드 예시: "silicon wafer die chip photo".
-    </div>
+    <svg class="flow-svg wafer-svg" viewBox="0 0 700 190" role="img"
+         aria-label="웨이퍼 위 다이 하나를 확대해 칩으로 만드는 과정을 보여주는 다이어그램">
+      <defs>
+        <pattern id="dieGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+          <rect class="die-cell" x="1" y="1" width="20" height="20" rx="2"/>
+        </pattern>
+      </defs>
+      <circle class="wafer-circle" cx="95" cy="95" r="80"/>
+      <circle cx="95" cy="95" r="80" fill="url(#dieGrid)"/>
+      <rect class="die-cell hot pulse" x="118" y="46" width="20" height="20" rx="2" style="transform-origin:128px 56px;"/>
+
+      <line class="farrow" x1="180" y1="95" x2="235" y2="95"/>
+      <polygon points="235,87 252,95 235,103" fill="var(--muted)"/>
+
+      <rect class="fbox" x="255" y="59" width="140" height="72" rx="14"/>
+      <text x="325" y="90" text-anchor="middle" class="flabel" font-size="15">🔲 Die</text>
+      <text x="325" y="110" text-anchor="middle" class="fsub" font-size="11">회로 조각 1개</text>
+
+      <line class="farrow" x1="395" y1="95" x2="440" y2="95"/>
+      <polygon points="440,87 457,95 440,103" fill="var(--muted)"/>
+
+      <rect class="fbox active" x="460" y="59" width="220" height="72" rx="14"/>
+      <text x="570" y="86" text-anchor="middle" class="flabel" font-size="15">📦 Chip</text>
+      <text x="570" y="106" text-anchor="middle" class="fsub" font-size="11">자르고 패키징한 완제품</text>
+    </svg>
+    <p class="img-caption">웨이퍼(둥근 원판) 위에는 같은 회로가 새겨진 다이(Die)가 수백~수천 개 있다.
+    보라색으로 반짝이는 칸 하나를 잘라 패키징하면 우리가 아는 칩(Chip)이 된다. (실제 웨이퍼 사진을
+    구할 수 있다면 이 다이어그램과 나란히 추가해도 좋다.)</p>
 
     <h3>반도체 제조의 주요 공정</h3>
     <p>웨이퍼는 <b>산화 → 포토(노광) → 식각 → 이온 주입 → 증착 → 세정</b> 같은 공정을 수백 번
     반복하며 회로가 완성된다. 각 공정은 서로 다른 <b>설비(Equipment)</b>에서 진행되며,
     설비 안에는 온도·압력·가스유량 등을 측정하는 <b>센서(Sensor)</b>가 붙어 있다.</p>
-    <div class="photo-slot">
-      🖼️ <b>이미지 자리</b> — "산화 → 포토 → 식각 → 이온 주입 → 증착 → 세정" 공정 흐름을 화살표로
-      연결한 다이어그램이나 애니메이션(GIF)을 추가하면 순서를 기억하기 쉽다.
-    </div>
+    <svg class="flow-svg wide" viewBox="0 0 900 130" role="img"
+         aria-label="산화, 포토, 식각, 이온 주입, 증착, 세정 순서로 이어지는 반도체 제조 공정 흐름도">
+      <rect class="fbox" x="10" y="10" width="130" height="88" rx="12"/>
+      <text x="75" y="46" text-anchor="middle" class="flabel" font-size="15">🔥 산화</text>
+      <text x="75" y="66" text-anchor="middle" class="fsub" font-size="10">SiO2 막 형성</text>
+
+      <line class="farrow" x1="140" y1="54" x2="158" y2="54"/>
+      <polygon points="158,47 172,54 158,61" fill="var(--muted)"/>
+
+      <rect class="fbox" x="160" y="10" width="130" height="88" rx="12"/>
+      <text x="225" y="46" text-anchor="middle" class="flabel" font-size="15">💡 포토</text>
+      <text x="225" y="66" text-anchor="middle" class="fsub" font-size="10">회로 패턴 새기기</text>
+
+      <line class="farrow" x1="290" y1="54" x2="308" y2="54"/>
+      <polygon points="308,47 322,54 308,61" fill="var(--muted)"/>
+
+      <rect class="fbox" x="310" y="10" width="130" height="88" rx="12"/>
+      <text x="375" y="46" text-anchor="middle" class="flabel" font-size="15">⚗️ 식각</text>
+      <text x="375" y="66" text-anchor="middle" class="fsub" font-size="10">불필요한 부분 제거</text>
+
+      <line class="farrow" x1="440" y1="54" x2="458" y2="54"/>
+      <polygon points="458,47 472,54 458,61" fill="var(--muted)"/>
+
+      <rect class="fbox" x="460" y="10" width="130" height="88" rx="12"/>
+      <text x="525" y="46" text-anchor="middle" class="flabel" font-size="15">⚛️ 이온 주입</text>
+      <text x="525" y="66" text-anchor="middle" class="fsub" font-size="10">불순물 주입</text>
+
+      <line class="farrow" x1="590" y1="54" x2="608" y2="54"/>
+      <polygon points="608,47 622,54 608,61" fill="var(--muted)"/>
+
+      <rect class="fbox" x="610" y="10" width="130" height="88" rx="12"/>
+      <text x="675" y="46" text-anchor="middle" class="flabel" font-size="15">🌫️ 증착</text>
+      <text x="675" y="66" text-anchor="middle" class="fsub" font-size="10">박막 쌓기</text>
+
+      <line class="farrow" x1="740" y1="54" x2="758" y2="54"/>
+      <polygon points="758,47 772,54 758,61" fill="var(--muted)"/>
+
+      <rect class="fbox active" x="760" y="10" width="130" height="88" rx="12"/>
+      <text x="825" y="46" text-anchor="middle" class="flabel" font-size="15">🧼 세정</text>
+      <text x="825" y="66" text-anchor="middle" class="fsub" font-size="10">잔여물 제거</text>
+    </svg>
+    <p class="img-caption">이 6단계를 수백 번 반복하며 웨이퍼 위에 회로가 완성된다 — 순서를
+    "산-포-식-이-증-세"처럼 앞글자로 외워두면 기억하기 쉽다.</p>
 
     <h3>FAB의 의미</h3>
     <p><b>FAB(팹, Fabrication의 줄임말)</b>은 반도체를 실제로 생산하는 공장을 말한다.
