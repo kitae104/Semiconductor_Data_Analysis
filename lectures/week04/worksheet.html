@@ -94,6 +94,18 @@ df.____________("온도_섭씨", ascending=False)</code></pre>
     </div>
   </section>
 
+  <section class="block">
+    <h2>7. 심화 실습</h2>
+    <div class="callout practice">
+      <b class="tag">심화</b>
+      <code>&amp;</code> 연산자로 두 조건을 동시에 만족하는 행을 찾아보자:
+      <code>df[(df["온도_섭씨"] &gt; 305) &amp; (df["합격여부"] == -1)]</code>. 이 결과의 행
+      개수를 세어 "고온이면서 불합격인 건수"를 확인하고, 전체 불합격 건수 대비 비율(%)을
+      계산해보자. 그리고 이 조건으로 걸러낸 결과에 <code>["공정명"].value_counts()</code>를
+      적용해 어떤 공정에서 많이 나타나는지도 확인해보자.
+    </div>
+  </section>
+
   <div class="nav-buttons">
     <a class="home" href="index.html">← 4차시 강의로 돌아가기</a>
   </div>

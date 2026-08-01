@@ -98,6 +98,18 @@ df_clean2 = df.____________()         # 중복 행 제거</code></pre>
     </div>
   </section>
 
+  <section class="block">
+    <h2>7. 심화 실습</h2>
+    <div class="callout practice">
+      <b class="tag">심화</b>
+      결측값을 <code>dropna()</code>로 제거하는 대신,
+      <code>df["온도_섭씨"].fillna(df["온도_섭씨"].mean())</code>과
+      <code>df["온도_섭씨"].fillna(df["온도_섭씨"].median())</code> 두 가지 방법으로 각각
+      채워보고, 채운 뒤의 평균값이 서로 어떻게 다른지 비교해보자. 이상값이 섞여 있을 때 왜
+      평균보다 중앙값이 더 안전한 선택인지 한 문장으로 설명해보자.
+    </div>
+  </section>
+
   <div class="nav-buttons">
     <a class="home" href="index.html">← 5차시 강의로 돌아가기</a>
   </div>
