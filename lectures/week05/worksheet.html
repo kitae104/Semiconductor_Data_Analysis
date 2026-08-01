@@ -108,6 +108,12 @@ df_clean2 = df.____________()         # 중복 행 제거</code></pre>
       채워보고, 채운 뒤의 평균값이 서로 어떻게 다른지 비교해보자. 이상값이 섞여 있을 때 왜
       평균보다 중앙값이 더 안전한 선택인지 한 문장으로 설명해보자.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      <code>fillna()</code>는 원본 <code>df</code>를 바꾸지 않고 "채워진 새 결과"를 돌려준다.
+      계속 쓰려면 <code>filled = df["온도_섭씨"].fillna(...)</code>처럼 변수에 담아야 하며,
+      그냥 <code>df["온도_섭씨"].fillna(...)</code>만 실행하고 끝내면 원본은 그대로다.
+    </div>
   </section>
 
   <div class="nav-buttons">

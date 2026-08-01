@@ -140,6 +140,12 @@ fail_count = 6</pre>
       <code>f"전체 {total}건 중 합격 {pass_count}건, 합격률 {pass_rate:.1f}%"</code> 형태의 문장을
       출력하는 코드를 작성해보자. <code>:.1f</code> 형식을 잊지 말고 사용한다.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      <code>pass_rate</code>는 <code>pass_count / total * 100</code> 순서로 계산해야 한다.
+      <code>pass_count / (total * 100)</code>처럼 괄호 위치가 달라지면 결과가 크게 작아지니
+      계산 순서를 꼭 확인하자.
+    </div>
   </section>
 
   <div class="nav-buttons">

@@ -104,6 +104,12 @@ df.____________("온도_섭씨", ascending=False)</code></pre>
       계산해보자. 그리고 이 조건으로 걸러낸 결과에 <code>["공정명"].value_counts()</code>를
       적용해 어떤 공정에서 많이 나타나는지도 확인해보자.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      Pandas에서 여러 조건을 <code>&amp;</code>(그리고)·<code>|</code>(또는)로 합칠 때는 각 조건을
+      반드시 괄호로 감싸야 한다. <code>df["온도_섭씨"] &gt; 305 &amp; df["합격여부"] == -1</code>처럼
+      괄호 없이 쓰면 연산 순서가 꼬여 오류가 나거나 엉뚱한 결과가 나온다.
+    </div>
   </section>
 
   <div class="nav-buttons">

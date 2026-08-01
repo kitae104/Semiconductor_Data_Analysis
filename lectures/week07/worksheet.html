@@ -131,6 +131,12 @@ df["불량유형"].____________()</code></pre>
       많이 발생한 불량 유형을 각각 찾아보자. EQ-04에서 가장 흔한 불량 유형이, 전체 데이터의
       파레토 1위 불량 유형과 같은지 다른지 비교하고, 다르다면 그 이유를 추측해보자.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      <code>groupby(...).value_counts()</code>의 결과는 (설비번호, 불량유형) 두 겹으로 색인된
+      Series다. 표처럼 바로 열 이름으로 필터링할 수 없고, 특정 설비만 보려면
+      <code>result.loc["EQ-04"]</code>처럼 첫 번째 인덱스로 골라야 한다.
+    </div>
   </section>
 
   <div class="nav-buttons">

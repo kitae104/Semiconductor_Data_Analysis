@@ -117,6 +117,12 @@ plt.show()</code></pre>
       <code>df["두께_nm"].corr(df["진동_mm_s"])</code>도 계산해서, 산점도에서 불합격(다른 색)
       점들이 특별히 몰려 있는 구간이 있는지 관찰해 한 문장으로 적어보자.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      <code>c=</code>에 넣는 값은 숫자형이어야 색으로 자동 구분된다. <code>합격여부</code>는 이미
+      1/-1 숫자라 바로 쓸 수 있지만, 만약 "합격"/"불합격" 같은 문자열 열이었다면 먼저 숫자로
+      바꾼 뒤 넣어야 한다.
+    </div>
   </section>
 
   <div class="nav-buttons">

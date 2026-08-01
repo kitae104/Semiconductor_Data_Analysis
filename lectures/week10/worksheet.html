@@ -110,6 +110,12 @@ new_lots["불합격_확률"] = proba[:, 1]</code></pre>
       그리고 기준을 낮추는 것의 장단점(불량을 더 많이 잡아내지만 오탐도 늘어남)을 한 문장으로
       적어보자.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      <code>proba[:, 1]</code>이 항상 "불합격 확률"이라고 단정하지 말고,
+      <code>model.classes_</code>를 먼저 출력해서 클래스가 어떤 순서로 배열되는지 확인하자.
+      순서가 <code>[0, 1]</code>이 아니라면 <code>proba</code>의 열 순서도 그에 맞춰 달라진다.
+    </div>
   </section>
 
   <div class="nav-buttons">

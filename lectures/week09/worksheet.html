@@ -102,6 +102,12 @@ model.fit(X_train, y_train)</code></pre>
       정확도를 비교해보자. <code>max_depth</code>가 클수록 항상 test 정확도가 좋아지는지
       확인하고, 만약 그렇지 않다면(과대적합, overfitting) 그 이유를 한 문장으로 설명해보자.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      정확도는 반드시 <code>X_test</code>, <code>y_test</code>로 비교해야 한다. <code>X_train</code>
+      으로 정확도를 재면 <code>max_depth</code>가 클수록 항상 높게 나와서 과대적합을 발견할 수
+      없다. train 정확도와 test 정확도를 각각 따로 확인해 두 값의 차이가 커지는지 살펴보자.
+    </div>
   </section>
 
   <div class="nav-buttons">

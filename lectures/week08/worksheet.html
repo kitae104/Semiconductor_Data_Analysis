@@ -116,6 +116,13 @@ r = df["온도_섭씨"].____(df["두께_nm"])</code></pre>
       비교해보자. 두 조건이 겹칠 때 불합격률이 더 크게 뛰는지 확인하고, 그렇다면 두 원인 후보가
       "함께 작용"할 가능성에 대해 한 문장으로 적어보자.
     </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      <code>&amp;</code>·<code>|</code>·<code>~</code>를 함께 쓸 때도 각 조건은 반드시 괄호로
+      감싸야 한다. 예: <code>both = df[(vac_out) &amp; (pres_out)]</code>,
+      <code>either = df[vac_out | pres_out]</code>, <code>neither = df[~(vac_out | pres_out)]</code>.
+      괄호를 빼먹으면 조건이 의도와 다르게 계산된다.
+    </div>
   </section>
 
   <div class="nav-buttons">
