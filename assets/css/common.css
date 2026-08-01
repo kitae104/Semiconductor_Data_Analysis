@@ -21,12 +21,12 @@
 }
 
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; font-size:17px;}
 body{
   margin:0; font-family:var(--font); background:var(--bg); color:var(--ink);
   line-height:1.7; font-size:17px;
 }
-h1,h2,h3,h4{line-height:1.35;}
+h1,h2,h3,h4{line-height:1.35; font-weight:800;}
 img{max-width:100%;}
 
 /* ---------- 헤더 & 진행률 ---------- */
@@ -82,10 +82,10 @@ section.block{
   scroll-margin-top:112px;
 }
 section.block > h2{
-  margin-top:0; color:var(--blue); font-size:1.25rem; display:flex; align-items:center; gap:.5rem;
+  margin-top:0; color:var(--blue); font-size:1.4rem; display:flex; align-items:center; gap:.5rem;
   border-bottom:2px solid var(--line); padding-bottom:.6rem;
 }
-section.block > h3{color:#0f172a; font-size:1.05rem;}
+section.block > h3{color:#0f172a; font-size:1.18rem; margin-top:1.3rem;}
 
 /* ---------- 목표/시간표 ---------- */
 .goal-list{list-style:none; margin:0; padding:0; display:grid; gap:.55rem;}
@@ -104,7 +104,7 @@ section.block > h3{color:#0f172a; font-size:1.05rem;}
 .term-card{
   border:1px solid var(--purple-line); background:var(--purple-bg); border-radius:12px; padding:1rem 1.1rem;
 }
-.term-card h4{margin:0 0 .2rem; color:#5b21b6; font-size:1.02rem;}
+.term-card h4{margin:0 0 .2rem; color:#5b21b6; font-size:1.12rem;}
 .term-card .en{font-size:.78rem; color:var(--muted); margin-bottom:.5rem;}
 .term-card dl{margin:.3rem 0 0; font-size:.88rem;}
 .term-card dt{font-weight:700; color:#4c1d95; margin-top:.45rem;}
@@ -277,8 +277,8 @@ table.data-preview tr:nth-child(even){background:#f8fafc;}
 
 @media (max-width:640px){
   body{font-size:16px;}
-  .hero h1{font-size:1.3rem;}
+  .hero h1{font-size:1.55rem;}
   .hero-home{padding:1.6rem 1.3rem;}
-  .hero-home h1{font-size:1.45rem;}
+  .hero-home h1{font-size:1.6rem;}
   section.block{padding:1.1rem 1rem;}
 }
