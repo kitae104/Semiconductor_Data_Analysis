@@ -43,6 +43,41 @@ document.addEventListener("DOMContentLoaded", function () {
     progressFill.style.width = pct + "%";
   }
 
+  // 이 차시 목차(TOC): 강의/실습지 페이지(주차 내비게이션이 있는 페이지)에서
+  // section.block > h2를 모아 클릭 시 해당 섹션으로 부드럽게 이동하는 목차를 자동 생성한다.
+  var weekNav = document.querySelector(".week-nav");
+  var heroEl = document.querySelector(".hero, .hero-home");
+  if (weekNav && heroEl) {
+    var tocSections = Array.prototype.filter.call(
+      document.querySelectorAll("main.page > section.block"),
+      function (sec) { return sec.querySelector("h2"); }
+    );
+    if (tocSections.length >= 4) {
+      var toc = document.createElement("nav");
+      toc.className = "toc-box";
+      toc.setAttribute("aria-label", "이 페이지 목차");
+
+      var title = document.createElement("span");
+      title.className = "toc-title";
+      title.textContent = "📑 이 페이지 목차";
+      toc.appendChild(title);
+
+      var list = document.createElement("div");
+      list.className = "toc-list";
+      tocSections.forEach(function (sec, i) {
+        if (!sec.id) sec.id = "sec-" + (i + 1);
+        var h2 = sec.querySelector("h2");
+        var a = document.createElement("a");
+        a.href = "#" + sec.id;
+        a.textContent = h2.textContent.trim();
+        list.appendChild(a);
+      });
+      toc.appendChild(list);
+
+      heroEl.insertAdjacentElement("afterend", toc);
+    }
+  }
+
   // 스크롤 등장 애니메이션: section.block / .hero / .hero-home이 화면에 들어오면 서서히 나타남
   if ("IntersectionObserver" in window) {
     var revealTargets = document.querySelectorAll("section.block, .hero, .hero-home");

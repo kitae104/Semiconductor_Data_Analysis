@@ -1,6 +1,6 @@
 /* 인쇄용 스타일: 내비게이션/버튼/퀴즈 정답 버튼 등 인터랙션 요소를 숨긴다 */
 @media print{
-  .site-header, .week-nav, #backToTop, .nav-buttons, .copy-btn, .reveal-btn{
+  .site-header, .week-nav, #backToTop, .nav-buttons, .copy-btn, .reveal-btn, .toc-box{
     display:none !important;
   }
   body{background:#fff; font-size:12pt; color:#000;}
