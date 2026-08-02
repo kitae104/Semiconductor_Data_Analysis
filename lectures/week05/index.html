@@ -69,6 +69,8 @@
       위젯을 연결하면 각 열의 최댓값·최솟값이 한눈에 표로 나오는데, 온도_섭씨 열에 500이 넘는
       값이 있다면 눈으로 바로 "뭔가 이상하다"는 것을 알아챌 수 있다.</p>
     </div>
+    <p style="color:var(--muted);font-size:.9rem;">Orange3 설치나 위젯 사용법이 처음이라면
+    <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>를 먼저 읽어보자.</p>
     <div class="oflow-wrap">
       <svg class="oflow-svg" viewBox="0 0 860 140" role="img"
            aria-label="File, Data Table, Feature Statistics 위젯을 순서대로 연결한 Orange3 워크플로 다이어그램">
@@ -98,19 +100,97 @@
   </section>
 
   <section class="block">
-    <h2>🐍 ② 파이썬으로 확인하기 — 결측값 찾고 처리하기</h2>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 데이터 읽기와 결측값 확인</span><button class="copy-btn">복사</button></div>
-      <pre><code>import pandas as pd
+    <h2>🐍 ② 파이썬으로 확인하기 — 숫자 요약부터, 그다음 결측값</h2>
 
-df = pd.read_csv("week05_dirty_process_data.csv")
-print(df.shape)
-print(df.isna().sum())</code></pre>
+    <h3>먼저 아주 작은 표로 오늘 배울 것 미리 보기</h3>
+    <p>오늘 배울 "결측값·이상값 찾기"를 반도체 데이터로 바로 연습하기 전에, 학생 5명의 점수를
+    담은 작은 표로 먼저 감을 잡아보자. 한 명은 점수가 비어 있고(결측값), 한 명은 점수가
+    550점으로 말이 안 되는 값(이상값)이다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 아주 작은 표로 미리 보기</span><button class="copy-btn">복사</button></div>
+      <pre><code>toy = pd.DataFrame({
+    "이름": ["지민", "하은", "서준", "예린", "도윤"],
+    "점수": [88, None, 92, 550, 79],   # None을 넣으면 결측값(NaN)이 된다
+})
+print(toy)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(113, 9)
-측정시간        0
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">   이름     점수
+0  지민   88.0
+1  하은    NaN
+2  서준   92.0
+3  예린  550.0
+4  도윤   79.0</pre>
+    </div>
+    <div class="explain-list">
+      <b>오늘 배울 것 미리 맛보기</b>
+      <ul>
+        <li><code>toy.isna().sum()</code> — 결측값 개수 세기 (하은의 <code>NaN</code> 1건이 잡힌다)</li>
+        <li><code>toy.dropna()</code> — 결측값이 있는 행 제거 (하은이 사라진다)</li>
+        <li><code>toy["점수"].fillna(toy["점수"].median())</code> — 결측값을 중앙값으로 채우기</li>
+        <li><code>toy[toy["점수"] &gt; 100]</code> — 조건 검색으로 이상값(예린의 550점) 찾기</li>
+      </ul>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      위 네 줄을 하나씩 실행해보자. 지금은 결과만 눈으로 훑어보고, 정확한 의미는 아래에서
+      반도체 데이터로 하나씩 자세히 배운다.
+    </div>
+
+    <h3>가장 먼저 하는 습관 — describe()로 숫자 요약 훑어보기</h3>
+    <p>결측값을 하나씩 세기 전에, <code>describe()</code>로 숫자 열 전체를 한 번에 요약해
+    훑어보는 것이 데이터 분석에서 가장 먼저 하는 습관 중 하나다. 최솟값·최댓값만 봐도
+    "말이 안 되는 값"이 있는지 바로 감을 잡을 수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 숫자 요약</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+
+df = pd.read_csv("week05_dirty_process_data.csv")
+print(df.describe())</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">          온도_섭씨      압력_Pa   가스유량_slm  처리시간_sec
+count   110.00     111.00      110.00      113.00
+mean    304.94     994.36       51.35      119.92
+std      33.58     140.25       19.93        5.19
+min     291.30     -42.91       -5.00      107.30
+25%     298.10    1007.85       48.76      116.50
+50%     300.45    1013.10       49.94      119.80
+75%     302.50    1017.50       51.38      123.40
+max     557.73    1033.10      250.00      132.30</pre>
+    </div>
+    <div class="explain-list">
+      <b>결과 읽는 법</b>
+      <ul>
+        <li><code>count</code> — 결측이 아닌(값이 있는) 개수. 전체 113행보다 적은 열
+        (온도_섭씨 110, 압력_Pa 111, 가스유량_slm 110)에는 결측값이 있다는 뜻이다.</li>
+        <li><code>mean</code>과 <code>50%</code>(중앙값) — 온도_섭씨의 평균(304.94)이 중앙값
+        (300.45)보다 눈에 띄게 크다. 평균이 중앙값보다 많이 높다면 극단적으로 큰 값이 섞여
+        있을 가능성이 높다는 신호다.</li>
+        <li><code>min</code>/<code>max</code> — 온도_섭씨의 max가 557.73으로 정상 범위
+        (295~305℃)를 크게 벗어나고, 압력_Pa의 min은 음수(-42.91)다. Orange3 Feature
+        Statistics에서 본 이상값을 숫자로도 확인한 것이다.</li>
+      </ul>
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — describe()는 숫자형 열만 보여준다</b>
+      <code>로트번호</code>·<code>설비번호</code>·<code>공정명</code>처럼 문자열(범주형) 열은
+      <code>describe()</code> 결과에 나오지 않는다. 범주형 열은 <code>value_counts()</code>나
+      <code>unique()</code>로 따로 확인해야 한다.
+    </div>
+
+    <h3>결측값 정확히 세기 — isna()</h3>
+    <p><code>describe()</code>의 <code>count</code>로 "결측이 있는 열이 있다"는 것은 알았으니,
+    이제 <code>isna()</code>로 열별 결측 개수를 정확히 세어보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 결측값 확인</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.isna().sum())</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">측정시간        0
 로트번호        0
 설비번호        0
 공정명         0
@@ -214,6 +294,31 @@ print(df.shape)</code></pre>
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(102, 9)</pre>
     </div>
+
+    <h3>참고 — loc로 행을 지우지 않고 "값만" 정정하기</h3>
+    <p>방금은 이상값이 있는 <b>행 전체</b>를 삭제했다. 하지만 다른 열은 모두 정상인데 한 열만
+    튀는 경우, 행 전체를 버리기 아까울 때가 있다. 4차시에서 배운 <code>loc</code>을 쓰면 조건에
+    맞는 행의 <b>특정 열 값만</b> 골라 바꿀 수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — loc로 값 정정</span><button class="copy-btn">복사</button></div>
+      <pre><code># 온도가 400도를 넘는 행만, 온도_섭씨 값만 중앙값으로 바꾼다(행은 남긴다)
+df.loc[df["온도_섭씨"] > 400, "온도_섭씨"] = df["온도_섭씨"].median()</code></pre>
+    </div>
+    <div class="explain-list">
+      <b>동작 원리</b>
+      <ul>
+        <li><code>df.loc[조건, "열이름"]</code>은 조건에 맞는 행의 그 열만 콕 집어 가리킨다.</li>
+        <li>지금까지는 조건 검색으로 데이터를 "읽기"만 했다면, <code>df.loc[조건, 열] = 값</code>은
+        골라낸 칸에만 새 값을 "쓰는(수정하는)" 것이다 — 다른 칸과 다른 열은 전혀 바뀌지 않는다.</li>
+      </ul>
+    </div>
+    <div class="callout warn">
+      <b class="tag">언제 삭제하고, 언제 loc로 정정할까?</b>
+      여러 값이 동시에 비정상인 행은 <b>행 삭제</b>가 안전하고, 한 열만 튀고 나머지는 정상인
+      행은 <b>loc로 값만 정정</b>하는 편이 데이터 손실을 줄인다. 정해진 정답은 없으니 상황에
+      맞게 판단하되, 실습에서는 계속 "행 삭제" 방식을 이어서 쓴다.
+    </div>
+
     <div class="callout warn">
       <b class="tag">체크포인트 — 필터링 후 인덱스에 구멍이 생긴다</b>
       <code>dropna()</code>·<code>drop_duplicates()</code>·조건 검색으로 행을 걸러내면, 남은 행의

@@ -140,6 +140,26 @@
 단계는 이번에 배치한 lectures/notebooks 개요(skeleton)를 사용자가 검토·확정한 뒤, 그 확정된
 목차를 기준으로 상세 설명·예제 코드·퀴즈·데이터 설명서를 실제로 채우는 것이다.
 
+### 후속 진행 — TODO 4: Orange3 공통 안내 자료 신규 작성 (2026-08-01)
+
+- 3~10차시 전체 상세 콘텐츠 완성 이후에도 TODO 4(Orange3 설치·기본 사용법 공통 안내 자료)는
+  계속 미착수 상태로 남아 있었다 — 각 차시는 "File → Data Table → Feature Statistics" 같은 위젯
+  이름만 언급할 뿐, 이 과정의 대상인 프로그래밍 완전 초보자에게 Orange3 설치 방법이나 캔버스에서
+  위젯을 놓고 연결하는 기본 조작법을 설명하는 곳이 어디에도 없었다.
+- `docs/orange3-guide.html`을 신규 작성해 TODO 4를 완료했다 — 설치(pip/설치파일 두 가지 방법),
+  기본 화면 구성(위젯 목록/캔버스/연결선, SVG 다이어그램 포함), 첫 워크플로 만들어보기 실습,
+  5~10차시에서 실제로 쓰는 위젯 11종(File, Data Table, Feature Statistics, Scatter Plot, Box
+  Plot, Distributions, Bar Chart, Correlations, Tree, Test and Score, Predictions) 설명, 차시별
+  사용 위젯 요약표, 자주 발생하는 문제 해결(연결 실패, 인코딩, Target Variable 누락 등)까지
+  다룬다. 다른 강의 자료와 동일하게 `assets/css/common.css` 기존 클래스만 재사용했다.
+- `README.md`(Orange3 설치 절 — 적용 범위를 "5·6·8·9차시"에서 실제 범위인 "5~10차시"로 바로잡고
+  새 부록 링크 추가), `index.html`("이 과정 사용 방법" 절에 부록 링크 추가),
+  `lectures/week{05~10}/index.html`(각 차시 "Orange3로 먼저 훑어보기" 절에 부록 링크 한 줄
+  추가), `lectures/week{05~10}/instructor-guide.md`(준비물 항목에 부록 링크 추가, 8차시는
+  Orange3 언급 자체가 없었어서 신규 추가)에서 새 부록을 상호 참조하도록 갱신했다.
+- `python scripts/validate_datasets.py`(43/43)와 `python scripts/validate_notebooks.py`(63/63)
+  로 회귀 없음을 재확인했다(이번 변경은 HTML/Markdown만 건드려 데이터·노트북에는 영향 없음).
+
 ### 후속 진행 — 1·2차시 상세 콘텐츠 완성 + 시간 정보 제거 정책
 
 - **1차시**: `lectures/week01/index.html`의 "파이썬 시작하기" 절을 개요에서 전체 내용으로

@@ -48,6 +48,49 @@
     transition:background .15s ease, transform .15s ease;
   }
   .links-row a:hover{background:var(--blue-bg); transform:translateY(-2px);}
+
+  /* ---------- 강의 자료 애니메이션 미리보기 ---------- */
+  .anim-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.1rem; margin-top:.9rem;}
+  .anim-card{
+    background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:1.1rem 1rem 1.3rem; box-shadow:0 2px 10px rgba(15,23,42,.05);
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+  }
+  .anim-card .anim-tag{font-size:.78rem; font-weight:800; color:var(--purple); margin-bottom:.4rem;}
+  .anim-card svg{width:100%; max-width:230px; height:auto; display:block; margin:0 auto;}
+  .anim-card .oflow-wrap{width:100%; margin:0;}
+  .anim-card .anim-caption{font-size:.83rem; color:var(--muted); margin:.6rem 0 .7rem; line-height:1.5;}
+  .anim-card .anim-link{font-size:.82rem; text-decoration:none; color:var(--blue); font-weight:700;}
+  .anim-card .anim-link:hover{text-decoration:underline;}
+
+  /* 1차시 — 변수 상자 애니메이션 */
+  .var-box-svg .box{fill:var(--blue-bg); stroke:var(--blue); stroke-width:2;}
+  .var-box-svg .value-text{fill:var(--blue); font-weight:800; font-family:'Courier New',monospace;}
+  .var-box-svg .label-text{fill:var(--blue); font-weight:700; font-family:'Courier New',monospace;}
+  .var-box-svg .arrow-line{stroke:var(--purple); stroke-width:3; stroke-dasharray:6 6; animation:dashMove 1.1s linear infinite;}
+  .var-box-svg .pulse{animation:pulseScale 1.6s ease-in-out infinite; transform-origin:315px 88px;}
+  @keyframes dashMove{to{stroke-dashoffset:-24;}}
+  @keyframes pulseScale{0%,100%{transform:scale(1);} 50%{transform:scale(1.08);}}
+
+  /* 2차시 — 리스트 강조 애니메이션 */
+  .list-svg .cell{fill:var(--blue-bg); stroke:var(--blue); stroke-width:2;}
+  .list-svg .cell.hot{fill:var(--purple-bg); stroke:var(--purple);}
+  .list-svg .cell.hot rect{animation:pulseScale2 1.6s ease-in-out infinite;}
+  .list-svg .val{fill:#0f172a; font-weight:700; font-family:'Courier New',monospace;}
+  .list-svg .idx{fill:var(--muted); font-family:'Courier New',monospace;}
+  @keyframes pulseScale2{0%,100%{transform:scale(1);} 50%{transform:scale(1.07);}}
+
+  /* 3차시 — 반복문 마커 이동 애니메이션 */
+  .loop-svg .cell{fill:var(--blue-bg); stroke:var(--blue); stroke-width:2;}
+  .loop-svg .val{fill:#0f172a; font-weight:700; font-family:'Courier New',monospace; font-size:13px;}
+  .loop-svg .marker{fill:var(--purple); opacity:.85; animation:walkMove 3s steps(5) infinite;}
+  @keyframes walkMove{0%{transform:translateX(0);} 20%{transform:translateX(102px);} 40%{transform:translateX(204px);} 60%{transform:translateX(306px);} 80%{transform:translateX(408px);} 100%{transform:translateX(408px);}}
+
+  @media (prefers-reduced-motion:reduce){
+    .var-box-svg .arrow-line,.var-box-svg .pulse,
+    .list-svg .cell.hot rect,
+    .loop-svg .marker{animation:none;}
+  }
 </style>
 </head>
 <body>
@@ -103,6 +146,106 @@
         <span class="jnum">4</span>
         <h4>🔮 예측</h4>
         <p>머신러닝 모델을 직접 만들고 평가한 뒤, 새 데이터를 예측해본다. (9~10차시)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🎬 강의 자료 미리보기 — 실제로 이렇게 움직입니다</h2>
+    <p style="color:var(--muted); font-size:.92rem; margin-top:-.3rem;">
+      각 차시 강의 자료에는 클릭이나 스크롤 없이도 개념이 눈에 들어오도록 움직이는 SVG
+      다이어그램이 들어 있습니다. 실제 자료에서 쓰는 애니메이션 몇 가지를 미리 볼 수 있습니다.
+    </p>
+    <div class="anim-grid">
+      <div class="anim-card">
+        <span class="anim-tag">1차시 · 변수</span>
+        <svg class="var-box-svg" viewBox="0 0 440 170" role="img"
+             aria-label="변수 개념도: 34라는 값이 화살표를 따라 pass_count라는 이름의 상자 안에 저장된다">
+          <text x="55" y="98" font-size="30" text-anchor="middle" fill="var(--muted)" font-weight="700" font-family="'Courier New',monospace">34</text>
+          <line class="arrow-line" x1="100" y1="90" x2="175" y2="90"/>
+          <polygon points="175,80 195,90 175,100" fill="var(--purple)"/>
+          <rect class="box" x="205" y="35" width="220" height="105" rx="16"/>
+          <text x="315" y="26" font-size="15" text-anchor="middle" class="label-text">pass_count</text>
+          <text x="315" y="98" font-size="34" text-anchor="middle" class="value-text pulse">34</text>
+        </svg>
+        <p class="anim-caption">값 <code>34</code>가 화살표를 따라 <code>pass_count</code>라는
+        이름의 상자에 저장되는 모습을 실시간으로 보여준다.</p>
+        <a class="anim-link" href="lectures/week01/index.html">1차시 강의 자료 보기 →</a>
+      </div>
+
+      <div class="anim-card">
+        <span class="anim-tag">2차시 · 리스트</span>
+        <svg class="list-svg" viewBox="0 0 520 130" role="img"
+             aria-label="temperatures 리스트: 인덱스 0부터 4까지 다섯 개의 온도 값이 순서대로 담겨 있고, 인덱스 2의 312.6이 가장 큰 값으로 강조되어 있다">
+          <g class="cell"><rect x="10" y="20" width="92" height="60" rx="10"/></g>
+          <g class="cell"><rect x="112" y="20" width="92" height="60" rx="10"/></g>
+          <g class="cell hot"><rect x="214" y="20" width="92" height="60" rx="10"/></g>
+          <g class="cell"><rect x="316" y="20" width="92" height="60" rx="10"/></g>
+          <g class="cell"><rect x="418" y="20" width="92" height="60" rx="10"/></g>
+          <text x="56" y="55" text-anchor="middle" class="val" font-size="14">295.4</text>
+          <text x="158" y="55" text-anchor="middle" class="val" font-size="14">298.1</text>
+          <text x="260" y="55" text-anchor="middle" class="val" font-size="14">312.6</text>
+          <text x="362" y="55" text-anchor="middle" class="val" font-size="14">301.0</text>
+          <text x="464" y="55" text-anchor="middle" class="val" font-size="14">296.8</text>
+          <text x="56" y="98" text-anchor="middle" class="idx" font-size="13">[0]</text>
+          <text x="158" y="98" text-anchor="middle" class="idx" font-size="13">[1]</text>
+          <text x="260" y="98" text-anchor="middle" class="idx" font-size="13">[2]</text>
+          <text x="362" y="98" text-anchor="middle" class="idx" font-size="13">[3]</text>
+          <text x="464" y="98" text-anchor="middle" class="idx" font-size="13">[4]</text>
+        </svg>
+        <p class="anim-caption">리스트에서 가장 큰 값이 담긴 칸이 보라색으로 맥동하며
+        강조된다.</p>
+        <a class="anim-link" href="lectures/week02/index.html">2차시 강의 자료 보기 →</a>
+      </div>
+
+      <div class="anim-card">
+        <span class="anim-tag">3차시 · 반복문</span>
+        <svg class="loop-svg" viewBox="0 0 520 110" role="img"
+             aria-label="for 반복문이 리스트의 다섯 상자를 왼쪽부터 순서대로 하나씩 방문하는 모습">
+          <g class="cell"><rect x="0" y="20" width="92" height="60" rx="10"/></g>
+          <g class="cell"><rect x="102" y="20" width="92" height="60" rx="10"/></g>
+          <g class="cell"><rect x="204" y="20" width="92" height="60" rx="10"/></g>
+          <g class="cell"><rect x="306" y="20" width="92" height="60" rx="10"/></g>
+          <g class="cell"><rect x="408" y="20" width="92" height="60" rx="10"/></g>
+          <text x="46" y="55" text-anchor="middle" class="val">295.4</text>
+          <text x="148" y="55" text-anchor="middle" class="val">298.1</text>
+          <text x="250" y="55" text-anchor="middle" class="val">312.6</text>
+          <text x="352" y="55" text-anchor="middle" class="val">301.0</text>
+          <text x="454" y="55" text-anchor="middle" class="val">296.8</text>
+          <g class="marker"><polygon points="46,5 36,15 56,15"/></g>
+        </svg>
+        <p class="anim-caption">보라색 화살표가 <code>for</code> 반복문처럼 리스트 칸을 한 칸씩
+        순서대로 이동한다.</p>
+        <a class="anim-link" href="lectures/week03/index.html">3차시 강의 자료 보기 →</a>
+      </div>
+
+      <div class="anim-card">
+        <span class="anim-tag">5~10차시 · Orange3</span>
+        <div class="oflow-wrap">
+          <svg class="oflow-svg" viewBox="0 0 460 140" role="img"
+               aria-label="File, 위젯, 결과 세 상자를 순서대로 연결한 Orange3 워크플로 예시 다이어그램">
+            <rect class="obox" x="10" y="25" width="130" height="90" rx="14"/>
+            <text x="75" y="62" text-anchor="middle" class="olabel" font-size="15">📁 File</text>
+            <text x="75" y="86" text-anchor="middle" class="osub" font-size="10">CSV 불러오기</text>
+
+            <line class="oarrow" x1="140" y1="70" x2="162" y2="70"/>
+            <polygon class="oarrowhead" points="162,62 179,70 162,78"/>
+
+            <rect class="obox" x="180" y="25" width="130" height="90" rx="14"/>
+            <text x="245" y="62" text-anchor="middle" class="olabel" font-size="15">🧩 위젯</text>
+            <text x="245" y="86" text-anchor="middle" class="osub" font-size="10">클릭만으로 분석</text>
+
+            <line class="oarrow" x1="310" y1="70" x2="332" y2="70"/>
+            <polygon class="oarrowhead" points="332,62 349,70 332,78"/>
+
+            <rect class="obox accent" x="350" y="25" width="100" height="90" rx="14"/>
+            <text x="400" y="62" text-anchor="middle" class="olabel" font-size="15">📊 결과</text>
+            <text x="400" y="86" text-anchor="middle" class="osub" font-size="10">바로 확인</text>
+          </svg>
+        </div>
+        <p class="anim-caption">File → 위젯 → 결과로 이어지는 연결선이 흐르는 방향으로 움직이며
+        Orange3 워크플로를 보여준다.</p>
+        <a class="anim-link" href="docs/orange3-guide.html">Orange3 부록 보기 →</a>
       </div>
     </div>
   </section>
@@ -214,6 +357,11 @@
       <b class="tag">강사용</b>
       각 차시 폴더의 <code>instructor-guide.md</code>에 수업 흐름과 진행 팁이 있습니다.
       <code>notebooks/instructor/</code>는 시연용, <code>notebooks/solutions/</code>는 정답입니다.
+    </div>
+    <div class="callout concept">
+      <b class="tag">Orange3가 처음이라면</b>
+      5~10차시에서 반복해서 쓰는 노코드 도구 Orange3의 설치 방법과 위젯 사용법을
+      <a href="docs/orange3-guide.html">부록: Orange3 시작하기</a>에 한 곳에 정리해뒀습니다.
     </div>
   </section>
 

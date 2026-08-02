@@ -16,7 +16,7 @@
 12. 정리 퀴즈 + 과제 안내 + 다음 차시 예고
 
 ## 준비물
-- 발표자용 Colab 계정, 프로젝터, Orange3
+- 발표자용 Colab 계정, 프로젝터, Orange3(설치·위젯 사용법은 `docs/orange3-guide.html` 참고)
 - `data/weekly/week07/week07_equipment_yield.csv` (학생 각자 다운로드 준비)
 - 미리 렌더링된 파레토 차트 이미지(`assets/images/week07/pareto_defects.png`) — 인터넷/matplotlib
   환경이 불안정한 조에게 결과 화면을 미리 보여줄 때 사용

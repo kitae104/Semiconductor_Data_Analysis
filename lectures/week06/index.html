@@ -65,6 +65,8 @@
       산점도, 설비별 온도 박스플롯을 먼저 그려본다. 어떤 설비의 상자가 가장 넓게 퍼져 있는지,
       온도와 두께가 관계가 있어 보이는지 눈으로 먼저 짐작해본다.</p>
     </div>
+    <p style="color:var(--muted);font-size:.9rem;">Scatter Plot·Box Plot·Distributions 위젯이
+    낯설다면 <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>에서 먼저 확인하자.</p>
     <div class="oflow-wrap">
       <svg class="oflow-svg" viewBox="0 0 760 220" role="img"
            aria-label="File 위젯 하나에서 Scatter Plot, Box Plot, Distributions 세 위젯으로 갈라지는 Orange3 워크플로 다이어그램">
@@ -119,6 +121,26 @@ df = df.sort_values("측정시간")</code></pre>
     </div>
 
     <h3>1. 선 그래프 — 시간에 따른 변화</h3>
+    <div class="callout practice">
+      <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
+      반도체 데이터로 들어가기 전에, 일주일간의 최고기온처럼 누구나 익숙한 데이터로 선
+      그래프부터 그려보자.
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 아주 간단한 선 그래프</span><button class="copy-btn">복사</button></div>
+      <pre><code>days = ["월", "화", "수", "목", "금", "토", "일"]
+temps = [18, 19, 17, 21, 23, 25, 24]
+
+plt.plot(days, temps, marker="o")
+plt.title("일주일 최고기온")
+plt.xlabel("요일")
+plt.ylabel("기온(도)")
+plt.show()</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/generic_line_week_temp.png" alt="일주일 최고기온 선 그래프. 월~수는 완만히 오르내리다 목요일부터 토요일까지 계속 오르고 일요일에 살짝 내려간다.">
+    <p class="img-caption">화요일(19도)에서 수요일(17도)로 잠깐 내려갔다가, 목~토요일에는 계속
+    올라 25도까지 오르는 것을 한눈에 볼 수 있다.</p>
+    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "시간에 따른 온도 변화"에 적용해보자.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>plt.plot(df["측정시간"], df["온도_섭씨"])
@@ -129,8 +151,45 @@ plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/week06/line_temperature_over_time.png" alt="시간에 따른 온도 변화 선 그래프. 시간이 지날수록 온도가 완만하게 상승하는 드리프트 패턴이 보인다.">
     <p class="img-caption">시간이 지날수록 온도가 완만하게 올라가는 "드리프트" 패턴이 보인다.</p>
+    <div class="explain-list">
+      <b>🤔 언제 이 그래프를 쓸까?</b>
+      <ul>
+        <li>시간처럼 <b>순서가 있는</b> 값이 어떻게 변해가는지 보고 싶을 때. 예: "시간이 지나며
+        온도가 오르는지 내리는지 궁금하다", "공정이 진행되며 압력이 어떻게 바뀌는지 보고 싶다".</li>
+        <li>순서가 없는 범주(설비 이름 등)를 선 그래프로 그리면 점들이 억지로 이어져 없는
+        추세가 있는 것처럼 오해를 부르니 쓰지 않는다.</li>
+      </ul>
+    </div>
+    <div class="explain-list">
+      <b>🔍 이 그래프 읽는 법</b>
+      <ul>
+        <li>x축은 항상 순서(시간), y축은 관심 있는 수치다. 선이 오른쪽 위로 향하면 값이
+        증가하는 추세, 들쭉날쭉 흔들리면 변동이 크다는 뜻이다.</li>
+        <li>지금 그래프: 시간이 지날수록 선이 완만하게 위로 향한다 — 온도가 서서히 오르는
+        "드리프트" 패턴으로, 설비가 갑자기 고장 난 것이 아니라 서서히 변해간다는 것을 보여준다.</li>
+      </ul>
+    </div>
 
     <h3>2. 막대그래프 — 범주별 비교</h3>
+    <div class="callout practice">
+      <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
+      과일 가게의 과일별 판매량처럼 범주를 비교하는 익숙한 예로 막대그래프부터 그려보자.
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 아주 간단한 막대그래프</span><button class="copy-btn">복사</button></div>
+      <pre><code>fruits = ["사과", "바나나", "포도", "딸기"]
+sales = [32, 45, 18, 27]
+
+plt.bar(fruits, sales)
+plt.title("과일별 판매량")
+plt.xlabel("과일")
+plt.ylabel("판매량(개)")
+plt.show()</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/generic_bar_fruit_sales.png" alt="과일별 판매량 막대그래프. 바나나가 가장 많이 팔리고 포도가 가장 적게 팔렸다.">
+    <p class="img-caption">막대 높이만 비교하면 바나나(45개)가 가장 많이, 포도(18개)가 가장
+    적게 팔렸다는 것을 바로 알 수 있다.</p>
+    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "설비별 측정 건수"에 적용해보자.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>df["설비번호"].value_counts().sort_index().plot(kind="bar")
@@ -141,8 +200,44 @@ plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/week06/bar_records_per_equipment.png" alt="설비별 측정 건수 막대그래프">
     <p class="img-caption">설비 4대의 측정 건수를 한눈에 비교할 수 있다.</p>
+    <div class="explain-list">
+      <b>🤔 언제 이 그래프를 쓸까?</b>
+      <ul>
+        <li>설비·공정명처럼 <b>범주(카테고리)</b>별로 개수·합계·평균 같은 값을 서로
+        "비교"하고 싶을 때. 예: "설비별로 측정 건수가 몇 건씩인지 비교하고 싶다", "공정별
+        불량 개수를 비교하고 싶다".</li>
+        <li>범주 사이에는 순서나 크기 의미가 없다는 점에서 선 그래프와 다르다 — 막대 순서를
+        바꿔도 의미가 달라지지 않는다.</li>
+      </ul>
+    </div>
+    <div class="explain-list">
+      <b>🔍 이 그래프 읽는 법</b>
+      <ul>
+        <li>막대가 높을수록 그 범주의 값이 크다. x축은 범주(순서 의미 없음), y축은 수량이다.</li>
+        <li>지금 그래프: 설비 4대의 막대 높이가 서로 비슷하다 — 특정 설비에 측정 기록이
+        몰리지 않고 고르게 수집되었다는 뜻이다.</li>
+      </ul>
+    </div>
 
     <h3>3. 히스토그램 — 값의 분포</h3>
+    <div class="callout practice">
+      <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
+      학생 20명의 시험 점수처럼 값 하나가 어디에 몰려 있는지 보고 싶은 익숙한 예로
+      히스토그램부터 그려보자.
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 아주 간단한 히스토그램</span><button class="copy-btn">복사</button></div>
+      <pre><code># scores에는 학생 20명의 시험 점수가 들어 있다고 하자.
+plt.hist(scores, bins=8)
+plt.title("학생 20명의 시험 점수 분포")
+plt.xlabel("점수")
+plt.ylabel("학생 수")
+plt.show()</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/generic_hist_scores.png" alt="학생 20명의 시험 점수 분포 히스토그램. 70점 근처에 학생이 가장 많이 몰려 있는 종 모양 분포.">
+    <p class="img-caption">70점 구간에 학생이 가장 많이(6명) 몰려 있고, 점수가 아주 낮거나
+    아주 높은 학생은 적은 종 모양 분포다.</p>
+    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "온도 분포"에 적용해보자.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>plt.hist(df["온도_섭씨"], bins=18)
@@ -153,8 +248,48 @@ plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/week06/hist_temperature.png" alt="온도 분포 히스토그램. 300도 근처에 값이 몰려 있는 종 모양 분포.">
     <p class="img-caption">대부분의 값이 300℃ 근처에 몰려 있는 것을 알 수 있다.</p>
+    <div class="explain-list">
+      <b>🤔 언제 이 그래프를 쓸까?</b>
+      <ul>
+        <li>숫자 변수 <b>하나</b>가 어떤 값 근처에 몰려 있는지, 분포의 모양(고르게 퍼져
+        있는지, 한쪽에 치우쳐 있는지)을 보고 싶을 때. 예: "온도가 정상 범위 근처에 잘
+        모여 있는지 확인하고 싶다".</li>
+        <li>범주별 비교(막대그래프)나 두 변수의 관계(산점도)가 궁금할 때는 히스토그램 대신
+        그에 맞는 그래프를 쓴다 — 히스토그램은 변수 하나의 "몰림"만 보여준다.</li>
+      </ul>
+    </div>
+    <div class="explain-list">
+      <b>🔍 이 그래프 읽는 법</b>
+      <ul>
+        <li>x축은 값을 일정한 구간(bin)으로 나눈 것, y축은 그 구간에 속한 데이터 개수다.
+        막대그래프의 x축(범주)과 다르게 x축이 <b>연속된 숫자 구간</b>이라는 점에 유의한다.</li>
+        <li>지금 그래프: 300℃ 부근에서 봉우리 하나가 솟은 종 모양이다 — 대부분의 측정값이
+        정상 범위 근처에 안정적으로 몰려 있고, 극단적으로 튀는 값은 소수라는 뜻이다.</li>
+      </ul>
+    </div>
 
     <h3>4. 산점도 — 두 변수의 관계</h3>
+    <div class="callout practice">
+      <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
+      "공부 시간이 늘수록 시험 점수도 오를까?"처럼 누구나 직관적으로 이해할 수 있는 예로
+      산점도부터 그려보자.
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 아주 간단한 산점도</span><button class="copy-btn">복사</button></div>
+      <pre><code>study_hours = [1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8]
+exam_scores = [50, 65, 55, 68, 70, 80, 72, 88, 78, 85, 90, 80]
+
+plt.scatter(study_hours, exam_scores)
+plt.title("공부 시간과 시험 점수의 관계")
+plt.xlabel("공부 시간(시간)")
+plt.ylabel("시험 점수(점)")
+plt.show()</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/generic_scatter_study_score.png" alt="공부 시간과 시험 점수의 관계 산점도. 공부 시간이 늘수록 점수도 대체로 함께 오르는 우상향 경향.">
+    <p class="img-caption">점들이 대체로 오른쪽 위로 향한다 — 공부 시간이 늘수록 점수도 함께
+    오르는 경향이 있다(다만 6시간 공부하고 78점, 4시간 공부하고 80점처럼 완벽히 일치하지는
+    않는다).</p>
+    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "온도-두께 관계"에 적용해보자.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>plt.scatter(df["온도_섭씨"], df["두께_nm"])
@@ -172,8 +307,49 @@ print(df["온도_섭씨"].corr(df["두께_nm"]))</code></pre>
     </div>
     <p class="img-caption">점들이 오른쪽 위로 향하는 경향이 보인다 — 온도가 높을수록 두께도
     두꺼워지는 관계(상관계수 약 0.81).</p>
+    <div class="explain-list">
+      <b>🤔 언제 이 그래프를 쓸까?</b>
+      <ul>
+        <li>숫자 변수 <b>두 개</b>가 같이 움직이는지(관계가 있는지) 보고 싶을 때. 예: "온도가
+        높을수록 두께도 두꺼워지는지 궁금하다", "압력과 가스유량이 서로 관련이 있는지 보고
+        싶다".</li>
+        <li>변수가 하나뿐이면 히스토그램, 범주별 비교면 막대그래프나 박스플롯을 쓴다 — 산점도는
+        반드시 숫자 변수 "두 개"가 필요하다.</li>
+      </ul>
+    </div>
+    <div class="explain-list">
+      <b>🔍 이 그래프 읽는 법</b>
+      <ul>
+        <li>점 하나가 데이터 하나(관측치 하나)다. 점들이 오른쪽 위로 향하면 양의 관계(하나가
+        커지면 다른 하나도 커짐), 오른쪽 아래로 향하면 음의 관계, 흩어져 있으면 뚜렷한 관계가
+        없다는 뜻이다. 상관계수는 -1~1 사이 값으로, 1에 가까울수록 강한 양의 관계다.</li>
+        <li>지금 그래프: 점들이 오른쪽 위로 향하고 상관계수가 약 0.81로 비교적 강하다 — 온도가
+        높을수록 두께도 두꺼워지는 관계가 있어 보인다(단, 관계가 있다고 해서 온도가 두께의
+        "원인"이라고 바로 단정할 수는 없다 — 8차시에서 자세히 다룬다).</li>
+      </ul>
+    </div>
 
     <h3>5. 박스플롯 — 그룹별 분포와 이상값</h3>
+    <div class="callout practice">
+      <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
+      A반·B반·C반의 시험 점수처럼 그룹별로 퍼짐을 비교하는 익숙한 예로 박스플롯부터
+      그려보자.
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 아주 간단한 박스플롯</span><button class="copy-btn">복사</button></div>
+      <pre><code># classA, classB, classC에는 각 반 학생들의 시험 점수가 들어 있다고 하자.
+plt.boxplot([classA, classB, classC], tick_labels=["A반", "B반", "C반"])
+plt.title("반별 시험 점수 박스플롯")
+plt.xlabel("반")
+plt.ylabel("점수")
+plt.show()</code></pre>
+    </div>
+    <img class="chart-img" src="../../assets/images/week06/generic_box_class_scores.png" alt="반별 시험 점수 박스플롯. B반의 상자와 수염이 가장 넓게 퍼져 있고, C반에는 동그라미로 표시된 이상치가 하나 있다.">
+    <p class="img-caption">B반의 상자와 수염이 가장 넓게 퍼져 있다 — B반 학생들의 점수 편차가
+    가장 크다는 뜻이다. C반에는 동그라미로 표시된 이상치(유독 튀는 점수)도 하나 보인다.</p>
+    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "설비별 온도"에 적용해보자. 반도체 데이터는
+    이미 표(DataFrame) 형태이므로, Pandas가 제공하는 <code>df.boxplot(column=, by=)</code>를
+    쓰면 그룹별로 나누는 작업까지 한 번에 처리해준다.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>df.boxplot(column="온도_섭씨", by="설비번호")
@@ -186,18 +362,44 @@ plt.show()</code></pre>
     <img class="chart-img" src="../../assets/images/week06/box_temperature_by_equipment.png" alt="설비별 온도 박스플롯. EQ-02의 상자와 수염이 다른 설비보다 넓게 퍼져 있다.">
     <p class="img-caption">EQ-02의 상자(사분위 범위)와 수염이 다른 설비보다 눈에 띄게 넓게
     퍼져 있다 — 온도가 가장 불안정한 설비라는 뜻이다.</p>
+    <div class="explain-list">
+      <b>🤔 언제 이 그래프를 쓸까?</b>
+      <ul>
+        <li>그룹(설비 등)별로 값이 어디에 몰려 있고 얼마나 퍼져 있는지, 이상치가 있는지
+        <b>동시에</b> 비교하고 싶을 때. 예: "설비별로 온도가 얼마나 들쭉날쭉한지 비교하고
+        싶다", "어느 그룹에 유독 튀는 값(이상치)이 많은지 보고 싶다".</li>
+        <li>단순히 그룹별 "개수·합계"만 비교하고 싶다면 막대그래프가 더 간단하다 — 박스플롯은
+        "퍼짐(분산)"까지 함께 보고 싶을 때 쓴다.</li>
+      </ul>
+    </div>
+    <div class="explain-list">
+      <b>🔍 이 그래프 읽는 법</b>
+      <ul>
+        <li>상자는 중간 50% 데이터가 모인 범위(사분위 범위), 상자 속 가로선은 중앙값, 위아래로
+        뻗은 수염은 정상 범위의 최대·최소, 수염 밖 낱개 점은 이상치를 나타낸다. 상자와 수염이
+        넓을수록 값이 넓게 퍼져 있어 불안정하다는 뜻이다.</li>
+        <li>지금 그래프: EQ-02의 상자와 수염이 다른 설비보다 뚜렷하게 넓다 — 온도가 가장
+        불안정한 설비가 EQ-02라는 것을 한눈에 보여준다.</li>
+      </ul>
+    </div>
   </section>
 
   <section class="block">
     <h2>📚 그래프 선택 가이드</h2>
     <table class="timetable">
-      <tr><th>알고 싶은 것</th><th>알맞은 그래프</th></tr>
-      <tr><td>시간에 따른 변화</td><td>선 그래프</td></tr>
-      <tr><td>범주(설비 등)별 개수·크기 비교</td><td>막대그래프</td></tr>
-      <tr><td>값이 어느 구간에 몰려 있는지</td><td>히스토그램</td></tr>
-      <tr><td>두 숫자 변수의 관계</td><td>산점도</td></tr>
-      <tr><td>그룹별 값의 퍼짐(분산) 비교</td><td>박스플롯</td></tr>
+      <tr><th>알고 싶은 것</th><th>예시 질문</th><th>알맞은 그래프</th></tr>
+      <tr><td>시간에 따른 변화</td><td>"시간이 지나며 온도가 오르는가?"</td><td>선 그래프</td></tr>
+      <tr><td>범주(설비 등)별 개수·크기 비교</td><td>"설비별로 측정 건수가 몇 건씩인가?"</td><td>막대그래프</td></tr>
+      <tr><td>값이 어느 구간에 몰려 있는지</td><td>"온도가 정상 범위에 잘 모여 있는가?"</td><td>히스토그램</td></tr>
+      <tr><td>두 숫자 변수의 관계</td><td>"온도가 높을수록 두께도 두꺼워지는가?"</td><td>산점도</td></tr>
+      <tr><td>그룹별 값의 퍼짐(분산) 비교</td><td>"어느 설비의 온도가 가장 들쭉날쭉한가?"</td><td>박스플롯</td></tr>
     </table>
+    <div class="callout warn">
+      <b class="tag">가장 흔한 실수 — "일단 막대그래프"</b>
+      초보자는 무엇을 그려야 할지 애매하면 습관적으로 막대그래프부터 그리는 경우가 많다.
+      그래프를 고르기 전에 먼저 "나는 지금 무엇이 궁금한가?"를 한 문장으로 말해보고, 위 표에서
+      그 질문과 가장 가까운 줄을 찾아 그래프를 고르는 습관을 들이자.
+    </div>
   </section>
 
   <section class="block">

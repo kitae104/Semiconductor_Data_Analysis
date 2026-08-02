@@ -6,14 +6,15 @@
 2. 오늘의 질문 제시 — "코드를 한 줄도 쓰기 전에, 이 데이터에 어떤 문제가 있어 보이는지 먼저 확인할 수 있을까?"
 3. Orange3 시연: File → Data Table → Feature Statistics로 결측 셀·극단값 훑어보기
 4. 개념 설명: 결측값·중복값·입력 오류·이상값 구분, 제거 vs 대체, 평균 vs 중앙값 + 용어 카드
-5. 강사 코드 시연(`isna`, `dropna`, `fillna`, `duplicated`, `drop_duplicates`, 조건 검색으로 이상값 찾기)
+5. 강사 코드 시연(`describe()`로 숫자 요약 먼저 훑어보기 → `isna`, `dropna`, `fillna`,
+   `duplicated`, `drop_duplicates`, 조건 검색으로 이상값 찾기 → `loc`로 값만 정정하는 대안 소개)
 6. 휴식
 7. 학생 실습: 결측값 세기 → 제거/대체 → 중복 제거 → 이상값 찾기·제거 → 정제 전후 비교
 8. 도전 실습: 공정명 오타 통일(`unique()`, `str.strip()`, `replace()`)
 9. 정리 퀴즈 + 과제 안내 + 다음 차시 예고
 
 ## 준비물
-- 발표자용 Colab 계정, 프로젝터, Orange3 설치(README 5절 참고)
+- 발표자용 Colab 계정, 프로젝터, Orange3 설치(README 5절, `docs/orange3-guide.html` 참고)
 - `data/weekly/week05/week05_dirty_process_data.csv` (학생 각자 다운로드 준비)
 - `data/data_dictionary/week05_dictionary.md`를 미리 한 번 읽어 의도적 오염 목록을 숙지
 
@@ -40,6 +41,11 @@
   검색으로 따로 찾아야 한다는 점을 반드시 짚는다.
 - 평균 대 중앙값 차이는 "반 학생 용돈" 비유로 설명하면 이해가 빠르다.
 - `dropna()`/`fillna()`가 원본을 바꾸지 않는다는 점(반환값을 다시 저장해야 함)을 실습 전에 미리 경고한다.
+- `describe()`를 가장 먼저 보여주며 "결측을 하나씩 세기 전에 숫자 요약부터 훑어보는 것이
+  실무 습관"이라는 점을 짚는다. `count`가 전체 행 수보다 적은 열, `mean`이 `50%`(중앙값)보다
+  훨씬 큰 열을 학생들이 스스로 짚어내도록 유도한다.
+- 이상값 처리에서 "행 삭제"만 배우고 끝내지 말고, 4차시에서 배운 `loc`로 값만 정정하는
+  `df.loc[조건, "열"] = 값` 예시를 함께 보여주며 "삭제 vs 정정" 판단 기준을 짚는다.
 
 ## 질문 예시
 - "Orange3 Feature Statistics에서 온도_섭씨의 Max 값을 보고 무엇이 이상하다고 느꼈나요?"

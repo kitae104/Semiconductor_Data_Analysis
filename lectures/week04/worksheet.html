@@ -95,7 +95,43 @@ df.____________("온도_섭씨", ascending=False)</code></pre>
   </section>
 
   <section class="block">
-    <h2>7. 심화 실습</h2>
+    <h2>7. loc / iloc 연습 문제</h2>
+    <p>아래 빈칸에 <code>loc</code> 또는 <code>iloc</code> 중 알맞은 것을 넣어보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code># ① 조건으로 행을 고르면서 열 두 개도 함께 지정하고 싶다
+df.____________[df["합격여부"] == -1, ["로트번호", "온도_섭씨"]]
+
+# ② 앞에서 3번째 행(위치 기준)만 보고 싶다
+df.____________[2]
+
+# ③ 앞에서 5개 행, 앞에서 2개 열만 잘라내고 싶다
+df.____________[0:5, 0:2]</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① <code>loc</code>(조건식은 loc 전용) ② <code>iloc</code>(위치 기준)
+    ③ <code>iloc</code>(위치 기준 슬라이스)</div>
+
+    <p style="margin-top:1rem;">다음 중 <code>df.iloc[0:3]</code>이 돌려주는 행의 개수로
+    올바른 것은?</p>
+    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
+      <li>① 2개(위치 0, 1)</li>
+      <li>② 3개(위치 0, 1, 2)</li>
+      <li>③ 4개(위치 0, 1, 2, 3)</li>
+    </ul>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">정답: ②. iloc의 슬라이스는 파이썬 리스트처럼 끝 번호(3)를 포함하지
+    않는다. 반면 <code>df.loc[0:3]</code>이었다면 끝 번호 3을 포함해 4개 행이 나왔을 것이다.</div>
+
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      <code>df.loc[0:2]</code>와 <code>df.iloc[0:2]</code>를 각각 실행해서 결과 행이 몇 개
+      나오는지 직접 세어 비교해보자. 예상과 같은가?
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>8. 심화 실습</h2>
     <div class="callout practice">
       <b class="tag">심화</b>
       <code>&amp;</code> 연산자로 두 조건을 동시에 만족하는 행을 찾아보자:

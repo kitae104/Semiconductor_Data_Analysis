@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부록. Orange3 시작하기</title>
+<link rel="stylesheet" href="../assets/css/common.css">
+<link rel="stylesheet" href="../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../index.html">🔬 반도체 데이터 분석 10차시 과정
+      <small>Semiconductor Process Data Analysis</small>
+    </a>
+    <nav class="week-nav">
+      <a href="../lectures/week01/index.html">1차시</a>
+      <a href="../lectures/week02/index.html">2차시</a>
+      <a href="../lectures/week03/index.html">3차시</a>
+      <a href="../lectures/week04/index.html">4차시</a>
+      <a href="../lectures/week05/index.html">5차시</a>
+      <a href="../lectures/week06/index.html">6차시</a>
+      <a href="../lectures/week07/index.html">7차시</a>
+      <a href="../lectures/week08/index.html">8차시</a>
+      <a href="../lectures/week09/index.html">9차시</a>
+      <a href="../lectures/week10/index.html">10차시</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+
+  <div class="hero">
+    <span class="badge purple">부록 · 전 차시 공통</span>
+    <h1>Orange3 시작하기</h1>
+    <p class="today-question">💬 이 부록으로 확인할 질문: <b>"코드를 한 줄도 쓰기 전에, 마우스만으로 데이터를 살펴보려면 Orange3를 어떻게 쓰면 될까?"</b></p>
+  </div>
+
+  <section class="block">
+    <h2>🎯 이 부록으로 할 수 있는 것</h2>
+    <ul class="goal-list">
+      <li>Orange3를 설치하고 실행할 수 있다.</li>
+      <li>위젯을 캔버스에 놓고 서로 연결해 워크플로를 만들 수 있다.</li>
+      <li><b>File</b> 위젯으로 실습용 CSV를 불러올 수 있다.</li>
+      <li>5~10차시에서 실제로 쓰는 위젯(Data Table, Feature Statistics, Scatter Plot, Box Plot,
+        Distributions, Bar Chart, Correlations, Tree, Test and Score, Predictions)이 각각 무엇을
+        보여주는지 설명할 수 있다.</li>
+      <li>자주 발생하는 문제(연결 실패, 한글 깨짐 등)를 스스로 해결할 수 있다.</li>
+    </ul>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>언제 보면 좋은가</b>: 5차시를
+    시작하기 전에 한 번 전체를 훑어보고, 이후 6~10차시에서 새 위젯이 나올 때마다 해당 위젯 설명만
+    다시 찾아보면 된다.</p>
+  </section>
+
+  <section class="block">
+    <h2>📚 Orange3란 무엇인가</h2>
+    <div class="callout concept">
+      <b class="tag">한 줄 정의</b>
+      Orange3는 코드를 한 줄도 쓰지 않고, <b>위젯(widget)</b>이라는 상자를 마우스로 끌어다 놓고
+      선으로 연결하는 것만으로 데이터를 열고·그래프를 그리고·모델을 만들 수 있는 무료 데스크톱
+      프로그램이다.
+    </div>
+    <p>이 과정에서는 <b>Orange3로 먼저 결과를 눈으로 훑어본 뒤, 같은 내용을 파이썬 코드로 직접
+    계산·확인</b>하는 순서로 5~10차시를 진행한다. Orange3가 새로운 개념을 가르치는 것이 아니라,
+    "이번 시간에 코드로 확인할 내용의 예고편"을 미리 보여주는 역할을 한다고 생각하면 된다.</p>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — Orange3는 파이썬 패키지가 아니다</b>
+      <code>requirements.txt</code>의 패키지들은 <code>pip install -r requirements.txt</code>로
+      한 번에 설치되지만, Orange3는 <b>별도의 데스크톱 프로그램</b>이라 항상 따로 설치해야 한다.
+      Orange3 없이도 이 과정의 파이썬 실습(Colab/Jupyter)은 전부 문제없이 진행할 수 있다 —
+      Orange3는 "먼저 눈으로 확인하는" 보조 도구다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🧩 설치하기</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>방법 A — pip로 설치(파이썬 환경이 있다면 가장 간단)</b></div>
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>터미널 / Anaconda Prompt</span><button class="copy-btn">복사</button></div>
+      <pre><code># 가상환경(.venv)을 이미 활성화한 상태에서 실행
+pip install orange3
+
+# 설치가 끝나면 아래 명령으로 실행(캔버스 창이 뜬다)
+python -m Orange.canvas</code></pre>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>방법 B — 설치 파일로 설치(파이썬 환경이 익숙하지 않다면 추천)</b> —
+      <a href="https://orangedatamining.com" target="_blank" rel="noopener">orangedatamining.com</a>
+      에 접속해 Windows/Mac용 설치 파일을 내려받아 다른 프로그램처럼 설치한다. 설치 후 바탕화면이나
+      시작 메뉴에서 "Orange 3" 아이콘을 실행하면 된다.</div>
+    </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — 처음 실행은 오래 걸릴 수 있다</b>
+      Orange3를 처음 실행하면 위젯 목록을 준비하느라 몇십 초~1분 정도 창이 하얗게 떠 있을 수
+      있다. 오류가 아니니 기다리면 된다. 두 번째 실행부터는 훨씬 빨라진다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🖥️ 기본 화면 구성</h2>
+    <p>Orange3를 실행하면 아래 세 영역으로 이루어진 화면이 열린다.</p>
+    <div class="oflow-wrap">
+      <svg class="oflow-svg" viewBox="0 0 860 300" role="img"
+           aria-label="Orange3 화면 구성: 왼쪽 위젯 목록, 가운데 빈 캔버스, 캔버스 위에 놓인 위젯 상자와 연결선을 보여주는 다이어그램">
+        <rect class="obox" x="10" y="10" width="180" height="280" rx="14"/>
+        <text x="100" y="38" text-anchor="middle" class="olabel" font-size="14">🧰 위젯 목록</text>
+        <text x="100" y="60" text-anchor="middle" class="osub" font-size="10">(Widget Toolbox)</text>
+        <text x="100" y="90" text-anchor="middle" class="osub" font-size="10">Data</text>
+        <text x="100" y="112" text-anchor="middle" class="osub" font-size="10">Visualize</text>
+        <text x="100" y="134" text-anchor="middle" class="osub" font-size="10">Model</text>
+        <text x="100" y="156" text-anchor="middle" class="osub" font-size="10">Evaluate</text>
+        <text x="100" y="178" text-anchor="middle" class="osub" font-size="10">... 카테고리별 아이콘</text>
+
+        <rect class="obox accent" x="210" y="10" width="640" height="280" rx="14"/>
+        <text x="530" y="34" text-anchor="middle" class="olabel" font-size="14">🗺️ 캔버스 (Canvas)</text>
+        <text x="530" y="54" text-anchor="middle" class="osub" font-size="10">위젯을 끌어다 놓고 연결하는 빈 작업 공간</text>
+
+        <rect class="obox" x="250" y="90" width="150" height="60" rx="10"/>
+        <text x="325" y="115" text-anchor="middle" class="olabel" font-size="13">📁 File</text>
+        <text x="325" y="135" text-anchor="middle" class="osub" font-size="10">더블클릭하면 창 열림</text>
+
+        <line class="oarrow" x1="400" y1="120" x2="440" y2="120"/>
+        <polygon class="oarrowhead" points="440,112 457,120 440,128"/>
+
+        <rect class="obox" x="460" y="90" width="150" height="60" rx="10"/>
+        <text x="535" y="115" text-anchor="middle" class="olabel" font-size="13">📋 Data Table</text>
+        <text x="535" y="135" text-anchor="middle" class="osub" font-size="10">연결선 = 데이터 흐름</text>
+
+        <text x="530" y="230" text-anchor="middle" class="osub" font-size="11">💡 왼쪽 목록의 위젯 아이콘을 캔버스로 드래그 → 두 위젯의 가장자리를 드래그해 선으로 연결</text>
+      </svg>
+      <p class="oflow-note">💡 실제 Orange3 캔버스 화면 캡처를 강사가 추가하면 더 좋다.</p>
+    </div>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>위젯 목록</h4><div class="en">Widget Toolbox</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>화면 왼쪽에 있는, 종류별로 묶인 위젯 아이콘 모음.</dd>
+          <dt>쉬운 비유</dt><dd>요리 재료를 종류별로 정리해 둔 부엌 선반.</dd>
+          <dt>자주 하는 오해</dt><dd>아이콘을 한 번 클릭하면 바로 켜진다고 생각하기 쉽지만,
+          먼저 <b>캔버스로 드래그</b>해 놓아야 한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>캔버스</h4><div class="en">Canvas</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>위젯을 배치하고 서로 연결해 "작업 흐름(워크플로)"을 만드는 큰 작업
+          공간.</dd>
+          <dt>쉬운 비유</dt><dd>여러 재료(위젯)를 순서대로 늘어놓고 화살표로 조리 순서를 표시한
+          레시피 판.</dd>
+          <dt>자주 하는 오해</dt><dd>위젯을 캔버스에 놓기만 하면 자동으로 연결된다고 생각하기 쉽지만,
+          <b>직접 선으로 이어줘야</b> 데이터가 흐른다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>위젯 연결선</h4><div class="en">Link</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>한 위젯의 결과(출력)를 다음 위젯의 입력으로 전달하는 화살표.</dd>
+          <dt>쉬운 비유</dt><dd>공정 라인의 컨베이어 벨트 — 앞 설비의 결과물이 다음 설비로 그대로
+          넘어간다.</dd>
+          <dt>자주 하는 오해</dt><dd>선이 하나라도 빠지면 뒤 위젯은 아무 데이터도 받지 못해 빈
+          화면만 보인다. 위젯 사이에 화살표가 그려져 있는지 항상 확인한다.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🟣 실습: 첫 워크플로 만들어보기</h2>
+    <p>어떤 차시든 Orange3 실습은 항상 <b>File 위젯으로 CSV를 불러오는 것</b>에서 시작한다. 5차시
+    데이터로 직접 연습해보자.</p>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="content"><b>File 위젯 놓기</b> — 왼쪽 위젯 목록의 <code>Data</code> 카테고리에서
+      <b>File</b> 아이콘을 캔버스로 끌어다 놓는다.</div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="content"><b>CSV 불러오기</b> — File 위젯을 더블클릭해 창을 열고, 폴더 아이콘을 눌러
+      <code>data/weekly/week05/week05_dirty_process_data.csv</code>를 선택한다.</div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>Data Table 위젯 추가</b> — <code>Data</code> 카테고리에서
+      <b>Data Table</b> 위젯을 캔버스로 끌어다 놓는다.</div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>두 위젯 연결하기</b> — File 위젯의 오른쪽 가장자리에서 마우스 버튼을
+      누른 채로 Data Table 위젯의 왼쪽 가장자리까지 끌고 가서 놓는다. 화살표가 있는 선이 생기면
+      연결 성공이다.</div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="content"><b>결과 확인</b> — Data Table 위젯을 더블클릭하면 CSV 내용이 표로
+      나타난다. 빈 칸(결측값)이 그대로 보이는지 확인해보자.</div>
+    </div>
+    <div class="callout danger">
+      <b class="tag">자주 하는 실수 — 위젯이 연결되지 않는다</b>
+      가장자리가 아니라 위젯 <b>가운데</b>를 클릭하면 위젯이 움직이기만 하고 연결선이 생기지
+      않는다. 반드시 위젯 테두리(오른쪽 끝)에 마우스를 올려 <b>커서 모양이 바뀌는 지점</b>에서
+      드래그를 시작해야 한다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">자주 하는 실수 — 한글이 깨져 보인다</b>
+      이 과정의 모든 CSV는 <code>utf-8-sig</code> 인코딩으로 저장되어 있어 대부분 자동으로 잘
+      열린다. 그래도 글자가 깨져 보이면 File 위젯 창의 <b>Encoding</b> 옵션을 "UTF-8"로 직접
+      지정해본다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🗂️ 위젯 사전 — 이 과정에서 쓰는 위젯 11가지</h2>
+    <p>아래 위젯은 실제로 사용하는 차시 순서대로 정리했다. 해당 차시에 도착하면 이 표를 다시 펼쳐
+    찾아봐도 좋다.</p>
+
+    <h3>📁 File — 5·8·9차시</h3>
+    <div class="callout concept">CSV 파일을 Orange3 안으로 불러오는 시작점 위젯. 모든 워크플로는
+    File 위젯에서 시작한다. 더블클릭 → 폴더 아이콘으로 CSV 선택 → 첫 줄이 자동으로 열 이름으로
+    인식된다.</div>
+
+    <h3>📋 Data Table — 5차시</h3>
+    <div class="callout concept">불러온 데이터를 표 형태 그대로 보여준다. 빈 칸(결측값)이 그대로
+    빈칸으로 보이므로, 어느 열에 결측이 많은지 눈으로 훑어보기 좋다. 열 머리글을 클릭하면 정렬도
+    된다.</div>
+
+    <h3>📊 Feature Statistics — 5차시</h3>
+    <div class="callout concept">각 열의 평균·최솟값·최댓값·표준편차 등을 표와 막대그래프로 한눈에
+    보여준다. Max/Min 값이 상식적인 범위를 벗어나 있으면 이상값 후보를 빠르게 찾을 수 있다.</div>
+
+    <h3>🔵 Scatter Plot — 6차시</h3>
+    <div class="callout concept">두 숫자 변수를 X축·Y축으로 놓고 점으로 흩뿌려 관계를 보여준다.
+    점들이 대각선 방향으로 모여 있으면 두 변수가 함께 움직인다는 뜻이다. 위젯 오른쪽 옵션에서 X축·
+    Y축 변수를 바꿔 고를 수 있다.</div>
+
+    <h3>📦 Box Plot — 6·7차시</h3>
+    <div class="callout concept">그룹(예: 설비번호)별로 값이 어디에 몰려 있고 얼마나 퍼져 있는지
+    상자 모양으로 보여준다. 상자가 넓을수록 그 그룹의 값이 들쭉날쭉하다는 뜻이다. "Subgroups"
+    옵션에 설비번호 같은 범주형 열을 지정하면 그룹별로 나눠 보여준다.</div>
+
+    <h3>📈 Distributions — 6차시</h3>
+    <div class="callout concept">한 변수의 값이 어떤 모양으로 퍼져 있는지 히스토그램으로 보여준다.
+    값이 한쪽에 몰려 있는지, 두 개의 봉우리로 나뉘는지 등을 눈으로 확인할 수 있다.</div>
+
+    <h3>📊 Bar Chart — 7차시</h3>
+    <div class="callout concept">범주형 열(예: 설비번호, 합격여부)의 값별 개수·비율을 막대로
+    보여준다. 설비별 합격/불합격 막대 길이를 비교하면 어느 설비의 불량이 많아 보이는지 짐작할 수
+    있다.</div>
+
+    <h3>🔗 Correlations — 8차시</h3>
+    <div class="callout concept">데이터의 모든 숫자 변수 쌍의 상관계수를 자동으로 계산해 관계가
+    강한 순서대로 정렬해 보여준다. 표 안의 한 행을 클릭하면 그 두 변수의 산점도도 바로 볼 수
+    있다.</div>
+
+    <h3>🌳 Tree — 9차시</h3>
+    <div class="callout concept">클릭만으로 의사결정나무 분류 모델을 학습시키는 위젯. Target
+    Variable(예: 검사결과)을 지정하면, 나머지 열을 특징으로 사용해 자동으로 모델을 만든다. 파이썬의
+    <code>DecisionTreeClassifier</code>와 같은 원리다.</div>
+
+    <h3>✅ Test and Score — 9차시</h3>
+    <div class="callout concept">Tree 같은 모델 위젯과 연결하면 정확도(Accuracy) 등 성능 지표를
+    자동으로 계산해 표로 보여준다. 별도의 코드 없이 "이 모델이 얼마나 잘 맞히는지"를 바로 확인할 수
+    있다.</div>
+
+    <h3>🔮 Predictions — 10차시</h3>
+    <div class="callout concept">학습된 모델과 정답을 모르는 새 데이터(CSV)를 함께 연결하면, 각
+    행에 대한 예측 결과(합격/불합격)와 확률을 표로 보여준다. scikit-learn의
+    <code>model.predict()</code>·<code>predict_proba()</code>와 같은 역할이다.</div>
+  </section>
+
+  <section class="block">
+    <h2>📅 차시별 사용 위젯 한눈에 보기</h2>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>차시</th><th>사용 위젯</th><th>먼저 확인하는 것</th></tr>
+        <tr><td>5차시</td><td>File → Data Table → Feature Statistics</td><td>결측 셀, 극단값</td></tr>
+        <tr><td>6차시</td><td>Scatter Plot · Box Plot · Distributions</td><td>온도-두께 관계, 설비별 분포</td></tr>
+        <tr><td>7차시</td><td>Box Plot · Bar Chart</td><td>설비별 온도·합격 분포 차이</td></tr>
+        <tr><td>8차시</td><td>File → Correlations</td><td>변수 쌍의 상관관계 순위</td></tr>
+        <tr><td>9차시</td><td>File → Tree → Test and Score</td><td>코드 없이 만든 모델의 정확도</td></tr>
+        <tr><td>10차시</td><td>Predictions</td><td>새 로트에 대한 예측과 확률</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>⚠️ 문제 해결 (Troubleshooting)</h2>
+    <div class="callout danger">
+      <b class="tag">위젯 창이 안 열려요</b>
+      더블클릭이 아니라 한 번만 클릭했을 가능성이 크다. 위젯 아이콘을 <b>정확히 두 번</b> 빠르게
+      클릭한다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">Data Table이 비어 있어요</b>
+      File 위젯과 연결선이 제대로 이어져 있는지 먼저 확인한다. 연결선이 없으면 데이터가 전달되지
+      않는다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">Tree/Test and Score에서 오류가 나요</b>
+      Target Variable(정답 열, 예: 검사결과)이 지정되어 있는지 확인한다. 파이썬의 Feature/Label
+      나누기와 같은 개념으로, Orange3에서도 "무엇을 맞힐지" 미리 알려줘야 한다.
+    </div>
+    <div class="callout warn">
+      <b class="tag">작업한 워크플로를 저장하고 싶어요</b>
+      <code>Ctrl+S</code>(Mac은 <code>Cmd+S</code>)로 저장하면 <code>.ows</code> 파일로 남는다.
+      다음에 그 파일을 다시 열면 위젯 배치와 연결이 그대로 복원된다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🔜 다음 단계</h2>
+    <div class="callout concept">
+      이제 <a href="../lectures/week05/index.html">5차시</a>로 돌아가 "Orange3로 먼저 훑어보기"
+      절부터 실습을 시작하면 된다. 이 부록은 언제든 다시 돌아와 필요한 위젯 설명만 찾아봐도 된다.
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <a class="home" href="../index.html">🏠 전체 목차로 돌아가기</a>
+    <a href="../lectures/week05/index.html">5차시로 이동 →</a>
+  </div>
+
+</main>
+
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 부록 · 교육용 자료(가상 데이터 사용)</footer>
+
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

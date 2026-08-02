@@ -99,7 +99,29 @@ df_clean2 = df.____________()         # 중복 행 제거</code></pre>
   </section>
 
   <section class="block">
-    <h2>7. 심화 실습</h2>
+    <h2>7. describe() 해석 문제</h2>
+    <p>실습에서 <code>df.describe()</code>를 실행했더니 <code>온도_섭씨</code> 열의 결과가
+    아래와 같았다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">count   110.00
+mean    304.94
+50%     300.45
+min     291.30
+max     557.73</pre>
+    <p>다음 질문에 답해보자.</p>
+    <ol>
+      <li>전체 113행 중 <code>count</code>가 110이라면, 결측값은 몇 개인가?</li>
+      <li>평균(304.94)이 중앙값(300.45)보다 큰 것은 어떤 값이 섞여 있다는 신호일까?</li>
+    </ol>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      1) 113 - 110 = 3개.<br>
+      2) 평균이 중앙값보다 훨씬 크다는 것은 나머지 값보다 매우 큰 극단값(이상값)이 섞여 있어
+      평균을 위로 끌어올렸다는 신호다(실제로 max가 557.73으로 정상 범위를 크게 벗어난다).
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>8. 심화 실습</h2>
     <div class="callout practice">
       <b class="tag">심화</b>
       결측값을 <code>dropna()</code>로 제거하는 대신,
