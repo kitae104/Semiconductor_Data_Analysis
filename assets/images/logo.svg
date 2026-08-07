@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" role="img" aria-label="반도체 데이터 분석 과정 로고">
+  <!-- Silicon wafer (outer ring + fill) -->
+  <circle cx="28" cy="28" r="27" fill="#1e3a8a"/>
+  <circle cx="28" cy="28" r="24" fill="#2563eb"/>
+
+  <!-- Wafer die streets (alignment grid) -->
+  <line x1="4" y1="28" x2="52" y2="28" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+  <line x1="28" y1="4" x2="28" y2="52" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+
+  <!-- IC chip body (center die) -->
+  <rect x="14" y="14" width="28" height="28" rx="3.5" fill="#f8fafc"/>
+  <rect x="14" y="14" width="28" height="28" rx="3.5" fill="none" stroke="#bfdbfe" stroke-width="0.8"/>
+
+  <!-- Lead pins — left -->
+  <rect x="6" y="19" width="8" height="3" rx="1.5" fill="#93c5fd"/>
+  <rect x="6" y="26" width="8" height="3" rx="1.5" fill="#93c5fd"/>
+  <rect x="6" y="33" width="8" height="3" rx="1.5" fill="#93c5fd"/>
+
+  <!-- Lead pins — right -->
+  <rect x="42" y="19" width="8" height="3" rx="1.5" fill="#93c5fd"/>
+  <rect x="42" y="26" width="8" height="3" rx="1.5" fill="#93c5fd"/>
+  <rect x="42" y="33" width="8" height="3" rx="1.5" fill="#93c5fd"/>
+
+  <!-- Lead pins — top -->
+  <rect x="19" y="6" width="3" height="8" rx="1.5" fill="#93c5fd"/>
+  <rect x="26" y="6" width="3" height="8" rx="1.5" fill="#93c5fd"/>
+  <rect x="33" y="6" width="3" height="8" rx="1.5" fill="#93c5fd"/>
+
+  <!-- Lead pins — bottom -->
+  <rect x="19" y="42" width="3" height="8" rx="1.5" fill="#93c5fd"/>
+  <rect x="26" y="42" width="3" height="8" rx="1.5" fill="#93c5fd"/>
+  <rect x="33" y="42" width="3" height="8" rx="1.5" fill="#93c5fd"/>
+
+  <!-- Data bar chart (3 bars: blue·green·orange = 3 phases) -->
+  <rect x="17" y="32" width="5" height="8" rx="1" fill="#3b82f6"/>
+  <rect x="24" y="25" width="5" height="15" rx="1" fill="#22c55e"/>
+  <rect x="31" y="19" width="5" height="21" rx="1" fill="#f97316"/>
+
+  <!-- Ascending trend line + data points (purple = 4th phase) -->
+  <polyline points="19.5,30 26.5,22 33.5,17" stroke="#7c3aed" stroke-width="2"
+            fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="19.5" cy="30" r="2" fill="#7c3aed"/>
+  <circle cx="26.5" cy="22" r="2" fill="#7c3aed"/>
+  <circle cx="33.5" cy="17" r="2" fill="#7c3aed"/>
+</svg>
