@@ -74,7 +74,24 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       toc.appendChild(list);
 
-      heroEl.insertAdjacentElement("afterend", toc);
+      // 목차를 왼쪽 사이드바로 배치하기 위해 hero 이후의 모든 형제 요소를
+      // 본문 래퍼(.page-content)로 옮기고, 목차와 나란히 2단 레이아웃(.page-body)을 구성한다.
+      var pageMain = heroEl.parentElement;
+      var body = document.createElement("div");
+      body.className = "page-body";
+      var content = document.createElement("div");
+      content.className = "page-content";
+
+      var node = heroEl.nextSibling;
+      while (node) {
+        var next = node.nextSibling;
+        content.appendChild(node);
+        node = next;
+      }
+
+      body.appendChild(toc);
+      body.appendChild(content);
+      pageMain.appendChild(body);
     }
   }
 

@@ -16,7 +16,7 @@
   --card:#ffffff;
   --line:#e2e8f0;
   --radius:14px;
-  --maxw:1000px;
+  --maxw:1180px;
   --font: "Pretendard","Malgun Gothic","Segoe UI",-apple-system,sans-serif;
 }
 
@@ -62,19 +62,30 @@ main.page{max-width:var(--maxw); margin:0 auto; padding:1.5rem 1.25rem 5rem;}
 .badge.blue{background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-line);}
 .badge.purple{background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-line);}
 
-/* ---------- 이 페이지 목차(TOC, JS가 자동 생성) ---------- */
+/* ---------- 본문 2단 레이아웃: 왼쪽 목차(TOC) + 오른쪽 본문 (TOC는 JS가 자동 생성) ---------- */
+.page-body{display:flex; align-items:flex-start; gap:1.6rem;}
+.page-content{flex:1; min-width:0;}
 .toc-box{
+  flex:0 0 230px; width:230px; position:sticky; top:120px; align-self:flex-start;
+  max-height:calc(100vh - 140px); overflow-y:auto;
   background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
-  padding:1rem 1.2rem; margin-bottom:1.4rem; box-shadow:0 2px 10px rgba(15,23,42,.04);
+  padding:1rem 1.1rem; box-shadow:0 2px 10px rgba(15,23,42,.04);
 }
 .toc-title{display:block; font-weight:800; color:var(--blue); font-size:.85rem; margin-bottom:.65rem;}
-.toc-list{display:flex; flex-wrap:wrap; gap:.45rem;}
+.toc-list{display:flex; flex-direction:column; gap:.4rem;}
 .toc-list a{
-  font-size:.82rem; text-decoration:none; color:var(--ink); background:var(--blue-bg);
-  border:1px solid var(--blue-line); border-radius:999px; padding:.35rem .8rem;
+  font-size:.83rem; text-decoration:none; color:var(--ink); background:var(--blue-bg);
+  border:1px solid var(--blue-line); border-radius:8px; padding:.5rem .75rem;
   transition:background .15s ease, color .15s ease, transform .15s ease;
 }
-.toc-list a:hover{background:var(--blue); border-color:var(--blue); color:#fff; transform:translateY(-1px);}
+.toc-list a:hover{background:var(--blue); border-color:var(--blue); color:#fff; transform:translateX(3px);}
+
+@media (max-width:860px){
+  .page-body{flex-direction:column;}
+  .toc-box{position:static; width:100%; flex:none; max-height:none;}
+  .toc-list{flex-direction:row; flex-wrap:wrap;}
+  .toc-list a{border-radius:999px;}
+}
 
 section.block{
   background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
