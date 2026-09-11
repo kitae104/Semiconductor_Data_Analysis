@@ -70,9 +70,10 @@
       <li>반도체, 웨이퍼, 칩의 차이를 설명할 수 있다.</li>
       <li>반도체 제조 공정의 전체 흐름을 이해한다.</li>
       <li>공정에서 데이터가 왜 발생하는지 설명할 수 있다.</li>
-      <li>Google Colab에서 CSV 파일을 열고 Pandas로 처음 조회해본다.</li>
-      <li>합격/불합격 데이터를 세어보고 의미를 해석할 수 있다.</li>
-      <li>(신규) 파이썬 변수에 값을 저장하고 <code>print()</code>로 출력할 수 있다.</li>
+      <li>파이썬이 어떤 언어이고, 이 과정에서 왜 필요한지 설명할 수 있다.</li>
+      <li>데이터를 "분석"한다는 것이 무엇이고 왜 필요한지 설명할 수 있다.</li>
+      <li>앞으로 10차시 동안 무엇을 배우게 되는지 전체 흐름을 그려볼 수 있다.</li>
+      <li>파이썬 변수에 값을 저장하고 <code>print()</code>/f-string으로 출력할 수 있다.</li>
     </ul>
   </section>
 
@@ -80,27 +81,43 @@
     <h2>⏮️ 지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">첫 시간 안내</b>
-      1차시이므로 복습할 이전 내용은 없다. 대신 10차시 전체 과정이 어떻게 이어지는지 먼저 살펴본다.
-      1~3차시는 데이터를 "보는" 법, 4~5차시는 데이터를 "정리하고 그리는" 법, 6~8차시는 데이터를
-      "비교하고 이상을 찾는" 법, 9~10차시는 "예측하고 종합하는" 법을 배운다.
+      <ul class="pt-list">
+        <li><b>1차시</b> — 복습할 이전 내용 없음. 대신 10차시 전체 흐름을 먼저 살펴본다.
+          <ul>
+            <li>1~3차시: 데이터를 <b>"보는"</b> 법</li>
+            <li>4~5차시: 데이터를 <b>"정리하고 그리는"</b> 법</li>
+            <li>6~8차시: 데이터를 <b>"비교하고 이상을 찾는"</b> 법</li>
+            <li>9~10차시: <b>"예측하고 종합하는"</b> 법</li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </section>
 
   <section class="block">
     <h2>📚 반도체 개념 이해하기</h2>
     <h3>반도체란 무엇인가</h3>
-    <p><b>반도체(Semiconductor)</b>는 전기가 "잘 통하는 도체"와 "전혀 통하지 않는 부도체"의
-    중간 성질을 가진 물질이다. 이 성질 덕분에 전류를 켜고 끄는 스위치처럼 동작시킬 수 있고,
-    이 스위치를 수십억 개 모아 계산과 저장을 수행하는 칩을 만든다.</p>
+    <ul class="pt-list">
+      <li><b>반도체(Semiconductor)</b> = 도체와 부도체의 중간 성질을 가진 물질
+        <ul>
+          <li>전류를 켜고 끄는 <b>스위치</b>처럼 동작</li>
+          <li>스위치 수십억 개를 모아 계산·저장을 수행하는 <b>칩</b>을 만듦</li>
+        </ul>
+      </li>
+    </ul>
 
     <h3>웨이퍼에서 칩이 만들어지는 과정</h3>
-    <p>둥근 원판 모양의 <b>웨이퍼(Wafer)</b> 위에 여러 공정을 반복해서 회로를 새기면,
-    웨이퍼 하나에 작은 사각형 회로 조각인 <b>다이(Die)</b>가 수백~수천 개 만들어진다.
-    다이를 자르고 포장(패키징)하면 우리가 아는 <b>칩(Chip)</b>이 된다.</p>
+    <ul class="pt-list">
+      <li><b>웨이퍼(Wafer)</b> — 둥근 원판, 여기에 공정을 반복해 회로를 새김</li>
+      <li><b>다이(Die)</b> — 웨이퍼 한 장에서 나오는 사각형 회로 조각 (수백~수천 개)</li>
+      <li><b>칩(Chip)</b> — 다이를 자르고 포장(패키징)한 결과물</li>
+    </ul>
     <div class="callout concept">
       <b class="tag">비유</b>
-      웨이퍼는 커다란 피자 도우, 다이는 그 위에 자른 한 조각이라고 생각하면 된다.
-      도우(웨이퍼) 하나로 여러 조각(다이)을 만들지만, 조각마다 굽는 상태(품질)가 다를 수 있다.
+      <ul class="pt-list">
+        <li>웨이퍼 = 커다란 피자 도우 / 다이 = 도우를 자른 한 조각</li>
+        <li>같은 도우(웨이퍼)라도 조각(다이)마다 굽는 상태(품질)가 다를 수 있음</li>
+      </ul>
     </div>
     <svg class="flow-svg wafer-svg" viewBox="0 0 700 190" role="img"
          aria-label="웨이퍼 위 다이 하나를 확대해 칩으로 만드는 과정을 보여주는 다이어그램">
@@ -132,9 +149,11 @@
     구할 수 있다면 이 다이어그램과 나란히 추가해도 좋다.)</p>
 
     <h3>반도체 제조의 주요 공정</h3>
-    <p>웨이퍼는 <b>산화 → 포토(노광) → 식각 → 이온 주입 → 증착 → 세정</b> 같은 공정을 수백 번
-    반복하며 회로가 완성된다. 각 공정은 서로 다른 <b>설비(Equipment)</b>에서 진행되며,
-    설비 안에는 온도·압력·가스유량 등을 측정하는 <b>센서(Sensor)</b>가 붙어 있다.</p>
+    <ul class="pt-list">
+      <li><b>산화 → 포토(노광) → 식각 → 이온 주입 → 증착 → 세정</b> 순서를 수백 번 반복 → 회로 완성</li>
+      <li>각 공정은 서로 다른 <b>설비(Equipment)</b>에서 진행</li>
+      <li>설비마다 온도·압력·가스유량을 측정하는 <b>센서(Sensor)</b> 부착</li>
+    </ul>
     <svg class="flow-svg wide" viewBox="0 0 900 130" role="img"
          aria-label="산화, 포토, 식각, 이온 주입, 증착, 세정 순서로 이어지는 반도체 제조 공정 흐름도">
       <rect class="fbox" x="10" y="10" width="130" height="88" rx="12"/>
@@ -180,15 +199,18 @@
     "산-포-식-이-증-세"처럼 앞글자로 외워두면 기억하기 쉽다.</p>
 
     <h3>FAB의 의미</h3>
-    <p><b>FAB(팹, Fabrication의 줄임말)</b>은 반도체를 실제로 생산하는 공장을 말한다.
-    하나의 FAB 안에는 수백~수천 대의 설비가 24시간 돌아간다.</p>
+    <ul class="pt-list">
+      <li><b>FAB(팹)</b> = Fabrication의 줄임말 = 반도체를 생산하는 공장</li>
+      <li>하나의 FAB 안에 수백~수천 대의 설비가 24시간 가동</li>
+    </ul>
   </section>
 
   <section class="block">
     <h2>📊 데이터 분석 개념 이해하기</h2>
     <h3>공정 데이터의 행과 열</h3>
-    <p>반도체 데이터로 바로 들어가기 전에, 누구나 익숙한 학급 성적표로 "표(행과 열)"라는
-    개념부터 잡아보자.</p>
+    <ul class="pt-list">
+      <li>학급 성적표로 <b>"표(행과 열)"</b> 개념부터 잡기</li>
+    </ul>
     <div class="tablewrap">
       <table class="data-preview">
         <tr><th>이름</th><th>국어</th><th>영어</th></tr>
@@ -197,32 +219,103 @@
         <tr><td>서준</td><td>88</td><td>76</td></tr>
       </table>
     </div>
-    <p>이 성적표에서 <b>한 행(row)은 "학생 한 명의 기록"</b>(예: 지민의 국어 90점, 영어 85점),
-    <b>한 열(column)은 "같은 종류의 항목"</b>(모든 학생의 국어 점수, 모든 학생의 영어 점수)이다.</p>
-    <p>반도체 공정 데이터도 똑같은 구조다. 설비의 센서는 몇 초~몇 시간 간격으로 값을 기록하는데,
-    이 기록을 표로 정리하면 <b>한 행은 "한 번의 측정 기록"</b>(학생 한 명 대신 측정 한 번),
-    <b>한 열은 "측정한 항목(온도, 압력 등)"</b>(국어·영어 점수 대신 온도·압력)이 된다.</p>
+    <ul class="pt-list">
+      <li><b>한 행(row)</b> = 학생 한 명의 기록 (예: 지민의 국어 90점, 영어 85점)</li>
+      <li><b>한 열(column)</b> = 같은 종류의 항목 (모든 학생의 국어 점수 등)</li>
+      <li>반도체 공정 데이터도 같은 구조
+        <ul>
+          <li>설비 센서가 몇 초~몇 시간 간격으로 값을 기록</li>
+          <li>한 행 = 한 번의 측정 기록 (학생 대신 측정 1회)</li>
+          <li>한 열 = 측정 항목 — 온도, 압력 등 (국어·영어 점수 대신)</li>
+        </ul>
+      </li>
+    </ul>
     <div class="callout concept">
       <b class="tag">개념</b>
-      표(table) = 여러 개의 행과 열로 이루어진 데이터. 오늘 우리가 열어볼 CSV 파일도
-      결국 위 성적표나 엑셀처럼 행과 열로 이루어진 표다.
+      표(table) = 여러 개의 행과 열로 이루어진 데이터. 오늘 열어볼 CSV 파일도 성적표·엑셀처럼
+      행과 열로 이루어진 표다.
     </div>
 
     <h3>합격과 불합격 데이터</h3>
-    <p>공정을 마친 웨이퍼는 검사를 거쳐 <b>합격(양품)</b>과 <b>불합격(불량)</b>으로 나뉜다.
-    이 과정에서는 <code>합격여부</code> 열의 값이 <code>1</code>이면 합격, <code>-1</code>이면
-    불합격을 의미하도록 정했다. (뒤에서 다룰 다른 원본 데이터인 fab.csv는 반대 부호를 쓰는데,
-    이는 9차시에서 자세히 설명한다.)</p>
+    <ul class="pt-list">
+      <li>검사를 마친 웨이퍼 → <b>합격(양품)</b> / <b>불합격(불량)</b>으로 분류</li>
+      <li><code>합격여부</code> 열 값: <code>1</code> = 합격, <code>-1</code> = 불합격
+        <ul>
+          <li>다른 원본 데이터 <code>fab.csv</code>는 반대 부호 사용 (9차시에서 설명)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>왜 데이터를 "분석"해야 할까</h3>
+    <ul class="pt-list">
+      <li>하나의 FAB에는 설비가 수백~수천 대 있고, 각 설비는 초 단위로 온도·압력 등을 기록
+        <ul>
+          <li>하루치 기록만 모아도 수만~수십만 행 → 사람이 하나하나 눈으로 훑어보는 건 사실상 불가능</li>
+        </ul>
+      </li>
+      <li>그래서 데이터를 <b>세고, 요약하고, 그림으로 그려서</b> 한눈에 볼 수 있게 만드는 작업이 필요함
+        <ul>
+          <li>예: "합격 34건, 불합격 6건" — 40줄짜리 표를 일일이 읽는 대신 숫자 두 개로 요약</li>
+          <li>이렇게 요약하면 "오늘 상태가 괜찮은가?", "어디를 더 살펴봐야 하는가?"를 훨씬 빨리 판단할 수 있음</li>
+        </ul>
+      </li>
+      <li>이것이 바로 <b>데이터 분석</b> — 많은 기록에서 의미 있는 패턴과 요약을 뽑아내는 과정
+        <ul>
+          <li>이 과정 10차시 전체가 "반도체 공정 데이터를 요약 → 비교 → 예측"하는 순서로 진행됨</li>
+        </ul>
+      </li>
+    </ul>
   </section>
 
   <section class="block">
     <h2>🐍 파이썬 시작하기 — 변수와 출력</h2>
 
+    <h3>파이썬이란 무엇인가</h3>
+    <ul class="pt-list">
+      <li><b>파이썬(Python)</b> = 사람이 읽고 쓰기 쉬운 문법으로 컴퓨터에게 일을 시키는 <b>프로그래밍 언어</b>
+        <ul>
+          <li><code>print</code>, <code>import</code>처럼 영어 단어에 가까운 명령어로 이루어져 있어 처음 배우기 좋음</li>
+          <li>웹 서비스, 인공지능, 데이터 분석 등 다양한 분야에서 가장 널리 쓰이는 언어 중 하나</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>왜 이 과정에서 파이썬을 배우는가</h3>
+    <ul class="pt-list">
+      <li>엑셀로도 표를 다룰 수 있지만, 데이터가 많아지면 한계가 있음
+        <ul>
+          <li>엑셀 — 마우스 클릭과 수식으로 작업 → 행이 수만 개가 넘어가면 느려지고, 사람이 실수하기도 쉬움</li>
+          <li>파이썬 — 같은 작업을 코드 몇 줄로 만들어두면, 데이터가 아무리 많아도 똑같이 빠르고 정확하게 반복 가능</li>
+        </ul>
+      </li>
+      <li>반도체 공정은 설비마다 초 단위로 온도·압력 등을 기록 → 하루에도 수만~수십만 행이 쌓임
+        <ul>
+          <li>이런 대용량 데이터를 정리·요약·시각화하려면 파이썬 같은 프로그래밍 언어가 사실상 필수</li>
+        </ul>
+      </li>
+      <li>이 과정에서는 파이썬 중에서도 표(행·열) 데이터를 다루는 데 특화된 <b>Pandas</b>라는 도구를 함께 사용
+        <ul>
+          <li>비유: 파이썬이 <b>"공구함"</b>이라면, Pandas는 그 안에 든 <b>"표 전용 공구"</b></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="callout concept">
+      <b class="tag">오늘의 순서</b>
+      표(데이터) 전체를 한 번에 다루는 도구인 <b>Pandas</b>는 4차시부터 배운다. 오늘은 그보다 먼저,
+      파이썬으로 값 하나를 다루는 가장 작은 단위인 <b>변수</b>부터 시작한다. "변수 → 자료형 →
+      출력(<code>print</code>, f-string) → 입력(<code>input</code>)" 순서로 기본기를 다진다.
+    </div>
+
     <h3>변수란 무엇인가</h3>
-    <p>오늘 <code>value_counts()</code>로 확인한 "합격 34건, 불합격 6건"이라는 숫자를, 매번 코드를
-    다시 실행하지 않고 기억해두고 싶다면 어떻게 해야 할까? 파이썬에서는 <b>변수(Variable)</b>를 써서
-    값에 이름을 붙여 저장해둔다. 변수는 "이름표가 붙은 상자"라고 생각하면 쉽다 — 상자 안에 값을
-    넣고, 이름표(변수 이름)로 그 상자를 다시 찾아 쓸 수 있다.</p>
+    <ul class="pt-list">
+      <li>문제: "합격 34건, 불합격 6건"을 매번 다시 계산하지 않고 기억해두려면?</li>
+      <li>해결: <b>변수(Variable)</b> — 값에 이름을 붙여 저장
+        <ul>
+          <li>비유: 이름표가 붙은 상자</li>
+          <li>상자 안에 값을 넣고, 이름표(변수 이름)로 다시 꺼내 씀</li>
+        </ul>
+      </li>
+    </ul>
 
     <svg class="var-box-svg" viewBox="0 0 440 170" role="img"
          aria-label="변수 개념도: 34라는 값이 화살표를 따라 pass_count라는 이름의 상자 안에 저장된다">
@@ -233,9 +326,8 @@
       <text x="315" y="26" font-size="15" text-anchor="middle" class="label-text">pass_count</text>
       <text x="315" y="98" font-size="34" text-anchor="middle" class="value-text pulse">34</text>
     </svg>
-    <p class="img-caption"><code>pass_count = 34</code> — 오른쪽 값(34)을 왼쪽 이름(<code>pass_count</code>)이라는
-    상자에 저장한다. 이때 <code>=</code>는 수학의 "같다"가 아니라 <b>"오른쪽 값을 왼쪽 이름에
-    저장하라"</b>는 뜻(대입 연산자)이다.</p>
+    <p class="img-caption"><code>pass_count = 34</code> — 오른쪽 값(34)을 왼쪽 이름(<code>pass_count</code>) 상자에 저장.
+    <code>=</code>는 수학의 "같다"가 아니라 <b>"오른쪽 값을 왼쪽 이름에 저장하라"</b>(대입 연산자).</p>
 
     <div class="code-block">
       <div class="code-label"><span>Python — 변수 만들기</span><button class="copy-btn">복사</button></div>
@@ -254,20 +346,27 @@ print(fail_count)</code></pre>
     </div>
     <div class="callout practice">
       <b class="tag">🙋 직접 해보기</b>
-      Colab에 위 코드를 그대로 입력하고 실행해보자. 그다음 <code>pass_count</code> 값을 다른 숫자로
-      바꿔서 다시 실행하면 어떻게 되는지 확인해보자.
+      <ul class="pt-list">
+        <li>Colab에 위 코드 입력 후 실행</li>
+        <li><code>pass_count</code> 값을 다른 숫자로 바꿔 다시 실행 → 결과 변화 확인</li>
+      </ul>
     </div>
     <div class="callout warn">
       <b class="tag">체크포인트 — 변수 이름 규칙</b>
-      변수 이름은 영문자·숫자·밑줄(<code>_</code>)만 쓸 수 있고 숫자로 시작할 수 없다. 띄어쓰기나
-      하이픈(<code>-</code>)도 쓸 수 없다(예: <code>pass count</code>, <code>1st_lot</code>,
-      <code>my-name</code>은 모두 오류가 난다). 또한 대문자와 소문자는 서로 다른 변수로
-      취급되므로 <code>Pass_Count</code>와 <code>pass_count</code>는 완전히 다른 이름이다.
+      <ul class="pt-list">
+        <li>사용 가능: 영문자 · 숫자 · 밑줄(<code>_</code>) — 단, 숫자로 시작 불가</li>
+        <li>사용 불가: 띄어쓰기, 하이픈(<code>-</code>)
+          <ul><li>예: <code>pass count</code>, <code>1st_lot</code>, <code>my-name</code> → 모두 오류</li></ul>
+        </li>
+        <li>대소문자 구분: <code>Pass_Count</code> ≠ <code>pass_count</code> (완전히 다른 변수)</li>
+      </ul>
     </div>
 
     <h3>자료형 — 숫자형, 문자열형, 불리언</h3>
-    <p>변수에는 숫자뿐 아니라 문자, 참/거짓 값도 담을 수 있다. 값의 "종류"를 <b>자료형(Data
-    Type)</b>이라고 부른다. 이번 차시에서는 아래 세 가지만 기억해도 충분하다.</p>
+    <ul class="pt-list">
+      <li>변수에는 숫자·문자·참거짓(참/거짓) 값을 담을 수 있음</li>
+      <li>값의 "종류" = <b>자료형(Data Type)</b> — 오늘은 아래 세 가지만 기억</li>
+    </ul>
     <table class="timetable">
       <tr><th>자료형</th><th>예시</th><th>설명</th></tr>
       <tr><td><code>int</code> (정수)</td><td><code>6</code></td><td>소수점 없는 숫자</td></tr>
@@ -293,14 +392,17 @@ print(type(is_pass))</code></pre>
     </div>
     <div class="callout warn">
       <b class="tag">주의</b>
-      문자열은 반드시 따옴표(<code>"..."</code> 또는 <code>'...'</code>)로 감싸야 한다.
-      <code>equipment = EQ-03</code>처럼 따옴표 없이 쓰면 파이썬은 이를 "EQ-03이라는 변수를 찾아라"는
-      뜻으로 오해해 <code>NameError</code>가 발생한다.
+      <ul class="pt-list">
+        <li>문자열은 반드시 따옴표(<code>"..."</code> 또는 <code>'...'</code>)로 감싸기</li>
+        <li><code>equipment = EQ-03</code>처럼 따옴표 없이 쓰면 "EQ-03 변수를 찾아라"로 오해 → <code>NameError</code></li>
+      </ul>
     </div>
 
     <h3>print()로 여러 값 한 번에 출력하기</h3>
-    <p><code>print()</code> 안에 콤마(<code>,</code>)로 여러 값을 나열하면, 값 사이에 공백을 하나씩
-    넣어 순서대로 이어서 출력해준다.</p>
+    <ul class="pt-list">
+      <li><code>print()</code> 안에 콤마(<code>,</code>)로 값을 나열</li>
+      <li>값 사이에 공백을 하나씩 넣어 순서대로 출력</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print("합격:", pass_count, "불합격:", fail_count)</code></pre>
@@ -311,10 +413,14 @@ print(type(is_pass))</code></pre>
     </div>
 
     <h3>f-string으로 문장 속에 값 끼워 넣기</h3>
-    <p>콤마로 나열하면 값 사이에 원치 않는 공백이 생기고, 문장을 매끄럽게 쓰기 어렵다.
-    <b>f-string</b>(포맷 문자열)을 쓰면 문장 안에서 원하는 위치에 변수 값을 자연스럽게 끼워 넣을 수
-    있다. 방법은 간단하다 — 문자열 앞에 <code>f</code>를 붙이고, 변수를 넣고 싶은 자리에
-    중괄호 <code>{ }</code>로 감싼다.</p>
+    <ul class="pt-list">
+      <li>콤마 나열의 문제 — 값 사이에 원치 않는 공백, 매끄러운 문장 쓰기 어려움</li>
+      <li><b>f-string</b>(포맷 문자열) — 문장 안 원하는 위치에 변수 값을 끼워 넣음
+        <ul>
+          <li>사용법: 문자열 앞에 <code>f</code> + 변수를 중괄호 <code>{ }</code>로 감싸기</li>
+        </ul>
+      </li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — f-string 기본</span><button class="copy-btn">복사</button></div>
       <pre><code>print(f"오늘 합격은 {pass_count}건, 불합격은 {fail_count}건입니다.")</code></pre>
@@ -323,9 +429,10 @@ print(type(is_pass))</code></pre>
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">오늘 합격은 34건, 불합격은 6건입니다.</pre>
     </div>
-    <p>중괄호 안에는 변수뿐 아니라 계산식도 바로 넣을 수 있다. 소수점 자리수를 정리하고 싶다면
-    <code>:.1f</code>처럼 콜론(<code>:</code>) 뒤에 서식을 적는다(<code>.1f</code> = 소수 첫째
-    자리까지).</p>
+    <ul class="pt-list">
+      <li>중괄호 안에는 변수뿐 아니라 계산식도 바로 입력 가능</li>
+      <li>소수점 자리수 지정: <code>:.1f</code>처럼 콜론(<code>:</code>) 뒤에 서식 (<code>.1f</code> = 소수 첫째 자리까지)</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — f-string 안에서 계산하기</span><button class="copy-btn">복사</button></div>
       <pre><code>total = pass_count + fail_count
@@ -339,15 +446,21 @@ print(f"전체 {total}건 중 불합격률은 {fail_rate:.1f}%입니다.")</code
     </div>
     <div class="callout practice">
       <b class="tag">🙋 직접 해보기</b>
-      <code>equipment</code> 변수(EQ-03)와 <code>temperature</code> 변수(300.1)를 이용해
-      <code>f"{equipment} 설비의 온도는 {temperature}도입니다."</code> 같은 나만의 f-string 문장을
-      만들어 출력해보자.
+      <ul class="pt-list">
+        <li><code>equipment</code>(EQ-03), <code>temperature</code>(300.1) 변수 활용</li>
+        <li><code>f"{equipment} 설비의 온도는 {temperature}도입니다."</code> 같은 나만의 f-string 문장 출력</li>
+      </ul>
     </div>
 
     <h3>input()으로 값 입력받기</h3>
-    <p>지금까지는 값을 코드에 직접 적었지만, <code>input()</code>을 쓰면 사람이 키보드로 입력한 값을
-    받아 사용할 수 있다. <code>input("질문")</code>을 실행하면 화면에 질문이 뜨고, 사람이 입력한
-    내용이 <code>input()</code>의 결과값이 된다.</p>
+    <ul class="pt-list">
+      <li>지금까지: 값을 코드에 직접 작성</li>
+      <li><code>input()</code>: 키보드로 입력한 값을 받아 사용
+        <ul>
+          <li><code>input("질문")</code> 실행 → 화면에 질문 표시 → 입력 내용이 결과값</li>
+        </ul>
+      </li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — input() 기본</span><button class="copy-btn">복사</button></div>
       <pre><code>name = input("이름을 입력하세요: ")
@@ -360,9 +473,10 @@ print(f"안녕하세요, {name}님! 반갑습니다.")</code></pre>
     </div>
     <div class="callout danger">
       <b class="tag">가장 중요한 주의사항</b>
-      <code>input()</code>이 돌려주는 값은 <b>항상 문자열(str)</b>이다. 숫자를 입력받아도 파이썬은
-      이를 글자로 취급하므로, 계산에 쓰려면 <code>int()</code>(정수) 또는 <code>float()</code>(실수)로
-      바꿔줘야 한다.
+      <ul class="pt-list">
+        <li><code>input()</code>의 결과값은 <b>항상 문자열(str)</b></li>
+        <li>숫자를 입력해도 파이썬은 글자로 취급 → 계산하려면 <code>int()</code> 또는 <code>float()</code>로 변환 필요</li>
+      </ul>
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — 입력값을 숫자로 바꾸기</span><button class="copy-btn">복사</button></div>
@@ -378,9 +492,11 @@ print(f"내년이면 {age + 1}살이 되네요!")</code></pre>
     </div>
     <div class="callout danger">
       <b class="tag">이렇게 하면 오류가 난다</b>
-      <code>age_text + 1</code>처럼 <b>변환 없이</b> 문자열과 숫자를 바로 더하면
-      <code>TypeError: can only concatenate str (not "int") to str</code> 오류가 발생한다.
-      "문자열끼리는 이어붙일 수 있지만, 문자열과 숫자는 더할 수 없다"는 규칙 때문이다.
+      <ul class="pt-list">
+        <li><code>age_text + 1</code>처럼 <b>변환 없이</b> 문자열+숫자를 더하면 오류</li>
+        <li><code>TypeError: can only concatenate str (not "int") to str</code></li>
+        <li>규칙: 문자열끼리는 이어붙이기 가능, 문자열+숫자는 불가</li>
+      </ul>
     </div>
 
     <svg class="flow-svg" viewBox="0 0 660 140" role="img"
@@ -408,7 +524,9 @@ print(f"내년이면 {age + 1}살이 되네요!")</code></pre>
     앞으로 10차시 내내 반복해서 쓰는 기본 패턴이다.</p>
 
     <h3>종합 실습 — 나만의 자기소개 만들기</h3>
-    <p>지금까지 배운 변수·<code>input()</code>·f-string을 모두 합쳐 자기소개 문장을 만들어보자.</p>
+    <ul class="pt-list">
+      <li>변수 · <code>input()</code> · f-string을 모두 합쳐 자기소개 문장 만들기</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 종합 실습</span><button class="copy-btn">복사</button></div>
       <pre><code>my_name = input("이름을 입력하세요: ")
@@ -430,10 +548,11 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
     <h2>🟣 파이썬 실습: 변수와 출력 따라 하기</h2>
     <div class="callout warn">
       <b class="tag">체크포인트 — 셀 실행 순서</b>
-      Colab은 클릭해서 실행한 순서대로 코드를 기억하며, 꼭 "위에서 아래로" 실행해야 하는 것은
-      아니다. 하지만 순서를 뒤섞어 실행하면 <code>NameError</code>가 나거나 예상과 다른 값이
-      나올 수 있다. 결과가 이상하면 상단 메뉴의 "런타임 → 모두 실행"으로 맨 위 셀부터 순서대로
-      다시 실행해보자.
+      <ul class="pt-list">
+        <li>Colab은 클릭해서 실행한 순서를 기억 — 반드시 "위에서 아래로" 실행할 필요는 없음</li>
+        <li>단, 순서를 뒤섞어 실행하면 <code>NameError</code>나 예상과 다른 값 발생 가능</li>
+        <li>결과가 이상하면 → "런타임 → 모두 실행"으로 맨 위부터 다시 실행</li>
+      </ul>
     </div>
     <div class="step">
       <div class="num">1</div>
@@ -566,9 +685,11 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
 
   <section class="block">
     <h2>📁 데이터 미리보기</h2>
-    <p>오늘 사용할 데이터: <code>data/weekly/week01/week01_semiconductor_process_overview.csv</code>
-    (약 40행 8열). 자세한 설명은
-    <a href="../../data/data_dictionary/week01_dictionary.md">데이터 설명서</a> 참고.</p>
+    <ul class="pt-list">
+      <li>이 과정에서 계속 등장할 데이터: <code>data/weekly/week01/week01_semiconductor_process_overview.csv</code> (약 40행 8열)</li>
+      <li>오늘은 이 표를 눈으로만 살펴본다 — 파이썬 코드로 직접 열어보는 건 4차시(Pandas)부터다</li>
+      <li>자세한 설명: <a href="../../data/data_dictionary/week01_dictionary.md">데이터 설명서</a> 참고</li>
+    </ul>
     <div class="tablewrap">
       <table class="data-preview">
         <tr><th>측정시간</th><th>로트번호</th><th>웨이퍼번호</th><th>공정명</th><th>설비번호</th><th>온도_섭씨</th><th>압력_Pa</th><th>합격여부</th></tr>
@@ -583,142 +704,109 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
-    <h2>💻 실습 코드</h2>
-    <div class="code-block">
-      <div class="code-label"><span>Python — Colab / Jupyter</span><button class="copy-btn">복사</button></div>
-      <pre><code># 1. 데이터 분석 도구인 Pandas를 불러옵니다.
-import pandas as pd
-
-# 2. CSV 파일을 읽어 표(DataFrame) 형태로 저장합니다.
-df = pd.read_csv("week01_semiconductor_process_overview.csv")
-
-# 3. 데이터의 앞부분 5개 행을 확인합니다.
-df.head()
-
-# 4. 행 개수와 열 개수를 확인합니다. (행, 열) 순서로 나옵니다.
-print(df.shape)
-
-# 5. 열 이름 목록을 확인합니다.
-print(df.columns)
-
-# 6. 합격(1)과 불합격(-1)이 각각 몇 건인지 세어봅니다.
-print(df["합격여부"].value_counts())</code></pre>
+    <h2>🔭 앞으로 배우게 될 내용</h2>
+    <ul class="pt-list">
+      <li>이 표를 눈으로 훑어보는 건 오늘로 끝이 아니다 — 앞으로 10차시 내내 이런 표를
+        <b>더 크고, 더 빠르고, 더 정확하게</b> 다루는 방법을 하나씩 배운다.</li>
+      <li>큰 그림은 아래 네 단계다. 지금은 용어만 눈에 익혀두면 충분하다.</li>
+    </ul>
+    <div class="term-grid">
+      <div class="term-card">
+        <h4>1단계 · 보는 법</h4><div class="en">1~3차시</div>
+        <dl>
+          <dt>배우는 도구</dt><dd>파이썬 기초</dd>
+          <dt>무엇을 할 수 있게 되나</dt><dd>변수에 값을 저장하고, 리스트·딕셔너리로 여러 값을 묶고,
+          조건문·반복문·함수로 계산을 자동화한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>2단계 · 정리하고 그리는 법</h4><div class="en">4~6차시</div>
+        <dl>
+          <dt>배우는 도구</dt><dd>Pandas, Matplotlib, Orange3</dd>
+          <dt>무엇을 할 수 있게 되나</dt><dd>CSV 표 전체를 코드 몇 줄로 읽고, 빈 값·이상한 값을
+          정리하고, 그래프로 공정 상태를 한눈에 확인한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>3단계 · 비교하고 이상을 찾는 법</h4><div class="en">7~8차시</div>
+        <dl>
+          <dt>배우는 도구</dt><dd>Pandas(groupby), Orange3</dd>
+          <dt>무엇을 할 수 있게 되나</dt><dd>설비·공정별로 수율·불량률을 비교하고, 이상값과
+          "원인 후보"를 데이터로 좁혀 나간다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>4단계 · 예측하고 종합하는 법</h4><div class="en">9~10차시</div>
+        <dl>
+          <dt>배우는 도구</dt><dd>scikit-learn, Orange3</dd>
+          <dt>무엇을 할 수 있게 되나</dt><dd>지금까지 배운 것을 모아 간단한 머신러닝 모델을 직접
+          만들고, 새로운 로트의 합격/불합격을 예측해본다.</dd>
+        </dl>
+      </div>
     </div>
-    <div class="explain-list">
-      <b>코드 한 줄씩 설명</b>
-      <ul>
-        <li><code>import pandas as pd</code>: 표 형태의 데이터를 다루는 도구 Pandas를 <code>pd</code>라는 별명으로 불러온다.</li>
-        <li><code>pd.read_csv(...)</code>: CSV 파일을 읽어서 <code>DataFrame</code>이라는 표 형태로 만든다.</li>
-        <li><code>df</code>: 읽어들인 데이터를 저장해두는 이름(변수)이다.</li>
-        <li><code>df.head()</code>: 데이터의 맨 앞 5개 행만 보여준다(전체를 다 보면 복잡하기 때문).</li>
-        <li><code>df.shape</code>: (행 개수, 열 개수)를 튜플로 알려준다.</li>
-        <li><code>df.columns</code>: 모든 열의 이름을 알려준다.</li>
-        <li><code>df["합격여부"].value_counts()</code>: <code>합격여부</code> 열에서 값별 개수를 센다.</li>
-      </ul>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과 예시</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(40, 8)
-Index(['측정시간', '로트번호', '웨이퍼번호', '공정명', '설비번호', '온도_섭씨', '압력_Pa', '합격여부'], dtype='object')
- 1    34
--1     6
-Name: count, dtype: int64</pre>
-    </div>
-    <div class="callout warn">
-      <b class="tag">결과 해석</b>
-      이 데이터는 40행 8열로 이루어져 있고, 합격이 34건(85%), 불합격이 6건(15%)이다.
-      즉 10개 중 8~9개는 정상적으로 만들어졌다는 뜻이다. 다만 이 수치만으로는
-      "어떤 설비에서, 어떤 공정에서" 불합격이 발생했는지는 알 수 없다 — 이는 3차시 이후에 배운다.
+    <div class="callout concept">
+      <b class="tag">오늘은 어디쯤?</b>
+      오늘은 1단계의 맨 처음, <b>변수</b>부터 시작한다. 이 표를 파이썬 코드로 직접 열어보는 건
+      4차시(Pandas)부터다. 지금은 "표를 다루려면 결국 이런 순서로 배우는구나" 정도만 기억해두자.
     </div>
   </section>
 
   <section class="block">
     <h2>🙋 실생활 비유로 정리하기</h2>
-    <p>공정 데이터를 처음 본다면 "학교 성적표"를 떠올려보자. 학생(웨이퍼) 한 명 한 명의
-    시험 점수(센서 측정값)를 기록한 표가 성적표이듯, 공정 데이터도 웨이퍼 한 장 한 장의
-    측정값을 기록한 표다. 성적표에서 "평균 점수", "합격/불합격 인원수"를 계산하듯,
-    공정 데이터에서도 같은 방식으로 요약할 수 있다.</p>
-  </section>
-
-  <section class="block">
-    <h2>🟣 단계별 따라 하기 실습</h2>
-    <div class="step">
-      <div class="num">1</div>
-      <div class="content"><b>Google Colab 열기</b> — <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a>에 접속해 "새 노트북"을 만든다.</div>
-    </div>
-    <div class="step">
-      <div class="num">2</div>
-      <div class="content"><b>CSV 업로드하기</b> — 왼쪽 폴더 아이콘 클릭 → 업로드 아이콘 클릭 →
-      <code>week01_semiconductor_process_overview.csv</code> 선택.</div>
-    </div>
-    <div class="step">
-      <div class="num">3</div>
-      <div class="content"><b>Pandas 불러오고 파일 읽기</b> — 위 코드의 1~2번 줄을 그대로 입력하고 실행(▶) 버튼을 누른다.</div>
-    </div>
-    <div class="step">
-      <div class="num">4</div>
-      <div class="content"><b>앞부분 확인</b> — <code>df.head()</code>를 실행해 표가 잘 보이는지 확인한다.</div>
-    </div>
-    <div class="step">
-      <div class="num">5</div>
-      <div class="content"><b>행/열 개수, 열 이름 확인</b> — <code>df.shape</code>, <code>df.columns</code>를 각각 실행해본다.</div>
-    </div>
-    <div class="step">
-      <div class="num">6</div>
-      <div class="content"><b>합격/불합격 세어보기</b> — <code>df["합격여부"].value_counts()</code>를 실행하고,
-      결과를 한 문장으로 적어본다. (학생용 Notebook의 TODO로 이어짐)</div>
-    </div>
+    <ul class="pt-list">
+      <li>공정 데이터 = "학교 성적표"와 같은 구조
+        <ul>
+          <li>성적표: 학생(웨이퍼) 한 명 한 명의 시험 점수(센서 측정값) 기록</li>
+          <li>공정 데이터: 웨이퍼 한 장 한 장의 측정값 기록</li>
+        </ul>
+      </li>
+      <li>성적표에서 "평균 점수", "합격/불합격 인원수"를 구하듯 → 공정 데이터도 같은 방식으로 요약</li>
+    </ul>
   </section>
 
   <section class="block">
     <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <div class="callout warn">
+      <b class="tag">주의</b>
+      <ul class="pt-list">
+        <li>Colab 런타임 초기화(연결 끊김) → 이전 실행 결과 사라짐</li>
+        <li>해결: 맨 위 셀부터 순서대로 다시 실행</li>
+      </ul>
+    </div>
     <div class="callout danger">
       <b class="tag">오류 1</b>
-      <code>FileNotFoundError</code> — CSV 파일 이름을 잘못 입력했거나 업로드하지 않은 경우다.
-      왼쪽 파일 목록에 파일이 보이는지, 이름의 대소문자·확장자가 정확한지 확인한다.
+      <ul class="pt-list">
+        <li><code>NameError: name 'EQ' is not defined</code> — 문자열 따옴표 누락 (<code>equipment = EQ-03</code>)</li>
+        <li>해결: 문자열은 항상 <code>"EQ-03"</code>처럼 따옴표로 감싸기</li>
+      </ul>
     </div>
     <div class="callout danger">
       <b class="tag">오류 2</b>
-      <code>KeyError: '합격여부'</code> — 열 이름을 잘못 입력한 경우다. <code>df.columns</code>로
-      정확한 열 이름을 먼저 확인한다.
-    </div>
-    <div class="callout warn">
-      <b class="tag">주의</b>
-      Colab에서 런타임이 초기화되면(연결이 끊기면) 이전에 실행한 코드 결과가 사라진다.
-      파일을 다시 업로드하고 셀을 처음부터 다시 실행해야 한다.
-    </div>
-    <div class="callout danger">
-      <b class="tag">오류 3</b>
-      <code>NameError: name 'EQ' is not defined</code> — 문자열에 따옴표를 빼먹은 경우다
-      (<code>equipment = EQ-03</code>처럼). 문자열은 항상 <code>"EQ-03"</code>처럼 따옴표로 감싼다.
-    </div>
-    <div class="callout danger">
-      <b class="tag">오류 4</b>
-      <code>TypeError: can only concatenate str (not "int") to str</code> —
-      <code>input()</code>으로 받은 문자열을 <code>int()</code>로 바꾸지 않고 바로 숫자와 더한
-      경우다. <code>age = int(input(...))</code>처럼 반드시 변환한다.
+      <ul class="pt-list">
+        <li><code>TypeError: can only concatenate str (not "int") to str</code></li>
+        <li>원인: <code>input()</code> 결과(문자열)를 <code>int()</code> 변환 없이 숫자와 더함</li>
+        <li>해결: <code>age = int(input(...))</code>처럼 반드시 변환</li>
+      </ul>
     </div>
     <div class="callout warn">
       <b class="tag">주의 — f-string 흔한 실수</b>
-      문자열 앞의 <code>f</code>를 빼먹으면 <code>{pass_count}</code>가 계산되지 않고 글자 그대로
-      출력된다(예: <code>"합격은 {pass_count}건"</code> → 화면에 <code>{pass_count}</code>가
-      그대로 찍힘). 항상 <code>f"..."</code> 형태인지 확인한다.
+      <ul class="pt-list">
+        <li>문자열 앞 <code>f</code> 누락 → <code>{pass_count}</code>가 계산 안 되고 글자 그대로 출력</li>
+        <li>예: <code>"합격은 {pass_count}건"</code> → 화면에 <code>{pass_count}</code> 그대로 표시</li>
+        <li>항상 <code>f"..."</code> 형태인지 확인</li>
+      </ul>
     </div>
   </section>
 
   <section class="block">
     <h2>🚀 도전 실습</h2>
     <div class="callout practice">
-      <b class="tag">도전 문제 1 (Pandas)</b>
-      <code>df["설비번호"].value_counts()</code>를 실행해 어떤 설비가 데이터에 가장 많이
-      등장하는지 확인해보자. 그리고 <code>df["공정명"].value_counts()</code>로 어떤 공정이
-      가장 많이 기록되었는지도 확인해보자.
-    </div>
-    <div class="callout practice">
-      <b class="tag">도전 문제 2 (파이썬)</b>
-      <code>total = pass_count + fail_count</code>로 전체 건수를 구하고,
-      <code>pass_rate = pass_count / total * 100</code>으로 합격률을 계산한 뒤,
-      <code>f"합격률은 {pass_rate:.1f}%입니다."</code>처럼 f-string으로 결과를 출력해보자.
+      <b class="tag">도전 문제</b>
+      <ul class="pt-list">
+        <li><code>total = pass_count + fail_count</code> — 전체 건수 계산</li>
+        <li><code>pass_rate = pass_count / total * 100</code> — 합격률 계산</li>
+        <li><code>f"합격률은 {pass_rate:.1f}%입니다."</code> — f-string으로 출력</li>
+      </ul>
     </div>
   </section>
 
@@ -739,9 +827,10 @@ Name: count, dtype: int64</pre>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q2. (참/거짓) <code>df.shape</code>는 데이터의 (행 개수, 열 개수)를 알려준다.</div>
+      <div class="q">Q2. (참/거짓) f-string을 쓰려면 문자열 앞에 반드시 <code>f</code>를 붙여야 한다.</div>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 참. 예를 들어 (40, 8)은 40행 8열이라는 뜻이다.</div>
+      <div class="answer-box">정답: 참. <code>f</code>를 빼먹으면 중괄호 <code>{ }</code> 안의 내용이 계산되지 않고
+      글자 그대로 출력된다.</div>
     </div>
 
     <div class="quiz-item">
@@ -785,27 +874,31 @@ Name: count, dtype: int64</pre>
 
   <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
-    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 <code>print()</code> 또는
-    f-string으로 확인할 수 있게 만들어 제출한다.</p>
+    <ul class="pt-list">
+      <li>Colab 노트북 한 개에 순서대로 작성, 각 결과를 <code>print()</code>/f-string으로 확인 가능하게 제출</li>
+    </ul>
     <div class="callout practice">
       <b class="tag">과제 1 — 나의 공정 데이터 요약하기</b>
-      오늘 데이터의 <code>합격여부</code> 결과(34, 6)를 <code>pass_count</code>, <code>fail_count</code>
-      변수에 저장하고, 전체 건수·합격률을 계산해 <code>"전체 ___건 중 합격률은 ___%입니다."</code>
-      형태의 문장을 f-string으로 출력한다.
+      <ul class="pt-list">
+        <li>오늘 데이터의 <code>합격여부</code> 결과(34, 6)를 <code>pass_count</code>, <code>fail_count</code>에 저장</li>
+        <li>전체 건수 · 합격률 계산 → <code>"전체 ___건 중 합격률은 ___%입니다."</code> 문장을 f-string으로 출력</li>
+      </ul>
     </div>
     <div class="callout practice">
       <b class="tag">과제 2 — 자기소개 카드 만들기</b>
-      <code>input()</code>으로 이름, 나이, 좋아하는 공정(증착/식각/포토/세정/산화 중 하나)을 각각
-      입력받아 변수에 저장한 뒤, f-string 세 줄로 자기소개 카드를 출력한다(이름, 나이, 좋아하는
-      공정이 각각 한 줄씩 들어가야 한다). 나이는 반드시 <code>int()</code>로 변환해 "내년 나이"도
-      함께 출력한다.
+      <ul class="pt-list">
+        <li><code>input()</code>으로 이름·나이·좋아하는 공정(증착/식각/포토/세정/산화 중 하나) 입력받아 저장</li>
+        <li>f-string 세 줄로 자기소개 카드 출력 (이름, 나이, 좋아하는 공정 각 한 줄)</li>
+        <li>나이는 반드시 <code>int()</code>로 변환해 "내년 나이"도 함께 출력</li>
+      </ul>
     </div>
     <div class="callout practice">
       <b class="tag">과제 3(도전) — 온도 판정 문장 만들기</b>
-      <code>temperature = 303.5</code> 변수를 만들고, 정상 범위(295~305℃)와 비교한 결과를
-      <code>is_normal</code>(True/False)이라는 변수에 저장한 뒤,
-      <code>f"온도 {temperature}도는 정상 범위 안에 있나요? {is_normal}"</code>처럼 출력해본다.
-      (비교 연산자 <code>&lt;=</code>는 3차시에서 자세히 배우지만, 미리 검색해서 써봐도 좋다.)
+      <ul class="pt-list">
+        <li><code>temperature = 303.5</code> 변수 생성, 정상 범위(295~305℃)와 비교한 결과를 <code>is_normal</code>(True/False)에 저장</li>
+        <li><code>f"온도 {temperature}도는 정상 범위 안에 있나요? {is_normal}"</code>처럼 출력</li>
+        <li>비교 연산자 <code>&lt;=</code>는 3차시에서 자세히 배움 — 미리 검색해서 써봐도 좋음</li>
+      </ul>
     </div>
   </section>
 
@@ -813,8 +906,10 @@ Name: count, dtype: int64</pre>
     <h2>🔜 다음 차시 예고</h2>
     <div class="callout concept">
       <b class="tag">2차시 예고</b>
-      다음 차시에는 오늘 배운 변수를 확장해 파이썬 리스트와 딕셔너리를 배우고, 여러 개의 측정값을
-      한 번에 담아 평균·최댓값·최솟값을 직접 계산해본다.
+      <ul class="pt-list">
+        <li>오늘 배운 변수를 확장해 파이썬 <b>리스트</b>와 <b>딕셔너리</b> 학습</li>
+        <li>여러 측정값을 한 번에 담아 평균·최댓값·최솟값 직접 계산</li>
+      </ul>
     </div>
   </section>
 

@@ -38,15 +38,14 @@
     <h2>2. 코드 빈칸 문제</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>import pandas as pd
+      <pre><code>pass_count = 34
+fail_count ____ 6   # 6을 fail_count라는 이름에 저장
 
-df = pd.____________("week01_semiconductor_process_overview.csv")
-
-print(df.____________)   # (행 개수, 열 개수) 확인
-print(df["합격여부"].____________())  # 값별 개수 세기</code></pre>
+print(f"합격 {pass_count}건, 불합격 {____}건")</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>read_csv</code>, <code>shape</code>, <code>value_counts</code></div>
+    <div class="answer-box">순서대로 <code>=</code>, <code>fail_count</code>.
+    <code>=</code>는 오른쪽 값을 왼쪽 이름에 저장하는 대입 연산자다.</div>
   </section>
 
   <section class="block">
@@ -62,9 +61,9 @@ print(df["합격여부"].____________())  # 값별 개수 세기</code></pre>
 
   <section class="block">
     <h2>4. 결과 해석 문제</h2>
-    <p>실습에서 <code>df["합격여부"].value_counts()</code> 결과가 아래와 같았다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">1     34
--1     6</pre>
+    <p>오늘 살펴본 데이터에서 합격/불합격 열을 정리한 결과가 아래와 같았다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">합격(1)      34
+불합격(-1)    6</pre>
     <p>이 결과를 보고 불합격 비율(%)을 계산해보자.</p>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">6 ÷ (34+6) × 100 = 15%. 즉 40건 중 15%가 불합격이다.</div>
@@ -83,8 +82,10 @@ print(df["합격여부"].____________())  # 값별 개수 세기</code></pre>
     <h2>6. 도전 문제</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      <code>df["설비번호"].value_counts()</code>와 <code>df["공정명"].value_counts()</code>를
-      각각 실행해서, 데이터에 가장 많이 등장한 설비와 공정을 찾아 적어보자.
+      설비별 기록 건수가 아래와 같다고 하자: <code>EQ-01</code> 9건, <code>EQ-02</code> 11건,
+      <code>EQ-03</code> 12건, <code>EQ-04</code> 8건. 네 값을 각각 변수에 저장한 뒤,
+      가장 많이 등장한 설비와 건수를 f-string으로
+      <code>"가장 많이 기록된 설비는 ___(___건)입니다."</code> 형태의 문장으로 출력해보자.
     </div>
   </section>
 

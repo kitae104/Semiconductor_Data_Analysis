@@ -28,9 +28,9 @@
     },
     {
       "type": "true_false",
-      "question": "df.shape는 데이터의 (행 개수, 열 개수)를 알려준다.",
+      "question": "f-string을 쓰려면 문자열 앞에 반드시 f를 붙여야 한다.",
       "answer": true,
-      "explanation": "예를 들어 (40, 8)은 40행 8열이라는 뜻이다."
+      "explanation": "f를 빼먹으면 중괄호 { } 안의 내용이 계산되지 않고 글자 그대로 출력된다."
     },
     {
       "type": "true_false",
@@ -50,13 +50,13 @@
     },
     {
       "type": "fill_blank",
-      "question": "CSV 파일을 읽어 DataFrame으로 만드는 Pandas 함수는 pd.____()이다.",
-      "answer": "read_csv"
+      "question": "값을 변수에 저장할 때 pass_count ____ 34 처럼 쓰는 기호는 무엇인가?",
+      "answer": "="
     },
     {
       "type": "fill_blank",
-      "question": "특정 열에서 값별 개수를 세는 메서드는 df['열이름'].____()이다.",
-      "answer": "value_counts"
+      "question": "문자열 안에 변수 값을 끼워 넣으려면 문자열 앞에 ____를 붙이고 변수를 중괄호 { }로 감싼다.",
+      "answer": "f"
     },
     {
       "type": "result_prediction",

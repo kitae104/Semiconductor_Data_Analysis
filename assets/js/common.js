@@ -57,10 +57,39 @@ document.addEventListener("DOMContentLoaded", function () {
       toc.className = "toc-box";
       toc.setAttribute("aria-label", "이 페이지 목차");
 
+      var head = document.createElement("div");
+      head.className = "toc-head";
+
       var title = document.createElement("span");
       title.className = "toc-title";
-      title.textContent = "📑 이 페이지 목차";
-      toc.appendChild(title);
+      title.appendChild(document.createTextNode("📑 "));
+      var titleText = document.createElement("span");
+      titleText.textContent = "이 페이지 목차";
+      title.appendChild(titleText);
+      head.appendChild(title);
+
+      var toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "toc-toggle";
+      toggle.setAttribute("aria-label", "목차 접기/펼치기");
+      toggle.textContent = "❮";
+      head.appendChild(toggle);
+
+      toc.appendChild(head);
+
+      var TOC_KEY = "tocCollapsed";
+      function applyCollapsed(collapsed) {
+        toc.classList.toggle("collapsed", collapsed);
+        toggle.textContent = collapsed ? "❯" : "❮";
+      }
+      toggle.addEventListener("click", function () {
+        var collapsed = !toc.classList.contains("collapsed");
+        applyCollapsed(collapsed);
+        try { localStorage.setItem(TOC_KEY, collapsed ? "1" : "0"); } catch (e) {}
+      });
+      try {
+        applyCollapsed(localStorage.getItem(TOC_KEY) === "1");
+      } catch (e) {}
 
       var list = document.createElement("div");
       list.className = "toc-list";
