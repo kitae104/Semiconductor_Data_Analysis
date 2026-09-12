@@ -65,8 +65,10 @@
       산점도, 설비별 온도 박스플롯을 먼저 그려본다. 어떤 설비의 상자가 가장 넓게 퍼져 있는지,
       온도와 두께가 관계가 있어 보이는지 눈으로 먼저 짐작해본다.</p>
     </div>
-    <p style="color:var(--muted);font-size:.9rem;">Scatter Plot·Box Plot·Distributions 위젯이
-    낯설다면 <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>에서 먼저 확인하자.</p>
+    <ul class="pt-list">
+      <li>Scatter Plot·Box Plot·Distributions 위젯이 낯설다면
+        <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>에서 먼저 확인</li>
+    </ul>
     <div class="oflow-wrap">
       <svg class="oflow-svg" viewBox="0 0 760 220" role="img"
            aria-label="File 위젯 하나에서 Scatter Plot, Box Plot, Distributions 세 위젯으로 갈라지는 Orange3 워크플로 다이어그램">
@@ -95,14 +97,16 @@
       <p class="oflow-note">💡 실제 Orange3 화면 캡처(Scatter Plot으로 그린 온도-두께 산점도, Box
       Plot으로 그린 설비별 온도 분포)를 강사가 추가하면 더 좋다.</p>
     </div>
-    <p style="color:var(--muted);font-size:.9rem;">이제 Orange3로 미리 살펴본 그래프를, 아래에서
-    Matplotlib 코드로 직접 그려 같은 결론이 나오는지 확인해본다.</p>
+    <ul class="pt-list">
+      <li>Orange3로 미리 살펴본 그래프를 아래에서 Matplotlib 코드로 직접 그려 같은 결론이 나오는지 확인</li>
+    </ul>
   </section>
 
   <section class="block">
     <h2>🐍 ② 파이썬으로 확인하기 — 다섯 가지 그래프</h2>
-    <p>먼저 <code>측정시간</code> 열을 진짜 날짜/시간 형식으로 바꿔야 시간 순서대로 그래프를 그릴
-    수 있다.</p>
+    <ul class="pt-list">
+      <li>먼저 <code>측정시간</code> 열을 날짜/시간 형식으로 변환 → 시간 순서대로 그래프를 그릴 수 있음</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 데이터 준비</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
@@ -114,10 +118,10 @@ df = df.sort_values("측정시간")</code></pre>
     </div>
     <div class="callout warn">
       <b class="tag">체크포인트 — 그래프가 겹쳐 보인다면</b>
-      아래 다섯 그래프를 각각 <b>서로 다른 코드 셀</b>에 나눠 실행하자. 한 셀 안에 여러 그래프
-      코드를 이어서 쓰면 <code>plt.show()</code>를 만나기 전까지는 같은 그림 위에 계속 겹쳐
-      그려진다. 그래프가 이상하게 겹쳐 보인다면 셀을 나누거나, 그래프마다 새로 시작하기 전에
-      <code>plt.show()</code>를 실행했는지 확인하자.
+      아래 다섯 그래프를 각각 <b>서로 다른 코드 블록</b>에 나눠 실행하자. 한 코드 블록 안에 여러
+      그래프 코드를 이어서 쓰면 <code>plt.show()</code>를 만나기 전까지는 같은 그림 위에 계속 겹쳐
+      그려진다. 그래프가 이상하게 겹쳐 보인다면 코드 블록을 나누거나, 그래프마다 새로 시작하기
+      전에 <code>plt.show()</code>를 실행했는지 확인하자.
     </div>
 
     <h3>1. 선 그래프 — 시간에 따른 변화</h3>
@@ -140,7 +144,9 @@ plt.show()</code></pre>
     <img class="chart-img" src="../../assets/images/week06/generic_line_week_temp.png" alt="일주일 최고기온 선 그래프. 월~수는 완만히 오르내리다 목요일부터 토요일까지 계속 오르고 일요일에 살짝 내려간다.">
     <p class="img-caption">화요일(19도)에서 수요일(17도)로 잠깐 내려갔다가, 목~토요일에는 계속
     올라 25도까지 오르는 것을 한눈에 볼 수 있다.</p>
-    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "시간에 따른 온도 변화"에 적용해보자.</p>
+    <ul class="pt-list">
+      <li>같은 방식을 반도체 데이터의 <b>"시간에 따른 온도 변화"</b>에 적용</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>plt.plot(df["측정시간"], df["온도_섭씨"])
@@ -189,7 +195,9 @@ plt.show()</code></pre>
     <img class="chart-img" src="../../assets/images/week06/generic_bar_fruit_sales.png" alt="과일별 판매량 막대그래프. 바나나가 가장 많이 팔리고 포도가 가장 적게 팔렸다.">
     <p class="img-caption">막대 높이만 비교하면 바나나(45개)가 가장 많이, 포도(18개)가 가장
     적게 팔렸다는 것을 바로 알 수 있다.</p>
-    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "설비별 측정 건수"에 적용해보자.</p>
+    <ul class="pt-list">
+      <li>같은 방식을 반도체 데이터의 <b>"설비별 측정 건수"</b>에 적용</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>df["설비번호"].value_counts().sort_index().plot(kind="bar")
@@ -237,7 +245,9 @@ plt.show()</code></pre>
     <img class="chart-img" src="../../assets/images/week06/generic_hist_scores.png" alt="학생 20명의 시험 점수 분포 히스토그램. 70점 근처에 학생이 가장 많이 몰려 있는 종 모양 분포.">
     <p class="img-caption">70점 구간에 학생이 가장 많이(6명) 몰려 있고, 점수가 아주 낮거나
     아주 높은 학생은 적은 종 모양 분포다.</p>
-    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "온도 분포"에 적용해보자.</p>
+    <ul class="pt-list">
+      <li>같은 방식을 반도체 데이터의 <b>"온도 분포"</b>에 적용</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>plt.hist(df["온도_섭씨"], bins=18)
@@ -289,7 +299,9 @@ plt.show()</code></pre>
     <p class="img-caption">점들이 대체로 오른쪽 위로 향한다 — 공부 시간이 늘수록 점수도 함께
     오르는 경향이 있다(다만 6시간 공부하고 78점, 4시간 공부하고 80점처럼 완벽히 일치하지는
     않는다).</p>
-    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "온도-두께 관계"에 적용해보자.</p>
+    <ul class="pt-list">
+      <li>같은 방식을 반도체 데이터의 <b>"온도-두께 관계"</b>에 적용</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>plt.scatter(df["온도_섭씨"], df["두께_nm"])
@@ -347,9 +359,13 @@ plt.show()</code></pre>
     <img class="chart-img" src="../../assets/images/week06/generic_box_class_scores.png" alt="반별 시험 점수 박스플롯. B반의 상자와 수염이 가장 넓게 퍼져 있고, C반에는 동그라미로 표시된 이상치가 하나 있다.">
     <p class="img-caption">B반의 상자와 수염이 가장 넓게 퍼져 있다 — B반 학생들의 점수 편차가
     가장 크다는 뜻이다. C반에는 동그라미로 표시된 이상치(유독 튀는 점수)도 하나 보인다.</p>
-    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "설비별 온도"에 적용해보자. 반도체 데이터는
-    이미 표(DataFrame) 형태이므로, Pandas가 제공하는 <code>df.boxplot(column=, by=)</code>를
-    쓰면 그룹별로 나누는 작업까지 한 번에 처리해준다.</p>
+    <ul class="pt-list">
+      <li>같은 방식을 반도체 데이터의 <b>"설비별 온도"</b>에 적용
+        <ul>
+          <li>반도체 데이터는 이미 표(DataFrame) 형태 → Pandas의 <code>df.boxplot(column=, by=)</code>로 그룹별 분리까지 한 번에 처리</li>
+        </ul>
+      </li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>df.boxplot(column="온도_섭씨", by="설비번호")
@@ -404,7 +420,9 @@ plt.show()</code></pre>
 
   <section class="block">
     <h2>📚 숫자로 다시 확인하기 — groupby로 검증</h2>
-    <p>그래프에서 본 "EQ-02가 가장 불안정하다"는 인상을 숫자로도 확인해보자(7차시 groupby 예고).</p>
+    <ul class="pt-list">
+      <li>그래프에서 본 <b>"EQ-02가 가장 불안정하다"</b>는 인상을 숫자로 확인 (7차시 groupby 예고)</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print(df.groupby("설비번호")["온도_섭씨"].std())</code></pre>
@@ -455,7 +473,7 @@ Name: 온도_섭씨, dtype: float64</pre>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>숫자로 검증하기</b> — <code>groupby().std()</code>로 그래프에서 본
-      결과를 숫자로 다시 확인한다. (학생용 Notebook의 TODO로 이어짐)</div>
+      결과를 숫자로 다시 확인한다. (학생용 실습 파일의 TODO로 이어짐)</div>
     </div>
   </section>
 
@@ -503,9 +521,11 @@ Name: 온도_섭씨, dtype: float64</pre>
 
   <section class="block">
     <h2>📁 데이터</h2>
-    <p><code>data/weekly/week06/week06_process_visualization.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">180행 10열 — 온도 드리프트, 설비별(EQ-02) 분산 확대 패턴 포함.
-    자세한 설명은 <a href="../../data/data_dictionary/week06_dictionary.md">데이터 설명서</a> 참고.</p>
+    <ul class="pt-list">
+      <li>파일: <code>data/weekly/week06/week06_process_visualization.csv</code> (180행 10열)</li>
+      <li>온도 드리프트, 설비별(EQ-02) 분산 확대 패턴 포함</li>
+      <li>자세한 설명: <a href="../../data/data_dictionary/week06_dictionary.md">데이터 설명서</a> 참고</li>
+    </ul>
   </section>
 
   <section class="block">
@@ -587,7 +607,9 @@ Name: 온도_섭씨, dtype: float64</pre>
 
   <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
-    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 그래프와 결과를 확인할 수 있게 만들어 제출한다.</p>
+    <ul class="pt-list">
+      <li>에디터 파일 하나에 순서대로 작성, 그래프와 결과를 확인할 수 있게 제출</li>
+    </ul>
     <div class="callout practice">
       <b class="tag">과제 1 — 압력 히스토그램</b>
       <code>압력_Pa</code> 열의 히스토그램을 그리고, 값이 어느 구간에 가장 많이 몰려 있는지

@@ -12,7 +12,7 @@
 1. 지난 시간 복습: 9차시에서 만든 모델(정확도 78.2%, 온도_섭씨가 가장 중요) 되짚기
 2. 강사 코드 시연: 9차시 모델 다시 만들기 → 새 로트 예측(predict) → 확률 확인(predict_proba)
 3. Orange3 시연: Predictions 위젯으로 같은 새 로트 재확인, scikit-learn 결과와 비교
-4. 학생 실습: Notebook 단계별 따라 하기(TODO 채우기)
+4. 학생 실습: 에디터 파일 단계별 따라 하기(TODO 채우기)
 5. 휴식
 6. 10차시 되짚기 — 1~9차시 핵심 내용을 표로 훑어보며 학생들과 함께 복습
 7. 도전 실습: `max_depth`를 바꿔 다시 학습시키고 예측이 달라지는지 비교
@@ -20,7 +20,7 @@
 9. 정리 퀴즈 + 과정 마무리 인사
 
 ## 준비물
-- 발표자용 Colab 계정, 프로젝터, Orange3(설치·위젯 사용법은 `docs/orange3-guide.html` 참고)
+- 발표자용 에디터 실습 환경, 프로젝터, Orange3(설치·위젯 사용법은 `docs/orange3-guide.html` 참고)
 - `data/weekly/week09/week09_new_lots_to_predict.csv`(학생 각자 다운로드 준비, 9차시의
   `week09_pass_fail_train.csv`도 함께 필요)
 - 1~9차시 강의 자료 링크(복습 시 즉시 열어 보여줄 수 있도록 즐겨찾기 해두기)

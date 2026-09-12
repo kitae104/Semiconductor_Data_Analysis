@@ -45,7 +45,9 @@
       <li>로트 단위 수율을 계산할 수 있다(단순 평균과의 차이 포함).</li>
       <li>불량 유형을 집계하고 파레토 관점에서 가장 큰 원인을 찾을 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 6차시 — 그래프로 관찰한 차이</p>
+    <ul class="pt-list">
+      <li><b>선수 지식</b> — 6차시: 그래프로 관찰한 차이</li>
+    </ul>
   </section>
 
   <section class="block">
@@ -65,8 +67,9 @@
       <p style="margin:.5rem 0 0;">groupby 코드를 쓰기 전에 Orange3 Box Plot/Bar Chart 위젯으로
       설비별 온도·합격 여부 분포를 먼저 살펴보고, 차이가 있어 보이는 설비를 미리 짐작해본다.</p>
     </div>
-    <p style="color:var(--muted);font-size:.9rem;">Box Plot·Bar Chart 위젯 사용법은
-    <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>에 정리되어 있다.</p>
+    <ul class="pt-list">
+      <li>Box Plot·Bar Chart 위젯 사용법 — <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a> 참고</li>
+    </ul>
     <div class="oflow-wrap">
       <svg class="oflow-svg" viewBox="0 0 760 190" role="img"
            aria-label="File 위젯에서 Box Plot과 Bar Chart 두 위젯으로 갈라지는 Orange3 워크플로 다이어그램">
@@ -89,15 +92,21 @@
       <p class="oflow-note">💡 실제 Orange3 화면 캡처(설비번호별 Box Plot, 합격여부 Bar Chart)를
       강사가 추가하면 더 좋다.</p>
     </div>
-    <p style="color:var(--muted);font-size:.9rem;">이제 Orange3로 미리 살펴본 인상을, 아래에서
-    <code>groupby</code>로 정확한 숫자로 확인해본다.</p>
+    <ul class="pt-list">
+      <li>Orange3로 미리 살펴본 인상 → 아래에서 <code>groupby</code>로 정확한 숫자로 확인</li>
+    </ul>
   </section>
 
   <section class="block">
     <h2>🐍 ② 파이썬으로 확인하기 — groupby로 설비별 비교하기</h2>
-    <p><code>groupby()</code>는 특정 열의 값(예: 설비번호)이 같은 행끼리 묶어주는 기능이다.
-    그 자체로는 결과를 보여주지 않으며, 반드시 <code>.mean()</code>, <code>.std()</code> 같은
-    집계 함수를 뒤에 붙여야 숫자가 나온다.</p>
+    <ul class="pt-list">
+      <li><code>groupby()</code> = 특정 열의 값(예: 설비번호)이 같은 행끼리 묶는 기능
+        <ul>
+          <li>그 자체로는 결과를 보여주지 않음</li>
+          <li>반드시 <code>.mean()</code>, <code>.std()</code> 같은 집계 함수를 뒤에 붙여야 숫자가 나옴</li>
+        </ul>
+      </li>
+    </ul>
     <div class="callout practice">
       <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
       반도체 데이터로 들어가기 전에, 학생을 반별로 묶어 평균 점수를 구하는 익숙한 예로
@@ -132,7 +141,9 @@ Name: 점수, dtype: float64</pre>
         A반은 (90+80)/2=85.0, B반은 (70+60)/2=65.0 하는 식이다.</li>
       </ul>
     </div>
-    <p>이제 같은 방식을 오늘 다룰 반도체 데이터의 "설비별 평균 온도"에 적용해보자.</p>
+    <ul class="pt-list">
+      <li>같은 방식을 오늘 다룰 반도체 데이터의 "설비별 평균 온도"에 적용</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 설비별 평균 온도</span><button class="copy-btn">복사</button></div>
       <pre><code>df = pd.read_csv("week07_equipment_yield.csv")
@@ -177,9 +188,10 @@ Name: 합격여부, dtype: float64</pre>
 
   <section class="block">
     <h2>📚 로트 단위 수율 계산하기</h2>
-    <p>합격률(웨이퍼 단위 단순 비율)과 <b>수율(로트 단위로 양품수량÷검사수량)</b>은 계산 방식이
-    다르다. 이번 데이터는 로트 하나당 웨이퍼 4장으로 구성되어 있으므로, 로트별로 묶어 수율을
-    계산해보자.</p>
+    <ul class="pt-list">
+      <li><b>합격률</b>(웨이퍼 단위 단순 비율) ≠ <b>수율</b>(로트 단위 양품수량÷검사수량) — 계산 방식이 다름</li>
+      <li>이번 데이터 = 로트 하나당 웨이퍼 4장 구성 → 로트별로 묶어 수율 계산</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 로트별 수율 계산</span><button class="copy-btn">복사</button></div>
       <pre><code>lot_summary = df.groupby("로트번호").agg(
@@ -242,8 +254,10 @@ Name: count, dtype: int64</pre>
 
   <section class="block">
     <h2>📚 불량 유형 집계와 파레토 분석</h2>
-    <p><b>파레토 분석</b>은 "소수의 원인이 대부분의 결과를 만든다"는 관점으로 문제를 우선순위화하는
-    방법이다. 불량 유형을 집계해 어떤 유형이 가장 많은지 확인해보자.</p>
+    <ul class="pt-list">
+      <li><b>파레토 분석</b> = "소수의 원인이 대부분의 결과를 만든다"는 관점으로 문제를 우선순위화하는 방법</li>
+      <li>불량 유형을 집계해 어떤 유형이 가장 많은지 확인</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>defect_counts = df[df["합격여부"] == -1]["불량유형"].value_counts()
@@ -295,7 +309,7 @@ Name: count, dtype: int64</pre>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>종합 정리</b> — 합격률이 가장 낮은 설비와 저수율 로트가 몰린
-      설비가 같은지 확인하고 문장으로 정리한다. (학생용 Notebook의 TODO로 이어짐)</div>
+      설비가 같은지 확인하고 문장으로 정리한다. (학생용 실습 파일의 TODO로 이어짐)</div>
     </div>
   </section>
 
@@ -334,10 +348,11 @@ Name: count, dtype: int64</pre>
 
   <section class="block">
     <h2>📁 데이터</h2>
-    <p><code>data/weekly/week07/week07_equipment_yield.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">300행(75로트×4웨이퍼) 11열 — 설비별 특성과
-    불량유형 패턴이 포함된 데이터. 자세한 설명은
-    <a href="../../data/data_dictionary/week07_dictionary.md">데이터 설명서</a> 참고.</p>
+    <ul class="pt-list">
+      <li><code>data/weekly/week07/week07_equipment_yield.csv</code></li>
+      <li>300행(75로트×4웨이퍼) 11열 — 설비별 특성과 불량유형 패턴이 포함된 데이터</li>
+      <li>자세한 설명: <a href="../../data/data_dictionary/week07_dictionary.md">데이터 설명서</a> 참고</li>
+    </ul>
   </section>
 
   <section class="block">
@@ -413,7 +428,9 @@ Name: count, dtype: int64</pre>
 
   <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
-    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 확인할 수 있게 만들어 제출한다.</p>
+    <ul class="pt-list">
+      <li>에디터 파일 하나에 순서대로 작성, 각 결과를 확인할 수 있게 만들어 제출</li>
+    </ul>
     <div class="callout practice">
       <b class="tag">과제 1 — 공정별 비교</b>
       <code>groupby("공정명")</code>으로 공정별 평균 처리시간(<code>처리시간_sec</code>)과

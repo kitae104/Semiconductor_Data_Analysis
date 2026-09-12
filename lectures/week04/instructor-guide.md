@@ -12,7 +12,7 @@
 8. 정리 퀴즈 + 과제 안내 + 다음 차시 예고
 
 ## 준비물
-- 발표자용 Colab 계정, 프로젝터
+- 발표자용 에디터 실습 환경, 프로젝터
 - `data/weekly/week04/week04_process_filtering.csv` (학생 각자 다운로드 준비)
 - 2~3차시에서 사용한 `equipment_list`, `judge_pass` 코드를 다시 띄워 "표=딕셔너리의 리스트"
   비유로 시작하면 좋다.

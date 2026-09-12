@@ -9,15 +9,15 @@
 5. 강사 코드 시연: 데이터 준비 → Feature/Label → train/test 분리 → 모델 학습
 6. 휴식
 7. 강사 코드 시연: 정확도·기준선 비교 → 혼동행렬 → feature_importances_
-8. 학생 실습: Notebook 단계별 따라 하기(TODO 채우기)
+8. 학생 실습: 실습 파일 단계별 따라 하기(TODO 채우기)
 9. 도전 실습: `max_depth` 값을 바꿔가며 정확도·혼동행렬 변화 비교하기
 10. 정리 퀴즈 + 과제 안내 + 다음 차시 예고
 
 ## 준비물
-- 발표자용 Colab 계정, 프로젝터, Orange3(설치·위젯 사용법은 `docs/orange3-guide.html` 참고)
+- 발표자용 에디터 실습 환경, 프로젝터, Orange3(설치·위젯 사용법은 `docs/orange3-guide.html` 참고)
 - `data/weekly/week09/week09_pass_fail_train.csv` (학생 각자 다운로드 준비)
 - `data/data_dictionary/week09_dictionary.md`를 미리 한 번 읽어두기
-- scikit-learn이 설치된 Colab/Jupyter 환경(Colab은 기본 포함)
+- scikit-learn이 설치된 에디터 실행 환경 준비
 
 ## 오늘 데이터 핵심 수치(실제 실행 결과, 강의 중 반드시 확인)
 - 원본: **750행 9열**(공정명, 설비번호, 온도_섭씨, 압력_Pa, 가스유량_slm, 두께_nm, 진공도_mTorr,

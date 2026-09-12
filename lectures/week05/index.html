@@ -69,8 +69,9 @@
       위젯을 연결하면 각 열의 최댓값·최솟값이 한눈에 표로 나오는데, 온도_섭씨 열에 500이 넘는
       값이 있다면 눈으로 바로 "뭔가 이상하다"는 것을 알아챌 수 있다.</p>
     </div>
-    <p style="color:var(--muted);font-size:.9rem;">Orange3 설치나 위젯 사용법이 처음이라면
-    <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>를 먼저 읽어보자.</p>
+    <ul class="pt-list">
+      <li>Orange3 설치·위젯 사용법이 처음이라면 <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a> 참고</li>
+    </ul>
     <div class="oflow-wrap">
       <svg class="oflow-svg" viewBox="0 0 860 140" role="img"
            aria-label="File, Data Table, Feature Statistics 위젯을 순서대로 연결한 Orange3 워크플로 다이어그램">
@@ -95,17 +96,23 @@
       <p class="oflow-note">💡 실제 Orange3 화면 캡처(위 워크플로를 연결한 캔버스 화면, 결측 셀이
       강조된 Data Table 화면)를 강사가 추가하면 더 좋다.</p>
     </div>
-    <p style="color:var(--muted);font-size:.9rem;">이제 Orange3로 미리 살펴본 문제를, 아래에서
-    파이썬 코드로 하나씩 직접 찾아 정제해본다.</p>
+    <ul class="pt-list">
+      <li>Orange3로 미리 살펴본 문제 → 아래에서 파이썬 코드로 하나씩 직접 찾아 정제</li>
+    </ul>
   </section>
 
   <section class="block">
     <h2>🐍 ② 파이썬으로 확인하기 — 숫자 요약부터, 그다음 결측값</h2>
 
     <h3>먼저 아주 작은 표로 오늘 배울 것 미리 보기</h3>
-    <p>오늘 배울 "결측값·이상값 찾기"를 반도체 데이터로 바로 연습하기 전에, 학생 5명의 점수를
-    담은 작은 표로 먼저 감을 잡아보자. 한 명은 점수가 비어 있고(결측값), 한 명은 점수가
-    550점으로 말이 안 되는 값(이상값)이다.</p>
+    <ul class="pt-list">
+      <li>오늘 배울 "결측값·이상값 찾기"를 반도체 데이터로 연습하기 전, 학생 5명 점수로 먼저 감 잡기
+        <ul>
+          <li>한 명 — 점수 비어 있음 (결측값)</li>
+          <li>한 명 — 점수 550점으로 말이 안 되는 값 (이상값)</li>
+        </ul>
+      </li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 아주 작은 표로 미리 보기</span><button class="copy-btn">복사</button></div>
       <pre><code>toy = pd.DataFrame({
@@ -139,9 +146,13 @@ print(toy)</code></pre>
     </div>
 
     <h3>가장 먼저 하는 습관 — describe()로 숫자 요약 훑어보기</h3>
-    <p>결측값을 하나씩 세기 전에, <code>describe()</code>로 숫자 열 전체를 한 번에 요약해
-    훑어보는 것이 데이터 분석에서 가장 먼저 하는 습관 중 하나다. 최솟값·최댓값만 봐도
-    "말이 안 되는 값"이 있는지 바로 감을 잡을 수 있다.</p>
+    <ul class="pt-list">
+      <li>결측값을 하나씩 세기 전, <code>describe()</code>로 숫자 열 전체를 한 번에 요약 — 데이터 분석에서 가장 먼저 하는 습관 중 하나
+        <ul>
+          <li>최솟값·최댓값만 봐도 "말이 안 되는 값" 여부를 바로 감 잡을 수 있음</li>
+        </ul>
+      </li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 숫자 요약</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
@@ -182,8 +193,10 @@ max     557.73    1033.10      250.00      132.30</pre>
     </div>
 
     <h3>결측값 정확히 세기 — isna()</h3>
-    <p><code>describe()</code>의 <code>count</code>로 "결측이 있는 열이 있다"는 것은 알았으니,
-    이제 <code>isna()</code>로 열별 결측 개수를 정확히 세어보자.</p>
+    <ul class="pt-list">
+      <li><code>describe()</code>의 <code>count</code> → "결측이 있는 열이 있다"까지만 확인 가능</li>
+      <li><code>isna()</code>로 열별 결측 개수를 정확히 세기</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 결측값 확인</span><button class="copy-btn">복사</button></div>
       <pre><code>print(df.isna().sum())</code></pre>
@@ -210,9 +223,10 @@ dtype: int64</pre>
     </div>
 
     <h3>결측값 처리 — 제거 vs 대체</h3>
-    <p><code>합격여부</code>처럼 범주형(1 또는 -1) 값은 평균이나 중앙값으로 채울 수 없으므로
-    <b>제거</b>한다. <code>온도_섭씨</code>처럼 숫자형 값은 <b>중앙값으로 대체</b>하는 것이
-    안전하다(극단값의 영향을 덜 받기 때문).</p>
+    <ul class="pt-list">
+      <li><code>합격여부</code> 같은 범주형(1 또는 -1) 값 — 평균·중앙값으로 채울 수 없음 → <b>제거</b></li>
+      <li><code>온도_섭씨</code> 같은 숫자형 값 — <b>중앙값으로 대체</b>가 안전 (극단값 영향을 덜 받음)</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code># 합격여부가 결측인 행은 제거(범주형은 대체 불가)
@@ -259,8 +273,10 @@ print(df.shape)</code></pre>
 
   <section class="block">
     <h2>🐍 이상값 찾기 — 4차시 조건 검색 재활용</h2>
-    <p>이상값은 "값이 없는 것"이 아니라 "값은 있지만 말이 안 되는 것"이므로 <code>isna()</code>로는
-    잡히지 않는다. 4차시에서 배운 조건 검색으로 직접 찾아야 한다.</p>
+    <ul class="pt-list">
+      <li>이상값 = "값이 없는 것"이 아니라 "값은 있지만 말이 안 되는 것" → <code>isna()</code>로 잡히지 않음</li>
+      <li>4차시에서 배운 조건 검색으로 직접 찾아야 함</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>hot_outlier = df[df["온도_섭씨"] > 400]
@@ -296,9 +312,14 @@ print(df.shape)</code></pre>
     </div>
 
     <h3>참고 — loc로 행을 지우지 않고 "값만" 정정하기</h3>
-    <p>방금은 이상값이 있는 <b>행 전체</b>를 삭제했다. 하지만 다른 열은 모두 정상인데 한 열만
-    튀는 경우, 행 전체를 버리기 아까울 때가 있다. 4차시에서 배운 <code>loc</code>을 쓰면 조건에
-    맞는 행의 <b>특정 열 값만</b> 골라 바꿀 수 있다.</p>
+    <ul class="pt-list">
+      <li>방금은 이상값이 있는 <b>행 전체</b>를 삭제
+        <ul>
+          <li>다른 열은 정상인데 한 열만 튀는 경우 → 행 전체를 버리기 아까움</li>
+        </ul>
+      </li>
+      <li>4차시에서 배운 <code>loc</code> — 조건에 맞는 행의 <b>특정 열 값만</b> 골라 바꿀 수 있음</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — loc로 값 정정</span><button class="copy-btn">복사</button></div>
       <pre><code># 온도가 400도를 넘는 행만, 온도_섭씨 값만 중앙값으로 바꾼다(행은 남긴다)
@@ -378,7 +399,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>정제 전후 비교</b> — 행 개수와 평균 온도를 비교해 문장으로
-      정리한다. (학생용 Notebook의 TODO로 이어짐)</div>
+      정리한다. (학생용 실습 파일의 TODO로 이어짐)</div>
     </div>
   </section>
 
@@ -426,10 +447,14 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
 
   <section class="block">
     <h2>📁 데이터</h2>
-    <p><code>data/weekly/week05/week05_dirty_process_data.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">113행 9열 — 결측값·중복행·이상값이 의도적으로 섞여 있는
-    정제 실습용 데이터. 자세한 설명은
-    <a href="../../data/data_dictionary/week05_dictionary.md">데이터 설명서</a> 참고.</p>
+    <ul class="pt-list">
+      <li><code>data/weekly/week05/week05_dirty_process_data.csv</code> — 113행 9열
+        <ul>
+          <li>결측값·중복행·이상값이 의도적으로 섞여 있는 정제 실습용 데이터</li>
+          <li>자세한 설명: <a href="../../data/data_dictionary/week05_dictionary.md">데이터 설명서</a> 참고</li>
+        </ul>
+      </li>
+    </ul>
   </section>
 
   <section class="block">
@@ -511,7 +536,9 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
 
   <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
-    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 확인할 수 있게 만들어 제출한다.</p>
+    <ul class="pt-list">
+      <li>아래 과제를 에디터 파일 하나에 순서대로 작성 — 각 결과를 확인할 수 있게 만들어 제출</li>
+    </ul>
     <div class="callout practice">
       <b class="tag">과제 1 — 정제 파이프라인 완성하기</b>
       오늘 배운 순서(결측 처리 → 중복 제거 → 이상값 제거)를 모두 적용한 뒤, 최종 행 개수와

@@ -70,8 +70,10 @@
 
   <section class="block">
     <h2>📚 CSV와 DataFrame</h2>
-    <p><b>CSV(Comma-Separated Values)</b>는 쉼표로 값을 구분한 텍스트 표 파일이다. Pandas의
-    <code>read_csv()</code>로 읽으면 <b>DataFrame</b>이라는 행·열 구조의 표로 바뀐다.</p>
+    <ul class="pt-list">
+      <li><b>CSV(Comma-Separated Values)</b> = 쉼표로 값을 구분한 텍스트 표 파일</li>
+      <li>Pandas <code>read_csv()</code>로 읽으면 → <b>DataFrame</b>(행·열 구조의 표)으로 변환</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
@@ -130,9 +132,10 @@ Index(['측정시간', '로트번호', '설비번호', '공정명', '온도_섭�
     </div>
 
     <h3>먼저 아주 작은 표로 오늘 배울 것 미리 보기</h3>
-    <p>오늘 배울 "열 선택 → 조건 검색 → 정렬 → loc/iloc"을 100행짜리 반도체 데이터로 바로
-    연습하기 전에, 학생 4명짜리 아주 작은 표로 먼저 감을 잡아보자. 아래 코드 전체를 지금 당장
-    이해할 필요는 없다 — 이번 차시를 마칠 때쯤 이 다섯 줄이 모두 익숙해지는 것이 목표다.</p>
+    <ul class="pt-list">
+      <li>오늘 배울 "열 선택 → 조건 검색 → 정렬 → loc/iloc" — 100행짜리 반도체 데이터로 연습하기 전, 학생 4명짜리 작은 표로 먼저 감 잡기</li>
+      <li>아래 코드를 지금 다 이해할 필요는 없음 — 이번 차시를 마칠 때쯤 이 다섯 줄에 익숙해지는 것이 목표</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 아주 작은 표 만들기</span><button class="copy-btn">복사</button></div>
       <pre><code>toy = pd.DataFrame({
@@ -184,9 +187,10 @@ print(df[["온도_섭씨", "압력_Pa"]])      # 열 여러 개 (대괄호 두 �
 
   <section class="block">
     <h2>📚 조건 검색 — 원하는 행만 골라내기</h2>
-    <p>3차시에서는 <code>for</code>와 <code>if</code>로 조건에 맞는 항목을 하나씩 확인했다.
-    Pandas는 조건식 하나로 표 전체에서 한 번에 골라낸다 — 이를 <b>조건 검색(불리언 인덱싱)</b>이라고
-    부른다.</p>
+    <ul class="pt-list">
+      <li>3차시 — <code>for</code>+<code>if</code>로 조건에 맞는 항목을 하나씩 확인</li>
+      <li>Pandas — 조건식 하나로 표 전체에서 한 번에 골라냄 = <b>조건 검색(불리언 인덱싱)</b></li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 특정 설비만 찾기</span><button class="copy-btn">복사</button></div>
       <pre><code>eq02 = df[df["설비번호"] == "EQ-02"]
@@ -245,10 +249,11 @@ print(fail.shape)</code></pre>
 
   <section class="block">
     <h2>📚 loc / iloc — 이름과 위치로 정확히 접근하기</h2>
-    <p>지금까지는 열 이름으로 열 전체를 골랐고(<code>df["열이름"]</code>), 조건으로 행 전체를
-    걸렀다(<code>df[조건]</code>). 그런데 <b>"몇 번째 행의, 이 열들만"</b>처럼 행과 열을 동시에
-    정확히 짚어야 할 때가 많다. 이럴 때 쓰는 것이 <code>loc</code>과 <code>iloc</code>이다 —
-    데이터 분석에서 아주 자주 쓰는 접근 방법이니 충분히 연습해두자.</p>
+    <ul class="pt-list">
+      <li>지금까지 — 열 이름으로 열 전체 선택(<code>df["열이름"]</code>), 조건으로 행 전체 필터(<code>df[조건]</code>)</li>
+      <li>필요할 때가 많음 — <b>"몇 번째 행의, 이 열들만"</b>처럼 행과 열을 동시에 정확히 짚기</li>
+      <li>이때 쓰는 것 = <code>loc</code>, <code>iloc</code> — 데이터 분석에서 자주 쓰는 접근법, 충분히 연습 필요</li>
+    </ul>
     <div class="explain-list">
       <b>loc vs iloc — 가장 중요한 차이</b>
       <ul>
@@ -337,8 +342,10 @@ print(df.iloc[-1])</code></pre>
 
   <section class="block">
     <h2>📚 종합 — 3차시 함수와 Pandas 비교하기</h2>
-    <p>3차시에서 만든 <code>judge_pass</code> 함수와 <code>for</code> 반복문으로 EQ-02의
-    불합격 건수를 세려면 여러 줄이 필요했다. Pandas 조건 검색을 조합하면 훨씬 짧아진다.</p>
+    <ul class="pt-list">
+      <li>3차시 — <code>judge_pass</code> 함수 + <code>for</code> 반복문으로 EQ-02 불합격 건수를 세려면 여러 줄 필요</li>
+      <li>Pandas 조건 검색 조합 → 훨씬 짧아짐</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>eq02_fail = eq02[eq02["합격여부"] == -1]
@@ -387,7 +394,7 @@ EQ-02 불합격률: 20.0%</pre>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>종합 실습</b> — EQ-02의 불합격 건수와 비율을 계산해 f-string으로
-      출력한다. (학생용 Notebook의 TODO로 이어짐)</div>
+      출력한다. (학생용 실습 파일의 TODO로 이어짐)</div>
     </div>
   </section>
 
@@ -453,9 +460,11 @@ EQ-02 불합격률: 20.0%</pre>
 
   <section class="block">
     <h2>📁 데이터</h2>
-    <p><code>data/weekly/week04/week04_process_filtering.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">100행 8열 — EQ-02에 불합격이 상대적으로 몰리도록 설계.
-    자세한 설명은 <a href="../../data/data_dictionary/week04_dictionary.md">데이터 설명서</a> 참고.</p>
+    <ul class="pt-list">
+      <li><code>data/weekly/week04/week04_process_filtering.csv</code></li>
+      <li>100행 8열 — EQ-02에 불합격이 상대적으로 몰리도록 설계</li>
+      <li>자세한 설명: <a href="../../data/data_dictionary/week04_dictionary.md">데이터 설명서</a> 참고</li>
+    </ul>
   </section>
 
   <section class="block">
@@ -576,7 +585,9 @@ EQ-02 불합격률: 20.0%</pre>
 
   <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
-    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 확인할 수 있게 만들어 제출한다.</p>
+    <ul class="pt-list">
+      <li>아래 과제를 에디터 파일 하나에 순서대로 작성, 각 결과를 확인할 수 있게 만들어 제출</li>
+    </ul>
     <div class="callout practice">
       <b class="tag">과제 1 — 설비별 요약</b>
       <code>EQ-01</code>, <code>EQ-03</code>, <code>EQ-04</code>에 대해서도 각각 조건 검색으로

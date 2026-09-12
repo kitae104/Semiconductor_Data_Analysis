@@ -14,7 +14,7 @@
 9. 정리 퀴즈 + 과제 안내 + 다음 차시 예고
 
 ## 준비물
-- 발표자용 Colab 계정, 프로젝터, Orange3 설치(README 5절, `docs/orange3-guide.html` 참고)
+- 발표자용 에디터 실습 환경, 프로젝터, Orange3 설치(README 5절, `docs/orange3-guide.html` 참고)
 - `data/weekly/week05/week05_dirty_process_data.csv` (학생 각자 다운로드 준비)
 - `data/data_dictionary/week05_dictionary.md`를 미리 한 번 읽어 의도적 오염 목록을 숙지
 

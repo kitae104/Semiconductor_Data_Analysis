@@ -84,8 +84,13 @@
   <section class="block">
     <h2>📚 리스트 — 여러 값을 순서대로 담기</h2>
     <h3>리스트란 무엇인가</h3>
-    <p>여러 개의 값을 순서대로 담아두고 싶을 때는 <b>리스트(List)</b>를 쓴다. 대괄호
-    <code>[ ]</code>로 값을 감싸고, 값 사이는 콤마(<code>,</code>)로 구분한다.</p>
+    <ul class="pt-list">
+      <li>여러 개의 값을 순서대로 담고 싶을 때 → <b>리스트(List)</b>
+        <ul>
+          <li>대괄호 <code>[ ]</code>로 값을 감싸고, 값 사이는 콤마(<code>,</code>)로 구분</li>
+        </ul>
+      </li>
+    </ul>
     <div class="callout practice">
       <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
       반도체 데이터로 바로 들어가기 전에, 과일 이름 세 개를 담은 가장 단순한 리스트로 연습해보자.
@@ -103,8 +108,9 @@ print(fruits[-1])   # 마지막 값</code></pre>
 사과
 포도</pre>
     </div>
-    <p>리스트는 문자열뿐 아니라 숫자도 똑같은 방식으로 담을 수 있다. 이제 오늘 다룰 반도체
-    데이터의 온도 값으로 넘어가보자.</p>
+    <ul class="pt-list">
+      <li>리스트는 문자열뿐 아니라 숫자도 같은 방식으로 담을 수 있음 → 이제 반도체 데이터의 온도 값으로 확장</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 리스트 만들기</span><button class="copy-btn">복사</button></div>
       <pre><code>temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]
@@ -137,7 +143,9 @@ print(temperatures)</code></pre>
     가장 큰 값(312.6) — 뒤에서 배울 <code>max()</code>가 찾아줄 값이다.</p>
 
     <h3>인덱싱 — 순서로 값 꺼내기</h3>
-    <p>대괄호 안에 인덱스를 넣으면 그 위치의 값을 꺼낼 수 있다.</p>
+    <ul class="pt-list">
+      <li>대괄호 안에 인덱스를 넣으면 → 그 위치의 값을 꺼낼 수 있음</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print(temperatures[0])    # 첫 번째 값
@@ -157,9 +165,14 @@ print(temperatures[-1])   # 마지막 값(음수 인덱스는 뒤에서부터)</
     </div>
 
     <h3>슬라이싱 — 여러 값을 한 번에 잘라내기</h3>
-    <p>콜론(<code>:</code>)을 쓰면 리스트의 일부(구간)를 한 번에 꺼낼 수 있다.
-    <code>list[시작:끝]</code>은 시작 인덱스부터 <b>끝 인덱스 바로 앞까지</b>를 의미한다(끝 인덱스
-    자신은 포함되지 않는다).</p>
+    <ul class="pt-list">
+      <li>콜론(<code>:</code>)을 쓰면 리스트의 일부(구간)를 한 번에 꺼낼 수 있음</li>
+      <li><code>list[시작:끝]</code> = 시작 인덱스부터 <b>끝 인덱스 바로 앞까지</b>
+        <ul>
+          <li>끝 인덱스 자신은 포함되지 않음</li>
+        </ul>
+      </li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print(temperatures[1:3])   # 인덱스 1~2 (3은 포함 안 됨)
@@ -179,8 +192,10 @@ print(temperatures[2:])    # 인덱스 2부터 끝까지</code></pre>
     </div>
 
     <h3>리스트 다루기 — 길이와 추가</h3>
-    <p><code>len()</code>으로 리스트에 담긴 값의 개수를 셀 수 있고, <code>append()</code>로
-    리스트 끝에 새 값을 추가할 수 있다.</p>
+    <ul class="pt-list">
+      <li><code>len()</code> — 리스트에 담긴 값의 개수를 셈</li>
+      <li><code>append()</code> — 리스트 끝에 새 값을 추가</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print(len(temperatures))     # 리스트 길이(값 개수)
@@ -204,9 +219,16 @@ print(len(temperatures))</code></pre>
     </div>
 
     <h3>리스트에서 최댓값·최솟값·평균 구하기</h3>
-    <p>파이썬은 리스트 전체를 계산하는 내장 함수를 기본으로 제공한다 —
-    <code>max()</code>(최댓값), <code>min()</code>(최솟값), <code>sum()</code>(합계). 평균은
-    "합계 ÷ 개수"이므로 <code>sum()</code>과 <code>len()</code>을 조합하면 된다.</p>
+    <ul class="pt-list">
+      <li>파이썬 내장 함수로 리스트 전체 계산 가능
+        <ul>
+          <li><code>max()</code> — 최댓값</li>
+          <li><code>min()</code> — 최솟값</li>
+          <li><code>sum()</code> — 합계</li>
+        </ul>
+      </li>
+      <li>평균 = "합계 ÷ 개수" → <code>sum()</code>과 <code>len()</code>을 조합</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print(max(temperatures))     # 최댓값
@@ -233,10 +255,14 @@ print(f"평균 온도는 {round(average, 1)}도입니다.")   # round()로 소�
   <section class="block">
     <h2>📚 딕셔너리 — 값에 이름표 붙이기</h2>
     <h3>딕셔너리란 무엇인가</h3>
-    <p>리스트는 순서로 값을 구분하지만, "이 값이 무엇을 의미하는지" 이름이 없다. 설비 1대가 가진
-    여러 정보(번호, 공정, 온도)처럼 값마다 이름표를 붙여 관리하고 싶을 때는
-    <b>딕셔너리(Dictionary)</b>를 쓴다. 중괄호 <code>{ }</code> 안에 <code>키(key): 값(value)</code>
-    쌍을 콤마로 나열한다.</p>
+    <ul class="pt-list">
+      <li>리스트 = 순서로 값을 구분 → "이 값이 무엇을 의미하는지" 이름은 없음</li>
+      <li>설비 1대가 가진 여러 정보(번호, 공정, 온도)처럼 값마다 이름표를 붙이고 싶을 때 → <b>딕셔너리(Dictionary)</b>
+        <ul>
+          <li>중괄호 <code>{ }</code> 안에 <code>키(key): 값(value)</code> 쌍을 콤마로 나열</li>
+        </ul>
+      </li>
+    </ul>
     <div class="callout practice">
       <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
       반도체 데이터로 들어가기 전에, 사람 한 명의 정보를 담은 가장 단순한 딕셔너리로 연습해보자.
@@ -252,7 +278,9 @@ print(person["이름"])</code></pre>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">{'이름': '지민', '나이': 15}
 지민</pre>
     </div>
-    <p>이제 같은 방식으로 설비 1대의 정보를 딕셔너리로 표현해보자.</p>
+    <ul class="pt-list">
+      <li>같은 방식으로 설비 1대의 정보를 딕셔너리로 표현</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 딕셔너리 만들기</span><button class="copy-btn">복사</button></div>
       <pre><code>equipment = {
@@ -282,7 +310,9 @@ print(equipment)</code></pre>
     순서를 몰라도 이름으로 바로 값을 찾을 수 있다.</p>
 
     <h3>키로 값 접근하기</h3>
-    <p>딕셔너리는 인덱스(순서 번호) 대신 <b>키(이름표)</b>로 값을 꺼낸다.</p>
+    <ul class="pt-list">
+      <li>딕셔너리는 인덱스(순서 번호) 대신 <b>키(이름표)</b>로 값을 꺼냄</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print(equipment["설비번호"])
@@ -301,8 +331,10 @@ print(equipment["온도_섭씨"])</code></pre>
     </div>
 
     <h3>값 수정하기 / 새 키 추가하기</h3>
-    <p>이미 있는 키에 새 값을 대입하면 값이 바뀌고, <b>없던 키에 값을 대입하면 새 항목이
-    추가된다</b>.</p>
+    <ul class="pt-list">
+      <li>이미 있는 키에 새 값을 대입 → 값이 바뀜</li>
+      <li><b>없던 키에 값을 대입 → 새 항목이 추가됨</b></li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>equipment["온도_섭씨"] = 305.5     # 기존 값 수정
@@ -324,9 +356,14 @@ print(equipment)</code></pre>
 
   <section class="block">
     <h2>📚 리스트 안에 딕셔너리 담기 — 여러 설비를 한 번에 표현하기</h2>
-    <p>설비 하나는 딕셔너리로 표현했다. 그런데 설비가 여러 대라면 어떻게 할까? 답은 간단하다 —
-    <b>리스트 안에 딕셔너리를 여러 개 넣으면 된다.</b> 이를 "딕셔너리의 리스트"라고 부르며, 앞으로
-    표(DataFrame) 데이터를 이해하는 데 중요한 기초가 된다(4차시 Pandas 예고).</p>
+    <ul class="pt-list">
+      <li>설비 하나는 딕셔너리로 표현 완료 — 설비가 여러 대라면?</li>
+      <li>답 = <b>리스트 안에 딕셔너리를 여러 개 넣기</b> = "딕셔너리의 리스트"
+        <ul>
+          <li>앞으로 표(DataFrame) 데이터를 이해하는 데 중요한 기초(4차시 Pandas 예고)</li>
+        </ul>
+      </li>
+    </ul>
     <div class="callout practice">
       <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
       학생 두 명의 정보를 담은 가장 단순한 "딕셔너리의 리스트"로 먼저 연습해보자.
@@ -348,7 +385,9 @@ print(students[1]["이름"])      # 두 번째 학생의 이름</code></pre>
 90
 하은</pre>
     </div>
-    <p>이제 같은 방식으로 설비 여러 대를 "딕셔너리의 리스트"로 표현해보자.</p>
+    <ul class="pt-list">
+      <li>같은 방식으로 설비 여러 대를 "딕셔너리의 리스트"로 표현</li>
+    </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 딕셔너리의 리스트</span><button class="copy-btn">복사</button></div>
       <pre><code>equipment_list = [
@@ -456,7 +495,7 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>종합 실습 완성하기</b> — 나만의 설비 2개를 딕셔너리의 리스트로 만들고,
-      f-string으로 각 설비를 소개하는 문장을 출력한다. (학생용 Notebook의 TODO로 이어짐)</div>
+      f-string으로 각 설비를 소개하는 문장을 출력한다. (학생용 실습 파일의 TODO로 이어짐)</div>
     </div>
   </section>
 
@@ -513,10 +552,10 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
 
   <section class="block">
     <h2>📁 데이터</h2>
-    <p><code>data/weekly/week02/week02_python_basics_1.csv</code></p>
-    <p style="color:var(--muted);font-size:.9rem;">20행 5열 — 리스트/딕셔너리 실습용 소량 데이터(정상범위 이탈 온도 2~3건 포함).
-    오늘은 이 CSV를 Pandas로 읽지 않고, 강의 중 리스트/딕셔너리 리터럴로 직접 옮겨 적어 사용한다
-    (Pandas는 4차시부터 배운다).</p>
+    <ul class="pt-list">
+      <li><code>data/weekly/week02/week02_python_basics_1.csv</code> — 20행 5열, 리스트/딕셔너리 실습용 소량 데이터(정상범위 이탈 온도 2~3건 포함)</li>
+      <li>오늘은 이 CSV를 Pandas로 읽지 않고, 강의 중 리스트/딕셔너리 리터럴로 직접 옮겨 적어 사용 (Pandas는 4차시부터)</li>
+    </ul>
   </section>
 
   <section class="block">
@@ -612,8 +651,9 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
 
   <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
-    <p>아래 과제를 Colab 노트북 한 개에 순서대로 작성하고, 각 결과를 <code>print()</code> 또는
-    f-string으로 확인할 수 있게 만들어 제출한다.</p>
+    <ul class="pt-list">
+      <li>아래 과제를 에디터 파일 하나에 순서대로 작성, 각 결과를 <code>print()</code> 또는 f-string으로 확인 가능하게 제출</li>
+    </ul>
     <div class="callout practice">
       <b class="tag">과제 1 — 나만의 측정값 리스트</b>
       본인이 정한 온도 값 6개를 <code>my_temps</code> 리스트로 만들고, 최댓값·최솟값·평균을 계산해
