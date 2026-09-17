@@ -655,6 +655,69 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
   </section>
 
   <section class="block">
+    <h2>🤖 AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
+    <div class="callout concept">
+      <b class="tag">이번 차시도 AI와 함께</b>
+      "상관관계 ≠ 원인"은 데이터 분석에서 가장 자주 오해되는 개념이다. AI에게 질문하고 코드를
+      만들어보며 오늘 배운 개념을 한 걸음 더 넓혀보자.
+    </div>
+
+    <h3>🔍 AI에게 검색하며 이해도 높이기</h3>
+    <ul class="pt-list">
+      <li>오늘은 상관계수와 "원인 후보"라는 표현을 배웠다 — AI에게 물어보며 이 개념을 더
+        단단히 다져보자.</li>
+    </ul>
+    <div class="callout practice">
+      <b class="tag">🙋 질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <ul class="pt-list">
+        <li>"상관계수(r)가 0.7이면 '강한 상관관계'라고 할 수 있나요? 판단 기준이 있나요?"</li>
+        <li>"상관관계와 인과관계는 정확히 어떻게 다른가요? 실생활 예시로 설명해주세요."</li>
+        <li>"'대조군(control group)'이라는 개념이 왜 중요한가요?"</li>
+        <li>"여러 변수 중 어떤 변수가 불량과 가장 관련 있는지 한 번에 비교하려면 어떻게 하나요?"</li>
+      </ul>
+    </div>
+
+    <h3>💡 AI에게 프롬프트로 코드 생성 요청하기</h3>
+    <ul class="pt-list">
+      <li>오늘 배운 상관계수 계산에, 판정 기준까지 자동으로 붙여주는 코드를 AI에게 요청해보자.</li>
+    </ul>
+    <div class="callout practice">
+      <b class="tag">🙋 코드 생성 프롬프트 따라 해보기</b>
+      <ul class="pt-list">
+        <li>"두 숫자 리스트의 상관계수를 계산하고, 절댓값이 0.5보다 크면 '뚜렷한 관계', 아니면
+          '약한 관계'라고 출력하는 코드를 만들어줘."</li>
+        <li>"여러 숫자 열이 있는 DataFrame에서, 특정 열과 나머지 열들의 상관계수를 큰 순서로
+          정렬해주는 코드를 만들어줘."</li>
+      </ul>
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+
+temp = pd.Series([295.4, 298.1, 312.6, 301.0, 296.8, 305.2])
+fail = pd.Series([0, 0, 1, 0, 0, 1])
+
+r = temp.corr(fail)
+label = "뚜렷한 관계" if abs(r) > 0.5 else "약한 관계"
+print(f"상관계수 r = {r:.2f} → {label}")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">상관계수 r = 0.89 → 뚜렷한 관계</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">AI 코드를 다룰 때 꼭 지킬 점</b>
+      <ul class="pt-list">
+        <li>"0.5보다 크면 뚜렷한 관계"라는 기준은 AI가 임의로 정한 것이다 — 실제로는 데이터의
+          성격에 따라 기준이 달라질 수 있다는 점을 잊지 말자.</li>
+        <li>AI가 만든 코드도 직접 실행해서 내가 기대한 결과가 맞는지 확인해야 한다.</li>
+        <li>상관계수가 크게 나왔다고 곧바로 "원인"이라고 말하면 안 된다 — 오늘 배운 대로 항상
+          "원인 후보"라는 표현을 쓰자.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
     <h2>🔜 다음 차시 예고</h2>
     <div class="callout concept">
       <b class="tag">9차시 예고</b>

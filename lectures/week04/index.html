@@ -584,6 +584,73 @@ EQ-02 불합격률: 20.0%</pre>
   </section>
 
   <section class="block">
+    <h2>🤖 AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
+    <div class="callout concept">
+      <b class="tag">이번 차시도 AI와 함께</b>
+      Pandas는 기능이 매우 많은 도구다. AI에게 질문하고 코드를 만들어보며 오늘 배운 기본기를
+      한 걸음 더 넓혀보자.
+    </div>
+
+    <h3>🔍 AI에게 검색하며 이해도 높이기</h3>
+    <ul class="pt-list">
+      <li>오늘은 Pandas의 가장 기본적인 부분만 다뤘다 — AI에게 물어보며 조금 더 깊이 들어가보자.</li>
+    </ul>
+    <div class="callout practice">
+      <b class="tag">🙋 질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <ul class="pt-list">
+        <li>"pandas의 loc과 iloc은 정확히 언제 다르게 동작하나요? 예시로 알려주세요."</li>
+        <li>"df[df['열']==값] 조건 검색과 df.query()는 어떻게 다른가요?"</li>
+        <li>"Pandas의 Series와 DataFrame은 정확히 어떻게 다른가요?"</li>
+        <li>"df.sort_values()에서 여러 열을 동시에 기준으로 정렬하려면 어떻게 하나요?"</li>
+      </ul>
+    </div>
+
+    <h3>💡 AI에게 프롬프트로 코드 생성 요청하기</h3>
+    <ul class="pt-list">
+      <li>오늘 배운 조건 검색을 확장해서, 설비별로 결과를 한눈에 표로 만드는 코드를 AI에게
+        요청해보자. <code>groupby</code>처럼 아직 배우지 않은 기능이 나올 수도 있다(7차시 예고).</li>
+    </ul>
+    <div class="callout practice">
+      <b class="tag">🙋 코드 생성 프롬프트 따라 해보기</b>
+      <ul class="pt-list">
+        <li>"설비번호와 합격여부 열이 있는 DataFrame에서, 설비별 합격/불합격 건수를 한 번에
+          표로 만들어주는 코드를 만들어줘."</li>
+        <li>"df에서 온도_섭씨가 300 이상이면서 합격여부가 1인 행만 골라주는 코드를 만들어줘."</li>
+      </ul>
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
+      <pre><code>import pandas as pd
+
+data = {
+    "설비번호": ["EQ-01", "EQ-01", "EQ-02", "EQ-02", "EQ-02"],
+    "합격여부": [1, -1, 1, 1, -1],
+}
+df = pd.DataFrame(data)
+
+summary = pd.crosstab(df["설비번호"], df["합격여부"])
+print(summary)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">합격여부  -1  1
+설비번호
+EQ-01     1  1
+EQ-02     1  2</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">AI 코드를 다룰 때 꼭 지킬 점</b>
+      <ul class="pt-list">
+        <li>위 예시의 <code>pd.crosstab()</code>은 오늘 배우지 않은 함수다 — 결과표가 뜻하는 바를
+          직접 눈으로 세어보며 확인하면 이해가 빨라진다.</li>
+        <li>AI가 만든 코드도 직접 실행해서 내가 기대한 결과가 맞는지 확인해야 한다.</li>
+        <li>열 이름이 오늘 쓴 데이터와 다르게 나올 수 있다 — <code>df.columns</code>로 실제 열
+          이름을 먼저 확인하고 맞춰서 사용하자.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
     <ul class="pt-list">
       <li>아래 과제를 에디터 파일 하나에 순서대로 작성, 각 결과를 확인할 수 있게 만들어 제출</li>
