@@ -873,6 +873,78 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
+    <h2>🤖 AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
+    <div class="callout concept">
+      <b class="tag">오늘부터 시작하는 습관</b>
+      오늘부터는 모르는 내용이 생기면 AI 챗봇(ChatGPT, Claude 등)에게 바로 물어보는 습관을 들여보자.
+      아래 프롬프트를 그대로 복사해서 사용해도 되고, 궁금한 점을 자유롭게 바꿔 질문해도 좋다.
+    </div>
+
+    <h3>🔍 AI에게 검색하며 이해도 높이기</h3>
+    <ul class="pt-list">
+      <li>오늘 배운 변수·자료형·f-string·input()은 파이썬의 가장 작은 기본기다 — AI에게 한 걸음 더
+        깊은 질문을 던져 이해를 넓혀보자.</li>
+    </ul>
+    <div class="callout practice">
+      <b class="tag">🙋 질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <ul class="pt-list">
+        <li>"파이썬에서 <code>=</code>와 <code>==</code>는 어떻게 다른가요? 예시 코드와 함께
+          설명해주세요."</li>
+        <li>"f-string에서 <code>:.1f</code> 말고 어떤 서식 옵션들이 있나요? 반도체 온도·압력 값을
+          예로 들어 설명해주세요."</li>
+        <li>"<code>input()</code>으로 받은 값을 실제 산업 현장 프로그램에서는 어떻게 안전하게
+          처리하나요? (예: 숫자가 아닌 값이 입력됐을 때)"</li>
+        <li>"웨이퍼, 다이, 칩의 관계를 반도체 피자 비유 말고 다른 비유로 설명해주세요."</li>
+      </ul>
+    </div>
+
+    <h3>💡 AI에게 프롬프트로 코드 생성 요청하기</h3>
+    <ul class="pt-list">
+      <li>AI에게 "이런 동작을 하는 파이썬 코드를 만들어줘"라고 구체적으로 요청하면, 아직 배우지 않은
+        문법이 섞인 코드도 받아볼 수 있다 — 이후 차시에서 배울 내용을 미리 살짝 맛보는 셈이다.</li>
+    </ul>
+    <div class="callout practice">
+      <b class="tag">🙋 코드 생성 프롬프트 따라 해보기</b>
+      <ul class="pt-list">
+        <li>"<code>pass_count</code>, <code>fail_count</code> 두 변수로 합격률을 계산해서, 90%
+          이상이면 '정상', 아니면 '점검 필요'라고 출력하는 파이썬 코드를 만들어줘."</li>
+        <li>"설비 이름과 온도 값을 변수로 받아서, 온도가 295~305도 범위를 벗어나면 경고 문구를
+          출력하는 코드를 만들어줘."</li>
+        <li>"<code>pass_count</code>, <code>fail_count</code>로 합격률을 계산해 소수 첫째 자리까지
+          보기 좋게 출력하는 코드를 만들어줘."</li>
+      </ul>
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
+      <pre><code>pass_count = 34
+fail_count = 6
+total = pass_count + fail_count
+pass_rate = pass_count / total * 100
+
+if pass_rate >= 90:
+    print(f"합격률 {pass_rate:.1f}% → 정상")
+else:
+    print(f"합격률 {pass_rate:.1f}% → 점검 필요")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">합격률 85.0% → 점검 필요</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">AI 코드를 다룰 때 꼭 지킬 점</b>
+      <ul class="pt-list">
+        <li>AI가 만든 코드를 <b>그대로 믿지 말고</b> 직접 Colab/Jupyter에 붙여넣어 실행해 결과를
+          확인한다.</li>
+        <li>위 예시의 <code>if</code>/<code>else</code>처럼 아직 배우지 않은 문법이 나올 수 있다 —
+          이해가 안 되면 그 부분만 다시 AI에게 "이 문법이 무슨 뜻이야?"라고 물어봐도 좋다
+          (조건문은 3차시에서 자세히 배운다).</li>
+        <li>변수 이름이 오늘 쓴 것과 다르게 나올 수도 있다 — 그런 경우 코드를 읽으며 내 변수
+          이름으로 바꿔본다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
     <ul class="pt-list">
       <li>Colab 노트북 한 개에 순서대로 작성, 각 결과를 <code>print()</code>/f-string으로 확인 가능하게 제출</li>
