@@ -2,9 +2,15 @@
 <html lang="ko">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />goekd
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>반도체 및 반도체 공정 데이터 분석 과정</title>
         <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
         <link rel="stylesheet" href="assets/css/common.css" />
         <link rel="stylesheet" href="assets/css/print.css" />
         <style>
@@ -17,12 +23,12 @@
                 display: block;
                 text-decoration: none;
                 color: inherit;
-                background: #fff;
+                background: var(--card);
                 border: 1px solid var(--line);
                 border-left: 4px solid var(--line);
-                border-radius: 14px;
+                border-radius: var(--radius);
                 padding: 1.2rem 1.3rem;
-                box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+                box-shadow: var(--shadow-card);
                 transition:
                     transform 0.18s ease,
                     box-shadow 0.18s ease,
@@ -43,7 +49,7 @@
             .week-card h3 {
                 margin: 0.35rem 0 0.5rem;
                 font-size: 1.08rem;
-                color: #0f172a;
+                color: var(--ink);
             }
             .week-card p {
                 margin: 0;
@@ -67,7 +73,7 @@
             }
             .week-card.p2:hover {
                 border-color: var(--green-line);
-                box-shadow: 0 10px 24px rgba(22, 163, 74, 0.16);
+                box-shadow: 0 10px 24px rgba(16, 185, 129, 0.16);
             }
             .week-card.p2 .num {
                 color: var(--green);
@@ -77,7 +83,7 @@
             }
             .week-card.p3:hover {
                 border-color: var(--orange-line);
-                box-shadow: 0 10px 24px rgba(234, 88, 12, 0.16);
+                box-shadow: 0 10px 24px rgba(245, 158, 11, 0.16);
             }
             .week-card.p3 .num {
                 color: var(--orange);
@@ -124,10 +130,10 @@
             .links-row a {
                 font-size: 0.85rem;
                 text-decoration: none;
-                background: #fff;
+                background: var(--card);
                 color: var(--blue);
                 border: 1px solid var(--blue-line);
-                border-radius: 8px;
+                border-radius: var(--radius-sm);
                 padding: 0.45rem 0.85rem;
                 transition:
                     background 0.15s ease,
@@ -146,11 +152,11 @@
                 margin-top: 0.9rem;
             }
             .anim-card {
-                background: #fff;
+                background: var(--card);
                 border: 1px solid var(--line);
-                border-radius: 14px;
+                border-radius: var(--radius);
                 padding: 1.1rem 1rem 1.3rem;
-                box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+                box-shadow: var(--shadow-card);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -244,7 +250,7 @@
                 animation: pulseScale2 1.6s ease-in-out infinite;
             }
             .list-svg .val {
-                fill: #0f172a;
+                fill: var(--ink);
                 font-weight: 700;
                 font-family: "Courier New", monospace;
             }
@@ -269,7 +275,7 @@
                 stroke-width: 2;
             }
             .loop-svg .val {
-                fill: #0f172a;
+                fill: var(--ink);
                 font-weight: 700;
                 font-family: "Courier New", monospace;
                 font-size: 13px;
