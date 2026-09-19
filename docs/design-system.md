@@ -61,6 +61,28 @@
   `.illustration-note`로 "예시 일러스트레이션 · 실제 데이터 아님"을 명시한다.
 - 배경 이미지로 쓸 때(`background-image`)는 저해상도 차트를 낮은 투명도(5~10%)로만 사용하고, 그
   위에 얹히는 텍스트의 대비가 WCAG AA를 넘는지 확인한다 — `index.html`의 `.hero-home`이 예시다.
+- **일반 스톡/장식 이미지**(`images/image1.jpg` ~ `image10.jpg` 등, 저장소 루트의 `images/` 폴더에
+  사용자가 제공)를 쓸 때:
+  - 출처가 불분명하거나 촬영자 워터마크가 박힌 이미지(예: `images/image1.jpg`)는 **쓰지 않는다** —
+    저작권 확인 없이 교육 사이트에 올리면 안 된다.
+  - 원본은 보통 수 MB로 커서 그대로 쓰면 안 된다. `assets/images/site/`에 최적화(리사이즈+압축)한
+    사본을 두고 그것만 참조한다. 예시 스크립트(Python Pillow):
+    ```python
+    from PIL import Image
+    im = Image.open("images/imageN.jpg")
+    w, h = im.size
+    maxw = 1600  # 배경용은 1600, 인라인용은 900 정도
+    if w > maxw:
+        im = im.resize((maxw, int(h * maxw / w)), Image.LANCZOS)
+    im.save("assets/images/site/이름.jpg", "JPEG", quality=80, optimize=True)
+    ```
+  - 현재 `assets/images/site/`에 있는 것: `chip-die-grid.jpg`(다크 칩 격자, `.cta-banner` 배경 텍스처),
+    `pcb-macro.jpg`(실제 PCB 매크로 사진, 1차시 "반도체 개념 이해하기"에 인라인 삽입),
+    `ai-circuit.jpg`(회로+AI 컨셉 이미지, 1차시 "AI로 한 걸음 더" 섹션 헤더 이미지).
+  - `<img>`로 삽입할 때 `width`/`height` HTML 속성과 함께 CSS `max-width`만 주면 **비율이 깨진다** —
+    반드시 `height:auto`도 같이 지정한다(`style="max-width:520px; height:auto;"`처럼).
+  - `images/` 폴더 자체(원본, 최적화 전)는 git에 커밋하지 않았다 — 용량이 크고 일부는 미사용/라이선스
+    불명확이라 로컬 작업용으로만 남겨뒀다.
 
 ## 다른 페이지에 롤아웃하는 절차
 
