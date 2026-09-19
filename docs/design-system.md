@@ -21,6 +21,7 @@
 | `--shadow-card` / `--shadow-card-hover` | (common.css 참고) | 카드 기본/hover 그림자 |
 | `--font` | Inter 우선, Pretendard/맑은고딕/Noto Sans KR 폴백 | 본문 폰트 |
 | `--font-mono` | JetBrains Mono 우선, Consolas/D2Coding 폴백 | 코드/수치 폰트 |
+| `--maxw` | `1180px` | 페이지 본문 최대 폭 |
 
 ## 다른 페이지에 롤아웃하는 절차
 

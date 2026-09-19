@@ -181,7 +181,7 @@ section.block > h3{color:#0f172a; font-size:1.18rem; margin-top:1.3rem;}
 .code-block{position:relative; margin:1rem 0; border-radius:10px; overflow:hidden; border:1px solid #1e293b;}
 .code-block .code-label{
   background:#0f172a; color:#93c5fd; font-size:.78rem; padding:.4rem .8rem; display:flex;
-  justify-content:space-between; align-items:center; font-family:monospace;
+  justify-content:space-between; align-items:center; font-family:var(--font-mono);
 }
 .code-block pre{margin:0; background:#0f172a; color:#e2e8f0; padding:1rem 1.1rem; overflow-x:auto; font-size:.88rem;}
 .code-block code{font-family:var(--font-mono);}
@@ -269,7 +269,7 @@ table.data-preview tr:nth-child(even){background:#f8fafc;}
 .oflow-svg .obox{fill:#fff; stroke:var(--orange); stroke-width:2;}
 .oflow-svg .obox.accent{fill:var(--orange); fill-opacity:.12; stroke-width:2.5;}
 .oflow-svg .olabel{fill:#7c2d12; font-weight:700;}
-.oflow-svg .osub{fill:var(--muted); font-family:"Consolas","D2Coding",monospace;}
+.oflow-svg .osub{fill:var(--muted); font-family:var(--font-mono);}
 .oflow-svg .oarrow{stroke:var(--orange); stroke-width:2.5; stroke-dasharray:6 6; animation:oDash 1s linear infinite;}
 .oflow-svg .oarrowhead{fill:var(--orange);}
 @keyframes oDash{to{stroke-dashoffset:-24;}}
@@ -281,7 +281,7 @@ table.data-preview tr:nth-child(even){background:#f8fafc;}
 /* ---------- 홈 히어로 & 학습 여정 ---------- */
 .hero-home{
   position:relative; overflow:hidden;
-  background:linear-gradient(135deg,#eff6ff 0%,#f5f3ff 55%,#fff 100%);
+  background:linear-gradient(135deg,var(--blue-bg) 0%,var(--purple-bg) 55%,var(--card) 100%);
   border:1px solid var(--blue-line); border-radius:var(--radius); padding:2.4rem 2rem; margin-bottom:1.5rem;
 }
 .hero-home::before,.hero-home::after{
