@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>1차시. 반도체 공정과 데이터 처음 만나기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 <style>
@@ -17,9 +20,9 @@
   .var-box-svg .pulse{animation:pulseScale 1.6s ease-in-out infinite;transform-origin:315px 88px;}
   @keyframes dashMove{to{stroke-dashoffset:-24;}}
   @keyframes pulseScale{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
-  .flow-svg .fbox{fill:#fff;stroke:var(--line);stroke-width:2;}
+  .flow-svg .fbox{fill:var(--card);stroke:var(--line);stroke-width:2;}
   .flow-svg .fbox.active{stroke:var(--purple);fill:var(--purple-bg);}
-  .flow-svg .flabel{fill:#0f172a;font-weight:700;}
+  .flow-svg .flabel{fill:var(--ink);font-weight:700;}
   .flow-svg .fsub{fill:var(--muted);font-family:'Courier New',monospace;}
   .flow-svg .farrow{stroke:var(--muted);stroke-width:2.5;}
   .flow-svg.wide{width:900px;}
@@ -955,6 +958,74 @@ else:
           (조건문은 3차시에서 자세히 배운다).</li>
         <li>변수 이름이 오늘 쓴 것과 다르게 나올 수도 있다 — 그런 경우 코드를 읽으며 내 변수
           이름으로 바꿔본다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🟣 연습문제 — 온도·설비 이름으로 문장 만들기</h2>
+    <p>새로운 값으로 변수·f-string을 한 번 더 연습해보자. 아래는 두 설비의 오늘 측정값이다.</p>
+    <table class="timetable">
+      <tr><th>설비</th><th>온도(°C)</th><th>습도(%)</th></tr>
+      <tr><td>EQ-02</td><td>23.5</td><td>45.2</td></tr>
+      <tr><td>EQ-05</td><td>24.1</td><td>44.8</td></tr>
+    </table>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      두 설비의 온도를 각각 변수에 저장하고, 평균 온도를 <code>:.1f</code> 서식으로 f-string
+      출력해보자. 여유가 있다면 습도까지 포함한 나만의 문장도 만들어보자.
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">temp_eq02 = 23.5
+temp_eq05 = 24.1
+avg_temp = (temp_eq02 + temp_eq05) / 2
+print(f"두 설비의 평균 온도는 {avg_temp:.1f}도입니다.")</pre>
+      실행 결과: <code>두 설비의 평균 온도는 23.8도입니다.</code>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 반도체 공정 운세 뽑기</h2>
+    <div class="callout concept">
+      <b class="tag">오늘의 미니 프로젝트</b>
+      오늘 배운 변수·f-string·input()으로, 실행하면 재미를 느낄 수 있는 나만의 프로그램을
+      AI에게 만들어달라고 요청해보자.
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      "input()으로 이름을 입력받고, 반도체 공정 운세 문장 리스트(예: '오늘은 식각 공정에서
+      대박이 납니다!', '포토 공정에서 살짝 조심하세요' 등 5개 정도) 중 하나를 무작위로 골라
+      이름과 함께 재미있게 출력하는 파이썬 코드를 만들어줘. <code>random</code> 모듈을 사용해도
+      좋아."
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
+      <pre><code>import random
+
+name = "지민"  # 실제로는 input("이름을 입력하세요: ")
+fortunes = [
+    "오늘은 식각 공정에서 대박이 납니다!",
+    "포토 공정에서 살짝 조심하세요.",
+    "증착 공정 결과가 아주 좋을 예감입니다.",
+    "세정을 꼼꼼히 하면 하루 종일 순조롭습니다.",
+    "산화 공정에서 뜻밖의 좋은 소식이 있을 거예요.",
+]
+
+today_fortune = random.choice(fortunes)
+print(f"{name}님의 오늘의 반도체 공정 운세: {today_fortune}")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">지민님의 오늘의 반도체 공정 운세: 세정을 꼼꼼히 하면 하루 종일 순조롭습니다.</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">더 놀아보기</b>
+      <ul class="pt-list">
+        <li>"운세 문장을 공정 이름(증착/식각/포토/세정/산화)마다 다르게 5개씩 만들어줘"처럼
+          추가로 요청해서 내용을 풍성하게 만들어보자.</li>
+        <li><code>random.choice()</code>처럼 아직 배우지 않은 표현이 나올 수 있다 — 리스트는
+          2차시, 반복문은 3차시에서 배우니 지금은 "이런 것도 있구나" 정도로 구경하면 충분하다.</li>
       </ul>
     </div>
   </section>
