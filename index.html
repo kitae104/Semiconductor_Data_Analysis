@@ -365,7 +365,7 @@
                     >
                 </a>
             </div>
-            <nav class="tab-strip">
+            <nav class="tab-strip" aria-label="페이지 내 이동">
                 <a href="#preview">데이터 미리보기</a>
                 <a href="#journey">학습 여정</a>
                 <a href="#demo">강의 자료 데모</a>
@@ -434,10 +434,15 @@
                         <h4>웨이퍼 다이 맵 예시</h4>
                         <div class="tsub">300mm Silicon Substrate · 예시</div>
                         <svg
-                            viewBox="0 0 220 140"
+                            viewBox="0 0 144 140"
                             role="img"
                             aria-label="웨이퍼 다이 맵 예시: 원형 웨이퍼 안에 합격(초록)·불합격(빨강) 다이가 격자로 배치된 그림"
                         >
+                            <defs>
+                                <clipPath id="homeWaferClip">
+                                    <circle cx="70" cy="70" r="62" />
+                                </clipPath>
+                            </defs>
                             <circle
                                 cx="70"
                                 cy="70"
@@ -446,7 +451,7 @@
                                 stroke="#334155"
                                 stroke-width="2"
                             />
-                            <g>
+                            <g clip-path="url(#homeWaferClip)">
                                 <rect x="16" y="16" width="15" height="15" rx="3" fill="var(--green)" opacity="0.85"/>
                                 <rect x="34" y="16" width="15" height="15" rx="3" fill="var(--green)" opacity="0.85"/>
                                 <rect x="52" y="16" width="15" height="15" rx="3" fill="var(--green)" opacity="0.85"/>
@@ -527,7 +532,7 @@
                             <text x="215" y="22" font-size="8" fill="var(--red)" text-anchor="end">UCL</text>
                         </svg>
                         <div class="tstats">
-                            <span class="item">최근 로트<b>WF-882</b></span>
+                            <span class="item">예시 로트<b>WF-882</b></span>
                             <span class="item pass">예시 수율<b>98.7%</b></span>
                         </div>
                     </div>

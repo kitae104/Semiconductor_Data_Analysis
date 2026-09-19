@@ -1,6 +1,7 @@
 /* 인쇄용 스타일: 내비게이션/버튼/퀴즈 정답 버튼 등 인터랙션 요소를 숨긴다 */
 @media print{
-  .site-header, .week-nav, #backToTop, .nav-buttons, .copy-btn, .reveal-btn, .toc-box{
+  .site-header, .week-nav, #backToTop, .nav-buttons, .copy-btn, .reveal-btn, .toc-box,
+  .tab-strip, .breadcrumb, .cta-banner, .btn-row{
     display:none !important;
   }
   body{background:#fff; font-size:12pt; color:#000;}
@@ -9,4 +10,9 @@
   .code-block pre{white-space:pre-wrap; word-break:break-word;}
   a{color:#000; text-decoration:underline;}
   .answer-box{display:block !important; background:#f3f3f3;}
+  .telemetry-card{
+    background:#fff !important; color:#000 !important; border:1px solid #999 !important;
+  }
+  .telemetry-card h4,.telemetry-card .tstats .item b{color:#000 !important;}
+  .telemetry-card .tsub,.telemetry-card .tstats .item{color:#333 !important;}
 }

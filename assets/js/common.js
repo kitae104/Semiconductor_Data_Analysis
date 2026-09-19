@@ -109,9 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
       // 기준으로 "히어로가 속한 블록"을 찾아 그 다음 형제부터 옮긴다.
       var pageMain = document.querySelector("main.page");
       var heroBlock = heroEl;
-      while (heroBlock.parentElement !== pageMain) {
+      while (heroBlock && heroBlock.parentElement !== pageMain) {
         heroBlock = heroBlock.parentElement;
       }
+      if (!heroBlock) heroBlock = heroEl;
       var body = document.createElement("div");
       body.className = "page-body";
       var content = document.createElement("div");

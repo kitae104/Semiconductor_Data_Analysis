@@ -21,8 +21,9 @@
   --radius-xs:6px;
   --shadow-card:0 1px 3px rgba(15,23,42,.06), 0 1px 2px rgba(15,23,42,.04);
   --shadow-card-hover:0 10px 25px -3px rgba(15,23,42,.08), 0 4px 6px -4px rgba(15,23,42,.04);
-  --shadow-glow-blue:0 0 20px -3px rgba(37,99,235,.35);
   --shadow-glow-cyan:0 0 15px -3px rgba(6,182,212,.3);
+  --on-dark:#e2e8f0;
+  --on-dark-muted:#94a3b8;
   --maxw:1180px;
   --font: "Inter","Pretendard","Malgun Gothic","Noto Sans KR",-apple-system,sans-serif;
   --font-mono: "JetBrains Mono","Consolas","D2Coding",monospace;
@@ -69,7 +70,7 @@ img{max-width:100%;}
 /* ---------- 브레드크럼 ---------- */
 .breadcrumb{
   display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; font-size:.85rem; color:var(--muted);
-  max-width:var(--maxw); margin:.9rem auto 0; padding:0 .1rem;
+  max-width:var(--maxw); margin:.9rem auto 0; padding:0 1.25rem;
 }
 .breadcrumb a{color:var(--muted); text-decoration:none;}
 .breadcrumb a:hover{color:var(--blue); text-decoration:underline;}
@@ -154,6 +155,8 @@ section.block{
   padding:1.5rem 1.6rem; margin-bottom:1.4rem; box-shadow:var(--shadow-card);
   scroll-margin-top:112px;
 }
+/* 탭 스트립이 있는 헤더는 더 높으므로 앵커 스크롤 여유값을 늘린다 */
+.site-header:has(.tab-strip) ~ main.page section.block{scroll-margin-top:156px;}
 section.block > h2{
   margin-top:0; color:var(--blue); font-size:1.4rem; display:flex; align-items:center; gap:.5rem;
   border-bottom:2px solid var(--line); padding-bottom:.6rem;
@@ -369,15 +372,15 @@ table.data-preview tr:nth-child(even){background:#f8fafc;}
   color:var(--muted); background:var(--bg); border:1px solid var(--line); border-radius:999px;
   padding:.25rem .7rem; margin-bottom:1rem;
 }
-.telemetry-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.telemetry-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr)); gap:1.1rem;}
 .telemetry-card{
-  background:var(--ink); color:#e2e8f0; border-radius:var(--radius); padding:1.2rem 1.3rem;
+  background:var(--ink); color:var(--on-dark); border-radius:var(--radius); padding:1.2rem 1.3rem;
   box-shadow:var(--shadow-card); border:1px solid #1e293b;
 }
 .telemetry-card h4{margin:0 0 .2rem; font-size:.98rem; color:#fff;}
-.telemetry-card .tsub{font-size:.76rem; color:#94a3b8; margin-bottom:.8rem; font-family:var(--font-mono);}
+.telemetry-card .tsub{font-size:.76rem; color:var(--on-dark-muted); margin-bottom:.8rem; font-family:var(--font-mono);}
 .telemetry-card .tstats{display:flex; flex-wrap:wrap; gap:.6rem .9rem; margin-top:.8rem; font-family:var(--font-mono);}
-.telemetry-card .tstats .item{font-size:.72rem; color:#94a3b8;}
+.telemetry-card .tstats .item{font-size:.72rem; color:var(--on-dark-muted);}
 .telemetry-card .tstats .item b{display:block; font-size:1rem; color:#fff; font-weight:700;}
 .telemetry-card .tstats .item.pass b{color:#34d399;}
 .telemetry-card .tstats .item.warn b{color:#fbbf24;}
@@ -448,7 +451,7 @@ table.data-preview tr:nth-child(even){background:#f8fafc;}
 
 /* ---------- 하단 CTA 배너 ---------- */
 .cta-banner{
-  background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); color:#fff;
+  background:linear-gradient(135deg,var(--ink) 0%,#1e293b 100%); color:#fff;
   border-radius:var(--radius); padding:2.2rem 2rem; text-align:center; margin:2rem 0;
 }
 .cta-banner h3{margin:0 0 .5rem; font-size:1.5rem; color:#fff;}
@@ -467,7 +470,6 @@ table.data-preview tr:nth-child(even){background:#f8fafc;}
   .hero-home{padding:1.6rem 1.3rem;}
   .hero-home h1{font-size:1.6rem;}
   section.block{padding:1.1rem 1rem;}
-  .outcome-grid{grid-template-columns:1fr;}
   .cta-banner{padding:1.6rem 1.2rem;}
   .cta-banner .btn-row{flex-direction:column;}
   .cta-banner .btn-row a{width:100%; justify-content:center;}
