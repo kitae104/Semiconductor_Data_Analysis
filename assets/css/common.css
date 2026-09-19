@@ -315,6 +315,12 @@ table.data-preview tr:nth-child(even){background:#f8fafc;}
 .hero-home::after{width:260px; height:260px; background:radial-gradient(circle,var(--purple-bg),transparent 70%); bottom:-100px; left:-80px; animation-delay:-4s;}
 @keyframes heroFloat{0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-14px) scale(1.05);}}
 @media (prefers-reduced-motion:reduce){ .hero-home::before,.hero-home::after{animation:none;} }
+.hero-home .hero-bg-chart{
+  position:absolute; inset:0; z-index:0; opacity:.035;
+  background-image:url(../images/week08/temp_thickness_scatter.png);
+  background-size:180% auto; background-position:right -40px bottom -60px; background-repeat:no-repeat;
+  pointer-events:none;
+}
 .hero-home > *{position:relative; z-index:1;}
 .hero-home h1{margin:.5rem 0; color:#1e3a8a; font-size:1.9rem; letter-spacing:-.01em;}
 .hero-home .lede{font-size:1.08rem; color:var(--ink); max-width:640px; line-height:1.7;}
