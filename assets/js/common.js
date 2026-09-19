@@ -105,13 +105,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // 목차를 왼쪽 사이드바로 배치하기 위해 hero 이후의 모든 형제 요소를
       // 본문 래퍼(.page-content)로 옮기고, 목차와 나란히 2단 레이아웃(.page-body)을 구성한다.
-      var pageMain = heroEl.parentElement;
+      // hero가 .hero-with-stats 같은 래퍼 안에 있을 수 있으므로, main.page의 직계 자식을
+      // 기준으로 "히어로가 속한 블록"을 찾아 그 다음 형제부터 옮긴다.
+      var pageMain = document.querySelector("main.page");
+      var heroBlock = heroEl;
+      while (heroBlock.parentElement !== pageMain) {
+        heroBlock = heroBlock.parentElement;
+      }
       var body = document.createElement("div");
       body.className = "page-body";
       var content = document.createElement("div");
       content.className = "page-content";
 
-      var node = heroEl.nextSibling;
+      var node = heroBlock.nextSibling;
       while (node) {
         var next = node.nextSibling;
         content.appendChild(node);

@@ -399,6 +399,11 @@ table.data-preview tr:nth-child(even){background:#f8fafc;}
 .outcome-card .osub{font-size:.82rem; color:var(--muted); font-family:var(--font-mono);}
 @media (max-width:820px){ .outcome-grid{grid-template-columns:1fr;} }
 
+/* ---------- 히어로 + 스탯 패널 2단 레이아웃 (강의 페이지) ---------- */
+.hero-with-stats{display:grid; grid-template-columns:1fr 280px; gap:1.2rem; align-items:stretch; margin-bottom:1.5rem;}
+.hero-with-stats .hero{margin-bottom:0;}
+@media (max-width:860px){ .hero-with-stats{grid-template-columns:1fr;} }
+
 /* ---------- 스탯 패널 (강의 페이지 상단 우측, 본문 예제값 재사용) ---------- */
 .stat-panel{
   background:var(--card); border:1px solid var(--line); border-radius:var(--radius);

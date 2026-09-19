@@ -59,17 +59,55 @@
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="1"></div></div>
 </header>
 
+<nav class="breadcrumb">
+  <a href="../../index.html">홈</a>
+  <span class="sep">›</span>
+  <span>1부 · 첫걸음: 개념과 파이썬 기초</span>
+  <span class="sep">›</span>
+  <span class="current">1차시: 반도체 공정과 데이터 처음 만나기</span>
+</nav>
+
 <main class="page">
 
-  <div class="hero">
-    <span class="badge blue">1차시</span>
-    <h1>반도체 공정과 데이터 처음 만나기</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"반도체는 어떻게 만들어지고, 그 과정은 어떤 기록을 남길까?"</b></p>
+  <div class="hero-with-stats">
+    <div class="hero">
+      <span class="badge blue">1차시</span>
+      <h1>반도체 공정과 데이터 처음 만나기</h1>
+      <p class="today-question">💬 오늘의 질문: <b>"반도체는 어떻게 만들어지고, 그 과정은 어떤 기록을 남길까?"</b></p>
+    </div>
+    <div class="stat-panel">
+      <div class="sp-title">오늘의 예제 데이터</div>
+      <div class="sp-run">1차시 실습 코드 기준값</div>
+      <dl>
+        <div><dt>측정 장비</dt><dd>EQ-03</dd></div>
+        <div><dt>챔버 온도</dt><dd>300.1°C</dd></div>
+        <div><dt>합격 / 불합격</dt><dd>34 / 6</dd></div>
+        <div><dt>합격 여부</dt><dd class="pass">PASS (True)</dd></div>
+      </dl>
+    </div>
   </div>
 
   <section class="block">
-    <h2>🎯 학습 목표</h2>
-    <ul class="goal-list">
+    <span class="section-kicker"><span class="dot"></span>LEARNING OUTCOMES</span>
+    <h2>🎯 3대 핵심 학습 목표</h2>
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <span class="okicker">OUTCOME 01</span>
+        <h4>반도체·웨이퍼·데이터의 본질</h4>
+        <div class="osub">FAB &amp; Wafer Concepts</div>
+      </div>
+      <div class="outcome-card">
+        <span class="okicker">OUTCOME 02</span>
+        <h4>파이썬 변수와 메모리 메커니즘</h4>
+        <div class="osub">Variable &amp; Type Allocation</div>
+      </div>
+      <div class="outcome-card">
+        <span class="okicker">OUTCOME 03</span>
+        <h4>print()·f-string으로 결과 출력</h4>
+        <div class="osub">Formatted Output</div>
+      </div>
+    </div>
+    <ul class="goal-list" style="margin-top: 1rem">
       <li>반도체, 웨이퍼, 칩의 차이를 설명할 수 있다.</li>
       <li>반도체 제조 공정의 전체 흐름을 이해한다.</li>
       <li>공정에서 데이터가 왜 발생하는지 설명할 수 있다.</li>
@@ -286,6 +324,7 @@
   </section>
 
   <section class="block">
+    <span class="step-badge">STEP 01</span>
     <h2>🐍 파이썬 시작하기 — 변수와 출력</h2>
 
     <h3>파이썬이란 무엇인가</h3>
@@ -335,17 +374,23 @@
       </li>
     </ul>
 
-    <svg class="var-box-svg" viewBox="0 0 440 170" role="img"
-         aria-label="변수 개념도: 34라는 값이 화살표를 따라 pass_count라는 이름의 상자 안에 저장된다">
-      <text x="55" y="98" font-size="30" text-anchor="middle" fill="var(--muted)" font-weight="700" font-family="'Courier New',monospace">34</text>
-      <line class="arrow-line" x1="100" y1="90" x2="175" y2="90"/>
-      <polygon points="175,80 195,90 175,100" fill="var(--purple)"/>
-      <rect class="box" x="205" y="35" width="220" height="105" rx="16"/>
-      <text x="315" y="26" font-size="15" text-anchor="middle" class="label-text">pass_count</text>
-      <text x="315" y="98" font-size="34" text-anchor="middle" class="value-text pulse">34</text>
-    </svg>
-    <p class="img-caption"><code>pass_count = 34</code> — 오른쪽 값(34)을 왼쪽 이름(<code>pass_count</code>) 상자에 저장.
-    <code>=</code>는 수학의 "같다"가 아니라 <b>"오른쪽 값을 왼쪽 이름에 저장하라"</b>(대입 연산자).</p>
+    <div class="concept-panel">
+      <div class="cp-visual">
+        <svg class="var-box-svg" viewBox="0 0 440 170" role="img"
+             aria-label="변수 개념도: 34라는 값이 화살표를 따라 pass_count라는 이름의 상자 안에 저장된다">
+          <text x="55" y="98" font-size="30" text-anchor="middle" fill="var(--muted)" font-weight="700" font-family="'Courier New',monospace">34</text>
+          <line class="arrow-line" x1="100" y1="90" x2="175" y2="90"/>
+          <polygon points="175,80 195,90 175,100" fill="var(--purple)"/>
+          <rect class="box" x="205" y="35" width="220" height="105" rx="16"/>
+          <text x="315" y="26" font-size="15" text-anchor="middle" class="label-text">pass_count</text>
+          <text x="315" y="98" font-size="34" text-anchor="middle" class="value-text pulse">34</text>
+        </svg>
+      </div>
+      <div class="cp-info">
+        <p><b>pass_count = 34</b> — 오른쪽 값(34)을 왼쪽 이름(<code>pass_count</code>) 상자에 저장한다.</p>
+        <p><code>=</code>는 수학의 "같다"가 아니라 <b>"오른쪽 값을 왼쪽 이름에 저장하라"</b>는 뜻의 대입 연산자다.</p>
+      </div>
+    </div>
 
     <div class="code-block">
       <div class="code-label"><span>Python — 변수 만들기</span><button class="copy-btn">복사</button></div>
@@ -563,6 +608,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
+    <span class="step-badge">STEP 02</span>
     <h2>🟣 파이썬 실습: 변수와 출력 따라 하기</h2>
     <div class="callout warn">
       <b class="tag">체크포인트 — 셀 실행 순서</b>
@@ -817,6 +863,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
+    <span class="step-badge">STEP 03</span>
     <h2>🚀 도전 실습</h2>
     <div class="callout practice">
       <b class="tag">도전 문제</b>
