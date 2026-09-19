@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>반도체 공정 데이터 분석 교육 플랫폼 | Semiconductor Fab Data Science</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400..600,0..1,0&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: "#0F172A",
+              blue: "#2563EB",
+              blueHover: "#1D4ED8",
+              cyan: "#06B6D4",
+              cyanLight: "#ECFEFF",
+              purple: "#7C3AED",
+              emerald: "#10B981",
+              amber: "#F59E0B",
+              rose: "#EF4444",
+              slate: "#64748B",
+              border: "#E2E8F0",
+              bg: "#F8FAFC",
+              card: "#FFFFFF"
+            }
+          },
+          borderRadius: {
+            'xl': '0.75rem',
+            '2xl': '1rem'
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans KR', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          boxShadow: {
+            'card': '0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04)',
+            'card-hover': '0 10px 25px -3px rgba(15,23,42,0.08), 0 4px 6px -4px rgba(15,23,42,0.04)',
+            'glow-cyan': '0 0 15px -3px rgba(6,182,212,0.3)',
+            'glow-blue': '0 0 20px -3px rgba(37,99,235,0.35)'
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @layer base {
+      html { scroll-behavior: smooth; }
+      body {
+        background-color: #F8FAFC;
+        color: #0F172A;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+    }
+    .wafer-grid rect { transition: all 0.2s ease; }
+    .wafer-grid rect:hover { opacity: 0.9; stroke: #0F172A; stroke-width: 0.5px; }
+  </style>
+</head>
+<body class="bg-brand-bg text-[#0F172A] antialiased selection:bg-brand-blue selection:text-white">
+<!-- TOP APP NAVIGATION CHROME -->
+<header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-brand-border shadow-[0_1px_4px_rgba(15,23,42,0.03)]">
+<div class="h-16 max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+<!-- Brand Title & Badge -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-brand-cyan flex items-center justify-center text-white shadow-sm shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<rect height="16" rx="2" width="16" x="4" y="4"></rect>
+<rect height="6" width="6" x="9" y="9"></rect>
+<path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-[#0F172A] text-[15px] sm:text-[16px] tracking-tight">반도체 데이터 분석 과정</span>
+<span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20">FAB-SPEC v2.4</span>
+</div>
+<span class="text-[12px] text-brand-slate hidden sm:block">Semiconductor Process Data Science · 비전공자 입문 최적화</span>
+</div>
+</div>
+<!-- Nav Links -->
+<nav class="hidden lg:flex items-center gap-1 font-medium text-[13px] text-brand-slate">
+<a class="px-3 py-1.5 rounded-lg text-brand-blue bg-blue-50/70 font-semibold transition-colors" href="#curriculum-section">전체 커리큘럼</a>
+<a class="px-3 py-1.5 rounded-lg hover:text-[#0F172A] hover:bg-slate-100 transition-colors" href="#pipeline-roadmap">학습 여정</a>
+<a class="px-3 py-1.5 rounded-lg hover:text-[#0F172A] hover:bg-slate-100 transition-colors flex items-center gap-1.5" href="#telemetry-showcase">
+<span>웨이퍼 시연</span>
+<span class="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-ping"></span>
+</a>
+<a class="px-3 py-1.5 rounded-lg hover:text-[#0F172A] hover:bg-slate-100 transition-colors" href="#sandbox-preview">인터랙티브 미리보기</a>
+<a class="px-3 py-1.5 rounded-lg hover:text-[#0F172A] hover:bg-slate-100 transition-colors" href="#guides-section">실습 자료 &amp; 가이드</a>
+</nav>
+<!-- Action Utilities -->
+<div class="flex items-center gap-2.5">
+<a class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-brand-border text-[12px] font-mono text-[#0F172A] hover:bg-slate-50 transition-colors shadow-xs" href="#">
+<svg class="w-3.5 h-3.5 text-amber-600" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+</svg>
+          Google Colab
+        </a>
+<a class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-brand-border text-[12px] font-mono text-[#0F172A] hover:bg-slate-50 transition-colors shadow-xs" href="#">
+<svg class="w-3.5 h-3.5 text-brand-slate" fill="currentColor" viewbox="0 0 24 24">
+<path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path>
+</svg>
+          GitHub
+        </a>
+<a class="px-3.5 py-1.5 rounded-lg bg-brand-navy hover:bg-slate-800 text-white font-medium text-[13px] shadow-sm transition-all flex items-center gap-1.5" href="#curriculum-section">
+<span>시작하기</span>
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+</header>
+<!-- MAIN WRAPPER -->
+<main class="w-full pt-20 pb-16">
+<div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+<!-- 1. HERO SECTION -->
+<section class="pt-6 sm:pt-10">
+<div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-white to-slate-50/80 border border-brand-border p-6 sm:p-10 lg:p-12 shadow-card">
+<!-- Subtle cleanroom wafer mesh background overlay -->
+<div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-32 -left-20 w-80 h-80 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute inset-0 pointer-events-none opacity-[0.025]" style="background-image: radial-gradient(#0F172A 1px, transparent 1px); background-size: 24px 24px;"></div>
+<div class="relative z-10 max-w-3xl space-y-5">
+<!-- Badges Bar -->
+<div class="flex flex-wrap items-center gap-2">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-brand-border shadow-xs text-[12px] font-medium text-[#0F172A]">
+<span class="w-2 h-2 rounded-full bg-brand-emerald animate-pulse"></span>
+<span>공학 비전공자 환영</span>
+<span class="text-brand-slate">·</span>
+<span class="text-brand-blue font-semibold">10차시 완성 커리큘럼</span>
+</div>
+<span class="text-[12px] font-mono px-2.5 py-0.5 rounded-full bg-slate-100 text-brand-slate border border-slate-200">
+                PYTHON 3.11+ &amp; ORANGE3
+              </span>
+</div>
+<!-- Main Heading -->
+<h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-brand-navy leading-[1.2]">
+              반도체 및 반도체 공정<br/>
+<span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-blue via-brand-cyan to-brand-purple">
+                데이터 분석 입문 과정
+              </span>
+</h1>
+<!-- Subtitle -->
+<p class="text-base sm:text-lg text-brand-slate leading-relaxed">
+              프로그래밍 경험이 없어도 쉽게 배울 수 있는 실무형 반도체 데이터 교육입니다. 웨이퍼 구조와 FAB 센서 로그 원리부터 시작하여 <strong class="text-brand-navy font-semibold">파이썬 기초 → 데이터 정제 → 공정 시각화 → 원인 탐색 → 머신러닝 예측 모델</strong>까지 직렬로 연계합니다.
+            </p>
+<!-- Pill Badges Specs -->
+<div class="flex flex-wrap items-center gap-2.5 pt-1">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-brand-border text-[13px] shadow-xs">
+<span class="font-mono font-bold text-brand-blue text-[15px]">10</span>
+<span class="text-brand-slate">단계 차시</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-brand-border text-[13px] shadow-xs">
+<span class="font-mono font-bold text-brand-purple text-[15px]">4</span>
+<span class="text-brand-slate">부 로드맵</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-brand-border font-mono text-[12px] text-brand-navy shadow-xs">
+<span class="text-brand-emerald">●</span> Python 3.11+
+              </div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-brand-border font-mono text-[12px] text-brand-navy shadow-xs">
+<span class="text-amber-500">●</span> Orange3 노코드 시각화
+              </div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-cyan/10 text-brand-cyan font-mono text-[12px] font-semibold border border-brand-cyan/20">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>
+                검증된 실습 예제 CSV
+              </div>
+</div>
+<!-- CTA Actions -->
+<div class="flex flex-wrap items-center gap-3 pt-3">
+<a class="px-6 py-3 rounded-xl bg-brand-blue hover:bg-brand-blueHover text-white font-semibold text-[14px] sm:text-[15px] shadow-glow-blue transition-all flex items-center gap-2" href="#curriculum-section">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+</svg>
+                1차시부터 시작하기
+              </a>
+<a class="px-5 py-3 rounded-xl bg-white hover:bg-slate-50 text-brand-navy border border-brand-border font-semibold text-[14px] sm:text-[15px] shadow-card transition-all flex items-center gap-2" href="#telemetry-showcase">
+<svg class="w-4 h-4 text-brand-cyan" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<polygon points="10 8 16 12 10 16 10 8"></polygon>
+</svg>
+                실시간 분석 대시보드 미리보기
+              </a>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. CRITICAL NEW SECTION: REAL DATA ANALYSIS & WAFER TELEMETRY CARDS -->
+<section class="space-y-4" id="telemetry-showcase">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+<div>
+<div class="flex items-center gap-2 font-mono text-[11px] font-bold tracking-wider text-brand-cyan uppercase">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2v20M2 12h20"></path></svg>
+              LIVE FAB &amp; WAFER TELEMETRY SHOWCASE
+            </div>
+<h2 class="text-2xl font-bold tracking-tight text-brand-navy mt-0.5">
+              실제 데이터 분석 화면 미리보기
+            </h2>
+</div>
+<div class="flex items-center gap-2 text-[12px] font-mono text-brand-slate bg-white px-3 py-1.5 rounded-lg border border-brand-border">
+<span class="w-2 h-2 rounded-full bg-brand-emerald animate-pulse"></span>
+<span>SIMULATED CLEANROOM CHIP SENSOR DATA · 300mm</span>
+</div>
+</div>
+<!-- 3 Rich Engineering Analytical Cards Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+<!-- Card A: Wafer Defect & Die Map (5 cols) -->
+<div class="lg:col-span-5 bg-brand-card rounded-2xl p-5 border border-brand-border shadow-card flex flex-col justify-between hover:shadow-card-hover transition-all">
+<div>
+<!-- Header -->
+<div class="flex items-center justify-between pb-3 mb-3 border-b border-brand-border">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-brand-cyan/10 text-brand-cyan flex items-center justify-center">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M12 3a9 9 0 0 1 0 18"></path>
+</svg>
+</div>
+<div>
+<h3 class="font-bold text-[14px] text-brand-navy leading-none">웨이퍼 다이 맵 (Wafer Die Map)</h3>
+<span class="text-[11px] font-mono text-brand-slate">300mm Silicon Substrate</span>
+</div>
+</div>
+<span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-brand-emerald border border-emerald-200">
+                  PASS 98.4%
+                </span>
+</div>
+<!-- Silicon Wafer Graphic -->
+<div class="relative flex items-center justify-center py-2">
+<svg class="w-56 h-56 drop-shadow-sm wafer-grid" viewbox="0 0 200 200">
+<!-- Outer Circular Edge with Notch on Top -->
+<circle cx="100" cy="100" fill="#F8FAFC" r="92" stroke="#CBD5E1" stroke-width="1.75"></circle>
+<!-- Top Wafer Notch -->
+<path d="M 94 8 A 92 92 0 0 1 106 8 L 100 13 Z" fill="#94A3B8"></path>
+<!-- Calibration Rings -->
+<circle cx="100" cy="100" fill="none" r="70" stroke="#E2E8F0" stroke-dasharray="3 3" stroke-width="1"></circle>
+<circle cx="100" cy="100" fill="none" r="40" stroke="#E2E8F0" stroke-dasharray="2 2" stroke-width="0.75"></circle>
+<!-- Die Array Grid (Pass: #2563EB, High-Yield: #06B6D4, Edge Defect: #EF4444, Warning: #F59E0B) -->
+<!-- Row 1 -->
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="75" y="40"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="90" y="40"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="105" y="40"></rect>
+<rect fill="#EF4444" height="10" rx="1.5" width="10" x="120" y="40"></rect>
+<!-- Row 2 -->
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="60" y="55"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="75" y="55"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="90" y="55"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="105" y="55"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="120" y="55"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="135" y="55"></rect>
+<!-- Row 3 -->
+<rect fill="#EF4444" height="10" rx="1.5" width="10" x="45" y="70"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="60" y="70"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="75" y="70"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="90" y="70"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="105" y="70"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="120" y="70"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="135" y="70"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="150" y="70"></rect>
+<!-- Row 4 (Center - Main Core) -->
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="35" y="85"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="50" y="85"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="65" y="85"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="80" y="85"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="95" y="85"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="110" y="85"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="125" y="85"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="140" y="85"></rect>
+<rect fill="#F59E0B" height="10" rx="1.5" width="10" x="155" y="85"></rect>
+<!-- Row 5 (Center) -->
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="35" y="100"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="50" y="100"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="65" y="100"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="80" y="100"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="95" y="100"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="110" y="100"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="125" y="100"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="140" y="100"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="155" y="100"></rect>
+<!-- Row 6 -->
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="45" y="115"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="60" y="115"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="75" y="115"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="90" y="115"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="105" y="115"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="120" y="115"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="135" y="115"></rect>
+<rect fill="#EF4444" height="10" rx="1.5" width="10" x="150" y="115"></rect>
+<!-- Row 7 -->
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="60" y="130"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="75" y="130"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="90" y="130"></rect>
+<rect fill="#06B6D4" height="10" rx="1.5" width="10" x="105" y="130"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="120" y="130"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="135" y="130"></rect>
+<!-- Row 8 -->
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="75" y="145"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="90" y="145"></rect>
+<rect fill="#F59E0B" height="10" rx="1.5" width="10" x="105" y="145"></rect>
+<rect fill="#2563EB" height="10" rx="1.5" width="10" x="120" y="145"></rect>
+<!-- Center Crosshairs -->
+<line stroke="#94A3B8" stroke-dasharray="3 3" stroke-width="0.5" x1="100" x2="100" y1="20" y2="180"></line>
+<line stroke="#94A3B8" stroke-dasharray="3 3" stroke-width="0.5" x1="20" x2="180" y1="100" y2="100"></line>
+</svg>
+</div>
+<!-- Legend -->
+<div class="flex items-center justify-center gap-4 text-[11px] font-mono text-brand-slate pt-2">
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-[#2563EB]"></span>Pass Die</span>
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-[#06B6D4]"></span>Premium Yield</span>
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-[#EF4444]"></span>Edge Defect</span>
+</div>
+</div>
+<!-- Telemetry Stats Footer -->
+<div class="grid grid-cols-4 gap-2 pt-3 mt-3 border-t border-brand-border bg-slate-50/70 -mx-5 -mb-5 p-4 rounded-b-2xl text-center">
+<div>
+<span class="block text-[10px] font-mono text-brand-slate">TOTAL DIES</span>
+<span class="font-mono font-bold text-[13px] text-brand-navy">1,428</span>
+</div>
+<div>
+<span class="block text-[10px] font-mono text-brand-slate">YIELD</span>
+<span class="font-mono font-bold text-[13px] text-brand-cyan">98.4%</span>
+</div>
+<div>
+<span class="block text-[10px] font-mono text-brand-slate">EDGE DEFECT</span>
+<span class="font-mono font-bold text-[13px] text-brand-rose">0.8%</span>
+</div>
+<div>
+<span class="block text-[10px] font-mono text-brand-slate">CHAMBER</span>
+<span class="font-mono font-bold text-[13px] text-brand-navy">ETCH-04B</span>
+</div>
+</div>
+</div>
+<!-- Card B: Lot-to-Lot Yield Trend & Control Limits (7 cols) -->
+<div class="lg:col-span-7 space-y-5">
+<!-- Yield Line Chart Card -->
+<div class="bg-brand-card rounded-2xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all">
+<div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-2 border-b border-brand-border">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M3 3v18h18"></path>
+<path d="M18 9l-5 5-4-4-6 6"></path>
+</svg>
+</div>
+<div>
+<h3 class="font-bold text-[14px] text-brand-navy leading-none">수율 추이 그래프 (Lot-to-Lot Yield Trend)</h3>
+<span class="text-[11px] font-mono text-brand-slate">Statistical Process Control (SPC) Limits</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] px-2 py-0.5 rounded bg-blue-50 text-brand-blue font-semibold border border-blue-100">
+                    평균 수율: 98.2%
+                  </span>
+<span class="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 text-brand-slate font-medium">
+                    Target: 98.0% (Met)
+                  </span>
+</div>
+</div>
+<!-- SVG Line Chart with UCL / LCL and Tooltip -->
+<div class="relative w-full h-44">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 540 160">
+<defs>
+<lineargradient id="yieldGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#2563EB" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#06B6D4" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="lineGrad" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#2563EB"></stop>
+<stop offset="100%" stop-color="#06B6D4"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Grid Lines -->
+<line stroke="#E2E8F0" stroke-width="1" x1="40" x2="520" y1="30" y2="30"></line>
+<line stroke="#E2E8F0" stroke-width="1" x1="40" x2="520" y1="65" y2="65"></line>
+<line stroke="#E2E8F0" stroke-width="1" x1="40" x2="520" y1="100" y2="100"></line>
+<line stroke="#E2E8F0" stroke-width="1" x1="40" x2="520" y1="135" y2="135"></line>
+<!-- Control Limits: UCL & LCL -->
+<!-- UCL line at y=32 -->
+<line stroke="#EF4444" stroke-dasharray="4 3" stroke-width="1" x1="40" x2="520" y1="32" y2="32"></line>
+<text fill="#EF4444" font-family="JetBrains Mono" font-size="9" font-weight="600" x="480" y="26">UCL 99.5%</text>
+<!-- LCL line at y=125 -->
+<line stroke="#F59E0B" stroke-dasharray="4 3" stroke-width="1" x1="40" x2="520" y1="125" y2="125"></line>
+<text fill="#F59E0B" font-family="JetBrains Mono" font-size="9" font-weight="600" x="480" y="142">LCL 97.0%</text>
+<!-- Area under curve -->
+<polygon fill="url(#yieldGrad)" points="50,90 90,82 130,70 170,75 210,58 250,62 290,48 330,55 370,44 410,48 450,42 490,40 490,140 50,140"></polygon>
+<!-- Main Trend Line -->
+<polyline fill="none" points="50,90 90,82 130,70 170,75 210,58 250,62 290,48 330,55 370,44 410,48 450,42 490,40" stroke="url(#lineGrad)" stroke-linecap="round" stroke-width="2.5"></polyline>
+<!-- Data Point Dots -->
+<circle cx="50" cy="90" fill="#2563EB" r="3"></circle>
+<circle cx="90" cy="82" fill="#2563EB" r="3"></circle>
+<circle cx="130" cy="70" fill="#2563EB" r="3"></circle>
+<circle cx="170" cy="75" fill="#2563EB" r="3"></circle>
+<circle cx="210" cy="58" fill="#2563EB" r="3"></circle>
+<circle cx="250" cy="62" fill="#2563EB" r="3"></circle>
+<circle cx="290" cy="48" fill="#06B6D4" r="3"></circle>
+<circle cx="330" cy="55" fill="#06B6D4" r="3"></circle>
+<circle cx="370" cy="44" fill="#06B6D4" r="3"></circle>
+<circle cx="410" cy="48" fill="#06B6D4" r="3"></circle>
+<circle cx="450" cy="42" fill="#06B6D4" r="3"></circle>
+<circle cx="490" cy="40" fill="#06B6D4" r="4" stroke="#FFFFFF" stroke-width="2"></circle>
+<!-- Simulated Active Tooltip on Latest Lot -->
+<g transform="translate(390, 10)">
+<rect fill="#0F172A" height="26" opacity="0.95" rx="4" width="98"></rect>
+<text fill="#FFFFFF" font-family="JetBrains Mono" font-size="10" font-weight="600" text-anchor="middle" x="49" y="17">Lot #WF-882: 98.7%</text>
+</g>
+</svg>
+</div>
+<!-- Bottom Lot Labels -->
+<div class="flex justify-between text-[10px] font-mono text-brand-slate px-2 pt-1 border-t border-brand-border">
+<span>Lot #WF-870</span>
+<span>#WF-873</span>
+<span>#WF-876</span>
+<span>#WF-879</span>
+<span class="text-brand-cyan font-bold">#WF-882 (Current)</span>
+</div>
+</div>
+<!-- Card C: Chamber Sensor Telemetry (Temp & RF Power) -->
+<div class="bg-brand-card rounded-2xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all">
+<div class="flex items-center justify-between pb-3 mb-2 border-b border-brand-border">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-purple-50 text-brand-purple flex items-center justify-center">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+</svg>
+</div>
+<div>
+<h3 class="font-bold text-[14px] text-brand-navy leading-none">공정 센서 시계열 차트 (Chamber Telemetry)</h3>
+<span class="text-[11px] font-mono text-brand-slate">Chamber Temp (310°C ±1.5) &amp; RF Plasma Power (1200W)</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-brand-emerald text-[11px] font-mono font-semibold border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-pulse"></span>
+                  NORMAL OPERATION
+                </span>
+</div>
+<!-- Dual Line SVG -->
+<div class="relative w-full h-28">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 540 100">
+<!-- Temp Wave (Cyan) -->
+<path d="M 0 50 Q 40 46, 80 50 T 160 52 T 240 48 T 320 50 T 400 47 T 480 51 T 540 50" fill="none" stroke="#06B6D4" stroke-width="2"></path>
+<!-- RF Power Wave (Blue) with slight fluctuation -->
+<path d="M 0 35 Q 45 32, 90 35 T 180 37 T 270 34 T 360 36 T 450 33 T 540 35" fill="none" stroke="#2563EB" stroke-dasharray="4 2" stroke-width="2"></path>
+<!-- Safe Target Zone Band -->
+<rect fill="#2563EB" height="35" opacity="0.04" width="540" x="0" y="28"></rect>
+</svg>
+</div>
+<!-- Legend + Quick Sensor Readout -->
+<div class="flex flex-wrap items-center justify-between text-[11px] font-mono pt-1 text-brand-slate border-t border-brand-border">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-brand-cyan"></span>
+<span>온도 (Temp): <strong class="text-brand-navy">310.4°C</strong></span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-brand-blue border-b border-dashed border-brand-blue"></span>
+<span>RF Power: <strong class="text-brand-navy">1204 W</strong></span>
+</span>
+</div>
+<span class="text-[10px] text-brand-slate">Sampling Rate: 100ms · Process Time: 0~60s</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. FOUR-STAGE LEARNING JOURNEY PIPELINE -->
+<section class="space-y-4" id="pipeline-roadmap">
+<div class="flex items-center justify-between">
+<div>
+<div class="flex items-center gap-2 font-mono text-[11px] font-bold tracking-wider text-brand-blue uppercase">
+<span>STAGE 01 — 04</span>
+<span>·</span>
+<span>PIPELINE ROADMAP</span>
+</div>
+<h2 class="text-2xl font-bold tracking-tight text-brand-navy mt-0.5">
+              🧭 4단계 학습 여정 한눈에 보기
+            </h2>
+</div>
+<span class="hidden md:inline-flex items-center gap-1.5 text-[13px] text-brand-slate">
+<svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>
+            기초 문법부터 공정 결함 예측까지 직렬 연계
+          </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Stage 1 -->
+<div class="bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-blue to-brand-cyan"></div>
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="w-7 h-7 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center font-mono text-[12px] font-bold">01</span>
+<span class="text-[11px] font-mono font-semibold text-brand-blue bg-blue-50 px-2 py-0.5 rounded border border-blue-100">1~3차시</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-xl">🧩</span>
+<h3 class="font-bold text-[16px] text-brand-navy">첫걸음</h3>
+</div>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                반도체·웨이퍼 기본 개념과 파이썬 기초(변수·리스트·조건문·함수)를 탄탄히 다집니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate font-medium">fab_metrics = [ ]</span>
+<svg class="w-4 h-4 text-brand-blue group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</div>
+</div>
+<!-- Stage 2 -->
+<div class="bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-cyan to-emerald-400"></div>
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="w-7 h-7 rounded-lg bg-brand-cyan/10 text-brand-cyan flex items-center justify-center font-mono text-[12px] font-bold">02</span>
+<span class="text-[11px] font-mono font-semibold text-brand-cyan bg-cyan-50 px-2 py-0.5 rounded border border-cyan-100">4~6차시</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-xl">🧹</span>
+<h3 class="font-bold text-[16px] text-brand-navy">데이터 다루기</h3>
+</div>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                Pandas로 표 데이터를 읽고, Orange3로 먼저 시각 확인 후 결측치 정제와 차트를 코드로 구현합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate font-medium">df.dropna().describe()</span>
+<svg class="w-4 h-4 text-brand-cyan group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</div>
+</div>
+<!-- Stage 3 -->
+<div class="bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-500"></div>
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-mono text-[12px] font-bold">03</span>
+<span class="text-[11px] font-mono font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">7~8차시</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-xl">🔍</span>
+<h3 class="font-bold text-[16px] text-brand-navy">비교와 원인 탐색</h3>
+</div>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                설비별 수율·불량률을 비교 분석하고, 피어슨 상관계수로 결함 원인 변수 후보를 도출합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate font-medium">corr = df.corr()</span>
+<svg class="w-4 h-4 text-amber-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</div>
+</div>
+<!-- Stage 4 -->
+<div class="bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-purple to-pink-500"></div>
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="w-7 h-7 rounded-lg bg-purple-50 text-brand-purple flex items-center justify-center font-mono text-[12px] font-bold">04</span>
+<span class="text-[11px] font-mono font-semibold text-brand-purple bg-purple-50 px-2 py-0.5 rounded border border-purple-200">9~10차시</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-xl">🔮</span>
+<h3 class="font-bold text-[16px] text-brand-navy">예측 모델링</h3>
+</div>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                머신러닝 분류 모델을 학습·평가한 후, 신규 웨이퍼 로트 데이터의 양/불을 정밀 예측합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate font-medium">model.predict(new_lot)</span>
+<svg class="w-4 h-4 text-brand-purple group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. INTERACTIVE DEMO SANDBOX (Tabs: 1차시 변수, 2차시 리스트, 3차시 반복문, 5~10차시 Orange3) -->
+<section class="space-y-4" id="sandbox-preview">
+<div class="bg-brand-card rounded-2xl p-6 sm:p-8 border border-brand-border shadow-card">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-brand-border">
+<div>
+<div class="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold tracking-wider text-brand-blue uppercase">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                INTERACTIVE SCHEMATIC DEMO
+              </div>
+<h2 class="text-2xl font-bold tracking-tight text-brand-navy mt-0.5">
+                🎬 강의 자료 미리보기 — 실제로 이렇게 움직입니다
+              </h2>
+<p class="text-[13px] text-brand-slate mt-1">
+                코딩이 낯선 입문자도 직관적으로 작동 원리를 이해할 수 있는 정밀 구조 다이어그램이 수록되어 있습니다.
+              </p>
+</div>
+<!-- Interactive Switcher Buttons -->
+<div class="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+<button class="preview-tab-btn px-3 py-1.5 rounded-lg text-[12px] font-mono font-semibold bg-white text-brand-blue shadow-xs" id="tab-btn-var" onclick="switchPreviewTab('var')">
+                1차시·변수
+              </button>
+<button class="preview-tab-btn px-3 py-1.5 rounded-lg text-[12px] font-mono font-semibold text-brand-slate hover:text-brand-navy" id="tab-btn-list" onclick="switchPreviewTab('list')">
+                2차시·리스트
+              </button>
+<button class="preview-tab-btn px-3 py-1.5 rounded-lg text-[12px] font-mono font-semibold text-brand-slate hover:text-brand-navy" id="tab-btn-loop" onclick="switchPreviewTab('loop')">
+                3차시·반복문
+              </button>
+<button class="preview-tab-btn px-3 py-1.5 rounded-lg text-[12px] font-mono font-semibold text-brand-slate hover:text-brand-navy" id="tab-btn-orange" onclick="switchPreviewTab('orange')">
+                5~10차시·Orange3
+              </button>
+</div>
+</div>
+<!-- Tab 1: Variable Slot -->
+<div class="demo-pane pt-6" id="demo-pane-var">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-slate-50/70 p-6 rounded-xl border border-brand-border">
+<div class="lg:col-span-7 flex flex-col items-center justify-center p-6 bg-white rounded-xl border border-brand-border shadow-xs min-h-[200px]">
+<div class="flex items-center gap-4 sm:gap-8 w-full max-w-md justify-center">
+<!-- Source Constant -->
+<div class="flex flex-col items-center">
+<span class="font-mono text-[10px] text-brand-slate mb-1">DATA VALUE</span>
+<div class="w-16 h-16 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center font-mono font-bold text-2xl text-brand-blue shadow-xs">
+                      34
+                    </div>
+</div>
+<!-- Animated Assign Arrow -->
+<div class="flex-1 flex flex-col items-center px-2">
+<span class="font-mono text-[11px] text-brand-blue mb-1 font-semibold">ASSIGN (=)</span>
+<div class="w-full relative flex items-center">
+<div class="w-full h-1 bg-slate-200 rounded-full overflow-hidden">
+<div class="w-1/2 h-full bg-brand-blue rounded-full animate-pulse"></div>
+</div>
+<svg class="w-4 h-4 text-brand-blue -ml-1" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</div>
+<span class="font-mono text-[10px] text-brand-slate mt-1">Memory Bus</span>
+</div>
+<!-- Target Variable Slot -->
+<div class="flex flex-col items-center">
+<span class="font-mono text-[11px] text-brand-navy font-bold mb-1">pass_count</span>
+<div class="w-20 h-16 rounded-xl bg-blue-50/40 border-2 border-brand-blue border-dashed flex items-center justify-center font-mono font-bold text-2xl text-brand-blue">
+                      34
+                    </div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 space-y-3">
+<span class="inline-block text-[11px] font-mono px-2 py-0.5 rounded bg-white text-brand-blue font-bold border border-brand-border">1차시 핵심 메커니즘</span>
+<h4 class="text-lg font-bold text-brand-navy">변수(Variable) 메모리 할당</h4>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                  값 <code class="font-mono text-brand-blue bg-white px-1.5 py-0.5 rounded border border-brand-border">34</code>가 대입 연산자를 통해 <code class="font-mono text-brand-blue bg-white px-1.5 py-0.5 rounded border border-brand-border">pass_count</code>라는 이름의 메모리 슬롯에 저장되는 과정을 시각화하여 초보자의 추상적 두려움을 해소합니다.
+                </p>
+<a class="inline-flex items-center gap-1 font-mono text-[12px] text-brand-blue font-semibold hover:underline" href="#curriculum-section">
+                  1차시 강의 자료 보기 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+</div>
+<!-- Tab 2: List Indexing -->
+<div class="demo-pane hidden pt-6" id="demo-pane-list">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-slate-50/70 p-6 rounded-xl border border-brand-border">
+<div class="lg:col-span-7 flex flex-col items-center justify-center p-6 bg-white rounded-xl border border-brand-border shadow-xs min-h-[200px]">
+<div class="w-full">
+<div class="flex justify-between items-center mb-2 px-1 text-[11px] font-mono">
+<span class="text-brand-slate">chamber_temp_seq = [...]</span>
+<span class="text-brand-cyan font-bold">PEAK DETECTED: [2] = 312.6°C</span>
+</div>
+<div class="grid grid-cols-5 gap-2 text-center">
+<div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border">
+<span class="block font-mono text-[14px] text-brand-navy font-semibold">295.4</span>
+<span class="block font-mono text-[10px] text-brand-slate mt-1">[0]</span>
+</div>
+<div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border">
+<span class="block font-mono text-[14px] text-brand-navy font-semibold">298.1</span>
+<span class="block font-mono text-[10px] text-brand-slate mt-1">[1]</span>
+</div>
+<div class="p-2.5 rounded-lg bg-brand-cyan text-white shadow-glow-cyan">
+<span class="block font-mono text-[14px] font-bold">312.6</span>
+<span class="block font-mono text-[10px] text-cyan-100 mt-1">[2] PEAK</span>
+</div>
+<div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border">
+<span class="block font-mono text-[14px] text-brand-navy font-semibold">301.0</span>
+<span class="block font-mono text-[10px] text-brand-slate mt-1">[3]</span>
+</div>
+<div class="p-2.5 rounded-lg bg-slate-50 border border-brand-border">
+<span class="block font-mono text-[14px] text-brand-navy font-semibold">296.8</span>
+<span class="block font-mono text-[10px] text-brand-slate mt-1">[4]</span>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 space-y-3">
+<span class="inline-block text-[11px] font-mono px-2 py-0.5 rounded bg-white text-brand-cyan font-bold border border-brand-border">2차시 핵심 메커니즘</span>
+<h4 class="text-lg font-bold text-brand-navy">리스트 인덱싱 및 피크치 감지</h4>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                  5개 챔버의 실시간 온도 센서 리스트 데이터에서 가장 높은 이상 온도값 <code class="font-mono text-brand-cyan bg-white px-1.5 py-0.5 rounded border border-brand-border">312.6</code> 칸을 인덱스로 식별하고 추출하는 방식을 배웁니다.
+                </p>
+<a class="inline-flex items-center gap-1 font-mono text-[12px] text-brand-cyan font-semibold hover:underline" href="#curriculum-section">
+                  2차시 강의 자료 보기 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+</div>
+<!-- Tab 3: Loop Pointer -->
+<div class="demo-pane hidden pt-6" id="demo-pane-loop">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-slate-50/70 p-6 rounded-xl border border-brand-border">
+<div class="lg:col-span-7 flex flex-col items-center justify-center p-6 bg-white rounded-xl border border-brand-border shadow-xs min-h-[200px]">
+<div class="w-full space-y-3">
+<div class="flex items-center justify-between text-[11px] font-mono">
+<span class="text-brand-blue font-bold">for temp in chamber_temp_seq:</span>
+<span class="text-brand-emerald bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">STEP 3 of 5 (Inspecting)</span>
+</div>
+<div class="flex items-center justify-between gap-2">
+<div class="flex-1 p-2 rounded-lg bg-slate-100 text-center opacity-60">
+<span class="block font-mono text-[13px] text-brand-slate">295.4</span>
+<span class="text-[10px] font-mono text-slate-400">pass</span>
+</div>
+<div class="flex-1 p-2 rounded-lg bg-slate-100 text-center opacity-60">
+<span class="block font-mono text-[13px] text-brand-slate">298.1</span>
+<span class="text-[10px] font-mono text-slate-400">pass</span>
+</div>
+<div class="flex-1 p-2 rounded-lg bg-brand-blue text-white text-center shadow-glow-blue scale-105 transition-all">
+<span class="block font-mono text-[13px] font-bold">312.6</span>
+<span class="text-[10px] font-mono text-blue-200">▶ current</span>
+</div>
+<div class="flex-1 p-2 rounded-lg bg-white border border-brand-border text-center">
+<span class="block font-mono text-[13px] text-brand-slate">301.0</span>
+<span class="text-[10px] font-mono text-slate-400">pending</span>
+</div>
+<div class="flex-1 p-2 rounded-lg bg-white border border-brand-border text-center">
+<span class="block font-mono text-[13px] text-brand-slate">296.8</span>
+<span class="text-[10px] font-mono text-slate-400">pending</span>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 space-y-3">
+<span class="inline-block text-[11px] font-mono px-2 py-0.5 rounded bg-white text-brand-blue font-bold border border-brand-border">3차시 핵심 메커니즘</span>
+<h4 class="text-lg font-bold text-brand-navy">for 순회 포인터 및 결함 판정</h4>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                  파이썬의 <code class="font-mono text-brand-blue bg-white px-1.5 py-0.5 rounded border border-brand-border">for</code> 반복문이 반도체 로트 계측 데이터를 한 칸씩 순서대로 읽고 임계치(305.0°C)를 판정하는 루프를 추적합니다.
+                </p>
+<a class="inline-flex items-center gap-1 font-mono text-[12px] text-brand-blue font-semibold hover:underline" href="#curriculum-section">
+                  3차시 강의 자료 보기 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+</div>
+<!-- Tab 4: Orange3 Pipeline -->
+<div class="demo-pane hidden pt-6" id="demo-pane-orange">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-slate-50/70 p-6 rounded-xl border border-brand-border">
+<div class="lg:col-span-7 flex flex-col items-center justify-center p-6 bg-white rounded-xl border border-brand-border shadow-xs min-h-[200px]">
+<div class="flex items-center justify-center gap-3 w-full max-w-lg">
+<div class="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-brand-border text-center min-w-[90px]">
+<span class="text-2xl mb-1">📁</span>
+<span class="font-bold text-[13px] text-brand-navy">File</span>
+<span class="font-mono text-[10px] text-brand-slate">fab_lot.csv</span>
+</div>
+<svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+<div class="flex flex-col items-center p-3 rounded-xl bg-slate-50 border border-brand-border text-center min-w-[90px]">
+<span class="text-2xl mb-1">🧩</span>
+<span class="font-bold text-[13px] text-brand-navy">Box Plot</span>
+<span class="font-mono text-[10px] text-brand-slate">이상치 탐지</span>
+</div>
+<svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+<div class="flex flex-col items-center p-3 rounded-xl bg-amber-500 text-white shadow-sm text-center min-w-[90px]">
+<span class="text-2xl mb-1">📊</span>
+<span class="font-bold text-[13px]">Scatter</span>
+<span class="font-mono text-[10px] text-amber-100">온도 vs 수율</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 space-y-3">
+<span class="inline-block text-[11px] font-mono px-2 py-0.5 rounded bg-white text-amber-600 font-bold border border-brand-border">5~10차시 노코드 실습</span>
+<h4 class="text-lg font-bold text-brand-navy">Orange3 GUI 기반 선험적 EDA</h4>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                  복잡한 코드를 먼저 작성하기 전에, 위젯 연결만으로 웨이퍼 결함 분포를 직관적으로 먼저 체득한 뒤 Python 코드로 전환합니다.
+                </p>
+<a class="inline-flex items-center gap-1 font-mono text-[12px] text-amber-600 font-semibold hover:underline" href="#guides-section">
+                  Orange3 가이드 부록 보기 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. 10-LECTURE COMPREHENSIVE CURRICULUM ROADMAP -->
+<section class="space-y-5" id="curriculum-section">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 font-mono text-[11px] font-bold tracking-wider text-brand-blue uppercase">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+              FULL SYLLABUS SCHEDULE
+            </div>
+<h2 class="text-2xl font-bold tracking-tight text-brand-navy mt-0.5">
+              📅 10차시 전체 커리큘럼
+            </h2>
+</div>
+<!-- Filter Pill Tabs -->
+<div class="flex flex-wrap items-center gap-1.5 bg-brand-card p-1.5 rounded-xl border border-brand-border shadow-xs">
+<button class="filter-pill px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold bg-brand-blue text-white shadow-xs" id="filter-btn-all" onclick="filterCurriculum('all')">
+              전체 보기 (All)
+            </button>
+<button class="filter-pill px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold text-brand-slate hover:text-brand-navy" id="filter-btn-part1" onclick="filterCurriculum('part1')">
+              1부: 첫걸음 (1~3)
+            </button>
+<button class="filter-pill px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold text-brand-slate hover:text-brand-navy" id="filter-btn-part2" onclick="filterCurriculum('part2')">
+              2부: 다루기 (4~6)
+            </button>
+<button class="filter-pill px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold text-brand-slate hover:text-brand-navy" id="filter-btn-part3" onclick="filterCurriculum('part3')">
+              3부: 원인탐색 (7~8)
+            </button>
+<button class="filter-pill px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold text-brand-slate hover:text-brand-navy" id="filter-btn-part4" onclick="filterCurriculum('part4')">
+              4부: 머신러닝 (9~10)
+            </button>
+</div>
+</div>
+<!-- Curriculum Cards Grid (10 Lectures) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+<!-- LECTURE 1 -->
+<div class="curriculum-card part-1 bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 mb-2">
+<span class="font-mono text-[11px] font-bold text-brand-blue bg-blue-50 px-2 py-0.5 rounded border border-blue-100">1차시 · 1부</span>
+<span class="font-mono text-[11px] text-brand-navy bg-slate-100 px-2 py-0.5 rounded font-semibold">● Python Code</span>
+</div>
+<h3 class="font-bold text-[15px] text-brand-navy mt-1">
+                반도체 공정과 데이터 처음 만나기 + 변수·출력
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed">
+                반도체·웨이퍼·칩·FAB 기본 개념 이해. 데이터 분석이 필요한 공학적 배경과 파이썬 변수 선언, 출력 및 f-string 기초를 습득합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate">print(f"Yield: {y}%")</span>
+<a class="font-mono text-[11px] text-brand-blue font-bold hover:underline flex items-center gap-0.5" href="#">
+                강의 자료 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- LECTURE 2 -->
+<div class="curriculum-card part-1 bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 mb-2">
+<span class="font-mono text-[11px] font-bold text-brand-blue bg-blue-50 px-2 py-0.5 rounded border border-blue-100">2차시 · 1부</span>
+<span class="font-mono text-[11px] text-brand-navy bg-slate-100 px-2 py-0.5 rounded font-semibold">● Python Code</span>
+</div>
+<h3 class="font-bold text-[15px] text-brand-navy mt-1">
+                리스트와 딕셔너리
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed">
+                웨이퍼별 연속 계측 센서 값을 리스트에 담아 인덱싱하고, 센서 이름표와 메타데이터를 딕셔너리로 체계적으로 구조화합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate">{"chamber": "A1", "temp": 300}</span>
+<a class="font-mono text-[11px] text-brand-blue font-bold hover:underline flex items-center gap-0.5" href="#">
+                강의 자료 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- LECTURE 3 -->
+<div class="curriculum-card part-1 bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 mb-2">
+<span class="font-mono text-[11px] font-bold text-brand-blue bg-blue-50 px-2 py-0.5 rounded border border-blue-100">3차시 · 1부</span>
+<span class="font-mono text-[11px] text-brand-navy bg-slate-100 px-2 py-0.5 rounded font-semibold">● Python Code</span>
+</div>
+<h3 class="font-bold text-[15px] text-brand-navy mt-1">
+                리스트·딕셔너리로 배우는 조건문·반복문·함수
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed">
+<code class="font-mono text-[12px] text-brand-blue">if</code> 조건문으로 불량 칩 판정, <code class="font-mono text-[12px] text-brand-blue">for</code> 반복문으로 로트 전수 검사, 재사용 가능한 공정 수율 계산 함수를 제작합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate">def check_pass(val):</span>
+<a class="font-mono text-[11px] text-brand-blue font-bold hover:underline flex items-center gap-0.5" href="#">
+                강의 자료 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- LECTURE 4 -->
+<div class="curriculum-card part-2 bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 mb-2">
+<span class="font-mono text-[11px] font-bold text-brand-cyan bg-cyan-50 px-2 py-0.5 rounded border border-cyan-100">4차시 · 2부</span>
+<span class="font-mono text-[11px] text-brand-navy bg-slate-100 px-2 py-0.5 rounded font-semibold">● Python Code</span>
+</div>
+<h3 class="font-bold text-[15px] text-brand-navy mt-1">
+                Pandas 가장 기본적인 부분
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed">
+<code class="font-mono text-[12px] text-brand-cyan">read_csv()</code>로 수천 행의 공정 데이터를 불러와 원하는 컬럼 선택, 조건 필터링, 정렬로 핵심 데이터만을 신속히 추출합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate">df[df['temp'] &gt; 310]</span>
+<a class="font-mono text-[11px] text-brand-cyan font-bold hover:underline flex items-center gap-0.5" href="#">
+                강의 자료 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- LECTURE 5 -->
+<div class="curriculum-card part-2 bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 mb-2">
+<span class="font-mono text-[11px] font-bold text-brand-cyan bg-cyan-50 px-2 py-0.5 rounded border border-cyan-100">5차시 · 2부</span>
+<span class="font-mono text-[11px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded font-semibold border border-amber-200">🟠 Orange3 + 🐍 Code</span>
+</div>
+<h3 class="font-bold text-[15px] text-brand-navy mt-1">
+                데이터 훑어보기와 정리(EDA)
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed">
+                Orange3 위젯으로 결측값·센서 노이즈를 육안으로 탐색한 후, Pandas 정제 함수로 결측치 대체 및 이상치를 제거합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate">df.fillna(df.median())</span>
+<a class="font-mono text-[11px] text-brand-cyan font-bold hover:underline flex items-center gap-0.5" href="#">
+                강의 자료 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- LECTURE 6 -->
+<div class="curriculum-card part-2 bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 mb-2">
+<span class="font-mono text-[11px] font-bold text-brand-cyan bg-cyan-50 px-2 py-0.5 rounded border border-cyan-100">6차시 · 2부</span>
+<span class="font-mono text-[11px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded font-semibold border border-amber-200">🟠 Orange3 + 🐍 Code</span>
+</div>
+<h3 class="font-bold text-[15px] text-brand-navy mt-1">
+                그래프로 공정 상태 이해하기
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed">
+                Orange3로 박스플롯을 빠르게 점검한 뒤, Matplotlib 및 Seaborn 코드로 공정 산점도, 히스토그램, 챔버별 편차 차트를 완성합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate">sns.boxplot(x='chamber')</span>
+<a class="font-mono text-[11px] text-brand-cyan font-bold hover:underline flex items-center gap-0.5" href="#">
+                강의 자료 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- LECTURE 7 -->
+<div class="curriculum-card part-3 bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 mb-2">
+<span class="font-mono text-[11px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">7차시 · 3부</span>
+<span class="font-mono text-[11px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded font-semibold border border-amber-200">🟠 Orange3 + 🐍 Code</span>
+</div>
+<h3 class="font-bold text-[15px] text-brand-navy mt-1">
+                설비·공정 비교와 수율·불량 분석
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed">
+                설비 라인별 생산성 편차를 Orange3로 1차 탐색하고, Pandas의 <code class="font-mono text-[12px] text-amber-600">groupby()</code>를 활용해 설비별 수율, 불량률 및 파레토 분석을 수행합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate">df.groupby('tool')['yield'].mean()</span>
+<a class="font-mono text-[11px] text-amber-600 font-bold hover:underline flex items-center gap-0.5" href="#">
+                강의 자료 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- LECTURE 8 -->
+<div class="curriculum-card part-3 bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 mb-2">
+<span class="font-mono text-[11px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">8차시 · 3부</span>
+<span class="font-mono text-[11px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded font-semibold border border-amber-200">🟠 Orange3 + 🐍 Code</span>
+</div>
+<h3 class="font-bold text-[15px] text-brand-navy mt-1">
+                공정 이상과 원인 후보 찾기
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed">
+                Orange3 Correlations 위젯을 통해 변수 간 관계를 관찰한 뒤, 상관계수 히트맵을 코드로 작성해 수율 하락을 유발한 근본 인자를 특정합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate">sns.heatmap(df.corr())</span>
+<a class="font-mono text-[11px] text-amber-600 font-bold hover:underline flex items-center gap-0.5" href="#">
+                강의 자료 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- LECTURE 9 -->
+<div class="curriculum-card part-4 bg-brand-card rounded-xl p-5 border border-brand-border shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 mb-2">
+<span class="font-mono text-[11px] font-bold text-brand-purple bg-purple-50 px-2 py-0.5 rounded border border-purple-200">9차시 · 4부</span>
+<span class="font-mono text-[11px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded font-semibold border border-amber-200">🟠 Orange3 + 🐍 Code</span>
+</div>
+<h3 class="font-bold text-[15px] text-brand-navy mt-1">
+                머신러닝 예측 모델 만들기
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed">
+                Orange3 예측 위젯으로 모델 가능성을 가늠한 후, scikit-learn 분류기(Random Forest/Logistic Regression)를 파이썬 코드로 직접 훈련시킵니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+<span class="font-mono text-[11px] text-brand-slate">clf.fit(X_train, y_train)</span>
+<a class="font-mono text-[11px] text-brand-purple font-bold hover:underline flex items-center gap-0.5" href="#">
+                강의 자료 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+<!-- LECTURE 10 (Standout Capstone Card) -->
+<div class="curriculum-card part-4 bg-brand-card rounded-xl p-6 border-2 border-brand-blue/30 shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between md:col-span-2 lg:col-span-3 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/10 rounded-full blur-2xl pointer-events-none"></div>
+<div>
+<div class="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] font-bold text-brand-purple bg-purple-50 px-2.5 py-0.5 rounded border border-purple-200">10차시 · 최종 종합</span>
+<span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-brand-cyan text-white shadow-xs">CAPSTONE PREDICTION</span>
+</div>
+<span class="font-mono text-[11px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded font-semibold border border-amber-200">🟠 Orange3 + 🐍 Code</span>
+</div>
+<h3 class="text-xl font-bold text-brand-navy mt-1">
+                모델 평가와 새 데이터 예측 (실전 웨이퍼 로트 종합 배포)
+              </h3>
+<p class="text-[13px] text-brand-slate mt-2 leading-relaxed max-w-4xl">
+                학습 완료된 모델의 혼동 행렬(Confusion Matrix)과 F1-Score를 평가하고, 신규 유입되는 가상 반도체 로트 데이터에 <code class="font-mono text-[12px] text-brand-blue bg-slate-100 px-1.5 py-0.5 rounded">predict()</code>를 적용합니다. Orange3 Predictions 위젯 결과와 상호 대조하며 데이터 사이언스 전 과정을 완벽히 정리합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border flex flex-wrap items-center justify-between gap-3">
+<span class="font-mono text-[12px] text-brand-blue font-bold">y_pred = model.predict(new_fab_lot)</span>
+<a class="px-4 py-2 rounded-lg bg-brand-blue hover:bg-brand-blueHover text-white font-semibold text-[13px] shadow-sm transition-all inline-flex items-center gap-1.5" href="#">
+                최종 강의 열기 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. GUIDES & RESOURCES SECTION -->
+<section class="space-y-4" id="guides-section">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-brand-blue/10 text-brand-blue flex items-center justify-center">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+</div>
+<h2 class="text-2xl font-bold tracking-tight text-brand-navy">
+            이 과정 사용 방법 &amp; 가이드
+          </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- Learner Guide -->
+<div class="bg-brand-card rounded-xl p-5 border border-brand-border shadow-card flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="p-2 rounded-lg bg-blue-50 text-brand-blue">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+</span>
+<h3 class="font-bold text-[15px] text-brand-navy">학습자용 가이드</h3>
+</div>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                매 차시 카드의 강의 자료를 정독한 후, <code class="font-mono text-[11px] text-brand-blue bg-slate-100 px-1 py-0.5 rounded">notebooks/student/</code>의 Notebook을 Google Colab에서 직접 코딩하세요. 차시별 실습지와 퀴즈로 이해도를 점검합니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border">
+<a class="font-mono text-[12px] text-brand-blue font-semibold hover:underline inline-flex items-center gap-1" href="#">
+                Colab 실습지 다운로드 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+</a>
+</div>
+</div>
+<!-- Instructor Guide -->
+<div class="bg-brand-card rounded-xl p-5 border border-brand-border shadow-card flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="p-2 rounded-lg bg-purple-50 text-brand-purple">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
+</span>
+<h3 class="font-bold text-[15px] text-brand-navy">강사용 가이드</h3>
+</div>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                차시 폴더의 <code class="font-mono text-[11px] text-brand-purple bg-slate-100 px-1 py-0.5 rounded">instructor-guide.md</code>에 수업 진행 팁과 수강생 Q&amp;A 모범 답안이 정리되어 있습니다. 시연용 솔루션 코드가 함께 제공됩니다.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border">
+<a class="font-mono text-[12px] text-brand-purple font-semibold hover:underline inline-flex items-center gap-1" href="#">
+                강사용 매뉴얼 열람 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"></path><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"></path></svg>
+</a>
+</div>
+</div>
+<!-- Orange3 Tool Guide -->
+<div class="bg-brand-card rounded-xl p-5 border border-brand-border shadow-card flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="p-2 rounded-lg bg-amber-50 text-amber-600">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="7" width="7" x="3" y="3"></rect><rect height="7" width="7" x="14" y="3"></rect><rect height="7" width="7" x="14" y="14"></rect><rect height="7" width="7" x="3" y="14"></rect></svg>
+</span>
+<h3 class="font-bold text-[15px] text-brand-navy">Orange3 처음이라면</h3>
+</div>
+<p class="text-[13px] text-brand-slate leading-relaxed">
+                5~10차시에서 반복 활용하는 노코드 데이터 도구 Orange3의 1분 설치법과 위젯 연결 튜토리얼을 <strong class="text-brand-navy">부록: Orange3 시작하기</strong>에서 한눈에 확인하세요.
+              </p>
+</div>
+<div class="mt-4 pt-3 border-t border-brand-border">
+<a class="font-mono text-[12px] text-amber-600 font-semibold hover:underline inline-flex items-center gap-1" href="#">
+                Orange3 부록 매뉴얼 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. BOTTOM ACTION STEPPER -->
+<section class="pt-2">
+<div class="bg-brand-card rounded-2xl p-6 border border-brand-border shadow-card flex flex-wrap items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 font-mono text-[11px] text-brand-slate">
+<span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
+<span>READY TO INSPECT SEMICONDUCTOR FAB DATA?</span>
+</div>
+<p class="text-[14px] font-bold text-brand-navy mt-0.5">반도체 공정 데이터 분석의 모든 것, 지금 시작해보세요.</p>
+</div>
+<div class="flex items-center gap-2.5">
+<a class="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-brand-navy border border-brand-border font-medium text-[13px] shadow-xs transition-colors" href="#curriculum-section">
+              ← 1차시 강의
+            </a>
+<a class="px-5 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-blueHover text-white font-semibold text-[13px] shadow-glow-blue transition-all inline-flex items-center gap-1.5" href="#curriculum-section">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              1차시부터 시작하기
+            </a>
+<a class="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-brand-navy border border-brand-border font-medium text-[13px] shadow-xs transition-colors" href="#curriculum-section">
+              10차시 미리보기 →
+            </a>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- PROFESSIONAL SEMICONDUCTOR CONSORTIUM FOOTER -->
+<footer class="w-full bg-white border-t border-brand-border py-12 mt-12">
+<div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-brand-border">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-brand-navy text-white flex items-center justify-center">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<rect height="16" rx="2" width="16" x="4" y="4"></rect>
+<rect height="6" width="6" x="9" y="9"></rect>
+<path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path>
+</svg>
+</div>
+<div>
+<div class="font-bold text-[15px] text-brand-navy">반도체 공정 데이터 분석 교육 포털</div>
+<p class="text-[12px] text-brand-slate">공정 엔지니어 및 데이터 사이언스 입문자를 위한 체계적인 반도체 실습 허브</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-4 font-mono text-[12px] text-brand-slate">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
+            Fab Telemetry Online
+          </span>
+<span class="text-brand-border">|</span>
+<span>Dataset: <strong class="text-brand-navy">v2.4-cleanroom</strong></span>
+<span class="text-brand-border">|</span>
+<span class="text-brand-cyan font-semibold">Ready for Colab &amp; Orange3</span>
+</div>
+</div>
+<div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-brand-slate">
+<p>© 2025 반도체 데이터 분석 교육 위원회 (Semiconductor Data Engineering Consortium). All rights reserved.</p>
+<div class="flex items-center gap-4">
+<a class="hover:text-brand-navy transition-colors" href="#">운영 가이드</a>
+<span>·</span>
+<a class="hover:text-brand-navy transition-colors" href="#">학습 윤리 규약</a>
+<span>·</span>
+<a class="hover:text-brand-navy transition-colors" href="#">데이터 라이선스</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- SCRIPT FOR TAB SWITCHING & CURRICULUM FILTERING -->
+<script>
+    function switchPreviewTab(tabId) {
+      document.querySelectorAll('.demo-pane').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.preview-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'text-brand-blue', 'shadow-xs');
+        btn.classList.add('text-brand-slate');
+      });
+
+      const targetPane = document.getElementById('demo-pane-' + tabId);
+      const targetBtn = document.getElementById('tab-btn-' + tabId);
+      if (targetPane) targetPane.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.classList.add('bg-white', 'text-brand-blue', 'shadow-xs');
+        targetBtn.classList.remove('text-brand-slate');
+      }
+    }
+
+    function filterCurriculum(part) {
+      const cards = document.querySelectorAll('.curriculum-card');
+      const buttons = document.querySelectorAll('.filter-pill');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-brand-blue', 'text-white', 'shadow-xs');
+        btn.classList.add('text-brand-slate');
+      });
+
+      const activeBtn = document.getElementById('filter-btn-' + part);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-brand-blue', 'text-white', 'shadow-xs');
+        activeBtn.classList.remove('text-brand-slate');
+      }
+
+      cards.forEach(card => {
+        if (part === 'all') {
+          card.classList.remove('hidden');
+        } else if (part === 'part1' && card.classList.contains('part-1')) {
+          card.classList.remove('hidden');
+        } else if (part === 'part2' && card.classList.contains('part-2')) {
+          card.classList.remove('hidden');
+        } else if (part === 'part3' && card.classList.contains('part-3')) {
+          card.classList.remove('hidden');
+        } else if (part === 'part4' && card.classList.contains('part-4')) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+</body></html>

@@ -512,6 +512,66 @@ for eq, rate in pass_rate.items():
   </section>
 
   <section class="block">
+    <h2>🟣 연습문제 — 불량 유형별 비율(%) 계산하기</h2>
+    <p>앞서 <code>value_counts()</code>로 센 불량유형 개수(<code>defect_counts</code>)를 전체
+    대비 비율(%)로 바꿔 파레토 관점을 한 번 더 연습해보자.</p>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      <code>defect_counts</code>의 각 값을 전체 합계로 나누고 100을 곱해 백분율로 바꿔보자.
+      (힌트: 합계를 구하는 메서드 이름을 떠올려보자.)
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">defect_pct = (defect_counts / defect_counts.sum() * 100).round(1)
+print(defect_pct)</pre>
+      실행 결과(약): <code>두께 불량 30.6%, 패턴 불량 16.7%, 파티클 13.9%, 오염 13.9%,
+      정렬 불량 11.1%, 식각 부족 11.1%, 전기적 특성 불량 2.8%</code> — 개수로 볼 때와 마찬가지로
+      "두께 불량"이 전체 불량의 약 31%를 차지하는 가장 큰 원인 후보임을 비율로도 확인할 수 있다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 설비 랭킹 발표 프로그램</h2>
+    <div class="callout concept">
+      <b class="tag">오늘의 미니 프로젝트</b>
+      오늘 계산한 <code>pass_rate</code>(설비별 합격률)로, 실행하면 재미를 느낄 수 있는 나만의
+      프로그램을 AI에게 만들어달라고 요청해보자.
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      "설비 이름과 합격률이 담긴 데이터를 받아서, 합격률이 높은 순서로 정렬한 뒤 1~3등에게
+      🥇🥈🥉 메달 이모지를 붙여 시상식처럼 발표하는 파이썬 코드를 만들어줘."
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
+      <pre><code>ranked = pass_rate.sort_values(ascending=False)
+medals = ["🥇", "🥈", "🥉"]
+
+print("🏆 설비 합격률 랭킹 발표 🏆")
+for i, (name, rate) in enumerate(ranked.items()):
+    medal = medals[i] if i < 3 else "  "
+    print(f"{medal} {i+1}위: {name} — 합격률 {rate:.1f}%")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">🏆 설비 합격률 랭킹 발표 🏆
+🥇 1위: EQ-01 — 합격률 98.1%
+🥈 2위: EQ-03 — 합격률 91.1%
+🥉 3위: EQ-02 — 합격률 86.5%
+   4위: EQ-04 — 합격률 75.0%</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">더 놀아보기</b>
+      <ul class="pt-list">
+        <li>메달 대신 등수별로 다른 응원 메시지를 붙여달라고 요청해보자.</li>
+        <li>꼴찌 설비에게는 "분발이 필요해요" 같은 문구를 추가해달라고 AI에게 다시 요청해보자.</li>
+        <li><code>sort_values()</code>, <code>enumerate()</code>처럼 아직 배우지 않은 표현이
+          나올 수 있다 — 지금은 "이런 것도 있구나" 정도로 구경하면 충분하다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
     <ul class="pt-list">
       <li>에디터 파일 하나에 순서대로 작성, 각 결과를 확인할 수 있게 만들어 제출</li>

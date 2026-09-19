@@ -500,6 +500,79 @@ print(f"재현율: {recall_score(y_true, y_pred):.2f}")</code></pre>
   </section>
 
   <section class="block">
+    <h2>🟣 연습문제 — 나무 깊이(max_depth) 바꿔보기</h2>
+    <p>지금까지는 <code>max_depth=4</code>로 고정한 모델만 살펴봤다. 나무 깊이(<code>max_depth</code>)를
+    2와 8로 각각 바꿔서 다시 학습시키면 정확도가 어떻게 달라지는지 비교해보자.</p>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      앞서 만든 <code>X_train</code>, <code>X_test</code>, <code>y_train</code>, <code>y_test</code>를
+      그대로 사용해, <code>max_depth=2</code>와 <code>max_depth=8</code>인 모델을 각각 새로
+      학습시키고 정확도를 비교해보자.
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">model_shallow = DecisionTreeClassifier(max_depth=2, random_state=42)
+model_shallow.fit(X_train, y_train)
+acc_shallow = accuracy_score(y_test, model_shallow.predict(X_test))
+
+model_deep = DecisionTreeClassifier(max_depth=8, random_state=42)
+model_deep.fit(X_train, y_train)
+acc_deep = accuracy_score(y_test, model_deep.predict(X_test))
+
+print(f"max_depth=2 정확도: {acc_shallow:.1%}")
+print(f"max_depth=8 정확도: {acc_deep:.1%}")</pre>
+      실행 결과 예시: <code>max_depth=2 정확도: 78.9%</code> / <code>max_depth=8 정확도: 75.5%</code>.
+      나무가 너무 얕으면(2) 패턴을 충분히 못 잡아 과소적합(underfitting)될 수 있고, 너무
+      깊으면(8) 학습 데이터에 지나치게 맞춰져 과대적합(overfitting)될 수 있다는 트레이드오프를
+      보여주는 결과다. 다만 이는 이 데이터에서 관찰된 경향일 뿐, depth나 데이터가 달라지면
+      순서가 바뀔 수도 있다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 합격 예측 미니 데모</h2>
+    <div class="callout concept">
+      <b class="tag">오늘의 미니 프로젝트</b>
+      오늘 학습시킨 분류 모델(<code>model</code>)과 특징 이름 리스트(<code>feature_cols</code>)를
+      그대로 활용해, 새로운 값 하나를 넣으면 합격/불합격을 재미있게 알려주는 미니 프로그램을
+      AI에게 만들어달라고 요청해보자.
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      "학습된 분류 모델(model)과 특징 이름 리스트(feature_cols)가 있을 때, 새로운 값 하나를
+      입력받아 데이터프레임 한 행으로 만들고 model.predict()로 합격/불합격을 재미있게
+      알려주는 파이썬 코드를 만들어줘."
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
+      <pre><code>sample = pd.DataFrame([{
+    "온도_섭씨": 301.5, "압력_Pa": 1010.0, "가스유량_slm": 52.0,
+    "두께_nm": 120.5, "진공도_mTorr": 5.0, "습도_pct": 45.0,
+}])  # 실제로는 input()으로 각 값을 하나씩 입력받아도 좋습니다.
+
+result = model.predict(sample[feature_cols])[0]
+if result == 0:
+    print("🎉 합격일 것 같아요!")
+else:
+    print("⚠️ 불합격 위험이 있어요, 공정을 다시 확인해보세요.")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">🎉 합격일 것 같아요!</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">더 놀아보기</b>
+      <ul class="pt-list">
+        <li><code>sample</code> 값을 바꿔가며 예측이 어떻게 달라지는지 실험해보자.</li>
+        <li>"<code>predict_proba()</code>로 합격/불합격 확률까지 같이 보여주는 코드로
+          바꿔줘"처럼 추가로 요청해보자 — 확률 예측은 10차시에서 자세히 다룬다.</li>
+        <li>모델이 새로운 값 하나로 바로 예측할 수 있는 것은, 이미 <code>model.fit()</code>으로
+          학습이 끝났기 때문이다 — 모델을 다시 학습시킬 필요는 없다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
     <ul class="pt-list">
       <li>아래 과제를 에디터 파일 하나에 순서대로 작성하고, 각 결과를 확인할 수 있게 만들어 제출</li>

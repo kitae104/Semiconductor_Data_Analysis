@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-error-container":"#93000a","on-primary-fixed":"#00174b","tertiary":"#6a1edb","error":"#ba1a1a","tertiary-fixed":"#eaddff","surface-dim":"#d2d9f4","on-primary-container":"#eeefff","on-surface-variant":"#434655","surface-bright":"#faf8ff","on-secondary":"#ffffff","inverse-surface":"#283044","primary-container":"#2563eb","secondary-fixed-dim":"#4cd7f6","surface-container-lowest":"#ffffff","outline":"#737686","on-secondary-fixed-variant":"#004e5c","tertiary-fixed-dim":"#d2bbff","secondary-container":"#57dffe","secondary-fixed":"#acedff","inverse-on-surface":"#eef0ff","tertiary-container":"#8343f4","surface":"#faf8ff","primary-fixed-dim":"#b4c5ff","on-background":"#131b2e","outline-variant":"#c3c6d7","surface-container-highest":"#dae2fd","on-error":"#ffffff","secondary":"#00687a","primary":"#004ac6","primary-fixed":"#dbe1ff","surface-tint":"#0053db","on-tertiary-fixed-variant":"#5a00c6","error-container":"#ffdad6","on-tertiary-fixed":"#25005a","on-tertiary-container":"#f7edff","on-primary":"#ffffff","surface-container":"#eaedff","on-primary-fixed-variant":"#003ea8","on-tertiary":"#ffffff","on-surface":"#131b2e","background":"#faf8ff","surface-container-low":"#f2f3ff","surface-variant":"#dae2fd","surface-container-high":"#e2e7ff","inverse-primary":"#b4c5ff","on-secondary-container":"#006172","on-secondary-fixed":"#001f26"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xl":"2rem","margin-lg":"2rem","space-lg":"1.5rem","space-sm":"0.5rem","margin-md":"1.5rem","margin":"1rem","gutter-lg":"1.5rem","gutter":"1rem","space-xs":"0.25rem","space-md":"1rem"},"fontFamily":{"headline-xl-mobile":["Inter"],"headline-lg":["Inter"],"body-lg":["Inter"],"mono-sm":["JetBrains Mono"],"headline-md":["Inter"],"headline-xl":["Inter"],"label-md":["Inter"],"body-md":["Inter"],"mono-data":["JetBrains Mono"],"body-sm":["Inter"]},"fontSize":{"headline-xl-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"mono-sm":["11px",{"lineHeight":"14px","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"mono-data":["13px",{"lineHeight":"18px","letterSpacing":"-0.01em","fontWeight":"500"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-gutter-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">memory</span></div><div class="flex flex-col"><span class="font-label-md text-label-md tracking-wider text-primary uppercase">FAB-SPEC v2.4</span><span class="font-body-md text-body-md font-semibold text-on-surface whitespace-nowrap">반도체 데이터 분석 과정</span></div></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-surface-container-high text-primary font-semibold rounded-lg"><a class="px-space-sm py-space-xs rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="entire-curriculum" href="#">전체 커리큘럼</a><a aria-current="page" class="px-space-sm py-space-xs transition-colors bg-surface-container-high text-primary font-semibold rounded-lg" data-path="lesson-1-intro" href="#">1차시: 반도체 공정과 데이터 처음 만나기</a><a class="px-space-sm py-space-xs rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="learning-summary" href="#">학습 요약</a><a class="px-space-sm py-space-xs rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="practice-colab-code" href="#">실습 코드(Colab)</a><a class="px-space-sm py-space-xs rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="quiz-worksheet" href="#">퀴즈 & 워크시트</a></nav></div><div class="flex items-center gap-space-sm"><a class="hidden sm:inline-flex items-center gap-space-xs px-space-sm py-space-xs rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" href="https://colab.research.google.com" target="_blank"><span class="material-symbols-outlined text-[16px] text-secondary">terminal</span>Google Colab 바로가기</a><a class="hidden md:inline-flex items-center gap-space-xs px-space-sm py-space-xs rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" href="https://github.com" target="_blank"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">code</span>Github</a><a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" data-path="lesson-2-preview" href="#">다음 2차시 →</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-[calc(100vh-16rem)]"><div class="flex flex-col w-full font-body-md text-on-surface">
+<section class="w-full bg-surface-container-lowest shadow-sm">
+<div class="max-w-7xl mx-auto px-gutter-lg py-space-xl">
+<nav class="flex items-center gap-space-xs text-body-sm font-body-sm text-outline mb-space-md">
+<a class="hover:text-primary transition-colors flex items-center gap-1" data-path="entire-curriculum" href="#">
+<span class="material-symbols-outlined text-[16px]">home</span> 홈
+        </a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface-variant">1부. 첫걸음: 개념과 파이썬 기초</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-semibold text-primary">1차시: 반도체 공정과 데이터 처음 만나기</span>
+</nav>
+<div class="flex flex-wrap items-center gap-space-xs mb-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded bg-primary-fixed text-on-primary-fixed font-mono-sm text-mono-sm font-semibold uppercase tracking-wider">
+          1차시 / 총 10차시
+        </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container font-label-md text-label-md text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          난이도: 입문 (Beginner)
+        </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container font-mono-sm text-mono-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+          실습 환경: Python 3.11+ / Google Colab
+        </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container font-mono-sm text-mono-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+          예상 소요시간: 50분
+        </span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<div class="lg:col-span-8 flex flex-col">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight mb-space-sm">
+            1차시. 반도체 공정과 데이터 처음 만나기 <span class="text-primary">+</span> 변수·출력
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed mb-space-lg">
+            반도체 8대 공정의 흐름과 왜 데이터 분석이 수율(Yield) 향상에 핵심인지 이해하고, 파이썬 변수(Variable) 선언, 콘솔 출력(print), f-string 포맷팅을 팹 센서 텔레메트리 데이터를 통해 체득합니다.
+          </p>
+<div class="flex flex-wrap items-center gap-space-sm">
+<a class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-xl bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-all shadow-sm" href="https://colab.research.google.com" target="_blank">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+              Google Colab 실습 노트북 열기
+            </a>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-xl bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">download</span>
+              실습 워크시트 PDF 다운로드
+            </button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" id="completeCheckBtn" onclick="toggleCompletion()" type="button">
+<span class="material-symbols-outlined text-[18px]" id="completeIcon">check_circle</span>
+<span id="completeText">차시 완료 체크</span>
+</button>
+</div>
+</div>
+<div class="lg:col-span-4 bg-surface-container-low rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-xs mb-space-sm">
+<span class="font-label-md text-label-md text-primary uppercase tracking-wider font-semibold">팹 공정 진단 요약</span>
+<span class="font-mono-sm text-mono-sm px-2 py-0.5 rounded bg-surface-container text-secondary font-semibold">RUN-LOT #0882</span>
+</div>
+<div class="space-y-space-xs font-mono-sm text-mono-sm">
+<div class="flex justify-between items-center py-1 bg-surface-container-lowest px-2.5 rounded">
+<span class="text-on-surface-variant font-medium">대상 공정 (Target Step)</span>
+<span class="font-bold text-on-surface">플라즈마 식각 (Dry Etch)</span>
+</div>
+<div class="flex justify-between items-center py-1 bg-surface-container-lowest px-2.5 rounded">
+<span class="text-on-surface-variant font-medium">실시간 챔버 온도</span>
+<span class="font-bold text-primary">310.45 °C</span>
+</div>
+<div class="flex justify-between items-center py-1 bg-surface-container-lowest px-2.5 rounded">
+<span class="text-on-surface-variant font-medium">웨이퍼 다이(Die) 밀집도</span>
+<span class="font-bold text-on-surface">3,420 ea / 300mm</span>
+</div>
+<div class="flex justify-between items-center py-1 bg-surface-container-lowest px-2.5 rounded">
+<span class="text-on-surface-variant font-medium">변수 할당 검증</span>
+<span class="font-semibold text-secondary flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> 4 SLOTS OK
+              </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="max-w-7xl mx-auto px-gutter-lg py-space-xl space-y-space-xl w-full">
+<section>
+<div class="flex items-center gap-2 mb-space-md">
+<span class="material-symbols-outlined text-primary text-[22px]">target</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">3대 핵심 학습 목표</h2>
+<span class="font-mono-sm text-mono-sm text-outline ml-space-xs uppercase tracking-wider">Learning Outcomes</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200">
+<div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary mb-space-md">
+<span class="material-symbols-outlined text-[24px]">radio_button_checked</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-secondary uppercase font-semibold">OUTCOME 01</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1 mb-space-xs">웨이퍼와 팹(FAB) 데이터의 본질</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              300mm 단결정 실리콘 웨이퍼 한 장에 각인되는 수천 개의 다이(Die)와 식각·증착 설비에서 초당 수백 회 발생하는 텔레메트리 센서 로그의 계층적 구조를 명확히 이해합니다.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center gap-2 text-outline font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">memory</span>
+<span>300mm Wafer Architecture</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200">
+<div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary mb-space-md">
+<span class="material-symbols-outlined text-[24px]">memory_alt</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-secondary uppercase font-semibold">OUTCOME 02</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1 mb-space-xs">파이썬 변수와 메모리 메커니즘</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              챔버 온도(310.45°C), 압력(12.8 mTorr), 플라즈마 고주파 전력(1205W) 등 센서 측정 원시값을 파이썬 식별자(Identifier) 메모리 공간에 라벨링하여 할당하는 원리를 체득합니다.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center gap-2 text-outline font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">data_object</span>
+<span>Memory Reference & Type Allocation</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between hover:translate-y-[-2px] transition-transform duration-200">
+<div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary mb-space-md">
+<span class="material-symbols-outlined text-[24px]">terminal</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-secondary uppercase font-semibold">OUTCOME 03</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1 mb-space-xs">f-string 공정 텔레메트리 리포트</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              수집된 원시 데이터 변수들을 엔지니어가 즉각 직관적으로 판독 가능한 정밀 공격 형식 포맷(`{temp:.1f}°C`)으로 문자열을 렌더링하고 콘솔 출력(print)하는 파이프라인을 완성합니다.
+            </p>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center gap-2 text-outline font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">fact_check</span>
+<span>Formatted Telemetry String</span>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-lg">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">schema</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">핵심 개념 시각화: 센서 수집에서 파이썬 메모리 적재까지</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            식각 챔버의 실물 센서 텔레메트리 값이 데이터 버스를 거쳐 파이썬 런타임 변수 메모리 슬롯에 저장되는 파이프라인
+          </p>
+</div>
+<div class="flex items-center gap-2 font-mono-sm text-mono-sm bg-surface-container px-3 py-1.5 rounded-lg">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-on-surface font-semibold">FAB PIPELINE: REALTIME INGESTION</span>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-center bg-surface-container-low/60 rounded-xl p-space-lg">
+<div class="xl:col-span-4 flex flex-col items-center justify-center p-space-md bg-surface-container-lowest rounded-xl shadow-sm text-center">
+<div class="relative w-48 h-48 mb-space-sm flex items-center justify-center">
+<svg class="w-48 h-48" fill="none" viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<circle cx="100" cy="100" fill="#E2E7FF" fill-opacity="0.4" r="90"></circle>
+<path d="M100 10 A90 90 0 0 1 190 100 A90 90 0 0 1 100 190 A90 90 0 0 1 10 100 A90 90 0 0 1 92 10.3 L92 18 L108 18 L108 10.3" fill="#2563EB" fill-opacity="0.1" stroke="#004AC6" stroke-width="2"></path>
+<circle cx="100" cy="100" r="70" stroke="#00687A" stroke-dasharray="3 3" stroke-width="1.5"></circle>
+<circle cx="100" cy="100" r="45" stroke="#004AC6" stroke-dasharray="2 2" stroke-width="1"></circle>
+<g fill="#004AC6" fill-opacity="0.15" stroke="#004AC6" stroke-width="0.75">
+<rect height="14" rx="1" width="14" x="65" y="65"></rect>
+<rect height="14" rx="1" width="14" x="83" y="65"></rect>
+<rect height="14" rx="1" width="14" x="101" y="65"></rect>
+<rect height="14" rx="1" width="14" x="119" y="65"></rect>
+<rect height="14" rx="1" width="14" x="65" y="83"></rect>
+<rect fill="#00687A" fill-opacity="0.5" height="14" rx="1" width="14" x="83" y="83"></rect>
+<rect height="14" rx="1" width="14" x="101" y="83"></rect>
+<rect height="14" rx="1" width="14" x="119" y="83"></rect>
+<rect height="14" rx="1" width="14" x="65" y="101"></rect>
+<rect height="14" rx="1" width="14" x="83" y="101"></rect>
+<rect fill="#BA1A1A" fill-opacity="0.4" height="14" rx="1" width="14" x="101" y="101"></rect>
+<rect height="14" rx="1" width="14" x="119" y="101"></rect>
+<rect height="14" rx="1" width="14" x="65" y="119"></rect>
+<rect height="14" rx="1" width="14" x="83" y="119"></rect>
+<rect height="14" rx="1" width="14" x="101" y="119"></rect>
+<rect height="14" rx="1" width="14" x="119" y="119"></rect>
+</g>
+<circle cx="100" cy="18" fill="#00687A" r="4"></circle>
+</svg>
+<div class="absolute bottom-2 bg-surface-container px-2 py-0.5 rounded font-mono-sm text-mono-sm text-secondary font-bold">
+              300mm Silicon Wafer
+            </div>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Chamber Etch Tool #CH-04</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+            센서 프로브: RTD 열전대, 압력 트랜스듀서, RF Generator
+          </p>
+</div>
+<div class="xl:col-span-3 flex flex-col items-center justify-center space-y-space-sm px-space-xs">
+<div class="w-full flex items-center justify-between text-secondary font-mono-sm text-mono-sm px-2">
+<span>DATA BUS</span>
+<span class="animate-pulse">SAMPLING @ 100Hz</span>
+</div>
+<div class="w-full bg-surface-container-lowest p- space-sm p-3 rounded-lg shadow-sm space-y-2">
+<div class="flex items-center justify-between font-mono-sm text-mono-sm">
+<span class="text-on-surface-variant">TEMP_SENSOR</span>
+<span class="text-primary font-bold">310.45</span>
+</div>
+<div class="w-full h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4"></div>
+</div>
+<div class="flex items-center justify-between font-mono-sm text-mono-sm pt-1">
+<span class="text-on-surface-variant">RF_PWR_MW</span>
+<span class="text-primary font-bold">1205</span>
+</div>
+<div class="w-full h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-5/6"></div>
+</div>
+</div>
+<div class="flex items-center gap-1 text-secondary font-mono-sm text-mono-sm">
+<span>MEM ALLOC</span>
+<span class="material-symbols-outlined text-[18px]">trending_flat</span>
+</div>
+</div>
+<div class="xl:col-span-5 bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-xs mb-space-sm">
+<span class="font-label-md text-label-md text-primary uppercase font-bold tracking-wider">Python Memory Heap & Variable Tags</span>
+<span class="font-mono-sm text-mono-sm text-outline">0x7FFE_FAB_HEAP</span>
+</div>
+<div class="space-y-space-xs">
+<div class="bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-mono-sm text-mono-sm font-semibold">chamber_temp</span>
+<span class="font-mono-sm text-mono-sm text-outline font-medium">=</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="px-2.5 py-0.5 rounded bg-surface-container-lowest font-mono-data text-mono-data text-primary font-bold shadow-xs">
+                  310.45
+                </div>
+<span class="font-mono-sm text-mono-sm px-1.5 py-0.5 rounded bg-surface-container-high text-secondary">float</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-mono-sm text-mono-sm font-semibold">rf_power</span>
+<span class="font-mono-sm text-mono-sm text-outline font-medium">=</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="px-2.5 py-0.5 rounded bg-surface-container-lowest font-mono-data text-mono-data text-primary font-bold shadow-xs">
+                  1205
+                </div>
+<span class="font-mono-sm text-mono-sm px-1.5 py-0.5 rounded bg-surface-container-high text-secondary">int</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-mono-sm text-mono-sm font-semibold">wafer_id</span>
+<span class="font-mono-sm text-mono-sm text-outline font-medium">=</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="px-2.5 py-0.5 rounded bg-surface-container-lowest font-mono-data text-mono-data text-on-surface font-bold shadow-xs">
+                  "WF-2024-001"
+                </div>
+<span class="font-mono-sm text-mono-sm px-1.5 py-0.5 rounded bg-surface-container-high text-secondary">str</span>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-mono-sm text-mono-sm font-semibold">is_pass</span>
+<span class="font-mono-sm text-mono-sm text-outline font-medium">=</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="px-2.5 py-0.5 rounded bg-surface-container-lowest font-mono-data text-mono-data text-secondary font-bold shadow-xs">
+                  True
+                </div>
+<span class="font-mono-sm text-mono-sm px-1.5 py-0.5 rounded bg-surface-container-high text-secondary">bool</span>
+</div>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">info</span>
+<span>변수(Variable)는 컴퓨터 메모리 주소에 사람이 붙인 <strong>이름표(Label Tag)</strong>입니다.</span>
+</div>
+</div>
+</div>
+</section>
+<section class="space-y-space-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">code_blocks</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">단계별 개념 및 코드 실습</h2>
+<span class="font-mono-sm text-mono-sm text-outline ml-space-xs uppercase tracking-wider">Step-by-Step Hands-on</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center gap-space-xs mb-space-sm">
+<span class="px-2.5 py-1 rounded bg-primary text-on-primary font-mono-sm text-mono-sm font-bold">STEP 01</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">반도체 공정에서 데이터가 왜 중요할까?</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+          현대 메모리(DRAM, V-NAND) 및 최첨단 3nm 파운드리 공정은 700~1,000단계가 넘는 미세 패터닝 공정을 거칩니다. 이때 <strong>수율(Yield) 0.1% 상승</strong>은 공장당 <strong>연간 수백억~수천억 원</strong>의 수익 개선으로 직결됩니다.
+        </p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm mb-space-sm">
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">monitoring</span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block">센서 드리프트(Drift) 감지</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">식각 가스 유량이나 히터 온도의 미세한 편차를 사전 포착해 결함 방지</p>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">blur_on</span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block">웨이퍼 맵 결함 패턴 분석</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Edge Ring, Donut, Scratch 등 공간 불량 패턴을 통계적으로 분류</p>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px] mt-0.5">trending_up</span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold block">FDC (Fault Detection & Classify)</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">공정 챔버 내 플라즈마 파라미터를 실시간 분석하여 공정 중단 최소화</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="px-2.5 py-1 rounded bg-primary text-on-primary font-mono-sm text-mono-sm font-bold">STEP 02</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">파이썬 변수 선언과 데이터 타입 (int, float, str, bool)</h3>
+</div>
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-mono-sm text-mono-sm hover:text-on-surface hover:bg-surface-container-high transition-colors" id="btn-copy-1" onclick="copySnippet('code1', 'btn-copy-1')" type="button">
+<span class="material-symbols-outlined text-[15px]">content_copy</span>
+<span>코드 복사</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+          반도체 센서 값은 물리적 성격에 따라 데이터 타입이 결정됩니다. 온도는 소수점을 포함하는 <code>float</code>, RF 전력이나 카운트는 <code>int</code>, 웨이퍼 식별 바코드는 <code>str</code>, 공정 통과 여부는 <code>bool</code>로 표현합니다.
+        </p>
+<div class="relative bg-inverse-surface rounded-xl p-space-md overflow-hidden text-inverse-on-surface">
+<div class="flex items-center justify-between pb-space-xs mb-space-sm font-mono-sm text-mono-sm text-outline-variant">
+<span class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-error inline-block"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-warning inline-block" style="background-color: #f59e0b;"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary inline-block"></span>
+<span class="ml-2">lesson1_step2_variable.py</span>
+</span>
+<span class="text-secondary-container">Python 3.11</span>
+</div>
+<pre class="font-mono-data text-mono-data leading-relaxed overflow-x-auto text-inverse-on-surface" id="code1"><code><span class="text-outline"># 1. 반도체 팹 식각(Etch) 챔버 센서 텔레메트리 변수 선언</span>
+<span class="text-secondary-fixed">wafer_id</span> = <span class="text-secondary-fixed-dim">"WF-2024-001"</span>     <span class="text-outline"># 문자열 (str): 웨이퍼 고유 바코드 식별자</span>
+<span class="text-secondary-fixed">chamber_temp</span> = <span class="text-primary-fixed-dim">310.45</span>        <span class="text-outline"># 부동소수점 실수 (float): 챔버 내부 온도 (°C)</span>
+<span class="text-secondary-fixed">rf_power</span> = <span class="text-primary-fixed-dim">1205</span>              <span class="text-outline"># 정수 (int): 플라즈마 고주파 RF 출력 (W)</span>
+<span class="text-secondary-fixed">is_pass</span> = <span class="text-tertiary-fixed-dim">True</span>               <span class="text-outline"># 불리언 (bool): 현재 챔버 수율 기준 만족 여부</span>
+
+<span class="text-outline"># 2. 파이썬 type() 함수로 메모리 타입 확인</span>
+<span class="text-primary-fixed">print</span>(<span class="text-primary-fixed">type</span>(wafer_id))         <span class="text-outline"># <class 'str'></span>
+<span class="text-primary-fixed">print</span>(<span class="text-primary-fixed">type</span>(chamber_temp))     <span class="text-outline"># <class 'float'></span>
+<span class="text-primary-fixed">print</span>(<span class="text-primary-fixed">type</span>(rf_power))         <span class="text-outline"># <class 'int'></span>
+<span class="text-primary-fixed">print</span>(<span class="text-primary-fixed">type</span>(is_pass))          <span class="text-outline"># <class 'bool'></span></code></pre>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="px-2.5 py-1 rounded bg-primary text-on-primary font-mono-sm text-mono-sm font-bold">STEP 03</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">`print()`와 `f-string`으로 공정 알림 메시지 만들기</h3>
+</div>
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-mono-sm text-mono-sm hover:text-on-surface hover:bg-surface-container-high transition-colors" id="btn-copy-2" onclick="copySnippet('code2', 'btn-copy-2')" type="button">
+<span class="material-symbols-outlined text-[15px]">content_copy</span>
+<span>코드 복사</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+          단순한 텍스트 나열 대신 <strong>f-string (포맷 문자열, Python 3.6+)</strong> 문법을 사용하면 변수 값과 소수점 자리수 제어(`:.1f`), 조건부 상태 표기를 하나의 표준 텔레메트리 로그로 변환할 수 있습니다.
+        </p>
+<div class="relative bg-inverse-surface rounded-xl p-space-md overflow-hidden text-inverse-on-surface mb-space-md">
+<div class="flex items-center justify-between pb-space-xs mb-space-sm font-mono-sm text-mono-sm text-outline-variant">
+<span>lesson1_step3_telemetry_fstring.py</span>
+<span class="text-secondary-container">Terminal Stream Script</span>
+</div>
+<pre class="font-mono-data text-mono-data leading-relaxed overflow-x-auto text-inverse-on-surface" id="code2"><code><span class="text-outline"># f-string을 활용한 실시간 팹 텔레메트리 리포트 출력</span>
+wafer_id = <span class="text-secondary-fixed-dim">"WF-2024-001"</span>
+chamber_temp = <span class="text-primary-fixed-dim">310.45</span>
+rf_power = <span class="text-primary-fixed-dim">1205</span>
+is_pass = <span class="text-tertiary-fixed-dim">True</span>
+
+<span class="text-outline"># {:.1f} 문법으로 소수점 첫째 자리까지 반올림 포맷팅 적용</span>
+status_text = <span class="text-secondary-fixed-dim">"PASS"</span> <span class="text-tertiary-fixed-dim">if</span> is_pass <span class="text-tertiary-fixed-dim">else</span> <span class="text-error">"DEFECT"</span>
+report = <span class="text-secondary-fixed-dim">f"[FAB TELEMETRY] Wafer: {wafer_id} | Temp: {chamber_temp:.1f}°C | RF: {rf_power}W | Status: {status_text}"</span>
+
+<span class="text-primary-fixed">print</span>(report)</code></pre>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md">
+<div class="flex items-center justify-between pb-space-xs mb-space-xs">
+<span class="font-label-md text-label-md text-secondary uppercase font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">output</span>
+              콘솔 실행 결과 미리보기 (Standard Output Preview)
+            </span>
+<span class="font-mono-sm text-mono-sm text-outline">Exit Code: 0</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg font-mono-data text-mono-data text-on-surface">
+<span class="text-secondary font-bold">[FAB TELEMETRY]</span>
+<span>Wafer: WF-2024-001 | Temp: 310.5°C | RF: 1205W | Status: </span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-secondary font-bold">PASS</span>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center gap-2 mb-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">quiz</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">미니 퀴즈 & 자가 점검</h2>
+<span class="font-mono-sm text-mono-sm text-outline ml-space-xs uppercase tracking-wider">Check Your Understanding</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+        오늘 학습한 반도체 공정 데이터와 파이썬 변수 개념을 2개의 실전 문제로 검증해보세요.
+      </p>
+<div class="space-y-space-lg">
+<div class="bg-surface-container-low/50 rounded-xl p-space-md" id="quiz-1-container">
+<div class="flex items-start justify-between gap-2 mb-space-sm">
+<span class="font-label-md text-label-md text-primary font-bold">Q1. 데이터 타입 판별</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono-sm text-mono-sm text-on-surface-variant">배점: 50점</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium mb-space-md">
+            300mm 웨이퍼 식각 공정 센서의 실시간 측정 온도값인 <code class="px-1.5 py-0.5 rounded bg-surface-container font-mono-sm text-primary font-semibold">310.4</code>를 파이썬에 저장하기에 가장 적합한 데이터 타입은 무엇일까요?
+          </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-xs mb-space-md font-mono-sm text-mono-sm">
+<label class="flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+<input class="text-primary focus:ring-0" name="quiz1" type="radio" value="A"/>
+<span class="text-on-surface">A) int (정수형)</span>
+</label>
+<label class="flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+<input class="text-primary focus:ring-0" name="quiz1" type="radio" value="B"/>
+<span class="text-on-surface font-semibold text-primary">B) float (실수형)</span>
+</label>
+<label class="flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+<input class="text-primary focus:ring-0" name="quiz1" type="radio" value="C"/>
+<span class="text-on-surface">C) bool (불리언형)</span>
+</label>
+<label class="flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+<input class="text-primary focus:ring-0" name="quiz1" type="radio" value="D"/>
+<span class="text-on-surface">D) list (배열형)</span>
+</label>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<button class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors" onclick="checkQuiz1()" type="button">
+              정답 확인
+            </button>
+<div class="hidden text-body-sm font-body-sm" id="quiz1-feedback"></div>
+</div>
+</div>
+<div class="bg-surface-container-low/50 rounded-xl p-space-md" id="quiz-2-container">
+<div class="flex items-start justify-between gap-2 mb-space-sm">
+<span class="font-label-md text-label-md text-primary font-bold">Q2. 파이썬 문법 식별</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono-sm text-mono-sm text-on-surface-variant">배점: 50점</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium mb-space-md">
+            문자열 앞에 접두사 <code class="px-1.5 py-0.5 rounded bg-surface-container font-mono-sm text-primary font-semibold">f</code>를 붙이고 중괄호 안에 변수를 넣어 출력하는 <code class="px-1.5 py-0.5 rounded bg-surface-container font-mono-sm text-primary font-semibold">print(f"Chamber: {tool_name}")</code> 코드의 문법 명칭은 무엇일까요?
+          </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-xs mb-space-md font-mono-sm text-mono-sm">
+<label class="flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+<input class="text-primary focus:ring-0" name="quiz2" type="radio" value="A"/>
+<span class="text-on-surface">A) Lambda Expression (람다식)</span>
+</label>
+<label class="flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+<input class="text-primary focus:ring-0" name="quiz2" type="radio" value="B"/>
+<span class="text-on-surface">B) %-formatting (퍼센트 포맷팅)</span>
+</label>
+<label class="flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+<input class="text-primary focus:ring-0" name="quiz2" type="radio" value="C"/>
+<span class="text-on-surface font-semibold text-primary">C) f-string (포맷티드 문자열 리터럴)</span>
+</label>
+<label class="flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+<input class="text-primary focus:ring-0" name="quiz2" type="radio" value="D"/>
+<span class="text-on-surface">D) String Slice (문자열 슬라이싱)</span>
+</label>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<button class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors" onclick="checkQuiz2()" type="button">
+              정답 확인
+            </button>
+<div class="hidden text-body-sm font-body-sm" id="quiz2-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<button class="w-full flex items-center justify-between text-left p-space-xs hover:bg-surface-container-low rounded-lg transition-colors" onclick="toggleInstructorTip()" type="button">
+<div class="flex items-center gap-2 text-primary font-semibold font-body-md text-body-md">
+<span class="material-symbols-outlined text-[20px]">lightbulb</span>
+<span>강사용 팁 & 초보자 흔한 실수 노트 (Instructor Insight)</span>
+</div>
+<span class="material-symbols-outlined text-[20px] text-outline transition-transform duration-200" id="tipArrow">expand_more</span>
+</button>
+<div class="hidden mt-space-md pt-space-md space-y-space-sm font-body-sm text-body-sm text-on-surface-variant" id="tipContent">
+<div class="p-3 bg-surface-container-low rounded-lg">
+<strong class="text-on-surface block mb-1">1. 따옴표 누락으로 인한 NameError</strong>
+<code class="text-error font-mono-sm text-mono-sm">wafer_id = WF-2024-001</code> 처럼 문자열 데이터에 큰따옴표나 작은따옴표를 씌우지 않으면, 파이썬은 이를 변수명으로 착각하여 <code class="font-mono-sm text-mono-sm">NameError: name 'WF' is not defined</code> 에러를 발생시킵니다.
+        </div>
+<div class="p-3 bg-surface-container-low rounded-lg">
+<strong class="text-on-surface block mb-1">2. 대소문자 엄격 구분 (Case Sensitivity)</strong>
+          파이썬은 대소문자를 완전히 별개로 처리합니다. <code class="font-mono-sm text-mono-sm">Chamber_temp</code>와 <code class="font-mono-sm text-mono-sm">chamber_temp</code>는 서로 다른 메모리 위치를 가리키므로 엔지니어링 표준 네이밍인 스네이크 케이스(snake_case)로 일관되게 작성해야 합니다.
+        </div>
+<div class="p-3 bg-surface-container-low rounded-lg">
+<strong class="text-on-surface block mb-1">3. f 접두사 누락</strong>
+<code class="font-mono-sm text-mono-sm">print("Wafer: {wafer_id}")</code> 처럼 문자열 앞에 <strong>f</strong>를 빼먹으면 중괄호 안의 코드가 해석되지 않고 문자 그대로 화면에 표시됩니다.
+        </div>
+</div>
+</section>
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<a class="inline-flex items-center gap-space-xs text-on-surface-variant hover:text-on-surface font-label-md text-label-md py-2 px-space-sm rounded-lg hover:bg-surface-container transition-colors" data-path="entire-curriculum" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+        메인 커리큘럼으로 돌아가기
+      </a>
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<span class="font-mono-sm text-mono-sm text-outline hidden md:inline">진도율: 1 / 10 차시 (10%)</span>
+<a class="inline-flex items-center gap-space-xs px-space-lg py-2.5 rounded-xl bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-all shadow-sm" data-path="lesson-2-preview" href="#">
+<span>2차시: 리스트와 딕셔너리로 센서 묶기</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function toggleCompletion() {
+    const btn = document.getElementById('completeCheckBtn');
+    const icon = document.getElementById('completeIcon');
+    const text = document.getElementById('completeText');
+
+    if (btn.classList.contains('bg-surface-container')) {
+      btn.classList.remove('bg-surface-container', 'text-on-surface-variant');
+      btn.classList.add('bg-primary-fixed', 'text-on-primary-fixed');
+      icon.innerText = 'check_circle';
+      text.innerText = '1차시 학습 완료됨';
+    } else {
+      btn.classList.add('bg-surface-container', 'text-on-surface-variant');
+      btn.classList.remove('bg-primary-fixed', 'text-on-primary-fixed');
+      icon.innerText = 'check_circle';
+      text.innerText = '차시 완료 체크';
+    }
+  }
+
+  function copySnippet(codeElementId, btnId) {
+    const code = document.getElementById(codeElementId).innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      const btn = document.getElementById(btnId);
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = '<span class="material-symbols-outlined text-[15px] text-secondary">check</span><span class="text-secondary font-semibold">복사됨!</span>';
+      setTimeout(() => {
+        btn.innerHTML = originalHtml;
+      }, 2000);
+    });
+  }
+
+  function toggleInstructorTip() {
+    const content = document.getElementById('tipContent');
+    const arrow = document.getElementById('tipArrow');
+    if (content.classList.contains('hidden')) {
+      content.classList.remove('hidden');
+      arrow.classList.add('rotate-180');
+    } else {
+      content.classList.add('hidden');
+      arrow.classList.remove('rotate-180');
+    }
+  }
+
+  function checkQuiz1() {
+    const selected = document.querySelector('input[name="quiz1"]:checked');
+    const feedback = document.getElementById('quiz1-feedback');
+    feedback.classList.remove('hidden');
+    if (!selected) {
+      feedback.className = 'text-body-sm font-body-sm text-error font-medium';
+      feedback.innerText = '보기 중 하나를 선택해주세요.';
+      return;
+    }
+    if (selected.value === 'B') {
+      feedback.className = 'text-body-sm font-body-sm text-secondary font-semibold flex items-center gap-1';
+      feedback.innerHTML = '<span class="material-symbols-outlined text-[16px]">check_circle</span> 정답입니다! 소수점이 있는 센서 데이터는 실수형(float)으로 저장합니다.';
+    } else {
+      feedback.className = 'text-body-sm font-body-sm text-error font-medium flex items-center gap-1';
+      feedback.innerHTML = '<span class="material-symbols-outlined text-[16px]">cancel</span> 오답입니다. 310.4처럼 소수점 이하가 존재하는 측정값은 float형입니다.';
+    }
+  }
+
+  function checkQuiz2() {
+    const selected = document.querySelector('input[name="quiz2"]:checked');
+    const feedback = document.getElementById('quiz2-feedback');
+    feedback.classList.remove('hidden');
+    if (!selected) {
+      feedback.className = 'text-body-sm font-body-sm text-error font-medium';
+      feedback.innerText = '보기 중 하나를 선택해주세요.';
+      return;
+    }
+    if (selected.value === 'C') {
+      feedback.className = 'text-body-sm font-body-sm text-secondary font-semibold flex items-center gap-1';
+      feedback.innerHTML = '<span class="material-symbols-outlined text-[16px]">check_circle</span> 정답입니다! 접두사 f를 붙여 중괄호로 변수를 바인딩하는 문법은 f-string입니다.';
+    } else {
+      feedback.className = 'text-body-sm font-body-sm text-error font-medium flex items-center gap-1';
+      feedback.innerHTML = '<span class="material-symbols-outlined text-[16px]">cancel</span> 오답입니다. Python 3.6부터 도입된 f-string(Formatted String Literals)입니다.';
+    }
+  }
+</script></main><footer class="w-full bg-surface-container-low py-space-xl"><div class="w-full px-gutter-lg"><div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg pb-space-lg"><div class="flex flex-col gap-space-xs"><div class="flex items-center gap-space-xs"><span class="font-label-md text-label-md tracking-wider text-primary uppercase">FAB-SPEC ARCHITECTURE</span><span class="px-space-xs py-0.5 rounded bg-surface-container font-mono-sm text-mono-sm text-secondary uppercase">Yield Engine v2.4</span></div><p class="font-body-sm text-body-sm text-on-surface-variant max-w-xl">반도체 공정 결함 및 파라메트릭 수율 엔지니어링 분석 교육 플랫폼. 웨이퍼 팹 센서 텔레메트리 데이터 셋 기반의 실습 중심 커리큘럼입니다.</p></div><div class="flex flex-wrap items-center gap-space-lg font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-on-surface transition-colors" data-path="entire-curriculum" href="#">커리큘럼 로드맵</a><a class="text-on-surface-variant hover:text-on-surface transition-colors" data-path="practice-colab-code" href="#">Colab 실행 환경 가이드</a><a class="text-on-surface-variant hover:text-on-surface transition-colors" data-path="semiconductor-glossary" href="#">반도체 공정 용어집</a><a class="text-on-surface-variant hover:text-on-surface transition-colors" data-path="fab-telemetry-dataset" href="#">FAB 데이터셋 스펙</a></div></div><div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm font-mono-sm text-mono-sm text-outline"><p>© 2025 Semiconductor Data Engineering Consortium. All rights reserved.</p><p>Process Telemetry & Yield Analytics Education Center</p></div></div></footer></body></html>

@@ -457,6 +457,64 @@ LOT-D: 불합격 확률 6.7% → 위험도 낮음</pre>
   </section>
 
   <section class="block">
+    <h2>🟣 연습문제 — 위험 로트 개수 세기</h2>
+    <p>4차시에서 배운 조건 검색(불리언 인덱싱)을 새 로트의 <code>불합격_확률</code> 열에
+    다시 적용해보자.</p>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      <code>불합격_확률</code>이 0.5를 초과하는(50%보다 큰) 로트를 "위험 로트"로 정의하고,
+      몇 개인지 세어보자.
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">risky_lots = new_lots[new_lots["불합격_확률"] > 0.5]
+print(f"위험 로트(불합격 확률 50% 초과) 개수: {len(risky_lots)}개")</pre>
+      실행 결과: <code>위험 로트(불합격 확률 50% 초과) 개수: 0개</code> — 오늘 새 로트 9건은
+      가장 높은 불합격 확률도 36.4%였으므로, 기준을 0.5로 잡으면 위험 로트가 없다는 뜻이다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 10차시 완주 인증서 만들기</h2>
+    <div class="callout concept">
+      <b class="tag">10차시, 그리고 전체 과정의 마지막 미니 프로젝트</b>
+      10주 동안 배운 모든 것을 되짚으며, 완주를 자축하는 나만의 프로그램을 AI에게 만들어달라고
+      요청해보자.
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      "input()으로 이름을 입력받고, 이모지나 별표(*)로 테두리를 두른 '10차시 반도체 데이터
+      분석 과정 수료증'을 이름과 함께 예쁘게 출력하는 파이썬 코드를 만들어줘."
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
+      <pre><code>name = "지민"  # 실제로는 input("이름을 입력하세요: ")
+
+print("🎓" * 15)
+print("   10차시 반도체 데이터 분석 과정 수료증")
+print("   위 사람은 10차시 전체 과정을 성실히 마쳤음을 증명합니다.")
+print(f"   이름: {name}")
+print("🎓" * 15)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓
+   10차시 반도체 데이터 분석 과정 수료증
+   위 사람은 10차시 전체 과정을 성실히 마쳤음을 증명합니다.
+   이름: 지민
+🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">더 놀아보기</b>
+      <ul class="pt-list">
+        <li>가장 기억에 남는 차시 이름을 인증서에 함께 넣어달라고 AI에게 요청해보자.</li>
+        <li>색깔 이모지나 테두리 모양을 바꿔 더 화려하게 꾸며보자 — 10차시 동안 배운 모든 것을
+          이 마지막 프로그램에 자유롭게 녹여보면 된다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
     <h2>📝 과제 — 나만의 재실험</h2>
     <ul class="pt-list">
       <li>과정을 마무리하며, 지금까지 배운 도구로 스스로 질문을 정하고 답해보는 마지막 과제</li>

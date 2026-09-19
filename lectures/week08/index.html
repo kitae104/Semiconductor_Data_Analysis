@@ -733,6 +733,73 @@ print(f"상관계수 r = {r:.2f} → {label}")</code></pre>
   </section>
 
   <section class="block">
+    <h2>🟣 연습문제 — 진동 값과 불합격의 관계 확인하기</h2>
+    <p>4단계(온도-두께)와 5단계(습도-불합격)에서 계산한 상관계수 외에, 앞서 진동 값을
+    설비별 평균으로만 살펴봤던 <code>진동_mm_s</code> 열도 상관계수로 직접 확인해보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 진동_mm_s과 불합격여부_숫자의 상관계수를 계산하세요.
+r_vib = df["진동_mm_s"].____(df["불합격여부_숫자"])
+print("진동-불합격 상관계수 r =", round(r_vib, 2))</code></pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 직접 해보기</b>
+      빈칸에 알맞은 메서드를 채워 실행하고, 결과가 온도-두께(r ≈ 0.71)나 습도-불합격
+      (r ≈ -0.13) 중 어느 쪽에 더 가까운지 비교해보자. 계산된 값이 크게 나오더라도
+      "진동이 불합격의 원인이다"라고 단정하지 말고, 반드시 <b>"원인 후보"</b>라는 표현을
+      사용해 문장을 완성해보자.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 원인 후보 추리 게임</h2>
+    <div class="callout concept">
+      <b class="tag">오늘의 미니 프로젝트</b>
+      오늘 계산한 상관계수(온도-두께, 습도-불합격, 진동-불합격)를 한데 모아, 절댓값이 큰
+      순서로 "용의선상 원인 후보 랭킹"을 매겨주는 재미있는 프로그램을 AI에게 만들어달라고
+      요청해보자.
+    </div>
+    <div class="callout practice">
+      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      "변수 이름과 상관계수가 담긴 딕셔너리를 받아서, 절댓값이 큰 순서로 정렬해 '용의선상
+      원인 후보 랭킹'처럼 🔎 이모지와 함께 출력하는 파이썬 코드를 만들어줘."
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의</b>
+      9단계 예시 코드에서 <code>r</code> 변수를 다른 값으로 재사용했으므로, 온도-두께
+      상관계수는 <code>r_thickness</code>로 다시 계산해서 사용한다.
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
+      <pre><code>r_thickness = df["온도_섭씨"].corr(df["두께_nm"])  # r 변수를 9단계에서 재사용했으므로 다시 계산
+
+suspects = {"온도-두께": r_thickness, "습도-불합격": r_humid, "진동-불합격": r_vib}
+ranked_suspects = sorted(suspects.items(), key=lambda item: abs(item[1]), reverse=True)
+
+print("🔎 원인 후보 추리 게임 결과 🔎")
+for rank, (name, value) in enumerate(ranked_suspects, start=1):
+    print(f"{rank}위 원인 후보: {name} (상관계수 {value:.2f})")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과 예시</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">🔎 원인 후보 추리 게임 결과 🔎
+1위 원인 후보: 온도-두께 (상관계수 0.71)
+2위 원인 후보: 습도-불합격 (상관계수 -0.13)
+3위 원인 후보: 진동-불합격 (상관계수 0.02)</pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">더 놀아보기</b>
+      <ul class="pt-list">
+        <li>다른 변수 쌍의 상관계수도 딕셔너리에 추가해서 더 긴 랭킹을 만들어보자.</li>
+        <li>1위로 뽑힌 원인 후보에게만 "🚨 가장 유력한 용의자" 같은 특별한 문구를 붙여달라고
+          AI에게 재요청해보자.</li>
+        <li>랭킹에 몇 위가 오르든, 출력 문장에서는 항상 "원인"이 아니라 <b>"원인 후보"</b>라는
+          표현을 쓰도록 AI에게 요청해보자.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
     <h2>🔜 다음 차시 예고</h2>
     <div class="callout concept">
       <b class="tag">9차시 예고</b>
