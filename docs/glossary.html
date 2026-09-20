@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>전체 용어집 | 반도체 데이터 분석 과정</title>
+<link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+/>
+<link rel="stylesheet" href="../assets/css/common.css" />
+<style>
+    .search-bar{
+        position:sticky; top:0; z-index:20; background:var(--bg);
+        padding:1rem 0 .8rem; margin-bottom:.4rem;
+        border-bottom:1px solid var(--line);
+    }
+    .search-input{
+        width:100%; font:inherit; font-size:1rem; padding:.75rem 1rem;
+        border:1px solid var(--line); border-radius:var(--radius-sm);
+        background:var(--card); color:var(--ink); box-shadow:var(--shadow-card);
+    }
+    .search-input:focus{outline:none; border-color:var(--blue-line); box-shadow:0 0 0 3px var(--blue-bg);}
+    .cat-chips{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.7rem;}
+    .cat-chip{
+        font:inherit; font-size:.82rem; font-weight:700; cursor:pointer;
+        color:var(--blue); padding:.32rem .8rem; border-radius:999px;
+        background:var(--blue-bg); border:1px solid var(--blue-line);
+        transition:background .15s ease, color .15s ease;
+    }
+    .cat-chip:hover{background:var(--blue-line);}
+    .cat-chip.active{background:var(--blue); color:#fff; border-color:var(--blue);}
+    .result-count{color:var(--muted); font-size:.82rem; margin:.7rem 0 0;}
+
+    .term-grid{
+        display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+        gap:1rem; margin-top:1.2rem;
+    }
+    .term-card{
+        background:var(--card); border:1px solid var(--line); border-left:4px solid var(--line);
+        border-radius:var(--radius); padding:1.1rem 1.25rem; box-shadow:var(--shadow-card);
+    }
+    .term-card[data-cat="basic"]{border-left-color:var(--blue);}
+    .term-card[data-cat="process"]{border-left-color:var(--orange);}
+    .term-card[data-cat="measure"]{border-left-color:var(--green);}
+    .term-card[data-cat="quality"]{border-left-color:var(--purple);}
+    .term-card[data-cat="ml"]{border-left-color:var(--cyan);}
+    .term-card h3{margin:0 0 .55rem; font-size:1.05rem; color:var(--ink); display:flex; align-items:baseline; gap:.45rem; flex-wrap:wrap;}
+    .term-card .term-en{font-size:.8rem; font-weight:600; color:var(--muted); font-family:var(--font-mono);}
+    .term-card p{margin:.4rem 0 0; font-size:.9rem; line-height:1.6; color:var(--ink);}
+    .term-card .term-meta{color:var(--muted);}
+    .term-card .term-meta b{color:var(--ink); font-weight:700; margin-right:.3rem;}
+
+    .no-result{display:none; text-align:center; color:var(--muted); padding:3rem 0; font-size:.95rem;}
+
+    #pass-fail-table table.timetable{margin-top:.9rem;}
+    .back-link{color:var(--blue); text-decoration:none; font-weight:700; font-size:.85rem;}
+    .back-link:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-row">
+            <div class="brand-group">
+                <a class="brand" href="../index.html">
+                    <img
+                        src="../assets/images/site/chip-macro-logo.jpg"
+                        alt=""
+                        aria-hidden="true"
+                        class="brand-logo"
+                        width="34"
+                        height="34"
+                    />
+                    <span class="brand-text">
+                        <strong>반도체 데이터 분석 과정</strong>
+                        <small>전체 용어집</small>
+                    </span>
+                </a>
+            </div>
+            <nav class="tab-strip" aria-label="페이지 내 이동">
+                <a href="../index.html">← 처음으로</a>
+                <a href="#pass-fail-table">합격/불합격 표기 정리</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page">
+        <section class="block" id="glossary-top">
+            <span class="section-kicker mono"
+                ><span class="dot"></span>GLOSSARY</span
+            >
+            <h2>🗂️ 전체 용어집</h2>
+            <p class="lede">
+                이 과정 전체에서 사용하는 핵심 용어를 모았습니다. 용어 이름과
+                쉬운 비유, 실습 데이터에서의 예시, 초보자가 자주 하는 오해까지
+                함께 정리했으니 검색하거나 분류별로 훑어보세요.
+            </p>
+
+            <div class="search-bar">
+                <input
+                    type="search"
+                    id="glossary-search"
+                    class="search-input"
+                    placeholder="🔍 용어 검색 (예: 웨이퍼, Yield, 수율...)"
+                    autocomplete="off"
+                />
+                <div class="cat-chips" id="cat-chips">
+                    <button class="cat-chip active" data-cat="all" type="button">전체</button>
+                    <button class="cat-chip" data-cat="basic" type="button">반도체·공정 기본 용어</button>
+                    <button class="cat-chip" data-cat="process" type="button">주요 공정 이름</button>
+                    <button class="cat-chip" data-cat="measure" type="button">측정값 관련 용어</button>
+                    <button class="cat-chip" data-cat="quality" type="button">품질·통계 용어</button>
+                    <button class="cat-chip" data-cat="ml" type="button">예측·분류 용어</button>
+                </div>
+                <p class="result-count" id="result-count"></p>
+            </div>
+
+            <div class="term-grid" id="term-grid">
+                <article class="term-card" data-cat="basic">
+                    <h3>반도체 <span class="term-en">Semiconductor</span></h3>
+                    <p>전기가 잘 통하는 도체와 전혀 통하지 않는 부도체의 중간 성질을 가진 물질.</p>
+                    <p class="term-meta"><b>비유</b>필요할 때만 여닫는 스위치.</p>
+                    <p class="term-meta"><b>예</b>이 과정에서 다루는 모든 데이터가 반도체 제조 과정에서 나온다.</p>
+                    <p class="term-meta"><b>오해</b>반도체를 특정 제품 이름으로 착각하기 쉽다 — 반도체는 재료의 "성질"이다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>웨이퍼 <span class="term-en">Wafer</span></h3>
+                    <p>반도체 칩을 만드는 둥근 원판 모양의 얇은 판.</p>
+                    <p class="term-meta"><b>비유</b>여러 조각으로 자를 큰 피자 도우.</p>
+                    <p class="term-meta"><b>예</b><code>웨이퍼번호</code> 열.</p>
+                    <p class="term-meta"><b>오해</b>웨이퍼 1장이 칩 1개라고 착각하기 쉽지만, 웨이퍼 1장에서 칩이 수백~수천 개 나온다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>다이 <span class="term-en">Die</span></h3>
+                    <p>웨이퍼를 잘라서 만든 작은 사각형 회로 조각. 패키징 전 단계의 칩.</p>
+                    <p class="term-meta"><b>비유</b>피자 한 조각.</p>
+                    <p class="term-meta"><b>예</b>검사 수량이 "다이 개수"로 표현되는 경우가 많다(7차시).</p>
+                    <p class="term-meta"><b>오해</b>다이와 칩을 같은 것으로 혼동하기 쉽지만, 다이를 포장해야 칩이 된다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>칩 <span class="term-en">Chip</span></h3>
+                    <p>다이를 자르고 포장(패키징)해서 완성한 최종 반도체 제품.</p>
+                    <p class="term-meta"><b>비유</b>포장까지 끝난 피자 한 조각.</p>
+                    <p class="term-meta"><b>예</b>스마트폰 안에 들어있는 부품.</p>
+                    <p class="term-meta"><b>오해</b>"반도체"와 "칩"을 완전히 같은 말로 쓰는 경우가 많지만, 칩은 반도체로 만든 완제품을 가리킨다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>팹 / FAB <span class="term-en">Fabrication</span></h3>
+                    <p>반도체를 실제로 생산하는 공장.</p>
+                    <p class="term-meta"><b>비유</b>수백 대의 정밀 기계가 24시간 돌아가는 공장.</p>
+                    <p class="term-meta"><b>예</b>이 과정의 모든 데이터는 가상의 FAB에서 나온 것으로 가정한다.</p>
+                    <p class="term-meta"><b>오해</b>FAB을 회사 이름으로 착각하기 쉽지만, "생산 시설"을 뜻하는 일반 용어다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>로트 <span class="term-en">Lot</span></h3>
+                    <p>함께 관리되는 웨이퍼의 묶음(보통 25장 내외).</p>
+                    <p class="term-meta"><b>비유</b>같은 상자에 담겨 함께 이동하는 물건 묶음.</p>
+                    <p class="term-meta"><b>예</b><code>로트번호</code>(예: LOT-0398).</p>
+                    <p class="term-meta"><b>오해</b>로트와 웨이퍼를 같은 단위로 혼동하기 쉽다 — 로트는 여러 웨이퍼의 묶음이다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>공정 <span class="term-en">Process</span></h3>
+                    <p>웨이퍼에 특정 처리를 하는 작업 단계(증착, 식각 등).</p>
+                    <p class="term-meta"><b>비유</b>요리의 "굽기", "볶기"처럼 각각의 조리 단계.</p>
+                    <p class="term-meta"><b>예</b><code>공정명</code>(예: 식각, 포토, 세정).</p>
+                    <p class="term-meta"><b>오해</b>공정 하나만 거치면 칩이 완성된다고 생각하기 쉽지만, 실제로는 수백 번 반복된다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>설비 <span class="term-en">Equipment</span></h3>
+                    <p>공정을 실제로 수행하는 기계.</p>
+                    <p class="term-meta"><b>비유</b>오븐, 가스레인지처럼 각 조리를 담당하는 기계.</p>
+                    <p class="term-meta"><b>예</b><code>설비번호</code>(EQ-01~EQ-04).</p>
+                    <p class="term-meta"><b>오해</b>설비 하나가 모든 공정을 다 한다고 생각하기 쉽지만, 설비마다 담당 공정이 다르다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>센서 <span class="term-en">Sensor</span></h3>
+                    <p>온도, 압력 등 물리량을 측정해 숫자로 기록하는 장치.</p>
+                    <p class="term-meta"><b>비유</b>체온계처럼 상태를 숫자로 알려주는 장치.</p>
+                    <p class="term-meta"><b>예</b><code>온도_섭씨</code>, <code>압력_Pa</code> 열.</p>
+                    <p class="term-meta"><b>오해</b>센서 값이 항상 정확하다고 여기기 쉽지만, 고장·노이즈로 이상값이 생길 수 있다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>레시피 <span class="term-en">Recipe</span></h3>
+                    <p>설비가 공정을 수행할 때 따르는 온도·압력·시간 등의 설정값 조합.</p>
+                    <p class="term-meta"><b>비유</b>요리 레시피처럼 "몇 도에서 몇 분 동안"을 정해둔 지침서.</p>
+                    <p class="term-meta"><b>예</b>이 과정의 "정상 범위" 표가 레시피의 목표값과 비슷한 역할을 한다.</p>
+                    <p class="term-meta"><b>오해</b>레시피와 공정을 같은 말로 혼동하기 쉽지만, 레시피는 공정을 수행하는 "설정값"이다.</p>
+                </article>
+
+                <article class="term-card" data-cat="process">
+                    <h3>증착 <span class="term-en">Deposition</span></h3>
+                    <p>웨이퍼 표면에 얇은 막(재료)을 입히는 공정.</p>
+                    <p class="term-meta"><b>비유</b>빵 위에 크림을 얇게 바르는 것.</p>
+                </article>
+
+                <article class="term-card" data-cat="process">
+                    <h3>식각 <span class="term-en">Etching</span></h3>
+                    <p>필요 없는 부분을 화학적·물리적으로 깎아내는 공정.</p>
+                    <p class="term-meta"><b>비유</b>조각칼로 원하는 모양만 남기고 파내는 것.</p>
+                </article>
+
+                <article class="term-card" data-cat="process">
+                    <h3>포토 공정 <span class="term-en">Photolithography</span></h3>
+                    <p>빛을 이용해 회로 모양을 웨이퍼에 옮기는 공정.</p>
+                    <p class="term-meta"><b>비유</b>사진 인화지에 이미지를 노출시키는 것.</p>
+                </article>
+
+                <article class="term-card" data-cat="process">
+                    <h3>산화 <span class="term-en">Oxidation</span></h3>
+                    <p>웨이퍼 표면에 얇은 산화막을 형성하는 공정.</p>
+                    <p class="term-meta"><b>비유</b>철이 녹스는 것과 비슷한 원리를 정밀하게 제어한 것.</p>
+                </article>
+
+                <article class="term-card" data-cat="process">
+                    <h3>이온 주입 <span class="term-en">Ion Implantation</span></h3>
+                    <p>웨이퍼에 특정 원소를 주입해 전기적 성질을 바꾸는 공정.</p>
+                    <p class="term-meta"><b>비유</b>반죽에 특정 재료를 골고루 섞어 넣는 것.</p>
+                </article>
+
+                <article class="term-card" data-cat="process">
+                    <h3>세정 <span class="term-en">Cleaning</span></h3>
+                    <p>공정 사이사이 웨이퍼 표면의 불순물을 제거하는 공정.</p>
+                    <p class="term-meta"><b>비유</b>요리 도구를 다음 요리 전에 씻는 것.</p>
+                </article>
+
+                <article class="term-card" data-cat="process">
+                    <h3>패키징 <span class="term-en">Packaging</span></h3>
+                    <p>완성된 다이를 보호 케이스로 포장해 칩으로 만드는 마지막 단계.</p>
+                    <p class="term-meta"><b>비유</b>완성된 요리를 포장 용기에 담는 것.</p>
+                </article>
+
+                <article class="term-card" data-cat="measure">
+                    <h3>온도 <span class="term-en">Temperature</span></h3>
+                    <p>공정 챔버 내부의 열 상태. 단위 ℃. 정상 범위를 벗어나면 막 두께나 품질에 영향을 줄 수 있다(8차시).</p>
+                </article>
+
+                <article class="term-card" data-cat="measure">
+                    <h3>압력 <span class="term-en">Pressure</span></h3>
+                    <p>챔버 내부 기체의 압력. 단위 Pa. 공정마다 정해진 범위를 유지해야 한다.</p>
+                </article>
+
+                <article class="term-card" data-cat="measure">
+                    <h3>진공도 <span class="term-en">Vacuum Level</span></h3>
+                    <p>챔버 내부를 얼마나 비웠는지 나타내는 값. 단위 mTorr. 낮을수록 더 진공에 가깝다.</p>
+                </article>
+
+                <article class="term-card" data-cat="measure">
+                    <h3>가스 유량 <span class="term-en">Gas Flow</span></h3>
+                    <p>공정에 투입되는 가스의 양. 단위 slm(분당 표준리터).</p>
+                </article>
+
+                <article class="term-card" data-cat="measure">
+                    <h3>RF 전력 <span class="term-en">RF Power</span></h3>
+                    <p>플라즈마를 발생시키는 데 사용하는 고주파 전력. 단위 W.</p>
+                </article>
+
+                <article class="term-card" data-cat="measure">
+                    <h3>막 두께 <span class="term-en">Film Thickness</span></h3>
+                    <p>증착·산화 등으로 형성된 막의 두께. 단위 nm. 목표값과의 차이가 불량 판정 기준이 되기도 한다.</p>
+                </article>
+
+                <article class="term-card" data-cat="measure">
+                    <h3>파티클 <span class="term-en">Particle</span></h3>
+                    <p>공정 중 웨이퍼 표면에 붙는 미세 이물질. 결함(불량)의 대표적인 원인 중 하나.</p>
+                </article>
+
+                <article class="term-card" data-cat="quality">
+                    <h3>결함 <span class="term-en">Defect</span></h3>
+                    <p>웨이퍼나 칩에 발생한 결점. 불량 판정의 근거가 된다.</p>
+                </article>
+
+                <article class="term-card" data-cat="quality">
+                    <h3>양품 <span class="term-en">Good Product</span></h3>
+                    <p>검사를 통과한 정상 제품.</p>
+                </article>
+
+                <article class="term-card" data-cat="quality">
+                    <h3>불량 <span class="term-en">Defective Product</span></h3>
+                    <p>검사를 통과하지 못한 제품.</p>
+                </article>
+
+                <article class="term-card" data-cat="quality">
+                    <h3>수율 <span class="term-en">Yield</span></h3>
+                    <p>생산한 것 중 정상 제품이 차지하는 비율. 예: 100개 중 92개가 정상이면 수율 92%.</p>
+                </article>
+
+                <article class="term-card" data-cat="quality">
+                    <h3>이상치 <span class="term-en">Outlier</span></h3>
+                    <p>대부분의 값과 크게 동떨어진 값. 항상 불량을 의미하지는 않지만 확인이 필요하다.</p>
+                </article>
+
+                <article class="term-card" data-cat="quality">
+                    <h3>관리 한계 <span class="term-en">Control Limit</span></h3>
+                    <p>정상으로 간주하는 값의 상한(관리 상한)과 하한(관리 하한).</p>
+                </article>
+
+                <article class="term-card" data-cat="quality">
+                    <h3>공정 변동 <span class="term-en">Process Variation</span></h3>
+                    <p>같은 조건에서도 매번 조금씩 달라지는 자연스러운 값의 흔들림.</p>
+                </article>
+
+                <article class="term-card" data-cat="quality">
+                    <h3>상관관계 <span class="term-en">Correlation</span></h3>
+                    <p>두 변수가 함께 움직이는 정도. 상관관계가 있다고 원인이라고 단정할 수는 없다(8차시 핵심).</p>
+                </article>
+
+                <article class="term-card" data-cat="ml">
+                    <h3>예측 <span class="term-en">Prediction</span></h3>
+                    <p>알고 있는 데이터로부터 아직 모르는 값을 추정하는 것.</p>
+                </article>
+
+                <article class="term-card" data-cat="ml">
+                    <h3>분류 <span class="term-en">Classification</span></h3>
+                    <p>데이터를 미리 정해진 범주(예: 합격/불합격)로 나누는 예측 방법.</p>
+                </article>
+
+                <article class="term-card" data-cat="ml">
+                    <h3>학습 데이터 <span class="term-en">Training Data</span></h3>
+                    <p>모델이 패턴을 배우는 데 사용하는 데이터.</p>
+                </article>
+
+                <article class="term-card" data-cat="ml">
+                    <h3>테스트 데이터 <span class="term-en">Test Data</span></h3>
+                    <p>모델의 성능을 확인하기 위해 학습에 사용하지 않고 남겨둔 데이터.</p>
+                </article>
+            </div>
+
+            <p class="no-result" id="no-result">🔍 검색 결과가 없습니다. 다른 검색어를 입력해보세요.</p>
+        </section>
+
+        <section class="block" id="pass-fail-table">
+            <span class="section-kicker mono"
+                ><span class="dot"></span>합격 / 불합격 표기</span
+            >
+            <h2>합격/불합격 표기 정리</h2>
+            <p class="lede">
+                이 과정에서 사용하는 세 가지 표기를 혼동하지 않도록 주의합니다.
+            </p>
+            <div class="tablewrap">
+                <table class="timetable">
+                    <tr>
+                        <th>데이터</th>
+                        <th>정상/합격</th>
+                        <th>이상/불량</th>
+                    </tr>
+                    <tr>
+                        <td><code>반도체_공정_샘플.csv</code> 원본 및 1~8·10차시 실습 데이터의 <code>합격여부</code></td>
+                        <td><code>1</code></td>
+                        <td><code>-1</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>fab.csv</code> 원본의 <code>Pass_Fail</code> (9차시)</td>
+                        <td><code>-1</code></td>
+                        <td><code>1</code></td>
+                    </tr>
+                    <tr>
+                        <td>이 과정의 통일 표기 <code>검사결과</code>(9~10차시 일부 데이터)</td>
+                        <td><code>0</code></td>
+                        <td><code>1</code></td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                원본 두 데이터의 부호가 서로 다르다는 점은 1차시와 9차시에서
+                반드시 짚고 넘어갑니다.
+            </p>
+            <p><a class="back-link" href="../index.html">← 처음으로 돌아가기</a></p>
+        </section>
+    </main>
+
+    <script>
+        (function () {
+            const search = document.getElementById("glossary-search");
+            const chips = Array.from(document.querySelectorAll(".cat-chip"));
+            const cards = Array.from(document.querySelectorAll(".term-card"));
+            const resultCount = document.getElementById("result-count");
+            const noResult = document.getElementById("no-result");
+            let activeCat = "all";
+
+            function applyFilter() {
+                const q = search.value.trim().toLowerCase();
+                let visible = 0;
+                cards.forEach((card) => {
+                    const matchesCat = activeCat === "all" || card.dataset.cat === activeCat;
+                    const matchesQuery = !q || card.innerText.toLowerCase().includes(q);
+                    const show = matchesCat && matchesQuery;
+                    card.style.display = show ? "" : "none";
+                    if (show) visible++;
+                });
+                resultCount.textContent = visible + "개 용어 표시 중 (전체 " + cards.length + "개)";
+                noResult.style.display = visible === 0 ? "block" : "none";
+            }
+
+            search.addEventListener("input", applyFilter);
+            chips.forEach((chip) => {
+                chip.addEventListener("click", () => {
+                    chips.forEach((c) => c.classList.remove("active"));
+                    chip.classList.add("active");
+                    activeCat = chip.dataset.cat;
+                    applyFilter();
+                });
+            });
+
+            applyFilter();
+        })();
+    </script>
+</body>
+</html>
