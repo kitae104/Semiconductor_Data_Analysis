@@ -8,7 +8,7 @@
 
 - **환경 준비**: 강사 PC에 `requirements.txt` 설치, Jupyter 커널 등록
   (`python -m ipykernel install --user --name python3`).
-- **학생 준비물 안내**: Google 계정(Colab용) 또는 로컬 Python 환경, 노트북/랩톱.
+- **학생 준비물 안내**: 로컬 Python/Jupyter 실습 환경, 노트북/랩톱.
 - **자료 배포**: 매 차시 수업 전 `data/weekly/weekXX/`의 CSV와 `notebooks/student/weekXX_student.ipynb`를
   학생들에게 공유한다(클라우드 드라이브, LMS 등).
 - **사전 실행 확인**: 매 차시 수업 전 `notebooks/instructor/weekXX_instructor.ipynb`를 처음부터 끝까지
@@ -41,10 +41,10 @@
 
 | 문제 | 원인 | 해결 |
 | --- | --- | --- |
-| `FileNotFoundError` | CSV 미업로드 또는 경로 오류 | Colab은 파일 업로드 후 파일명만 사용, 로컬은 저장소 구조 유지 |
+| `FileNotFoundError` | CSV 경로 오류 | 저장소 구조를 유지한 채 `pd.read_csv("../../data/weekly/...")` 상대경로로 여는지 확인 |
 | `KeyError: '컬럼명'` | 열 이름 오타 | `df.columns`로 정확한 이름 먼저 확인 |
 | 한글 깨짐 | 인코딩 문제 | 모든 CSV는 `utf-8-sig`로 저장되어 있음. `pd.read_csv(..., encoding="utf-8-sig")` 확인 |
-| Colab 런타임 끊김 | 세션 만료 | 파일 재업로드 후 위에서부터 재실행 |
+| Jupyter 커널 연결 끊김 | 커널 종료/재시작 | 커널을 다시 시작한 뒤 맨 위 셀부터 재실행 |
 | 9차시 모델 학습 느림 | 정상 | `DecisionTreeClassifier(max_depth=4)`는 수 초 내 완료되어야 함. 오래 걸리면 `stratify=y` 누락 등 확인 |
 
 ## 5. 평가 운영

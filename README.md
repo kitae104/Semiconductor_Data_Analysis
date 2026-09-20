@@ -17,7 +17,7 @@
 
 - 반도체·웨이퍼·공정의 기본 개념을 설명한다.
 - 변수·리스트·딕셔너리·조건문·반복문·함수 등 파이썬 기초를 익힌다.
-- Google Colab/Jupyter에서 CSV를 열고 Pandas로 조회·정리한다.
+- Jupyter Notebook에서 CSV를 열고 Pandas로 조회·정리한다.
 - 결측값·중복값·이상값을 찾고 정제한다.
 - 그래프로 공정 상태를 확인하고 설비별·공정별 차이를 비교한다.
 - 수율과 불량률을 계산하고, 공정 이상의 원인 후보를 데이터로 탐색한다.
@@ -99,16 +99,7 @@ Correlations, Tree, Test and Score, Predictions) 사용법은
 [`docs/orange3-guide.html`](docs/orange3-guide.html)에 한 곳에 정리했습니다. 차시별로 어떤 위젯을
 "먼저" 쓰는지는 [`docs/curriculum.md`](docs/curriculum.md)의 5~10차시 설명을 참고하세요.
 
-## 6. Google Colab 사용 방법
-
-1. [colab.research.google.com](https://colab.research.google.com)에 접속해 새 노트북을 만들거나,
-   `notebooks/student/weekXX_student.ipynb`를 업로드합니다(파일 → 노트북 업로드).
-2. 왼쪽 폴더 아이콘 → 업로드 아이콘을 눌러 해당 차시의 CSV
-   (`data/weekly/weekXX/*.csv`)를 업로드합니다.
-3. 노트북 안의 `pd.read_csv("../../data/weekly/...")` 경로를 Colab에서는
-   파일명만 있는 상대경로(예: `"week01_semiconductor_process_overview.csv"`)로 바꿔서 실행하세요.
-
-## 7. Jupyter Notebook(로컬) 사용 방법
+## 6. Jupyter Notebook 사용 방법
 
 ```bash
 jupyter notebook notebooks/student/week01_student.ipynb
@@ -117,7 +108,7 @@ jupyter notebook notebooks/student/week01_student.ipynb
 로컬 실행 시에는 노트북 안의 상대경로(`../../data/weekly/...`)가 그대로 작동합니다
 (저장소 구조를 그대로 유지한 채 실행해야 합니다).
 
-## 8. 실습 데이터 생성 방법
+## 7. 실습 데이터 생성 방법
 
 모든 차시 데이터는 시드가 고정된 스크립트로 재현 가능하게 생성됩니다. 원본 CSV(`data/raw/`)는
 절대 덮어쓰지 않습니다.
@@ -129,7 +120,7 @@ python scripts/validate_datasets.py      # 데이터 검증
 python scripts/validate_notebooks.py     # 노트북 실행 검증
 ```
 
-## 9. HTML 강의 자료 실행 방법
+## 8. HTML 강의 자료 실행 방법
 
 `index.html`을 브라우저로 열면 전체 목차로 이동할 수 있습니다. 별도 서버 없이 파일을 직접 열어도
 핵심 내용이 모두 표시되도록 만들어졌습니다(이미지·CSS·JS는 모두 상대경로의 로컬 파일).
@@ -139,7 +130,7 @@ python scripts/validate_notebooks.py     # 노트북 실행 검증
 start index.html
 ```
 
-## 10. 강사용 자료와 학생용 자료의 차이
+## 9. 강사용 자료와 학생용 자료의 차이
 
 | 구분 | 위치 | 특징 |
 | --- | --- | --- |
@@ -148,7 +139,7 @@ start index.html
 | 정답 | `notebooks/solutions/` | 학생용의 모든 TODO가 채워진 완성본 |
 | 강의 운영안 | `lectures/weekXX/instructor-guide.md` | 수업 흐름, 발문, 예상 오개념, 난이도별 과제 |
 
-## 11. 데이터 출처 및 교육용 가공 안내
+## 10. 데이터 출처 및 교육용 가공 안내
 
 - 원본 참고 자료: `반도체_공정_샘플.csv`(200행), `fab.csv`(1,567행 × 590센서, SECOM 유형의
   고차원 센서 데이터)를 `data/raw/`에 원본 그대로 보존했습니다.
@@ -161,14 +152,14 @@ start index.html
 - 반도체_공정_샘플.csv의 합격/불합격 부호(1=합격/-1=불합격)와 fab.csv의 부호(-1=정상/1=이상)가
   서로 다르다는 점은 1차시와 용어집에서 설명합니다.
 
-## 12. 주의사항
+## 11. 주의사항
 
 - 이 과정은 전문 데이터 과학자 양성이 아니라, 반도체 공정 데이터를 스스로 열어보고 해석할 수 있는
   능력을 기르는 것을 목표로 합니다.
 - 모든 상관관계·예측 결과는 "원인 후보"로 조심스럽게 표현하며, 확정된 인과관계로 단정하지 않습니다.
 - 실습 데이터는 교육 목적의 가상 데이터이므로, 실제 현업 의사결정에 사용해서는 안 됩니다.
 
-## 13. 라이선스 안내
+## 12. 라이선스 안내
 
 이 교육 자료와 생성된 실습 데이터는 교육 목적으로 자유롭게 사용·수정할 수 있습니다.
 `data/raw/`의 원본 CSV는 별도로 제공받은 참고 자료이므로, 재배포 전 출처 및 사용 조건을 확인하세요.
