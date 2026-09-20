@@ -395,18 +395,18 @@ table.data-preview tr:nth-child(even){background:#f8fafc;}
 }
 .telemetry-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr)); gap:1.1rem;}
 .telemetry-card{
-  background:var(--ink); color:var(--on-dark); border-radius:var(--radius); padding:1.2rem 1.3rem;
-  box-shadow:var(--shadow-card); border:1px solid #1e293b;
+  background:var(--card); color:var(--ink); border-radius:var(--radius); padding:1.2rem 1.3rem;
+  box-shadow:var(--shadow-card); border:1px solid var(--line);
 }
-.telemetry-card h4{margin:0 0 .2rem; font-size:.98rem; color:#fff;}
-.telemetry-card .tsub{font-size:.76rem; color:var(--on-dark-muted); margin-bottom:.8rem; font-family:var(--font-mono);}
+.telemetry-card h4{margin:0 0 .2rem; font-size:.98rem; color:var(--ink);}
+.telemetry-card .tsub{font-size:.76rem; color:var(--muted); margin-bottom:.8rem; font-family:var(--font-mono);}
 .telemetry-card .tstats{display:flex; flex-wrap:wrap; gap:.6rem .9rem; margin-top:.8rem; font-family:var(--font-mono);}
-.telemetry-card .tstats .item{font-size:.72rem; color:var(--on-dark-muted);}
-.telemetry-card .tstats .item b{display:block; font-size:1rem; color:#fff; font-weight:700;}
-.telemetry-card .tstats .item.pass b{color:#34d399;}
-.telemetry-card .tstats .item.warn b{color:#fbbf24;}
+.telemetry-card .tstats .item{font-size:.72rem; color:var(--muted);}
+.telemetry-card .tstats .item b{display:block; font-size:1rem; color:var(--ink); font-weight:700;}
+.telemetry-card .tstats .item.pass b{color:var(--green);}
+.telemetry-card .tstats .item.warn b{color:var(--orange);}
 .telemetry-card svg{display:block; width:100%; height:auto;}
-.telemetry-card:hover{box-shadow:var(--shadow-glow-cyan);}
+.telemetry-card:hover{box-shadow:var(--shadow-card-hover);}
 
 /* ---------- 3열 아웃컴 카드 (강의 페이지 핵심 학습 목표) ---------- */
 .outcome-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;}

@@ -22,11 +22,11 @@
 | `--cyan` / `--cyan-bg` / `--cyan-line` | `#06b6d4` / `#ecfeff` / `#a5f3fc` | 텔레메트리 보조 강조(필요할 때만) |
 | `--ink` | `#0f172a` | 본문/제목 색 |
 | `--muted` | `#64748b` | 보조 텍스트 |
-| `--on-dark` / `--on-dark-muted` | `#e2e8f0` / `#94a3b8` | 다크 카드(`.telemetry-card` 등) 위의 본문/보조 텍스트 |
+| `--on-dark` / `--on-dark-muted` | `#e2e8f0` / `#94a3b8` | 다크 배경 위의 본문/보조 텍스트용(현재 미사용, 향후 다크 카드 추가 시 재사용) |
 | `--bg` / `--card` / `--line` | `#f8fafc` / `#ffffff` / `#e2e8f0` | 배경/카드/테두리 |
 | `--radius` / `--radius-sm` / `--radius-xs` | `16px` / `10px` / `6px` | 카드 / 버튼·입력 / 배지·칩 |
-| `--shadow-card` / `--shadow-card-hover` | (common.css 참고) | 카드 기본/hover 그림자 |
-| `--shadow-glow-cyan` | (common.css 참고) | 다크 카드 hover 강조(`.telemetry-card:hover`) |
+| `--shadow-card` / `--shadow-card-hover` | (common.css 참고) | 카드 기본/hover 그림자(`.telemetry-card` 포함) |
+| `--shadow-glow-cyan` | (common.css 참고) | 다크 배경 위 hover 강조용(현재 미사용) |
 | `--font` | Inter 우선, Pretendard/맑은고딕/Noto Sans KR 폴백 | 본문 폰트 |
 | `--font-mono` | JetBrains Mono 우선, Consolas/D2Coding 폴백 | 코드/수치 폰트 |
 | `--maxw` | `1180px` | 페이지 본문 최대 폭 |
@@ -44,7 +44,7 @@
 | `.outcome-grid` / `.outcome-card` | 3열 핵심 학습 목표 카드 | 기존 `.goal-list`를 지우지 말고 카드 아래에 그대로 둔다 |
 | `.concept-panel` (`.cp-visual` / `.cp-info`) | 기존 SVG 개념도를 2단(그림+설명)으로 감싸는 패널 | 새 그림을 만들 필요 없이 기존 SVG를 그대로 옮겨 넣으면 됨 |
 | `.step-badge` | `STEP 01/02/03` 같은 단계 배지 | 실제 손 실습 흐름을 따라가는 섹션에만, 전체 섹션에 남발하지 않는다 |
-| `.telemetry-grid` / `.telemetry-card` | 다크 카드 그리드(대시보드형 미리보기) | **반드시 "예시" 라벨과 `.illustration-note`를 함께 표시** — 아래 "이미지·일러스트레이션 사용 원칙" 참고 |
+| `.telemetry-grid` / `.telemetry-card` | 라이트 카드 그리드(대시보드형 미리보기) | **반드시 "예시" 라벨과 `.illustration-note`를 함께 표시** — 아래 "이미지·일러스트레이션 사용 원칙" 참고 |
 | `.btn-row`, `.btn-primary`, `.btn-secondary` (`.on-dark` 변형 포함) | 히어로/CTA용 버튼 쌍 | `.nav-buttons`(진행 버튼)와는 별개 — 혼용해 중첩하지 않는다 |
 | `.cta-banner` | 하단 다크 CTA 배너 | `print.css`에서 이미 인쇄 시 숨김 처리됨 |
 | `.footer-status` (`.chip`) | 푸터 상태 칩 | **실제로 검증 가능한 사실만**(`Python 3.11+`, `10차시 · 4부 구성`) — "Online" 같은 가짜 가동 상태 금지 |
