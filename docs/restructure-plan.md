@@ -213,3 +213,12 @@
 - **남은 항목**: `index.html`의 "진행 안내" 배너가 아직 "skeleton" 단계 문구를 담고 있다면
   갱신 필요(전 차시 상세 완료를 반영). `lectures/week10/project-report-template.html` 고아 파일
   정리 여부는 사용자 판단 필요.
+
+### 후속 진행 — Orange3 실제 화면 캡처 자리 추가, 설치 안내 제거 (2026-09-21)
+
+- 5~10차시 Orange3 절과 `docs/orange3-guide.html`에 실제 Orange3 화면 캡처 자리를 추가했다.
+  파일이 없으면 점선 상자로 캡처할 화면과 저장 위치를 보여준다(`assets/js/common.js`,
+  체크리스트: `assets/images/orange3/README.md`).
+- 이 과정은 **실습 PC에 Orange3가 미리 설치된 환경**을 전제로 하기로 해, 부록의 설치 절
+  (설치 파일/pip/conda)을 짧은 "실행하기" 절로 바꾸고 `README.md`와 5~10차시 강사 가이드의
+  "설치" 문구도 정리했다. Orange3의 필요성·특징 설명은 유지했다.

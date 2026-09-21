@@ -24,7 +24,7 @@
 10. 정리 퀴즈 + 과제 안내 + 다음 차시 예고
 
 ## 준비물
-- 발표자용 에디터 실습 환경, 프로젝터, Orange3(설치·위젯 사용법은 `docs/orange3-guide.html` 참고)
+- 발표자용 에디터 실습 환경, 프로젝터, Orange3(실습 PC에 미리 설치, 위젯 사용법은 `docs/orange3-guide.html` 참고)
 - `data/weekly/week09/week09_pass_fail_train.csv` (학생 각자 다운로드 준비)
 - `data/data_dictionary/week09_dictionary.md`를 미리 한 번 읽어두기
 - scikit-learn이 설치된 에디터 실행 환경 준비

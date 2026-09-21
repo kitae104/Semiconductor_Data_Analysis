@@ -22,13 +22,10 @@
 
 | 파일명 | 캡처할 화면 | 준비 |
 |---|---|---|
-| `guide_01_download_page.png` | 공식 다운로드 페이지 — 운영체제 탭과 설치 파일 다운로드 버튼 | https://orangedatamining.com/download/ |
-| `guide_02_installer.png` | 설치 마법사 화면(Windows) — Next 버튼이 보이는 단계 | 설치 파일 실행 |
-| `guide_03_first_launch.png` | 처음 실행 시 나타나는 시작 안내(Welcome) 창 | 설치 후 첫 실행 |
-| `guide_04_main_screen.png` | 기본 화면 전체 — 왼쪽 위젯 목록 + 가운데 빈 캔버스 | Welcome 창에서 New |
-| `guide_05_file_widget.png` | File 위젯 창 — CSV를 불러와 열 목록(Name·Type·Role)이 보이는 화면 | `data/weekly/week05/week05_dirty_process_data.csv` |
-| `guide_06_link.png` | File 위젯과 Data Table 위젯이 연결선으로 이어진 캔버스 | 위와 같음 |
-| `guide_07_data_table.png` | Data Table 창 — 표에 빈 칸(결측값)이 보이는 화면 | 위와 같음 |
+| `guide_01_main_screen.png` | 기본 화면 전체 — 왼쪽 위젯 목록 + 가운데 빈 캔버스 | Orange3 실행 → Welcome 창에서 New |
+| `guide_02_file_widget.png` | File 위젯 창 — CSV를 불러와 열 목록(Name·Type·Role)이 보이는 화면 | `data/weekly/week05/week05_dirty_process_data.csv` |
+| `guide_03_link.png` | File 위젯과 Data Table 위젯이 연결선으로 이어진 캔버스 | 위와 같음 |
+| `guide_04_data_table.png` | Data Table 창 — 표에 빈 칸(결측값)이 보이는 화면 | 위와 같음 |
 
 ## 5차시 — `week05_dirty_process_data.csv`
 

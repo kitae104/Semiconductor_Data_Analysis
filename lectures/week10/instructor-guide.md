@@ -30,7 +30,7 @@
 9. 정리 퀴즈 + 과정 마무리 인사
 
 ## 준비물
-- 발표자용 에디터 실습 환경, 프로젝터, Orange3(설치·위젯 사용법은 `docs/orange3-guide.html` 참고)
+- 발표자용 에디터 실습 환경, 프로젝터, Orange3(실습 PC에 미리 설치, 위젯 사용법은 `docs/orange3-guide.html` 참고)
 - `data/weekly/week09/week09_new_lots_to_predict.csv`(학생 각자 다운로드 준비, 9차시의
   `week09_pass_fail_train.csv`도 함께 필요)
 - 1~9차시 강의 자료 링크(복습 시 즉시 열어 보여줄 수 있도록 즐겨찾기 해두기)

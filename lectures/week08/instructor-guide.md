@@ -24,7 +24,7 @@
 ## 준비물
 - `data/weekly/week08/week08_anomaly_root_cause.csv`
 - 발표용 산점도 이미지(강의 자료에 포함되어 있음)
-- Orange3(Correlations 위젯 시연용, 설치·사용법은 `docs/orange3-guide.html` 참고)
+- Orange3(Correlations 위젯 시연용, 위젯 사용법은 `docs/orange3-guide.html` 참고)
 
 ## 강사 설명 포인트
 - **상관관계 ≠ 인과관계**를 이번 시간의 핵심 메시지로 반복 강조한다. "상관계수가 높다 = 원인이다"라고

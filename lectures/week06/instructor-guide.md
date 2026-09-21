@@ -21,7 +21,7 @@
 8. 정리 퀴즈 + 과제 안내 + 다음 차시 예고
 
 ## 준비물
-- 발표자용 에디터 실습 환경, 프로젝터, Orange3(설치·위젯 사용법은 `docs/orange3-guide.html` 참고)
+- 발표자용 에디터 실습 환경, 프로젝터, Orange3(실습 PC에 미리 설치, 위젯 사용법은 `docs/orange3-guide.html` 참고)
 - `data/weekly/week06/week06_process_visualization.csv` (학생 각자 다운로드 준비)
 - 5차시에서 정제한 데이터를 다시 띄워 "정제된 데이터라야 그래프도 왜곡 없이 보인다"는 연결고리로
   시작하면 좋다.
