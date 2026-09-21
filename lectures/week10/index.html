@@ -209,9 +209,18 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
         <text x="710" y="98" text-anchor="middle" class="osub" font-size="11">합격 / 불합격</text>
         <text x="710" y="118" text-anchor="middle" class="osub" font-size="11">확률(Probability) 포함</text>
       </svg>
-      <p class="oflow-note">💡 실제 Orange3 화면 캡처(Predictions 위젯에 새 로트를 넣어 예측한
-      결과 표, 확률 컬럼 포함)를 강사가 추가하면 더 좋다.</p>
     </div>
+    <p style="margin:.8rem 0 .2rem;"><b>🖼️ 실제 Orange3 화면으로 확인하기</b></p>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../../assets/images/orange3/week10_01_canvas.png" loading="lazy"
+           alt="그림 10-1. Tree 모델과 새 로트 데이터를 Predictions에 연결한 캔버스" data-shot="학습용 File → Tree → Predictions, 새 로트 File → Predictions로 연결한 캔버스">
+      <figcaption class="img-caption">그림 10-1. Tree 모델과 새 로트 데이터를 Predictions에 연결한 캔버스</figcaption>
+    </figure>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../../assets/images/orange3/week10_02_predictions.png" loading="lazy"
+           alt="그림 10-2. Predictions가 보여주는 새 로트 예측 결과와 확률" data-shot="Predictions 창 — 새 로트별 예측 결과와 확률 열이 보이는 표">
+      <figcaption class="img-caption">그림 10-2. Predictions가 보여주는 새 로트 예측 결과와 확률</figcaption>
+    </figure>
     <div class="callout warn">
       <b class="tag">두 방식이 다르게 나온다면?</b>
       Orange3의 기본 Tree 설정과 오늘 코드의 <code>max_depth=4</code>가 다르면 결과가 달라질 수

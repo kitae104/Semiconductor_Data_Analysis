@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>부록. Orange3 시작하기</title>
+<link rel="icon" href="../assets/images/site/chip-favicon.png" type="image/png">
 <link rel="stylesheet" href="../assets/css/common.css">
 <link rel="stylesheet" href="../assets/css/print.css">
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../index.html">🔬 반도체 데이터 분석 10차시 과정
+    <a class="brand" href="../index.html"><img src="../assets/images/site/chip-macro-logo.jpg" alt="" aria-hidden="true" class="brand-logo" width="34" height="34" /> 반도체 데이터 분석 10차시 과정
       <small>Semiconductor Process Data Analysis</small>
     </a>
     <nav class="week-nav">
@@ -39,7 +40,8 @@
   <section class="block">
     <h2>🎯 이 부록으로 할 수 있는 것</h2>
     <ul class="goal-list">
-      <li>Orange3를 설치하고 실행할 수 있다.</li>
+      <li>Orange3가 무엇이고 이 과정에서 왜 쓰는지 한 문장으로 설명할 수 있다.</li>
+      <li>내 컴퓨터(Windows/Mac)에 맞는 설치 파일을 골라 Orange3를 설치하고 실행할 수 있다.</li>
       <li>위젯을 캔버스에 놓고 서로 연결해 워크플로를 만들 수 있다.</li>
       <li><b>File</b> 위젯으로 실습용 CSV를 불러올 수 있다.</li>
       <li>5~10차시에서 실제로 쓰는 위젯(Data Table, Feature Statistics, Scatter Plot, Box Plot,
@@ -63,6 +65,22 @@
     <p>이 과정에서는 <b>Orange3로 먼저 결과를 눈으로 훑어본 뒤, 같은 내용을 파이썬 코드로 직접
     계산·확인</b>하는 순서로 5~10차시를 진행한다. Orange3가 새로운 개념을 가르치는 것이 아니라,
     "이번 시간에 코드로 확인할 내용의 예고편"을 미리 보여주는 역할을 한다고 생각하면 된다.</p>
+    <div class="callout concept">
+      <b class="tag">쉬운 비유 — 레고 블록으로 만드는 분석 공장</b>
+      위젯 하나하나는 "파일 열기", "표로 보기", "그래프 그리기", "모델 만들기"처럼 한 가지 일만 하는
+      레고 블록이다. 블록을 순서대로 놓고 선으로 이으면 데이터가 컨베이어 벨트를 타듯 앞 블록에서
+      뒤 블록으로 흘러가며 처리된다. 이렇게 이어 붙인 전체 모양을 <b>워크플로(workflow)</b>라고
+      부른다.
+    </div>
+    <p>엑셀·Orange3·파이썬은 모두 데이터를 다루는 도구지만, 잘하는 일이 조금씩 다르다.</p>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>도구</th><th>사용 방법</th><th>잘하는 일</th><th>이 과정에서의 역할</th></tr>
+        <tr><td>엑셀</td><td>셀에 직접 입력·수식</td><td>작은 표 정리, 간단한 합계</td><td>익숙한 비교 대상(1·4차시에서 비교)</td></tr>
+        <tr><td>Orange3</td><td>위젯을 마우스로 연결</td><td>코드 없이 빠르게 그래프·모델 확인</td><td>먼저 눈으로 훑어보기</td></tr>
+        <tr><td>파이썬</td><td>코드 작성</td><td>정확한 계산, 반복 작업 자동화</td><td>숫자로 직접 확인하기</td></tr>
+      </table>
+    </div>
     <div class="callout warn">
       <b class="tag">체크포인트 — Orange3는 파이썬 패키지가 아니다</b>
       <code>requirements.txt</code>의 패키지들은 <code>pip install -r requirements.txt</code>로
@@ -74,29 +92,115 @@
 
   <section class="block">
     <h2>🧩 설치하기</h2>
+    <p>설치 방법은 두 가지다. <b>파이썬을 처음 배우는 중이라면 방법 A(설치 파일)를 쓰면 된다.</b>
+    방법 A는 게임이나 메신저를 설치하듯 다음 버튼만 누르면 끝나고, 필요한 파이썬도 설치 파일
+    안에 함께 들어 있어 따로 준비할 것이 없다.</p>
+
+    <h3>설치 전에 확인할 것</h3>
+    <ul class="pt-list">
+      <li><b>운영체제</b>: 64비트 Windows 또는 macOS(Apple Silicon·Intel 모두 지원)</li>
+      <li><b>관리자 권한</b>: Windows 설치 파일은 관리자 권한 없이도 설치할 수 있다(회사·학교 PC도 대부분 가능).</li>
+      <li><b>인터넷</b>: 설치 파일을 내려받을 때만 필요하다. 설치 후 실습은 인터넷 없이도 된다.</li>
+    </ul>
+
+    <h3>방법 A — 설치 파일로 설치하기 (초보자 추천)</h3>
     <div class="step">
       <div class="num">1</div>
-      <div class="content"><b>방법 A — pip로 설치(파이썬 환경이 있다면 가장 간단)</b></div>
+      <div class="content"><b>공식 다운로드 페이지 접속</b> — 웹 브라우저에서
+      <a href="https://orangedatamining.com/download/" target="_blank" rel="noopener">orangedatamining.com/download</a>
+      에 접속한다. 내 운영체제(Windows / macOS) 탭이 자동으로 선택되어 있는지 확인한다.</div>
     </div>
-    <div class="code-block">
-      <div class="code-label"><span>터미널 / Anaconda Prompt</span><button class="copy-btn">복사</button></div>
-      <pre><code># 가상환경(.venv)을 이미 활성화한 상태에서 실행
-pip install orange3
-
-# 설치가 끝나면 아래 명령으로 실행(캔버스 창이 뜬다)
-python -m Orange.canvas</code></pre>
-    </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/orange3/guide_01_download_page.png" loading="lazy"
+           alt="그림 A-1. Orange3 공식 다운로드 페이지" data-shot="Orange3 공식 다운로드 페이지 — 운영체제 탭과 설치 파일 다운로드 버튼이 보이는 화면">
+      <figcaption class="img-caption">그림 A-1. Orange3 공식 다운로드 페이지</figcaption>
+    </figure>
     <div class="step">
       <div class="num">2</div>
-      <div class="content"><b>방법 B — 설치 파일로 설치(파이썬 환경이 익숙하지 않다면 추천)</b> —
-      <a href="https://orangedatamining.com" target="_blank" rel="noopener">orangedatamining.com</a>
-      에 접속해 Windows/Mac용 설치 파일을 내려받아 다른 프로그램처럼 설치한다. 설치 후 바탕화면이나
-      시작 메뉴에서 "Orange 3" 아이콘을 실행하면 된다.</div>
+      <div class="content"><b>내 컴퓨터에 맞는 파일 내려받기</b>
+        <ul class="pt-list">
+          <li><b>Windows</b>: <code>Orange3-(버전)-x86_64.exe</code> 형태의 설치 파일(Standalone installer)</li>
+          <li><b>Mac(M1·M2 등 Apple Silicon)</b>: 파일 이름에 <code>arm64</code>가 들어간 <code>.dmg</code></li>
+          <li><b>Mac(Intel)</b>: 파일 이름에 <code>x86_64</code>가 들어간 <code>.dmg</code></li>
+        </ul>
+        내 Mac이 어느 쪽인지 모르겠다면 화면 왼쪽 위 <b>사과 모양 메뉴 → 이 Mac에 관하여</b>에서 "칩"
+        항목에 Apple M1/M2/M3…이 보이면 Apple Silicon, "프로세서"에 Intel이 보이면 Intel이다.
+      </div>
     </div>
+    <div class="callout concept">
+      <b class="tag">참고 — 버전 번호는 계속 바뀐다</b>
+      2026년 9월 기준 최신 버전은 3.40.0이다. 파일 이름의 숫자가 이 문서와 달라도 괜찮다.
+      다운로드 페이지에 보이는 <b>가장 위(최신) 파일</b>을 받으면 된다.
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="content"><b>설치 파일 실행</b> — 내려받은 파일(보통 "다운로드" 폴더에 있다)을
+      더블클릭한다. Windows에서는 설치 마법사가 뜨면 <b>Next(다음)</b>를 계속 눌러 기본 설정 그대로
+      설치하고, 마지막에 <b>Finish(마침)</b>를 누른다. Mac에서는 열린 창에서 Orange 아이콘을
+      <b>Applications(응용 프로그램)</b> 폴더로 끌어다 놓으면 설치가 끝난다.</div>
+    </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/orange3/guide_02_installer.png" loading="lazy"
+           alt="그림 A-2. Orange3 설치 마법사 화면" data-shot="Orange3 설치 마법사 화면(Windows) — Next 버튼이 보이는 단계">
+      <figcaption class="img-caption">그림 A-2. Orange3 설치 마법사 화면 — 기본 설정 그대로 Next</figcaption>
+    </figure>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — 보안 경고 창이 뜨는 경우</b>
+      <b>Windows</b>에서 "Windows의 PC 보호" 파란 창이 뜨면 <b>추가 정보 → 실행</b>을 누른다.
+      <b>Mac</b>에서 "확인되지 않은 개발자" 경고가 뜨면 응용 프로그램 폴더의 Orange 아이콘을
+      <b>마우스 오른쪽 클릭 → 열기</b>로 실행한다. 단, 이 방법은 반드시 위의
+      <b>공식 사이트에서 받은 파일</b>에만 사용한다.
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="content"><b>처음 실행하기</b> — Windows는 시작 메뉴에서 <b>Orange</b>를 검색해
+      실행하고, Mac은 응용 프로그램 폴더에서 Orange를 실행한다. 처음 실행하면 시작 안내 창
+      (Welcome)이 뜨는데, <b>New</b>(새 워크플로)를 누르면 빈 캔버스가 열린다.</div>
+    </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/orange3/guide_03_first_launch.png" loading="lazy"
+           alt="그림 A-3. Orange3를 처음 실행하면 나타나는 시작 안내 창" data-shot="Orange3를 처음 실행했을 때 나타나는 시작 안내(Welcome) 창">
+      <figcaption class="img-caption">그림 A-3. 처음 실행하면 나타나는 시작 안내 창 — New를 누른다</figcaption>
+    </figure>
     <div class="callout warn">
       <b class="tag">체크포인트 — 처음 실행은 오래 걸릴 수 있다</b>
-      Orange3를 처음 실행하면 위젯 목록을 준비하느라 몇십 초~1분 정도 창이 하얗게 떠 있을 수
-      있다. 오류가 아니니 기다리면 된다. 두 번째 실행부터는 훨씬 빨라진다.
+      Orange3를 처음 실행하면 위젯 목록을 준비하느라 몇십 초~1분 정도 창이 하얗게 떠 있거나
+      아무 반응이 없을 수 있다. 오류가 아니니 기다리면 된다. 아이콘을 여러 번 누르면 창이 여러 개
+      열리니 한 번만 누르고 기다리자. 두 번째 실행부터는 훨씬 빨라진다.
+    </div>
+    <div class="callout concept">
+      <b class="tag">설치가 막힐 때 — 포터블(압축) 버전</b>
+      Windows에서 설치가 계속 막히면 다운로드 페이지의 <b>Portable</b> 버전(<code>.zip</code>)을
+      받아 압축을 풀고, 폴더 안의 바로가기를 실행해도 된다. 설치 과정 없이 바로 쓸 수 있다.
+    </div>
+
+    <h3>방법 B — 명령어로 설치하기 (파이썬에 익숙한 경우만)</h3>
+    <p>이미 Anaconda나 파이썬 가상환경을 다룰 줄 안다면 명령어로 설치할 수도 있다. 이 과정의
+    실습용 가상환경과 섞이지 않도록 <b>Orange3 전용 환경을 따로 만드는 것</b>을 권장한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Anaconda Prompt (conda 사용 시)</span><button class="copy-btn">복사</button></div>
+      <pre><code>conda create python=3.11 --yes --name orange3
+conda activate orange3
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+conda install orange3
+
+# 실행(캔버스 창이 뜬다)
+python -m Orange.canvas</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>터미널 (pip 사용 시)</span><button class="copy-btn">복사</button></div>
+      <pre><code># Orange3 화면을 그리는 PyQt6를 먼저 설치한다
+pip install PyQt6 PyQt6-WebEngine
+pip install orange3
+
+# 실행(캔버스 창이 뜬다)
+python -m Orange.canvas</code></pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — 명령어 방식이 어렵다면</b>
+      명령어 설치 중 빨간 오류 메시지가 나오면 고치려고 애쓰기보다 <b>방법 A(설치 파일)</b>로
+      바꾸는 것이 가장 빠르다. 두 방법으로 설치한 Orange3는 기능이 같다.
     </div>
   </section>
 
@@ -132,8 +236,12 @@ python -m Orange.canvas</code></pre>
 
         <text x="530" y="230" text-anchor="middle" class="osub" font-size="11">💡 왼쪽 목록의 위젯 아이콘을 캔버스로 드래그 → 두 위젯의 가장자리를 드래그해 선으로 연결</text>
       </svg>
-      <p class="oflow-note">💡 실제 Orange3 캔버스 화면 캡처를 강사가 추가하면 더 좋다.</p>
     </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/orange3/guide_04_main_screen.png" loading="lazy"
+           alt="그림 A-4. Orange3 기본 화면" data-shot="Orange3 기본 화면 전체 — 왼쪽 위젯 목록과 가운데 빈 캔버스가 보이는 창">
+      <figcaption class="img-caption">그림 A-4. 실제 Orange3 기본 화면 — 왼쪽 위젯 목록, 가운데 캔버스</figcaption>
+    </figure>
     <div class="term-grid">
       <div class="term-card">
         <h4>위젯 목록</h4><div class="en">Widget Toolbox</div>
@@ -182,6 +290,19 @@ python -m Orange.canvas</code></pre>
       <div class="content"><b>CSV 불러오기</b> — File 위젯을 더블클릭해 창을 열고, 폴더 아이콘을 눌러
       <code>data/weekly/week05/week05_dirty_process_data.csv</code>를 선택한다.</div>
     </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/orange3/guide_05_file_widget.png" loading="lazy"
+           alt="그림 A-5. File 위젯 창에서 CSV를 불러온 모습" data-shot="File 위젯 창 — week05_dirty_process_data.csv를 불러와 열 목록(Name·Type·Role)이 보이는 화면">
+      <figcaption class="img-caption">그림 A-5. File 위젯 창 — 폴더 아이콘으로 CSV를 고르면 아래에 열 목록이 나타난다</figcaption>
+    </figure>
+    <div class="callout concept">
+      <b class="tag">알아두기 — File 창 아래의 열 목록(Type·Role)</b>
+      File 창 아래 표에는 열마다 <b>Type</b>(숫자 numeric / 범주 categorical / 글자 text 등)과
+      <b>Role</b>(feature: 재료로 쓰는 열, target: 맞힐 정답 열, meta: 참고용 열)이 표시된다.
+      Orange3가 자동으로 정해 주므로 5~8차시에는 그대로 두면 된다. <b>9차시</b>에는 맞힐 열
+      (검사결과)의 Role을 <b>target</b>, Type을 <b>categorical</b>로 바꿔야 한다. 칸을
+      더블클릭하면 바꿀 수 있고, 바꾼 뒤에는 오른쪽 아래 <b>Apply</b>를 누른다.
+    </div>
     <div class="step">
       <div class="num">3</div>
       <div class="content"><b>Data Table 위젯 추가</b> — <code>Data</code> 카테고리에서
@@ -193,11 +314,21 @@ python -m Orange.canvas</code></pre>
       누른 채로 Data Table 위젯의 왼쪽 가장자리까지 끌고 가서 놓는다. 화살표가 있는 선이 생기면
       연결 성공이다.</div>
     </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/orange3/guide_06_link.png" loading="lazy"
+           alt="그림 A-6. File 위젯과 Data Table 위젯이 연결선으로 이어진 캔버스" data-shot="캔버스 — File 위젯과 Data Table 위젯이 연결선(Data)으로 이어진 모습">
+      <figcaption class="img-caption">그림 A-6. 두 위젯이 연결선으로 이어진 모습</figcaption>
+    </figure>
     <div class="step">
       <div class="num">5</div>
       <div class="content"><b>결과 확인</b> — Data Table 위젯을 더블클릭하면 CSV 내용이 표로
       나타난다. 빈 칸(결측값)이 그대로 보이는지 확인해보자.</div>
     </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/orange3/guide_07_data_table.png" loading="lazy"
+           alt="그림 A-7. Data Table 창에 CSV 내용이 표로 나타난 모습" data-shot="Data Table 창 — CSV 내용이 표로 보이고 빈 칸(결측값)이 있는 화면">
+      <figcaption class="img-caption">그림 A-7. Data Table 창 — 첫 워크플로 완성!</figcaption>
+    </figure>
     <div class="callout danger">
       <b class="tag">자주 하는 실수 — 위젯이 연결되지 않는다</b>
       가장자리가 아니라 위젯 <b>가운데</b>를 클릭하면 위젯이 움직이기만 하고 연결선이 생기지
@@ -289,6 +420,17 @@ python -m Orange.canvas</code></pre>
   <section class="block">
     <h2>⚠️ 문제 해결 (Troubleshooting)</h2>
     <div class="callout danger">
+      <b class="tag">설치했는데 실행이 안 돼요</b>
+      ① 처음 실행은 1분 가까이 걸릴 수 있으니 먼저 기다려 본다. ② 그래도 안 뜨면 컴퓨터를 다시
+      시작한 뒤 한 번만 실행해 본다. ③ Windows라면 설치 대신 <b>포터블(.zip) 버전</b>을 받아
+      압축을 풀어 실행해 본다. ④ Mac에서 경고 창이 뜨면 앞의 "보안 경고 창" 체크포인트를 따른다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">위젯 목록에 원하는 위젯이 안 보여요</b>
+      캔버스 빈 곳을 마우스 오른쪽 클릭하면 위젯 검색 창이 뜬다. 위젯 이름(예:
+      <code>Box Plot</code>)을 입력하고 Enter를 누르면 그 자리에 위젯이 놓인다.
+    </div>
+    <div class="callout danger">
       <b class="tag">위젯 창이 안 열려요</b>
       더블클릭이 아니라 한 번만 클릭했을 가능성이 크다. 위젯 아이콘을 <b>정확히 두 번</b> 빠르게
       클릭한다.
@@ -301,7 +443,10 @@ python -m Orange.canvas</code></pre>
     <div class="callout danger">
       <b class="tag">Tree/Test and Score에서 오류가 나요</b>
       Target Variable(정답 열, 예: 검사결과)이 지정되어 있는지 확인한다. 파이썬의 Feature/Label
-      나누기와 같은 개념으로, Orange3에서도 "무엇을 맞힐지" 미리 알려줘야 한다.
+      나누기와 같은 개념으로, Orange3에서도 "무엇을 맞힐지" 미리 알려줘야 한다. File 위젯 창의
+      열 목록에서 검사결과의 Role을 <b>target</b>, Type을 <b>categorical</b>로 바꾸고
+      <b>Apply</b>를 누른다(위 "첫 워크플로" 절의 알아두기 참고). Type이 numeric으로 남아 있으면
+      Orange3는 합격/불합격 분류가 아니라 숫자 맞히기(회귀)로 처리한다.
     </div>
     <div class="callout warn">
       <b class="tag">작업한 워크플로를 저장하고 싶어요</b>

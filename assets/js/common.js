@@ -131,6 +131,35 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // 캡처 이미지 자리: <img data-shot="캡처할 화면 설명"> 파일이 아직 없으면
+  // 점선 상자(.photo-slot)로 바꿔 "무엇을, 어떤 파일명으로" 저장하면 되는지 보여준다.
+  // 해당 경로에 이미지를 저장하면 HTML 수정 없이 새로고침만으로 이미지가 표시된다.
+  document.querySelectorAll("img[data-shot]").forEach(function (img) {
+    function showSlot() {
+      if (!img.parentNode) return;
+      var slot = document.createElement("div");
+      slot.className = "photo-slot";
+      var desc = document.createElement("div");
+      desc.appendChild(document.createTextNode("📸 캡처 예정 — "));
+      var b = document.createElement("b");
+      b.textContent = img.getAttribute("data-shot");
+      desc.appendChild(b);
+      slot.appendChild(desc);
+      var file = document.createElement("code");
+      var src = img.getAttribute("src") || "";
+      var idx = src.indexOf("assets/");
+      file.textContent = idx >= 0 ? src.slice(idx) : src;
+      slot.appendChild(document.createTextNode("저장 위치: "));
+      slot.appendChild(file);
+      img.parentNode.replaceChild(slot, img);
+    }
+    if (img.complete && img.naturalWidth === 0) {
+      showSlot();
+    } else {
+      img.addEventListener("error", showSlot);
+    }
+  });
+
   // 스크롤 등장 애니메이션: section.block / .hero / .hero-home이 화면에 들어오면 서서히 나타남
   if ("IntersectionObserver" in window) {
     var revealTargets = document.querySelectorAll("section.block, .hero, .hero-home");
