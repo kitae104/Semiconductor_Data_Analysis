@@ -107,6 +107,12 @@
       <br><br>
       <code>관리 상한 = 평균 + 2×표준편차</code>, <code>관리 하한 = 평균 − 2×표준편차</code>
     </div>
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>공장에서 쓰는 '관리도(Control Chart)'에서 관리 상한·하한은 보통 평균에서 표준편차 몇 배 떨어진 곳에 긋는지 알려줘. '규격(Spec)'과 '관리 한계'가 어떻게 다른지도 초등학생도 알 수 있게 비유로 설명해줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: "3시그마(3배)"라는 말이 나오는지, 그리고 이 강의에서 쓴 2배는 교육용 기준이라는 점과 비교해보자.</p>
+
     <div class="callout practice">
       <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
       친구 6명의 팔굽혀펴기 횟수처럼 작은 숫자 예로 관리 상한/하한 계산부터 손에 익혀보자.
@@ -178,6 +184,12 @@ dtype: int64</pre>
       <tr><td>-0.7 ~ -0.3</td><td>약한~중간 음의 상관</td></tr>
       <tr><td>-0.7 이하</td><td>강한 음의 상관</td></tr>
     </table>
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>상관계수(r)에 대한 초보자용 OX 퀴즈 3문제를 내줘. 'r이 0이면 두 변수는 아무 관계도 없다' 같은 헷갈리는 문장도 꼭 넣어줘. 정답과 해설은 내가 답한 뒤에 알려줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: "r이 0에 가까워도 곡선 모양이나 '범위를 벗어나면 나빠지는' 관계는 있을 수 있다"는 설명이 나오는지 확인하자.</p>
+
   </section>
 
   <section class="block">
@@ -419,6 +431,12 @@ print("정상 범위 밖 불합격률(%):", round(fail_rate_out, 2))</code></pre
     </div>
     <p style="color:var(--muted);font-size:.9rem;">참고로 진공도와 불합격의 상관계수를 계산하면 r ≈ 0.02로 거의 0이다.
     너무 낮아도, 너무 높아도 불합격이 늘기 때문에 상관계수로는 잡히지 않는다 — 그래서 범위 이탈 비교가 따로 필요하다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>너는 반도체 공장의 베테랑 엔지니어고 나는 신입이야. 가상 상황: 진공도가 정상 범위를 벗어나면 불합격률이 8%에서 26%로 높아졌어. 내가 '진공도가 원인이네요!'라고 말하면, 왜 '원인 후보'라고 불러야 하는지와 확정하려면 무엇을 더 확인해야 하는지 대화로 3번 주고받으며 알려줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI가 끝까지 "원인이다"라고 단정하지 않는지, "제3의 요인"이나 "조건을 바꿔보는 실험" 같은 확인 방법이 나오는지 살펴보자.</p>
+
   </section>
 
   <section class="block">

@@ -177,6 +177,12 @@ dtype: int64
 X = df[feature_cols]   # Feature(특징)
 y = df["검사결과"]       # Label(정답)</code></pre>
     </div>
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>머신러닝의 Feature(특징)와 Label(정답)을 '떡볶이 맛 예측하기' 같은 일상 비유로 설명해줘. 그다음 Feature와 Label을 구분하는 OX 문제 3개를 내주고, 내가 답하면 정답과 이유를 알려줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 비유에서 "맞히고 싶은 것"이 Label, "보고 판단하는 재료"가 Feature로 나뉘어 있는지 확인하자.</p>
+
   </section>
 
   <section class="block">
@@ -213,6 +219,12 @@ model.fit(X_train, y_train)</code></pre>
         <li><code>model.fit(X_train, y_train)</code>: 학습용 데이터로 모델을 훈련시킨다.</li>
       </ul>
     </div>
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>train_test_split의 stratify=y를, 빨간 사탕 20개와 파란 사탕 80개를 두 봉지로 나누는 상황에 빗대서 설명해줘. stratify를 안 쓰면 어떤 일이 생길 수 있는지도 알려줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: "두 봉지 모두 빨강:파랑 비율이 비슷해진다"는 핵심이 들어 있는지 보자.</p>
+
   </section>
 
   <section class="block">
@@ -266,6 +278,12 @@ print(cm)</code></pre>
       아직 부족하다(약 19%만 적중). 전체 정확도는 그럴듯해 보여도, "불합격을 놓치지 않는 것"이
       더 중요한 상황이라면 이 모델은 아직 충분하지 않다.
     </div>
+
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>너는 반도체 공장의 품질 엔지니어야. '불합격 로트를 합격으로 놓치는 실수'와 '합격 로트를 불합격으로 잘못 잡는 실수' 중 공장에서는 어느 쪽이 더 곤란한지, 초보자도 알 수 있게 짧은 역할극으로 설명해줘. 가상의 예로만 설명해줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 불량을 놓치면 고객에게 불량품이 갈 수 있다는 점이 설명되는지 보고, 오늘 혼동행렬의 25건이 어느 실수인지 스스로 짚어보자.</p>
 
     <h3>어떤 특징이 예측에 중요했을까?</h3>
     <div class="code-block">

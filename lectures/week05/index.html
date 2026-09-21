@@ -229,6 +229,12 @@ max    557.727366  1033.100000  250.000000  132.300000    1.000000</pre>
       <code>unique()</code>로 따로 확인해야 한다.
     </div>
 
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>평균이 중앙값보다 훨씬 크면 왜 '엄청 큰 값이 섞였다'는 신호인지, 반 친구 10명의 용돈 이야기로 비유해서 초등학생도 알게 설명해줘. 숫자 예시도 하나 들어줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI의 숫자 예시에서 큰 값 하나 때문에 평균만 크게 뛰고 중앙값은 거의 그대로인지 계산기로 직접 확인하자.</p>
+
     <h3>결측값 정확히 세기 — isna()</h3>
     <ul class="pt-list">
       <li><code>describe()</code>의 <code>count</code> → "결측이 있는 열이 있다"까지만 확인 가능</li>
@@ -285,6 +291,12 @@ print(df.isna().sum().sum())   # 남은 결측값 총합</code></pre>
       <code>df.dropna(...)</code>와 <code>df[col].fillna(...)</code>는 모두 새 결과를 돌려줄 뿐
       원본을 바꾸지 않는다. <code>df = df.dropna(...)</code>처럼 다시 저장해야 실제로 반영된다.
     </div>
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>결측값(NaN), dropna(), fillna()에 대한 OX 문제 3개를 내줘. 정답은 내가 답을 말한 다음에 알려줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: "NaN과 0은 같다", "dropna()만 실행해도 원본이 바뀐다" 같은 문제가 나오면 오늘 배운 대로 둘 다 X인지 확인하자.</p>
+
   </section>
 
   <section class="block">
@@ -386,6 +398,12 @@ df.loc[df["온도_섭씨"] > 400, "온도_섭씨"] = df["온도_섭씨"].median(
       중간중간 번호가 빠지게 된다. 리스트처럼 "몇 번째 행"으로 순서대로 접근하고 싶다면
       <code>df = df.reset_index(drop=True)</code>를 추가로 실행해 인덱스를 새로 매겨야 한다.
     </div>
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>너는 반도체 공장의 공정 엔지니어야. 압력 센서에 -42 Pa라는 값이 찍혔을 때, 그 기록을 지울지, 값을 고칠지, 그대로 두고 설비를 먼저 확인할지 초보자에게 역할극으로 설명해줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI가 "무조건 지운다"고만 하지 않고, 상황에 따라 판단한다는 오늘 강의 내용과 같은 말을 하는지 보자.</p>
+
   </section>
 
   <section class="block">

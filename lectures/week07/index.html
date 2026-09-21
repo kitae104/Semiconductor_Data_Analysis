@@ -174,6 +174,12 @@ Name: 점수, dtype: float64</pre>
         A반은 (90+80)/2=85.0, B반은 (70+60)/2=65.0 하는 식이다.</li>
       </ul>
     </div>
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>파이썬 pandas의 groupby를 프로그래밍을 처음 배우는 사람에게 택배 분류 센터 비유로 3줄 안에 설명해줘. groupby만 쓰고 .mean()을 안 붙이면 왜 숫자가 안 나오는지도 같은 비유로 알려줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 비유 안에 "① 같은 것끼리 묶기 → ② 묶음마다 계산하기" 두 단계가 모두 들어 있는지 확인하자.</p>
+
     <ul class="pt-list">
       <li>같은 방식을 오늘 다룰 반도체 데이터의 "설비별 평균 온도"에 적용</li>
     </ul>
@@ -261,6 +267,12 @@ print(lot_summary.head())</code></pre>
       계산해야 정확하다(실습지 3번 문제에서 직접 비교해본다).
     </div>
 
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>'로트별 수율을 그냥 평균 내는 것'과 '양품 합계÷검사 합계로 계산하는 것'의 차이에 대해 초보자용 OX 퀴즈 3문제를 내줘. 정답은 내가 답을 말한 다음에 해설과 함께 알려줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 해설에 "로트마다 크기가 다를 때" 예시가 나오면 계산기로 두 값을 직접 구해 정말 다른지 확인하자.</p>
+
     <h3>저수율 로트 찾기</h3>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
@@ -313,6 +325,12 @@ Name: count, dtype: int64</pre>
     <img class="chart-img" src="../../assets/images/week07/pareto_defects.png" alt="불량유형 파레토 차트. 두께 불량이 가장 많고, 누적 비율 막대와 선이 함께 표시되어 있다.">
     <p class="img-caption">"두께 불량"이 전체 불량(36건)의 약 31%로 가장 많이 발생한 불량 유형이다 — 가장 먼저 개선할 대상이다.
     상위 2개 유형(두께 불량, 패턴 불량)만 해결해도 전체 불량의 절반 가까이를 줄일 수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>너는 반도체 공장의 친절한 품질 엔지니어야. 가상의 불량 개수가 두께 불량 11, 패턴 불량 6, 파티클 5, 오염 5, 정렬 불량 4, 식각 부족 4, 전기적 특성 불량 1건이야. 어떤 순서로 개선할지, 파레토 차트의 누적선이 무슨 뜻인지 신입에게 설명하듯 알려줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI가 말한 "상위 2개 누적 비율"이 강의 결과(두께+패턴 17/36 ≈ 47%)와 같은지 직접 계산해보자.</p>
+
   </section>
 
   <section class="block">
