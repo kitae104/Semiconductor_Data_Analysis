@@ -83,7 +83,7 @@
       <b class="tag">쉬운 예시</b>
       한 설비의 온도를 하루에 5번 측정했다면 값 5개를 변수 5개로 따로 만드는 건 번거롭다.
       리스트에 <code>[298, 301, 299, 305, 300]</code>처럼 담아두면 최고·최저·평균 온도를 한 번에 계산할 수 있고,
-      딕셔너리로 <code>{"설비번호": "EQ-03", "온도": 301}</code>처럼 이름표를 붙이면 이 값이 어느 설비의
+      딕셔너리로 <code>{"설비번호": "EQ-03", "온도_섭씨": 301}</code>처럼 이름표를 붙이면 이 값이 어느 설비의
       기록인지도 함께 관리할 수 있다.
     </div>
   </section>
@@ -259,13 +259,13 @@ print(f"평균 온도는 {round(average, 1)}도입니다.")   # round()로 소�
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">312.6
 295.4
-1806.9
+1807.1
 평균 온도는 301.2도입니다.</pre>
     </div>
     <div class="callout practice">
       <b class="tag">🙋 직접 해보기</b>
-      <code>max(temperatures) - min(temperatures)</code>로 "온도 편차"를 계산하고, f-string으로
-      <code>f"온도 편차는 {편차}도입니다."</code> 같은 문장을 출력해보자.
+      <code>temp_range = max(temperatures) - min(temperatures)</code>로 온도 범위(최고-최저 차이)를
+      계산하고, <code>f"온도 범위는 {temp_range:.1f}도입니다."</code> 같은 문장을 출력해보자.
     </div>
   </section>
 
@@ -478,7 +478,8 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
       <b class="tag">따옴표 규칙</b>
       f-string 바깥은 큰따옴표(<code>"..."</code>)를 썼으므로, 딕셔너리 키 안쪽은 작은따옴표
       (<code>'설비번호'</code>)를 써야 한다. 같은 종류의 따옴표를 겹쳐 쓰면 문자열이 예상보다
-      일찍 끝나버려 <code>SyntaxError</code>가 날 수 있다.
+      일찍 끝나버려 <code>SyntaxError</code>가 날 수 있다(파이썬 3.12 이전 버전). 버전과 상관없이
+      안전하게 쓰려면 안쪽은 작은따옴표를 쓰자.
     </div>
   </section>
 
@@ -512,7 +513,7 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>종합 실습 완성하기</b> — 나만의 설비 2개를 딕셔너리의 리스트로 만들고,
-      f-string으로 각 설비를 소개하는 문장을 출력한다. (학생용 실습 파일의 TODO로 이어짐)</div>
+      f-string으로 각 설비를 소개하는 문장을 출력한다. (학생용 Notebook의 TODO로 이어짐)</div>
     </div>
   </section>
 
@@ -561,7 +562,7 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
           <dt>한 줄 설명</dt><dd>딕셔너리를 이루는 "이름표(키)"와 "내용(값)"의 짝.</dd>
           <dt>쉬운 비유</dt><dd>택배 상자에 붙은 "받는 사람" 이름표와 그 안의 물건.</dd>
           <dt>데이터에서의 예</dt><dd><code>"공정명": "식각"</code>에서 키는 <code>공정명</code>, 값은 <code>식각</code>.</dd>
-          <dt>자주 하는 오해</dt><dd>키에는 반드시 따옴표가 필요하지만(문자열 키의 경우), 값은 숫자면 따옴표가 필요 없다는 점을 헷갈리기 쉽다.</dd>
+          <dt>자주 하는 오해</dt><dd>글자(문자열)인 키와 값에는 따옴표가 필요하지만, <code>301.2</code> 같은 숫자 값에는 따옴표를 붙이지 않는다는 점을 헷갈리기 쉽다.</dd>
         </dl>
       </div>
     </div>
@@ -570,7 +571,7 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
   <section class="block">
     <h2>📁 데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week02/week02_python_basics_1.csv</code> — 20행 5열, 리스트/딕셔너리 실습용 소량 데이터(정상범위 이탈 온도 2~3건 포함)</li>
+      <li><code>data/weekly/week02/week02_python_basics_1.csv</code> — 20행 5열, 리스트/딕셔너리 실습용 소량 데이터(정상범위 295~305℃를 벗어나는 온도 9건 포함)</li>
       <li>오늘은 이 CSV를 Pandas로 읽지 않고, 강의 중 리스트/딕셔너리 리터럴로 직접 옮겨 적어 사용 (Pandas는 4차시부터)</li>
     </ul>
   </section>
@@ -774,7 +775,7 @@ equipment_list = [
     {"설비번호": "EQ-01", "공정명": "식각", "온도_섭씨": 301.2},
     {"설비번호": "EQ-02", "공정명": "증착", "온도_섭씨": 308.7},
     {"설비번호": "EQ-03", "공정명": "포토", "온도_섭씨": 297.5},
-    eq04,
+    {"설비번호": "EQ-04", "공정명": "세정", "온도_섭씨": 299.9},
 ]
 
 lucky = random.choice(equipment_list)
@@ -804,7 +805,7 @@ print(f"온도: {lucky['온도_섭씨']}도")</code></pre>
   <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
     <ul class="pt-list">
-      <li>아래 과제를 에디터 파일 하나에 순서대로 작성, 각 결과를 <code>print()</code> 또는 f-string으로 확인 가능하게 제출</li>
+      <li>아래 과제를 Jupyter Notebook 파일 하나에 순서대로 작성, 각 결과를 <code>print()</code> 또는 f-string으로 확인 가능하게 제출</li>
     </ul>
     <div class="callout practice">
       <b class="tag">과제 1 — 나만의 측정값 리스트</b>
@@ -828,7 +829,7 @@ print(f"온도: {lucky['온도_섭씨']}도")</code></pre>
 
   <section class="block">
     <h2>❓ 핵심 질문 → 데이터 연결</h2>
-    <div class="callout concept">이 리스트에서 가장 높은 온도와 가장 낮은 온도를 가진 값은 몇 번째인가?</div>
+    <div class="callout concept"><code>temperatures</code> 리스트에서 가장 높은 온도와 가장 낮은 온도는 각각 몇 번째(인덱스) 값인가? (정답: 최고 312.6 → 인덱스 2, 최저 295.4 → 인덱스 0)</div>
   </section>
 
   <section class="block">

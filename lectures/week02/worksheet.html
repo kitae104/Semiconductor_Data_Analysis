@@ -32,7 +32,7 @@
       <b class="tag">쉬운 예시</b>
       한 설비의 온도를 하루에 5번 측정했다면 값 5개를 변수 5개로 따로 만드는 건 번거롭다.
       리스트에 <code>[298, 301, 299, 305, 300]</code>처럼 담아두면 최고·최저·평균 온도를 한 번에 계산할 수 있고,
-      딕셔너리로 <code>{"설비번호": "EQ-03", "온도": 301}</code>처럼 이름표를 붙이면 이 값이 어느 설비의
+      딕셔너리로 <code>{"설비번호": "EQ-03", "온도_섭씨": 301}</code>처럼 이름표를 붙이면 이 값이 어느 설비의
       기록인지도 함께 관리할 수 있다.
     </div>
   </section>
@@ -58,7 +58,7 @@
       <pre><code>temps = [302.7, 300.1, 292.0, 299.0, 291.9, 303.5]
 
 print(temps[____])          # 첫 번째 값(302.7)을 출력하려면?
-print(temps[____])          # 마지막 값(303.5)을 인덱스 없이 뒤에서부터 출력하려면?
+print(temps[____])          # 마지막 값(303.5)을 리스트 길이를 몰라도 뒤에서부터 세어 출력하려면?
 print(temps[1:____])        # 두 번째~세 번째 값([300.1, 292.0])만 출력하려면?
 
 average = ____(temps) / ____(temps)   # 평균 계산</code></pre>
@@ -85,10 +85,10 @@ average = ____(temps) / ____(temps)   # 평균 계산</code></pre>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>lot = {"로트번호": "LOT-0398", "설비번호": "EQ-03", "합격여부": 1}
-print(f"{lot['로트번호']}는 {lot['설비번호']}에서 처리되었다.")</code></pre>
+print(f"{lot['로트번호']} 로트는 {lot['설비번호']}에서 처리되었다.")</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">정답: <code>LOT-0398는 EQ-03에서 처리되었다.</code> —
+    <div class="answer-box">정답: <code>LOT-0398 로트는 EQ-03에서 처리되었다.</code> —
     딕셔너리의 키로 값을 꺼내 f-string 문장 속에 그대로 끼워 넣는다.</div>
   </section>
 

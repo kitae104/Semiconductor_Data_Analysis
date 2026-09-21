@@ -118,7 +118,7 @@ r = df["온도_섭씨"].____(df["두께_nm"])</code></pre>
     <h2>7. 도전 문제</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      압력_Pa 열에 대해서도 정상 범위 안/밖 불합격률을 비교해보고, 진공도만큼 원인 후보로
+      압력_Pa 열에 대해서도 정상 범위(교육용 기준 995~1025 Pa) 안/밖 불합격률을 비교해보고, 진공도만큼 원인 후보로
       볼 수 있는지 자신의 근거를 들어 판단해보자.
     </div>
   </section>
@@ -134,8 +134,8 @@ r = df["온도_섭씨"].____(df["두께_nm"])</code></pre>
     </div>
     <div class="callout warn">
       <b class="tag">체크포인트</b>
-      <code>&amp;</code>·<code>|</code>·<code>~</code>를 함께 쓸 때도 각 조건은 반드시 괄호로
-      감싸야 한다. 예: <code>both = df[(vac_out) &amp; (pres_out)]</code>,
+      <code>df["진공도_mTorr"] &lt; 4.5</code>처럼 비교식을 <code>&amp;</code>·<code>|</code>·<code>~</code>와
+      함께 쓸 때는 각 비교식을 괄호로 감싸야 한다. <code>vac_out</code>처럼 미리 변수로 만들어 두면 괄호 없이 써도 된다. 예: <code>both = df[(vac_out) &amp; (pres_out)]</code>,
       <code>either = df[vac_out | pres_out]</code>, <code>neither = df[~(vac_out | pres_out)]</code>.
       괄호를 빼먹으면 조건이 의도와 다르게 계산된다.
     </div>
@@ -153,7 +153,8 @@ r = df["온도_섭씨"].____(df["두께_nm"])</code></pre>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
       "AI가 뽑아준 1위 원인 후보는 ______________________________이다. (단, 이는 아직
-      확정된 원인이 아니라 원인 후보일 뿐이다.)"
+      확정된 원인이 아니라 원인 후보일 뿐이다.)"<br>
+      그리고 그 1위가 정말 "불합격"과의 관계인지, 대조군(습도)이 높은 순위에 올라 있지는 않은지도 확인해보자.
     </div>
   </section>
 

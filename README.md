@@ -87,7 +87,7 @@ python -m ipykernel install --user --name python3 --display-name "Python 3"
 Orange3는 클릭만으로 데이터를 분석하는 별도 데스크톱 프로그램으로, 이 과정은 **실습 PC에 Orange3가
 미리 설치된 환경**을 전제로 합니다(설치가 필요하면 [orangedatamining.com](https://orangedatamining.com/download/)
 참고). 실행 방법, 캔버스 화면 구성, 위젯을 놓고 연결하는 법, 5~10차시에서 실제로 쓰는 위젯
-(File, Data Table, Feature Statistics, Scatter Plot, Box Plot, Distributions, Bar Chart,
+(File, Data Table, Feature Statistics, Scatter Plot, Box Plot, Distributions,
 Correlations, Tree, Test and Score, Predictions) 사용법은
 [`docs/orange3-guide.html`](docs/orange3-guide.html)에 한 곳에 정리했습니다. 차시별로 어떤 위젯을
 "먼저" 쓰는지는 [`docs/curriculum.md`](docs/curriculum.md)의 5~10차시 설명을 참고하세요.

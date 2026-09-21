@@ -65,11 +65,11 @@
       "explanation": "5 ÷ 25 × 100 = 20.0%"
     },
     {
-      "type": "chart_choice",
-      "question": "여러 조건(열)을 동시에 비교하는 표를 한눈에 훑어보기 좋은 방법은?",
-      "options": ["표(DataFrame) 미리보기", "소리로 듣기", "종이에 손으로 옮겨 적기"],
+      "type": "multiple_choice",
+      "question": "새로 읽은 DataFrame의 앞부분을 표로 빠르게 눈으로 확인하는 방법은?",
+      "options": ["df.head()", "df.shape", "df.columns"],
       "answer": 0,
-      "explanation": "head()나 미리보기 표로 데이터를 눈으로 훑어보는 것이 가장 빠르고 정확하다."
+      "explanation": "head()는 앞 5행을 표로 보여준다. shape는 (행 개수, 열 개수), columns는 열 이름 목록만 보여준다."
     },
     {
       "type": "short_answer",

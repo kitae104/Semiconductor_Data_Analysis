@@ -31,7 +31,7 @@
     <div class="callout concept">
       <b class="tag">쉬운 예시</b>
       매일 아침 "오늘 생산된 웨이퍼 중 합격/불합격이 몇 건인지" 확인해야 하는 담당자가 있다고 하자.
-      "합격 34, 불합격 6"이라는 숫자를 <code>pass_count</code>, <code>fail_count</code>라는 변수에 담아두면,
+      "합격 32, 불합격 8"이라는 숫자를 <code>pass_count</code>, <code>fail_count</code>라는 변수에 담아두면,
       매번 다시 세지 않고 <code>print()</code>로 바로 꺼내 볼 수 있다 — 이것이 데이터를 코드로 다루는 첫걸음이다.
     </div>
   </section>
@@ -54,8 +54,8 @@
     <h2>2. 코드 빈칸 문제</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>pass_count = 34
-fail_count ____ 6   # 6을 fail_count라는 이름에 저장
+      <pre><code>pass_count = 32
+fail_count ____ 8   # 8을 fail_count라는 이름에 저장
 
 print(f"합격 {pass_count}건, 불합격 {____}건")</code></pre>
     </div>
@@ -72,17 +72,17 @@ print(f"합격 {pass_count}건, 불합격 {____}건")</code></pre>
     </ul>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">정답: ② 막대그래프. 막대그래프는 범주(카테고리)별 개수나 크기를 비교할 때 가장 알아보기 쉽다.
-    (5차시에서 직접 그려본다.)</div>
+    (6차시에서 직접 그려본다.)</div>
   </section>
 
   <section class="block">
     <h2>4. 결과 해석 문제</h2>
     <p>오늘 살펴본 데이터에서 합격/불합격 열을 정리한 결과가 아래와 같았다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">합격(1)      34
-불합격(-1)    6</pre>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">합격(1)      32
+불합격(-1)    8</pre>
     <p>이 결과를 보고 불합격 비율(%)을 계산해보자.</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">6 ÷ (34+6) × 100 = 15%. 즉 40건 중 15%가 불합격이다.</div>
+    <div class="answer-box">8 ÷ (32+8) × 100 = 20%. 즉 40건 중 20%가 불합격이다.</div>
   </section>
 
   <section class="block">
@@ -98,8 +98,8 @@ print(f"합격 {pass_count}건, 불합격 {____}건")</code></pre>
     <h2>6. 도전 문제</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      설비별 기록 건수가 아래와 같다고 하자: <code>EQ-01</code> 9건, <code>EQ-02</code> 11건,
-      <code>EQ-03</code> 12건, <code>EQ-04</code> 8건. 네 값을 각각 변수에 저장한 뒤,
+      오늘 데이터의 설비별 기록 건수는 <code>EQ-01</code> 13건, <code>EQ-02</code> 9건,
+      <code>EQ-03</code> 12건, <code>EQ-04</code> 6건이다. 네 값을 각각 변수에 저장한 뒤,
       가장 많이 등장한 설비와 건수를 f-string으로
       <code>"가장 많이 기록된 설비는 ___(___건)입니다."</code> 형태의 문장으로 출력해보자.
     </div>
@@ -109,7 +109,7 @@ print(f"합격 {pass_count}건, 불합격 {____}건")</code></pre>
     <h2>7. 변수·자료형 빈칸 문제</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>pass_count ____ 34        # 34를 pass_count라는 이름에 저장
+      <pre><code>pass_count ____ 32        # 32를 pass_count라는 이름에 저장
 equipment = "EQ-03"
 print(____(equipment))    # equipment의 자료형을 확인</code></pre>
     </div>
@@ -151,8 +151,8 @@ print(f"내년이면 {age + 1}살이 되네요!")</code></pre>
     <div class="callout practice">
       <b class="tag">심화</b>
       아래처럼 합격 건수와 불합격 건수를 변수에 저장했다.
-      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;margin-top:.6rem;">pass_count = 34
-fail_count = 6</pre>
+      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;margin-top:.6rem;">pass_count = 32
+fail_count = 8</pre>
       <code>total</code>(전체 건수)과 <code>pass_rate</code>(합격률) 변수를 직접 계산해서 만들고,
       <code>f"전체 {total}건 중 합격 {pass_count}건, 합격률 {pass_rate:.1f}%"</code> 형태의 문장을
       출력하는 코드를 작성해보자. <code>:.1f</code> 형식을 잊지 말고 사용한다.

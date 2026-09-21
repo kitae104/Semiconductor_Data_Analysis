@@ -44,7 +44,7 @@
       <li>Orange3로 먼저 설비별 분포 차이가 있어 보이는지 훑어볼 수 있다.</li>
       <li>groupby로 설비별/공정별 평균값과 합격률을 비교할 수 있다.</li>
       <li>로트 단위 수율을 계산할 수 있다(단순 평균과의 차이 포함).</li>
-      <li>불량 유형을 집계하고 파레토 관점에서 가장 큰 원인을 찾을 수 있다.</li>
+      <li>불량 유형을 집계하고 파레토 관점에서 가장 먼저 개선할 불량 유형을 찾을 수 있다.</li>
     </ul>
     <ul class="pt-list">
       <li><b>선수 지식</b> — 6차시: 그래프로 관찰한 차이</li>
@@ -60,8 +60,8 @@
     </ul>
     <div class="callout concept">
       <b class="tag">쉬운 예시</b>
-      설비 4대의 전체 평균 합격률만 보면 92%로 괜찮아 보인다. 하지만 <code>groupby</code>로 설비별로 나눠보면
-      "EQ-03만 합격률 78%로 유독 낮다"는 사실이 드러날 수 있다 — 전체 평균 속에 숨어 있던 문제 설비를
+      설비 4대의 전체 합격률만 보면 88%로 나쁘지 않아 보인다. 하지만 <code>groupby</code>로 설비별로 나눠보면
+      "EQ-04만 합격률 75%로 유독 낮다"는 사실이 드러난다 — 전체 평균 속에 숨어 있던 문제 설비를
       찾아낸 것이다.
     </div>
   </section>
@@ -79,16 +79,19 @@
   <section class="block">
     <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
     <div class="callout practice">
-      <b class="tag">위젯</b> Box Plot · Bar Chart
-      <p style="margin:.5rem 0 0;">groupby 코드를 쓰기 전에 Orange3 Box Plot/Bar Chart 위젯으로
-      설비별 온도·합격 여부 분포를 먼저 살펴보고, 차이가 있어 보이는 설비를 미리 짐작해본다.</p>
+      <b class="tag">위젯</b> Box Plot · Distributions
+      <p style="margin:.5rem 0 0;">groupby 코드를 쓰기 전에 Orange3 <b>Box Plot</b>으로 설비별 온도 분포를,
+      <b>Distributions</b>(6차시에서 쓴 위젯)로 설비별 합격/불합격 개수를 먼저 살펴보고, 차이가 있어 보이는
+      설비를 미리 짐작해본다. Distributions에서 Variable을 <code>설비번호</code>, Split by를
+      <code>합격여부</code>로 고르면 설비마다 합격/불합격 막대가 색으로 나뉜다(합격여부는 1/-1 숫자라서
+      File 위젯에서 Type을 <b>categorical</b>로 바꿔야 Split by에 나타난다).</p>
     </div>
     <ul class="pt-list">
-      <li>Box Plot·Bar Chart 위젯 사용법 — <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a> 참고</li>
+      <li>Box Plot·Distributions 위젯 사용법 — <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a> 참고</li>
     </ul>
     <div class="oflow-wrap">
       <svg class="oflow-svg" viewBox="0 0 760 190" role="img"
-           aria-label="File 위젯에서 Box Plot과 Bar Chart 두 위젯으로 갈라지는 Orange3 워크플로 다이어그램">
+           aria-label="File 위젯에서 Box Plot과 Distributions 두 위젯으로 갈라지는 Orange3 워크플로 다이어그램">
         <rect class="obox" x="10" y="61" width="180" height="68" rx="14"/>
         <text x="100" y="89" text-anchor="middle" class="olabel" font-size="15">📁 File</text>
         <text x="100" y="111" text-anchor="middle" class="osub" font-size="11">week07_...csv</text>
@@ -102,15 +105,15 @@
         <path class="oarrow" d="M190,95 H230 V147 H272" fill="none"/>
         <polygon class="oarrowhead" points="272,139 289,147 272,155"/>
         <rect class="obox accent" x="280" y="119" width="270" height="56" rx="12"/>
-        <text x="415" y="142" text-anchor="middle" class="olabel" font-size="14">📊 Bar Chart</text>
-        <text x="415" y="162" text-anchor="middle" class="osub" font-size="10">설비별 합격/불합격</text>
+        <text x="415" y="142" text-anchor="middle" class="olabel" font-size="14">📈 Distributions</text>
+        <text x="415" y="162" text-anchor="middle" class="osub" font-size="10">설비별 합격/불합격 개수</text>
       </svg>
     </div>
     <p style="margin:.8rem 0 .2rem;"><b>🖼️ 실제 Orange3 화면으로 확인하기</b></p>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week07_01_canvas.png" loading="lazy"
-           alt="그림 7-1. File → Box Plot · Bar Chart 캔버스" data-shot="File 위젯에서 Box Plot과 Bar Chart로 갈라진 캔버스">
-      <figcaption class="img-caption">그림 7-1. File → Box Plot · Bar Chart 캔버스</figcaption>
+           alt="그림 7-1. File → Box Plot · Distributions 캔버스" data-shot="File 위젯에서 Box Plot과 Distributions로 갈라진 캔버스">
+      <figcaption class="img-caption">그림 7-1. File → Box Plot · Distributions 캔버스</figcaption>
     </figure>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week07_02_box_plot.png" loading="lazy"
@@ -118,9 +121,9 @@
       <figcaption class="img-caption">그림 7-2. 설비번호별 온도 Box Plot</figcaption>
     </figure>
     <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week07_03_bar_chart.png" loading="lazy"
-           alt="그림 7-3. 설비번호별 합격/불합격 Bar Chart" data-shot="Bar Chart 창 — 설비번호별 합격여부 막대">
-      <figcaption class="img-caption">그림 7-3. 설비번호별 합격/불합격 Bar Chart</figcaption>
+      <img class="chart-img" src="../../assets/images/orange3/week07_03_distributions.png" loading="lazy"
+           alt="그림 7-3. 설비번호별 합격/불합격 개수(Distributions)" data-shot="Distributions 창 — Variable 설비번호, Split by 합격여부로 설정한 화면">
+      <figcaption class="img-caption">그림 7-3. 설비번호별 합격/불합격 개수(Distributions)</figcaption>
     </figure>
     <ul class="pt-list">
       <li>Orange3로 미리 살펴본 인상 → 아래에서 <code>groupby</code>로 정확한 숫자로 확인</li>
@@ -182,10 +185,10 @@ print(df.groupby("설비번호")["온도_섭씨"].mean())</code></pre>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">설비번호
-EQ-01    300.21
-EQ-02    300.07
-EQ-03    299.35
-EQ-04    301.65
+EQ-01    300.205769
+EQ-02    300.065385
+EQ-03    299.346429
+EQ-04    301.651136
 Name: 온도_섭씨, dtype: float64</pre>
     </div>
     <div class="callout warn">
@@ -204,10 +207,10 @@ print(pass_rate)</code></pre>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">설비번호
-EQ-01    98.1
-EQ-02    86.5
-EQ-03    91.1
-EQ-04    75.0
+EQ-01    98.076923
+EQ-02    86.538462
+EQ-03    91.071429
+EQ-04    75.000000
 Name: 합격여부, dtype: float64</pre>
     </div>
     <div class="callout warn">
@@ -219,7 +222,8 @@ Name: 합격여부, dtype: float64</pre>
   <section class="block">
     <h2>📚 로트 단위 수율 계산하기</h2>
     <ul class="pt-list">
-      <li><b>합격률</b>(웨이퍼 단위 단순 비율) ≠ <b>수율</b>(로트 단위 양품수량÷검사수량) — 계산 방식이 다름</li>
+      <li><b>수율</b> = 검사한 것 중 양품 비율(양품수량÷검사수량) — 웨이퍼·로트·전체 등 어떤 단위로도 계산할 수 있다</li>
+      <li>이 과정에서는 웨이퍼 전체를 한 번에 나눈 값을 <b>합격률</b>, 로트별로 묶어 계산한 값을 <b>로트 수율</b>로 구분해 부른다</li>
       <li>이번 데이터 = 로트 하나당 웨이퍼 4장 구성 → 로트별로 묶어 수율 계산</li>
     </ul>
     <div class="code-block">
@@ -277,8 +281,9 @@ Name: count, dtype: int64</pre>
     <div class="callout warn">
       <b class="tag">결과 해석</b>
       저수율 로트 21개 중 11개(절반 이상)가 EQ-04에서 나왔다 — 합격률이 가장 낮았던 설비와
-      저수율 로트가 가장 많이 나온 설비가 <b>일치</b>한다. 두 가지 다른 방법(합격률, 로트별
-      수율)이 같은 결론을 가리킨다는 것은 그 결론이 우연이 아닐 가능성을 높여준다.
+      저수율 로트가 가장 많이 나온 설비가 <b>일치</b>한다. 다만 두 값은 같은 합격/불합격
+      기록에서 나온 것이라 서로 독립된 증거는 아니다. 대신 로트 단위로 보면 새로운 사실이 보인다 —
+      EQ-04의 22개 로트 중 11개는 수율 100%로, 설비 전체가 아니라 일부 로트에 문제가 몰려 있다.
     </div>
   </section>
 
@@ -295,7 +300,8 @@ print(defect_counts)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">두께 불량        11
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">불량유형
+두께 불량        11
 패턴 불량         6
 파티클           5
 오염            5
@@ -305,7 +311,7 @@ print(defect_counts)</code></pre>
 Name: count, dtype: int64</pre>
     </div>
     <img class="chart-img" src="../../assets/images/week07/pareto_defects.png" alt="불량유형 파레토 차트. 두께 불량이 가장 많고, 누적 비율 막대와 선이 함께 표시되어 있다.">
-    <p class="img-caption">"두께 불량"이 전체 불량(36건)의 약 31%를 차지하는 가장 큰 원인이다.
+    <p class="img-caption">"두께 불량"이 전체 불량(36건)의 약 31%로 가장 많이 발생한 불량 유형이다 — 가장 먼저 개선할 대상이다.
     상위 2개 유형(두께 불량, 패턴 불량)만 해결해도 전체 불량의 절반 가까이를 줄일 수 있다.</p>
   </section>
 
@@ -313,7 +319,7 @@ Name: count, dtype: int64</pre>
     <h2>🟣 실습: groupby와 수율 분석 따라 하기</h2>
     <div class="step">
       <div class="num">1</div>
-      <div class="content"><b>Orange3로 먼저 훑어보기</b> — Box Plot, Bar Chart로 설비별 차이를
+      <div class="content"><b>Orange3로 먼저 훑어보기</b> — Box Plot, Distributions로 설비별 차이를
       미리 짐작해본다.</div>
     </div>
     <div class="step">
@@ -339,7 +345,7 @@ Name: count, dtype: int64</pre>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>종합 정리</b> — 합격률이 가장 낮은 설비와 저수율 로트가 몰린
-      설비가 같은지 확인하고 문장으로 정리한다. (학생용 실습 파일의 TODO로 이어짐)</div>
+      설비가 같은지 확인하고 문장으로 정리한다. (학생용 Notebook의 TODO로 이어짐)</div>
     </div>
   </section>
 
@@ -358,7 +364,7 @@ Name: count, dtype: int64</pre>
       <div class="term-card">
         <h4>합격률 vs 수율</h4><div class="en">Pass Rate vs Yield</div>
         <dl>
-          <dt>한 줄 설명</dt><dd>합격률은 전체를 한 번에 나눈 비율, 수율은 로트처럼 묶음 단위로 계산한 비율.</dd>
+          <dt>한 줄 설명</dt><dd>합격률은 전체를 한 번에 나눈 비율, 로트 수율은 로트별로 묶어 계산한 비율(둘 다 "양품÷검사" 방식은 같다).</dd>
           <dt>쉬운 비유</dt><dd>학년 전체 평균 vs 반별 평균처럼, 어떤 단위로 나누느냐에 따라 다른 그림이 보인다.</dd>
           <dt>데이터에서의 예</dt><dd>전체 합격률과 로트별 수율이 다른 결론을 보여줄 수 있다.</dd>
           <dt>자주 하는 오해</dt><dd>둘이 항상 같은 결과를 준다고 착각하기 쉽다.</dd>
@@ -589,7 +595,7 @@ for i, (name, rate) in enumerate(ranked.items()):
   <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
     <ul class="pt-list">
-      <li>에디터 파일 하나에 순서대로 작성, 각 결과를 확인할 수 있게 만들어 제출</li>
+      <li>Jupyter Notebook 파일 하나에 순서대로 작성, 각 결과를 확인할 수 있게 만들어 제출</li>
     </ul>
     <div class="callout practice">
       <b class="tag">과제 1 — 공정별 비교</b>

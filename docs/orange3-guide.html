@@ -45,7 +45,7 @@
       <li>위젯을 캔버스에 놓고 서로 연결해 워크플로를 만들 수 있다.</li>
       <li><b>File</b> 위젯으로 실습용 CSV를 불러올 수 있다.</li>
       <li>5~10차시에서 실제로 쓰는 위젯(Data Table, Feature Statistics, Scatter Plot, Box Plot,
-        Distributions, Bar Chart, Correlations, Tree, Test and Score, Predictions)이 각각 무엇을
+        Distributions, Correlations, Tree, Test and Score, Predictions)이 각각 무엇을
         보여주는지 설명할 수 있다.</li>
       <li>자주 발생하는 문제(연결 실패, 한글 깨짐 등)를 스스로 해결할 수 있다.</li>
     </ul>
@@ -251,7 +251,7 @@
   </section>
 
   <section class="block">
-    <h2>🗂️ 위젯 사전 — 이 과정에서 쓰는 위젯 11가지</h2>
+    <h2>🗂️ 위젯 사전 — 이 과정에서 쓰는 위젯 10가지</h2>
     <p>아래 위젯은 실제로 사용하는 차시 순서대로 정리했다. 해당 차시에 도착하면 이 표를 다시 펼쳐
     찾아봐도 좋다.</p>
 
@@ -279,14 +279,16 @@
     상자 모양으로 보여준다. 상자가 넓을수록 그 그룹의 값이 들쭉날쭉하다는 뜻이다. "Subgroups"
     옵션에 설비번호 같은 범주형 열을 지정하면 그룹별로 나눠 보여준다.</div>
 
-    <h3>📈 Distributions — 6차시</h3>
-    <div class="callout concept">한 변수의 값이 어떤 모양으로 퍼져 있는지 히스토그램으로 보여준다.
-    값이 한쪽에 몰려 있는지, 두 개의 봉우리로 나뉘는지 등을 눈으로 확인할 수 있다.</div>
-
-    <h3>📊 Bar Chart — 7차시</h3>
-    <div class="callout concept">범주형 열(예: 설비번호, 합격여부)의 값별 개수·비율을 막대로
-    보여준다. 설비별 합격/불합격 막대 길이를 비교하면 어느 설비의 불량이 많아 보이는지 짐작할 수
-    있다.</div>
+    <h3>📈 Distributions — 6·7차시</h3>
+    <div class="callout concept">한 변수의 값이 어떤 모양으로 퍼져 있는지 보여준다. 숫자 열(예: 온도)을
+    고르면 히스토그램이 되어 값이 한쪽에 몰려 있는지, 두 개의 봉우리로 나뉘는지 등을 확인할 수 있다.
+    범주형 열(예: 설비번호)을 고르면 값별 개수를 막대로 보여주고, <b>Split by</b>에 합격여부를 지정하면
+    설비별 합격/불합격 개수를 색으로 나눠 비교할 수 있다(7차시).</div>
+    <div class="callout warn">
+      <b class="tag">헷갈리기 쉬운 위젯 — Bar Plot</b>
+      위젯 목록에는 <b>Bar Plot</b>이라는 위젯도 있는데, 이것은 개수를 세는 위젯이 아니라 데이터
+      한 행마다 숫자 값 하나를 막대로 그린다. 범주별 개수를 비교할 때는 Distributions를 쓴다.
+    </div>
 
     <h3>🔗 Correlations — 8차시</h3>
     <div class="callout concept">데이터의 모든 숫자 변수 쌍의 상관계수를 자동으로 계산해 관계가
@@ -316,7 +318,7 @@
         <tr><th>차시</th><th>사용 위젯</th><th>먼저 확인하는 것</th></tr>
         <tr><td>5차시</td><td>File → Data Table → Feature Statistics</td><td>결측 셀, 극단값</td></tr>
         <tr><td>6차시</td><td>Scatter Plot · Box Plot · Distributions</td><td>온도-두께 관계, 설비별 분포</td></tr>
-        <tr><td>7차시</td><td>Box Plot · Bar Chart</td><td>설비별 온도·합격 분포 차이</td></tr>
+        <tr><td>7차시</td><td>Box Plot · Distributions</td><td>설비별 온도·합격 분포 차이</td></tr>
         <tr><td>8차시</td><td>File → Correlations</td><td>변수 쌍의 상관관계 순위</td></tr>
         <tr><td>9차시</td><td>File → Tree → Test and Score</td><td>코드 없이 만든 모델의 정확도</td></tr>
         <tr><td>10차시</td><td>Predictions</td><td>새 로트에 대한 예측과 확률</td></tr>

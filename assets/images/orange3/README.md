@@ -48,9 +48,9 @@
 
 | 파일명 | 캡처할 화면 |
 |---|---|
-| `week07_01_canvas.png` | File에서 Box Plot과 Bar Chart로 갈라진 캔버스 |
+| `week07_01_canvas.png` | File에서 Box Plot과 Distributions로 갈라진 캔버스 |
 | `week07_02_box_plot.png` | Box Plot — 변수 온도_섭씨, Subgroups 설비번호 |
-| `week07_03_bar_chart.png` | Bar Chart — 설비번호별 합격여부 |
+| `week07_03_distributions.png` | Distributions — Variable 설비번호, Split by 합격여부(합격여부 Type을 categorical로) |
 
 ## 8차시 — `week08_anomaly_root_cause.csv`
 

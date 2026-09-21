@@ -70,8 +70,9 @@
     <h2>⏮️ 지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">8차시 연결</b>
-      8차시에서는 온도·진공도·두께가 불합격의 "원인 후보"로 보인다는 것을 상관관계로 확인했다.
-      오늘은 이 원인 후보들을 실제로 <b>예측</b>에 사용해본다. "이 값들을 보면 합격/불합격을
+      8차시에서는 진공도가 정상 범위를 벗어나면 불합격률이 크게 뛰어, 진공도 이탈을 불합격의
+      "원인 후보"로 삼았다(온도는 두께와 관계가 있었지만 불합격과는 뚜렷한 관계가 없었다). 오늘은
+      온도·진공도·두께 등 여러 공정 조건을 한꺼번에 넣어 합격/불합격을 <b>예측</b>해본다. "이 값들을 보면 합격/불합격을
       미리 알 수 있을까?"가 오늘의 도전이다.
     </div>
   </section>
@@ -83,7 +84,9 @@
       <p style="margin:.5rem 0 0;">scikit-learn 코드를 쓰기 전에 Orange3로 코드 없이 모델을 먼저
       만들어본다. <b>File</b> 위젯으로 <code>week09_pass_fail_train.csv</code>를 불러오고,
       <b>Tree</b> 위젯을 연결해 분류 모델을 만든 뒤, <b>Test and Score</b> 위젯을 연결하면
-      정확도(Accuracy)가 자동으로 계산되어 나온다.</p>
+      정확도(Accuracy)가 자동으로 계산되어 나온다. 이때 File 위젯에서 <code>검사결과</code> 열의 Type을
+      <b>categorical</b>, Role을 <b>target</b>으로 바꿔야 한다(숫자로 두면 분류가 아닌 회귀로 계산된다).
+      결과 표에서 정확도는 <b>CA</b>라는 이름으로 보인다.</p>
     </div>
     <ul class="pt-list">
       <li>Tree·Test and Score 위젯이 처음이라면 → <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>에서 먼저 확인</li>
@@ -127,7 +130,7 @@
       <figcaption class="img-caption">그림 9-3. Test and Score가 자동으로 계산한 정확도</figcaption>
     </figure>
     <ul class="pt-list">
-      <li>이제 Orange3로 미리 확인한 정확도를, 아래에서 scikit-learn 코드로 직접 만들어 비교</li>
+      <li>이제 Orange3로 미리 확인한 정확도를, 아래에서 scikit-learn 코드로 직접 계산한 값과 비교해보자</li>
     </ul>
   </section>
 
@@ -281,8 +284,9 @@ print(cm)</code></pre>
     </div>
     <div class="callout concept">
       <b class="tag">8차시와의 연결</b>
-      온도·진공도·두께가 중요도 상위권이고, 습도·압력은 중요도가 낮다 — 8차시에서 상관관계로
-      찾았던 "원인 후보"와 오늘 모델이 스스로 찾은 "중요한 특징"이 대체로 일치한다.
+      온도가 압도적으로 중요했고, 그다음은 진공도·가스유량·두께 순이다. 습도·압력은 중요도가 낮다.
+      진공도는 8차시에서 원인 후보로 짚었던 변수와 겹친다. 다만 중요도는 "모델이 많이 참고한 값"일 뿐이라,
+      원인 후보를 좁히는 참고 자료로만 쓴다.
     </div>
   </section>
 
@@ -314,7 +318,7 @@ print(cm)</code></pre>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>중요 특징 확인</b> — <code>feature_importances_</code>로 8차시의
-      원인 후보와 비교한다. (학생용 실습 파일의 TODO로 이어짐)</div>
+      원인 후보와 비교한다. (학생용 Notebook의 TODO로 이어짐)</div>
     </div>
   </section>
 
@@ -352,7 +356,7 @@ print(cm)</code></pre>
         <h4>혼동행렬</h4><div class="en">Confusion Matrix</div>
         <dl>
           <dt>한 줄 설명</dt><dd>실제값과 예측값을 교차표로 정리해, 어떤 종류의 오류가 많은지 보여주는 표.</dd>
-          <dt>쉬운 비유</dt><dd>정답-오답표를 "맞았는데 맞다고 함/틀렸는데 맞다고 함" 등으로 세분화한 것.</dd>
+          <dt>쉬운 비유</dt><dd>채점표를 "불합격을 불합격이라고 맞힘 / 불합격인데 합격이라고 놓침"처럼 정답·오답의 종류별로 나눠 적은 것.</dd>
           <dt>데이터에서의 예</dt><dd>실제 불합격 31건 중 6건만 정확히 예측.</dd>
           <dt>자주 하는 오해</dt><dd>정확도 하나만 보면 충분하다고 착각하기 쉽다. 특히 불균형 데이터에서는 혼동행렬이 필수다.</dd>
         </dl>
@@ -393,8 +397,8 @@ print(cm)</code></pre>
     <h2>🚀 도전 실습</h2>
     <div class="callout practice">
       <b class="tag">도전 문제</b>
-      <code>DecisionTreeClassifier(max_depth=...)</code>의 숫자를 3, 6, 10 등으로 바꿔가며
-      다시 학습시켜보자. 정확도와 혼동행렬이 어떻게 달라지는지 비교하고, 어떤 값이 가장
+      <code>DecisionTreeClassifier(max_depth=...)</code>의 숫자를 아래 연습문제(2, 8) 외에
+      3, 6, 10 등으로도 바꿔가며 다시 학습시켜보자. 정확도와 혼동행렬이 어떻게 달라지는지 비교하고, 어떤 값이 가장
       균형 잡힌 결과를 주는지 찾아보자.
     </div>
     <div class="callout warn">
@@ -467,7 +471,7 @@ print(cm)</code></pre>
         <li>"결정트리 말고 다른 분류 모델에는 어떤 것들이 있나요? (로지스틱 회귀, 랜덤 포레스트 등)"</li>
         <li>"정확도(accuracy) 말고 모델 성능을 평가하는 다른 지표(정밀도, 재현율, F1)는 각각
           무엇을 의미하나요?"</li>
-        <li>"max_depth를 너무 깊게 설정하면 어떤 문제(과적합)가 생기나요?"</li>
+        <li>"max_depth를 너무 깊게 설정하면 어떤 문제(과대적합)가 생기나요?"</li>
         <li>"오늘처럼 합격이 압도적으로 많은 불균형 데이터를 다루는 다른 방법들이 있나요?"</li>
       </ul>
     </div>
@@ -537,10 +541,10 @@ acc_deep = accuracy_score(y_test, model_deep.predict(X_test))
 print(f"max_depth=2 정확도: {acc_shallow:.1%}")
 print(f"max_depth=8 정확도: {acc_deep:.1%}")</pre>
       실행 결과 예시: <code>max_depth=2 정확도: 78.9%</code> / <code>max_depth=8 정확도: 75.5%</code>.
-      나무가 너무 얕으면(2) 패턴을 충분히 못 잡아 과소적합(underfitting)될 수 있고, 너무
-      깊으면(8) 학습 데이터에 지나치게 맞춰져 과대적합(overfitting)될 수 있다는 트레이드오프를
-      보여주는 결과다. 다만 이는 이 데이터에서 관찰된 경향일 뿐, depth나 데이터가 달라지면
-      순서가 바뀔 수도 있다.
+      이 데이터에서는 오히려 얕은 나무(2)의 test 정확도가 더 높았다(78.9%는 "모두 합격" 기준선과
+      우연히 같은 값이고, 실제로는 불합격을 6건 예측했다). 깊은 나무(8)는 train 정확도가 95.7%까지
+      올라갔지만 test는 75.5%로 떨어져, 학습 데이터를 외워버린 과대적합(overfitting) 신호를 보였다.
+      다만 이는 이 데이터에서 관찰된 경향일 뿐이다.
     </div>
   </section>
 
@@ -562,8 +566,8 @@ print(f"max_depth=8 정확도: {acc_deep:.1%}")</pre>
       <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
       <pre><code>sample = pd.DataFrame([{
     "온도_섭씨": 301.5, "압력_Pa": 1010.0, "가스유량_slm": 52.0,
-    "두께_nm": 120.5, "진공도_mTorr": 5.0, "습도_pct": 45.0,
-}])  # 실제로는 input()으로 각 값을 하나씩 입력받아도 좋습니다.
+    "두께_nm": 100.5, "진공도_mTorr": 5.0, "습도_pct": 45.0,
+}])  # 실제로는 input()으로 각 값을 하나씩 입력받아도 좋다.
 
 result = model.predict(sample[feature_cols])[0]
 if result == 0:
@@ -590,12 +594,12 @@ else:
   <section class="block">
     <h2>📝 과제(다음 차시까지)</h2>
     <ul class="pt-list">
-      <li>아래 과제를 에디터 파일 하나에 순서대로 작성하고, 각 결과를 확인할 수 있게 만들어 제출</li>
+      <li>아래 과제를 Jupyter Notebook 파일 하나에 순서대로 작성하고, 각 결과를 확인할 수 있게 만들어 제출</li>
     </ul>
     <div class="callout practice">
       <b class="tag">과제 1 — max_depth 실험</b>
-      <code>max_depth</code>를 2, 4, 8로 각각 바꿔 학습시키고, 정확도·혼동행렬을 표로
-      정리해 비교한다.
+      연습문제의 max_depth 2·8 결과에 <code>max_depth=3</code>과 4를 추가해, train/test 정확도와
+      혼동행렬을 표로 정리해 비교한다.
     </div>
     <div class="callout practice">
       <b class="tag">과제 2 — Feature 조합 바꾸기</b>
@@ -605,7 +609,9 @@ else:
     <div class="callout practice">
       <b class="tag">과제 3(도전) — Orange3와 비교</b>
       Orange3 Test and Score에서 나온 정확도와, 오늘 파이썬으로 구한 정확도(78.2%)를 비교해
-      차이가 있다면 왜 그런지 생각해본다(예: Orange3의 기본 Tree 설정이 다를 수 있다).
+      차이가 있다면 왜 그런지 생각해본다(예: Test and Score는 기본으로 데이터를 여러 번 나눠 평가하는 교차검증(Cross validation)을 쓰고,
+      Orange3 Tree는 공정명·설비번호까지 특징으로 쓰며, 결측 행도 지우지 않고 사용한다. 기본 나무 깊이도
+      max_depth=4와 다르다).
     </div>
   </section>
 

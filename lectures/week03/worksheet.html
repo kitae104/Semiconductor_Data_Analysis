@@ -26,7 +26,7 @@
     <ul class="pt-list">
       <li>"불합격만 찾기", "이상 온도만 걸러내기" 같은 판단을 사람이 수천 줄을 눈으로 보며 할 수는 없다.
         <code>if</code>는 판정 규칙을, <code>for</code>는 그 규칙을 모든 데이터에 반복 적용하는 방법을, <code>def</code>는
-        그 로직을 재사용하는 방법을 알려주며, 이는 4차시부터 배우는 Pandas 조건 검색이 내부적으로 하는 일과 같다.</li>
+        그 로직을 재사용하는 방법을 알려주며, 이는 4차시부터 배우는 Pandas 조건 검색이 한 줄로 대신해주는 일과 같은 개념이다.</li>
     </ul>
     <div class="callout concept">
       <b class="tag">쉬운 예시</b>
@@ -125,7 +125,7 @@ print("정상입니다.")</code></pre>
     <h2>6. 도전 문제</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      매개변수를 2개 받는 함수 <code>judge_range(value, limit)</code>를 만들어, <code>value</code>가
+      매개변수를 2개 받는 함수 <code>judge_limit(value, limit)</code>를 만들어, <code>value</code>가
       <code>limit</code>를 넘으면 <code>"초과"</code>, 아니면 <code>"정상"</code>을 반환하도록
       작성해보자. 그리고 이 함수를 온도 리스트와 압력 리스트 양쪽에 재사용해보자.
     </div>
@@ -139,7 +139,7 @@ print("정상입니다.")</code></pre>
       <code>count_exceed(values, limit)</code>를 만들어보자(함수 안에서 <code>for</code>와
       <code>if</code>로 개수를 센 뒤 <code>return</code>한다). 이 함수를 아래 온도 리스트와 압력
       리스트에 각각 적용해 초과 건수를 구하고, 두 리스트 중 어느 쪽의 "초과 비율(초과 건수 ÷
-      전체 개수)"이 더 높은지 비교해보자.
+      전체 개수)"이 더 높은지 비교해보자(기준값은 온도 305, 압력 1025로 하자).
       <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;margin-top:.6rem;">temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]
 pressures = [980, 1010, 1050, 995, 1120]</pre>
     </div>
@@ -155,9 +155,9 @@ pressures = [980, 1010, 1050, 995, 1120]</pre>
     <h2>8. AI 미니 프로젝트 도전 — 온도 뽑기 심판 프로그램</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      AI 챗봇에게 "0부터 320 사이의 임의의 온도를 5번 뽑아서, judge_pass 같은 함수로 합격/불합격을
+      AI 챗봇에게 "290부터 320 사이의 임의의 온도를 5번 뽑아서, judge_pass 같은 함수로 합격/불합격을
       판정하고 합격이면 ✅, 불합격이면 ❌ 이모지와 함께 심판처럼 발표하는 파이썬 코드를 만들어줘.
-      random 모듈을 사용해도 좋아."라고 요청해보자. 코드를 에디터에 붙여넣어 실행하고, 실행 결과
+      random 모듈을 사용해도 좋아."라고 요청해보자. 코드를 Jupyter Notebook 셀에 붙여넣어 실행하고, 실행 결과
       한 줄을 아래에 적어보자.
     </div>
     <div class="callout practice">
