@@ -127,15 +127,33 @@ r = df["온도_섭씨"].____(df["두께_nm"])</code></pre>
     <h2>8. 심화 실습</h2>
     <div class="callout practice">
       <b class="tag">심화</b>
-      진공도와 압력이 "둘 다" 정상 범위를 벗어난 행, "하나만" 벗어난 행, "둘 다 정상"인 행을
-      각각 <code>&amp;</code>, <code>|</code>, <code>~</code> 연산자로 나누어 불합격률을
-      비교해보자. 두 조건이 겹칠 때 불합격률이 더 크게 뛰는지 확인하고, 그렇다면 두 원인 후보가
-      "함께 작용"할 가능성에 대해 한 문장으로 적어보자.
+      먼저 두 조건을 각각 변수로 만들어 두자. 변수로 만들어 두면 아래 네 집단을 짧게 쓸 수 있다.
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>vac_out  = (df["진공도_mTorr"] &lt; 4.5) | (df["진공도_mTorr"] &gt; 5.5)
+pres_out = (df["압력_Pa"] &lt; 995) | (df["압력_Pa"] &gt; 1025)   # 교육용 정상 범위</code></pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">심화</b>
+      이제 네 집단으로 나누어 각각의 <b>건수</b>와 <b>불합격률</b>을 구해보자 —
+      ① 진공도만 이탈 <code>df[vac_out &amp; ~pres_out]</code>
+      ② 압력만 이탈 <code>df[~vac_out &amp; pres_out]</code>
+      ③ 둘 다 이탈 <code>df[vac_out &amp; pres_out]</code>
+      ④ 둘 다 정상 <code>df[~(vac_out | pres_out)]</code>
+    </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      <b>비율보다 건수를 먼저 보자.</b> ③은 <b>4건</b>뿐이다. 4건에서 나온 비율은 불합격이 1건만
+      달라져도 0%에서 50%까지 출렁인다 — <b>비율을 비교할 수 없는 크기</b>다. 반면 ①(74건)과
+      ②(36건)는 ④(336건)와 견줄 만하다. 이 세 집단의 불합격률을 비교해, 압력이 진공도에
+      <b>추가 정보를 주는지</b> 한 문장으로 적어보자.
     </div>
     <div class="callout warn">
       <b class="tag">체크포인트</b>
       <code>df["진공도_mTorr"] &lt; 4.5</code>처럼 비교식을 <code>&amp;</code>·<code>|</code>·<code>~</code>와
-      함께 쓸 때는 각 비교식을 괄호로 감싸야 한다. <code>vac_out</code>처럼 미리 변수로 만들어 두면 괄호 없이 써도 된다. 예: <code>both = df[(vac_out) &amp; (pres_out)]</code>,
+      함께 쓸 때는 각 비교식을 괄호로 감싸야 한다. 위처럼 <code>vac_out</code>·<code>pres_out</code>으로
+      미리 만들어 두면 괄호 없이 써도 된다. 예: <code>both = df[vac_out &amp; pres_out]</code>,
       <code>either = df[vac_out | pres_out]</code>, <code>neither = df[~(vac_out | pres_out)]</code>.
       괄호를 빼먹으면 조건이 의도와 다르게 계산된다.
     </div>

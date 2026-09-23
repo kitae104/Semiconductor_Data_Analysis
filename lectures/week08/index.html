@@ -618,31 +618,35 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>데이터 불러오기</b> — <code>week08_anomaly_root_cause.csv</code>를
-      Jupyter Notebook에서 <code>read_csv</code>로 읽는다.</div>
+      Jupyter Notebook에서 <code>read_csv</code>로 읽는다. (노트북 1단계)</div>
     </div>
     <div class="step">
       <div class="num">2</div>
       <div class="content"><b>정상 범위 설정</b> — 진공도의 정상 범위(4.5~5.5)를 변수로 만들고,
-      조건 검색으로 이탈 행을 찾는다.</div>
+      조건 검색으로 이탈 행을 찾는다. (노트북 2단계)</div>
     </div>
     <div class="step">
       <div class="num">3</div>
-      <div class="content"><b>불합격률 비교</b> — 정상 범위 안/밖 각각의 불합격률을 계산해 비교한다.</div>
+      <div class="content"><b>불합격률 비교</b> — 정상 범위 안/밖 각각의 불합격률을 계산해 비교한다.
+      (노트북 3단계)</div>
     </div>
     <div class="step">
       <div class="num">4</div>
       <div class="content"><b>온도-두께 관계 확인</b> — 산점도를 그리고 <code>.corr()</code>로
-      상관계수를 계산한다.</div>
+      상관계수를 계산한다. (노트북 4단계)</div>
     </div>
     <div class="step">
       <div class="num">5</div>
-      <div class="content"><b>대조군 확인</b> — 습도와 불합격의 상관계수를 계산해 관계가 없음을 확인한다.</div>
+      <div class="content"><b>대조군 확인</b> — 습도와 불합격의 상관계수를 계산해 관계가 없음을 확인한다.
+      (노트북 5~6단계 · 6단계는 EQ-02의 진동 값을 같은 방법으로 비교하는 도전 단계)</div>
     </div>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>원인 후보 문장 쓰기</b> — "OO은 XX의 원인 후보로 보인다. 근거는 ___이다."
-      형식으로 한 문장을 완성한다. (학생용 Notebook의 TODO로 이어짐)</div>
+      형식으로 한 문장을 완성한다. (노트북 7단계 · 학생용 Notebook의 TODO로 이어짐)</div>
     </div>
+    <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 8~11단계(AI에게 질문하기 ·
+    AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로 마무리한다.</p>
   </section>
 
   <section class="block">

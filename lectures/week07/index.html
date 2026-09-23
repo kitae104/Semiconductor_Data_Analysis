@@ -338,33 +338,36 @@ Name: count, dtype: int64</pre>
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>Orange3로 먼저 훑어보기</b> — Box Plot, Distributions로 설비별 차이를
-      미리 짐작해본다.</div>
+      미리 짐작해본다. (노트북 대응 없음 — Orange3 화면에서 진행)</div>
     </div>
     <div class="step">
       <div class="num">2</div>
       <div class="content"><b>설비별 평균·합격률</b> — <code>groupby("설비번호")</code>로 평균
-      온도와 합격률을 계산한다.</div>
+      온도와 합격률을 계산한다. (노트북 1~2단계)</div>
     </div>
     <div class="step">
       <div class="num">3</div>
       <div class="content"><b>로트별 수율 계산</b> — <code>groupby("로트번호").agg(...)</code>로
-      로트마다 검사수량·양품수량·수율을 계산한다.</div>
+      로트마다 검사수량·양품수량·수율을 계산한다. (노트북 3단계)</div>
     </div>
     <div class="step">
       <div class="num">4</div>
       <div class="content"><b>저수율 로트 찾기</b> — 수율 80% 미만 로트를 조건 검색으로 찾고,
-      어느 설비에 몰려 있는지 확인한다.</div>
+      어느 설비에 몰려 있는지 확인한다. (노트북 4단계)</div>
     </div>
     <div class="step">
       <div class="num">5</div>
       <div class="content"><b>불량 유형 파레토</b> — <code>value_counts()</code>로 불량 유형을
-      집계하고, 가장 큰 원인을 찾는다.</div>
+      집계하고, 가장 큰 원인을 찾는다. (노트북 5단계)</div>
     </div>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>종합 정리</b> — 합격률이 가장 낮은 설비와 저수율 로트가 몰린
-      설비가 같은지 확인하고 문장으로 정리한다. (학생용 Notebook의 TODO로 이어짐)</div>
+      설비가 같은지 확인하고 문장으로 정리한다. (노트북 6단계 · 학생용 Notebook의 TODO로 이어짐)</div>
     </div>
+    <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 7~11단계(오늘의 학습을 한 문장으로 정리 ·
+    AI에게 질문하기 · AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로
+    마무리한다.</p>
   </section>
 
   <section class="block">

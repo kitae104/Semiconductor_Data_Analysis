@@ -42,7 +42,7 @@
 | 7 | 설비·공정 비교와 수율·불량 분석 | groupby 집계, 수율/불량률, 파레토 |
 | 8 | 공정 이상과 원인 후보 찾기 | 이상탐지, 상관관계 + Orange3 Correlations |
 | 9 | 머신러닝으로 합격/불합격 예측하기 | 반도체_공정_샘플.csv 기반 분류 모델, 예측 체험 + Orange3 |
-| 10 | 반도체 공정 데이터 분석 미니 프로젝트 | 종합 프로젝트, 최종 보고서 |
+| 10 | 모델 평가와 새 데이터 예측 | 새 로트 `predict()`, 모델 신뢰도 점검 + Orange3 Predictions |
 
 자세한 설계 근거는 [`docs/curriculum.md`](docs/curriculum.md), v1→v2 재구성 계획은
 [`docs/restructure-plan.md`](docs/restructure-plan.md), 데이터 생성 규칙(현재 v1 기준, 개정 예정)은

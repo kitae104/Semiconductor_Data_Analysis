@@ -431,33 +431,37 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>Orange3로 먼저 훑어보기</b> — File → Data Table → Feature
-      Statistics로 결측 셀과 극단값을 눈으로 확인한다.</div>
+      Statistics로 결측 셀과 극단값을 눈으로 확인한다.
+      (노트북 대응 없음 — Orange3 화면에서 진행)</div>
     </div>
     <div class="step">
       <div class="num">2</div>
       <div class="content"><b>결측값 확인</b> — <code>isna().sum()</code>으로 열별 결측 개수를
-      확인한다.</div>
+      확인한다. (노트북 1단계)</div>
     </div>
     <div class="step">
       <div class="num">3</div>
       <div class="content"><b>결측값 처리</b> — 범주형은 <code>dropna()</code>, 숫자형은
-      <code>fillna(중앙값)</code>으로 처리한다.</div>
+      <code>fillna(중앙값)</code>으로 처리한다. (노트북 2단계)</div>
     </div>
     <div class="step">
       <div class="num">4</div>
       <div class="content"><b>중복 제거</b> — <code>duplicated().sum()</code>으로 개수를 확인하고
-      <code>drop_duplicates()</code>로 제거한다.</div>
+      <code>drop_duplicates()</code>로 제거한다. (노트북 3단계)</div>
     </div>
     <div class="step">
       <div class="num">5</div>
       <div class="content"><b>이상값 찾기·제거</b> — 조건 검색으로 고온·음수 압력·비정상
-      가스유량을 찾아 제거한다.</div>
+      가스유량을 찾아 제거한다. (노트북 4~5단계)</div>
     </div>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>정제 전후 비교</b> — 행 개수와 평균 온도를 비교해 문장으로
-      정리한다. (학생용 Notebook의 TODO로 이어짐)</div>
+      정리한다. (노트북 6단계 · 학생용 Notebook의 TODO로 이어짐)</div>
     </div>
+    <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 7~11단계(오늘의 학습을 한 문장으로 정리 ·
+    AI에게 질문하기 · AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로
+    마무리한다.</p>
   </section>
 
   <section class="block">
@@ -538,9 +542,21 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
     </div>
     <div class="callout practice">
       <b class="tag">도전 문제 2</b>
-      <code>측정시간</code> 열에서 형식이 다른 날짜(<code>2024/03/05</code>,
-      <code>03-05-2024 10:00</code>) 2건을 조건 검색이나 <code>str.len()</code>으로 찾아보자
-      (6차시 시계열 그래프 예고).
+      <code>측정시간</code> 열에는 형식이 다른 날짜가 <b>2건</b> 섞여 있다
+      (<code>2024/03/05</code>, <code>03-05-2024 10:00</code>). 두 단계로 찾아보자.<br><br>
+      ① 정상값은 <code>2024-03-05 10:00</code>처럼 16자다. 그러니 글자 수가 16이 아닌 행을
+      골라보자: <code>df[df["측정시간"].str.len() != 16]</code>. 그런데 결과는
+      <b>1건</b>뿐이다.<br>
+      ② 왜 1건만 나올까? 나머지 1건인 <code>03-05-2024 10:00</code>은 정상값과 글자 수가
+      똑같이 16자라서 길이로는 걸러지지 않는다. 대신 <b>5번째 글자가 <code>-</code>인지</b>를
+      보면 된다: <code>df[df["측정시간"].str[4] != "-"]</code>. 이렇게 하면 <b>2건</b> 모두
+      잡힌다.
+    </div>
+    <div class="callout concept">
+      <b class="tag">여기서 얻어갈 것</b>
+      <b>글자 수가 같아도 형식은 다를 수 있다.</b> 데이터를 정제할 때 "길이로 걸렀으니 다 찾았다"고
+      믿으면 남은 1건을 그대로 안고 간다. 한 가지 방법으로 찾은 뒤에는 "이 방법이 놓치는 경우는
+      없을까?"를 한 번 더 물어보자. 날짜를 날짜답게 다루는 방법은 6차시(시계열 그래프)에서 다룬다.
     </div>
   </section>
 

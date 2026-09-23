@@ -335,6 +335,64 @@ def check_data(scope: str, week: int) -> None:
 # --------------------------------------------------------------------------- week
 
 
+EXC_RE = re.compile(r"\b([A-Z][A-Za-z]*(?:Error|Exception|Warning))\b")
+FIGURE_RE = re.compile(r"(\d+(?:\.\d+)?%|\d+건)")
+EXC_MSG_RE = re.compile(r"`([A-Z][A-Za-z]*(?:Error|Exception)): ([^`]{3,80})`")
+
+
+def week_corpus(week: int) -> str:
+    """해당 차시의 강의·실습지·노트북 3종을 한 덩어리 문자열로 모은다."""
+    parts = []
+    folder = os.path.join(BASE, "lectures", f"week{week:02d}")
+    for name in ("index.html", "worksheet.html", "quiz.json"):
+        p = os.path.join(folder, name)
+        if os.path.exists(p):
+            parts.append(read(p))
+    for kind, suffix in (("student", "student"), ("instructor", "instructor"), ("solutions", "solution")):
+        p = os.path.join(BASE, "notebooks", kind, f"week{week:02d}_{suffix}.ipynb")
+        if os.path.exists(p):
+            code, md = notebook_sources(p)
+            parts.extend(code)
+            parts.extend(md)
+    p = os.path.join(BASE, "data", "data_dictionary", f"week{week:02d}_dictionary.md")
+    if os.path.exists(p):
+        parts.append(read(p))
+    return "\n".join(parts)
+
+
+def check_guide_claims(scope: str, rel_guide: str, text: str, week: int) -> None:
+    """운영안이 단독으로 주장하는 오류 이름·수치를 잡는다.
+
+    전 차시 감사(2026-09-23)에서 차단 18건 중 12건이 운영안 단독 오류였는데 기존 검사가
+    한 건도 잡지 못했다. 강사는 이 파일을 보고 시연하므로, 여기 적힌 오류 이름과 수치가
+    다른 산출물 어디에도 없다면 강의 중에 실제와 다른 것을 예고하게 된다.
+    
+    둘 다 WARN이다. 운영안이 강의 본문에 없는 오류까지 대비해 적어두는 것은 정상적인
+    역할이라, 스크립트만으로는 "운영안에만 있지만 맞는 것"과 "운영안에만 있고 틀린 것"을
+    구분할 수 없다(실제로 3·9·10차시의 TypeError·KeyError·NameError는 직접 실행해보니
+    전부 맞는 서술이었다). 이 검사의 목적은 판정이 아니라 **사람이 직접 실행·재계산해봐야
+    할 지점을 좁혀주는 것**이다. 확인해서 맞으면 그대로 두면 된다.
+    """
+    corpus = week_corpus(week)
+
+    orphan_exc = sorted({m for m in EXC_RE.findall(text) if m not in corpus})
+    warn_if(scope, f"{rel_guide} 인용 오류 이름이 다른 산출물에 존재", not orphan_exc,
+            f"운영안에만 있는 예외: {orphan_exc} — 실제로 그 예외가 나는지 실행해 확인할 것"
+            if orphan_exc else "")
+
+    orphan_msg = sorted({f"{a}: {b}" for a, b in EXC_MSG_RE.findall(text)
+                         if f"{a}: {b}" not in corpus})
+    warn_if(scope, f"{rel_guide} 인용 오류 메시지가 다른 산출물에 존재", not orphan_msg,
+            f"운영안에만 있는 오류 메시지: {orphan_msg} — 그 메시지가 실제로 그대로 나오는지"
+            " 실행해 확인할 것(라이브러리 버전이 올라가 더 이상 나지 않는 경우가 있다)"
+            if orphan_msg else "")
+
+    orphan_fig = sorted({m for m in FIGURE_RE.findall(text) if m not in corpus})
+    warn_if(scope, f"{rel_guide} 인용 수치가 다른 산출물에 존재", not orphan_fig,
+            f"운영안에만 있는 수치: {orphan_fig} — 데이터로 재계산해 확인할 것"
+            if orphan_fig else "")
+
+
 def check_week(week: int, css_classes: set[str]) -> None:
     scope = f"week{week:02d}"
     folder = os.path.join(BASE, "lectures", scope)
@@ -348,6 +406,7 @@ def check_week(week: int, css_classes: set[str]) -> None:
         text = read(guide)
         check_csv_refs(scope, rel_guide, text)
         check_wording(scope, rel_guide, text, week)
+        check_guide_claims(scope, rel_guide, text, week)
         for heading in ("수업 흐름", "예상 오개념"):
             warn_if(scope, f"{rel_guide} '{heading}' 섹션", f"## {heading}" in text or heading in text)
     check_notebooks(scope, week)

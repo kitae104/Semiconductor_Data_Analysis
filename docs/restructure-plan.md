@@ -209,7 +209,7 @@
     "예측은 같아도 확신의 정도는 다르다"를 보여준 뒤 10개 차시 전체를 되짚는 표와 "과정을 마치며"
     절로 마무리했다(마지막 차시이므로 "다음 차시 예고" 없음).
   - `lectures/week10/project-report-template.html`은 구 미니 프로젝트용 파일로 어떤 페이지에서도
-    참조하지 않는 고아 파일이었다. 사용자 확인 후 삭제했고, `docs/instructor-operation-guide.md`의
+    참조하지 않는 고아 파일이었다. 사용자 확인 후 커밋 `ae47736`에서 삭제했고, `docs/instructor-operation-guide.md`의
     "10차시 미니 프로젝트" 평가 항목도 실제 10차시(9차시 모델로 새 로트 예측 + `predict_proba`)
     평가 기준으로 함께 고쳤다.
 - **`data/data_dictionary/*.md` 재정비** — worksheet.html 등과 동일하게 차시 번호가 밀린 채
@@ -218,9 +218,8 @@
   10차시 핵심 데이터가 `week09_new_lots_to_predict.csv`임을 명확히 했다.
 - `python scripts/validate_datasets.py`(43/43)와 `python scripts/validate_notebooks.py`(63/63)
   모두 0건 실패로 최종 재확인했다.
-- **남은 항목**: `index.html`의 "진행 안내" 배너가 아직 "skeleton" 단계 문구를 담고 있다면
-  갱신 필요(전 차시 상세 완료를 반영). `lectures/week10/project-report-template.html` 고아 파일
-  정리 여부는 사용자 판단 필요.
+- **남은 항목 없음**(2026-09-23 확인) — `index.html`에 "skeleton"·"진행 안내" 문구는 **0건**이고,
+  위에 적은 10차시 고아 파일도 커밋 `ae47736`에서 이미 삭제돼 `lectures/week10/`에 존재하지 않는다.
 
 ### 후속 진행 — Orange3 실제 화면 캡처 자리 추가, 설치 안내 제거 (2026-09-21)
 

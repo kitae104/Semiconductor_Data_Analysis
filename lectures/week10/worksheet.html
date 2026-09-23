@@ -101,7 +101,13 @@ new_lots["불합격_확률"] = proba[:, 1]</code></pre>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
       "새 로트 ____건을 예측한 결과 모두 ____(으)로 예측되었으며, 그중 불합격 확률이 가장 높은
-      로트는 ____번(확률 약 ____%)이었다."
+      로트는 ____번과 ____번(둘 다 확률 약 ____%)이었다."
+    </div>
+    <div class="callout warn">
+      <b class="tag">체크포인트</b>
+      가장 높은 로트가 <b>하나가 아니라 둘</b>이다. 두 로트의 확률이 똑같은 것은, 결정 트리가
+      두 로트를 <b>같은 갈래(리프)로 보냈다</b>는 뜻이다. 같은 갈래에 도착한 로트는 트리가
+      구분하지 못하므로 확률도 같게 나온다.
     </div>
   </section>
 
@@ -117,7 +123,26 @@ new_lots["불합격_확률"] = proba[:, 1]</code></pre>
   </section>
 
   <section class="block">
-    <h2>7. 심화 실습</h2>
+    <h2>7. 연습문제 — 위험 로트 개수 세기</h2>
+    <p>불합격 확률이 0.5를 초과하는(50%보다 큰) 로트를 "위험 로트"로 정하고, 몇 개인지 세어보자
+    (4차시에서 배운 조건 검색을 다시 쓰는 문제다).</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>risky_lots = new_lots[new_lots["불합격_확률"] &gt; 0.5]
+print(f"위험 로트(불합격 확률 50% 초과) 개수: {len(risky_lots)}개")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">정답은 <b>0개</b>다. 새 로트 9건 중 불합격 확률이 가장 높은 것도
+    0.364(36.4%)라서, 0.5를 넘는 로트가 하나도 없다. 코드를 잘못 쓴 것이 아니다 —
+    <b>"해당하는 것이 없다"도 분석 결과</b>이며, 현장에서는 "이번 배치에는 즉시 조치가 필요한
+    로트가 없다"로 읽는다. 기준을 0.3으로 낮추면
+    <code>new_lots[new_lots["불합격_확률"] &gt;= 0.3]</code>에서 <b>2개</b>(0번·6번)가 잡힌다.
+    같은 데이터라도 기준을 어디에 두느냐에 따라 "위험 로트"의 수가 달라진다는 점을 8번 심화 실습과
+    이어서 생각해보자.</div>
+  </section>
+
+  <section class="block">
+    <h2>8. 심화 실습</h2>
     <div class="callout practice">
       <b class="tag">심화</b>
       기본값인 0.5 대신, 불합격 확률이 0.3 이상이면 불합격으로 재분류하는 코드
@@ -135,7 +160,7 @@ new_lots["불합격_확률"] = proba[:, 1]</code></pre>
   </section>
 
   <section class="block">
-    <h2>8. AI 미니 프로젝트 도전 — 10차시 완주 인증서 만들기</h2>
+    <h2>9. AI 미니 프로젝트 도전 — 10차시 완주 인증서 만들기</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
       드디어 10차시, 그리고 10차시 전체 과정의 마지막 문제다. AI 챗봇에게 "input()으로 이름을
