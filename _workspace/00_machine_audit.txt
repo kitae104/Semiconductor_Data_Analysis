@@ -1,0 +1,33 @@
+[WARN] (week01) week01 단계 제목 일치 (student vs solutions) — 1건 — 4단계: '4단계(도전). 나만의 자기소개 만들기' != '4단계. 나만의 자기소개 만들기'
+[WARN] (week02) week02 단계 제목 일치 (student vs instructor) — 2건 — 10단계: '10단계(도전). 종합 실습 — 나만의 설비 목록 만들기' != '10단계. 종합 실습 — 나만의 설비 목록 만들기' / 11단계: '11단계. 오늘의 학습을 한 문장으로 정리하기' != '11단계. 오류 대처 방법'
+[WARN] (week02) week02_basic_process_values.csv 모든 열이 데이터사전에 설명됨 — 누락: ['측정시간', '압력_Pa']
+[WARN] (week03) week03 단계 제목 일치 (student vs instructor) — 1건 — 9단계: '9단계. 오늘의 학습을 한 문장으로 정리하기' != '9단계. 오류 대처 방법'
+[WARN] (week03) week03_process_filtering.csv 모든 열이 데이터사전에 설명됨 — 누락: ['측정시간', '압력_Pa', '가스유량_slm']
+[WARN] (week04) week04 단계 제목 일치 (student vs instructor) — 1건 — 8단계: '8단계. 오늘의 학습을 한 문장으로 정리하기' != '8단계. 오류 대처 방법'
+[WARN] (week04) week04_dirty_process_data.csv 모든 열이 데이터사전에 설명됨 — 누락: ['처리시간_sec']
+[WARN] (week05) week05 단계 제목 일치 (student vs instructor) — 1건 — 7단계: '7단계. 오늘의 학습을 한 문장으로 정리하기' != '7단계. 오류 대처 방법'
+[WARN] (week05) week05_process_visualization.csv 모든 열이 데이터사전에 설명됨 — 누락: ['두께_nm', '진동_mm_s']
+[WARN] (week06) week06 단계 제목 일치 (student vs instructor) — 6건 — 2단계: '2단계. 선 그래프 — 시간에 따른 온도 변화' != '2단계. 선 그래프' / 3단계: '3단계. 막대그래프 — 설비별 측정 건수' != '3단계. 막대그래프' / 4단계: '4단계. 히스토그램 — 온도 분포' != '4단계. 히스토그램'
+[WARN] (week06) week06 단계 제목 일치 (student vs solutions) — 5건 — 2단계: '2단계. 선 그래프 — 시간에 따른 온도 변화' != '2단계. 선 그래프' / 3단계: '3단계. 막대그래프 — 설비별 측정 건수' != '3단계. 막대그래프' / 4단계: '4단계. 히스토그램 — 온도 분포' != '4단계. 히스토그램'
+[WARN] (week06) week06_equipment_comparison.csv 모든 열이 데이터사전에 설명됨 — 누락: ['작업조', '진공도_mTorr']
+[WARN] (week07) week07 단계 제목 일치 (student vs instructor) — 1건 — 7단계: '7단계. 오늘의 학습을 한 문장으로 정리하기' != '7단계. 오류 대처 방법'
+[WARN] (week07) week07_yield_defect_analysis.csv 모든 열이 데이터사전에 설명됨 — 누락: ['검사수량', '양품수량', '불량수량', '수율_pct']
+[WARN] (week08) week08 단계 제목 일치 (student vs instructor) — 4건 — 4단계: '4단계. 온도와 두께의 관계(산점도 + 상관계수)' != '4단계. 온도와 두께의 관계' / 5단계: '5단계. 습도(대조군)와 불합격의 관계 확인하기' != '5단계. 습도(대조군) 확인' / 6단계: '6단계(도전). EQ-02의 진동 값 비교하기' != '6단계. EQ-02의 진동 값 확인'
+[WARN] (week08) week08 단계 제목 일치 (student vs solutions) — 1건 — 4단계: '4단계. 온도와 두께의 관계(산점도 + 상관계수)' != '4단계. 온도와 두께의 관계'
+[WARN] (week09) week09 단계 제목 일치 (student vs instructor) — 1건 — 7단계: '7단계. 오늘의 학습을 한 문장으로 정리하기' != '7단계. 오류 대처 방법'
+[WARN] (week09) week09_fab_beginner.csv 모든 열이 데이터사전에 설명됨 — 누락: ['SensorTime', 'Chamber_Temperature_edu', 'Chamber_Pressure_edu', 'Gas_Flow_edu', 'RF_Power_edu', 'Vacuum_Level_edu', 'Cooling_Water_Temperature_edu', 'Vibration_edu', 'Process_Time_edu', '주요센서_A', '주요센서_B']
+[WARN] (week09) week09_fab_selected_sensors.csv 모든 열이 데이터사전에 설명됨 — 누락: ['SensorTime', 'Sensor59', 'Sensor103', 'Sensor510', 'Sensor348', 'Sensor431', 'Sensor434', 'Sensor430', 'Sensor435', 'Sensor21', 'Sensor28', 'Sensor436', 'Sensor129', 'Sensor210', 'Sensor298', 'Sensor163', 'Pass_Fail']
+[WARN] (week10) week10 단계 수 일치 (student vs instructor) — student 10개 vs instructor 11개
+
+검사 743건 · PASS 723 · WARN 20 · FAIL 0
+
+=== 사용자 확정 범위 (2026-09-23) ===
+1. 확장 검사 WARN 20건을 전부 0으로 만든다.
+   - 데이터사전 열 설명 누락 7건
+   - 노트북 단계 제목 불일치 전부 (student/solutions/instructor 3종 비교 기준)
+   - 강사용 노트북 9개에 "한 문장으로 정리하기" 단계 추가
+     (기존 "오류 대처 방법"은 지우지 않고 번호 없는 제목으로 이동)
+   - week10 단계 수 불일치 (student 10 vs instructor 11)
+   - week09 fab 파생 CSV 잔재 처리
+2. 8차시 압력/진공도 물리량 모순은 이번에 고치지 않는다 — 보고만 한다.
+3. 사진·이미지·디자인 작업은 범위 밖.
