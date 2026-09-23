@@ -47,11 +47,19 @@
 2. ~~**`scripts/generate_weekly_data.py` 개정**~~ — ✅ 완료. `gen_week02()`~`gen_week09()`를 v2 스펙에
    맞게 재작성하고 `python scripts/generate_weekly_data.py`로 `data/weekly/`를 재생성했다. 기존 시드
    규칙(`seed = 100 + 차시번호`)과 `utf-8-sig` 저장 규칙은 그대로 유지했다.
-   - **과도기 상태(의도적)**: `week02`~`week07`, `week09` 폴더에는 v1 시절 파일명(예:
-     `week02_basic_process_values.csv`, `week06_equipment_comparison.csv`,
-     `week09_fab_beginner.csv` 등)이 새 v2 파일과 **함께 남아 있다**. `lectures/`·`notebooks/`가
-     아직 v1 파일명을 참조하므로, 지금 지우면 기존 강의자료가 바로 깨진다. TODO 3·5에서 해당 차시의
-     강의자료·노트북을 v2로 재작성한 뒤 옛 파일을 정리한다.
+   - ~~**과도기 상태(의도적)**: `week02`~`week07`, `week09` 폴더에 v1 시절 파일명이 새 v2 파일과
+     함께 남아 있다. TODO 3·5에서 강의자료·노트북을 v2로 재작성한 뒤 옛 파일을 정리한다.~~
+     → **✅ 2026-09-23 정리 완료.** TODO 3·5가 끝나 `lectures/`·`notebooks/`·`scripts/`의 v1
+     파일명 참조가 0건임을 전수 확인한 뒤, 아래 8개를 삭제했다.
+     `week02_basic_process_values.csv`, `week03_process_filtering.csv`,
+     `week04_dirty_process_data.csv`, `week05_process_visualization.csv`,
+     `week06_equipment_comparison.csv`, `week07_yield_defect_analysis.csv`,
+     `week09_fab_beginner.csv`, `week09_fab_selected_sensors.csv`.
+     `data/weekly/`에는 이제 `generate_weekly_data.py`가 생성하는 v2 정본 11개만 남는다.
+     `week09_new_lots_to_predict.csv`는 10차시가 실제로 쓰는 정본이라 보존했다.
+     삭제 배경 하나 더 — `week09_fab_beginner.csv`는 열 이름이 `Chamber_Temperature_edu`,
+     `Gas_Flow_edu` 형태인데 값이 `week09_fab_selected_sensors.csv`의 `Sensor59`, `Sensor510`과
+     동일했다. 즉 `Sensor*`의 물리적 의미를 단정한 파생물이라 CLAUDE.md 금지선에 어긋났다.
    - fab.csv 기반 `SELECTED_SENSORS`/`BEGINNER_ALIAS`/`gen_week09()`의 fab 파생 로직은 스크립트에서
      완전히 제거했다(9차시는 이제 `반도체_공정_샘플.csv` 계열 신규 데이터만 생성).
 3. 🔶 **`lectures/weekXX/` 재작성** — **개요(skeleton) 단계까지 완료.** 2·3·4·5·6·7·9·10차시의
@@ -100,7 +108,7 @@
 - `CLAUDE.md` — fab.csv/9차시 관련 규칙을 v2 기준으로 일반화
 - `docs/data-design.md` — v2 차시 구성에 맞게 전체 재작성(TODO 1 완료)
 - `scripts/generate_weekly_data.py` — v2 스펙대로 재작성(TODO 2 완료)
-- `data/weekly/week02`~`week10`(9차시 포함) — v2 스펙 CSV 생성(v1 파일은 과도기 동안 함께 보존)
+- `data/weekly/week02`~`week10`(9차시 포함) — v2 스펙 CSV 생성(v1 파일은 2026-09-23에 정리 완료)
 - `scripts/validate_datasets.py` — v2 파일명·스펙 기준으로 갱신(TODO 8 중 데이터셋 검증만 완료)
 - `lectures/week02,03,04,05,06,07,09,10/index.html` — 제목·학습목표·다룰 내용 개요만 담은 skeleton으로 교체(TODO 3 skeleton 단계 완료)
 - `notebooks/{student,instructor,solutions}/week{02,03,04,05,06,07,09,10}_*.ipynb`(24개) — 마크다운
