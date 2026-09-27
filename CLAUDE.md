@@ -55,3 +55,6 @@ python .claude/skills/course-consistency-audit/scripts/check_course_consistency.
 | 2026-09-23 | 운영안 대조 검사 3종 추가(인용 오류 이름·오류 메시지·수치가 다른 산출물에 있는지) | skills/course-consistency-audit | 전 차시 감사에서 차단 18건 중 12건이 운영안 단독 오류였는데 기존 검사가 0건 잡음 |
 | 2026-09-23 | 새 개념 예산에 "활성 개념 / 노출 전용 개념" 구분 신설(노출 전용은 예산 밖이되 차시 스펙에 목록 명시) | skills/curriculum-spec, docs/curriculum.md | 전 차시에 AI 프롬프트 박스 30개와 "AI 미니 프로그램" 단계가 들어가 있어, 구분 없이 세면 과정 설계와 예산 규칙이 구조적으로 충돌했다. 1차시는 활성 5개로 상한 내로 재분류, 4차시는 활성 6개로 의도적 초과를 선언 |
 | 2026-09-23 | "실습 흐름은 노트북 단계와 1:1 대응한다" 규칙 폐기 → 강의는 수업 흐름 묶음 5~6개, 노트북은 셀 단위. 강의 step에 "(노트북 N~M단계)" 병기, 운영안은 노트북 번호로 지시 | skills/curriculum-spec | 10차시 전수 대조 결과 순서 역전은 4차시 한 곳뿐이고 9차시는 "순서 일치 + 1:N 포함"이었다. 1:1로 펼치면 강의 실습 절이 11~15단계가 되고 그중 5개(꼬리 블록)가 매 차시 똑같아져 한눈 보기 기능을 잃는다 |
+| 2026-09-27 | 디자인 시스템을 FabMetric Datasheet로 교체, 스킬의 토큰 표를 `docs/design-system.md` 참조로 대체 | skills/design-system-rollout, docs/design-system.md | AI 생성 느낌 제거 요청 → 시안 3종 비교 후 데이터시트형 확정. 토큰 값이 스킬과 문서 두 곳에 복제돼 있어 한쪽만 갱신될 위험이 있었다 |
+| 2026-09-27 | 섹션 템플릿·콜아웃 예시에서 이모지 제거, "제목·태그·버튼에 이모지 금지" 규칙 추가 | skills/lecture-material-authoring, skills/curriculum-spec | 전 차시 이모지 일괄 제거 후 템플릿이 이모지를 다시 들여오지 않게 하기 위함 |
+| 2026-09-27 | 실습지 체크포인트 해설을 접는 규칙(`reveal-btn` + `callout … answer-box`) 추가 | skills/lecture-material-authoring | 심화 문제 바로 아래 체크포인트가 결과("결과는 3건이다" 등)를 먼저 보여줘 학생이 풀기 전에 답을 보게 됐다 |

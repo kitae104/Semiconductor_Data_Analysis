@@ -35,11 +35,11 @@
   <div class="hero">
     <span class="badge blue">9차시</span>
     <h1>머신러닝 예측 모델 만들기</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"코드를 쓰기 전에, Orange3로 먼저 이 데이터가 얼마나 잘 예측되는지 확인해볼 수 있을까?"</b></p>
+    <p class="today-question">오늘의 질문: <b>"코드를 쓰기 전에, Orange3로 먼저 이 데이터가 얼마나 잘 예측되는지 확인해볼 수 있을까?"</b></p>
   </div>
 
   <section class="block">
-    <h2>🎯 학습 목표</h2>
+    <h2>학습 목표</h2>
     <ul class="goal-list">
       <li>Orange3로 먼저 이 데이터가 얼마나 잘 예측되는지 확인할 수 있다.</li>
       <li>Feature(특징)와 Label(정답)의 의미를 설명할 수 있다.</li>
@@ -52,7 +52,7 @@
   </section>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>지금까지는 이미 일어난 불량을 데이터로 "설명"했지만, 현장에서는 문제가 생기기 전에 "이 로트가
         불합격할 것 같다"를 미리 알 수 있으면 훨씬 유용하다. 머신러닝은 과거 데이터의 패턴(온도·압력 등과
@@ -67,7 +67,7 @@
   </section>
 
   <section class="block">
-    <h2>⏮️ 지난 시간 복습</h2>
+    <h2>지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">8차시 연결</b>
       8차시에서는 진공도가 정상 범위를 벗어나면 불합격률이 크게 뛰어, 진공도 이탈을 불합격의
@@ -78,7 +78,7 @@
   </section>
 
   <section class="block">
-    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <h2>① Orange3로 먼저 훑어보기</h2>
     <div class="callout practice">
       <b class="tag">위젯</b> File → Tree → Test and Score
       <p style="margin:.5rem 0 0;">scikit-learn 코드를 쓰기 전에 Orange3로 코드 없이 모델을 먼저
@@ -95,25 +95,25 @@
       <svg class="oflow-svg" viewBox="0 0 860 140" role="img"
            aria-label="File, Tree, Test and Score 위젯을 순서대로 연결한 Orange3 워크플로 다이어그램">
         <rect class="obox" x="10" y="25" width="220" height="90" rx="14"/>
-        <text x="120" y="62" text-anchor="middle" class="olabel" font-size="15">📁 File</text>
+        <text x="120" y="62" text-anchor="middle" class="olabel" font-size="15">File</text>
         <text x="120" y="86" text-anchor="middle" class="osub" font-size="11">week09_pass_fail_train.csv</text>
 
         <line class="oarrow" x1="230" y1="70" x2="252" y2="70"/>
         <polygon class="oarrowhead" points="252,62 269,70 252,78"/>
 
         <rect class="obox" x="270" y="25" width="220" height="90" rx="14"/>
-        <text x="380" y="62" text-anchor="middle" class="olabel" font-size="15">🌳 Tree</text>
+        <text x="380" y="62" text-anchor="middle" class="olabel" font-size="15">Tree</text>
         <text x="380" y="86" text-anchor="middle" class="osub" font-size="11">분류 모델 생성</text>
 
         <line class="oarrow" x1="490" y1="70" x2="512" y2="70"/>
         <polygon class="oarrowhead" points="512,62 529,70 512,78"/>
 
         <rect class="obox accent" x="530" y="25" width="320" height="90" rx="14"/>
-        <text x="690" y="62" text-anchor="middle" class="olabel" font-size="15">✅ Test and Score</text>
+        <text x="690" y="62" text-anchor="middle" class="olabel" font-size="15">Test and Score</text>
         <text x="690" y="86" text-anchor="middle" class="osub" font-size="11">Accuracy 자동 계산</text>
       </svg>
     </div>
-    <p style="margin:.8rem 0 .2rem;"><b>🖼️ 실제 Orange3 화면으로 확인하기</b></p>
+    <p style="margin:.8rem 0 .2rem;"><b>실제 Orange3 화면으로 확인하기</b></p>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week09_01_canvas.png" loading="lazy"
            alt="그림 9-1. File → Tree → Test and Score 캔버스" data-shot="File → Tree → Test and Score를 연결한 캔버스(File은 Test and Score에도 연결)">
@@ -135,7 +135,7 @@
   </section>
 
   <section class="block">
-    <h2>🐍 ② 파이썬으로 확인하기 — 데이터 준비</h2>
+    <h2>② 파이썬으로 확인하기 — 데이터 준비</h2>
     <div class="code-block">
       <div class="code-label"><span>Python — 데이터 읽기와 결측치 처리</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
@@ -178,15 +178,15 @@ X = df[feature_cols]   # Feature(특징)
 y = df["검사결과"]       # Label(정답)</code></pre>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>머신러닝의 Feature(특징)와 Label(정답)을 '떡볶이 맛 예측하기' 같은 일상 비유로 설명해줘. 그다음 Feature와 Label을 구분하는 OX 문제 3개를 내주고, 내가 답하면 정답과 이유를 알려줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 비유에서 "맞히고 싶은 것"이 Label, "보고 판단하는 재료"가 Feature로 나뉘어 있는지 확인하자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 비유에서 "맞히고 싶은 것"이 Label, "보고 판단하는 재료"가 Feature로 나뉘어 있는지 확인하자.</p>
 
   </section>
 
   <section class="block">
-    <h2>📚 train/test 분리와 모델 학습</h2>
+    <h2>train/test 분리와 모델 학습</h2>
     <ul class="pt-list">
       <li>모델의 실력을 제대로 확인하려면 → 학습에 쓰지 않은 데이터로 시험을 봐야 함</li>
       <li><code>train_test_split</code> — 데이터를 학습용(train)과 평가용(test)으로 분리</li>
@@ -220,15 +220,15 @@ model.fit(X_train, y_train)</code></pre>
       </ul>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>train_test_split의 stratify=y를, 빨간 사탕 20개와 파란 사탕 80개를 두 봉지로 나누는 상황에 빗대서 설명해줘. stratify를 안 쓰면 어떤 일이 생길 수 있는지도 알려줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: "두 봉지 모두 빨강:파랑 비율이 비슷해진다"는 핵심이 들어 있는지 보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: "두 봉지 모두 빨강:파랑 비율이 비슷해진다"는 핵심이 들어 있는지 보자.</p>
 
   </section>
 
   <section class="block">
-    <h2>📚 정확도 확인하기 — 그리고 정확도의 함정</h2>
+    <h2>정확도 확인하기 — 그리고 정확도의 함정</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>from sklearn.metrics import accuracy_score
@@ -280,10 +280,10 @@ print(cm)</code></pre>
     </div>
 
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>너는 반도체 공장의 품질 엔지니어야. '불합격 로트를 합격으로 놓치는 실수'와 '합격 로트를 불합격으로 잘못 잡는 실수' 중 공장에서는 어느 쪽이 더 곤란한지, 초보자도 알 수 있게 짧은 역할극으로 설명해줘. 가상의 예로만 설명해줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 불량을 놓치면 고객에게 불량품이 갈 수 있다는 점이 설명되는지 보고, 오늘 혼동행렬의 25건이 어느 실수인지 스스로 짚어보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 불량을 놓치면 고객에게 불량품이 갈 수 있다는 점이 설명되는지 보고, 오늘 혼동행렬의 25건이 어느 실수인지 스스로 짚어보자.</p>
 
     <h3>어떤 특징이 예측에 중요했을까?</h3>
     <div class="code-block">
@@ -309,7 +309,7 @@ print(cm)</code></pre>
   </section>
 
   <section class="block">
-    <h2>🟣 실습: 예측 모델 만들기 따라 하기</h2>
+    <h2>실습: 예측 모델 만들기 따라 하기</h2>
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>Orange3로 먼저 훑어보기</b> — File → Tree → Test and Score로
@@ -346,7 +346,7 @@ print(cm)</code></pre>
   </section>
 
   <section class="block">
-    <h2>🗂️ 핵심 용어 카드</h2>
+    <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
         <h4>Feature</h4><div class="en">특징</div>
@@ -388,7 +388,7 @@ print(cm)</code></pre>
   </section>
 
   <section class="block">
-    <h2>📁 데이터</h2>
+    <h2>데이터</h2>
     <ul class="pt-list">
       <li><code>data/weekly/week09/week09_pass_fail_train.csv</code></li>
       <li>학습용 750행 9열(검사결과 포함, 결측치 소량 포함)</li>
@@ -398,7 +398,7 @@ print(cm)</code></pre>
   </section>
 
   <section class="block">
-    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
       <b class="tag">오류 1</b>
       <code>ValueError: could not convert string to float</code> — Feature 목록에 문자열 열
@@ -417,7 +417,7 @@ print(cm)</code></pre>
   </section>
 
   <section class="block">
-    <h2>🚀 도전 실습</h2>
+    <h2>도전 실습</h2>
     <div class="callout practice">
       <b class="tag">도전 문제</b>
       <code>DecisionTreeClassifier(max_depth=...)</code>의 숫자를 아래 연습문제(2, 8) 외에
@@ -435,7 +435,7 @@ print(cm)</code></pre>
   </section>
 
   <section class="block">
-    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <h2>결과 정리 &amp; 퀴즈</h2>
     <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
 
     <div class="quiz-item">
@@ -476,20 +476,20 @@ print(cm)</code></pre>
   </section>
 
   <section class="block">
-    <h2>🤖 AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
+    <h2>AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
     <div class="callout concept">
       <b class="tag">이번 차시도 AI와 함께</b>
       머신러닝은 모델 종류와 평가 지표가 정말 다양하다. AI에게 질문하고 코드를 만들어보며 오늘
       배운 결정트리 하나를 넘어 조금 더 넓게 살펴보자.
     </div>
 
-    <h3>🔍 AI에게 검색하며 이해도 높이기</h3>
+    <h3>AI에게 검색하며 이해도 높이기</h3>
     <ul class="pt-list">
       <li>오늘은 결정트리 모델 하나로 정확도·혼동행렬을 살펴봤다 — AI에게 물어보며 관련 개념을
         더 알아보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <b class="tag">질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
       <ul class="pt-list">
         <li>"결정트리 말고 다른 분류 모델에는 어떤 것들이 있나요? (로지스틱 회귀, 랜덤 포레스트 등)"</li>
         <li>"정확도(accuracy) 말고 모델 성능을 평가하는 다른 지표(정밀도, 재현율, F1)는 각각
@@ -499,13 +499,13 @@ print(cm)</code></pre>
       </ul>
     </div>
 
-    <h3>💡 AI에게 프롬프트로 코드 생성 요청하기</h3>
+    <h3>AI에게 프롬프트로 코드 생성 요청하기</h3>
     <ul class="pt-list">
       <li>오늘 확인한 정확도·혼동행렬 외에, 정밀도·재현율까지 한 번에 출력하는 코드를 AI에게
         요청해보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 코드 생성 프롬프트 따라 해보기</b>
+      <b class="tag">코드 생성 프롬프트 따라 해보기</b>
       <ul class="pt-list">
         <li>"실제값과 예측값 리스트를 받아서, 정확도·정밀도·재현율을 한 번에 출력하는 코드를
           만들어줘."</li>
@@ -542,11 +542,11 @@ print(f"재현율: {recall_score(y_true, y_pred):.2f}")</code></pre>
   </section>
 
   <section class="block">
-    <h2>🟣 연습문제 — 나무 깊이(max_depth) 바꿔보기</h2>
+    <h2>연습문제 — 나무 깊이(max_depth) 바꿔보기</h2>
     <p>지금까지는 <code>max_depth=4</code>로 고정한 모델만 살펴봤다. 나무 깊이(<code>max_depth</code>)를
     2와 8로 각각 바꿔서 다시 학습시키면 정확도가 어떻게 달라지는지 비교해보자.</p>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       앞서 만든 <code>X_train</code>, <code>X_test</code>, <code>y_train</code>, <code>y_test</code>를
       그대로 사용해, <code>max_depth=2</code>와 <code>max_depth=8</code>인 모델을 각각 새로
       학습시키고 정확도를 비교해보자.
@@ -572,7 +572,7 @@ print(f"max_depth=8 정확도: {acc_deep:.1%}")</pre>
   </section>
 
   <section class="block">
-    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 합격 예측 미니 데모</h2>
+    <h2>AI로 재미있는 미니 프로그램 만들기 — 합격 예측 미니 데모</h2>
     <div class="callout concept">
       <b class="tag">오늘의 미니 프로젝트</b>
       오늘 학습시킨 분류 모델(<code>model</code>)과 특징 이름 리스트(<code>feature_cols</code>)를
@@ -580,7 +580,7 @@ print(f"max_depth=8 정확도: {acc_deep:.1%}")</pre>
       AI에게 만들어달라고 요청해보자.
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      <b class="tag">프롬프트 예시 — 그대로 물어보기</b>
       "학습된 분류 모델(model)과 특징 이름 리스트(feature_cols)가 있을 때, 새로운 값 하나를
       입력받아 데이터프레임 한 행으로 만들고 model.predict()로 합격/불합격을 재미있게
       알려주는 파이썬 코드를 만들어줘."
@@ -615,7 +615,7 @@ else:
   </section>
 
   <section class="block">
-    <h2>📝 과제(다음 차시까지)</h2>
+    <h2>과제(다음 차시까지)</h2>
     <ul class="pt-list">
       <li>아래 과제를 Jupyter Notebook 파일 하나에 순서대로 작성하고, 각 결과를 확인할 수 있게 만들어 제출</li>
     </ul>
@@ -639,18 +639,18 @@ else:
   </section>
 
   <section class="block">
-    <h2>❓ 핵심 질문 → 데이터 연결</h2>
+    <h2>핵심 질문 → 데이터 연결</h2>
     <div class="callout concept">Orange3가 보여준 정확도와 내가 학습시킨 모델의 정확도가 비슷한가?</div>
   </section>
 
   <section class="block">
-    <h2>🔜 다음 차시 예고</h2>
+    <h2>다음 차시 예고</h2>
     <div class="callout concept">10차시에는 오늘 만든 모델로 새 로트를 예측하고, Orange3 Predictions로 다시 확인한다.</div>
   </section>
 
   <div class="nav-buttons">
     <a href="../week08/index.html">← 이전 차시: 8차시</a>
-    <a class="home" href="../../index.html">🏠 전체 목차</a>
+    <a class="home" href="../../index.html">전체 목차</a>
     <a href="../week10/index.html">다음 차시: 10차시 →</a>
   </div>
 

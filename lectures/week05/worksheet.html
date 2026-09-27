@@ -22,7 +22,7 @@
   </div>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>실제 현장 데이터는 센서 오류나 기록 누락으로 빈 값·터무니없는 값이 섞여 있기 마련이다. 이런
         "더러운 데이터"를 그대로 분석하면 평균·그래프·모델 결과가 모두 왜곡되므로, 분석을 시작하기 전
@@ -146,7 +146,8 @@ max     557.73</pre>
       채워보고, 채운 뒤의 평균값이 서로 어떻게 다른지 비교해보자. 이상값이 섞여 있을 때 왜
       평균보다 중앙값이 더 안전한 선택인지 한 문장으로 설명해보자.
     </div>
-    <div class="callout warn">
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
       <code>fillna()</code>는 원본 <code>df</code>를 바꾸지 않고 "채워진 새 결과"를 돌려준다.
       계속 쓰려면 <code>filled = df["온도_섭씨"].fillna(...)</code>처럼 변수에 담아야 하며,

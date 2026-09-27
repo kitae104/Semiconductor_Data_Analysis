@@ -22,7 +22,7 @@
   </div>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>"이 설비가 다른 설비보다 문제가 있는가?"를 판단하는 건 현장에서 가장 중요한 질문 중 하나다.
         <code>groupby</code>는 전체 데이터를 설비별·공정별로 쪼개 평균·합격률을 한 번에 비교해주는 도구로,
@@ -150,7 +150,8 @@ df["불량유형"].____________()</code></pre>
       많이 발생한 불량 유형을 각각 찾아보자. EQ-04에서 가장 흔한 불량 유형이, 전체 데이터의
       파레토 1위 불량 유형과 같은지 다른지 비교하고, 다르다면 그 이유를 추측해보자.
     </div>
-    <div class="callout warn">
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
       <code>groupby(...).value_counts()</code>의 결과는 (설비번호, 불량유형) 두 겹으로 색인된
       Series다. 표처럼 바로 열 이름으로 필터링할 수 없고, 특정 설비만 보려면

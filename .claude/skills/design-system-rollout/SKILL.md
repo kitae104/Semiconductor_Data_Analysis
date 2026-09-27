@@ -5,7 +5,7 @@ description: 사이트 디자인·레이아웃을 바꾸거나 전 차시에 롤
 
 # 디자인 시스템 롤아웃
 
-디자인 시스템 이름은 **FabMetric Telemetry**이고, 계약서는 `docs/design-system.md`다.
+디자인 시스템 이름은 **FabMetric Datasheet**이고, 계약서는 `docs/design-system.md`다.
 토큰·컴포넌트를 바꾸면 그 문서를 함께 갱신한다 — 안 그러면 다음 세션의 작성자가 무엇을
 써도 되는지 알 수 없다.
 
@@ -22,22 +22,8 @@ description: 사이트 디자인·레이아웃을 바꾸거나 전 차시에 롤
 
 ## 토큰 (`assets/css/common.css`의 `:root`)
 
-| 변수 | 값 | 용도 |
-|---|---|---|
-| `--blue` / `--blue-bg` / `--blue-line` / `--blue-hover` | `#2563eb` / `#eff6ff` / `#bfdbfe` / `#1d4ed8` | 개념·주요 액션 |
-| `--green` / `--green-bg` / `--green-line` | `#10b981` / `#ecfdf5` / `#a7f3d0` | 정상·합격·성공 |
-| `--orange` / `--orange-bg` / `--orange-line` | `#f59e0b` / `#fffbeb` / `#fde68a` | 주의·확인 필요 |
-| `--red` / `--red-bg` / `--red-line` | `#ef4444` / `#fef2f2` / `#fecaca` | 이상·불량·오류 |
-| `--purple` / `--purple-bg` / `--purple-line` | `#7c3aed` / `#faf5ff` / `#e9d5ff` | 실습·도전 |
-| `--cyan` / `--cyan-bg` / `--cyan-line` | `#06b6d4` / `#ecfeff` / `#a5f3fc` | 텔레메트리 보조 강조 |
-| `--ink` / `--muted` | `#0f172a` / `#64748b` | 본문·제목 / 보조 텍스트 |
-| `--on-dark` / `--on-dark-muted` | `#e2e8f0` / `#94a3b8` | 다크 배경 위 텍스트 |
-| `--bg` / `--card` / `--line` | `#f8fafc` / `#ffffff` / `#e2e8f0` | 배경 / 카드 / 테두리 |
-| `--radius` / `--radius-sm` / `--radius-xs` | `16px` / `10px` / `6px` | 카드 / 버튼·입력 / 배지·칩 |
-| `--shadow-card` / `--shadow-card-hover` | — | 카드 기본 / hover |
-| `--font` | Inter → Pretendard → 맑은고딕 → Noto Sans KR | 본문 |
-| `--font-mono` | JetBrains Mono → Consolas → D2Coding | 코드·수치 |
-| `--maxw` | `1180px` | 본문 최대 폭 |
+값과 원칙(데이터시트 스킨: 직각·1px 선·모노 라벨·강조색 청록 1개·그림자/hover 유지·섹션 자동 번호는 강의·랜딩만)은
+`docs/design-system.md`의 "3단계"와 토큰 표가 기준이다. 여기에 값을 복사해 두지 않는다 — 두 곳이 어긋난다.
 
 **색은 의미를 가진다.** 초록은 정상/합격, 빨강은 이상/불량이다. 장식으로 색을 고르면
 학생이 색에서 잘못된 신호를 읽는다.

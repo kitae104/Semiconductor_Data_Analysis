@@ -7,7 +7,7 @@
 <link rel="icon" href="../../assets/images/site/chip-favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 <style>
@@ -27,7 +27,6 @@
   .flow-svg .fsub{fill:var(--muted);font-family:'Courier New',monospace;}
   .flow-svg .farrow{stroke:var(--muted);stroke-width:2.5;}
   .flow-svg.wide{width:900px;}
-  .img-caption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:-.4rem;}
   .wafer-svg{width:700px;}
   .wafer-circle{fill:var(--blue-bg);stroke:var(--blue);stroke-width:3;}
   .die-cell{fill:var(--card);stroke:var(--blue-line);stroke-width:1;}
@@ -79,7 +78,7 @@
     <div class="hero">
       <span class="badge blue">1차시</span>
       <h1>반도체 공정과 데이터 처음 만나기</h1>
-      <p class="today-question">💬 오늘의 질문: <b>"반도체는 어떻게 만들어지고, 그 과정은 어떤 기록을 남길까?"</b></p>
+      <p class="today-question">오늘의 질문: <b>"반도체는 어떻게 만들어지고, 그 과정은 어떤 기록을 남길까?"</b></p>
     </div>
     <div class="stat-panel">
       <div class="sp-title">오늘의 예제 데이터</div>
@@ -95,7 +94,7 @@
 
   <section class="block">
     <span class="section-kicker"><span class="dot"></span>LEARNING OUTCOMES</span>
-    <h2>🎯 3대 핵심 학습 목표</h2>
+    <h2>3대 핵심 학습 목표</h2>
     <div class="outcome-grid">
       <div class="outcome-card">
         <span class="okicker">OUTCOME 01</span>
@@ -125,7 +124,7 @@
   </section>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>반도체 공정 데이터가 어디서, 왜 생기는지 모르면 앞으로 볼 숫자들이 그냥 "의미 없는 숫자 나열"일 뿐이다.
         오늘 배우는 <b>변수와 출력</b>은 그 숫자를 코드 안에 기억해두고 다시 꺼내 쓰는 가장 작은 단위로, 앞으로
@@ -140,7 +139,7 @@
   </section>
 
   <section class="block">
-    <h2>⏮️ 지난 시간 복습</h2>
+    <h2>지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">첫 시간 안내</b>
       <ul class="pt-list">
@@ -157,7 +156,7 @@
   </section>
 
   <section class="block">
-    <h2>📚 반도체 개념 이해하기</h2>
+    <h2>반도체 개념 이해하기</h2>
     <h3>반도체란 무엇인가</h3>
     <ul class="pt-list">
       <li><b>반도체(Semiconductor)</b> = 도체와 부도체의 중간 성질을 가진 물질
@@ -196,14 +195,14 @@
       <polygon points="235,87 252,95 235,103" fill="var(--muted)"/>
 
       <rect class="fbox" x="255" y="59" width="140" height="72" rx="14"/>
-      <text x="325" y="90" text-anchor="middle" class="flabel" font-size="15">🔲 Die</text>
+      <text x="325" y="90" text-anchor="middle" class="flabel" font-size="15">Die</text>
       <text x="325" y="110" text-anchor="middle" class="fsub" font-size="11">회로 조각 1개</text>
 
       <line class="farrow" x1="395" y1="95" x2="440" y2="95"/>
       <polygon points="440,87 457,95 440,103" fill="var(--muted)"/>
 
       <rect class="fbox active" x="460" y="59" width="220" height="72" rx="14"/>
-      <text x="570" y="86" text-anchor="middle" class="flabel" font-size="15">📦 Chip</text>
+      <text x="570" y="86" text-anchor="middle" class="flabel" font-size="15">Chip</text>
       <text x="570" y="106" text-anchor="middle" class="fsub" font-size="11">자르고 패키징한 완제품</text>
     </svg>
     <p class="img-caption">웨이퍼(둥근 원판) 위에는 같은 회로가 새겨진 다이(Die)가 수백~수천 개 있다.
@@ -224,50 +223,50 @@
     <svg class="flow-svg wide" viewBox="0 0 900 130" role="img"
          aria-label="산화, 포토, 식각, 이온 주입, 증착, 세정 순서로 이어지는 반도체 제조 공정 흐름도">
       <rect class="fbox" x="10" y="10" width="130" height="88" rx="12"/>
-      <text x="75" y="46" text-anchor="middle" class="flabel" font-size="15">🔥 산화</text>
+      <text x="75" y="46" text-anchor="middle" class="flabel" font-size="15">산화</text>
       <text x="75" y="66" text-anchor="middle" class="fsub" font-size="10">SiO2 막 형성</text>
 
       <line class="farrow" x1="140" y1="54" x2="158" y2="54"/>
       <polygon points="158,47 172,54 158,61" fill="var(--muted)"/>
 
       <rect class="fbox" x="160" y="10" width="130" height="88" rx="12"/>
-      <text x="225" y="46" text-anchor="middle" class="flabel" font-size="15">💡 포토</text>
+      <text x="225" y="46" text-anchor="middle" class="flabel" font-size="15">포토</text>
       <text x="225" y="66" text-anchor="middle" class="fsub" font-size="10">회로 패턴 새기기</text>
 
       <line class="farrow" x1="290" y1="54" x2="308" y2="54"/>
       <polygon points="308,47 322,54 308,61" fill="var(--muted)"/>
 
       <rect class="fbox" x="310" y="10" width="130" height="88" rx="12"/>
-      <text x="375" y="46" text-anchor="middle" class="flabel" font-size="15">⚗️ 식각</text>
+      <text x="375" y="46" text-anchor="middle" class="flabel" font-size="15">식각</text>
       <text x="375" y="66" text-anchor="middle" class="fsub" font-size="10">불필요한 부분 제거</text>
 
       <line class="farrow" x1="440" y1="54" x2="458" y2="54"/>
       <polygon points="458,47 472,54 458,61" fill="var(--muted)"/>
 
       <rect class="fbox" x="460" y="10" width="130" height="88" rx="12"/>
-      <text x="525" y="46" text-anchor="middle" class="flabel" font-size="15">⚛️ 이온 주입</text>
+      <text x="525" y="46" text-anchor="middle" class="flabel" font-size="15">이온 주입</text>
       <text x="525" y="66" text-anchor="middle" class="fsub" font-size="10">불순물 주입</text>
 
       <line class="farrow" x1="590" y1="54" x2="608" y2="54"/>
       <polygon points="608,47 622,54 608,61" fill="var(--muted)"/>
 
       <rect class="fbox" x="610" y="10" width="130" height="88" rx="12"/>
-      <text x="675" y="46" text-anchor="middle" class="flabel" font-size="15">🌫️ 증착</text>
+      <text x="675" y="46" text-anchor="middle" class="flabel" font-size="15">증착</text>
       <text x="675" y="66" text-anchor="middle" class="fsub" font-size="10">박막 쌓기</text>
 
       <line class="farrow" x1="740" y1="54" x2="758" y2="54"/>
       <polygon points="758,47 772,54 758,61" fill="var(--muted)"/>
 
       <rect class="fbox active" x="760" y="10" width="130" height="88" rx="12"/>
-      <text x="825" y="46" text-anchor="middle" class="flabel" font-size="15">🧼 세정</text>
+      <text x="825" y="46" text-anchor="middle" class="flabel" font-size="15">세정</text>
       <text x="825" y="66" text-anchor="middle" class="fsub" font-size="10">잔여물 제거</text>
     </svg>
     <p class="img-caption">이 6단계를 수백 번 반복하며 웨이퍼 위에 회로가 완성된다 — 순서를
     "산-포-식-이-증-세"처럼 앞글자로 외워두면 기억하기 쉽다.</p>
 
     <div class="callout warn">
-      <b class="tag">🤖 "AI에게 물어보기" 상자 사용법</b>
-      이 과정 곳곳에 아래와 같은 <b>🤖 AI에게 물어보기</b> 상자가 있다. [복사]를 눌러 ChatGPT·Gemini·Claude
+      <b class="tag">"AI에게 물어보기" 상자 사용법</b>
+      이 과정 곳곳에 아래와 같은 <b>AI에게 물어보기</b> 상자가 있다. [복사]를 눌러 ChatGPT·Gemini·Claude
       같은 AI 챗봇에 그대로 붙여넣으면 된다. 두 가지만 꼭 기억하자.
       <ul class="pt-list">
         <li>AI의 답도 틀릴 수 있다 — 강의 내용과 비교하고, 코드는 직접 실행해서 확인하자.</li>
@@ -275,10 +274,10 @@
       </ul>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>너는 20년 경력의 반도체 공장 엔지니어야. 산화 → 포토 → 식각 → 이온 주입 → 증착 → 세정 6단계를 '케이크 만들기'에 비유해서, 처음 배우는 사람도 알아듣게 단계마다 한 줄씩 설명해줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI의 비유가 위 흐름도의 한 줄 설명(막 만들기, 회로 무늬 새기기, 필요 없는 부분 깎기 …)과 같은 뜻인지 하나씩 맞춰보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: AI의 비유가 위 흐름도의 한 줄 설명(막 만들기, 회로 무늬 새기기, 필요 없는 부분 깎기 …)과 같은 뜻인지 하나씩 맞춰보자.</p>
 
     <h3>FAB의 의미</h3>
     <ul class="pt-list">
@@ -288,7 +287,7 @@
   </section>
 
   <section class="block">
-    <h2>📊 데이터 분석 개념 이해하기</h2>
+    <h2>데이터 분석 개념 이해하기</h2>
     <h3>공정 데이터의 행과 열</h3>
     <ul class="pt-list">
       <li>학급 성적표로 <b>"표(행과 열)"</b> 개념부터 잡기</li>
@@ -351,7 +350,7 @@
 
   <section class="block">
     <span class="step-badge">STEP 01</span>
-    <h2>🐍 파이썬 시작하기 — 변수와 출력</h2>
+    <h2>파이썬 시작하기 — 변수와 출력</h2>
 
     <h3>파이썬이란 무엇인가</h3>
     <ul class="pt-list">
@@ -434,7 +433,7 @@ print(fail_count)</code></pre>
 8</pre>
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       <ul class="pt-list">
         <li>Jupyter Notebook에 위 코드 입력 후 실행</li>
         <li><code>pass_count</code> 값을 다른 숫자로 바꿔 다시 실행 → 결과 변화 확인</li>
@@ -452,10 +451,10 @@ print(fail_count)</code></pre>
     </div>
 
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>파이썬 변수 이름 규칙에 대한 OX 퀴즈 3문제를 아주 쉽게 내줘. 정답은 아직 알려주지 말고, 내가 답을 말하면 그때 정답과 이유를 알려줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI의 해설이 위 규칙(숫자로 시작 불가, 띄어쓰기·하이픈 불가, 대소문자 구분)과 같은지 확인하자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: AI의 해설이 위 규칙(숫자로 시작 불가, 띄어쓰기·하이픈 불가, 대소문자 구분)과 같은지 확인하자.</p>
 
     <h3>자료형 — 정수·실수(숫자형), 문자열형, 불리언</h3>
     <ul class="pt-list">
@@ -540,7 +539,7 @@ print(f"전체 {total}건 중 불합격률은 {fail_rate:.1f}%입니다.")</code
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">전체 40건 중 불합격률은 20.0%입니다.</pre>
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       <ul class="pt-list">
         <li><code>equipment</code>(EQ-03), <code>temperature</code>(300.1) 변수 활용</li>
         <li><code>f"{equipment} 설비의 온도는 {temperature}도입니다."</code> 같은 나만의 f-string 문장 출력</li>
@@ -594,30 +593,30 @@ print(f"내년이면 {age + 1}살이 되네요!")</code></pre>
       </ul>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>input()으로 받은 값이 왜 문자열인지 보여주는 5줄짜리 장난스러운 파이썬 코드를 만들어줘. 숫자 3과 4를 입력받아 더하면 7이 아니라 '34'가 나오는 걸 보여주고, 마지막 줄에서 int()로 고쳐줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 코드를 직접 실행해서 처음엔 34, 고친 뒤에는 7이 나오는지 보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 코드를 직접 실행해서 처음엔 34, 고친 뒤에는 7이 나오는지 보자.</p>
 
 
     <svg class="flow-svg" viewBox="0 0 660 140" role="img"
          aria-label="input 함수로 값을 입력받아 변수에 저장한 뒤 f-string으로 출력하는 흐름도">
       <rect class="fbox" x="10" y="35" width="190" height="72" rx="14"/>
-      <text x="105" y="66" text-anchor="middle" class="flabel" font-size="15">⌨️ input()</text>
+      <text x="105" y="66" text-anchor="middle" class="flabel" font-size="15">input()</text>
       <text x="105" y="88" text-anchor="middle" class="fsub" font-size="12">사용자 입력 받기</text>
 
       <line class="farrow" x1="205" y1="71" x2="245" y2="71"/>
       <polygon points="245,63 262,71 245,79" fill="var(--muted)"/>
 
       <rect class="fbox" x="265" y="35" width="190" height="72" rx="14"/>
-      <text x="360" y="66" text-anchor="middle" class="flabel" font-size="15">📦 변수에 저장</text>
+      <text x="360" y="66" text-anchor="middle" class="flabel" font-size="15">변수에 저장</text>
       <text x="360" y="88" text-anchor="middle" class="fsub" font-size="12">name = "지민"</text>
 
       <line class="farrow" x1="460" y1="71" x2="500" y2="71"/>
       <polygon points="500,63 517,71 500,79" fill="var(--muted)"/>
 
       <rect class="fbox active" x="520" y="35" width="130" height="72" rx="14"/>
-      <text x="585" y="60" text-anchor="middle" class="flabel" font-size="14">🖨️ f-string</text>
+      <text x="585" y="60" text-anchor="middle" class="flabel" font-size="14">f-string</text>
       <text x="585" y="78" text-anchor="middle" class="flabel" font-size="14">출력</text>
       <text x="585" y="98" text-anchor="middle" class="fsub" font-size="11">print(f"...")</text>
     </svg>
@@ -647,7 +646,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
 
   <section class="block">
     <span class="step-badge">STEP 02</span>
-    <h2>🟣 파이썬 실습: 변수와 출력 따라 하기</h2>
+    <h2>파이썬 실습: 변수와 출력 따라 하기</h2>
     <div class="callout warn">
       <b class="tag">체크포인트 — 셀 실행 순서</b>
       <ul class="pt-list">
@@ -696,7 +695,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
-    <h2>🗂️ 핵심 용어 카드</h2>
+    <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
         <h4>반도체</h4><div class="en">Semiconductor</div>
@@ -792,7 +791,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
-    <h2>📁 데이터 미리보기</h2>
+    <h2>데이터 미리보기</h2>
     <ul class="pt-list">
       <li>오늘 살펴볼 데이터: <code>data/weekly/week01/week01_semiconductor_process_overview.csv</code> (약 40행 8열)</li>
       <li>오늘은 이 표를 눈으로만 살펴본다 — 파이썬 코드로 직접 열어보는 건 4차시(Pandas)부터다</li>
@@ -812,7 +811,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
-    <h2>🔭 앞으로 배우게 될 내용</h2>
+    <h2>앞으로 배우게 될 내용</h2>
     <ul class="pt-list">
       <li>이 표를 눈으로 훑어보는 건 오늘로 끝이 아니다 — 앞으로 10차시 내내 이런 표를
         <b>더 크고, 더 빠르고, 더 정확하게</b> 다루는 방법을 하나씩 배운다.</li>
@@ -860,7 +859,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
-    <h2>🙋 실생활 비유로 정리하기</h2>
+    <h2>실생활 비유로 정리하기</h2>
     <ul class="pt-list">
       <li>공정 데이터 = "학교 성적표"와 같은 구조
         <ul>
@@ -873,7 +872,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
-    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout warn">
       <b class="tag">주의</b>
       <ul class="pt-list">
@@ -908,7 +907,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
 
   <section class="block">
     <span class="step-badge">STEP 03</span>
-    <h2>🚀 도전 실습</h2>
+    <h2>도전 실습</h2>
     <div class="callout practice">
       <b class="tag">도전 문제</b>
       <ul class="pt-list">
@@ -920,7 +919,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
-    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <h2>결과 정리 &amp; 퀴즈</h2>
     <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
 
     <div class="quiz-item">
@@ -982,7 +981,7 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
   </section>
 
   <section class="block">
-    <h2>🤖 AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
+    <h2>AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
     <img class="chart-img" src="../../assets/images/site/ai-circuit.jpg"
          alt="회로 기판 위에 사람 옆모습 실루엣과 뇌 형상이 겹쳐진 AI 컨셉 이미지"
          loading="lazy" width="900" height="300" style="max-width:100%; height:auto;">
@@ -992,13 +991,13 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
       아래 프롬프트를 그대로 복사해서 사용해도 되고, 궁금한 점을 자유롭게 바꿔 질문해도 좋다.
     </div>
 
-    <h3>🔍 AI에게 검색하며 이해도 높이기</h3>
+    <h3>AI에게 검색하며 이해도 높이기</h3>
     <ul class="pt-list">
       <li>오늘 배운 변수·자료형·f-string·input()은 파이썬의 가장 작은 기본기다 — AI에게 한 걸음 더
         깊은 질문을 던져 이해를 넓혀보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <b class="tag">질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
       <ul class="pt-list">
         <li>"파이썬에서 <code>=</code>와 <code>==</code>는 어떻게 다른가요? 예시 코드와 함께
           설명해주세요."</li>
@@ -1010,13 +1009,13 @@ print(f"오늘 배운 공정 중에서는 '{favorite_process}' 공정이 가장 
       </ul>
     </div>
 
-    <h3>💡 AI에게 프롬프트로 코드 생성 요청하기</h3>
+    <h3>AI에게 프롬프트로 코드 생성 요청하기</h3>
     <ul class="pt-list">
       <li>AI에게 "이런 동작을 하는 파이썬 코드를 만들어줘"라고 구체적으로 요청하면, 아직 배우지 않은
         문법이 섞인 코드도 받아볼 수 있다 — 이후 차시에서 배울 내용을 미리 살짝 맛보는 셈이다.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 코드 생성 프롬프트 따라 해보기</b>
+      <b class="tag">코드 생성 프롬프트 따라 해보기</b>
       <ul class="pt-list">
         <li>"<code>pass_count</code>, <code>fail_count</code> 두 변수로 합격률을 계산해서, 90%
           이상이면 '정상', 아니면 '점검 필요'라고 출력하는 파이썬 코드를 만들어줘."</li>
@@ -1057,7 +1056,7 @@ else:
   </section>
 
   <section class="block">
-    <h2>🟣 연습문제 — 온도·설비 이름으로 문장 만들기</h2>
+    <h2>연습문제 — 온도·설비 이름으로 문장 만들기</h2>
     <p>새로운 값으로 변수·f-string을 한 번 더 연습해보자. 아래는 두 설비 주변 클린룸(청정실)의 오늘 온도·습도 값이다.</p>
     <table class="timetable">
       <tr><th>설비</th><th>온도(°C)</th><th>습도(%)</th></tr>
@@ -1065,7 +1064,7 @@ else:
       <tr><td>EQ-05</td><td>24.1</td><td>44.8</td></tr>
     </table>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       두 설비의 온도를 각각 변수에 저장하고, 평균 온도를 <code>:.1f</code> 서식으로 f-string
       출력해보자. 여유가 있다면 습도까지 포함한 나만의 문장도 만들어보자.
     </div>
@@ -1080,14 +1079,14 @@ print(f"두 설비의 평균 온도는 {avg_temp:.1f}도입니다.")</pre>
   </section>
 
   <section class="block">
-    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 반도체 공정 운세 뽑기</h2>
+    <h2>AI로 재미있는 미니 프로그램 만들기 — 반도체 공정 운세 뽑기</h2>
     <div class="callout concept">
       <b class="tag">오늘의 미니 프로젝트</b>
       오늘 배운 변수·f-string·input()으로, 실행하면 재미를 느낄 수 있는 나만의 프로그램을
       AI에게 만들어달라고 요청해보자.
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      <b class="tag">프롬프트 예시 — 그대로 물어보기</b>
       "input()으로 이름을 입력받고, 반도체 공정 운세 문장 리스트(예: '오늘은 식각 공정에서
       대박이 납니다!', '포토 공정에서 살짝 조심하세요' 등 5개 정도) 중 하나를 무작위로 골라
       이름과 함께 재미있게 출력하는 파이썬 코드를 만들어줘. <code>random</code> 모듈을 사용해도
@@ -1125,7 +1124,7 @@ print(f"{name}님의 오늘의 반도체 공정 운세: {today_fortune}")</code>
   </section>
 
   <section class="block">
-    <h2>📝 과제(다음 차시까지)</h2>
+    <h2>과제(다음 차시까지)</h2>
     <ul class="pt-list">
       <li>Jupyter Notebook 한 개에 순서대로 작성, 각 결과를 <code>print()</code>/f-string으로 확인 가능하게 제출</li>
     </ul>
@@ -1155,7 +1154,7 @@ print(f"{name}님의 오늘의 반도체 공정 운세: {today_fortune}")</code>
   </section>
 
   <section class="block">
-    <h2>🔜 다음 차시 예고</h2>
+    <h2>다음 차시 예고</h2>
     <div class="callout concept">
       <b class="tag">2차시 예고</b>
       <ul class="pt-list">
@@ -1167,7 +1166,7 @@ print(f"{name}님의 오늘의 반도체 공정 운세: {today_fortune}")</code>
 
   <div class="nav-buttons">
     <a class="disabled">← 이전 차시 없음</a>
-    <a class="home" href="../../index.html">🏠 전체 목차</a>
+    <a class="home" href="../../index.html">전체 목차</a>
     <a href="../week02/index.html">다음 차시: 2차시 →</a>
   </div>
 

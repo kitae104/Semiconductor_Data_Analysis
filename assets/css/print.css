@@ -15,4 +15,10 @@
   }
   .telemetry-card h4,.telemetry-card .tstats .item b{color:#000 !important;}
   .telemetry-card .tsub,.telemetry-card .tstats .item{color:#333 !important;}
+  /* 데이터시트 디자인의 "어두운 배경 + 흰 글자" 요소: 인쇄 시 배경이 빠지면 글자가 사라지므로 선으로 바꾼다 */
+  section.block > h2::before, .badge.blue, .step .num, .step-badge, .journey .jstep .jnum,
+  .timetable th, table.data-preview th{
+    background:#fff !important; color:#000 !important; border:1px solid #000;
+  }
+  .hero, .hero-home{background-image:none !important; box-shadow:none;}
 }

@@ -14,7 +14,6 @@
   .df-svg .cell.hl{fill:var(--purple-bg);stroke:var(--purple);}
   .df-svg text{font-family:'Courier New',monospace;font-size:11px;fill:#0f172a;}
   .df-svg .head{fill:var(--blue);font-weight:700;}
-  .img-caption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:-.4rem;}
 </style>
 </head>
 <body>
@@ -44,11 +43,11 @@
   <div class="hero">
     <span class="badge blue">4차시</span>
     <h1>Pandas 가장 기본적인 부분</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"3차시에 반복문으로 한 줄씩 처리했던 일을, Pandas는 어떻게 한 번에 처리할까?"</b></p>
+    <p class="today-question">오늘의 질문: <b>"3차시에 반복문으로 한 줄씩 처리했던 일을, Pandas는 어떻게 한 번에 처리할까?"</b></p>
   </div>
 
   <section class="block">
-    <h2>🎯 학습 목표</h2>
+    <h2>학습 목표</h2>
     <ul class="goal-list">
       <li>read_csv로 CSV 파일을 DataFrame으로 읽을 수 있다.</li>
       <li>원하는 열만 선택해서 볼 수 있다.</li>
@@ -59,7 +58,7 @@
   </section>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>3차시까지는 리스트·반복문으로 표 데이터를 흉내 냈지만, 실제 공정 데이터는 수만 행이 넘는 CSV
         파일로 존재한다. <b>Pandas</b>는 이런 대용량 표를 통째로 불러와 열 선택·조건 검색·정렬을 코드 몇 줄로
@@ -72,15 +71,15 @@
       10만 행이든 코드는 그대로다.
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>엑셀에서 필터를 클릭해 원하는 행만 보는 것과, 파이썬 pandas에서 조건 한 줄로 행을 고르는 것의 차이를 '도서관에서 책 찾기'에 비유해서 3줄로 설명해줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 비유에 "데이터가 아무리 많아져도 코드 한 줄은 그대로"라는 장점이 들어 있는지 보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 비유에 "데이터가 아무리 많아져도 코드 한 줄은 그대로"라는 장점이 들어 있는지 보자.</p>
 
   </section>
 
   <section class="block">
-    <h2>⏮️ 지난 시간 복습</h2>
+    <h2>지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">3차시 연결</b>
       3차시에서는 <code>for</code>와 <code>if</code>로 리스트를 하나씩 순회하며
@@ -91,7 +90,7 @@
   </section>
 
   <section class="block">
-    <h2>📚 CSV와 DataFrame</h2>
+    <h2>CSV와 DataFrame</h2>
     <ul class="pt-list">
       <li><b>CSV(Comma-Separated Values)</b> = 쉼표로 값을 구분한 텍스트 표 파일</li>
       <li>Pandas <code>read_csv()</code>로 읽으면 → <b>DataFrame</b>(행·열 구조의 표)으로 변환</li>
@@ -142,10 +141,10 @@ df.head()</code></pre>
     2~3차시에서 만들었던 딕셔너리이고, 표 전체가 그 딕셔너리들의 리스트다.</p>
 
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>파이썬의 '딕셔너리의 리스트'와 pandas DataFrame의 관계를 학교 출석부에 비유해서 쉽게 설명해줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 비유 속에서 "행 하나 = 딕셔너리 하나", "열 이름 = 키"가 맞게 짝지어졌는지 확인하자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 비유 속에서 "행 하나 = 딕셔너리 하나", "열 이름 = 키"가 맞게 짝지어졌는지 확인하자.</p>
 
     <h3>기본 정보 확인하기</h3>
     <div class="code-block">
@@ -192,14 +191,14 @@ print(toy)</code></pre>
       </ul>
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       위 다섯 줄을 하나씩 실행하며 결과를 확인해보자. 지금은 결과만 눈으로 훑어보고, 각각의
       정확한 의미는 아래에서 반도체 데이터로 하나씩 자세히 배운다.
     </div>
   </section>
 
   <section class="block">
-    <h2>📚 열 선택 — 원하는 열만 보기</h2>
+    <h2>열 선택 — 원하는 열만 보기</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print(df["온도_섭씨"])                 # 열 하나 (Series)
@@ -214,7 +213,7 @@ print(df[["온도_섭씨", "압력_Pa"]])      # 열 여러 개 (대괄호 두 �
   </section>
 
   <section class="block">
-    <h2>📚 조건 검색 — 원하는 행만 골라내기</h2>
+    <h2>조건 검색 — 원하는 행만 골라내기</h2>
     <ul class="pt-list">
       <li>3차시 — <code>for</code>+<code>if</code>로 조건에 맞는 항목을 하나씩 확인</li>
       <li>Pandas — 조건식 하나로 표 전체에서 한 번에 골라냄 = <b>조건 검색(불리언 인덱싱)</b></li>
@@ -253,7 +252,7 @@ print(fail.shape)</code></pre>
   </section>
 
   <section class="block">
-    <h2>📚 정렬 — 값이 높은/낮은 순서로 보기</h2>
+    <h2>정렬 — 값이 높은/낮은 순서로 보기</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>df.sort_values("온도_섭씨", ascending=False).head(5)</code></pre>
@@ -276,7 +275,7 @@ print(fail.shape)</code></pre>
   </section>
 
   <section class="block">
-    <h2>📚 loc / iloc — 이름과 위치로 정확히 접근하기</h2>
+    <h2>loc / iloc — 이름과 위치로 정확히 접근하기</h2>
     <ul class="pt-list">
       <li>지금까지 — 열 이름으로 열 전체 선택(<code>df["열이름"]</code>), 조건으로 행 전체 필터(<code>df[조건]</code>)</li>
       <li>필요할 때가 많음 — <b>"몇 번째 행의, 이 열들만"</b>처럼 행과 열을 동시에 정확히 짚기</li>
@@ -341,10 +340,10 @@ print(df.iloc[-1])</code></pre>
     </div>
 
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>pandas 초보야. loc과 iloc 슬라이스에서 끝 번호가 포함되는지를 묻는 OX 문제 3개를 내줘. 내가 답하면 그때 정답과 이유를 알려줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI 정답이 "loc은 끝 포함, iloc은 끝 미포함" 규칙과 맞는지, df.loc[0:2]와 df.iloc[0:2]를 직접 실행해 행 개수로 확인하자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: AI 정답이 "loc은 끝 포함, iloc은 끝 미포함" 규칙과 맞는지, df.loc[0:2]와 df.iloc[0:2]를 직접 실행해 행 개수로 확인하자.</p>
 
     <div class="tablewrap">
       <table class="timetable">
@@ -375,7 +374,7 @@ print(df.iloc[-1])</code></pre>
   </section>
 
   <section class="block">
-    <h2>📚 종합 — 3차시 함수와 Pandas 비교하기</h2>
+    <h2>종합 — 3차시 함수와 Pandas 비교하기</h2>
     <ul class="pt-list">
       <li>3차시 — <code>judge_pass</code> 함수 + <code>for</code> 반복문으로 EQ-02 불합격 건수를 세려면 여러 줄 필요</li>
       <li>Pandas 조건 검색 조합 → 훨씬 짧아짐</li>
@@ -402,7 +401,7 @@ EQ-02 불합격률: 20.0%</pre>
   </section>
 
   <section class="block">
-    <h2>🟣 실습: Pandas 기본기 따라 하기</h2>
+    <h2>실습: Pandas 기본기 따라 하기</h2>
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>데이터 읽기</b> — <code>read_csv()</code>로 CSV를 읽고
@@ -441,7 +440,7 @@ EQ-02 불합격률: 20.0%</pre>
   </section>
 
   <section class="block">
-    <h2>🗂️ 핵심 용어 카드</h2>
+    <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
         <h4>DataFrame</h4><div class="en">DataFrame</div>
@@ -501,7 +500,7 @@ EQ-02 불합격률: 20.0%</pre>
   </section>
 
   <section class="block">
-    <h2>📁 데이터</h2>
+    <h2>데이터</h2>
     <ul class="pt-list">
       <li><code>data/weekly/week04/week04_process_filtering.csv</code></li>
       <li>100행 8열 — EQ-02와 EQ-04에 불합격이 각각 5건으로 상대적으로 많다(비율은 EQ-02 20.0%, EQ-04 약 22.7%)</li>
@@ -510,7 +509,7 @@ EQ-02 불합격률: 20.0%</pre>
   </section>
 
   <section class="block">
-    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
       <b class="tag">오류 1</b>
       <code>KeyError: '온도'</code> — 열 이름을 정확히 쓰지 않은 경우다(실제 열 이름은
@@ -540,7 +539,7 @@ EQ-02 불합격률: 20.0%</pre>
   </section>
 
   <section class="block">
-    <h2>🚀 도전 실습</h2>
+    <h2>도전 실습</h2>
     <div class="callout practice">
       <b class="tag">도전 문제 1</b>
       <code>df[df["설비번호"] != "EQ-02"]</code>로 EQ-02가 아닌 나머지 설비의 기록만 골라내고,
@@ -565,7 +564,7 @@ EQ-02 불합격률: 20.0%</pre>
   </section>
 
   <section class="block">
-    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <h2>결과 정리 &amp; 퀴즈</h2>
     <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
 
     <div class="quiz-item">
@@ -626,19 +625,19 @@ EQ-02 불합격률: 20.0%</pre>
   </section>
 
   <section class="block">
-    <h2>🤖 AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
+    <h2>AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
     <div class="callout concept">
       <b class="tag">이번 차시도 AI와 함께</b>
       Pandas는 기능이 매우 많은 도구다. AI에게 질문하고 코드를 만들어보며 오늘 배운 기본기를
       한 걸음 더 넓혀보자.
     </div>
 
-    <h3>🔍 AI에게 검색하며 이해도 높이기</h3>
+    <h3>AI에게 검색하며 이해도 높이기</h3>
     <ul class="pt-list">
       <li>오늘은 Pandas의 가장 기본적인 부분만 다뤘다 — AI에게 물어보며 조금 더 깊이 들어가보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <b class="tag">질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
       <ul class="pt-list">
         <li>"pandas의 loc과 iloc은 정확히 언제 다르게 동작하나요? 예시로 알려주세요."</li>
         <li>"df[df['열']==값] 조건 검색과 df.query()는 어떻게 다른가요?"</li>
@@ -647,13 +646,13 @@ EQ-02 불합격률: 20.0%</pre>
       </ul>
     </div>
 
-    <h3>💡 AI에게 프롬프트로 코드 생성 요청하기</h3>
+    <h3>AI에게 프롬프트로 코드 생성 요청하기</h3>
     <ul class="pt-list">
       <li>오늘 배운 조건 검색을 확장해서, 설비별로 결과를 한눈에 표로 만드는 코드를 AI에게
         요청해보자. <code>groupby</code>처럼 아직 배우지 않은 기능이 나올 수도 있다(7차시 예고).</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 코드 생성 프롬프트 따라 해보기</b>
+      <b class="tag">코드 생성 프롬프트 따라 해보기</b>
       <ul class="pt-list">
         <li>"설비번호와 합격여부 열이 있는 DataFrame에서, 설비별 합격/불합격 건수를 한 번에
           표로 만들어주는 코드를 만들어줘."</li>
@@ -693,7 +692,7 @@ EQ-02     1  2</pre>
   </section>
 
   <section class="block">
-    <h2>🟣 연습문제 — loc/iloc으로 원하는 데이터 골라내기</h2>
+    <h2>연습문제 — loc/iloc으로 원하는 데이터 골라내기</h2>
     <p>오늘 배운 <code>loc</code>/<code>iloc</code>을 한 번 더 연습해보자.</p>
     <div class="callout warn">
       <b class="tag">기억하기 — 슬라이스 범위가 다르다</b>
@@ -701,7 +700,7 @@ EQ-02     1  2</pre>
       <code>df.iloc[0:4]</code>는 파이썬 리스트처럼 4를 <b>포함하지 않아</b> 4개 행만 돌려준다.
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       <ul class="pt-list">
         <li><code>loc</code>으로 0~4번 행의 <code>온도_섭씨</code>, <code>압력_Pa</code> 열만 선택해보자.</li>
         <li><code>iloc</code>으로 첫 번째 행 전체를 선택해보자. (위치 기반 인덱싱)</li>
@@ -731,14 +730,14 @@ print(first_row)</pre>
   </section>
 
   <section class="block">
-    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 나만의 설비 검색기</h2>
+    <h2>AI로 재미있는 미니 프로그램 만들기 — 나만의 설비 검색기</h2>
     <div class="callout concept">
       <b class="tag">오늘의 미니 프로젝트</b>
       오늘 배운 조건 검색으로, 직접 실행하면서 재미를 느낄 수 있는 나만의 프로그램을
       AI에게 만들어달라고 요청해보자.
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      <b class="tag">프롬프트 예시 — 그대로 물어보기</b>
       "설비번호 열이 있는 DataFrame df에서, 사용자가 input()으로 설비번호(예: EQ-02)를 입력하면
       그 설비의 기록 건수와 평균 온도를 보기 좋게 출력하는 파이썬 코드를 만들어줘."
     </div>
@@ -772,7 +771,7 @@ else:
   </section>
 
   <section class="block">
-    <h2>📝 과제(다음 차시까지)</h2>
+    <h2>과제(다음 차시까지)</h2>
     <ul class="pt-list">
       <li>아래 과제를 Jupyter Notebook 파일 하나에 순서대로 작성, 각 결과를 확인할 수 있게 만들어 제출</li>
     </ul>
@@ -809,18 +808,18 @@ else:
   </section>
 
   <section class="block">
-    <h2>❓ 핵심 질문 → 데이터 연결</h2>
+    <h2>핵심 질문 → 데이터 연결</h2>
     <div class="callout concept">EQ-02에서 발생한 불합격은 몇 건인가?</div>
   </section>
 
   <section class="block">
-    <h2>🔜 다음 차시 예고</h2>
+    <h2>다음 차시 예고</h2>
     <div class="callout concept">5차시에는 Orange3로 먼저 데이터를 훑어본 뒤, 지저분한 데이터를 정제하는 방법을 배운다.</div>
   </section>
 
   <div class="nav-buttons">
     <a href="../week03/index.html">← 이전 차시: 3차시</a>
-    <a class="home" href="../../index.html">🏠 전체 목차</a>
+    <a class="home" href="../../index.html">전체 목차</a>
     <a href="../week05/index.html">다음 차시: 5차시 →</a>
   </div>
 

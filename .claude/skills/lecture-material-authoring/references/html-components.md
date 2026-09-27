@@ -106,7 +106,7 @@
 <div class="hero">
   <span class="badge blue">{N}차시</span>
   <h1>{제목}</h1>
-  <p class="today-question">💬 오늘의 질문: <b>"{한 문장 질문}"</b></p>
+  <p class="today-question">오늘의 질문: <b>"{한 문장 질문}"</b></p>
 </div>
 ```
 
@@ -119,11 +119,11 @@
 강조 상자. 5종이고 각각 의미가 정해져 있다 — 색을 장식으로 쓰지 않는다.
 
 ```html
-<div class="callout concept">💡 <b>개념</b> — 설명</div>
-<div class="callout practice">🟣 <b>해보기</b> — 실습 지시</div>
-<div class="callout success">✅ <b>확인</b> — 잘 됐을 때의 모습</div>
-<div class="callout warn">⚠️ <b>주의</b> — 헷갈리기 쉬운 점</div>
-<div class="callout danger">🚫 <b>하지 말 것</b> — 오류로 이어지는 행동</div>
+<div class="callout concept"><b>개념</b> — 설명</div>
+<div class="callout practice"><b>해보기</b> — 실습 지시</div>
+<div class="callout success"><b>확인</b> — 잘 됐을 때의 모습</div>
+<div class="callout warn"><b>주의</b> — 헷갈리기 쉬운 점</div>
+<div class="callout danger"><b>하지 말 것</b> — 오류로 이어지는 행동</div>
 ```
 
 | 클래스 | 용도 |

@@ -8,7 +8,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="assets/css/common.css" />
@@ -25,7 +25,7 @@
                 color: inherit;
                 background: var(--card);
                 border: 1px solid var(--line);
-                border-left: 4px solid var(--line);
+                border-left: 4px solid var(--ink);
                 border-radius: var(--radius);
                 padding: 1.2rem 1.3rem;
                 box-shadow: var(--shadow-card);
@@ -36,15 +36,18 @@
             }
             .week-card:hover {
                 transform: translateY(-4px);
-                box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+                box-shadow: var(--shadow-card-hover);
+                border-color: var(--ink);
             }
             .week-card .num {
                 display: inline-flex;
                 align-items: center;
                 gap: 0.35rem;
-                font-size: 0.78rem;
-                font-weight: 800;
+                font-size: 0.75rem;
+                font-weight: 600;
+                font-family: var(--font-mono);
                 letter-spacing: 0.04em;
+                color: var(--blue);
             }
             .week-card h3 {
                 margin: 0.35rem 0 0.5rem;
@@ -58,67 +61,19 @@
                 line-height: 1.5;
             }
 
-            .week-card.p1 {
-                border-left-color: var(--blue);
-            }
-            .week-card.p1:hover {
-                border-color: var(--blue-line);
-                box-shadow: 0 10px 24px rgba(37, 99, 235, 0.16);
-            }
-            .week-card.p1 .num {
-                color: var(--blue);
-            }
-            .week-card.p2 {
-                border-left-color: var(--green);
-            }
-            .week-card.p2:hover {
-                border-color: var(--green-line);
-                box-shadow: 0 10px 24px rgba(16, 185, 129, 0.16);
-            }
-            .week-card.p2 .num {
-                color: var(--green);
-            }
-            .week-card.p3 {
-                border-left-color: var(--orange);
-            }
-            .week-card.p3:hover {
-                border-color: var(--orange-line);
-                box-shadow: 0 10px 24px rgba(245, 158, 11, 0.16);
-            }
-            .week-card.p3 .num {
-                color: var(--orange);
-            }
-            .week-card.p4 {
-                border-left-color: var(--purple);
-            }
-            .week-card.p4:hover {
-                border-color: var(--purple-line);
-                box-shadow: 0 10px 24px rgba(124, 58, 237, 0.16);
-            }
-            .week-card.p4 .num {
-                color: var(--purple);
-            }
 
             .phase-label {
                 grid-column: 1/-1;
-                font-weight: 800;
-                margin: 0.6rem 0 -0.2rem;
-                font-size: 0.95rem;
+                font-weight: 600;
+                font-family: var(--font-mono);
+                color: var(--ink);
+                border-bottom: 1px solid var(--ink);
+                padding-bottom: 0.3rem;
+                margin: 0.8rem 0 0;
+                font-size: 0.9rem;
                 display: flex;
                 align-items: center;
                 gap: 0.4rem;
-            }
-            .phase-label.p1 {
-                color: var(--blue);
-            }
-            .phase-label.p2 {
-                color: var(--green);
-            }
-            .phase-label.p3 {
-                color: var(--orange);
-            }
-            .phase-label.p4 {
-                color: var(--purple);
             }
 
             .links-row {
@@ -165,7 +120,8 @@
             .anim-card .anim-tag {
                 font-size: 0.78rem;
                 font-weight: 800;
-                color: var(--purple);
+                color: var(--blue);
+                font-family: var(--font-mono);
                 margin-bottom: 0.4rem;
             }
             .anim-card svg {
@@ -181,7 +137,6 @@
                 height: auto;
                 display: block;
                 margin: 0 auto;
-                border-radius: 8px;
                 border: 1px solid var(--line);
             }
             .anim-card .oflow-wrap {
@@ -336,21 +291,6 @@
                 gap: 1.2rem;
                 margin-bottom: 0.8rem;
             }
-            .hero-logo {
-                width: 84px;
-                height: 84px;
-                flex-shrink: 0;
-                border-radius: 50%;
-                object-fit: cover;
-                border: 3px solid var(--blue);
-                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
-            }
-            @media (max-width: 600px) {
-                .hero-logo {
-                    width: 60px;
-                    height: 60px;
-                }
-            }
         </style>
     </head>
     <body>
@@ -383,7 +323,6 @@
 
         <main class="page">
             <div class="hero-home">
-                <div class="hero-bg-chart" aria-hidden="true"></div>
                 <div class="hero-side-img" aria-hidden="true">
                     <img
                         src="assets/images/site/pcb-macro-gold.jpg"
@@ -394,13 +333,6 @@
                     />
                 </div>
                 <div class="hero-title-row">
-                    <img
-                        src="assets/images/site/chip-macro-logo.jpg"
-                        alt="반도체 데이터 분석 과정 로고"
-                        class="hero-logo"
-                        width="84"
-                        height="84"
-                    />
                     <div>
                         <span class="badge blue">전체 과정 목차</span>
                         <h1>반도체 및 반도체 공정 데이터 분석 과정</h1>
@@ -416,24 +348,24 @@
                     <span class="stat"><b>10</b>차시</span>
                     <span class="stat"><b>4</b>부 구성</span>
                     <span class="stat"
-                        >🐍 Python <b>+</b> 🟠 Orange3(노코드)</span
+                        >Python <b>+</b> Orange3(노코드)</span
                     >
-                    <span class="stat">🟢 초보자 눈높이</span>
+                    <span class="stat">초보자 눈높이</span>
                 </div>
                 <div class="btn-row">
                     <a class="btn-primary" href="lectures/week01/index.html"
-                        >🚀 1차시부터 시작하기</a
+                        >1차시부터 시작하기</a
                     >
                     <a class="btn-secondary" href="#preview"
-                        >📊 데이터 분석 화면 미리보기</a
+                        >데이터 분석 화면 미리보기</a
                     >
                 </div>
                 <div class="links-row">
                     <a href="docs/glossary.html" target="_blank" rel="noopener"
-                        >🗂️ 전체 용어집</a
+                        >전체 용어집</a
                     >
                     <a href="reports/raw-data-profile.html"
-                        >📊 원본 데이터 분석 리포트</a
+                        >원본 데이터 분석 리포트</a
                     >
                 </div>
             </div>
@@ -443,9 +375,9 @@
                     ><span class="dot"></span>SAMPLE FAB DATA
                     WALKTHROUGH</span
                 >
-                <h2>📊 데이터 분석 화면 미리보기</h2>
+                <h2>데이터 분석 화면 미리보기</h2>
                 <span class="illustration-note"
-                    >✏️ 예시 일러스트레이션 · 실제 실시간 데이터가 아닙니다</span
+                    >예시 일러스트레이션 · 실제 실시간 데이터가 아닙니다</span
                 >
                 <div class="telemetry-grid">
                     <div class="telemetry-card">
@@ -589,11 +521,11 @@
                     ><span class="dot"></span>STAGE 01–04 · 학습
                     로드맵</span
                 >
-                <h2>🧭 학습 여정 한눈에 보기</h2>
+                <h2>학습 여정 한눈에 보기</h2>
                 <div class="journey">
                     <div class="jstep j1">
                         <span class="jnum">1</span>
-                        <h4>🧩 첫걸음</h4>
+                        <h4>첫걸음</h4>
                         <p>
                             반도체·웨이퍼 개념과 파이썬
                             기초(변수·리스트·조건문·함수)를 익힌다. (1~3차시)
@@ -602,7 +534,7 @@
                     </div>
                     <div class="jstep j2">
                         <span class="jnum">2</span>
-                        <h4>🧹 데이터 다루기</h4>
+                        <h4>데이터 다루기</h4>
                         <p>
                             Pandas로 표를 읽고, Orange3로 먼저 훑어본 뒤 정제와
                             그래프를 코드로 재현한다. (4~6차시)
@@ -611,7 +543,7 @@
                     </div>
                     <div class="jstep j3">
                         <span class="jnum">3</span>
-                        <h4>🔍 비교와 원인 탐색</h4>
+                        <h4>비교와 원인 탐색</h4>
                         <p>
                             설비별 수율·불량률을 비교하고, 상관관계로 원인
                             후보를 찾는다. (7~8차시)
@@ -620,7 +552,7 @@
                     </div>
                     <div class="jstep j4">
                         <span class="jnum">4</span>
-                        <h4>🔮 예측</h4>
+                        <h4>예측</h4>
                         <p>
                             머신러닝 모델을 직접 만들고 평가한 뒤, 새 데이터를
                             예측해본다. (9~10차시)
@@ -635,7 +567,7 @@
                     ><span class="dot"></span>INTERACTIVE SCHEMATIC
                     DEMO</span
                 >
-                <h2>🎬 강의 자료 미리보기 — 실제로 이렇게 움직입니다</h2>
+                <h2>강의 자료 미리보기 — 실제로 이렇게 움직입니다</h2>
                 <p
                     style="
                         color: var(--muted);
@@ -998,7 +930,7 @@
                                     class="olabel"
                                     font-size="15"
                                 >
-                                    📁 File
+                                    File
                                 </text>
                                 <text
                                     x="75"
@@ -1037,7 +969,7 @@
                                     class="olabel"
                                     font-size="15"
                                 >
-                                    🧩 위젯
+                                    위젯
                                 </text>
                                 <text
                                     x="245"
@@ -1076,7 +1008,7 @@
                                     class="olabel"
                                     font-size="15"
                                 >
-                                    📊 결과
+                                    결과
                                 </text>
                                 <text
                                     x="400"
@@ -1138,7 +1070,7 @@
             </section>
 
             <section class="block">
-                <h2>🎯 이 과정을 마치면 할 수 있는 것</h2>
+                <h2>이 과정을 마치면 할 수 있는 것</h2>
                 <ul class="goal-list">
                     <li>
                         반도체와 웨이퍼의 기본 개념을 설명하고, 공정 데이터를
@@ -1176,14 +1108,14 @@
                     ><span class="dot"></span>FULL SYLLABUS
                     SCHEDULE</span
                 >
-                <h2>📅 10차시 커리큘럼</h2>
+                <h2>10차시 커리큘럼</h2>
 
                 <div class="week-grid">
-                    <div class="phase-label p1">
-                        🧩 1부 · 첫걸음 — 개념과 파이썬 기초 (1~3차시)
+                    <div class="phase-label">
+                        1부 · 첫걸음 — 개념과 파이썬 기초 (1~3차시)
                     </div>
 
-                    <a class="week-card p1" href="lectures/week01/index.html">
+                    <a class="week-card" href="lectures/week01/index.html">
                         <div class="num">● 1차시</div>
                         <h3>반도체 공정과 데이터 처음 만나기 + 변수·출력</h3>
                         <p>
@@ -1192,7 +1124,7 @@
                             f-string.
                         </p>
                     </a>
-                    <a class="week-card p1" href="lectures/week02/index.html">
+                    <a class="week-card" href="lectures/week02/index.html">
                         <div class="num">● 2차시</div>
                         <h3>리스트와 딕셔너리</h3>
                         <p>
@@ -1200,7 +1132,7 @@
                             붙이기, 두 가지를 충분히 연습.
                         </p>
                     </a>
-                    <a class="week-card p1" href="lectures/week03/index.html">
+                    <a class="week-card" href="lectures/week03/index.html">
                         <div class="num">● 3차시</div>
                         <h3>리스트·딕셔너리로 배우는 조건문·반복문·함수</h3>
                         <p>
@@ -1209,11 +1141,11 @@
                         </p>
                     </a>
 
-                    <div class="phase-label p2">
-                        🧹 2부 · 데이터 다루기 (4~6차시)
+                    <div class="phase-label">
+                        2부 · 데이터 다루기 (4~6차시)
                     </div>
 
-                    <a class="week-card p2" href="lectures/week04/index.html">
+                    <a class="week-card" href="lectures/week04/index.html">
                         <div class="num">● 4차시</div>
                         <h3>Pandas 가장 기본적인 부분</h3>
                         <p>
@@ -1221,16 +1153,16 @@
                             찾기(가장 기본만).
                         </p>
                     </a>
-                    <a class="week-card p2" href="lectures/week05/index.html">
-                        <div class="num">🟠 5차시</div>
+                    <a class="week-card" href="lectures/week05/index.html">
+                        <div class="num">5차시</div>
                         <h3>데이터 훑어보기와 정리(EDA)</h3>
                         <p>
                             Orange3로 먼저 결측값·이상값을 훑어본 뒤, Pandas로
                             직접 찾아 정제하기.
                         </p>
                     </a>
-                    <a class="week-card p2" href="lectures/week06/index.html">
-                        <div class="num">🟠 6차시</div>
+                    <a class="week-card" href="lectures/week06/index.html">
+                        <div class="num">6차시</div>
                         <h3>그래프로 공정 상태 이해하기</h3>
                         <p>
                             Orange3로 먼저 그래프를 그려본 뒤,
@@ -1239,20 +1171,20 @@
                         </p>
                     </a>
 
-                    <div class="phase-label p3">
-                        🔍 3부 · 비교와 원인 탐색 (7~8차시)
+                    <div class="phase-label">
+                        3부 · 비교와 원인 탐색 (7~8차시)
                     </div>
 
-                    <a class="week-card p3" href="lectures/week07/index.html">
-                        <div class="num">🟠 7차시</div>
+                    <a class="week-card" href="lectures/week07/index.html">
+                        <div class="num">7차시</div>
                         <h3>설비·공정 비교와 수율·불량 분석</h3>
                         <p>
                             Orange3로 먼저 설비별 차이를 훑어본 뒤, groupby로
                             수율·불량률·파레토를 직접 계산하기.
                         </p>
                     </a>
-                    <a class="week-card p3" href="lectures/week08/index.html">
-                        <div class="num">🟠 8차시</div>
+                    <a class="week-card" href="lectures/week08/index.html">
+                        <div class="num">8차시</div>
                         <h3>공정 이상과 원인 후보 찾기</h3>
                         <p>
                             Orange3 Correlations로 먼저 관계를 훑어본 뒤,
@@ -1260,18 +1192,18 @@
                         </p>
                     </a>
 
-                    <div class="phase-label p4">🔮 4부 · 예측 (9~10차시)</div>
+                    <div class="phase-label">4부 · 예측 (9~10차시)</div>
 
-                    <a class="week-card p4" href="lectures/week09/index.html">
-                        <div class="num">🟠 9차시</div>
+                    <a class="week-card" href="lectures/week09/index.html">
+                        <div class="num">9차시</div>
                         <h3>머신러닝 예측 모델 만들기</h3>
                         <p>
                             Orange3로 먼저 예측 정확도를 훑어본 뒤,
                             scikit-learn으로 분류 모델을 직접 학습시키기.
                         </p>
                     </a>
-                    <a class="week-card p4" href="lectures/week10/index.html">
-                        <div class="num">🟠 10차시</div>
+                    <a class="week-card" href="lectures/week10/index.html">
+                        <div class="num">10차시</div>
                         <h3>모델 평가와 새 데이터 예측</h3>
                         <p>
                             학습한 모델로 새 로트를 predict()하고, Orange3
@@ -1289,7 +1221,7 @@
                 </p>
                 <div class="btn-row" style="justify-content: center">
                     <a class="btn-primary" href="lectures/week01/index.html"
-                        >🚀 1차시부터 시작하기</a
+                        >1차시부터 시작하기</a
                     >
                     <a
                         class="btn-secondary"

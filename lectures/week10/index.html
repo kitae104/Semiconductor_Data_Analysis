@@ -35,11 +35,11 @@
   <div class="hero">
     <span class="badge blue">10차시 · 마지막 차시</span>
     <h1>모델 평가와 새 데이터 예측</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"내가 만든 모델은 처음 보는 새로운 데이터에서도 믿을 만할까?"</b></p>
+    <p class="today-question">오늘의 질문: <b>"내가 만든 모델은 처음 보는 새로운 데이터에서도 믿을 만할까?"</b></p>
   </div>
 
   <section class="block">
-    <h2>🎯 학습 목표</h2>
+    <h2>학습 목표</h2>
     <ul class="goal-list">
       <li>학습된 모델로 새 로트의 합격/불합격을 predict()로 예측할 수 있다.</li>
       <li>predict_proba()로 예측의 확신 정도(확률)까지 확인할 수 있다.</li>
@@ -52,7 +52,7 @@
   </section>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>모델을 만들었다고 끝이 아니다. 그 모델이 <b>학습에 쓰지 않은 새로운 데이터</b>에서도 잘 맞아야
         실제 현장에서 믿고 쓸 수 있다. 새 로트에 <code>predict()</code>를 적용하는 것은 모델을 실제로
@@ -67,7 +67,7 @@
   </section>
 
   <section class="block">
-    <h2>⏮️ 지난 시간 복습</h2>
+    <h2>지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">9차시 연결</b>
       9차시에서는 <code>week09_pass_fail_train.csv</code>로 모델을 학습시켜 정확도(78.2%)와
@@ -77,7 +77,7 @@
   </section>
 
   <section class="block">
-    <h2>🐍 ① 파이썬으로 새 로트 예측하기</h2>
+    <h2>① 파이썬으로 새 로트 예측하기</h2>
     <ul class="pt-list">
       <li>9차시와 똑같은 방식으로 모델을 다시 학습 — 같은 <code>random_state</code>를 쓰면 항상 같은 모델이 만들어짐</li>
       <li>정답이 없는 새 로트에 적용</li>
@@ -163,10 +163,10 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
       정도는 다르고, 그 이유는 직접 확인해봐야 한다"는 것을 보여주는 좋은 예다. 실무라면 이런 "애매한" 로트를 우선 재검사 대상으로 삼을 수 있다.
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>predict_proba()가 돌려주는 '불합격 확률 36%'를 일기예보의 '비 올 확률 30%'에 빗대서 설명해줘. 예측은 '합격'인데 불합격 확률이 36%라면 어떻게 받아들여야 하는지도 알려줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: "확률이 50%를 넘지 않아 합격으로 예측됐지만, 확률이 높을수록 더 주의해서 봐야 한다"는 설명이 있는지 보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: "확률이 50%를 넘지 않아 합격으로 예측됐지만, 확률이 높을수록 더 주의해서 봐야 한다"는 설명이 있는지 보자.</p>
 
     <div class="callout warn">
       <b class="tag">체크포인트 — proba[:, 1]이 항상 "불합격 확률"은 아니다</b>
@@ -176,15 +176,15 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
       때는 항상 <code>print(model.classes_)</code>로 클래스 순서를 먼저 확인하는 습관을 들이자.
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>라벨이 '사과', '바나나' 같은 문자열일 때 DecisionTreeClassifier의 model.classes_ 순서가 어떻게 되는지 보여주는 5줄짜리 재미있는 파이썬 예제를 만들어줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 직접 실행해서 classes_가 입력한 순서가 아니라 가나다(알파벳) 순서로 나오는지, predict_proba의 열 순서도 그와 같은지 확인하자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 직접 실행해서 classes_가 입력한 순서가 아니라 가나다(알파벳) 순서로 나오는지, predict_proba의 열 순서도 그와 같은지 확인하자.</p>
 
   </section>
 
   <section class="block">
-    <h2>🟠 ② Orange3로 재확인하기</h2>
+    <h2>② Orange3로 재확인하기</h2>
     <div class="callout practice">
       <b class="tag">위젯</b> Predictions
       <p style="margin:.5rem 0 0;">9차시에서 Orange3로 만든 Tree 모델에 같은 새 로트
@@ -199,11 +199,11 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
       <svg class="oflow-svg" viewBox="0 0 860 190" role="img"
            aria-label="9차시 Tree 모델과 새 로트 CSV가 Predictions 위젯으로 모여 예측 결과를 만드는 Orange3 워크플로 다이어그램">
         <rect class="obox" x="10" y="15" width="230" height="56" rx="12"/>
-        <text x="125" y="38" text-anchor="middle" class="olabel" font-size="14">🌳 9차시 Tree 모델</text>
+        <text x="125" y="38" text-anchor="middle" class="olabel" font-size="14">9차시 Tree 모델</text>
         <text x="125" y="58" text-anchor="middle" class="osub" font-size="10">Orange3에서 학습된 모델</text>
 
         <rect class="obox" x="10" y="119" width="230" height="56" rx="12"/>
-        <text x="125" y="142" text-anchor="middle" class="olabel" font-size="14">📁 새 로트 CSV</text>
+        <text x="125" y="142" text-anchor="middle" class="olabel" font-size="14">새 로트 CSV</text>
         <text x="125" y="162" text-anchor="middle" class="osub" font-size="10">week09_new_lots_to_predict.csv</text>
 
         <path class="oarrow" d="M240,43 H270 V95 H306" fill="none"/>
@@ -211,19 +211,19 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
         <polygon class="oarrowhead" points="306,87 323,95 306,103"/>
 
         <rect class="obox accent" x="310" y="61" width="220" height="68" rx="14"/>
-        <text x="420" y="90" text-anchor="middle" class="olabel" font-size="15">🔮 Predictions</text>
+        <text x="420" y="90" text-anchor="middle" class="olabel" font-size="15">Predictions</text>
         <text x="420" y="112" text-anchor="middle" class="osub" font-size="11">새 로트 예측 실행</text>
 
         <line class="oarrow" x1="530" y1="95" x2="552" y2="95"/>
         <polygon class="oarrowhead" points="552,87 569,95 552,103"/>
 
         <rect class="obox" x="570" y="45" width="280" height="100" rx="14"/>
-        <text x="710" y="76" text-anchor="middle" class="olabel" font-size="15">📋 예측 결과</text>
+        <text x="710" y="76" text-anchor="middle" class="olabel" font-size="15">예측 결과</text>
         <text x="710" y="98" text-anchor="middle" class="osub" font-size="11">합격 / 불합격</text>
         <text x="710" y="118" text-anchor="middle" class="osub" font-size="11">확률(Probability) 포함</text>
       </svg>
     </div>
-    <p style="margin:.8rem 0 .2rem;"><b>🖼️ 실제 Orange3 화면으로 확인하기</b></p>
+    <p style="margin:.8rem 0 .2rem;"><b>실제 Orange3 화면으로 확인하기</b></p>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week10_01_canvas.png" loading="lazy"
            alt="그림 10-1. Tree 모델과 새 로트 데이터를 Predictions에 연결한 캔버스" data-shot="학습용 File → Tree → Predictions, 새 로트 File → Predictions로 연결한 캔버스">
@@ -243,7 +243,7 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
   </section>
 
   <section class="block">
-    <h2>📚 10차시 되짚기 — 우리가 배운 것들</h2>
+    <h2>10차시 되짚기 — 우리가 배운 것들</h2>
     <table class="timetable">
       <tr><th>차시</th><th>핵심 내용</th></tr>
       <tr><td>1</td><td>반도체·웨이퍼·공정 개념, 변수와 print() 출력</td></tr>
@@ -262,15 +262,15 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
       <li>앞으로 새로운 공정 데이터를 받아도 오늘까지 배운 순서(읽기 → 정제 → 시각화 → 비교 → 원인 탐색 → 예측)를 그대로 적용 가능</li>
     </ul>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>반도체 공정 데이터 분석 입문 과정을 복습하려고 해. 결측값 처리, 상관관계와 '원인 후보', 정확도의 함정에 대한 OX 문제 3개를 내줘. 내가 답하면 그때 정답과 해설을 알려줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: 해설에서 상관관계를 "원인"이 아니라 "원인 후보"로 표현하는지 확인하자. "원인"이라고 단정하면 AI의 답을 바로잡아보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 해설에서 상관관계를 "원인"이 아니라 "원인 후보"로 표현하는지 확인하자. "원인"이라고 단정하면 AI의 답을 바로잡아보자.</p>
 
   </section>
 
   <section class="block">
-    <h2>🟣 실습: 새 로트 예측과 전체 회고 따라 하기</h2>
+    <h2>실습: 새 로트 예측과 전체 회고 따라 하기</h2>
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>모델 다시 만들기</b> — 9차시와 동일한 코드로 모델을 학습시킨다.
@@ -301,7 +301,7 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
   </section>
 
   <section class="block">
-    <h2>🗂️ 핵심 용어 카드</h2>
+    <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
         <h4>predict()</h4><div class="en">Predict</div>
@@ -334,7 +334,7 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
   </section>
 
   <section class="block">
-    <h2>📁 데이터</h2>
+    <h2>데이터</h2>
     <ul class="pt-list">
       <li><code>data/weekly/week09/week09_new_lots_to_predict.csv</code></li>
       <li>예측 실습용 새 로트 9행(정답 라벨 없음)</li>
@@ -343,7 +343,7 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
   </section>
 
   <section class="block">
-    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
       <b class="tag">오류 1</b>
       <code>KeyError: "[...] not in index"</code> 또는 <code>ValueError: The feature names should match those that were passed during fit.</code>
@@ -357,7 +357,7 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
   </section>
 
   <section class="block">
-    <h2>🚀 도전 실습</h2>
+    <h2>도전 실습</h2>
     <div class="callout practice">
       <b class="tag">도전 문제</b>
       9차시의 모델을 <code>max_depth=8</code>로 다시 학습시킨 뒤, 같은 새 로트 9건에 대해
@@ -367,7 +367,7 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
   </section>
 
   <section class="block">
-    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <h2>결과 정리 &amp; 퀴즈</h2>
     <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
 
     <div class="quiz-item">
@@ -412,20 +412,20 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
   </section>
 
   <section class="block">
-    <h2>🤖 AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
+    <h2>AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
     <div class="callout concept">
       <b class="tag">마지막 차시도 AI와 함께</b>
       10차시 동안 배운 것들을 실무에 가깝게 확장하는 마지막 AI 활용 실습이다. 이제 스스로
       필요한 코드를 AI에게 요청하고, 검증하고, 이해하는 흐름에 익숙해졌기를 바란다.
     </div>
 
-    <h3>🔍 AI에게 검색하며 이해도 높이기</h3>
+    <h3>AI에게 검색하며 이해도 높이기</h3>
     <ul class="pt-list">
       <li>오늘은 학습된 모델로 새 데이터를 예측하고 확률까지 확인했다 — AI에게 물어보며
         실무에서 더 필요한 개념을 알아보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <b class="tag">질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
       <ul class="pt-list">
         <li>"predict()와 predict_proba()는 내부적으로 어떻게 다른 계산을 하나요?"</li>
         <li>"학습시킨 모델을 저장했다가 나중에 다시 불러와서 쓰려면 어떻게 하나요? (pickle, joblib)"</li>
@@ -435,13 +435,13 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
       </ul>
     </div>
 
-    <h3>💡 AI에게 프롬프트로 코드 생성 요청하기</h3>
+    <h3>AI에게 프롬프트로 코드 생성 요청하기</h3>
     <ul class="pt-list">
       <li>오늘 계산한 불합격 확률을 활용해서, 위험도 등급까지 함께 매기는 코드를 AI에게
         요청해보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 코드 생성 프롬프트 따라 해보기</b>
+      <b class="tag">코드 생성 프롬프트 따라 해보기</b>
       <ul class="pt-list">
         <li>"로트 이름과 불합격 확률 리스트를 받아서, 확률이 높은 순서로 정렬하고 위험도
           등급(높음/보통/낮음)을 함께 표시하는 코드를 만들어줘."</li>
@@ -489,11 +489,11 @@ LOT-D: 불합격 확률 6.7% → 위험도 낮음</pre>
   </section>
 
   <section class="block">
-    <h2>🟣 연습문제 — 위험 로트 개수 세기</h2>
+    <h2>연습문제 — 위험 로트 개수 세기</h2>
     <p>4차시에서 배운 조건 검색(불리언 인덱싱)을 새 로트의 <code>불합격_확률</code> 열에
     다시 적용해보자.</p>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       <code>불합격_확률</code>이 0.5를 초과하는(50%보다 큰) 로트를 "위험 로트"로 정의하고,
       몇 개인지 세어보자.
     </div>
@@ -512,14 +512,14 @@ print(f"위험 로트(불합격 확률 50% 초과) 개수: {len(risky_lots)}개"
   </section>
 
   <section class="block">
-    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 10차시 완주 인증서 만들기</h2>
+    <h2>AI로 재미있는 미니 프로그램 만들기 — 10차시 완주 인증서 만들기</h2>
     <div class="callout concept">
       <b class="tag">10차시, 그리고 전체 과정의 마지막 미니 프로젝트</b>
       10차시 동안 배운 모든 것을 되짚으며, 완주를 자축하는 나만의 프로그램을 AI에게 만들어달라고
       요청해보자.
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      <b class="tag">프롬프트 예시 — 그대로 물어보기</b>
       "input()으로 이름을 입력받고, 이모지나 별표(*)로 테두리를 두른 '10차시 반도체 데이터
       분석 과정 수료증'을 이름과 함께 예쁘게 출력하는 파이썬 코드를 만들어줘."
     </div>
@@ -552,7 +552,7 @@ print("🎓" * 15)</code></pre>
   </section>
 
   <section class="block">
-    <h2>📝 과제 — 나만의 재실험</h2>
+    <h2>과제 — 나만의 재실험</h2>
     <ul class="pt-list">
       <li>과정을 마무리하며, 지금까지 배운 도구로 스스로 질문을 정하고 답해보는 마지막 과제</li>
     </ul>
@@ -574,12 +574,12 @@ print("🎓" * 15)</code></pre>
   </section>
 
   <section class="block">
-    <h2>❓ 핵심 질문 → 데이터 연결</h2>
+    <h2>핵심 질문 → 데이터 연결</h2>
     <div class="callout concept">두 방식(scikit-learn/Orange3)의 예측이 같은가? 다르다면 왜 다를 수 있는가?</div>
   </section>
 
   <section class="block">
-    <h2>📦 산출물</h2>
+    <h2>산출물</h2>
     <ul class="goal-list">
       <li>새 로트 예측 결과 정리 문장</li>
       <li>1~9차시 핵심 내용 한 줄 회고</li>
@@ -588,7 +588,7 @@ print("🎓" * 15)</code></pre>
   </section>
 
   <section class="block">
-    <h2>🎓 과정을 마치며</h2>
+    <h2>과정을 마치며</h2>
     <div class="callout success">
       <b class="tag">수고하셨습니다!</b>
       10차시 동안 프로그래밍 경험이 없는 상태에서 시작해 변수·리스트·조건문·반복문·함수 같은
@@ -601,7 +601,7 @@ print("🎓" * 15)</code></pre>
 
   <div class="nav-buttons">
     <a href="../week09/index.html">← 이전 차시: 9차시</a>
-    <a class="home" href="../../index.html">🏠 전체 목차</a>
+    <a class="home" href="../../index.html">전체 목차</a>
     <a class="disabled">다음 차시 없음(마지막 차시)</a>
   </div>
 

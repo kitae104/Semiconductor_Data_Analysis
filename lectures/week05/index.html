@@ -35,11 +35,11 @@
   <div class="hero">
     <span class="badge blue">5차시</span>
     <h1>데이터 훑어보기와 정리(EDA)</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"코드를 한 줄도 쓰기 전에, 이 데이터에 어떤 문제가 있어 보이는지 먼저 확인할 수 있을까?"</b></p>
+    <p class="today-question">오늘의 질문: <b>"코드를 한 줄도 쓰기 전에, 이 데이터에 어떤 문제가 있어 보이는지 먼저 확인할 수 있을까?"</b></p>
   </div>
 
   <section class="block">
-    <h2>🎯 학습 목표</h2>
+    <h2>학습 목표</h2>
     <ul class="goal-list">
       <li>Orange3로 CSV를 열어 결측값·이상값이 있어 보이는 곳을 먼저 확인할 수 있다.</li>
       <li>결측값·중복값·이상값을 Pandas 코드로 직접 찾을 수 있다.</li>
@@ -50,7 +50,7 @@
   </section>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>실제 현장 데이터는 센서 오류나 기록 누락으로 빈 값·터무니없는 값이 섞여 있기 마련이다. 이런
         "더러운 데이터"를 그대로 분석하면 평균·그래프·모델 결과가 모두 왜곡되므로, 분석을 시작하기 전
@@ -65,7 +65,7 @@
   </section>
 
   <section class="block">
-    <h2>⏮️ 지난 시간 복습</h2>
+    <h2>지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">4차시 연결</b>
       4차시에서는 Pandas로 원하는 행·열을 골라내는 법을 배웠다. 그런데 현실의 데이터에는 빈 칸
@@ -76,7 +76,7 @@
   </section>
 
   <section class="block">
-    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <h2>① Orange3로 먼저 훑어보기</h2>
     <div class="callout practice">
       <b class="tag">위젯</b> File → Data Table → Feature Statistics
       <p style="margin:.5rem 0 0;">파이썬 코드를 쓰기 전에 Orange3로 같은 CSV를 먼저 열어본다.
@@ -93,25 +93,25 @@
       <svg class="oflow-svg" viewBox="0 0 860 140" role="img"
            aria-label="File, Data Table, Feature Statistics 위젯을 순서대로 연결한 Orange3 워크플로 다이어그램">
         <rect class="obox" x="10" y="25" width="230" height="90" rx="14"/>
-        <text x="125" y="62" text-anchor="middle" class="olabel" font-size="15">📁 File</text>
+        <text x="125" y="62" text-anchor="middle" class="olabel" font-size="15">File</text>
         <text x="125" y="86" text-anchor="middle" class="osub" font-size="11">week05_dirty_process_data.csv</text>
 
         <line class="oarrow" x1="240" y1="70" x2="262" y2="70"/>
         <polygon class="oarrowhead" points="262,62 279,70 262,78"/>
 
         <rect class="obox" x="280" y="25" width="230" height="90" rx="14"/>
-        <text x="395" y="62" text-anchor="middle" class="olabel" font-size="15">📋 Data Table</text>
+        <text x="395" y="62" text-anchor="middle" class="olabel" font-size="15">Data Table</text>
         <text x="395" y="86" text-anchor="middle" class="osub" font-size="11">빈 칸(결측 셀) 그대로 표시</text>
 
         <line class="oarrow" x1="510" y1="70" x2="532" y2="70"/>
         <polygon class="oarrowhead" points="532,62 549,70 532,78"/>
 
         <rect class="obox accent" x="550" y="25" width="300" height="90" rx="14"/>
-        <text x="700" y="62" text-anchor="middle" class="olabel" font-size="15">📊 Feature Statistics</text>
+        <text x="700" y="62" text-anchor="middle" class="olabel" font-size="15">Feature Statistics</text>
         <text x="700" y="86" text-anchor="middle" class="osub" font-size="11">온도_섭씨 최댓값 500↑ 발견!</text>
       </svg>
     </div>
-    <p style="margin:.8rem 0 .2rem;"><b>🖼️ 실제 Orange3 화면으로 확인하기</b></p>
+    <p style="margin:.8rem 0 .2rem;"><b>실제 Orange3 화면으로 확인하기</b></p>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week05_01_canvas.png" loading="lazy"
            alt="그림 5-1. 세 위젯을 연결한 Orange3 캔버스" data-shot="File → Data Table → Feature Statistics 세 위젯을 연결한 캔버스 전체 화면">
@@ -133,7 +133,7 @@
   </section>
 
   <section class="block">
-    <h2>🐍 ② 파이썬으로 확인하기 — 숫자 요약부터, 그다음 결측값</h2>
+    <h2>② 파이썬으로 확인하기 — 숫자 요약부터, 그다음 결측값</h2>
 
     <h3>먼저 아주 작은 표로 오늘 배울 것 미리 보기</h3>
     <ul class="pt-list">
@@ -173,7 +173,7 @@ print(toy)</code></pre>
       </ul>
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       위 네 줄을 하나씩 실행해보자. 지금은 결과만 눈으로 훑어보고, 정확한 의미는 아래에서
       반도체 데이터로 하나씩 자세히 배운다.
     </div>
@@ -230,10 +230,10 @@ max    557.727366  1033.100000  250.000000  132.300000    1.000000</pre>
     </div>
 
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>평균이 중앙값보다 훨씬 크면 왜 '엄청 큰 값이 섞였다'는 신호인지, 반 친구 10명의 용돈 이야기로 비유해서 초등학생도 알게 설명해줘. 숫자 예시도 하나 들어줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI의 숫자 예시에서 큰 값 하나 때문에 평균만 크게 뛰고 중앙값은 거의 그대로인지 계산기로 직접 확인하자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: AI의 숫자 예시에서 큰 값 하나 때문에 평균만 크게 뛰고 중앙값은 거의 그대로인지 계산기로 직접 확인하자.</p>
 
     <h3>결측값 정확히 세기 — isna()</h3>
     <ul class="pt-list">
@@ -292,15 +292,15 @@ print(df.isna().sum().sum())   # 남은 결측값 총합</code></pre>
       원본을 바꾸지 않는다. <code>df = df.dropna(...)</code>처럼 다시 저장해야 실제로 반영된다.
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>결측값(NaN), dropna(), fillna()에 대한 OX 문제 3개를 내줘. 정답은 내가 답을 말한 다음에 알려줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: "NaN과 0은 같다", "dropna()만 실행해도 원본이 바뀐다" 같은 문제가 나오면 오늘 배운 대로 둘 다 X인지 확인하자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: "NaN과 0은 같다", "dropna()만 실행해도 원본이 바뀐다" 같은 문제가 나오면 오늘 배운 대로 둘 다 X인지 확인하자.</p>
 
   </section>
 
   <section class="block">
-    <h2>🐍 중복값 찾고 제거하기</h2>
+    <h2>중복값 찾고 제거하기</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print(df.duplicated().sum())   # 중복 행 개수
@@ -321,7 +321,7 @@ print(df.shape)</code></pre>
   </section>
 
   <section class="block">
-    <h2>🐍 이상값 찾기 — 4차시 조건 검색 재활용</h2>
+    <h2>이상값 찾기 — 4차시 조건 검색 재활용</h2>
     <ul class="pt-list">
       <li>이상값 = "값이 없는 것"이 아니라 "값은 있지만 말이 안 되는 것" → <code>isna()</code>로 잡히지 않음</li>
       <li>4차시에서 배운 조건 검색으로 직접 찾아야 함</li>
@@ -343,7 +343,7 @@ print("비정상 가스유량:", len(bad_gas), "건")</code></pre>
 비정상 가스유량: 2 건</pre>
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       <code>df["공정명"].unique()</code>를 실행해 공정명 열에 어떤 값들이 있는지 확인해보자.
       <code>중착</code>, <code>포토공정</code>처럼 오타가 섞여 있는 것이 보이는가?
     </div>
@@ -399,15 +399,15 @@ df.loc[df["온도_섭씨"] > 400, "온도_섭씨"] = df["온도_섭씨"].median(
       <code>df = df.reset_index(drop=True)</code>를 추가로 실행해 인덱스를 새로 매겨야 한다.
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>너는 반도체 공장의 공정 엔지니어야. 압력 센서에 -42 Pa라는 값이 찍혔을 때, 그 기록을 지울지, 값을 고칠지, 그대로 두고 설비를 먼저 확인할지 초보자에게 역할극으로 설명해줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI가 "무조건 지운다"고만 하지 않고, 상황에 따라 판단한다는 오늘 강의 내용과 같은 말을 하는지 보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: AI가 "무조건 지운다"고만 하지 않고, 상황에 따라 판단한다는 오늘 강의 내용과 같은 말을 하는지 보자.</p>
 
   </section>
 
   <section class="block">
-    <h2>📚 정제 전후 비교하기</h2>
+    <h2>정제 전후 비교하기</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>print(f"정제 전 평균 온도: {304.9:.1f}도 (113행)")   # 정제 전 값(위에서 미리 계산)
@@ -427,7 +427,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
   </section>
 
   <section class="block">
-    <h2>🟣 실습: 데이터 정제 따라 하기</h2>
+    <h2>실습: 데이터 정제 따라 하기</h2>
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>Orange3로 먼저 훑어보기</b> — File → Data Table → Feature
@@ -465,7 +465,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
   </section>
 
   <section class="block">
-    <h2>🗂️ 핵심 용어 카드</h2>
+    <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
         <h4>결측값</h4><div class="en">Missing Value</div>
@@ -507,7 +507,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
   </section>
 
   <section class="block">
-    <h2>📁 데이터</h2>
+    <h2>데이터</h2>
     <ul class="pt-list">
       <li><code>data/weekly/week05/week05_dirty_process_data.csv</code> — 113행 9열
         <ul>
@@ -519,7 +519,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
   </section>
 
   <section class="block">
-    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
       <b class="tag">오류 1</b>
       <code>KeyError</code> — 열 이름에 오타나 공백이 있는 경우다. <code>df.columns</code>로
@@ -533,7 +533,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
   </section>
 
   <section class="block">
-    <h2>🚀 도전 실습</h2>
+    <h2>도전 실습</h2>
     <div class="callout practice">
       <b class="tag">도전 문제 1</b>
       <code>df["공정명"].unique()</code>로 찾은 오타(<code>중착</code>, <code>포토공정</code>,
@@ -561,7 +561,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
   </section>
 
   <section class="block">
-    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <h2>결과 정리 &amp; 퀴즈</h2>
     <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
 
     <div class="quiz-item">
@@ -608,20 +608,20 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
   </section>
 
   <section class="block">
-    <h2>🤖 AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
+    <h2>AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
     <div class="callout concept">
       <b class="tag">이번 차시도 AI와 함께</b>
       데이터 정제는 정답이 하나로 정해져 있지 않은 경우가 많다. AI에게 질문하고 코드를 만들어보며
       오늘 배운 방법 외에 어떤 선택지가 더 있는지 넓혀보자.
     </div>
 
-    <h3>🔍 AI에게 검색하며 이해도 높이기</h3>
+    <h3>AI에게 검색하며 이해도 높이기</h3>
     <ul class="pt-list">
       <li>오늘은 결측값·중복값·이상값을 다루는 가장 기본적인 방법을 배웠다 — AI에게 물어보며
         다른 선택지도 알아보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <b class="tag">질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
       <ul class="pt-list">
         <li>"결측값을 평균으로 채우는 것과 중앙값으로 채우는 것은 언제 다르게 써야 하나요?"</li>
         <li>"이상값(outlier)을 찾는 통계적 방법(IQR, Z-score)에는 어떤 것들이 있나요?"</li>
@@ -630,13 +630,13 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
       </ul>
     </div>
 
-    <h3>💡 AI에게 프롬프트로 코드 생성 요청하기</h3>
+    <h3>AI에게 프롬프트로 코드 생성 요청하기</h3>
     <ul class="pt-list">
       <li>오늘은 "정상 범위를 직접 정해서" 이상값을 찾았다 — AI에게 통계적인 방법(IQR)도
         요청해보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 코드 생성 프롬프트 따라 해보기</b>
+      <b class="tag">코드 생성 프롬프트 따라 해보기</b>
       <ul class="pt-list">
         <li>"숫자 데이터에서 IQR(사분위범위) 방법으로 이상값을 찾아주는 코드를 만들어줘."</li>
         <li>"열 이름 목록을 받아서, 각 열의 결측값 개수를 한 번에 표로 보여주는 코드를 만들어줘."</li>
@@ -673,12 +673,12 @@ dtype: float64</pre>
   </section>
 
   <section class="block">
-    <h2>🟣 연습문제 — 나만의 정제 리포트 만들기</h2>
+    <h2>연습문제 — 나만의 정제 리포트 만들기</h2>
     <p>오늘 배운 <code>isna()</code>·<code>duplicated()</code>를 활용해, 원본 데이터를 다시 읽어
     "정제 리포트" 한 문장을 만들어보자. (지금까지 다룬 <code>df</code>는 이미 정제가 끝났으므로,
     원본과 비교하려면 파일을 새로 읽어야 한다.)</p>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       <ul class="pt-list">
         <li><code>raw_df = pd.read_csv("week05_dirty_process_data.csv")</code>로 원본을 다시
           읽는다.</li>
@@ -700,14 +700,14 @@ print(f"정제 리포트: 결측 {missing_count}건, 중복 {duplicate_count}건
   </section>
 
   <section class="block">
-    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 이상값 탐정 게임</h2>
+    <h2>AI로 재미있는 미니 프로그램 만들기 — 이상값 탐정 게임</h2>
     <div class="callout concept">
       <b class="tag">오늘의 미니 프로젝트</b>
       오늘 배운 이상값 찾기를, 통계(평균·표준편차)를 이용해 재미있는 "탐정 게임"으로 만들어달라고
       AI에게 요청해보자.
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      <b class="tag">프롬프트 예시 — 그대로 물어보기</b>
       "숫자 리스트를 받아서, 평균에서 표준편차의 2배 이상 벗어난 값을 '용의자'로 찾아 🔍 이모지와
       함께 출력하는 파이썬 코드를 만들어줘."
     </div>
@@ -752,7 +752,7 @@ for v in sample_values:
   </section>
 
   <section class="block">
-    <h2>📝 과제(다음 차시까지)</h2>
+    <h2>과제(다음 차시까지)</h2>
     <ul class="pt-list">
       <li>아래 과제를 Jupyter Notebook 파일 하나에 순서대로 작성 — 각 결과를 확인할 수 있게 만들어 제출</li>
     </ul>
@@ -774,18 +774,18 @@ for v in sample_values:
   </section>
 
   <section class="block">
-    <h2>❓ 핵심 질문 → 데이터 연결</h2>
+    <h2>핵심 질문 → 데이터 연결</h2>
     <div class="callout concept">Orange3에서 눈으로 확인한 문제와 Pandas로 찾은 문제가 같은가? 정제 전후 평균 온도는 얼마나 달라지는가?</div>
   </section>
 
   <section class="block">
-    <h2>🔜 다음 차시 예고</h2>
+    <h2>다음 차시 예고</h2>
     <div class="callout concept">6차시에도 Orange3로 먼저 그래프를 그려본 뒤, Matplotlib 코드로 같은 그래프를 그려본다.</div>
   </section>
 
   <div class="nav-buttons">
     <a href="../week04/index.html">← 이전 차시: 4차시</a>
-    <a class="home" href="../../index.html">🏠 전체 목차</a>
+    <a class="home" href="../../index.html">전체 목차</a>
     <a href="../week06/index.html">다음 차시: 6차시 →</a>
   </div>
 

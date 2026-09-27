@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       var title = document.createElement("span");
       title.className = "toc-title";
-      title.appendChild(document.createTextNode("📑 "));
       var titleText = document.createElement("span");
       titleText.textContent = "이 페이지 목차";
       title.appendChild(titleText);
@@ -140,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
       var slot = document.createElement("div");
       slot.className = "photo-slot";
       var desc = document.createElement("div");
-      desc.appendChild(document.createTextNode("📸 캡처 예정 — "));
+      desc.appendChild(document.createTextNode("캡처 예정 — "));
       var b = document.createElement("b");
       b.textContent = img.getAttribute("data-shot");
       desc.appendChild(b);

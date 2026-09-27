@@ -22,7 +22,7 @@
   </div>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>지금까지는 이미 일어난 불량을 데이터로 "설명"했지만, 현장에서는 문제가 생기기 전에 "이 로트가
         불합격할 것 같다"를 미리 알 수 있으면 훨씬 유용하다. 머신러닝은 과거 데이터의 패턴(온도·압력 등과
@@ -119,7 +119,8 @@ model.fit(X_train, y_train)</code></pre>
       정확도를 비교해보자. <code>max_depth</code>가 클수록 항상 test 정확도가 좋아지는지
       확인하고, 만약 그렇지 않다면(과대적합, overfitting) 그 이유를 한 문장으로 설명해보자.
     </div>
-    <div class="callout warn">
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
       정확도는 반드시 <code>X_test</code>, <code>y_test</code>로 비교해야 한다. <code>X_train</code>
       으로 정확도를 재면 <code>max_depth</code>가 클수록 항상 높게 나와서 과대적합을 발견할 수

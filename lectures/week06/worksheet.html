@@ -22,7 +22,7 @@
   </div>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>숫자로만 나열된 표는 수백 행만 넘어가도 패턴을 눈으로 알아채기 어렵다. 그래프는 온도·압력 같은
         값의 변화와 설비 간 차이를 한눈에 보여줘서, 어디를 더 자세히 조사해야 할지 훨씬 빠르게 판단하게
@@ -138,7 +138,8 @@ plt.show()</code></pre>
       두께와 진동 사이에는 이렇다 할 관계가 없다. 그 위에서 불합격(다른 색) 점들이 특별히 몰려
       있는 구간이 있는지 관찰해 한 문장으로 적어보자.
     </div>
-    <div class="callout concept">
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout concept answer-box">
       <b class="tag">체크포인트 — 한 가지를 더 확인하자</b>
       불합격 점이 진동이 높은 쪽에 몰려 보일 것이다. 실제로 진동 상위 25%(약 0.55 이상) 45건의
       불합격 비율은 <b>17.8%</b>로 전체(11.7%)보다 높다. 그런데 같은 산점도를 <code>c=</code>에
@@ -150,7 +151,8 @@ plt.show()</code></pre>
       <b>교란 요인(confounder)</b>이라고 부른다. 진동도 EQ-02도 지금은 <b>원인 후보</b>이고,
       이런 상황을 어떻게 다루는지가 <b>8차시</b>의 주제다.
     </div>
-    <div class="callout warn">
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
       <code>c=</code>에 넣는 값은 숫자형이어야 색으로 자동 구분된다. <code>합격여부</code>는 이미
       1/-1 숫자라 바로 쓸 수 있지만, 만약 "합격"/"불합격" 같은 문자열 열이었다면 먼저 숫자로

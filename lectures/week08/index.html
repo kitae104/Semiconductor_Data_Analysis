@@ -35,11 +35,11 @@
   <div class="hero">
     <span class="badge blue">8차시</span>
     <h1>공정 이상과 원인 후보 찾기</h1>
-    <p class="today-question">💬 오늘의 질문: <b>"온도가 이상했던 시점과 불량이 발생한 시점이 겹칠까?"</b></p>
+    <p class="today-question">오늘의 질문: <b>"온도가 이상했던 시점과 불량이 발생한 시점이 겹칠까?"</b></p>
   </div>
 
   <section class="block">
-    <h2>🎯 학습 목표</h2>
+    <h2>학습 목표</h2>
     <ul class="goal-list">
       <li>Orange3 Correlations 위젯으로 변수 쌍의 상관관계를 먼저 훑어볼 수 있다.</li>
       <li>임계값(기준값)을 이용해 이상치(비정상 데이터)를 찾아낼 수 있다.</li>
@@ -51,7 +51,7 @@
   </section>
 
   <section class="block">
-    <h2>🤔 왜 이걸 배워야 할까?</h2>
+    <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>불량이 발생했을 때 "왜"인지 알아야 재발을 막을 수 있는데, 수많은 변수 중 무엇이 관련 있는지
         눈으로 짐작하기는 어렵다. 상관관계 분석은 "함께 움직이는 변수 쌍"을 숫자로 찾아주는 도구로, 불량
@@ -66,7 +66,7 @@
   </section>
 
   <section class="block">
-    <h2>⏮️ 지난 시간 복습</h2>
+    <h2>지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">5차시 + 7차시 연결</b>
       5차시에서는 결측값·중복값과 함께 "말이 안 되는 이상값(예: 500℃ 이상)"을 찾아 정리해봤다.
@@ -77,7 +77,7 @@
   </section>
 
   <section class="block">
-    <h2>📚 이상치, 관리 상한/하한, 표준편차</h2>
+    <h2>이상치, 관리 상한/하한, 표준편차</h2>
     <h3>이상치(Outlier)란?</h3>
     <ul class="pt-list">
       <li>대부분의 측정값 = 평소와 비슷한 범위 안에 모여 있음</li>
@@ -108,10 +108,10 @@
       <code>관리 상한 = 평균 + 2×표준편차</code>, <code>관리 하한 = 평균 − 2×표준편차</code>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>공장에서 쓰는 '관리도(Control Chart)'에서 관리 상한·하한은 보통 평균에서 표준편차 몇 배 떨어진 곳에 긋는지 알려줘. '규격(Spec)'과 '관리 한계'가 어떻게 다른지도 초등학생도 알 수 있게 비유로 설명해줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: "3시그마(3배)"라는 말이 나오는지, 그리고 이 강의에서 쓴 2배는 교육용 기준이라는 점과 비교해보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: "3시그마(3배)"라는 말이 나오는지, 그리고 이 강의에서 쓴 2배는 교육용 기준이라는 점과 비교해보자.</p>
 
     <div class="callout practice">
       <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
@@ -158,7 +158,7 @@ dtype: int64</pre>
   </section>
 
   <section class="block">
-    <h2>📚 상관관계, 직관적으로 이해하기</h2>
+    <h2>상관관계, 직관적으로 이해하기</h2>
     <ul class="pt-list">
       <li><b>상관관계(Correlation)</b> = 두 변수가 "함께 움직이는 정도"
         <ul>
@@ -185,15 +185,15 @@ dtype: int64</pre>
       <tr><td>-0.7 이하</td><td>강한 음의 상관</td></tr>
     </table>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>상관계수(r)에 대한 초보자용 OX 퀴즈 3문제를 내줘. 'r이 0이면 두 변수는 아무 관계도 없다' 같은 헷갈리는 문장도 꼭 넣어줘. 정답과 해설은 내가 답한 뒤에 알려줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: "r이 0에 가까워도 곡선 모양이나 '범위를 벗어나면 나빠지는' 관계는 있을 수 있다"는 설명이 나오는지 확인하자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: "r이 0에 가까워도 곡선 모양이나 '범위를 벗어나면 나빠지는' 관계는 있을 수 있다"는 설명이 나오는지 확인하자.</p>
 
   </section>
 
   <section class="block">
-    <h2>⚠️ 상관관계 ≠ 인과관계 — "원인 후보"라는 표현</h2>
+    <h2>상관관계 ≠ 인과관계 — "원인 후보"라는 표현</h2>
     <div class="callout danger">
       <b class="tag">가장 중요한 원칙</b>
       <b>상관관계가 있다고 해서 원인이라고 단정할 수 없다.</b> 두 변수가 함께 움직인다는 것은
@@ -226,7 +226,7 @@ dtype: int64</pre>
   </section>
 
   <section class="block">
-    <h2>🗂️ 핵심 용어 카드</h2>
+    <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
         <h4>이상치</h4><div class="en">Outlier / Anomaly</div>
@@ -295,7 +295,7 @@ dtype: int64</pre>
   </section>
 
   <section class="block">
-    <h2>📁 데이터 미리보기</h2>
+    <h2>데이터 미리보기</h2>
     <ul class="pt-list">
       <li>오늘 사용할 데이터: <code>data/weekly/week08/week08_anomaly_root_cause.csv</code> (450행 12열)</li>
       <li>자세한 설명: <a href="../../data/data_dictionary/week08_dictionary.md">데이터 설명서</a> 참고</li>
@@ -314,7 +314,7 @@ dtype: int64</pre>
   </section>
 
   <section class="block">
-    <h2>🟠 ① Orange3로 먼저 훑어보기</h2>
+    <h2>① Orange3로 먼저 훑어보기</h2>
     <div class="callout practice">
       <b class="tag">위젯</b> File → Correlations
       <p style="margin:.5rem 0 0;">Pandas 코드를 쓰기 전에, 같은 CSV(<code>week08_anomaly_root_cause.csv</code>)를
@@ -327,25 +327,25 @@ dtype: int64</pre>
       <svg class="oflow-svg" viewBox="0 0 860 140" role="img"
            aria-label="File, Correlations 위젯을 연결해 상관관계 순위표를 얻는 Orange3 워크플로 다이어그램">
         <rect class="obox" x="10" y="25" width="230" height="90" rx="14"/>
-        <text x="125" y="62" text-anchor="middle" class="olabel" font-size="15">📁 File</text>
+        <text x="125" y="62" text-anchor="middle" class="olabel" font-size="15">File</text>
         <text x="125" y="86" text-anchor="middle" class="osub" font-size="11">week08_anomaly_root_cause.csv</text>
 
         <line class="oarrow" x1="240" y1="70" x2="262" y2="70"/>
         <polygon class="oarrowhead" points="262,62 279,70 262,78"/>
 
         <rect class="obox accent" x="280" y="25" width="230" height="90" rx="14"/>
-        <text x="395" y="62" text-anchor="middle" class="olabel" font-size="15">🔗 Correlations</text>
+        <text x="395" y="62" text-anchor="middle" class="olabel" font-size="15">Correlations</text>
         <text x="395" y="86" text-anchor="middle" class="osub" font-size="11">모든 숫자 쌍 자동 정렬</text>
 
         <line class="oarrow" x1="510" y1="70" x2="532" y2="70"/>
         <polygon class="oarrowhead" points="532,62 549,70 532,78"/>
 
         <rect class="obox" x="550" y="25" width="300" height="90" rx="14"/>
-        <text x="700" y="62" text-anchor="middle" class="olabel" font-size="15">📋 상관관계 순위표</text>
+        <text x="700" y="62" text-anchor="middle" class="olabel" font-size="15">상관관계 순위표</text>
         <text x="700" y="86" text-anchor="middle" class="osub" font-size="11">관계 있어 보이는 쌍 먼저 표시</text>
       </svg>
     </div>
-    <p style="margin:.8rem 0 .2rem;"><b>🖼️ 실제 Orange3 화면으로 확인하기</b></p>
+    <p style="margin:.8rem 0 .2rem;"><b>실제 Orange3 화면으로 확인하기</b></p>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week08_01_canvas.png" loading="lazy"
            alt="그림 8-1. File → Correlations 캔버스" data-shot="File → Correlations 두 위젯을 연결한 캔버스">
@@ -366,7 +366,7 @@ dtype: int64</pre>
   </section>
 
   <section class="block">
-    <h2>🐍 ② 파이썬으로 확인하기 — 정상 범위 설정과 이탈 데이터 찾기</h2>
+    <h2>② 파이썬으로 확인하기 — 정상 범위 설정과 이탈 데이터 찾기</h2>
     <ul class="pt-list">
       <li>진공도_mTorr 열에서 정상 범위(4.5~5.5 mTorr)를 벗어난 행을 조건 검색으로 찾기</li>
     </ul>
@@ -403,7 +403,7 @@ print("이탈 비율(%):", round(len(vac_outlier) / len(df) * 100, 2))</code></p
   </section>
 
   <section class="block">
-    <h2>💻 실습 코드 ② — 진공도 이탈과 불합격률 비교</h2>
+    <h2>실습 코드 ② — 진공도 이탈과 불합격률 비교</h2>
     <ul class="pt-list">
       <li>진공도가 정상 범위 안/밖일 때 불합격률이 실제로 다른지 비교</li>
     </ul>
@@ -432,15 +432,15 @@ print("정상 범위 밖 불합격률(%):", round(fail_rate_out, 2))</code></pre
     <p style="color:var(--muted);font-size:.9rem;">참고로 진공도와 불합격의 상관계수를 계산하면 r ≈ 0.02로 거의 0이다.
     너무 낮아도, 너무 높아도 불합격이 늘기 때문에 상관계수로는 잡히지 않는다 — 그래서 범위 이탈 비교가 따로 필요하다.</p>
     <div class="code-block">
-      <div class="code-label"><span>🤖 AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
       <pre style="white-space:pre-wrap;"><code>너는 반도체 공장의 베테랑 엔지니어고 나는 신입이야. 가상 상황: 진공도가 정상 범위를 벗어나면 불합격률이 8%에서 26%로 높아졌어. 내가 '진공도가 원인이네요!'라고 말하면, 왜 '원인 후보'라고 불러야 하는지와 확정하려면 무엇을 더 확인해야 하는지 대화로 3번 주고받으며 알려줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">👀 이렇게 확인해보자: AI가 끝까지 "원인이다"라고 단정하지 않는지, "제3의 요인"이나 "조건을 바꿔보는 실험" 같은 확인 방법이 나오는지 살펴보자.</p>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: AI가 끝까지 "원인이다"라고 단정하지 않는지, "제3의 요인"이나 "조건을 바꿔보는 실험" 같은 확인 방법이 나오는지 살펴보자.</p>
 
   </section>
 
   <section class="block">
-    <h2>💻 실습 코드 ③ — 온도와 두께의 산점도, 상관계수</h2>
+    <h2>실습 코드 ③ — 온도와 두께의 산점도, 상관계수</h2>
     <div class="callout practice">
       <b class="tag">먼저 아주 간단한 예로 감을 잡자</b>
       6차시에서 그려본 "공부 시간과 시험 점수" 예로, <code>.corr()</code>가 상관계수를 어떻게
@@ -503,7 +503,7 @@ plt.show()</code></pre>
   </section>
 
   <section class="block">
-    <h2>💻 실습 코드 ④ — 다른 이상 신호: 설비 진동과 시차 패턴</h2>
+    <h2>실습 코드 ④ — 다른 이상 신호: 설비 진동과 시차 패턴</h2>
     <h3>EQ-02 설비의 진동은 유독 높을까?</h3>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
@@ -576,7 +576,7 @@ print("이후 공정온도 평균:", round(during["온도_섭씨"].mean(), 2))</
   </section>
 
   <section class="block">
-    <h2>💻 실습 코드 ⑤ — 습도(대조군)로 "상관관계 없음" 확인하기</h2>
+    <h2>실습 코드 ⑤ — 습도(대조군)로 "상관관계 없음" 확인하기</h2>
     <ul class="pt-list">
       <li>습도_pct = 처음부터 불합격과 무관하게 설계된 대조군 변수 — 실제로 그런지 확인</li>
     </ul>
@@ -600,7 +600,7 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
   </section>
 
   <section class="block">
-    <h2>🙋 실생활 비유로 정리하기</h2>
+    <h2>실생활 비유로 정리하기</h2>
     <ul class="pt-list">
       <li>이상 탐지와 원인 후보 찾기 = "몸이 아플 때 원인을 찾는 과정"과 비슷
         <ul>
@@ -614,7 +614,7 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
   </section>
 
   <section class="block">
-    <h2>🟣 단계별 따라 하기 실습</h2>
+    <h2>단계별 따라 하기 실습</h2>
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>데이터 불러오기</b> — <code>week08_anomaly_root_cause.csv</code>를
@@ -650,7 +650,7 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
   </section>
 
   <section class="block">
-    <h2>⚠️ 주의할 점 &amp; 자주 발생하는 오류</h2>
+    <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
       <b class="tag">오류 1</b>
       <code>ValueError: The truth value of a Series is ambiguous</code> — 조건 검색에서
@@ -670,7 +670,7 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
   </section>
 
   <section class="block">
-    <h2>🚀 도전 실습</h2>
+    <h2>도전 실습</h2>
     <div class="callout practice">
       <b class="tag">도전 문제</b>
       압력_Pa 열에도 진공도와 같은 방식(정상 범위 밖 vs 안)으로 불합격률을 비교해보자(교육용 정상 범위: 995~1025 Pa, 7차시와 동일).
@@ -680,7 +680,7 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
   </section>
 
   <section class="block">
-    <h2>✅ 결과 정리 &amp; 퀴즈</h2>
+    <h2>결과 정리 &amp; 퀴즈</h2>
     <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
 
     <div class="quiz-item">
@@ -715,20 +715,20 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
   </section>
 
   <section class="block">
-    <h2>🤖 AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
+    <h2>AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
     <div class="callout concept">
       <b class="tag">이번 차시도 AI와 함께</b>
       "상관관계 ≠ 원인"은 데이터 분석에서 가장 자주 오해되는 개념이다. AI에게 질문하고 코드를
       만들어보며 오늘 배운 개념을 한 걸음 더 넓혀보자.
     </div>
 
-    <h3>🔍 AI에게 검색하며 이해도 높이기</h3>
+    <h3>AI에게 검색하며 이해도 높이기</h3>
     <ul class="pt-list">
       <li>오늘은 상관계수와 "원인 후보"라는 표현을 배웠다 — AI에게 물어보며 이 개념을 더
         단단히 다져보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <b class="tag">질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
       <ul class="pt-list">
         <li>"상관계수(r)가 0.7이면 '강한 상관관계'라고 할 수 있나요? 판단 기준이 있나요?"</li>
         <li>"상관관계와 인과관계는 정확히 어떻게 다른가요? 실생활 예시로 설명해주세요."</li>
@@ -737,12 +737,12 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
       </ul>
     </div>
 
-    <h3>💡 AI에게 프롬프트로 코드 생성 요청하기</h3>
+    <h3>AI에게 프롬프트로 코드 생성 요청하기</h3>
     <ul class="pt-list">
       <li>오늘 배운 상관계수 계산에, 판정 기준까지 자동으로 붙여주는 코드를 AI에게 요청해보자.</li>
     </ul>
     <div class="callout practice">
-      <b class="tag">🙋 코드 생성 프롬프트 따라 해보기</b>
+      <b class="tag">코드 생성 프롬프트 따라 해보기</b>
       <ul class="pt-list">
         <li>"두 숫자 리스트의 상관계수를 계산하고, 절댓값이 0.5보다 크면 '뚜렷한 관계', 아니면
           '약한 관계'라고 출력하는 코드를 만들어줘."</li>
@@ -778,7 +778,7 @@ print(f"상관계수 r = {r:.2f} → {label}")</code></pre>
   </section>
 
   <section class="block">
-    <h2>🟣 연습문제 — 진동 값과 불합격의 관계 확인하기</h2>
+    <h2>연습문제 — 진동 값과 불합격의 관계 확인하기</h2>
     <p>4단계(온도-두께)와 5단계(습도-불합격)에서 계산한 상관계수 외에, 앞서 진동 값을
     설비별 평균으로만 살펴봤던 <code>진동_mm_s</code> 열도 상관계수로 직접 확인해보자.</p>
     <div class="code-block">
@@ -788,7 +788,7 @@ r_vib = df["진동_mm_s"].____(df["불합격여부_숫자"])
 print("진동-불합격 상관계수 r =", round(r_vib, 2))</code></pre>
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 직접 해보기</b>
+      <b class="tag">직접 해보기</b>
       빈칸에 알맞은 메서드를 채워 실행하고, 결과가 온도-두께(r ≈ 0.71)나 습도-불합격
       (r ≈ -0.13) 중 어느 쪽에 더 가까운지 비교해보자. 계산된 값이 크게 나오더라도
       "진동이 불합격의 원인이다"라고 단정하지 말고, 반드시 <b>"원인 후보"</b>라는 표현을
@@ -797,7 +797,7 @@ print("진동-불합격 상관계수 r =", round(r_vib, 2))</code></pre>
   </section>
 
   <section class="block">
-    <h2>🎉 AI로 재미있는 미니 프로그램 만들기 — 원인 후보 추리 게임</h2>
+    <h2>AI로 재미있는 미니 프로그램 만들기 — 원인 후보 추리 게임</h2>
     <div class="callout concept">
       <b class="tag">오늘의 미니 프로젝트</b>
       오늘 계산한 상관계수(온도-두께, 습도-불합격, 진동-불합격)를 한데 모아, 절댓값이 큰
@@ -805,7 +805,7 @@ print("진동-불합격 상관계수 r =", round(r_vib, 2))</code></pre>
       요청해보자.
     </div>
     <div class="callout practice">
-      <b class="tag">🙋 프롬프트 예시 — 그대로 물어보기</b>
+      <b class="tag">프롬프트 예시 — 그대로 물어보기</b>
       "변수 이름과 상관계수가 담긴 딕셔너리를 받아서, 절댓값이 큰 순서로 정렬해 '용의선상
       원인 후보 랭킹'처럼 🔎 이모지와 함께 출력하는 파이썬 코드를 만들어줘."
     </div>
@@ -841,7 +841,7 @@ for rank, (name, value) in enumerate(ranked_suspects, start=1):
       <b class="tag">더 놀아보기</b>
       <ul class="pt-list">
         <li>다른 변수 쌍의 상관계수도 딕셔너리에 추가해서 더 긴 랭킹을 만들어보자.</li>
-        <li>1위로 뽑힌 원인 후보에게만 "🚨 가장 유력한 용의자" 같은 특별한 문구를 붙여달라고
+        <li>1위로 뽑힌 원인 후보에게만 "가장 유력한 용의자" 같은 특별한 문구를 붙여달라고
           AI에게 재요청해보자.</li>
         <li>랭킹에 몇 위가 오르든, 출력 문장에서는 항상 "원인"이 아니라 <b>"원인 후보"</b>라는
           표현을 쓰도록 AI에게 요청해보자.</li>
@@ -850,7 +850,7 @@ for rank, (name, value) in enumerate(ranked_suspects, start=1):
   </section>
 
   <section class="block">
-    <h2>🔜 다음 차시 예고</h2>
+    <h2>다음 차시 예고</h2>
     <div class="callout concept">
       <b class="tag">9차시 예고</b>
       다음 차시에는 새 데이터로 온도·진공도 같은 공정 값을 특징(Feature)으로 삼아 합격/불합격을
@@ -861,7 +861,7 @@ for rank, (name, value) in enumerate(ranked_suspects, start=1):
 
   <div class="nav-buttons">
     <a href="../week07/index.html">← 이전 차시: 7차시</a>
-    <a class="home" href="../../index.html">🏠 전체 목차</a>
+    <a class="home" href="../../index.html">전체 목차</a>
     <a href="../week09/index.html">다음 차시: 9차시 →</a>
   </div>
 

@@ -1,4 +1,4 @@
-# 디자인 시스템 — FabMetric Telemetry
+# 디자인 시스템 — FabMetric Datasheet
 
 `assets/css/common.css`가 정의하는 공통 디자인 토큰·컴포넌트와, 다른 차시/`worksheet.html`로 새
 디자인을 롤아웃할 때 따라야 할 절차를 정리한다. 배경: `stitch-reference/`의 목업(`DESIGN.md`,
@@ -10,25 +10,44 @@
    stitch 구성(탭 스트립, 대시보드형 미리보기 카드, 아웃컴 카드, 스탯 패널 등)에 맞춰 다시 짰다.
    아래 "재사용 가능한 컴포넌트" 목록은 이 2단계에서 추가된 것들이다.
 
+## 3단계 — 데이터시트 스킨 (2026-09-27)
+
+"AI가 만든 티"(Tailwind 기본색·그라데이션·둥근 카드·다색 강조)를 걷어내기 위해 시안 3종(교재형·데이터시트형·미니멀형,
+`_workspace/design/`)을 비교한 뒤 **데이터시트형**으로 확정했다. 원칙:
+
+- **직각 모서리 · 1px 선 · 모노스페이스 라벨.** 히어로는 모눈종이 배경 + 먹색 테두리.
+- **강조색 1개(계측 청록).** `--blue`/`--cyan`은 청록, `--purple`(실습·도전)은 먹색 계열이다.
+  변수 이름은 기존 마크업 호환을 위해 유지한다. 의미색(초록·주황·빨강)은 채도만 낮춰 유지.
+- **그림자와 hover 떠오름 효과는 유지한다**(사용자 요청). 그라데이션·떠다니는 원 장식은 제거.
+- **섹션 자동 번호**(`01`, `02`…)는 강의 페이지·랜딩에만 붙는다(`body:has(#progressFill, .tab-strip)`).
+  실습지는 제목에 "1." 번호가 이미 있어 붙이지 않는다.
+- **인쇄**: 어두운 배경 + 흰 글자 요소(표 머리글, 번호 배지 등)는 `print.css`에서 흰 배경 + 검은 선으로 바꾼다.
+- **폰트**: IBM Plex Sans KR / IBM Plex Mono를 `common.css` 첫 줄 `@import`로 불러온다(모든 페이지 공통).
+- **캡션**: `.img-caption`은 그림과 `.9rem` 간격을 둔다. 차시 HTML의 `<style>`에서 음수 margin으로 덮어쓰지 않는다.
+- **이모지 없음**: 제목·콜아웃 태그·버튼·SVG 라벨·목차에 이모지를 쓰지 않는다(전 차시 일괄 제거). 예외는 코드 블록 안의
+  출력 문자열과, 프롬프트 내용 자체가 "~ 이모지를 붙여줘"인 경우.
+- **실습지 접기**: 정답(`.answer-box`)과 체크포인트 해설(`.callout.answer-box`)은 기본으로 접혀 있고 `.reveal-btn`으로 연다.
+  인쇄할 때는 `print.css`가 모두 펼친다.
+
 ## 토큰 목록 (`assets/css/common.css` `:root`)
 
 | 변수 | 값 | 용도 |
 |---|---|---|
-| `--blue` / `--blue-bg` / `--blue-line` / `--blue-hover` | `#2563eb` / `#eff6ff` / `#bfdbfe` / `#1d4ed8` | 개념/주요 액션 |
-| `--green` / `--green-bg` / `--green-line` | `#10b981` / `#ecfdf5` / `#a7f3d0` | 정상/합격/성공 |
-| `--orange` / `--orange-bg` / `--orange-line` | `#f59e0b` / `#fffbeb` / `#fde68a` | 주의/확인 필요 |
-| `--red` / `--red-bg` / `--red-line` | `#ef4444` / `#fef2f2` / `#fecaca` | 이상/불량/오류 |
-| `--purple` / `--purple-bg` / `--purple-line` | `#7c3aed` / `#faf5ff` / `#e9d5ff` | 실습/도전 |
-| `--cyan` / `--cyan-bg` / `--cyan-line` | `#06b6d4` / `#ecfeff` / `#a5f3fc` | 텔레메트리 보조 강조(필요할 때만) |
-| `--ink` | `#0f172a` | 본문/제목 색 |
-| `--muted` | `#64748b` | 보조 텍스트 |
-| `--on-dark` / `--on-dark-muted` | `#e2e8f0` / `#94a3b8` | 다크 배경 위의 본문/보조 텍스트용(현재 미사용, 향후 다크 카드 추가 시 재사용) |
-| `--bg` / `--card` / `--line` | `#f8fafc` / `#ffffff` / `#e2e8f0` | 배경/카드/테두리 |
-| `--radius` / `--radius-sm` / `--radius-xs` | `16px` / `10px` / `6px` | 카드 / 버튼·입력 / 배지·칩 |
-| `--shadow-card` / `--shadow-card-hover` | (common.css 참고) | 카드 기본/hover 그림자(`.telemetry-card` 포함) |
-| `--shadow-glow-cyan` | (common.css 참고) | 다크 배경 위 hover 강조용(현재 미사용) |
-| `--font` | Inter 우선, Pretendard/맑은고딕/Noto Sans KR 폴백 | 본문 폰트 |
-| `--font-mono` | JetBrains Mono 우선, Consolas/D2Coding 폴백 | 코드/수치 폰트 |
+| `--blue` / `--blue-bg` / `--blue-line` / `--blue-hover` | `#0b6e69` / `#e8f3f2` / `#b7d6d3` / `#08524e` | 강조색(청록) — 개념·주요 액션·번호 배지 |
+| `--green` / `--green-bg` / `--green-line` | `#1f7a44` / `#edf6f0` / `#bfdcc9` | 정상/합격/성공 |
+| `--orange` / `--orange-bg` / `--orange-line` | `#b25e09` / `#fbf3e8` / `#ecd1ad` | 주의/확인 필요 |
+| `--red` / `--red-bg` / `--red-line` | `#b42318` / `#fdf0ef` / `#f1c5c0` | 이상/불량/오류 |
+| `--purple` / `--purple-bg` / `--purple-line` | `#1f2933` / `#f3f4f6` / `#d4d8dd` | 실습/도전(먹색 계열) · 옅은 회색 면 |
+| `--cyan` / `--cyan-bg` / `--cyan-line` | `--blue`와 같은 값 | 호환용(새 강조색을 만들지 않는다) |
+| `--ink` | `#111827` | 본문/제목, 먹색 테두리·버튼 |
+| `--muted` | `#5b6472` | 보조 텍스트 |
+| `--on-dark` / `--on-dark-muted` | `#e5e7eb` / `#aab3bf` | 다크 배경(CTA 배너 등) 위 텍스트 |
+| `--bg` / `--card` / `--line` / `--grid` | `#ffffff` / `#ffffff` / `#d9dde3` / `#eef0f3` | 배경/카드/테두리/모눈선 |
+| `--radius` / `--radius-sm` / `--radius-xs` | `0px` / `0px` / `0px` | 직각 모서리(변수는 유지) |
+| `--shadow-card` / `--shadow-card-hover` | (common.css 참고) | 카드 기본/hover 그림자 — 유지 |
+| `--shadow-glow-cyan` | (common.css 참고) | 현재 미사용 |
+| `--font` | IBM Plex Sans KR 우선, Pretendard/맑은고딕/Noto Sans KR 폴백 | 본문 폰트 |
+| `--font-mono` | IBM Plex Mono 우선, Consolas/D2Coding 폴백 | 코드·수치·라벨 폰트 |
 | `--maxw` | `1180px` | 페이지 본문 최대 폭 |
 
 ## 재사용 가능한 컴포넌트 (2단계에서 추가, `common.css`)
