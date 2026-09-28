@@ -120,7 +120,7 @@
       <div class="code-label"><span>Python — 아주 간단한 if</span><button class="copy-btn">복사</button></div>
       <pre><code>age = 20
 
-if age >= 18:
+if age &gt;= 18:
     print("성인입니다.")</code></pre>
     </div>
     <div class="callout success">
@@ -132,7 +132,7 @@ if age >= 18:
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>temperature = 312.6
 
-if temperature > 305:
+if temperature &gt; 305:
     print("온도가 너무 높습니다!")</code></pre>
     </div>
     <div class="callout success">
@@ -153,7 +153,7 @@ if temperature > 305:
       <div class="code-label"><span>Python — 아주 간단한 if/else</span><button class="copy-btn">복사</button></div>
       <pre><code>age = 15
 
-if age >= 18:
+if age &gt;= 18:
     print("성인입니다.")
 else:
     print("미성년자입니다.")</code></pre>
@@ -167,7 +167,7 @@ else:
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>temperature = 301.0
 
-if temperature > 305 or temperature < 295:
+if temperature &gt; 305 or temperature &lt; 295:
     print("비정상 범위입니다.")
 else:
     print("정상 범위입니다.")</code></pre>
@@ -214,11 +214,11 @@ else:
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>score = 75
 
-if score >= 90:
+if score &gt;= 90:
     grade = "A"
-elif score >= 80:
+elif score &gt;= 80:
     grade = "B"
-elif score >= 70:
+elif score &gt;= 70:
     grade = "C"
 else:
     grade = "D"
@@ -239,6 +239,7 @@ print(f"점수 {score}는 {grade}등급입니다.")</code></pre>
     <div class="callout practice">
       <b class="tag">직접 해보기</b>
       <code>score</code>를 65로 바꿔서 다시 실행해보자. 어떤 등급이 나오는가?
+      (노트북 2단계 '직접 해보기' 셀)
     </div>
     <div class="code-block">
       <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
@@ -314,7 +315,7 @@ for temp in temperatures:
       <pre><code>normal_count = 0
 
 for temp in temperatures:
-    if 295 <= temp <= 305:
+    if 295 &lt;= temp &lt;= 305:
         normal_count += 1     # normal_count = normal_count + 1 과 같은 뜻
 
 print(f"정상 범위인 값은 {normal_count}개입니다.")</code></pre>
@@ -367,7 +368,7 @@ EQ-03 297.5</pre>
       <pre><code>hot_equipment = []   # 2차시에서 배운 빈 리스트 + append() 조합
 
 for eq in equipment_list:
-    if eq["온도_섭씨"] > 305:
+    if eq["온도_섭씨"] &gt; 305:
         hot_equipment.append(eq["설비번호"])
 
 print(f"온도가 305도를 넘는 설비: {hot_equipment}")</code></pre>
@@ -379,7 +380,7 @@ print(f"온도가 305도를 넘는 설비: {hot_equipment}")</code></pre>
     <div class="callout practice">
       <b class="tag">직접 해보기</b>
       조건을 <code>eq["온도_섭씨"] &lt; 300</code>으로 바꿔서, 온도가 300도 미만인 설비 목록을
-      만들어보자.
+      만들어보자. (노트북 5단계 '직접 해보기' 셀)
     </div>
   </section>
 
@@ -449,7 +450,7 @@ print(avg2)</code></pre>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>def judge_pass(temp):
-    if 295 <= temp <= 305:
+    if 295 &lt;= temp &lt;= 305:
         return "합격"
     else:
         return "불합격"
@@ -504,28 +505,28 @@ LOT-0103: 합격
     <h2>실습: 조건문·반복문·함수 따라 하기</h2>
     <div class="step">
       <div class="num">1</div>
-      <div class="content"><b>조건문 연습</b> — 온도 하나를 변수에 저장하고 <code>if</code>/<code>else</code>로
-      정상/비정상을 판정해본다. (노트북 1단계)</div>
+      <div class="content"><b>조건문 연습</b> — 온도 하나를 변수에 저장해 <code>if</code>로 고온인지 확인하고,
+      <code>if</code>/<code>else</code>로 정상/비정상까지 나눠본다. (노트북 1단계 — 앞부분에 나이 예제)</div>
     </div>
     <div class="step">
       <div class="num">2</div>
-      <div class="content"><b>if/elif/else 연습</b> — 점수 등급 예제를 나만의 기준으로 바꿔 실행해본다.
-      (노트북 2단계)</div>
+      <div class="content"><b>if/elif/else 연습</b> — 점수 등급 예제를 실행하고, 점수를 바꿔 다시 실행해본다.
+      (노트북 2단계 — 뒷부분에 '직접 해보기' 셀)</div>
     </div>
     <div class="step">
       <div class="num">3</div>
       <div class="content"><b>for로 리스트 순회</b> — <code>temperatures</code> 리스트를 <code>for</code>로
-      출력하고, <code>if</code>를 추가해 정상 개수를 세어본다. (노트북 3~4단계)</div>
+      출력하고, <code>if</code>를 추가해 정상 개수를 세어본다. (노트북 3~4단계 — 3단계 앞부분에 과일 예제)</div>
     </div>
     <div class="step">
       <div class="num">4</div>
       <div class="content"><b>딕셔너리의 리스트 필터링</b> — <code>equipment_list</code>에서 조건에
-      맞는 설비만 새 리스트로 골라낸다. (노트북 5단계)</div>
+      맞는 설비만 새 리스트로 골라낸다. (노트북 5단계 — 뒷부분에 '직접 해보기' 셀)</div>
     </div>
     <div class="step">
       <div class="num">5</div>
       <div class="content"><b>함수 만들기</b> — <code>calculate_average</code>와 <code>judge_pass</code>
-      함수를 직접 정의하고 호출해본다. (노트북 6~7단계)</div>
+      함수를 직접 정의하고 호출해본다. (노트북 6~7단계 — 6단계 앞부분에 <code>add_numbers</code> 예제)</div>
     </div>
     <div class="step">
       <div class="num">6</div>
@@ -535,7 +536,7 @@ LOT-0103: 합격
     </div>
     <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 9~13단계(오늘의 학습을 한 문장으로 정리 ·
     AI에게 질문하기 · AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로
-    마무리한다.</p>
+    마무리한다. 빨리 끝낸 사람은 노트북 9단계 뒷부분의 '도전 문제' 셀(아래 "도전 실습" 절)에 도전해보자.</p>
   </section>
 
   <section class="block">
@@ -625,13 +626,16 @@ LOT-0103: 합격
       <b class="tag">도전 문제 1</b>
       <code>lots</code> 리스트를 순회하며, 합격/불합격 개수를 각각 세는 <code>pass_count</code>,
       <code>fail_count</code> 두 변수를 동시에 누적해보자. 마지막에 합격률(%)도 f-string으로
-      출력해보자.
+      출력해보자. (노트북 9단계 '도전 문제 1' 셀)
     </div>
     <div class="callout practice">
       <b class="tag">도전 문제 2</b>
       매개변수를 3개 받는 함수 <code>judge_range(value, low, high)</code>를 만들어, 정상 범위를
       온도(295~305)뿐 아니라 압력 등 다른 값에도 재사용할 수 있게 만들어보자.
+      (노트북 9단계 '도전 문제 2' 셀)
     </div>
+    <p style="color:var(--muted);font-size:.9rem;">학생용 노트북의 도전 문제 셀은 코드 일부가 빈칸(<code>____</code>)으로
+    가려져 있다. 빈칸에 들어갈 내용은 모두 이 강의 자료 본문에 나오므로, 셀 바로 아래 "참고"가 알려주는 절을 다시 보며 채워보자.</p>
   </section>
 
   <section class="block">
@@ -655,7 +659,7 @@ LOT-0103: 합격
       <div class="q">Q2. (참/거짓) <code>for temp in temperatures:</code>에서 <code>temp</code>라는
       이름은 반드시 <code>temperatures</code>와 관련된 이름이어야 한다.</div>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 거짓. <code>temp</code>는 그냥 변수 이름이므로 <code>x</code>,
+      <div class="answer-box">정답: 거짓. <code>temp</code>는 값을 잠시 담는 변수 이름일 뿐이므로 <code>x</code>,
       <code>t</code> 등 어떤 이름을 써도 동작은 같다. 다만 읽기 쉬운 이름을 쓰는 것이 좋은 습관이다.</div>
     </div>
 
@@ -728,7 +732,7 @@ LOT-0103: 합격
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
-      <pre><code>lots = [
+      <pre><code>sample_lots = [
     {"로트번호": "LOT-0101", "온도_섭씨": 299.5},
     {"로트번호": "LOT-0102", "온도_섭씨": 306.2},
     {"로트번호": "LOT-0103", "온도_섭씨": 301.0},
@@ -737,13 +741,13 @@ LOT-0103: 합격
 def count_results(lots):
     counts = {"합격": 0, "불합격": 0}
     for lot in lots:
-        if 295 <= lot["온도_섭씨"] <= 305:
+        if 295 &lt;= lot["온도_섭씨"] &lt;= 305:
             counts["합격"] += 1
         else:
             counts["불합격"] += 1
     return counts
 
-print(count_results(lots))</code></pre>
+print(count_results(sample_lots))</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
@@ -755,6 +759,8 @@ print(count_results(lots))</code></pre>
         <li>함수가 딕셔너리를 반환하는 방식은 오늘 배운 것과 같은 원리다 — 결과를 <code>print()</code>
           바로 하지 않고 변수에 저장한 뒤 필요한 값만 꺼내 써도 된다.</li>
         <li>AI가 만든 코드도 직접 실행해서 내가 기대한 결과가 맞는지 확인해야 한다.</li>
+        <li>위 예시는 목록 이름을 <code>sample_lots</code>로 지어, 종합 실습에서 만든 <code>lots</code>를 덮어쓰지 않는다.
+          AI 코드를 내 노트북에 붙여넣을 때는 이미 쓰고 있는 변수 이름과 겹치지 않는지 먼저 살펴보자.</li>
         <li>리스트 컴프리헨션처럼 압축된 코드는 처음엔 읽기 어렵다 — 익숙해지기 전까지는
           오늘 배운 <code>for</code>+<code>if</code> 방식으로 풀어 써도 전혀 문제없다.</li>
       </ul>
@@ -780,9 +786,9 @@ print(count_results(lots))</code></pre>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">
       <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">def classify_temp(temp):
-    if temp > 305:
+    if temp &gt; 305:
         return "위험"
-    elif 295 <= temp <= 305:
+    elif 295 &lt;= temp &lt;= 305:
         return "정상"
     else:
         return "주의"

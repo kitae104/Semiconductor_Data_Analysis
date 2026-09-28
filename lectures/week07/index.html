@@ -243,15 +243,21 @@ lot_summary["수율_pct"] = (lot_summary["양품수량"] / lot_summary["검사�
 
 print(lot_summary.head())</code></pre>
     </div>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>로트번호</th><th>설비번호</th><th>검사수량</th><th>양품수량</th><th>수율_pct</th></tr>
-        <tr><td>LOT-0001</td><td>EQ-01</td><td>4</td><td>4</td><td>100.0</td></tr>
-        <tr><td>LOT-0005</td><td>EQ-04</td><td>4</td><td>4</td><td>100.0</td></tr>
-        <tr><td>LOT-0006</td><td>EQ-04</td><td>4</td><td>3</td><td>75.0</td></tr>
-        <tr><td>LOT-0008</td><td>EQ-04</td><td>4</td><td>0</td><td>0.0</td></tr>
-      </table>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">           설비번호  검사수량  양품수량  수율_pct
+로트번호
+LOT-0001  EQ-01     4     4   100.0
+LOT-0002  EQ-01     4     4   100.0
+LOT-0003  EQ-01     4     4   100.0
+LOT-0004  EQ-01     4     4   100.0
+LOT-0005  EQ-04     4     4   100.0</pre>
     </div>
+    <ul class="pt-list">
+      <li><code>head()</code>는 앞 5개 로트만 보여주는데, 이 5개는 모두 수율 100.0이다. 수율이 낮은 로트
+        (예: LOT-0006은 웨이퍼 4장 중 3장 양품 75.0%, LOT-0008은 웨이퍼 4장 중 0장 양품 0.0%)는 뒤쪽에 있어 여기에는
+        보이지 않는다 — 아래 "저수율 로트 찾기"에서 조건으로 골라낸다.</li>
+    </ul>
     <div class="callout warn">
       <b class="tag">주의 — 단순 평균과 다르다</b>
       "전체 합격률"은 300건 전체를 한 번에 나눈 값이지만, "로트별 수율"은 로트 하나하나를 따로
@@ -259,7 +265,7 @@ print(lot_summary.head())</code></pre>
       합격률만 봐서는 놓칠 수 있다.
     </div>
     <div class="callout warn">
-      <b class="tag">체크포인트 — 로트별 수율을 그냥 평균 내면 안 될 수 있다</b>
+      <b class="tag">체크포인트 — 로트별 수율을 단순 평균 내면 안 될 수 있다</b>
       <code>lot_summary["수율_pct"].mean()</code>처럼 로트별 수율(%)을 단순히 평균 내면, 로트마다
       웨이퍼 수가 다를 경우 실제 전체 수율과 다른 값이 나올 수 있다(웨이퍼가 적은 로트와 많은
       로트를 "똑같이 1표씩" 취급하기 때문). 이번 데이터는 로트마다 웨이퍼가 4장으로 같아 크게
@@ -269,14 +275,14 @@ print(lot_summary.head())</code></pre>
 
     <div class="code-block">
       <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>'로트별 수율을 그냥 평균 내는 것'과 '양품 합계÷검사 합계로 계산하는 것'의 차이에 대해 초보자용 OX 퀴즈 3문제를 내줘. 정답은 내가 답을 말한 다음에 해설과 함께 알려줘.</code></pre>
+      <pre style="white-space:pre-wrap;"><code>'로트별 수율을 단순 평균 내는 것'과 '양품 합계÷검사 합계로 계산하는 것'의 차이에 대해 초보자용 OX 퀴즈 3문제를 내줘. 정답은 내가 답을 말한 다음에 해설과 함께 알려줘.</code></pre>
     </div>
     <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 해설에 "로트마다 크기가 다를 때" 예시가 나오면 계산기로 두 값을 직접 구해 정말 다른지 확인하자.</p>
 
     <h3>저수율 로트 찾기</h3>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>low_yield_lots = lot_summary[lot_summary["수율_pct"] < 80]
+      <pre><code>low_yield_lots = lot_summary[lot_summary["수율_pct"] &lt; 80]
 print(len(low_yield_lots), "개 로트가 수율 80% 미만")
 print(low_yield_lots["설비번호"].value_counts())</code></pre>
     </div>
@@ -343,7 +349,7 @@ Name: count, dtype: int64</pre>
     <div class="step">
       <div class="num">2</div>
       <div class="content"><b>설비별 평균·합격률</b> — <code>groupby("설비번호")</code>로 평균
-      온도와 합격률을 계산한다. (노트북 1~2단계)</div>
+      온도와 합격률을 계산한다. (노트북 1~2단계 — 1단계 앞부분에 "반별 평균 점수" 예제 두 셀이 먼저 나온다)</div>
     </div>
     <div class="step">
       <div class="num">3</div>
@@ -367,7 +373,7 @@ Name: count, dtype: int64</pre>
     </div>
     <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 7~11단계(오늘의 학습을 한 문장으로 정리 ·
     AI에게 질문하기 · AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로
-    마무리한다.</p>
+    마무리한다. 빠른 학습자는 7단계 안의 "도전 문제 1" 셀(아래 "도전 실습"의 설비×작업조 합격률)도 풀어 본다.</p>
   </section>
 
   <section class="block">
@@ -437,6 +443,7 @@ Name: count, dtype: int64</pre>
       <code>df.groupby(["설비번호", "작업조"])["합격여부"].apply(lambda s: (s==1).mean()*100)</code>처럼
       설비와 작업조 <b>두 기준</b>을 동시에 그룹화해보자. 특정 설비+작업조 조합이 유독 낮은
       합격률을 보이는지 확인해본다.
+      (노트북 7단계 "도전 문제 1" 셀 — 학생용은 빈칸 두 곳을 채운다)
     </div>
   </section>
 
@@ -525,10 +532,10 @@ Name: count, dtype: int64</pre>
       <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-pass_rate = pd.Series({"EQ-01": 98.1, "EQ-02": 86.5, "EQ-03": 91.1, "EQ-04": 75.0})
+sample_rate = pd.Series({"EQ-01": 98.1, "EQ-02": 86.5, "EQ-03": 91.1, "EQ-04": 75.0})
 
-for eq, rate in pass_rate.items():
-    if rate < 90:
+for eq, rate in sample_rate.items():
+    if rate &lt; 90:
         print(f"⚠️ {eq} 합격률 {rate:.1f}% → 점검 필요")
     else:
         print(f"✅ {eq} 합격률 {rate:.1f}% → 정상")</code></pre>
@@ -549,6 +556,10 @@ for eq, rate in pass_rate.items():
         <li>AI가 만든 코드도 직접 실행해서 내가 기대한 결과가 맞는지 확인해야 한다.</li>
         <li>기준값(90%)은 AI가 임의로 정한 것일 수 있다 — 실제 공정 기준은 반드시 담당자와
           확인해야 한다.</li>
+        <li>위 예시는 합격률을 직접 적은 표에 <code>sample_rate</code>라는 새 이름을 붙여서, 앞에서 계산한
+          <code>pass_rate</code>를 건드리지 않는다. AI 코드가 <code>pass_rate = pd.Series({...})</code>처럼 같은 이름에
+          새 값을 넣으면 오늘 계산한 합격률이 덮어써져, 아래 미니 프로그램이 계산값이 아닌 직접 적은 값으로
+          순위를 매기게 된다 — 이름을 바꿔 실행하고, 이미 덮어썼다면 합격률 계산 셀을 다시 실행하자.</li>
       </ul>
     </div>
   </section>
@@ -591,7 +602,7 @@ medals = ["🥇", "🥈", "🥉"]
 
 print("🏆 설비 합격률 랭킹 발표 🏆")
 for i, (name, rate) in enumerate(ranked.items()):
-    medal = medals[i] if i < 3 else "  "
+    medal = medals[i] if i &lt; 3 else "  "
     print(f"{medal} {i+1}위: {name} — 합격률 {rate:.1f}%")</code></pre>
     </div>
     <div class="callout success">

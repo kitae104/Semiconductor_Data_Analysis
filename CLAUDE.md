@@ -58,3 +58,4 @@ python .claude/skills/course-consistency-audit/scripts/check_course_consistency.
 | 2026-09-27 | 디자인 시스템을 FabMetric Datasheet로 교체, 스킬의 토큰 표를 `docs/design-system.md` 참조로 대체 | skills/design-system-rollout, docs/design-system.md | AI 생성 느낌 제거 요청 → 시안 3종 비교 후 데이터시트형 확정. 토큰 값이 스킬과 문서 두 곳에 복제돼 있어 한쪽만 갱신될 위험이 있었다 |
 | 2026-09-27 | 섹션 템플릿·콜아웃 예시에서 이모지 제거, "제목·태그·버튼에 이모지 금지" 규칙 추가 | skills/lecture-material-authoring, skills/curriculum-spec | 전 차시 이모지 일괄 제거 후 템플릿이 이모지를 다시 들여오지 않게 하기 위함 |
 | 2026-09-27 | 실습지 체크포인트 해설을 접는 규칙(`reveal-btn` + `callout … answer-box`) 추가 | skills/lecture-material-authoring | 심화 문제 바로 아래 체크포인트가 결과("결과는 3건이다" 등)를 먼저 보여줘 학생이 풀기 전에 답을 보게 됐다 |
+| 2026-09-28 | "노트북이 원본" → "강의 HTML이 기준"으로 전환. 노트북 셀 출력 단위 분할·셀마다 초보자 주석·도전 문제(강의 본문 근거 빈칸 + 참고 셀)·seed/한글 폰트·빌드 스크립트 재생성·`git checkout -- notebooks/` 금지 규칙 추가 | skills/notebook-authoring, skills/course-build | 전 차시 강의↔노트북 일치화 작업에서 사용자가 기준을 강의 HTML로 지정. 작업 중 되돌리기 명령으로 30개 노트북이 초기화되는 사고가 있었다 |

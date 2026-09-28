@@ -328,9 +328,9 @@ print(df.shape)</code></pre>
     </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>hot_outlier = df[df["온도_섭씨"] > 400]
-neg_pressure = df[df["압력_Pa"] < 0]
-bad_gas = df[(df["가스유량_slm"] < 0) | (df["가스유량_slm"] >= 200)]
+      <pre><code>hot_outlier = df[df["온도_섭씨"] &gt; 400]
+neg_pressure = df[df["압력_Pa"] &lt; 0]
+bad_gas = df[(df["가스유량_slm"] &lt; 0) | (df["가스유량_slm"] &gt;= 200)]
 
 print("고온 이상값:", len(hot_outlier), "건")
 print("음수 압력:", len(neg_pressure), "건")
@@ -346,12 +346,13 @@ print("비정상 가스유량:", len(bad_gas), "건")</code></pre>
       <b class="tag">직접 해보기</b>
       <code>df["공정명"].unique()</code>를 실행해 공정명 열에 어떤 값들이 있는지 확인해보자.
       <code>중착</code>, <code>포토공정</code>처럼 오타가 섞여 있는 것이 보이는가?
+      (노트북 4단계 "직접 해보기" 셀)
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — 이상값 제거</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = df[df["온도_섭씨"] <= 400]
-df = df[df["압력_Pa"] >= 0]
-df = df[(df["가스유량_slm"] >= 0) & (df["가스유량_slm"] < 200)]
+      <pre><code>df = df[df["온도_섭씨"] &lt;= 400]
+df = df[df["압력_Pa"] &gt;= 0]
+df = df[(df["가스유량_slm"] &gt;= 0) &amp; (df["가스유량_slm"] &lt; 200)]
 
 print(df.shape)</code></pre>
     </div>
@@ -371,14 +372,24 @@ print(df.shape)</code></pre>
     </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — loc로 값 정정</span><button class="copy-btn">복사</button></div>
-      <pre><code># (위에서 이미 400도 초과 행을 지웠다면 바꿀 값이 없다 — 원본을 다시 읽어
-#  df = pd.read_csv("week05_dirty_process_data.csv") 한 뒤 시험해보자)
+      <pre><code># 위에서 이미 400도 초과 행을 지운 df에는 바꿀 값이 없다.
+# 그래서 원본을 sample_df라는 새 이름으로 다시 읽어 시험한다(정제 중인 df는 그대로 둔다).
+sample_df = pd.read_csv("week05_dirty_process_data.csv")
+
 # 온도가 400도를 넘는 행만, 온도_섭씨 값만 중앙값으로 바꾼다(행은 남긴다)
-df.loc[df["온도_섭씨"] > 400, "온도_섭씨"] = df["온도_섭씨"].median()</code></pre>
+sample_df.loc[sample_df["온도_섭씨"] &gt; 400, "온도_섭씨"] = sample_df["온도_섭씨"].median()
+print("400도 초과:", (sample_df["온도_섭씨"] &gt; 400).sum(), "건 / 행 개수:", len(sample_df))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">400도 초과: 0 건 / 행 개수: 113</pre>
     </div>
     <div class="explain-list">
       <b>동작 원리</b>
       <ul>
+        <li>원본을 <code>df</code>가 아니라 <code>sample_df</code>라는 새 이름으로 읽었다. 같은 이름
+        <code>df</code>에 다시 읽으면 지금까지 정제한 결과가 원본으로 덮여, 아래 "정제 전후 비교하기"가
+        102행이 아니라 113행 기준으로 계산된다.</li>
         <li><code>df.loc[조건, "열이름"]</code>은 조건에 맞는 행의 그 열만 콕 집어 가리킨다.</li>
         <li>지금까지는 조건 검색으로 데이터를 "읽기"만 했다면, <code>df.loc[조건, 열] = 값</code>은
         골라낸 칸에만 새 값을 "쓰는(수정하는)" 것이다 — 다른 칸과 다른 열은 전혀 바뀌지 않는다.</li>
@@ -410,7 +421,7 @@ df.loc[df["온도_섭씨"] > 400, "온도_섭씨"] = df["온도_섭씨"].median(
     <h2>정제 전후 비교하기</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(f"정제 전 평균 온도: {304.9:.1f}도 (113행)")   # 정제 전 값(위에서 미리 계산)
+      <pre><code>print("정제 전 평균 온도: 304.9도 (113행)")   # 정제 전 값(위 describe()의 온도_섭씨 mean을 옮겨 적음)
 print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}행)")</code></pre>
     </div>
     <div class="callout success">
@@ -423,6 +434,8 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
       정제 전후 평균 온도가 약 4.3도 차이 난다. 500도가 넘는 극단 고온 이상값 2건이 정제 전
       평균을 실제보다 높게 끌어올렸기 때문이다 — "이상값 하나가 전체 평균을 왜곡할 수 있다"는
       것을 보여주는 좋은 예다.
+      정제 전 값 304.9는 <code>describe()</code>의 온도_섭씨 <code>mean</code>(304.94)을 옮겨 적은 것으로,
+      113행 중 결측 3칸을 뺀 110개 값의 평균이다(<code>mean()</code>은 빈칸을 빼고 계산한다).
     </div>
   </section>
 
@@ -437,7 +450,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
     <div class="step">
       <div class="num">2</div>
       <div class="content"><b>결측값 확인</b> — <code>isna().sum()</code>으로 열별 결측 개수를
-      확인한다. (노트북 1단계)</div>
+      확인한다. (노트북 1단계 — 앞부분에 "아주 작은 표로 미리 보기"와 <code>describe()</code> 셀이 먼저 나온다)</div>
     </div>
     <div class="step">
       <div class="num">3</div>
@@ -452,7 +465,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
     <div class="step">
       <div class="num">5</div>
       <div class="content"><b>이상값 찾기·제거</b> — 조건 검색으로 고온·음수 압력·비정상
-      가스유량을 찾아 제거한다. (노트북 4~5단계)</div>
+      가스유량을 찾아 제거한다. (노트북 4~5단계 — 4단계 "직접 해보기", 5단계 "참고 — loc"·"체크포인트" 셀 포함)</div>
     </div>
     <div class="step">
       <div class="num">6</div>
@@ -461,7 +474,7 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
     </div>
     <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 7~11단계(오늘의 학습을 한 문장으로 정리 ·
     AI에게 질문하기 · AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로
-    마무리한다.</p>
+    마무리한다. 빠른 학습자는 7단계 안의 "도전 문제 1·2" 셀(아래 "도전 실습")도 풀어 본다.</p>
   </section>
 
   <section class="block">
@@ -538,7 +551,8 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
       <b class="tag">도전 문제 1</b>
       <code>df["공정명"].unique()</code>로 찾은 오타(<code>중착</code>, <code>포토공정</code>,
       공백이 붙은 <code>식각 </code>)를 <code>str.strip()</code>과 <code>replace()</code>로
-      통일해보자.
+      통일해보자.<br>
+      (노트북 7단계 "도전 문제 1" 셀 — 공백 지우기와 오타 바꾸기를 두 셀로 나눠 중간 결과를 본다)
     </div>
     <div class="callout practice">
       <b class="tag">도전 문제 2</b>
@@ -549,8 +563,10 @@ print(f"정제 후 평균 온도: {df['온도_섭씨'].mean():.1f}도 ({len(df)}
       <b>1건</b>뿐이다.<br>
       ② 왜 1건만 나올까? 나머지 1건인 <code>03-05-2024 10:00</code>은 정상값과 글자 수가
       똑같이 16자라서 길이로는 걸러지지 않는다. 대신 <b>5번째 글자가 <code>-</code>인지</b>를
-      보면 된다: <code>df[df["측정시간"].str[4] != "-"]</code>. 이렇게 하면 <b>2건</b> 모두
-      잡힌다.
+      보면 된다: <code>df[df["측정시간"].str[4] != "-"]</code>(파이썬은 글자 위치를 0부터 세므로
+      5번째 글자는 위치 4다). 이렇게 하면 <b>2건</b> 모두
+      잡힌다.<br>
+      (노트북 7단계 "도전 문제 2" 셀 — ①과 ②를 한 셀씩 실행한다)
     </div>
     <div class="callout concept">
       <b class="tag">여기서 얻어갈 것</b>
@@ -652,7 +668,7 @@ q1, q3 = temps.quantile(0.25), temps.quantile(0.75)
 iqr = q3 - q1
 lower, upper = q1 - 1.5 * iqr, q3 + 1.5 * iqr
 
-outliers = temps[(temps < lower) | (temps > upper)]
+outliers = temps[(temps &lt; lower) | (temps &gt; upper)]
 print(outliers)</code></pre>
     </div>
     <div class="callout success">

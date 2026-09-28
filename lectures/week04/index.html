@@ -259,14 +259,16 @@ print(fail.shape)</code></pre>
     </div>
     <div class="tablewrap">
       <table class="data-preview">
-        <tr><th>로트번호</th><th>설비번호</th><th>온도_섭씨</th><th>합격여부</th></tr>
-        <tr><td>LOT-0324</td><td>EQ-03</td><td>310.1</td><td>1</td></tr>
-        <tr><td>LOT-0089</td><td>EQ-03</td><td>308.6</td><td>1</td></tr>
-        <tr><td>LOT-0159</td><td>EQ-01</td><td>308.4</td><td>1</td></tr>
-        <tr><td>LOT-0174</td><td>EQ-04</td><td>308.4</td><td>1</td></tr>
-        <tr><td>LOT-0192</td><td>EQ-04</td><td>308.2</td><td>-1</td></tr>
+        <tr><th></th><th>측정시간</th><th>로트번호</th><th>설비번호</th><th>공정명</th><th>온도_섭씨</th><th>압력_Pa</th><th>가스유량_slm</th><th>합격여부</th></tr>
+        <tr><td>30</td><td>2024-03-11 18:00</td><td>LOT-0324</td><td>EQ-03</td><td>포토</td><td>310.1</td><td>1010.0</td><td>51.55</td><td>1</td></tr>
+        <tr><td>15</td><td>2024-03-06 16:00</td><td>LOT-0089</td><td>EQ-03</td><td>증착</td><td>308.6</td><td>1006.8</td><td>51.56</td><td>1</td></tr>
+        <tr><td>57</td><td>2024-03-20 03:00</td><td>LOT-0159</td><td>EQ-01</td><td>증착</td><td>308.4</td><td>1014.4</td><td>51.59</td><td>1</td></tr>
+        <tr><td>40</td><td>2024-03-13 15:00</td><td>LOT-0174</td><td>EQ-04</td><td>증착</td><td>308.4</td><td>1008.8</td><td>49.92</td><td>1</td></tr>
+        <tr><td>11</td><td>2024-03-05 12:00</td><td>LOT-0192</td><td>EQ-04</td><td>증착</td><td>308.2</td><td>1033.0</td><td>52.46</td><td>-1</td></tr>
       </table>
     </div>
+    <p>맨 왼쪽 숫자(30, 15, 57, 40, 11)는 원래 표에서의 행 번호(인덱스)다 — 정렬해도 행 번호는 원래
+    번호를 그대로 따라간다. 온도 상위 5건 중 4건이 합격(1), 1건만 불합격(-1)이다.</p>
     <div class="callout warn">
       <b class="tag">주의 — 기본값은 오름차순</b>
       <code>ascending</code>을 생략하면 기본값은 <code>True</code>(오름차순, 작은 값이 먼저)다.
@@ -303,11 +305,12 @@ print(eq02_view.head())</code></pre>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">297.6
-      로트번호  온도_섭씨  합격여부
-0  LOT-0141   297.6     1
-2  LOT-0156   296.9    -1
-3  LOT-0224   297.2     1
-...</pre>
+        로트번호  온도_섭씨  합격여부
+0   LOT-0141  297.6     1
+2   LOT-0156  296.9    -1
+3   LOT-0224  297.2     1
+8   LOT-0054  294.4     1
+14  LOT-0375  303.4     1</pre>
     </div>
     <div class="explain-list">
       <b>동작 원리</b>
@@ -330,6 +333,31 @@ print(df.iloc[0:3, 0:2])
 
 # 맨 마지막 행
 print(df.iloc[-1])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">측정시간        2024-03-01 21:00
+로트번호                LOT-0141
+설비번호                   EQ-02
+공정명                       산화
+온도_섭씨                  297.6
+압력_Pa                 1005.8
+가스유량_slm               50.02
+합격여부                       1
+Name: 0, dtype: object
+               측정시간      로트번호
+0  2024-03-01 21:00  LOT-0141
+1  2024-03-02 04:00  LOT-0122
+2  2024-03-02 08:00  LOT-0156
+측정시간        2024-04-02 22:00
+로트번호                LOT-0179
+설비번호                   EQ-03
+공정명                       증착
+온도_섭씨                  300.9
+압력_Pa                 1004.8
+가스유량_slm               46.42
+합격여부                       1
+Name: 99, dtype: object</pre>
     </div>
     <div class="callout warn">
       <b class="tag">주의 — loc과 iloc의 슬라이스 범위가 다르다</b>
@@ -432,11 +460,12 @@ EQ-02 불합격률: 20.0%</pre>
       <div class="num">6</div>
       <div class="content"><b>loc/iloc 연습</b> — <code>loc</code>으로 조건+열을 동시에 골라보고,
       <code>iloc</code>으로 앞에서 3개 행·2개 열을 잘라내며 둘의 차이를 직접 확인한다.
-      답을 구한 뒤 도구를 한 번 더 익히는 마무리 연습이다. (노트북 11단계)</div>
+      답을 구한 뒤 도구를 한 번 더 익히는 마무리 연습이다. (노트북 11단계 — 앞부분 "따라 해보기" 셀에서
+      위 loc/iloc 코드를 실행하고, 뒷부분 "직접 풀어보기" 셀에서 연습문제를 푼다)</div>
     </div>
     <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 8~10단계(오늘의 학습을 한 문장으로 정리 ·
     AI에게 질문하기 · AI에게 코드 생성 요청하기)와 12단계(AI로 재미있는 미니 프로그램 만들기)로
-    마무리한다.</p>
+    마무리한다. 빠른 학습자는 노트북 8단계 아래의 "도전 문제 1~4" 셀(아래 "도전 실습" 절)을 먼저 풀어도 된다.</p>
   </section>
 
   <section class="block">
@@ -503,7 +532,7 @@ EQ-02 불합격률: 20.0%</pre>
     <h2>데이터</h2>
     <ul class="pt-list">
       <li><code>data/weekly/week04/week04_process_filtering.csv</code></li>
-      <li>100행 8열 — EQ-02와 EQ-04에 불합격이 각각 5건으로 상대적으로 많다(비율은 EQ-02 20.0%, EQ-04 약 22.7%)</li>
+      <li>100행 8열 — EQ-02와 EQ-04에 불합격이 각각 5건으로 상대적으로 많다(비율은 EQ-02 20.0%, EQ-04 약 22.7%). 전체 불합격은 100건 중 13건(13.0%)이다</li>
       <li>자세한 설명: <a href="../../data/data_dictionary/week04_dictionary.md">데이터 설명서</a> 참고</li>
     </ul>
   </section>
@@ -558,9 +587,12 @@ EQ-02 불합격률: 20.0%</pre>
     <div class="callout practice">
       <b class="tag">도전 문제 4 — iloc</b>
       <code>df.iloc[-5:]</code>로 데이터의 마지막 5행을 확인하고,
-      <code>df.sort_values("측정시간").iloc[-5:]</code>와 비교해 두 결과가 왜 다른지(원본 순서
-      vs 정렬된 순서) 설명해보자.
+      <code>df.sort_values("온도_섭씨").iloc[-5:]</code>와 비교해 두 결과가 왜 다른지(원본 순서
+      vs 정렬된 순서) 설명해보자. 이 데이터는 이미 측정시간 순서로 저장돼 있어서
+      <code>df.sort_values("측정시간").iloc[-5:]</code>는 원본과 같은 결과가 나온다는 점도 확인해보자.
     </div>
+    <p>노트북에서는 8단계 아래 "도전 문제 1~4" 셀에서 풀 수 있다(학생용은 일부가 빈칸 <code>____</code>이고,
+    빈칸 뒤 "참고" 셀에 다시 볼 강의 절이 적혀 있다).</p>
   </section>
 
   <section class="block">
@@ -667,17 +699,17 @@ data = {
     "설비번호": ["EQ-01", "EQ-01", "EQ-02", "EQ-02", "EQ-02"],
     "합격여부": [1, -1, 1, 1, -1],
 }
-df = pd.DataFrame(data)
+sample_df = pd.DataFrame(data)
 
-summary = pd.crosstab(df["설비번호"], df["합격여부"])
+summary = pd.crosstab(sample_df["설비번호"], sample_df["합격여부"])
 print(summary)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">합격여부  -1  1
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">합격여부   -1   1
 설비번호
-EQ-01     1  1
-EQ-02     1  2</pre>
+EQ-01   1   1
+EQ-02   1   2</pre>
     </div>
     <div class="callout warn">
       <b class="tag">AI 코드를 다룰 때 꼭 지킬 점</b>
@@ -687,6 +719,10 @@ EQ-02     1  2</pre>
         <li>AI가 만든 코드도 직접 실행해서 내가 기대한 결과가 맞는지 확인해야 한다.</li>
         <li>열 이름이 오늘 쓴 데이터와 다르게 나올 수 있다 — <code>df.columns</code>로 실제 열
           이름을 먼저 확인하고 맞춰서 사용하자.</li>
+        <li>위 예시는 새 표 이름을 <code>sample_df</code>로 지어서, 앞에서 읽은 <code>df</code>(100행)를
+          건드리지 않는다. AI가 <code>df = pd.DataFrame(data)</code>처럼 같은 이름 <code>df</code>에 새 표를
+          저장하면 원래 데이터가 덮어써져 뒤의 연습문제에서 <code>KeyError: '온도_섭씨'</code>가 난다 —
+          이름을 바꿔 실행하고, 이미 덮어썼다면 <code>read_csv</code> 셀을 다시 실행하자.</li>
       </ul>
     </div>
   </section>
@@ -793,7 +829,7 @@ else:
     </div>
     <div class="callout practice">
       <b class="tag">과제 4(도전) — 두 조건 동시 검색</b>
-      <code>df[(df["설비번호"] == "EQ-02") & (df["합격여부"] == -1)]</code>처럼 <code>&amp;</code>
+      <code>df[(df["설비번호"] == "EQ-02") &amp; (df["합격여부"] == -1)]</code>처럼 <code>&amp;</code>
       기호로 조건 두 개를 동시에 적용하는 코드를 검색해서 실행해보고, 결과가 무엇을 의미하는지
       설명해본다(5차시 이상값 제거에서 다시 쓰인다).
     </div>

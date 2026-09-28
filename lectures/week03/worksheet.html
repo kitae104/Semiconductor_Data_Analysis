@@ -58,7 +58,7 @@
 count = 0
 
 ____ temp in temperatures:
-    ____ 295 <= temp <= 305:
+    ____ 295 &lt;= temp &lt;= 305:
         count ____ 1
 
 print(count)</code></pre>
@@ -74,9 +74,9 @@ print(count)</code></pre>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>def judge(temp):
-    if temp > 305:
+    if temp &gt; 305:
         return "고온"
-    elif temp < 295:
+    elif temp &lt; 295:
         return "저온"
     else:
         return "정상"
@@ -96,7 +96,7 @@ print(judge(300.0))</code></pre>
     <div class="code-block">
       <div class="code-label"><span>Python — 오류 있는 코드</span><button class="copy-btn">복사</button></div>
       <pre><code>temperature = 301.0
-if temperature > 305:
+if temperature &gt; 305:
 print("고온입니다.")
 else:
 print("정상입니다.")</code></pre>
@@ -118,7 +118,7 @@ print("정상입니다.")</code></pre>
     <p><code>for</code>와 <code>if</code>를 사용해 온도가 305도를 넘는 설비가 몇 대인지 세는
     코드를 손으로 적어보자(직접 실행하지 않고 코드만 작성).</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box"><code>count = 0<br>for eq in equipment_list:<br>&nbsp;&nbsp;&nbsp;&nbsp;if eq["온도_섭씨"] > 305:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count += 1<br>print(count)</code> → 결과는 1(EQ-02만 해당).</div>
+    <div class="answer-box"><code>count = 0<br>for eq in equipment_list:<br>&nbsp;&nbsp;&nbsp;&nbsp;if eq["온도_섭씨"] &gt; 305:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count += 1<br>print(count)</code> → 결과는 1(EQ-02만 해당).</div>
   </section>
 
   <section class="block">
