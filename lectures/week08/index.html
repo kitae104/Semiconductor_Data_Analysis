@@ -380,7 +380,7 @@ df = pd.read_csv("week08_anomaly_root_cause.csv")
 vac_low, vac_high = 4.5, 5.5
 
 # 2. 조건 검색으로 정상 범위를 벗어난 행을 찾는다.
-vac_outlier = df[(df["진공도_mTorr"] < vac_low) | (df["진공도_mTorr"] > vac_high)]
+vac_outlier = df[(df["진공도_mTorr"] &lt; vac_low) | (df["진공도_mTorr"] &gt; vac_high)]
 
 print("전체 행 수:", len(df))
 print("진공도 이탈 행 수:", len(vac_outlier))
@@ -409,7 +409,7 @@ print("이탈 비율(%):", round(len(vac_outlier) / len(df) * 100, 2))</code></p
     </ul>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>vac_in = df[(df["진공도_mTorr"] >= vac_low) & (df["진공도_mTorr"] <= vac_high)]
+      <pre><code>vac_in = df[(df["진공도_mTorr"] &gt;= vac_low) &amp; (df["진공도_mTorr"] &lt;= vac_high)]
 
 fail_rate_in = (vac_in["합격여부"] == -1).mean() * 100
 fail_rate_out = (vac_outlier["합격여부"] == -1).mean() * 100
@@ -470,6 +470,8 @@ print("공부시간-점수 상관계수 r =", round(r_study, 2))</code></pre>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>import matplotlib.pyplot as plt
+plt.rcParams["font.family"] = "Malgun Gothic"   # 한글 글꼴(Windows). Mac은 "AppleGothic"
+plt.rcParams["axes.unicode_minus"] = False      # 음수 부호(-)가 네모로 깨지지 않게
 
 r = df["온도_섭씨"].corr(df["두께_nm"])
 print("상관계수 r =", round(r, 2))
@@ -487,6 +489,8 @@ plt.show()</code></pre>
     <div class="tablewrap">
       <img src="../../assets/images/week08/temp_thickness_scatter.png" alt="온도와 두께의 산점도, 상관계수 0.71의 강한 양의 상관을 보여줌" style="display:block;width:100%;">
     </div>
+    <p class="img-caption">예시 그림 — 합격/불합격을 색으로 나누고 추세선을 더해 다시 그린 그림이다. 위 코드를 실행하면
+    점이 한 가지 색으로 찍히고 추세선은 없지만, 점들이 오른쪽 위로 올라가는 모양은 같다.</p>
     <div class="callout warn">
       <b class="tag">결과 해석</b>
       r = 0.71은 "강한 양의 상관"에 해당한다. 온도가 높을수록 두께도 함께 커지는
@@ -618,7 +622,7 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
     <div class="step">
       <div class="num">1</div>
       <div class="content"><b>데이터 불러오기</b> — <code>week08_anomaly_root_cause.csv</code>를
-      Jupyter Notebook에서 <code>read_csv</code>로 읽는다. (노트북 1단계)</div>
+      Jupyter Notebook에서 <code>read_csv</code>로 읽는다. (노트북 1단계 · 앞부분은 개념 절의 팔굽혀펴기 관리 상한/하한 예제)</div>
     </div>
     <div class="step">
       <div class="num">2</div>
@@ -632,20 +636,22 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
     </div>
     <div class="step">
       <div class="num">4</div>
-      <div class="content"><b>온도-두께 관계 확인</b> — 산점도를 그리고 <code>.corr()</code>로
-      상관계수를 계산한다. (노트북 4단계)</div>
+      <div class="content"><b>온도-두께 관계 확인</b> — <code>.corr()</code>로 상관계수를 계산하고
+      산점도로 모양을 확인한다. (노트북 4단계 · 앞부분은 공부 시간-시험 점수 <code>.corr()</code> 예제)</div>
     </div>
     <div class="step">
       <div class="num">5</div>
-      <div class="content"><b>대조군 확인</b> — 습도와 불합격의 상관계수를 계산해 관계가 없음을 확인한다.
-      (노트북 5~6단계 · 6단계는 EQ-02의 진동 값을 같은 방법으로 비교하는 도전 단계)</div>
+      <div class="content"><b>대조군 확인과 다른 이상 신호</b> — 습도와 불합격의 상관계수를 계산해 관계가 없음을
+      확인한다(노트북 5단계). 이어서 「실습 코드 ④」의 설비별 진동 평균과 냉각수온도 이상 전후 비교를 실행한다
+      (노트북 6단계 · 강의 본문은 ④ 진동·냉각수 → ⑤ 습도 순서지만, 노트북은 5단계 습도 → 6단계 진동·냉각수 순서다)</div>
     </div>
     <div class="step">
       <div class="num">6</div>
       <div class="content"><b>원인 후보 문장 쓰기</b> — "OO은 XX의 원인 후보로 보인다. 근거는 ___이다."
-      형식으로 한 문장을 완성한다. (노트북 7단계 · 학생용 Notebook의 TODO로 이어짐)</div>
+      형식으로 한 문장을 완성한다. (노트북 7단계 · 학생용은 예시 문장의 빈칸 ___을 채운다)</div>
     </div>
-    <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 8~11단계(AI에게 질문하기 ·
+    <p>여기까지가 오늘의 핵심 실습이다. 빠르게 끝낸 학생은 노트북 7단계 끝의 "도전 문제 1" 셀(아래 「도전 실습」)도
+    풀어 본다. 이어서 노트북 8~11단계(AI에게 질문하기 ·
     AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로 마무리한다.</p>
   </section>
 
@@ -676,6 +682,8 @@ print("습도-불합격 상관계수 r =", round(r_humid, 2))</code></pre>
       압력_Pa 열에도 진공도와 같은 방식(정상 범위 밖 vs 안)으로 불합격률을 비교해보자(교육용 정상 범위: 995~1025 Pa, 7차시와 동일).
       진공도만큼 차이가 크게 나는지, 아니면 큰 차이가 없는지 확인하고, 압력을 원인 후보로
       볼 수 있을지 자신의 문장으로 정리해보자.
+      <p style="margin:.5rem 0 0;">(노트북 7단계 "도전 문제 1" 셀 — 범위 밖/안 행 고르기와 불합격률 계산을 두 셀로 나눠
+      중간 결과를 본다. 학생용은 빈칸 + 강의 어느 절을 다시 보면 되는지 알려 주는 "참고" 셀이 붙어 있다)</p>
     </div>
   </section>
 

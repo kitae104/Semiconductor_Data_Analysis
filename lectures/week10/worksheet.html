@@ -30,8 +30,8 @@
     </ul>
     <div class="callout concept">
       <b class="tag">쉬운 예시</b>
-      9차시에서 만든 모델에 아직 검사 결과가 나오지 않은 새 로트 몇 개를 넣어 예측했더니 "대부분 합격 예상,
-      일부는 불합격 예상"이라는 결과가 나왔다. 이후 실제 검사 결과와 맞춰보면, 이 모델을 앞으로 얼마나 믿고
+      9차시에서 만든 모델에 아직 검사 결과가 나오지 않은 새 로트 9건을 넣어 예측했더니 9건 모두 "합격 예상"이
+      나왔지만, 로트마다 "불합격일 확률"은 서로 달랐다. 이후 실제 검사 결과와 맞춰보면, 이 모델을 앞으로 얼마나 믿고
       사용할 수 있는지 판단할 수 있다.
     </div>
   </section>
@@ -59,10 +59,11 @@ X_new = new_lots[feature_cols]
 new_lots["예측_검사결과"] = model.____________(X_new)
 
 proba = model.____________(X_new)
-new_lots["불합격_확률"] = proba[:, 1]</code></pre>
+new_lots["불합격_확률"] = proba[:, 1].round(3)</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>predict</code>, <code>predict_proba</code></div>
+    <div class="answer-box">순서대로 <code>predict</code>, <code>predict_proba</code>
+    (노트북 3단계·4단계 TODO 셀과 같다. <code>.round(3)</code>은 확률을 소수 셋째 자리까지 반올림한다)</div>
   </section>
 
   <section class="block">

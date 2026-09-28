@@ -30,7 +30,7 @@
       "type": "true_false",
       "question": "for temp in temperatures: 에서 temp라는 이름은 반드시 temperatures와 관련된 이름이어야 한다.",
       "answer": false,
-      "explanation": "temp는 그냥 변수 이름이므로 어떤 이름을 써도 동작은 같다. 읽기 쉬운 이름을 쓰는 것이 좋은 습관일 뿐이다."
+      "explanation": "temp는 값을 잠시 담는 변수 이름일 뿐이므로 어떤 이름을 써도 동작은 같다. 다만 읽기 쉬운 이름을 쓰는 것이 좋은 습관이다."
     },
     {
       "type": "true_false",

@@ -161,7 +161,7 @@ print(df.shape)</code></pre>
 습도_pct       8
 검사결과         0
 dtype: int64
-(735, 9)</code></pre>
+(735, 9)</pre>
     </div>
 
     <h3>Feature(특징)와 Label(정답) 나누기</h3>
@@ -216,7 +216,9 @@ model.fit(X_train, y_train)</code></pre>
         유지되도록 나눈다.</li>
         <li><code>DecisionTreeClassifier</code>: 스무고개처럼 "이 값이 이 기준보다 큰가?"를
         반복해 답을 좁혀가는 분류 모델(3차시의 if/elif/else와 원리가 비슷하다!).</li>
-        <li><code>model.fit(X_train, y_train)</code>: 학습용 데이터로 모델을 훈련시킨다.</li>
+        <li><code>model.fit(X_train, y_train)</code>: 학습용 데이터로 모델을 훈련시킨다. Jupyter에서는 이 줄이
+        셀의 마지막 줄이라, 학습을 마친 모델의 설정 <code>DecisionTreeClassifier(max_depth=4, random_state=42)</code>가
+        출력 아래에 함께 표시된다(오류가 아니다).</li>
       </ul>
     </div>
     <div class="code-block">
@@ -342,7 +344,7 @@ print(cm)</code></pre>
     </div>
     <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 7~11단계(오늘의 학습을 한 문장으로 정리 ·
     AI에게 질문하기 · AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로
-    마무리한다.</p>
+    마무리한다. 빠른 학습자는 7단계 안의 "도전 문제 1" 셀(아래 "도전 실습")도 풀어 본다.</p>
   </section>
 
   <section class="block">
@@ -422,7 +424,8 @@ print(cm)</code></pre>
       <b class="tag">도전 문제</b>
       <code>DecisionTreeClassifier(max_depth=...)</code>의 숫자를 아래 연습문제(2, 8) 외에
       3, 6, 10 등으로도 바꿔가며 다시 학습시켜보자. 정확도와 혼동행렬이 어떻게 달라지는지 비교하고, 어떤 값이 가장
-      균형 잡힌 결과를 주는지 찾아보자.
+      균형 잡힌 결과를 주는지 찾아보자.<br>
+      (노트북 7단계 "도전 문제 1" 셀 — max_depth 2·3·4·6·8·10의 train/test 정확도와 혼동행렬을 두 셀로 나눠 비교한다)
     </div>
     <div class="callout warn">
       <b class="tag">체크포인트 — train 정확도만 보면 착각하기 쉽다</b>

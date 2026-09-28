@@ -141,11 +141,15 @@
     <h2>② 파이썬으로 확인하기 — 다섯 가지 그래프</h2>
     <ul class="pt-list">
       <li>먼저 <code>측정시간</code> 열을 날짜/시간 형식으로 변환 → 시간 순서대로 그래프를 그릴 수 있음</li>
+      <li>그래프 제목·축 이름의 한글이 네모(□)로 깨지지 않도록 <code>import matplotlib.pyplot as plt</code> 바로 아래에
+        글꼴을 정하는 두 줄을 함께 넣는다(Windows는 "Malgun Gothic", Mac은 "AppleGothic")</li>
     </ul>
     <div class="code-block">
       <div class="code-label"><span>Python — 데이터 준비</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 import matplotlib.pyplot as plt
+plt.rcParams["font.family"] = "Malgun Gothic"   # 한글 글꼴(Windows). Mac은 "AppleGothic"
+plt.rcParams["axes.unicode_minus"] = False      # 음수 부호(-)가 네모로 깨지지 않게
 
 df = pd.read_csv("week06_process_visualization.csv")
 df["측정시간"] = pd.to_datetime(df["측정시간"])   # 문자열 → 날짜/시간 형식
@@ -276,7 +280,9 @@ plt.show()</code></pre>
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — 아주 간단한 히스토그램</span><button class="copy-btn">복사</button></div>
-      <pre><code># (scores 값은 생략했다 — 직접 실행하려면 scores = [55, 62, 68, ...]처럼 숫자 20개를 먼저 넣자)
+      <pre><code># 학생 20명의 시험 점수(연습용 예시 값)
+scores = [55, 62, 68, 70, 72, 58, 71, 74, 78, 66, 80, 69, 85, 72, 79, 88, 71, 76, 81, 91]
+
 plt.hist(scores, bins=8)
 plt.title("학생 20명의 시험 점수 분포")
 plt.xlabel("점수")
@@ -284,8 +290,8 @@ plt.ylabel("학생 수")
 plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/week06/generic_hist_scores.png" alt="학생 20명의 시험 점수 분포 히스토그램. 70점 근처에 학생이 가장 많이 몰려 있는 종 모양 분포.">
-    <p class="img-caption">70점 구간에 학생이 가장 많이(6명) 몰려 있고, 점수가 아주 낮거나
-    아주 높은 학생은 적은 종 모양 분포다.</p>
+    <p class="img-caption">(예시 그림 — 직접 그린 결과와 색·축 눈금이 조금 다를 수 있다) 70점 구간(68.5~73점)에
+    학생이 가장 많이(6명) 몰려 있고, 점수가 아주 낮거나 아주 높은 학생은 적은 분포다.</p>
     <ul class="pt-list">
       <li>같은 방식을 반도체 데이터의 <b>"온도 분포"</b>에 적용</li>
     </ul>
@@ -402,7 +408,11 @@ print(df["온도_섭씨"].corr(df["두께_nm"]))</code></pre>
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — 아주 간단한 박스플롯</span><button class="copy-btn">복사</button></div>
-      <pre><code># (classA·classB·classC 값은 생략했다 — 직접 실행하려면 classA = [70, 75, 80, ...]처럼 반마다 점수 리스트를 먼저 넣자)
+      <pre><code># 반마다 학생 10명의 시험 점수(연습용 예시 값)
+classA = [70, 75, 80, 77, 83, 74, 86, 67, 78, 82]
+classB = [62, 66, 70, 95, 88, 75, 86, 64, 78, 91]
+classC = [64, 67, 61, 70, 66, 72, 65, 68, 76, 84]
+
 plt.boxplot([classA, classB, classC], tick_labels=["A반", "B반", "C반"])
 plt.title("반별 시험 점수 박스플롯")
 plt.xlabel("반")
@@ -410,8 +420,9 @@ plt.ylabel("점수")
 plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/week06/generic_box_class_scores.png" alt="반별 시험 점수 박스플롯. B반의 상자와 수염이 가장 넓게 퍼져 있고, C반에는 동그라미로 표시된 이상치가 하나 있다.">
-    <p class="img-caption">B반의 상자와 수염이 가장 넓게 퍼져 있다 — B반 학생들의 점수 편차가
-    가장 크다는 뜻이다. C반에는 동그라미로 표시된 이상치(유독 튀는 점수)도 하나 보인다.</p>
+    <p class="img-caption">(예시 그림 — 직접 그린 결과와 상자 위치가 조금 다를 수 있다) B반의 상자와 수염이 가장
+    넓게 퍼져 있다 — B반 학생들의 점수 편차가 가장 크다는 뜻이다. C반에는 동그라미로 표시된 이상치(유독 튀는
+    점수, 위 값에서는 84점)도 보인다.</p>
     <ul class="pt-list">
       <li>같은 방식을 반도체 데이터의 <b>"설비별 온도"</b>에 적용
         <ul>
@@ -507,22 +518,23 @@ Name: 온도_섭씨, dtype: float64</pre>
     <div class="step">
       <div class="num">2</div>
       <div class="content"><b>데이터 준비</b> — <code>read_csv()</code>로 읽고
-      <code>pd.to_datetime()</code>으로 측정시간을 변환한다. (노트북 1단계)</div>
+      <code>pd.to_datetime()</code>으로 측정시간을 변환한다. (노트북 1단계 — 첫 셀에 한글 글꼴 설정 두 줄이 함께 들어 있다)</div>
     </div>
     <div class="step">
       <div class="num">3</div>
       <div class="content"><b>선 그래프·막대그래프</b> — 시간-온도 선그래프, 설비별 건수
-      막대그래프를 그려본다. (노트북 2~3단계)</div>
+      막대그래프를 그려본다. (노트북 2~3단계 — 단계마다 앞부분 "따라 해보기" 셀(완성된 코드)로 감을 잡고
+      "반도체 데이터에 적용하기" 셀로 넘어간다)</div>
     </div>
     <div class="step">
       <div class="num">4</div>
       <div class="content"><b>히스토그램·산점도</b> — 온도 히스토그램, 온도-두께 산점도를 그리고
-      상관계수를 계산한다. (노트북 4~5단계)</div>
+      상관계수를 계산한다. (노트북 4~5단계 — 같은 구성이며, 5단계는 산점도 셀과 상관계수 셀이 나뉘어 있다)</div>
     </div>
     <div class="step">
       <div class="num">5</div>
       <div class="content"><b>박스플롯</b> — 설비별 온도 박스플롯을 그리고, 어느 설비가 가장
-      넓게 퍼져 있는지 확인한다. (노트북 6단계)</div>
+      넓게 퍼져 있는지 확인한다. (노트북 6단계 — 앞부분 "따라 해보기" 반별 박스플롯 → 설비별 온도 박스플롯)</div>
     </div>
     <div class="step">
       <div class="num">6</div>
@@ -531,7 +543,7 @@ Name: 온도_섭씨, dtype: float64</pre>
     </div>
     <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 8~12단계(오늘의 학습을 한 문장으로 정리 ·
     AI에게 질문하기 · AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로
-    마무리한다.</p>
+    마무리한다. 빠른 학습자는 8단계 안의 "도전 문제 1" 셀(아래 "도전 실습")도 풀어 본다.</p>
   </section>
 
   <section class="block">
@@ -607,6 +619,7 @@ Name: 온도_섭씨, dtype: float64</pre>
       <code>df.boxplot(column="진동_mm_s", by="설비번호")</code>를 실행해 설비별 진동 값의
       박스플롯을 직접 그려보자. 온도 박스플롯과 같은 설비(EQ-02)가 가장 넓게 퍼져 있는지
       확인하고, 이 결과로 EQ-02에 대해 어떤 "원인 후보"를 떠올릴 수 있는지 한 문장으로 적어보자.
+      (노트북 8단계 "도전 문제 1" 셀 — 박스플롯을 그린 뒤, 이어지는 셀에서 설비별 진동 표준편차로도 확인한다)
     </div>
   </section>
 
@@ -724,7 +737,8 @@ plt.show()</code></pre>
         <li>제목에 값을 끼워 넣는 <code>f"...{r:.2f}"</code> 부분은 1차시에서 배운 f-string이다 —
           이렇게 이전 차시 내용이 AI 코드 안에서 계속 재사용된다는 것을 확인해보자.</li>
         <li>AI가 만든 코드도 직접 실행해서 그래프가 내가 기대한 모습인지 확인해야 한다.</li>
-        <li>한글이 깨져 보이면 당황하지 말고 위에서 물어본 "한글 폰트" 질문의 답을 참고해 해결해보자.</li>
+        <li>한글이 깨져 보이면 당황하지 말고 "데이터 준비" 코드의 글꼴 설정 두 줄(<code>plt.rcParams[...]</code>)을
+          먼저 실행했는지 확인하고, 위에서 물어본 "한글 폰트" 질문의 답과 비교해보자.</li>
       </ul>
     </div>
   </section>

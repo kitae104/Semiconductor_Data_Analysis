@@ -91,7 +91,7 @@
     <h2>지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">1차시 연결</b>
-      1차시에서는 값 하나를 변수 하나에 담았다 — <code>pass_count = 34</code>처럼 "이름표 하나에
+      1차시에서는 값 하나를 변수 하나에 담았다 — <code>pass_count = 32</code>처럼 "이름표 하나에
       값 하나"였다. 오늘은 이것을 두 방향으로 확장한다. 여러 값을 순서대로 한 번에 담고 싶다면
       <b>리스트</b>, 값 하나하나에 각각 이름표를 붙이고 싶다면 <b>딕셔너리</b>를 쓴다.
     </div>
@@ -210,7 +210,7 @@ print(temperatures[2:])    # 인덱스 2부터 끝까지</code></pre>
     <div class="callout practice">
       <b class="tag">직접 해보기</b>
       <code>temperatures[-2:]</code>를 실행해보고, 음수 인덱스와 슬라이싱을 함께 쓰면 어떤 값이
-      나오는지 확인해보자.
+      나오는지 확인해보자. (노트북 3단계 「직접 해보기」 셀)
     </div>
 
     <div class="code-block">
@@ -243,7 +243,7 @@ print(len(temperatures))</code></pre>
       <code>append()</code>는 리스트 자체를 바로 바꿔줄 뿐, 결과값(리턴값)은 없다(정확히는
       <code>None</code>). <code>temperatures = temperatures.append(303.2)</code>처럼 다시
       대입하면 <code>temperatures</code>가 <code>None</code>이 되어버려 이후 코드가 모두 오류가
-      난다. 그냥 <code>temperatures.append(303.2)</code>만 한 줄로 쓰면 된다.
+      난다. 다시 대입하지 말고 <code>temperatures.append(303.2)</code> 한 줄만 쓰면 된다.
     </div>
 
     <h3>리스트에서 최댓값·최솟값·평균 구하기</h3>
@@ -277,6 +277,7 @@ print(f"평균 온도는 {round(average, 1)}도입니다.")   # round()로 소�
       <b class="tag">직접 해보기</b>
       <code>temp_range = max(temperatures) - min(temperatures)</code>로 온도 범위(최고-최저 차이)를
       계산하고, <code>f"온도 범위는 {temp_range:.1f}도입니다."</code> 같은 문장을 출력해보자.
+      <code>:.1f</code>는 소수 첫째 자리까지만 보여 달라는 표시다. (노트북 5단계 「직접 해보기」 셀)
     </div>
   </section>
 
@@ -378,7 +379,7 @@ print(equipment)</code></pre>
       <b class="tag">직접 해보기</b>
       나만의 <code>equipment</code> 딕셔너리를 만들고, f-string으로
       <code>f"설비 {equipment['설비번호']}은(는) {equipment['공정명']} 공정이며 온도는
-      {equipment['온도_섭씨']}도입니다."</code> 같은 문장을 출력해보자.
+      {equipment['온도_섭씨']}도입니다."</code> 같은 문장을 출력해보자. (노트북 8단계 「직접 해보기」 셀)
     </div>
     <div class="code-block">
       <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
@@ -471,6 +472,7 @@ EQ-02</pre>
     <div class="callout practice">
       <b class="tag">직접 해보기</b>
       <code>equipment_list[2]["공정명"]</code>을 출력해 세 번째 설비의 공정명을 확인해보자.
+      (노트북 9단계 「직접 해보기」 셀)
     </div>
 
     <h3>종합 실습 — 나만의 설비 목록 만들기</h3>
@@ -538,7 +540,8 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
     </div>
     <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 11~15단계(오늘의 학습을 한 문장으로 정리 ·
     AI에게 질문하기 · AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는 미니 프로그램 만들기)로
-    마무리한다.</p>
+    마무리한다. 개념 설명 중간의 「직접 해보기」는 노트북 3·5·8·9단계 안에, 아래 「도전 실습」의 두 문제는
+    노트북 11단계 안에 셀로 들어 있다.</p>
   </section>
 
   <section class="block">
@@ -631,9 +634,12 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
     </div>
     <div class="callout practice">
       <b class="tag">도전 문제 2</b>
-      딕셔너리에 <code>"합격여부": 1</code> 같은 새 키를 추가해보고, 전체 딕셔너리를 다시
-      출력해 잘 추가됐는지 확인해보자.
+      딕셔너리(예: 앞에서 만든 <code>equipment</code>)에 <code>"합격여부": 1</code> 같은 새 키를
+      추가해보고, 전체 딕셔너리를 다시 출력해 잘 추가됐는지 확인해보자. 값 1은 1차시에서 배운
+      규약으로 "합격"을 뜻한다(-1은 불합격).
     </div>
+    <p>두 문제 모두 노트북 11단계 안의 「도전 문제 1」「도전 문제 2」 셀에서 풀 수 있다(빠른 학습자용,
+    학생용 노트북은 일부 코드가 빈칸).</p>
   </section>
 
   <section class="block">
@@ -731,13 +737,13 @@ EQ-05 설비는 산화 공정, 온도는 302.4도입니다.</pre>
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
-      <pre><code>equipment_list = [
+      <pre><code>sample_list = [
     {"설비번호": "EQ-01", "온도_섭씨": 301.2},
     {"설비번호": "EQ-02", "온도_섭씨": 308.7},
     {"설비번호": "EQ-03", "온도_섭씨": 297.5},
 ]
 
-hottest = max(equipment_list, key=lambda eq: eq["온도_섭씨"])
+hottest = max(sample_list, key=lambda eq: eq["온도_섭씨"])
 print(f"가장 온도가 높은 설비는 {hottest['설비번호']}이고, 온도는 {hottest['온도_섭씨']}도입니다.")</code></pre>
     </div>
     <div class="callout success">
@@ -752,6 +758,9 @@ print(f"가장 온도가 높은 설비는 {hottest['설비번호']}이고, 온�
         <li>AI가 만든 코드도 직접 실행해서 내가 기대한 결과가 맞는지 확인해야 한다.</li>
         <li>변수 이름이나 딕셔너리 키 이름이 오늘 쓴 것과 다르게 나올 수 있다 — 내 코드에 맞게
           바꿔서 사용하자.</li>
+        <li>위 예시는 목록 이름을 <code>sample_list</code>로 지었다. AI 코드가 <code>equipment_list = [...]</code>처럼
+          앞에서 만든 변수 이름을 그대로 쓰면 내 설비 목록(공정명 포함)이 새 목록으로 덮어써지니, 이름을 바꿔서
+          실행하자.</li>
       </ul>
     </div>
   </section>
@@ -769,12 +778,18 @@ print(f"가장 온도가 높은 설비는 {hottest['설비번호']}이고, 온�
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">
       <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">pressures = [1010.2, 1005.4, 1022.9, 998.7, 1011.0]
+highest_p = max(pressures)
+lowest_p = min(pressures)
 average_p = sum(pressures) / len(pressures)
+
+print(f"최댓값: {highest_p}, 최솟값: {lowest_p}, 평균: {round(average_p, 1)}")
 
 eq04 = {"설비번호": "EQ-04", "공정명": "세정", "온도_섭씨": 299.9}
 eq04["압력_Pa"] = average_p
 print(eq04)</pre>
-      실행 결과: <code>{'설비번호': 'EQ-04', '공정명': '세정', '온도_섭씨': 299.9, '압력_Pa': 1009.64}</code>
+      실행 결과: <code>최댓값: 1022.9, 최솟값: 998.7, 평균: 1009.6</code><br>
+      <code>{'설비번호': 'EQ-04', '공정명': '세정', '온도_섭씨': 299.9, '압력_Pa': 1009.64}</code>
+      (노트북 14단계)
     </div>
   </section>
 
@@ -794,6 +809,7 @@ print(eq04)</pre>
     <div class="code-block">
       <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
       <pre><code>import random
+random.seed(7)  # 실행할 때마다 같은 결과가 나오도록 고정
 
 equipment_list = [
     {"설비번호": "EQ-01", "공정명": "식각", "온도_섭씨": 301.2},
@@ -809,16 +825,18 @@ print(f"공정명: {lucky['공정명']}")
 print(f"온도: {lucky['온도_섭씨']}도")</code></pre>
     </div>
     <div class="callout success">
-      <b class="tag">실행 결과 예시</b>
+      <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">🎉 오늘의 럭키 설비 🎉
-설비번호: EQ-04
-공정명: 세정
-온도: 299.9도</pre>
+설비번호: EQ-03
+공정명: 포토
+온도: 297.5도</pre>
     </div>
     <div class="callout warn">
       <b class="tag">더 놀아보기</b>
       <ul class="pt-list">
         <li>"설비를 2개 더 추가해줘"처럼 요청해서 뽑기 대상을 풍성하게 만들어보자.</li>
+        <li>예시 코드는 <code>random.seed(7)</code> 줄로 결과를 고정해 두어 몇 번을 실행해도 EQ-03이 뽑힌다.
+          이 줄을 지우고 여러 번 실행하면 매번 다른 설비가 뽑힌다.</li>
         <li><code>random</code> 모듈 자체는 오늘 처음 보는 표현이다 — 리스트·딕셔너리는 오늘 배운
           내용이니, <code>random.choice()</code>가 리스트 안에서 하나를 무작위로 골라준다는 정도만
           이해하고 넘어가도 충분하다.</li>
