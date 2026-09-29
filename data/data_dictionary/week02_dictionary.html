@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2차시 데이터 설명서</title>
+<link rel="icon" href="../../assets/images/site/chip-favicon.png" type="image/png">
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<!-- 자동 생성 파일: data_dictionary/week02_dictionary.md 를 고친 뒤
+     python scripts/build_data_dictionary_html.py 로 다시 만든다. 이 파일을 직접 고치지 않는다. -->
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html"><img src="../../assets/images/site/chip-macro-logo.jpg" alt="" aria-hidden="true" class="brand-logo" width="34" height="34" /> 반도체 데이터 분석 10차시 과정
+      <small>Semiconductor Process Data Analysis</small>
+    </a>
+    <nav class="week-nav">
+      <a href="week01_dictionary.html">1차시</a>
+      <a href="week02_dictionary.html" class="current">2차시</a>
+      <a href="week03_dictionary.html">3차시</a>
+      <a href="week04_dictionary.html">4차시</a>
+      <a href="week05_dictionary.html">5차시</a>
+      <a href="week06_dictionary.html">6차시</a>
+      <a href="week07_dictionary.html">7차시</a>
+      <a href="week08_dictionary.html">8차시</a>
+      <a href="week09_dictionary.html">9차시</a>
+      <a href="week10_dictionary.html">10차시</a>
+    </nav>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="2"></div></div>
+</header>
+
+<nav class="breadcrumb" aria-label="현재 위치">
+  <a href="../../index.html">홈</a>
+  <span class="sep">›</span>
+  <a href="../../lectures/week02/index.html">2차시 강의</a>
+  <span class="sep">›</span>
+  <span class="current">데이터 설명서</span>
+</nav>
+
+<main class="page">
+
+  <div class="hero">
+    <span class="badge blue">2차시 · 데이터 설명서</span>
+    <h1>2차시 실습 데이터 설명서</h1>
+    <p class="today-question">대상 파일: <code>week02_python_basics_1.csv</code></p>
+  </div>
+
+
+
+  <section class="block">
+    <h2>목적</h2>
+<p>리스트와 딕셔너리를 처음 배울 때 참고할 소량의 예시 데이터다. 이 CSV는 Pandas로 읽지 않고, 강의 중 리스트/딕셔너리 리터럴로 직접 옮겨 적어 사용한다(Pandas는 4차시부터 배운다).</p>
+  </section>
+
+  <section class="block">
+    <h2>가상 상황</h2>
+<p>설비 여러 대에서 각각 측정한 온도 기록이다.</p>
+  </section>
+
+  <section class="block">
+    <h2>행 하나의 의미</h2>
+<p>한 행 = 특정 로트·설비의 온도 측정 기록 1건.</p>
+  </section>
+
+  <section class="block">
+    <h2>열 설명</h2>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>열 이름</th>
+<th>쉬운 설명</th>
+<th>데이터 형식</th>
+<th>단위</th>
+<th>예시</th>
+<th>결측값 가능 여부</th>
+</tr></thead><tbody>
+<tr><td>로트번호</td><td>로트 식별 번호</td><td>문자열</td><td>-</td><td>LOT-0012</td><td>없음</td></tr>
+<tr><td>공정명</td><td>공정 종류</td><td>문자열</td><td>-</td><td>식각</td><td>없음</td></tr>
+<tr><td>설비번호</td><td>공정 설비</td><td>문자열</td><td>-</td><td>EQ-01</td><td>없음</td></tr>
+<tr><td>온도_섭씨</td><td>챔버 온도</td><td>실수</td><td>℃</td><td>298.1</td><td>없음</td></tr>
+<tr><td>합격여부</td><td>검사 결과</td><td>정수</td><td>-</td><td>1(합격) / -1(불합격)</td><td>없음</td></tr>
+</tbody></table></div>
+  </section>
+
+  <section class="block">
+    <h2>정상 범위 (교육용 예시)</h2>
+<p>온도 295~305℃.</p>
+  </section>
+
+  <section class="block">
+    <h2>의도적으로 포함된 패턴</h2>
+<p>20행 중 정상범위(295~305℃)를 벗어나는 온도 값을 9건 포함해, 리스트에서 최댓값·최솟값을 찾는 실습(<code>max()</code>, <code>min()</code>) 소재로 쓴다. 결측값은 없다(2차시는 리스트/딕셔너리 문법에 집중).</p>
+  </section>
+
+  <section class="block">
+    <h2>이번 차시 분석 질문</h2>
+<ul class="pt-list"><li>이 리스트에서 가장 높은 온도와 가장 낮은 온도는 몇 번째 값인가?</li><li>온도 값들의 평균은 얼마인가?</li></ul>
+  </section>
+
+  <section class="block">
+    <h2>실제 현업 데이터와 다른 점</h2>
+<p>완전한 가상 데이터이며, 리스트/딕셔너리 문법 연습을 위해 아주 작은 규모로 만들었다.</p>
+  </section>
+
+  <div class="nav-buttons">
+    <a href="week01_dictionary.html">← 1차시 데이터 설명서</a>
+    <a class="home" href="../../lectures/week02/index.html">2차시 강의로 돌아가기</a>
+    <a href="week03_dictionary.html">3차시 데이터 설명서 →</a>
+  </div>
+
+</main>
+
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 2차시 데이터 설명서 · 교육용 자료(가상 데이터 사용)</footer>
+
+<script src="../../assets/js/common.js"></script>
+</body>
+</html>

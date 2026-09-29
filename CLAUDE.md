@@ -25,6 +25,7 @@
 python scripts/generate_weekly_data.py   # 차시별 데이터 재생성(재현 가능)
 python scripts/validate_datasets.py      # 데이터 검증
 python scripts/validate_notebooks.py     # 노트북 실행 검증(nbclient, kernel_name="python3")
+python scripts/build_data_dictionary_html.py  # 데이터 설명서 .md → 강의 디자인 .html 변환(.md 수정 후 실행)
 ```
 
 Windows 환경에서는 `python`을 사용한다(`python3`는 Microsoft Store 스텁으로 연결되어 동작하지 않는다).

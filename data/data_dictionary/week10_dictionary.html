@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10차시 데이터 설명서</title>
+<link rel="icon" href="../../assets/images/site/chip-favicon.png" type="image/png">
+<link rel="stylesheet" href="../../assets/css/common.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<!-- 자동 생성 파일: data_dictionary/week10_dictionary.md 를 고친 뒤
+     python scripts/build_data_dictionary_html.py 로 다시 만든다. 이 파일을 직접 고치지 않는다. -->
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../../index.html"><img src="../../assets/images/site/chip-macro-logo.jpg" alt="" aria-hidden="true" class="brand-logo" width="34" height="34" /> 반도체 데이터 분석 10차시 과정
+      <small>Semiconductor Process Data Analysis</small>
+    </a>
+    <nav class="week-nav">
+      <a href="week01_dictionary.html">1차시</a>
+      <a href="week02_dictionary.html">2차시</a>
+      <a href="week03_dictionary.html">3차시</a>
+      <a href="week04_dictionary.html">4차시</a>
+      <a href="week05_dictionary.html">5차시</a>
+      <a href="week06_dictionary.html">6차시</a>
+      <a href="week07_dictionary.html">7차시</a>
+      <a href="week08_dictionary.html">8차시</a>
+      <a href="week09_dictionary.html">9차시</a>
+      <a href="week10_dictionary.html" class="current">10차시</a>
+    </nav>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="10"></div></div>
+</header>
+
+<nav class="breadcrumb" aria-label="현재 위치">
+  <a href="../../index.html">홈</a>
+  <span class="sep">›</span>
+  <a href="../../lectures/week10/index.html">10차시 강의</a>
+  <span class="sep">›</span>
+  <span class="current">데이터 설명서</span>
+</nav>
+
+<main class="page">
+
+  <div class="hero">
+    <span class="badge blue">10차시 · 데이터 설명서</span>
+    <h1>10차시 실습 데이터 설명서</h1>
+    <p class="today-question">대상 파일: <code>week10_mini_project_dataset.csv</code> <span>(선택 심화용)</span></p>
+  </div>
+
+<div class="callout concept"><b class="tag">참고</b>v2 커리큘럼(<code>docs/curriculum.md</code>)에서 10차시의 핵심 데이터는 9차시에서 학습한 모델로 예측을 수행하는 <code>week09_new_lots_to_predict.csv</code>다(설명은 <code>week09_dictionary.md</code> 참고). 이 파일(<code>week10_mini_project_dataset.csv</code>)은 8개 프로젝트 주제 중 하나를 골라 더 깊이 파보고 싶은 학습자를 위한 <b>선택 심화 자료</b>로 남겨둔 것이며, 10차시 core 진행에는 사용하지 않는다.</div>
+
+  <section class="block">
+    <h2>목적</h2>
+<p>1~9차시에서 배운 모든 기법(조회, 정제, 시각화, 그룹 비교, 수율, 이상탐지, 예측적 사고)을 한 데이터셋 위에서 종합 적용해보는 미니 프로젝트용 데이터다.</p>
+  </section>
+
+  <section class="block">
+    <h2>가상 상황</h2>
+<p>600건의 공정 기록으로, 여러 차시의 패턴(설비별 차이, 이상값, 불량유형 등)이 옅게 섞여 있다.</p>
+  </section>
+
+  <section class="block">
+    <h2>행 하나의 의미</h2>
+<p>한 행 = 특정 로트·웨이퍼의 공정 측정 및 검사 기록.</p>
+  </section>
+
+  <section class="block">
+    <h2>열 설명</h2>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>열 이름</th>
+<th>쉬운 설명</th>
+<th>데이터 형식</th>
+<th>단위</th>
+<th>결측값 가능 여부</th>
+</tr></thead><tbody>
+<tr><td>측정시간</td><td>측정 시각</td><td>문자열(날짜시간)</td><td>-</td><td>없음</td></tr>
+<tr><td>로트번호</td><td>로트 식별 번호</td><td>문자열</td><td>-</td><td>없음</td></tr>
+<tr><td>웨이퍼번호</td><td>웨이퍼 순번</td><td>정수</td><td>-</td><td>없음</td></tr>
+<tr><td>설비번호</td><td>공정 설비</td><td>문자열</td><td>-</td><td>없음</td></tr>
+<tr><td>공정명</td><td>공정 종류</td><td>문자열</td><td>-</td><td>없음</td></tr>
+<tr><td>작업조</td><td>근무 조</td><td>문자열</td><td>-</td><td>없음</td></tr>
+<tr><td>온도_섭씨</td><td>챔버 온도</td><td>실수</td><td>℃</td><td>없음</td></tr>
+<tr><td>압력_Pa</td><td>챔버 압력</td><td>실수</td><td>Pa</td><td>없음</td></tr>
+<tr><td>진공도_mTorr</td><td>챔버 진공도</td><td>실수</td><td>mTorr</td><td>없음</td></tr>
+<tr><td>두께_nm</td><td>막 두께</td><td>실수</td><td>nm</td><td>없음</td></tr>
+<tr><td>진동_mm_s</td><td>설비 진동</td><td>실수</td><td>mm/s</td><td>없음</td></tr>
+<tr><td>처리시간_sec</td><td>처리 소요 시간</td><td>실수</td><td>sec</td><td>없음</td></tr>
+<tr><td>냉각수온도_섭씨</td><td>냉각수 온도</td><td>실수</td><td>℃</td><td>없음</td></tr>
+<tr><td>습도_pct</td><td>클린룸 습도</td><td>실수</td><td>%</td><td>없음</td></tr>
+<tr><td>불량유형</td><td>불량 시 유형(정상이면 빈 값)</td><td>문자열</td><td>-</td><td>있음(정상일 때)</td></tr>
+<tr><td>검사결과</td><td>최종 판정</td><td>정수</td><td>-</td><td>없음(0=정상/합격, 1=이상/불합격)</td></tr>
+</tbody></table></div>
+  </section>
+
+  <section class="block">
+    <h2>정상 범위 (교육용 예시)</h2>
+<p>docs/data-design.md의 공통 정상 범위표를 참고한다.</p>
+  </section>
+
+  <section class="block">
+    <h2>압력_Pa 값의 한계 (교육용 가상 데이터)</h2>
+<p><code>압력_Pa</code>는 교육용으로 생성한 가상 값이며 실제 측정값이 아니다. 이번 차시의 실측 범위는 약 989.5~1,046.0 Pa(평균 약 1,013.9 Pa)인데, 이 자릿수는 Pa로 읽은 챔버 압력보다 hPa로 읽었을 때의 자릿수에 가깝다(대기압이 약 1,013 hPa = 101,325 Pa다). <b>단위 라벨과 값의 자릿수가 서로 맞지 않는다.</b> 같은 행의 <code>진공도_mTorr</code>와도 맞지 않는다. 진공도 평균 약 4.98 mTorr는 약 0.66 Pa인데(1 mTorr ≈ 0.133 Pa) 같은 행의 <code>압력_Pa</code>는 평균 약 1,013.9 Pa여서 약 1,530배 차이가 난다 — 한 챔버가 같은 시각에 두 압력일 수는 없다. 이 값이 실제로 어떤 공정 조건을 나타내는지는 단정할 수 없으므로, 실습에서는 <code>압력_Pa</code>의 절대값을 물리적으로 해석하지 않고 <b>수치 열 하나</b>로만 다룬다.</p>
+<div class="callout concept"><b class="tag">학생이 물어보면</b>"교육용으로 만든 가상 값이라 단위와 자릿수가 실제 공정과 맞지 않습니다. 이번 실습에서는 압력의 절대값을 해석하지 않고 값들 사이의 상대적인 차이만 봅니다"라고 답한다.</div>
+<p>데이터를 다시 만들면 1~10차시의 실습 결과 수치와 강의 자료가 모두 함께 바뀌므로, 현재 버전은 값을 그대로 두고 이 한계를 여기에 명시하는 쪽을 택했다.</p>
+  </section>
+
+  <section class="block">
+    <h2>의도적으로 포함된 패턴</h2>
+<p>6~8차시에서 사용한 설비별 차이(EQ-04 불량률 높음 등) 패턴을 노이즈를 늘려 옅게 재현했다. 어떤 프로젝트 주제를 선택해도(설비 비교, 저수율 로트, 온도 이상, 진공도-불량 관계 등) 분석이 가능하도록 여러 열을 폭넓게 포함했다.</p>
+  </section>
+
+  <section class="block">
+    <h2>이번 차시 분석 질문(자유 선택)</h2>
+<ol class="goal-list"><li>설비별 불량률 비교</li><li>수율이 낮은 로트 찾기</li><li>온도 이상 구간 탐지</li><li>진공도 변화와 불량 관계</li><li>냉각수온도-공정온도 관계</li><li>막 두께 불량 원인 후보 분석</li><li>주요 센서를 이용한 불량 예측(9차시 방식 응용)</li><li>설비의 시간대별 공정 변화 분석</li></ol>
+  </section>
+
+  <section class="block">
+    <h2>실제 현업 데이터와 다른 점</h2>
+<p>완전한 가상 데이터다. 여러 패턴이 동시에 섞여 있어 실제 데이터처럼 "완벽하게 명확하지 않은" 상태로 설계했다 — 분석 결과에 항상 불확실성이 남는다는 점을 경험하게 하기 위함이다.</p>
+  </section>
+
+  <div class="nav-buttons">
+    <a href="week09_dictionary.html">← 9차시 데이터 설명서</a>
+    <a class="home" href="../../lectures/week10/index.html">10차시 강의로 돌아가기</a>
+    <a class="disabled">다음 없음 →</a>
+  </div>
+
+</main>
+
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 10차시 데이터 설명서 · 교육용 자료(가상 데이터 사용)</footer>
+
+<script src="../../assets/js/common.js"></script>
+</body>
+</html>

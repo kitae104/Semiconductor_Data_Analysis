@@ -93,7 +93,9 @@ python -c "import pandas as pd; df=pd.read_csv('data/weekly/week04/week04_proces
 
 ## 데이터사전
 
-`data/data_dictionary/weekXX_dictionary.md`. CSV마다 학생이 읽을 설명서다. 고정 형식:
+`data/data_dictionary/weekXX_dictionary.md`. CSV마다 학생이 읽을 설명서다. 강의 페이지는 이 .md를
+변환한 `weekXX_dictionary.html`에 링크하므로, .md를 고친 뒤에는 반드시
+`python scripts/build_data_dictionary_html.py`로 HTML을 다시 만든다(.html 직접 수정 금지). 고정 형식:
 
 ```markdown
 # {파일명}.csv 데이터 설명서
