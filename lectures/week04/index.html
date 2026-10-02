@@ -8,12 +8,20 @@
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
 <style>
-  .df-svg{display:block;margin:1.2rem auto;max-width:100%;width:520px;height:auto;}
-  .df-svg .colhead{fill:var(--blue-bg);stroke:var(--blue);stroke-width:2;}
-  .df-svg .cell{fill:#fff;stroke:var(--line);stroke-width:1.5;}
+  .df-svg,.filter-svg{display:block;margin:1.2rem auto;max-width:100%;height:auto;}
+  .df-svg{width:520px;}
+  .filter-svg{width:660px;}
+  .df-svg .colhead,.filter-svg .colhead{fill:var(--blue-bg);stroke:var(--blue);stroke-width:1.5;}
+  .df-svg .cell,.filter-svg .cell{fill:var(--card);stroke:var(--line);stroke-width:1.2;}
   .df-svg .cell.hl{fill:var(--purple-bg);stroke:var(--purple);}
-  .df-svg text{font-family:'Courier New',monospace;font-size:11px;fill:#0f172a;}
-  .df-svg .head{fill:var(--blue);font-weight:700;}
+  .filter-svg .cell.yes{fill:var(--green-bg);stroke:var(--green);}
+  .filter-svg .cell.no{fill:var(--red-bg);stroke:var(--red);}
+  .df-svg text,.filter-svg text{font-family:var(--font-mono),'Courier New',monospace;font-size:12px;fill:var(--ink);}
+  .df-svg .head,.filter-svg .head{fill:var(--blue);font-weight:700;}
+  .filter-svg .yes-t{fill:var(--green);font-weight:700;}
+  .filter-svg .no-t{fill:var(--red);font-weight:700;}
+  .filter-svg .step-t{fill:var(--purple);font-weight:700;font-size:13px;}
+  .filter-svg .farrow{stroke:var(--muted);stroke-width:2.5;}
 </style>
 </head>
 <body>
@@ -40,184 +48,263 @@
 
 <main class="page">
 
-  <div class="hero">
-    <span class="badge blue">4차시</span>
-    <h1>Pandas 가장 기본적인 부분</h1>
-    <p class="today-question">오늘의 질문: <b>"3차시에 반복문으로 한 줄씩 처리했던 일을, Pandas는 어떻게 한 번에 처리할까?"</b></p>
+  <div class="hero-with-stats">
+    <div class="hero">
+      <span class="badge blue">4차시</span>
+      <h1>Pandas 가장 기본적인 부분</h1>
+      <p class="today-question">오늘의 질문: <b>"3차시에 반복문으로 한 줄씩 처리했던 일을, Pandas는 어떻게 한 번에 처리할까?"</b></p>
+    </div>
+    <div class="stat-panel">
+      <div class="sp-title">오늘의 데이터</div>
+      <div class="sp-run">week04_process_filtering.csv (가상)</div>
+      <dl>
+        <div><dt>크기</dt><dd>100행 × 8열</dd></div>
+        <div><dt>설비</dt><dd>EQ-01 ~ EQ-04</dd></div>
+        <div><dt>전체 불합격</dt><dd>13건 (13.0%)</dd></div>
+        <div><dt>EQ-02 불합격</dt><dd>5건 / 25건</dd></div>
+      </dl>
+    </div>
   </div>
 
   <section class="block">
-    <h2>학습 목표</h2>
+    <h2>오늘의 학습 목표</h2>
     <ul class="goal-list">
-      <li>read_csv로 CSV 파일을 DataFrame으로 읽을 수 있다.</li>
-      <li>원하는 열만 선택해서 볼 수 있다.</li>
-      <li>조건 검색(불리언 인덱싱)으로 원하는 행만 골라낼 수 있다.</li>
-      <li>정렬로 값이 높은/낮은 순서를 확인할 수 있다.</li>
+      <li>CSV 파일을 <code>read_csv</code>로 읽어 표(DataFrame)로 만들고, <code>head</code>·<code>shape</code>·<code>columns</code>로 생김새를 확인할 수 있다.</li>
+      <li>필요한 열만 꺼내 볼 수 있다. 열 하나는 <code>df["열"]</code>, 여러 개는 <code>df[["열1", "열2"]]</code>.</li>
+      <li>조건 검색으로 특정 설비·불합격 기록만 골라내고, 건수와 비율로 설비끼리 비교할 수 있다.</li>
+      <li><code>sort_values</code>로 값이 큰 순서·작은 순서로 줄 세울 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 3차시 — 반복문·함수</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 1차시 — 표의 행과 열, 2차시 — 딕셔너리의 리스트, 3차시 — <code>for</code>+<code>if</code>.
+    <code>loc</code>은 오늘 "맛보기"만 한다(값을 고칠 때도 쓸 수 있다 — 5차시에서 잠깐 다시 본다).</p>
   </section>
 
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
-      <li>3차시까지는 리스트·반복문으로 표 데이터를 흉내 냈지만, 실제 공정 데이터는 수만 행이 넘는 CSV
-        파일로 존재한다. <b>Pandas</b>는 이런 대용량 표를 통째로 불러와 열 선택·조건 검색·정렬을 코드 몇 줄로
-        처리해주는, 반도체 데이터 분석에서 가장 많이 쓰이는 도구다.</li>
+      <li>1차시에는 40줄짜리 표를 강사가 눈으로 세어 "불합격 8건"이라고 알려줬다. 오늘 표는 100줄이고,
+        실제 공장은 하루에도 수십만 줄이 쌓인다. 눈으로 세는 방법은 곧 한계가 온다.</li>
+      <li><b>Pandas(판다스)</b>는 파이썬 안에서 표를 다루는 전용 도구다. 1차시에 말한 "공구함 속 표 전용 공구"가 바로 이것이다.
+        엑셀처럼 표를 다루지만, 한 번 써 둔 코드는 100줄이든 10만 줄이든 그대로 다시 쓸 수 있다.</li>
+      <li>무엇보다 <b>표를 나눠서 볼 수 있다.</b> 전체를 한 덩어리로 볼 때는 안 보이던 것이, 특정 설비만 따로 떼어 보면 보인다.</li>
     </ul>
     <div class="callout concept">
-      <b class="tag">쉬운 예시</b>
-      "EQ-02 설비에서 발생한 불합격은 몇 건인가?"라는 질문에 엑셀이면 필터를 클릭해서 찾아야 하지만,
-      Pandas는 <code>df[df["설비번호"]=="EQ-02"]</code> 한 줄로 즉시 걸러낼 수 있다. 데이터가 100행이든
-      10만 행이든 코드는 그대로다.
+      <b class="tag">예를 들면 — 오늘 데이터에서 실제로 나온 숫자</b>
+      <ul class="pt-list">
+        <li>100건 전체로 보면 불합격은 13건(13.0%)이다. 이 숫자 하나로는 "그럭저럭 괜찮네"로 끝나기 쉽다.</li>
+        <li>설비별로 따로 떼어 보면 이야기가 달라진다. EQ-04는 22건 중 5건(22.7%), EQ-02는 25건 중 5건(20.0%)이 불합격인데,
+          EQ-03은 22건 중 1건(4.5%)뿐이다. 같은 공장 안에서 약 다섯 배 차이가 난다(기록이 적어 우연일 수도 있다 — 뒤에서 다시 본다).</li>
+        <li>학교 전체 평균은 괜찮은데 반별로 나눠 보니 한 반만 점수가 낮은 것과 같다. 오늘 배우는 <b>조건 검색</b>이 이렇게 "따로 떼어 보는" 도구다.</li>
+      </ul>
     </div>
-    <div class="code-block">
-      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>엑셀에서 필터를 클릭해 원하는 행만 보는 것과, 파이썬 pandas에서 조건 한 줄로 행을 고르는 것의 차이를 '도서관에서 책 찾기'에 비유해서 3줄로 설명해줘.</code></pre>
-    </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 비유에 "데이터가 아무리 많아져도 코드 한 줄은 그대로"라는 장점이 들어 있는지 보자.</p>
-
   </section>
 
   <section class="block">
     <h2>지난 시간 복습</h2>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>차시</th><th>배운 것</th><th>오늘 어떻게 이어지나</th></tr>
+        <tr><td>1차시</td><td>표는 행(기록 1건)과 열(기록 항목)로 되어 있다</td><td>그 표를 이제 코드로 직접 연다</td></tr>
+        <tr><td>2차시</td><td>설비 여러 대를 "딕셔너리의 리스트"로 담았다</td><td>DataFrame은 딕셔너리의 리스트와 같은 모양이다</td></tr>
+        <tr><td>3차시</td><td><code>for</code>+<code>if</code>로 조건에 맞는 설비만 골라냈다</td><td>같은 일을 조건 검색 한 줄로 한다</td></tr>
+      </table>
+    </div>
     <div class="callout concept">
-      <b class="tag">3차시 연결</b>
-      3차시에서는 <code>for</code>와 <code>if</code>로 리스트를 하나씩 순회하며
-      <code>judge_pass</code> 함수로 직접 판정했다. 오늘 배울 <b>Pandas</b>는 "표 전체"를 다루는
-      도구로, 3차시에 여러 줄로 짰던 반복 작업을 대부분 <b>한 줄</b>로 처리해준다. 딕셔너리의
-      리스트가 사실 "표(DataFrame)"와 매우 비슷한 모양이라는 것을 오늘 확인한다.
+      <b class="tag">3차시 코드 기억나나요?</b>
+      온도가 305도를 넘는 설비를 고르려고 빈 리스트를 만들고, <code>for</code>로 하나씩 꺼내 <code>if</code>로 확인한 뒤
+      <code>append()</code>로 담았다. 네 줄이 넘었다. 오늘은 이 일을 <code>df[df["온도_섭씨"] &gt; 305]</code> 한 줄로 한다.
     </div>
   </section>
 
   <section class="block">
-    <h2>CSV와 DataFrame</h2>
+    <span class="step-badge">STEP 01</span>
+    <h2>CSV와 DataFrame — 1차시의 그 표를 파이썬으로 읽기</h2>
     <ul class="pt-list">
-      <li><b>CSV(Comma-Separated Values)</b> = 쉼표로 값을 구분한 텍스트 표 파일</li>
-      <li>Pandas <code>read_csv()</code>로 읽으면 → <b>DataFrame</b>(행·열 구조의 표)으로 변환</li>
+      <li><b>CSV</b>는 표의 칸을 쉼표(,)로 구분해 저장한 파일이다(1차시). 엑셀로도 열린다.</li>
+      <li>Pandas의 <code>read_csv()</code>로 CSV를 읽으면 <b>DataFrame(데이터프레임)</b>이라는 표가 된다.
+        1차시에 눈으로 본 그 표를 파이썬이 읽어 들고 있는 것이다.</li>
+      <li>DataFrame은 보통 <code>df</code>라는 짧은 이름의 변수에 담는다(1차시의 변수와 같다).</li>
     </ul>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 데이터 읽기</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-df = pd.read_csv("week04_process_filtering.csv")
+df = pd.read_csv("../../data/weekly/week04/week04_process_filtering.csv", encoding="utf-8-sig")
 df.head()</code></pre>
     </div>
+    <ul class="pt-list">
+      <li>경로의 <code>../</code>는 "한 단계 위 폴더"라는 뜻이다. 노트북이 있는 <code>notebooks/student/</code>에서 두 단계 위로 올라가 <code>data</code> 폴더를 찾아간다.</li>
+      <li><code>import pandas as pd</code> — Pandas 공구를 꺼내 <code>pd</code>라는 짧은 이름으로 부르겠다는 뜻. 매 노트북 맨 위에 한 번 쓴다.</li>
+      <li>괄호 안 첫 번째는 파일 위치(경로), <code>encoding="utf-8-sig"</code>는 한글을 읽는 방식이다. 이 과정의 CSV는 모두 이렇게 저장돼 있으니 그대로 따라 쓴다.</li>
+      <li><code>df.head()</code>는 표의 맨 앞 5행만 보여준다. 표를 처음 열면 습관처럼 먼저 실행한다.</li>
+    </ul>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <div class="tablewrap">
+        <table class="data-preview">
+          <tr><th></th><th>측정시간</th><th>로트번호</th><th>설비번호</th><th>공정명</th><th>온도_섭씨</th><th>압력_Pa</th><th>가스유량_slm</th><th>합격여부</th></tr>
+          <tr><td>0</td><td>2024-03-01 21:00</td><td>LOT-0141</td><td>EQ-02</td><td>산화</td><td>297.6</td><td>1005.8</td><td>50.02</td><td>1</td></tr>
+          <tr><td>1</td><td>2024-03-02 04:00</td><td>LOT-0122</td><td>EQ-04</td><td>식각</td><td>300.4</td><td>1010.5</td><td>49.22</td><td>1</td></tr>
+          <tr><td>2</td><td>2024-03-02 08:00</td><td>LOT-0156</td><td>EQ-02</td><td>세정</td><td>296.9</td><td>1007.6</td><td>50.91</td><td>-1</td></tr>
+          <tr><td>3</td><td>2024-03-02 12:00</td><td>LOT-0224</td><td>EQ-02</td><td>산화</td><td>297.2</td><td>1019.1</td><td>47.75</td><td>1</td></tr>
+          <tr><td>4</td><td>2024-03-02 21:00</td><td>LOT-0302</td><td>EQ-01</td><td>세정</td><td>296.7</td><td>1016.9</td><td>51.17</td><td>1</td></tr>
+        </table>
+      </div>
+    </div>
+    <p>맨 왼쪽의 0, 1, 2 … 는 Pandas가 붙여 주는 <b>행 번호표(인덱스)</b>다. 0부터 센다(2차시 리스트와 같다).</p>
+
+    <h3>열 이름이 공장에서 뜻하는 것</h3>
+    <p>1차시에 배운 내용을 한 줄씩 다시 짚는다. 행 하나는 "작업 1건의 기록"이다.</p>
     <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>측정시간</th><th>로트번호</th><th>설비번호</th><th>공정명</th><th>온도_섭씨</th><th>압력_Pa</th><th>가스유량_slm</th><th>합격여부</th></tr>
-        <tr><td>2024-03-01 21:00</td><td>LOT-0141</td><td>EQ-02</td><td>산화</td><td>297.6</td><td>1005.8</td><td>50.02</td><td>1</td></tr>
-        <tr><td>2024-03-02 04:00</td><td>LOT-0122</td><td>EQ-04</td><td>식각</td><td>300.4</td><td>1010.5</td><td>49.22</td><td>1</td></tr>
-        <tr><td>2024-03-02 08:00</td><td>LOT-0156</td><td>EQ-02</td><td>세정</td><td>296.9</td><td>1007.6</td><td>50.91</td><td>-1</td></tr>
-        <tr><td>2024-03-02 12:00</td><td>LOT-0224</td><td>EQ-02</td><td>산화</td><td>297.2</td><td>1019.1</td><td>47.75</td><td>1</td></tr>
-        <tr><td>2024-03-02 21:00</td><td>LOT-0302</td><td>EQ-01</td><td>세정</td><td>296.7</td><td>1016.9</td><td>51.17</td><td>1</td></tr>
+      <table class="timetable">
+        <tr><th>열 이름</th><th>공장에서 뜻하는 것</th></tr>
+        <tr><td><code>측정시간</code></td><td>그 작업을 기록한 날짜와 시각</td></tr>
+        <tr><td><code>로트번호</code></td><td>웨이퍼 묶음(택배 상자 하나)의 번호</td></tr>
+        <tr><td><code>설비번호</code></td><td>작업을 한 기계의 번호(EQ-01~EQ-04)</td></tr>
+        <tr><td><code>공정명</code></td><td>어떤 작업이었는지(산화·포토·식각·증착·세정)</td></tr>
+        <tr><td><code>온도_섭씨</code></td><td>설비 안의 온도(℃)를 센서로 잰 값</td></tr>
+        <tr><td><code>압력_Pa</code></td><td>설비 안의 압력을 센서로 잰 값(Pa는 압력 단위 "파스칼")</td></tr>
+        <tr><td><code>가스유량_slm</code></td><td>작업에 쓰는 가스가 흘러 들어간 양(slm은 "1분에 몇 리터"를 표준 상태 기준으로 센 단위)</td></tr>
+        <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
       </table>
     </div>
+    <div class="callout warn">
+      <b class="tag">가상 값이라는 점 기억하기</b>
+      교육용으로 만든 가상 데이터다. 온도·압력·가스유량의 크기를 실제 공정 조건으로 해석하지 않고,
+      기록들끼리 비교하는 연습용 숫자로만 쓴다(1차시와 같다).
+    </div>
 
-    <svg class="df-svg" viewBox="0 0 520 190" role="img"
-         aria-label="DataFrame은 딕셔너리의 리스트와 비슷하다: 각 행이 딕셔너리 하나, 표 전체가 리스트 하나에 해당한다">
+    <h3>DataFrame은 "딕셔너리의 리스트"와 같은 모양</h3>
+    <svg class="df-svg" viewBox="0 0 520 170" role="img"
+         aria-label="DataFrame의 행 하나가 2차시에 만든 딕셔너리 하나와 같다는 것을 보여주는 그림">
       <rect class="colhead" x="10" y="10" width="80" height="26"/><text x="50" y="27" text-anchor="middle" class="head">설비번호</text>
       <rect class="colhead" x="90" y="10" width="80" height="26"/><text x="130" y="27" text-anchor="middle" class="head">공정명</text>
       <rect class="colhead" x="170" y="10" width="90" height="26"/><text x="215" y="27" text-anchor="middle" class="head">온도_섭씨</text>
 
-      <g><rect class="cell hl" x="10" y="36" width="80" height="26"/><text x="50" y="53" text-anchor="middle">EQ-02</text></g>
-      <g><rect class="cell hl" x="90" y="36" width="80" height="26"/><text x="130" y="53" text-anchor="middle">산화</text></g>
-      <g><rect class="cell hl" x="170" y="36" width="90" height="26"/><text x="215" y="53" text-anchor="middle">297.6</text></g>
+      <rect class="cell hl" x="10" y="36" width="80" height="26"/><text x="50" y="53" text-anchor="middle">EQ-02</text>
+      <rect class="cell hl" x="90" y="36" width="80" height="26"/><text x="130" y="53" text-anchor="middle">산화</text>
+      <rect class="cell hl" x="170" y="36" width="90" height="26"/><text x="215" y="53" text-anchor="middle">297.6</text>
 
-      <g><rect class="cell" x="10" y="62" width="80" height="26"/><text x="50" y="79" text-anchor="middle">EQ-04</text></g>
-      <g><rect class="cell" x="90" y="62" width="80" height="26"/><text x="130" y="79" text-anchor="middle">식각</text></g>
-      <g><rect class="cell" x="170" y="62" width="90" height="26"/><text x="215" y="79" text-anchor="middle">300.4</text></g>
+      <rect class="cell" x="10" y="62" width="80" height="26"/><text x="50" y="79" text-anchor="middle">EQ-04</text>
+      <rect class="cell" x="90" y="62" width="80" height="26"/><text x="130" y="79" text-anchor="middle">식각</text>
+      <rect class="cell" x="170" y="62" width="90" height="26"/><text x="215" y="79" text-anchor="middle">300.4</text>
 
-      <g><rect class="cell" x="10" y="88" width="80" height="26"/><text x="50" y="105" text-anchor="middle">EQ-02</text></g>
-      <g><rect class="cell" x="90" y="88" width="80" height="26"/><text x="130" y="105" text-anchor="middle">세정</text></g>
-      <g><rect class="cell" x="170" y="88" width="90" height="26"/><text x="215" y="105" text-anchor="middle">296.9</text></g>
+      <rect class="cell" x="10" y="88" width="80" height="26"/><text x="50" y="105" text-anchor="middle">EQ-02</text>
+      <rect class="cell" x="90" y="88" width="80" height="26"/><text x="130" y="105" text-anchor="middle">세정</text>
+      <rect class="cell" x="170" y="88" width="90" height="26"/><text x="215" y="105" text-anchor="middle">296.9</text>
 
-      <text x="290" y="55" class="head">← 이 행 하나가</text>
-      <text x="290" y="75">{"설비번호": "EQ-02",</text>
-      <text x="300" y="93">"공정명": "산화",</text>
-      <text x="300" y="111">"온도_섭씨": 297.6}</text>
-      <text x="290" y="135" fill="var(--muted)">2~3차시의 딕셔너리 하나와 같다!</text>
+      <text x="285" y="53" class="head">← 이 행 하나가</text>
+      <text x="285" y="75">{"설비번호": "EQ-02",</text>
+      <text x="295" y="93">"공정명": "산화",</text>
+      <text x="295" y="111">"온도_섭씨": 297.6}</text>
+      <text x="285" y="140">2차시의 딕셔너리 하나와 같다</text>
     </svg>
-    <p class="img-caption">DataFrame은 결국 "딕셔너리의 리스트"와 같은 모양이다 — 행 하나하나가
-    2~3차시에서 만들었던 딕셔너리이고, 표 전체가 그 딕셔너리들의 리스트다.</p>
+    <p class="img-caption">행 하나는 2차시에 만든 딕셔너리 하나, 열 이름은 딕셔너리의 키, 표 전체는 딕셔너리들을 담은 리스트다.
+    차이는 Pandas가 이것을 표 모양으로 보여주고, 표 전체에 한 번에 명령을 내릴 수 있게 해 준다는 점이다.</p>
 
+    <h3>표의 크기와 열 이름 확인하기</h3>
     <div class="code-block">
-      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>파이썬의 '딕셔너리의 리스트'와 pandas DataFrame의 관계를 학교 출석부에 비유해서 쉽게 설명해줘.</code></pre>
-    </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 비유 속에서 "행 하나 = 딕셔너리 하나", "열 이름 = 키"가 맞게 짝지어졌는지 확인하자.</p>
-
-    <h3>기본 정보 확인하기</h3>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(df.shape)     # (행 개수, 열 개수)
-print(df.columns)   # 열 이름 목록</code></pre>
+      <div class="code-label"><span>Python — 기본 정보 확인</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.shape)
+print(df.columns)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(100, 8)
-Index(['측정시간', '로트번호', '설비번호', '공정명', '온도_섭씨', '압력_Pa', '가스유량_slm', '합격여부'], dtype='object')</pre>
+Index(['측정시간', '로트번호', '설비번호', '공정명', '온도_섭씨', '압력_Pa', '가스유량_slm', '합격여부'], dtype='str')</pre>
     </div>
-
-    <h3>먼저 아주 작은 표로 오늘 배울 것 미리 보기</h3>
     <ul class="pt-list">
-      <li>오늘 배울 "열 선택 → 조건 검색 → 정렬 → loc/iloc" — 100행짜리 반도체 데이터로 연습하기 전, 학생 4명짜리 작은 표로 먼저 감 잡기</li>
-      <li>아래 코드를 지금 다 이해할 필요는 없음 — 이번 차시를 마칠 때쯤 이 다섯 줄에 익숙해지는 것이 목표</li>
+      <li><code>df.shape</code> — (행 개수, 열 개수). 기록 100건, 항목 8개라는 뜻이다.</li>
+      <li><code>df.columns</code> — 열 이름 목록. 뒤에서 열을 꺼낼 때 이 이름을 <b>글자 그대로</b> 쓴다.</li>
+      <li>둘 다 뒤에 괄호 <code>()</code>를 붙이지 않는다. <code>head()</code>는 "해 줘"라는 명령이라 괄호가 있고,
+        <code>shape</code>·<code>columns</code>는 표가 원래 가진 정보라 괄호가 없다.</li>
+      <li>Pandas 버전에 따라 마지막 <code>dtype='str'</code>이 <code>dtype='object'</code>로 보일 수 있다. 둘 다 정상이다.</li>
     </ul>
+  </section>
+
+  <section class="block">
+    <h2>열 선택 — 필요한 열만 꺼내 보기</h2>
+    <p>8개 열을 한꺼번에 보면 눈이 분산된다. 지금 궁금한 열만 꺼내 보자. 열 이름을 대괄호 <code>[ ]</code> 안에 넣는다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 아주 작은 표 만들기</span><button class="copy-btn">복사</button></div>
-      <pre><code>toy = pd.DataFrame({
-    "이름": ["지민", "하은", "서준", "예린"],
-    "점수": [90, 72, 88, 65],
-    "합격여부": [1, -1, 1, -1],
-})
-print(toy)</code></pre>
+      <div class="code-label"><span>Python — 열 하나</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df["온도_섭씨"].head())</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">   이름  점수  합격여부
-0  지민  90     1
-1  하은  72    -1
-2  서준  88     1
-3  예린  65    -1</pre>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">0    297.6
+1    300.4
+2    296.9
+3    297.2
+4    296.7
+Name: 온도_섭씨, dtype: float64</pre>
     </div>
-    <div class="explain-list">
-      <b>오늘 배울 것 미리 맛보기</b>
-      <ul>
-        <li><code>toy["점수"]</code> — 열 선택</li>
-        <li><code>toy[toy["점수"] &gt;= 80]</code> — 조건 검색</li>
-        <li><code>toy.sort_values("점수", ascending=False)</code> — 정렬</li>
-        <li><code>toy.loc[toy["합격여부"]==1, ["이름","점수"]]</code> — loc</li>
-        <li><code>toy.iloc[0:2]</code> — iloc</li>
-      </ul>
-    </div>
-    <div class="callout practice">
-      <b class="tag">직접 해보기</b>
-      위 다섯 줄을 하나씩 실행하며 결과를 확인해보자. 지금은 결과만 눈으로 훑어보고, 각각의
-      정확한 의미는 아래에서 반도체 데이터로 하나씩 자세히 배운다.
-    </div>
-  </section>
+    <ul class="pt-list">
+      <li>열 하나를 꺼내면 <b>Series(시리즈)</b>가 된다. 행 번호표가 붙은 값 한 줄이다. 맨 아래 <code>Name</code>은 열 이름,
+        <code>float64</code>는 실수(1차시의 float)라는 뜻이다.</li>
+      <li><code>.head()</code>를 붙이면 꺼낸 열에서도 앞 5개만 보여준다.</li>
+    </ul>
 
-  <section class="block">
-    <h2>열 선택 — 원하는 열만 보기</h2>
+    <p>여러 열을 함께 보고 싶으면 열 이름들을 <b>리스트로</b> 묶어서 넣는다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(df["온도_섭씨"])                 # 열 하나 (Series)
-print(df[["온도_섭씨", "압력_Pa"]])      # 열 여러 개 (대괄호 두 번!)</code></pre>
+      <div class="code-label"><span>Python — 여러 열 함께</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df[["설비번호", "온도_섭씨", "합격여부"]].head())</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">    설비번호  온도_섭씨  합격여부
+0  EQ-02  297.6     1
+1  EQ-04  300.4     1
+2  EQ-02  296.9    -1
+3  EQ-02  297.2     1
+4  EQ-01  296.7     1</pre>
     </div>
     <div class="callout warn">
-      <b class="tag">가장 흔한 함정</b>
-      열을 <b>여러 개</b> 선택할 때는 <code>df["온도_섭씨", "압력_Pa"]</code>처럼 대괄호를 한 번만
-      쓰면 오류가 난다. <code>df[["온도_섭씨", "압력_Pa"]]</code>처럼 <b>안쪽에 리스트</b>를 한 번
-      더 감싸야 한다(2차시에서 배운 리스트 <code>[ ]</code>를 대괄호 안에 넣는 것).
+      <b class="tag">주의 — 여러 열은 대괄호가 두 겹 [[ ]]</b>
+      <ul class="pt-list">
+        <li>바깥 <code>[ ]</code>는 "표에서 꺼내 줘", 안쪽 <code>[ ]</code>는 2차시에 배운 <b>리스트</b>(꺼낼 열 이름 목록)다.</li>
+        <li><code>df["설비번호", "온도_섭씨", "합격여부"]</code>처럼 한 겹만 쓰면 Pandas는 "설비번호, 온도_섭씨, 합격여부"라는
+          이름의 열 <b>하나</b>를 찾다가 <code>KeyError: ('설비번호', '온도_섭씨', '합격여부')</code>를 낸다.</li>
+        <li>열 하나는 한 겹 <code>df["온도_섭씨"]</code>, 여러 개는 두 겹 <code>df[["설비번호", "온도_섭씨"]]</code>. 가장 흔한 실수다.</li>
+      </ul>
+    </div>
+    <div class="callout concept">
+      <b class="tag">왜 여러 열을 함께 꺼내 볼까</b>
+      위 결과에서 2번 행은 EQ-02 설비, 온도 296.9도, 불합격(-1)이다. 합격여부 열만 봤다면 "불합격이 하나 있다"에서 끝났겠지만,
+      설비번호와 온도를 나란히 놓으니 "어느 기계에서, 몇 도일 때"까지 함께 읽힌다. 1차시에 말한 "여러 열 함께 보기"가 여기서 시작된다.
     </div>
   </section>
 
   <section class="block">
+    <span class="step-badge">STEP 02</span>
     <h2>조건 검색 — 원하는 행만 골라내기</h2>
+    <p>열 선택이 "세로줄 고르기"라면, 조건 검색은 <b>"가로줄(행) 고르기"</b>다. "설비번호가 EQ-02인 기록만", "불합격인 기록만"처럼
+    조건에 맞는 행만 남긴다. 정식 이름은 불리언 인덱싱(Boolean Indexing)이다. 불리언은 1차시에 배운 True/False다.</p>
+    <div class="callout concept">
+      <b class="tag">비유 — 엑셀 필터</b>
+      엑셀에서 설비번호 열의 필터 단추를 눌러 "EQ-02"에만 체크하면 EQ-02 행만 남는다. 조건 검색이 바로 그 일이다.
+      차이는 두 가지다. 코드로 남아 있어 언제든 다시 실행할 수 있고, 데이터가 10만 줄이어도 같은 한 줄이면 된다.
+    </div>
+
+    <h3>1단계 — 행마다 체크 표시(True/False) 붙이기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 조건식의 결과 보기</span><button class="copy-btn">복사</button></div>
+      <pre><code>check = df["설비번호"] == "EQ-02"
+print(check.head())</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">0     True
+1    False
+2     True
+3     True
+4    False
+Name: 설비번호, dtype: bool</pre>
+    </div>
     <ul class="pt-list">
-      <li>3차시 — <code>for</code>+<code>if</code>로 조건에 맞는 항목을 하나씩 확인</li>
-      <li>Pandas — 조건식 하나로 표 전체에서 한 번에 골라냄 = <b>조건 검색(불리언 인덱싱)</b></li>
+      <li><code>==</code>는 "같은가?"를 묻는 비교다(3차시). 표 전체 100행에 한꺼번에 물어보고, 행마다 True(맞다) 또는 False(아니다)를 붙인다.</li>
+      <li>위 <code>head()</code> 결과의 0·2·3번 행이 EQ-02라서 True, 1·4번 행은 EQ-04·EQ-01이라 False다.</li>
     </ul>
+
+    <h3>2단계 — True인 행만 남기기</h3>
     <div class="code-block">
       <div class="code-label"><span>Python — 특정 설비만 찾기</span><button class="copy-btn">복사</button></div>
       <pre><code>eq02 = df[df["설비번호"] == "EQ-02"]
@@ -227,16 +314,87 @@ print(eq02.shape)</code></pre>
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(25, 8)</pre>
     </div>
-    <div class="explain-list">
-      <b>동작 원리 — 2단계로 이해하기</b>
-      <ul>
-        <li><code>df["설비번호"] == "EQ-02"</code>: 모든 행에 대해 참/거짓(True/False) 목록을 만든다.</li>
-        <li><code>df[ 그 True/False 목록 ]</code>: True인 행만 남기고 나머지는 걸러낸다.</li>
-      </ul>
+    <p>안쪽 <code>df["설비번호"] == "EQ-02"</code>가 체크 표시 목록을 만들고, 바깥 <code>df[ ]</code>가 True인 행만 남긴다.
+    위에서 만든 <code>check</code>를 넣어 <code>df[check]</code>라고 써도 결과는 같다. 100행이 EQ-02 기록 25행으로 줄었다.</p>
+
+    <svg class="filter-svg" viewBox="0 0 660 215" role="img"
+         aria-label="조건 검색 그림. 왼쪽 원래 표 5행에 True와 False 체크 표시를 붙이고, True인 0, 2, 3번 행만 오른쪽 결과 표에 남는다">
+      <text x="90" y="18" text-anchor="middle" class="step-t">원래 표 df</text>
+      <rect class="colhead" x="20" y="28" width="40" height="26"/><text x="40" y="45" text-anchor="middle" class="head">행</text>
+      <rect class="colhead" x="60" y="28" width="100" height="26"/><text x="110" y="45" text-anchor="middle" class="head">설비번호</text>
+      <rect class="cell" x="20" y="54" width="40" height="26"/><text x="40" y="71" text-anchor="middle">0</text>
+      <rect class="cell" x="60" y="54" width="100" height="26"/><text x="110" y="71" text-anchor="middle">EQ-02</text>
+      <rect class="cell" x="20" y="80" width="40" height="26"/><text x="40" y="97" text-anchor="middle">1</text>
+      <rect class="cell" x="60" y="80" width="100" height="26"/><text x="110" y="97" text-anchor="middle">EQ-04</text>
+      <rect class="cell" x="20" y="106" width="40" height="26"/><text x="40" y="123" text-anchor="middle">2</text>
+      <rect class="cell" x="60" y="106" width="100" height="26"/><text x="110" y="123" text-anchor="middle">EQ-02</text>
+      <rect class="cell" x="20" y="132" width="40" height="26"/><text x="40" y="149" text-anchor="middle">3</text>
+      <rect class="cell" x="60" y="132" width="100" height="26"/><text x="110" y="149" text-anchor="middle">EQ-02</text>
+      <rect class="cell" x="20" y="158" width="40" height="26"/><text x="40" y="175" text-anchor="middle">4</text>
+      <rect class="cell" x="60" y="158" width="100" height="26"/><text x="110" y="175" text-anchor="middle">EQ-01</text>
+
+      <line class="farrow" x1="168" y1="106" x2="205" y2="106"/>
+      <polygon points="205,99 219,106 205,113" fill="var(--muted)"/>
+
+      <text x="285" y="18" text-anchor="middle" class="step-t">1단계: 체크 표시</text>
+      <rect class="colhead" x="225" y="28" width="120" height="26"/><text x="285" y="45" text-anchor="middle" class="head">== "EQ-02" ?</text>
+      <rect class="cell yes" x="225" y="54" width="120" height="26"/><text x="285" y="71" text-anchor="middle" class="yes-t">True</text>
+      <rect class="cell no" x="225" y="80" width="120" height="26"/><text x="285" y="97" text-anchor="middle" class="no-t">False</text>
+      <rect class="cell yes" x="225" y="106" width="120" height="26"/><text x="285" y="123" text-anchor="middle" class="yes-t">True</text>
+      <rect class="cell yes" x="225" y="132" width="120" height="26"/><text x="285" y="149" text-anchor="middle" class="yes-t">True</text>
+      <rect class="cell no" x="225" y="158" width="120" height="26"/><text x="285" y="175" text-anchor="middle" class="no-t">False</text>
+
+      <line class="farrow" x1="353" y1="106" x2="390" y2="106"/>
+      <polygon points="390,99 404,106 390,113" fill="var(--muted)"/>
+
+      <text x="500" y="18" text-anchor="middle" class="step-t">2단계: True만 남김</text>
+      <rect class="colhead" x="430" y="28" width="40" height="26"/><text x="450" y="45" text-anchor="middle" class="head">행</text>
+      <rect class="colhead" x="470" y="28" width="100" height="26"/><text x="520" y="45" text-anchor="middle" class="head">설비번호</text>
+      <rect class="cell yes" x="430" y="54" width="40" height="26"/><text x="450" y="71" text-anchor="middle">0</text>
+      <rect class="cell yes" x="470" y="54" width="100" height="26"/><text x="520" y="71" text-anchor="middle">EQ-02</text>
+      <rect class="cell yes" x="430" y="80" width="40" height="26"/><text x="450" y="97" text-anchor="middle">2</text>
+      <rect class="cell yes" x="470" y="80" width="100" height="26"/><text x="520" y="97" text-anchor="middle">EQ-02</text>
+      <rect class="cell yes" x="430" y="106" width="40" height="26"/><text x="450" y="123" text-anchor="middle">3</text>
+      <rect class="cell yes" x="470" y="106" width="100" height="26"/><text x="520" y="123" text-anchor="middle">EQ-02</text>
+      <text x="500" y="160" text-anchor="middle">행 번호 0, 2, 3은</text>
+      <text x="500" y="178" text-anchor="middle">원래 번호 그대로</text>
+    </svg>
+    <p class="img-caption">조건 검색은 두 단계다. ① 모든 행에 True/False 체크 표시를 붙이고, ② 체크(True)된 행만 줄 세워 새 표로 만든다.
+    그림은 앞 5행만 보여준 것이고, 실제로는 100행 전체에 같은 일이 한 번에 일어난다.</p>
+    <div class="callout warn">
+      <b class="tag">주의 — 원본은 그대로다</b>
+      <code>df[조건]</code>의 결과는 <b>새 표</b>다. <code>eq02 = ...</code>처럼 변수에 저장해야 다시 쓸 수 있고, 원래 <code>df</code>(100행)는 바뀌지 않는다.
     </div>
 
+    <h3>3차시 for+if와 비교하기</h3>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>3차시 방식 — 한 줄씩 직접 확인</th><th>오늘 방식 — 표 전체에 한 번에</th></tr>
+        <tr>
+          <td><pre style="margin:0;white-space:pre-wrap;">hot_equipment = []
+for eq in equipment_list:
+    if eq["온도_섭씨"] &gt; 305:
+        hot_equipment.append(eq["설비번호"])</pre></td>
+          <td><pre style="margin:0;white-space:pre-wrap;">hot = df[df["온도_섭씨"] &gt; 305]</pre></td>
+        </tr>
+      </table>
+    </div>
     <div class="code-block">
-      <div class="code-label"><span>Python — 불합격 데이터만 찾기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 온도가 305도를 넘는 기록</span><button class="copy-btn">복사</button></div>
+      <pre><code>hot = df[df["온도_섭씨"] &gt; 305]
+print(len(hot))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">13</pre>
+    </div>
+    <p>Pandas가 속으로는 3차시처럼 100행을 하나씩 확인하지만, 우리는 그 반복을 쓰지 않아도 된다. "100개의 <code>if</code>문을 한 줄로" 실행하는 셈이다.
+    표의 행 개수는 2차시에 배운 <code>len()</code>으로 센다.</p>
+
+    <h3>불합격 기록만 골라내기</h3>
+    <p>오늘 데이터의 <code>합격여부</code> 열은 <b>1 = 합격, -1 = 불합격</b>이다(0이 아니다).</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 불합격만 찾기</span><button class="copy-btn">복사</button></div>
       <pre><code>fail = df[df["합격여부"] == -1]
 print(fail.shape)</code></pre>
     </div>
@@ -244,171 +402,113 @@ print(fail.shape)</code></pre>
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(13, 8)</pre>
     </div>
-    <div class="callout warn">
-      <b class="tag">주의 — 원본은 그대로다</b>
-      <code>df[df["설비번호"] == "EQ-02"]</code>의 결과는 <b>새로운 표</b>다. <code>eq02 = ...</code>처럼
-      변수에 저장해야 이후에 계속 쓸 수 있고, 원본 <code>df</code>는 전혀 바뀌지 않는다.
+
+    <h3>고온 기록과 불합격 기록은 같은 기록일까</h3>
+    <p>공교롭게도 고온(305도 초과) 기록도 13건, 불합격 기록도 13건이다. 같은 13건일까? 고온 기록 <code>hot</code> 안에서 불합격만 다시 골라 보자.
+    조건 검색은 이미 골라낸 표에 한 번 더 할 수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 골라낸 표에서 한 번 더 고르기</span><button class="copy-btn">복사</button></div>
+      <pre><code>hot_fail = hot[hot["합격여부"] == -1]
+print(len(hot_fail))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">3</pre>
+    </div>
+    <div class="callout concept">
+      <b class="tag">숫자가 같다고 같은 기록은 아니다</b>
+      고온 13건 중 불합격은 3건뿐이다. 거꾸로 말하면 불합격 13건 중 10건은 온도가 305도 이하였다. "온도가 높으면 불합격"이라는
+      짐작은 이 데이터에서는 잘 맞지 않는다. 1차시에 "온도 하나만으로는 불합격 대부분이 설명되지 않는다"고 한 것과 같은 이야기다.
+      열 하나의 숫자만 보지 말고, 골라낸 기록을 다른 열과 함께 확인하는 습관이 필요한 이유다.
     </div>
   </section>
 
   <section class="block">
-    <h2>정렬 — 값이 높은/낮은 순서로 보기</h2>
+    <h2>정렬 — 값의 크기 순서로 줄 세우기</h2>
+    <p>키 순서대로 줄을 서듯, 한 열의 값 크기 순서로 행을 다시 늘어놓는 것이 정렬이다. "가장 뜨거웠던 기록은?"처럼 극단의 값을 찾을 때 쓴다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 온도가 높은 순서로 상위 5건</span><button class="copy-btn">복사</button></div>
       <pre><code>df.sort_values("온도_섭씨", ascending=False).head(5)</code></pre>
     </div>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th></th><th>측정시간</th><th>로트번호</th><th>설비번호</th><th>공정명</th><th>온도_섭씨</th><th>압력_Pa</th><th>가스유량_slm</th><th>합격여부</th></tr>
-        <tr><td>30</td><td>2024-03-11 18:00</td><td>LOT-0324</td><td>EQ-03</td><td>포토</td><td>310.1</td><td>1010.0</td><td>51.55</td><td>1</td></tr>
-        <tr><td>15</td><td>2024-03-06 16:00</td><td>LOT-0089</td><td>EQ-03</td><td>증착</td><td>308.6</td><td>1006.8</td><td>51.56</td><td>1</td></tr>
-        <tr><td>57</td><td>2024-03-20 03:00</td><td>LOT-0159</td><td>EQ-01</td><td>증착</td><td>308.4</td><td>1014.4</td><td>51.59</td><td>1</td></tr>
-        <tr><td>40</td><td>2024-03-13 15:00</td><td>LOT-0174</td><td>EQ-04</td><td>증착</td><td>308.4</td><td>1008.8</td><td>49.92</td><td>1</td></tr>
-        <tr><td>11</td><td>2024-03-05 12:00</td><td>LOT-0192</td><td>EQ-04</td><td>증착</td><td>308.2</td><td>1033.0</td><td>52.46</td><td>-1</td></tr>
-      </table>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <div class="tablewrap">
+        <table class="data-preview">
+          <tr><th></th><th>측정시간</th><th>로트번호</th><th>설비번호</th><th>공정명</th><th>온도_섭씨</th><th>압력_Pa</th><th>가스유량_slm</th><th>합격여부</th></tr>
+          <tr><td>30</td><td>2024-03-11 18:00</td><td>LOT-0324</td><td>EQ-03</td><td>포토</td><td>310.1</td><td>1010.0</td><td>51.55</td><td>1</td></tr>
+          <tr><td>15</td><td>2024-03-06 16:00</td><td>LOT-0089</td><td>EQ-03</td><td>증착</td><td>308.6</td><td>1006.8</td><td>51.56</td><td>1</td></tr>
+          <tr><td>57</td><td>2024-03-20 03:00</td><td>LOT-0159</td><td>EQ-01</td><td>증착</td><td>308.4</td><td>1014.4</td><td>51.59</td><td>1</td></tr>
+          <tr><td>40</td><td>2024-03-13 15:00</td><td>LOT-0174</td><td>EQ-04</td><td>증착</td><td>308.4</td><td>1008.8</td><td>49.92</td><td>1</td></tr>
+          <tr><td>11</td><td>2024-03-05 12:00</td><td>LOT-0192</td><td>EQ-04</td><td>증착</td><td>308.2</td><td>1033.0</td><td>52.46</td><td>-1</td></tr>
+        </table>
+      </div>
     </div>
-    <p>맨 왼쪽 숫자(30, 15, 57, 40, 11)는 원래 표에서의 행 번호(인덱스)다 — 정렬해도 행 번호는 원래
-    번호를 그대로 따라간다. 온도 상위 5건 중 4건이 합격(1), 1건만 불합격(-1)이다.</p>
+    <ul class="pt-list">
+      <li><code>sort_values("열 이름")</code> — 그 열을 기준으로 줄 세운다. <code>ascending=False</code>는 "큰 값부터"(내림차순)라는 뜻이다.</li>
+      <li>맨 왼쪽 행 번호(30, 15, 57 …)는 원래 표의 번호가 그대로 따라온다. 정렬은 순서만 바꾼다.</li>
+      <li>가장 뜨거운 5건 중 불합격은 1건(11번 행)뿐이다. 앞에서 본 것처럼 온도가 높다고 모두 불합격은 아니다.</li>
+    </ul>
     <div class="callout warn">
-      <b class="tag">주의 — 기본값은 오름차순</b>
-      <code>ascending</code>을 생략하면 기본값은 <code>True</code>(오름차순, 작은 값이 먼저)다.
-      내림차순(큰 값이 먼저)을 보려면 반드시 <code>ascending=False</code>를 써야 한다.
+      <b class="tag">주의 — 기본은 작은 값부터</b>
+      <code>ascending</code>을 빼면 작은 값부터(오름차순) 나온다. 큰 값부터 보려면 <code>ascending=False</code>를 꼭 쓴다.
+      <code>False</code>는 첫 글자가 대문자다. <code>false</code>로 쓰면 <code>NameError: name 'false' is not defined</code>가 난다.
     </div>
   </section>
 
   <section class="block">
-    <h2>loc / iloc — 이름과 위치로 정확히 접근하기</h2>
+    <h2>loc 맛보기 — 행 이름과 열 이름으로 값 꺼내기</h2>
+    <p>오늘은 구경과 아주 기본적인 사용만 한다. 값을 꺼낼 때뿐 아니라 <b>조건에 맞는 행의 값을 고칠 때도</b> 쓸 수 있다(5차시에서 잠깐 다시 본다). 모양만 눈에 익혀 두자.</p>
     <ul class="pt-list">
-      <li>지금까지 — 열 이름으로 열 전체 선택(<code>df["열이름"]</code>), 조건으로 행 전체 필터(<code>df[조건]</code>)</li>
-      <li>필요할 때가 많음 — <b>"몇 번째 행의, 이 열들만"</b>처럼 행과 열을 동시에 정확히 짚기</li>
-      <li>이때 쓰는 것 = <code>loc</code>, <code>iloc</code> — 데이터 분석에서 자주 쓰는 접근법, 충분히 연습 필요</li>
+      <li><code>df.loc[행, 열]</code> — 대괄호 안을 쉼표로 나눠 <b>앞은 행, 뒤는 열</b>을 적는다.</li>
+      <li>성적표에서 "지민(행)의 국어(열) 점수"를 찾는 것과 같다. 행은 왼쪽 행 번호표, 열은 열 이름으로 부른다.</li>
     </ul>
-    <div class="explain-list">
-      <b>loc vs iloc — 가장 중요한 차이</b>
-      <ul>
-        <li><b>loc</b> — <b>이름(라벨)</b>로 찾는다. 행 인덱스 값과 열 이름을 그대로 쓴다.</li>
-        <li><b>iloc</b> — <b>위치(정수)</b>로 찾는다. 앞에서부터 몇 번째 행/열인지 0부터 센다
-        (2차시에서 배운 리스트의 인덱스 번호와 같은 방식).</li>
-      </ul>
-    </div>
-
-    <h3>loc — 이름(라벨)로 찾기</h3>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code># 행 하나 + 열 하나
-print(df.loc[0, "온도_섭씨"])
-
-# 조건으로 행을 고르면서, 보고 싶은 열도 함께 지정
-eq02_view = df.loc[df["설비번호"] == "EQ-02", ["로트번호", "온도_섭씨", "합격여부"]]
+      <div class="code-label"><span>Python — 0번 행의 온도 하나 꺼내기</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.loc[0, "온도_섭씨"])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">297.6</pre>
+    </div>
+    <p>행 자리에 조건을 넣으면 "조건에 맞는 행의, 이 열들만"을 한 번에 고를 수 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 조건과 열 이름을 함께</span><button class="copy-btn">복사</button></div>
+      <pre><code>eq02_view = df.loc[df["설비번호"] == "EQ-02", ["로트번호", "온도_섭씨", "합격여부"]]
 print(eq02_view.head())</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">297.6
-        로트번호  온도_섭씨  합격여부
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">        로트번호  온도_섭씨  합격여부
 0   LOT-0141  297.6     1
 2   LOT-0156  296.9    -1
 3   LOT-0224  297.2     1
 8   LOT-0054  294.4     1
 14  LOT-0375  303.4     1</pre>
     </div>
-    <div class="explain-list">
-      <b>동작 원리</b>
-      <ul>
-        <li><code>df.loc[행조건, 열이름목록]</code> — 대괄호 안이 <b>"행, 열"</b> 두 부분으로
-        나뉜다. 앞은 위에서 배운 조건 검색과 똑같고, 뒤는 보고 싶은 열 이름 리스트다.</li>
-        <li>열 부분을 생략하면(<code>df.loc[조건]</code>) 조건에 맞는 <b>모든 열</b>이 나온다 —
-        지금까지 써온 <code>df[조건]</code>과 사실상 같은 결과다.</li>
-      </ul>
+    <div class="callout concept">
+      <b class="tag">구경만 — iloc</b>
+      <code>loc</code>과 짝인 <code>iloc</code>은 이름이 아니라 <b>위치(0부터 센 순서)</b>로 자른다. 2차시 리스트 슬라이싱처럼 끝 번호는 빠진다.
+      아래 코드는 위치 0, 1, 2인 세 행을 보여준다. 오늘은 실행만 해 본다. 뒤 차시에서는 쓰지 않으니, 이런 방법도 있다는 것만 알아두자.
     </div>
-
-    <h3>iloc — 위치(정수)로 찾기</h3>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code># 첫 번째 행 (위치 0)
-print(df.iloc[0])
-
-# 앞에서 3개 행, 앞에서 2개 열
-print(df.iloc[0:3, 0:2])
-
-# 맨 마지막 행
-print(df.iloc[-1])</code></pre>
+      <div class="code-label"><span>Python — 구경만: 앞에서 세 행</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.iloc[0:3])</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">측정시간        2024-03-01 21:00
-로트번호                LOT-0141
-설비번호                   EQ-02
-공정명                       산화
-온도_섭씨                  297.6
-압력_Pa                 1005.8
-가스유량_slm               50.02
-합격여부                       1
-Name: 0, dtype: object
-               측정시간      로트번호
-0  2024-03-01 21:00  LOT-0141
-1  2024-03-02 04:00  LOT-0122
-2  2024-03-02 08:00  LOT-0156
-측정시간        2024-04-02 22:00
-로트번호                LOT-0179
-설비번호                   EQ-03
-공정명                       증착
-온도_섭씨                  300.9
-압력_Pa                 1004.8
-가스유량_slm               46.42
-합격여부                       1
-Name: 99, dtype: object</pre>
-    </div>
-    <div class="callout warn">
-      <b class="tag">주의 — loc과 iloc의 슬라이스 범위가 다르다</b>
-      <code>df.loc[0:2]</code>는 인덱스 0, 1, <b>2까지 포함</b>해 3개 행을 돌려주지만,
-      <code>df.iloc[0:3]</code>은 파이썬 리스트 슬라이싱과 똑같이 <b>끝 번호를 포함하지 않아</b>
-      위치 0, 1, 2인 3개 행을 돌려준다. "숫자만 보면 헷갈리지만 결과 개수는 같다"는 점,
-      "loc은 끝 포함, iloc은 끝 미포함"이라는 규칙을 꼭 기억하자.
-    </div>
-
-    <div class="code-block">
-      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>pandas 초보야. loc과 iloc 슬라이스에서 끝 번호가 포함되는지를 묻는 OX 문제 3개를 내줘. 내가 답하면 그때 정답과 이유를 알려줘.</code></pre>
-    </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: AI 정답이 "loc은 끝 포함, iloc은 끝 미포함" 규칙과 맞는지, df.loc[0:2]와 df.iloc[0:2]를 직접 실행해 행 개수로 확인하자.</p>
-
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>구분</th><th>loc</th><th>iloc</th></tr>
-        <tr><td>기준</td><td>이름(라벨) — 인덱스 값, 열 이름</td><td>위치(정수) — 0부터 센 순서</td></tr>
-        <tr><td>행 하나 예시</td><td><code>df.loc[0]</code></td><td><code>df.iloc[0]</code></td></tr>
-        <tr><td>조건으로 행 고르기</td><td><code>df.loc[df["합격여부"]==-1]</code></td><td>조건을 바로 넣으면 오류 → loc 사용</td></tr>
-        <tr><td>슬라이스 끝 번호</td><td>포함</td><td>미포함</td></tr>
-      </table>
-    </div>
-
-    <div class="callout danger">
-      <b class="tag">오류 — iloc에 열 이름을 넣으면?</b>
-      <code>df.iloc[0, "온도_섭씨"]</code>처럼 <code>iloc</code>에 열 <b>이름</b>을 넣으면
-      <code>ValueError</code>가 난다. <code>iloc</code>은 오직 정수 위치만 받는다 — 열 이름이
-      몇 번째 열인지 알고 싶다면 <code>df.columns.get_loc("온도_섭씨")</code>로 먼저 확인하거나,
-      이름으로 접근할 때는 <code>loc</code>을 쓰면 된다.
-    </div>
-
-    <div class="explain-list">
-      <b>언제 무엇을 쓸까?</b>
-      <ul>
-        <li>조건으로 행을 거르면서 특정 열도 같이 보고 싶다 → <b>loc</b></li>
-        <li>"처음 5행", "마지막 3행"처럼 순서(위치)로 잘라내고 싶다 → <b>iloc</b></li>
-        <li>반복문에서 <code>i</code>번째 행에 차례로 접근하고 싶다 → <b>iloc</b></li>
-      </ul>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">               측정시간      로트번호   설비번호 공정명  온도_섭씨   압력_Pa  가스유량_slm  합격여부
+0  2024-03-01 21:00  LOT-0141  EQ-02  산화  297.6  1005.8     50.02     1
+1  2024-03-02 04:00  LOT-0122  EQ-04  식각  300.4  1010.5     49.22     1
+2  2024-03-02 08:00  LOT-0156  EQ-02  세정  296.9  1007.6     50.91    -1</pre>
     </div>
   </section>
 
   <section class="block">
-    <h2>종합 — 3차시 함수와 Pandas 비교하기</h2>
-    <ul class="pt-list">
-      <li>3차시 — <code>judge_pass</code> 함수 + <code>for</code> 반복문으로 EQ-02 불합격 건수를 세려면 여러 줄 필요</li>
-      <li>Pandas 조건 검색 조합 → 훨씬 짧아짐</li>
-    </ul>
+    <span class="step-badge">STEP 03</span>
+    <h2>종합 — EQ-02 불합격률과 "따로 떼어 보기"</h2>
+    <p>오늘의 핵심 질문 "EQ-02에서 발생한 불합격은 몇 건인가?"에 답해 보자. 앞에서 만든 <code>eq02</code>(EQ-02 기록 25건) 안에서 불합격만 한 번 더 고른다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 종합 실습</span><button class="copy-btn">복사</button></div>
       <pre><code>eq02_fail = eq02[eq02["합격여부"] == -1]
 fail_rate = len(eq02_fail) / len(eq02) * 100
 
@@ -420,109 +520,163 @@ print(f"EQ-02 불합격률: {fail_rate:.1f}%")</code></pre>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">EQ-02 불합격 건수: 5건
 EQ-02 불합격률: 20.0%</pre>
     </div>
-    <div class="callout concept">
-      <b class="tag">비교해보기</b>
-      3차시라면 <code>for eq in equipment_list: if judge_pass(...) == "불합격": count += 1</code>처럼
-      반복문+조건문+함수를 조합해야 했다. Pandas는 <code>df[조건]</code> 한 줄로 "100개의 if문"을
-      한 번에 실행하는 셈이다 — 이것이 표 데이터를 다룰 때 Pandas를 쓰는 이유다.
+    <ul class="pt-list">
+      <li>불합격률 = 불합격 건수 ÷ 전체 건수 × 100. 1차시에 f-string으로 불합격률을 출력한 것과 같은 계산이다.</li>
+      <li>3차시라면 <code>for</code>로 25건을 돌며 <code>if</code>로 확인하고 <code>count += 1</code>을 했을 일이다. 지금은 조건 검색 한 줄과 <code>len()</code>이면 된다.</li>
+    </ul>
+
+    <h3>여러 열 함께 보기 — 불합격 5건은 어떤 기록일까</h3>
+    <p>"5건"이라는 숫자에서 멈추지 말고, 그 5건의 다른 열도 꺼내 보자. 앞에서 배운 열 선택(대괄호 두 겹)을 그대로 쓴다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 불합격 5건 자세히 보기</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(eq02_fail[["로트번호", "공정명", "온도_섭씨"]])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">        로트번호 공정명  온도_섭씨
+2   LOT-0156  세정  296.9
+21  LOT-0074  식각  299.3
+44  LOT-0218  식각  304.9
+84  LOT-0217  증착  301.4
+85  LOT-0162  세정  307.8</pre>
+    </div>
+    <ul class="pt-list">
+      <li><b>온도와 함께 보기</b>: 5건 중 4건은 학습용 정상 범위(295~305℃, 데이터 설명서의 교육용 기준) 안이다. 온도만으로는 설명되지 않는다.</li>
+      <li><b>공정명과 함께 보기</b>: 세정 2건, 식각 2건, 증착 1건으로 한 공정에 몰려 있지 않다.</li>
+      <li>→ 온도나 공정 하나로는 설명되지 않으니 "<b>EQ-02라는 설비 쪽</b>을 더 살펴봐야 하지 않을까?"라는 질문이 생긴다. 아직은 질문일 뿐이다.</li>
+    </ul>
+
+    <h3>설비별로 따로 떼어 보면</h3>
+    <p>같은 방법으로 네 설비를 하나씩 골라 세면 아래 표가 된다(EQ-04는 아래 "직접 해보기"에서 직접 구한다).</p>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>설비번호</th><th>전체 기록</th><th>불합격</th><th>불합격률</th></tr>
+        <tr><td>EQ-01</td><td>31건</td><td>2건</td><td>6.5%</td></tr>
+        <tr><td>EQ-02</td><td>25건</td><td><b>5건</b></td><td><b>20.0%</b></td></tr>
+        <tr><td>EQ-03</td><td>22건</td><td>1건</td><td>4.5%</td></tr>
+        <tr><td>EQ-04</td><td>22건</td><td><b>5건</b></td><td><b>22.7%</b></td></tr>
+        <tr><td>전체</td><td>100건</td><td>13건</td><td>13.0%</td></tr>
+      </table>
+    </div>
+    <ul class="pt-list">
+      <li><b>전체만 보면</b> 13.0%다. 설비 하나하나의 차이가 평균 속에 묻힌다.</li>
+      <li><b>따로 떼어 보면</b> EQ-02·EQ-04는 다섯 건 중 한 건꼴, EQ-01·EQ-03은 열다섯~스물두 건 중 한 건꼴로 불합격이다.</li>
+      <li><b>건수와 비율은 다를 수 있다.</b> EQ-02와 EQ-04는 불합격 건수(5건)가 같지만, EQ-04는 기록이 22건으로 더 적어서 비율은 더 높다.
+        비교할 때는 "몇 건"과 함께 "전체 중 몇 %"를 본다.</li>
+    </ul>
+    <div class="callout practice">
+      <b class="tag">직접 해보기</b>
+      위 종합 코드에서 <code>"EQ-02"</code>를 <code>"EQ-04"</code>로 바꿔 EQ-04의 불합격 건수와 불합격률을 구해 보자.
+      표의 5건, 22.7%가 나오면 성공이다. (노트북 8단계 "직접 해보기" 셀)
+    </div>
+    <div class="callout warn">
+      <b class="tag">그렇다고 "EQ-04가 불량의 원인이다"라고 말해도 될까?</b>
+      <ul class="pt-list">
+        <li>아직은 안 된다. 기록이 22건뿐이라 한두 건만 달라져도 비율이 크게 바뀐다. 우연일 수도 있다.</li>
+        <li>지금 말할 수 있는 것은 "EQ-02와 EQ-04를 <b>원인 후보</b>로 더 살펴볼 만하다"까지다. 1차시의 "용의자 ≠ 범인"과 같다.</li>
+        <li>설비끼리 제대로 비교하는 법은 7차시, 원인 후보를 좁히는 법은 8차시에 배운다. 오늘은 "따로 떼어 보면 보인다"까지 기억하자.</li>
+      </ul>
     </div>
   </section>
 
   <section class="block">
     <h2>실습: Pandas 기본기 따라 하기</h2>
+    <p>학생용 노트북 <code>week04_student.ipynb</code>를 열고 위에서 아래로 차례대로 진행한다. <code>____</code>(밑줄 네 개)로 비어 있는 곳만 채우면 된다.</p>
+    <div class="callout warn">
+      <b class="tag">체크포인트 — df는 1단계에서 만든다</b>
+      모든 단계가 1단계에서 읽은 <code>df</code>를 쓴다. <code>NameError: name 'df' is not defined</code>가 나면 1단계 셀부터 다시 실행한다.
+    </div>
     <div class="step">
       <div class="num">1</div>
-      <div class="content"><b>데이터 읽기</b> — <code>read_csv()</code>로 CSV를 읽고
-      <code>df.head()</code>, <code>df.shape</code>, <code>df.columns</code>를 확인한다.
-      (노트북 1~2단계)</div>
+      <div class="content"><b>데이터 읽고 생김새 보기</b> — <code>read_csv()</code>로 읽고 <code>head()</code>, <code>shape</code>, <code>columns</code>를 확인한다. (노트북 1~2단계)</div>
     </div>
     <div class="step">
       <div class="num">2</div>
-      <div class="content"><b>열 선택</b> — 온도 열 하나, 온도+압력 두 열을 각각 선택해본다.
-      (노트북 3단계)</div>
+      <div class="content"><b>열 선택</b> — 온도 열 하나, 설비번호·온도·합격여부 세 열을 꺼낸다. 대괄호 두 겹을 직접 쳐 본다. (노트북 3단계)</div>
     </div>
     <div class="step">
       <div class="num">3</div>
-      <div class="content"><b>조건 검색</b> — EQ-02만, 그리고 불합격만 각각 골라내 행 개수를 확인한다.
-      (노트북 4~5단계)</div>
+      <div class="content"><b>조건 검색</b> — 체크 표시(True/False)를 눈으로 본 뒤 EQ-02만, 305도 초과만, 불합격만 골라낸다. (노트북 4~5단계)</div>
     </div>
     <div class="step">
       <div class="num">4</div>
-      <div class="content"><b>정렬</b> — 온도 내림차순으로 정렬해 상위 5건을 확인한다.
-      (노트북 6단계)</div>
+      <div class="content"><b>정렬과 loc 맛보기</b> — 온도 상위 5건을 보고, <code>loc</code>으로 값을 꺼내 본다. <code>iloc</code>은 실행만 한다. (노트북 6~7단계)</div>
     </div>
     <div class="step">
       <div class="num">5</div>
-      <div class="content"><b>종합 실습</b> — EQ-02의 불합격 건수와 비율을 계산해 f-string으로
-      출력한다. 오늘의 질문에 답이 나오는 자리다. (노트북 7단계 · 학생용 Notebook의 TODO로 이어짐)</div>
+      <div class="content"><b>종합</b> — EQ-02 불합격률을 구하고, 불합격 5건을 여러 열과 함께 본다. "직접 해보기"로 EQ-04도 구한다.
+      먼저 끝난 사람은 도전 문제 1~2로 넘어간다. (노트북 8단계)</div>
     </div>
     <div class="step">
       <div class="num">6</div>
-      <div class="content"><b>loc/iloc 연습</b> — <code>loc</code>으로 조건+열을 동시에 골라보고,
-      <code>iloc</code>으로 앞에서 3개 행·2개 열을 잘라내며 둘의 차이를 직접 확인한다.
-      답을 구한 뒤 도구를 한 번 더 익히는 마무리 연습이다. (노트북 11단계 — 앞부분 "따라 해보기" 셀에서
-      위 loc/iloc 코드를 실행하고, 뒷부분 "직접 풀어보기" 셀에서 연습문제를 푼다)</div>
+      <div class="content"><b>AI 활용과 연습문제</b> — AI에게 질문하고, AI 코드를 실행해 보고, 세정 공정 연습문제와 설비 검색기로 마무리한다. (노트북 9~12단계)</div>
     </div>
-    <p>여기까지가 오늘의 핵심 실습이다. 이어서 노트북 8~10단계(오늘의 학습을 한 문장으로 정리 ·
-    AI에게 질문하기 · AI에게 코드 생성 요청하기)와 12단계(AI로 재미있는 미니 프로그램 만들기)로
-    마무리한다. 빠른 학습자는 노트북 8단계 아래의 "도전 문제 1~4" 셀(아래 "도전 실습" 절)을 먼저 풀어도 된다.</p>
   </section>
 
   <section class="block">
     <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
+        <h4>Pandas</h4><div class="en">Pandas</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>파이썬에서 표 데이터를 읽고 고르고 정리하는 도구.</dd>
+          <dt>쉬운 비유</dt><dd>파이썬 공구함 속 "표 전용 공구".</dd>
+          <dt>데이터에서의 예</dt><dd><code>import pandas as pd</code> 후 <code>pd.read_csv(...)</code></dd>
+          <dt>자주 하는 오해</dt><dd>엑셀을 대신하는 별도 프로그램이 아니다. 파이썬 안에서 코드로 쓰는 도구다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
         <h4>DataFrame</h4><div class="en">DataFrame</div>
         <dl>
           <dt>한 줄 설명</dt><dd>Pandas가 CSV를 읽어 만든 행·열 구조의 표.</dd>
-          <dt>쉬운 비유</dt><dd>엑셀 시트, 또는 딕셔너리가 여러 개 담긴 리스트.</dd>
-          <dt>데이터에서의 예</dt><dd><code>df = pd.read_csv(...)</code></dd>
-          <dt>자주 하는 오해</dt><dd>DataFrame이 리스트·딕셔너리와 완전히 다른 개념이라고 생각하기 쉽다. 사실 개념적으로 매우 비슷하다.</dd>
+          <dt>쉬운 비유</dt><dd>엑셀 시트 한 장, 또는 2차시의 "딕셔너리의 리스트".</dd>
+          <dt>데이터에서의 예</dt><dd><code>df</code> — 100행 8열의 공정 기록 표</dd>
+          <dt>자주 하는 오해</dt><dd>리스트·딕셔너리와 완전히 다른 것이라고 생각하기 쉽다. 행 하나가 딕셔너리 하나와 같은 모양이다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>Series</h4><div class="en">Series</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>DataFrame에서 열 하나를 꺼낸 것. 행 번호표가 붙은 값 한 줄.</dd>
+          <dt>쉬운 비유</dt><dd>엑셀 시트의 세로줄 하나.</dd>
+          <dt>데이터에서의 예</dt><dd><code>df["온도_섭씨"]</code></dd>
+          <dt>자주 하는 오해</dt><dd>열을 여러 개 꺼내도 Series라고 생각하기 쉽다. 두 개 이상이면 다시 DataFrame(표)이다.</dd>
         </dl>
       </div>
       <div class="term-card">
         <h4>열 선택</h4><div class="en">Column Selection</div>
         <dl>
-          <dt>한 줄 설명</dt><dd>원하는 열(들)만 골라 보는 방법.</dd>
-          <dt>쉬운 비유</dt><dd>엑셀에서 특정 세로줄(열)만 눈으로 훑어보는 것.</dd>
-          <dt>데이터에서의 예</dt><dd><code>df[["온도_섭씨", "압력_Pa"]]</code></dd>
-          <dt>자주 하는 오해</dt><dd>여러 열 선택 시 대괄호를 한 번만 쓰는 실수가 흔하다.</dd>
+          <dt>한 줄 설명</dt><dd>필요한 열(세로줄)만 꺼내 보는 것.</dd>
+          <dt>쉬운 비유</dt><dd>성적표에서 국어 점수 칸만 손가락으로 짚어 보기.</dd>
+          <dt>데이터에서의 예</dt><dd><code>df[["설비번호", "온도_섭씨"]]</code></dd>
+          <dt>자주 하는 오해</dt><dd>여러 열인데 대괄호를 한 겹만 쓰기 쉽다. 여러 열은 두 겹 <code>[[ ]]</code>이다.</dd>
         </dl>
       </div>
       <div class="term-card">
         <h4>조건 검색</h4><div class="en">Boolean Indexing</div>
         <dl>
-          <dt>한 줄 설명</dt><dd>조건에 맞는 행만 골라내는 방법.</dd>
-          <dt>쉬운 비유</dt><dd>3차시의 <code>if</code>를 표 전체에 한 번에 적용하는 것.</dd>
+          <dt>한 줄 설명</dt><dd>행마다 True/False를 붙인 뒤 True인 행만 남기는 것.</dd>
+          <dt>쉬운 비유</dt><dd>엑셀 필터에서 원하는 값에만 체크하기.</dd>
           <dt>데이터에서의 예</dt><dd><code>df[df["설비번호"] == "EQ-02"]</code></dd>
-          <dt>자주 하는 오해</dt><dd>결과가 원본을 바꾼다고 착각하기 쉽다. 실제로는 새 표가 만들어진다.</dd>
+          <dt>자주 하는 오해</dt><dd>원본 표가 바뀐다고 생각하기 쉽다. 결과는 새 표이고, 원본 <code>df</code>는 그대로다.</dd>
         </dl>
       </div>
       <div class="term-card">
         <h4>정렬</h4><div class="en">Sort</div>
         <dl>
-          <dt>한 줄 설명</dt><dd>특정 열을 기준으로 행의 순서를 바꾸는 것.</dd>
-          <dt>쉬운 비유</dt><dd>키 순서대로 줄을 서는 것.</dd>
+          <dt>한 줄 설명</dt><dd>한 열의 값 크기 순서로 행을 다시 늘어놓는 것.</dd>
+          <dt>쉬운 비유</dt><dd>키 순서대로 줄 서기.</dd>
           <dt>데이터에서의 예</dt><dd><code>df.sort_values("온도_섭씨", ascending=False)</code></dd>
-          <dt>자주 하는 오해</dt><dd>기본 정렬이 내림차순이라고 착각하기 쉽다. 기본값은 오름차순이다.</dd>
+          <dt>자주 하는 오해</dt><dd>기본이 큰 값부터라고 생각하기 쉽다. 기본은 작은 값부터(오름차순)다.</dd>
         </dl>
       </div>
       <div class="term-card">
-        <h4>loc</h4><div class="en">Label-based Indexing</div>
+        <h4>loc (맛보기)</h4><div class="en">Label-based Indexing</div>
         <dl>
-          <dt>한 줄 설명</dt><dd>행 인덱스 값·열 이름 같은 "이름(라벨)"으로 데이터를 골라내는 방법.</dd>
-          <dt>쉬운 비유</dt><dd>출석부에서 "이름"으로 학생을 찾는 것.</dd>
-          <dt>데이터에서의 예</dt><dd><code>df.loc[df["설비번호"]=="EQ-02", ["온도_섭씨"]]</code></dd>
-          <dt>자주 하는 오해</dt><dd><code>df.loc[0:2]</code>처럼 슬라이스를 쓸 때 끝 번호 2가 결과에서 빠진다고 착각하기 쉽다. loc은 끝 번호를 포함한다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>iloc</h4><div class="en">Position-based Indexing</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>0부터 세는 "위치(정수)"로 데이터를 골라내는 방법.</dd>
-          <dt>쉬운 비유</dt><dd>번호표 순서대로 "몇 번째" 학생인지로 찾는 것.</dd>
-          <dt>데이터에서의 예</dt><dd><code>df.iloc[0:3, 0:2]</code></dd>
-          <dt>자주 하는 오해</dt><dd>iloc에 열 이름을 넣을 수 있다고 착각하기 쉽다. iloc은 오직 정수 위치만 받는다.</dd>
+          <dt>한 줄 설명</dt><dd>행 이름(행 번호표)과 열 이름으로 원하는 칸을 꺼내는 방법.</dd>
+          <dt>쉬운 비유</dt><dd>성적표에서 "지민의 국어 점수" 칸 찾기.</dd>
+          <dt>데이터에서의 예</dt><dd><code>df.loc[0, "온도_섭씨"]</code> → 297.6</dd>
+          <dt>자주 하는 오해</dt><dd>대괄호 안의 순서를 바꿔 쓰기 쉽다. 쉼표 앞이 행, 뒤가 열이다.</dd>
         </dl>
       </div>
     </div>
@@ -531,326 +685,278 @@ EQ-02 불합격률: 20.0%</pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week04/week04_process_filtering.csv</code></li>
-      <li>100행 8열 — EQ-02와 EQ-04에 불합격이 각각 5건으로 상대적으로 많다(비율은 EQ-02 20.0%, EQ-04 약 22.7%). 전체 불합격은 100건 중 13건(13.0%)이다</li>
-      <li>자세한 설명: <a href="../../data/data_dictionary/week04_dictionary.html">데이터 설명서</a> 참고</li>
+      <li>파일: <code>data/weekly/week04/week04_process_filtering.csv</code> — 100행 8열. 교육용으로 만든 <b>가상 데이터</b>이며 실제 회사의 생산 기록이 아니다.</li>
+      <li>설비 4대(EQ-01~EQ-04)와 공정 5가지(산화·포토·식각·증착·세정)의 기록이 섞여 있다. 가상 데이터라 설비와 공정이 무작위로 짝지어져 있다(실제 공장에서는 설비마다 맡는 공정이 정해져 있다). 빈 칸(결측값)은 없다. 빈 칸 다루기는 5차시 주제다.</li>
+      <li><code>압력_Pa</code> 값은 1,000 근처로 만들어져 단위와 자릿수가 서로 맞지 않는다. 그래서 어떤 공정 조건을 나타내는지 단정할 수 없다. 이 과정에서는 크기를 해석하지 않고 기록끼리 비교만 한다.</li>
+      <li>열마다 자세한 설명은 <a href="../../data/data_dictionary/week04_dictionary.html">데이터 설명서</a>에 있다.</li>
     </ul>
   </section>
 
   <section class="block">
     <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
-      <b class="tag">오류 1</b>
-      <code>KeyError: '온도'</code> — 열 이름을 정확히 쓰지 않은 경우다(실제 열 이름은
-      <code>온도_섭씨</code>). <code>df.columns</code>로 정확한 이름을 먼저 확인하자.
+      <b class="tag">오류 1 — 열 이름을 틀렸을 때</b>
+      <ul class="pt-list">
+        <li><code>KeyError: '온도'</code></li>
+        <li>원인: 실제 열 이름은 <code>온도_섭씨</code>인데 <code>df["온도"]</code>라고 썼다. 띄어쓰기·밑줄 하나도 같아야 한다.</li>
+        <li>해결: <code>print(df.columns)</code>로 정확한 이름을 확인하고 복사해 쓴다.</li>
+      </ul>
     </div>
     <div class="callout danger">
-      <b class="tag">오류 2</b>
-      조건식에서 <code>df[df["설비번호"] = "EQ-02"]</code>처럼 <code>=</code>을 쓰면
-      <code>SyntaxError</code>가 난다. 비교는 항상 <code>==</code>다(3차시 복습).
-    </div>
-    <div class="callout warn">
-      <b class="tag">주의 — 대괄호 개수</b>
-      열 하나는 <code>df["열이름"]</code>(대괄호 1개), 열 여러 개는
-      <code>df[["열1", "열2"]]</code>(대괄호 2개, 안쪽이 리스트)다.
+      <b class="tag">오류 2 — 여러 열을 대괄호 한 겹으로 골랐을 때</b>
+      <ul class="pt-list">
+        <li><code>KeyError: ('설비번호', '온도_섭씨', '합격여부')</code></li>
+        <li>원인: <code>df["설비번호", "온도_섭씨", "합격여부"]</code>처럼 대괄호를 한 겹만 썼다.</li>
+        <li>해결: <code>df[["설비번호", "온도_섭씨", "합격여부"]]</code>처럼 두 겹으로 쓴다.</li>
+      </ul>
     </div>
     <div class="callout danger">
-      <b class="tag">오류 3</b>
-      <code>ValueError</code> — <code>df.iloc[0, "온도_섭씨"]</code>처럼 <code>iloc</code>에 열
-      이름을 넣은 경우다. <code>iloc</code>은 정수 위치만 받으므로, 열 이름으로 접근하려면
-      <code>loc</code>을 써야 한다.
+      <b class="tag">오류 3 — 조건식에 = 하나를 썼을 때</b>
+      <ul class="pt-list">
+        <li><code>SyntaxError: cannot assign to subscript here. Maybe you meant '==' instead of '='?</code></li>
+        <li>원인: <code>df[df["설비번호"] = "EQ-02"]</code>. <code>=</code>는 "저장하라"는 뜻이다(1차시).</li>
+        <li>해결: 비교는 항상 <code>==</code>(등호 두 개)다(3차시).</li>
+      </ul>
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 4 — 파일 경로가 틀렸을 때</b>
+      <ul class="pt-list">
+        <li><code>FileNotFoundError: [Errno 2] No such file or directory: 'week04_process_filtering.csv'</code></li>
+        <li>원인: 노트북 위치에서 CSV까지 가는 경로를 빼먹었거나 오타가 났다.</li>
+        <li>해결: 강의 코드의 <code>"../../data/weekly/week04/week04_process_filtering.csv"</code>를 그대로 복사해 쓴다.</li>
+      </ul>
     </div>
     <div class="callout warn">
-      <b class="tag">주의 — loc은 끝 포함, iloc은 끝 미포함</b>
-      <code>df.loc[0:2]</code>는 3개 행(0,1,2)을, <code>df.iloc[0:2]</code>는 2개 행(0,1)만
-      돌려준다. 슬라이스 결과 개수가 예상과 다르면 이 규칙을 먼저 떠올리자.
+      <b class="tag">주의 — 오류는 없는데 결과가 0행일 때</b>
+      <code>df[df["설비번호"] == "eq-02"]</code>처럼 소문자로 쓰면 오류 없이 <code>(0, 8)</code>, 즉 빈 표가 나온다.
+      글자는 대소문자와 하이픈까지 데이터와 똑같아야 같은 값으로 본다. 결과가 0행이면 먼저 철자를 확인하자.
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의 — shape와 columns에는 괄호가 없다</b>
+      <code>df.shape()</code>라고 쓰면 <code>TypeError: 'tuple' object is not callable</code>이 난다. <code>df.shape</code>로 쓴다.
     </div>
   </section>
 
   <section class="block">
+    <span class="step-badge">STEP 04</span>
     <h2>도전 실습</h2>
     <div class="callout practice">
-      <b class="tag">도전 문제 1</b>
-      <code>df[df["설비번호"] != "EQ-02"]</code>로 EQ-02가 아닌 나머지 설비의 기록만 골라내고,
-      그 안에서 불합격 비율을 계산해서 EQ-02(20.0%)와 비교해보자.
+      <b class="tag">도전 문제 1 — EQ-02가 아닌 설비 모아 보기</b>
+      <ul class="pt-list">
+        <li><code>!=</code>는 "같지 않다"를 묻는 비교다. <code>df[df["설비번호"] != "EQ-02"]</code>는 EQ-02를 뺀 나머지 기록을 고른다.</li>
+        <li>그 안에서 불합격률을 구해 EQ-02(20.0%)와 비교해 보자. 종합 실습 코드와 같은 모양이다.</li>
+        <li>노트북 8단계 끝의 "도전 문제 1" 셀에서 푼다.</li>
+      </ul>
     </div>
     <div class="callout practice">
-      <b class="tag">도전 문제 2</b>
-      <code>df.sort_values("온도_섭씨")</code>(오름차순)로 온도가 가장 낮았던 하위 5건을
-      확인해보자. 그 5건 중 불합격은 몇 건인가?
+      <b class="tag">도전 문제 2 — 온도가 가장 낮은 5건</b>
+      <ul class="pt-list">
+        <li><code>df.sort_values("온도_섭씨").head(5)</code>로 온도가 가장 낮은 5건을 고른다(<code>ascending</code>을 빼면 작은 값부터).</li>
+        <li>그 5건은 어느 설비의 기록인가? 불합격은 몇 건인가? 설비번호·온도·합격여부 세 열을 함께 꺼내 확인하자.</li>
+        <li>노트북 8단계 끝의 "도전 문제 2" 셀에서 푼다.</li>
+      </ul>
     </div>
-    <div class="callout practice">
-      <b class="tag">도전 문제 3 — loc</b>
-      <code>df.loc[(df["설비번호"]=="EQ-02") &amp; (df["합격여부"]==-1), ["로트번호", "온도_섭씨"]]</code>로
-      EQ-02에서 불합격한 로트의 로트번호와 온도만 뽑아보자.
-    </div>
-    <div class="callout practice">
-      <b class="tag">도전 문제 4 — iloc</b>
-      <code>df.iloc[-5:]</code>로 데이터의 마지막 5행을 확인하고,
-      <code>df.sort_values("온도_섭씨").iloc[-5:]</code>와 비교해 두 결과가 왜 다른지(원본 순서
-      vs 정렬된 순서) 설명해보자. 이 데이터는 이미 측정시간 순서로 저장돼 있어서
-      <code>df.sort_values("측정시간").iloc[-5:]</code>는 원본과 같은 결과가 나온다는 점도 확인해보자.
-    </div>
-    <p>노트북에서는 8단계 아래 "도전 문제 1~4" 셀에서 풀 수 있다(학생용은 일부가 빈칸 <code>____</code>이고,
-    빈칸 뒤 "참고" 셀에 다시 볼 강의 절이 적혀 있다).</p>
   </section>
 
   <section class="block">
     <h2>결과 정리 &amp; 퀴즈</h2>
-    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+    <p>더 많은 문제는 <a href="worksheet.html">실습지</a>에 있다.</p>
 
     <div class="quiz-item">
-      <div class="q">Q1. (객관식) 온도_섭씨와 압력_Pa 두 열을 함께 선택하는 올바른 코드는?</div>
+      <div class="q">Q1. (객관식) CSV 파일을 읽어 DataFrame으로 만드는 명령은?</div>
       <ul class="options">
-        <li>A. <code>df["온도_섭씨", "압력_Pa"]</code></li>
-        <li>B. <code>df[["온도_섭씨", "압력_Pa"]]</code></li>
-        <li>C. <code>df.온도_섭씨.압력_Pa</code></li>
-        <li>D. <code>df("온도_섭씨", "압력_Pa")</code></li>
+        <li>A. <code>pd.open_csv()</code></li>
+        <li>B. <code>pd.read_csv()</code></li>
+        <li>C. <code>pd.load_csv()</code></li>
+        <li>D. <code>print(csv)</code></li>
       </ul>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. 여러 열을 선택할 때는 대괄호 안에 리스트(대괄호)를 한 번 더 감싸야 한다.</div>
+      <div class="answer-box">정답: B. <code>pd.read_csv("경로", encoding="utf-8-sig")</code>로 읽는다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q2. (참/거짓) <code>df.sort_values("온도_섭씨")</code>는 기본적으로 온도가
-      높은 순서(내림차순)로 정렬한다.</div>
+      <div class="q">Q2. (객관식) 설비번호와 온도_섭씨 두 열을 함께 꺼내는 올바른 코드는?</div>
+      <ul class="options">
+        <li>A. <code>df["설비번호", "온도_섭씨"]</code></li>
+        <li>B. <code>df[["설비번호", "온도_섭씨"]]</code></li>
+        <li>C. <code>df("설비번호", "온도_섭씨")</code></li>
+      </ul>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 거짓. 기본값은 오름차순이다. 내림차순은
-      <code>ascending=False</code>를 명시해야 한다.</div>
+      <div class="answer-box">정답: B. 여러 열은 열 이름 리스트를 넣어 대괄호가 두 겹이 된다. A는 <code>KeyError</code>가 난다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q3. (빈칸) 조건에 맞는 행만 골라낼 때, 먼저 True/False 목록을 만드는
-      부분은 <code>df["합격여부"] ______ -1</code>이다.</div>
+      <div class="q">Q3. (결과 예측) 오늘 데이터의 0~4번 행 설비번호는 EQ-02, EQ-04, EQ-02, EQ-02, EQ-01이다.
+      <code>df["설비번호"] == "EQ-02"</code>의 앞 5개 결과는?</div>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: <code>==</code>. 비교 연산자를 써서 각 행이 조건을 만족하는지
-      True/False로 판단한 뒤, 그 목록으로 원본을 걸러낸다.</div>
+      <div class="answer-box">정답: True, False, True, True, False. 조건에 맞는 행에 True, 아닌 행에 False 체크 표시가 붙는다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q4. (서술) 3차시의 <code>for</code>+<code>if</code> 방식과 오늘 배운
-      Pandas 조건 검색의 차이를 한 문장으로 설명해보자.</div>
+      <div class="q">Q4. (참/거짓) <code>df.sort_values("온도_섭씨")</code>는 온도가 높은 기록부터 보여준다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 거짓. 기본은 작은 값부터(오름차순)다. 큰 값부터 보려면 <code>ascending=False</code>를 쓴다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q5. (참/거짓) EQ-02와 EQ-04는 불합격이 똑같이 5건이므로 불합격률도 같다.</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 거짓. 전체 기록 수가 다르다. EQ-02는 25건 중 5건(20.0%), EQ-04는 22건 중 5건(22.7%)이다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q6. (서술) 전체 불합격률(13.0%)만 볼 때와 설비별로 따로 떼어 볼 때, 무엇이 달라졌는지 한두 문장으로 설명해 보자.</div>
       <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">예시 답안: "3차시에는 반복문으로 값을 하나씩 확인하며 조건을
-      검사했지만, Pandas는 조건식 한 줄로 표 전체에서 한 번에 원하는 행을 골라낼 수 있다."</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q5. (객관식) <code>df.iloc[0:3]</code>이 돌려주는 행의 개수는?</div>
-      <ul class="options">
-        <li>A. 2개(위치 0, 1)</li>
-        <li>B. 3개(위치 0, 1, 2)</li>
-        <li>C. 4개(위치 0, 1, 2, 3)</li>
-      </ul>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. iloc의 슬라이스는 파이썬 리스트처럼 끝 번호(3)를
-      포함하지 않으므로 위치 0, 1, 2 세 개 행이 나온다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q6. (빈칸) 조건으로 행을 고르면서 특정 열도 함께 지정하고 싶을 때 쓰는
-      것은 <code>df.______[조건, 열이름목록]</code>이다.</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: <code>loc</code>. <code>iloc</code>은 정수 위치를 받는
-      방식이라, 조건식을 바로 넣으면 오류가 난다.</div>
+      <div class="answer-box">예시 답안: "전체로는 100건 중 13건(13.0%)이 불합격이라 평범해 보였지만, 설비별로 떼어 보니 EQ-04(22.7%)와 EQ-02(20.0%)가
+      EQ-03(4.5%)·EQ-01(6.5%)보다 훨씬 높았다. 다만 기록이 적어 원인이라고 단정할 수는 없고, 원인 후보로 더 살펴볼 만하다."</div>
     </div>
   </section>
 
   <section class="block">
-    <h2>AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
-    <div class="callout concept">
-      <b class="tag">이번 차시도 AI와 함께</b>
-      Pandas는 기능이 매우 많은 도구다. AI에게 질문하고 코드를 만들어보며 오늘 배운 기본기를
-      한 걸음 더 넓혀보자.
-    </div>
-
-    <h3>AI에게 검색하며 이해도 높이기</h3>
-    <ul class="pt-list">
-      <li>오늘은 Pandas의 가장 기본적인 부분만 다뤘다 — AI에게 물어보며 조금 더 깊이 들어가보자.</li>
-    </ul>
+    <h2>AI로 한 걸음 더 — 질문하고 코드 받아보기</h2>
     <div class="callout practice">
-      <b class="tag">질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <b class="tag">질문해보기 — 하나 이상 골라서 (노트북 9단계)</b>
       <ul class="pt-list">
-        <li>"pandas의 loc과 iloc은 정확히 언제 다르게 동작하나요? 예시로 알려주세요."</li>
-        <li>"df[df['열']==값] 조건 검색과 df.query()는 어떻게 다른가요?"</li>
-        <li>"Pandas의 Series와 DataFrame은 정확히 어떻게 다른가요?"</li>
-        <li>"df.sort_values()에서 여러 열을 동시에 기준으로 정렬하려면 어떻게 하나요?"</li>
-      </ul>
-    </div>
-
-    <h3>AI에게 프롬프트로 코드 생성 요청하기</h3>
-    <ul class="pt-list">
-      <li>오늘 배운 조건 검색을 확장해서, 설비별로 결과를 한눈에 표로 만드는 코드를 AI에게
-        요청해보자. <code>groupby</code>처럼 아직 배우지 않은 기능이 나올 수도 있다(7차시 예고).</li>
-    </ul>
-    <div class="callout practice">
-      <b class="tag">코드 생성 프롬프트 따라 해보기</b>
-      <ul class="pt-list">
-        <li>"설비번호와 합격여부 열이 있는 DataFrame에서, 설비별 합격/불합격 건수를 한 번에
-          표로 만들어주는 코드를 만들어줘."</li>
-        <li>"df에서 온도_섭씨가 300 이상이면서 합격여부가 1인 행만 골라주는 코드를 만들어줘."</li>
+        <li>"pandas의 df[조건]이 엑셀의 필터와 어떻게 비슷하고 어떻게 다른지 초보자에게 설명해주세요."</li>
+        <li>"pandas에서 여러 열을 고를 때 왜 대괄호를 두 겹 [[ ]] 써야 하나요?"</li>
+        <li>"pandas의 DataFrame과 Series는 어떻게 다른가요? 엑셀에 비유해 주세요."</li>
       </ul>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
-      <pre><code>import pandas as pd
-
-data = {
-    "설비번호": ["EQ-01", "EQ-01", "EQ-02", "EQ-02", "EQ-02"],
-    "합격여부": [1, -1, 1, 1, -1],
-}
-sample_df = pd.DataFrame(data)
-
-summary = pd.crosstab(sample_df["설비번호"], sample_df["합격여부"])
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>df라는 이름의 pandas DataFrame이 이미 있어. 설비번호 열과 합격여부 열(1=합격, -1=불합격)로 설비별 합격/불합격 건수를 한 번에 표로 보여주는 코드를 만들어줘. df를 새로 만들지 말고 그대로 써줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 결과표의 숫자가 위 "설비별로 따로 떼어 보면" 표(EQ-02 불합격 5건, 합격 20건 등)와 같은지 맞춰 보자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시 (노트북 10단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>summary = pd.crosstab(df["설비번호"], df["합격여부"])
 print(summary)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">합격여부   -1   1
 설비번호
-EQ-01   1   1
-EQ-02   1   2</pre>
+EQ-01   2  29
+EQ-02   5  20
+EQ-03   1  21
+EQ-04   5  17</pre>
     </div>
     <div class="callout warn">
       <b class="tag">AI 코드를 다룰 때 꼭 지킬 점</b>
       <ul class="pt-list">
-        <li>위 예시의 <code>pd.crosstab()</code>은 오늘 배우지 않은 함수다 — 결과표가 뜻하는 바를
-          직접 눈으로 세어보며 확인하면 이해가 빨라진다.</li>
-        <li>AI가 만든 코드도 직접 실행해서 내가 기대한 결과가 맞는지 확인해야 한다.</li>
-        <li>열 이름이 오늘 쓴 데이터와 다르게 나올 수 있다 — <code>df.columns</code>로 실제 열
-          이름을 먼저 확인하고 맞춰서 사용하자.</li>
-        <li>위 예시는 새 표 이름을 <code>sample_df</code>로 지어서, 앞에서 읽은 <code>df</code>(100행)를
-          건드리지 않는다. AI가 <code>df = pd.DataFrame(data)</code>처럼 같은 이름 <code>df</code>에 새 표를
-          저장하면 원래 데이터가 덮어써져 뒤의 연습문제에서 <code>KeyError: '온도_섭씨'</code>가 난다 —
-          이름을 바꿔 실행하고, 이미 덮어썼다면 <code>read_csv</code> 셀을 다시 실행하자.</li>
+        <li><code>pd.crosstab()</code>은 오늘 배우지 않은 함수다. 구경만 하자. 7차시에 설비별로 묶어 세는 방법을 배운다.
+          지금은 "-1 열이 불합격 건수, 1 열이 합격 건수"라고 읽을 수 있으면 충분하다.</li>
+        <li>AI 코드에 <code>df = pd.DataFrame(...)</code> 줄이 있으면 1단계에서 읽은 100행 데이터가 예시 데이터로 덮어써진다.
+          그러면 연습문제에서 <code>KeyError: '공정명'</code>이 난다. 그 줄을 지우고 실행하거나, 이미 덮어썼다면 1단계 셀을 다시 실행한다.</li>
+        <li>AI가 만든 코드는 직접 실행해서 결과를 확인한다. AI의 답도 틀릴 수 있다.</li>
       </ul>
     </div>
   </section>
 
   <section class="block">
-    <h2>연습문제 — loc/iloc으로 원하는 데이터 골라내기</h2>
-    <p>오늘 배운 <code>loc</code>/<code>iloc</code>을 한 번 더 연습해보자.</p>
-    <div class="callout warn">
-      <b class="tag">기억하기 — 슬라이스 범위가 다르다</b>
-      <code>df.loc[0:4]</code>는 인덱스 4까지 <b>포함</b>해 5개 행을 돌려주지만,
-      <code>df.iloc[0:4]</code>는 파이썬 리스트처럼 4를 <b>포함하지 않아</b> 4개 행만 돌려준다.
-    </div>
+    <h2>연습문제 — 세정 공정만 골라 살펴보기</h2>
+    <p>이번에는 설비가 아니라 공정으로 따로 떼어 보자. <code>공정명</code>이 세정인 기록만 골라 건수와 불합격률을 구한다.</p>
     <div class="callout practice">
-      <b class="tag">직접 해보기</b>
+      <b class="tag">직접 해보기 (노트북 11단계)</b>
       <ul class="pt-list">
-        <li><code>loc</code>으로 0~4번 행의 <code>온도_섭씨</code>, <code>압력_Pa</code> 열만 선택해보자.</li>
-        <li><code>iloc</code>으로 첫 번째 행 전체를 선택해보자. (위치 기반 인덱싱)</li>
+        <li><code>cleaning</code>에 세정 기록만 골라 담고 <code>shape</code>를 확인한다.</li>
+        <li><code>cleaning</code> 안에서 불합격만 골라 <code>cleaning_fail</code>에 담고, 불합격률을 <code>:.1f</code>로 출력한다. 종합 실습 코드와 같은 모양이다.</li>
       </ul>
-    </div>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code># TODO: loc으로 0~4번 행의 "온도_섭씨", "압력_Pa" 열만 선택하세요.
-subset_loc = df.loc[____:____, [____, ____]]
-print(subset_loc)
-
-# TODO: iloc으로 첫 번째 행 전체를 선택하세요. (위치 기반 인덱싱)
-first_row = df.iloc[____]
-print(first_row)</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">
-      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">subset_loc = df.loc[0:4, ["온도_섭씨", "압력_Pa"]]
-print(subset_loc)
+      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">cleaning = df[df["공정명"] == "세정"]
+print(cleaning.shape)
 
-first_row = df.iloc[0]
-print(first_row)</pre>
-      <code>loc</code>은 이름(라벨) 기반이라 슬라이스 끝(4)을 포함해 5개 행이 나오고,
-      <code>iloc</code>은 위치(정수) 기반이므로 <code>iloc[0]</code>은 맨 앞(0번째) 행 하나를
-      Series로 돌려준다.
+cleaning_fail = cleaning[cleaning["합격여부"] == -1]
+cleaning_rate = len(cleaning_fail) / len(cleaning) * 100
+print(f"세정 {len(cleaning)}건 중 불합격 {len(cleaning_fail)}건 ({cleaning_rate:.1f}%)")</pre>
+      실행 결과: <code>(18, 8)</code>, <code>세정 18건 중 불합격 3건 (16.7%)</code>
     </div>
   </section>
 
   <section class="block">
     <h2>AI로 재미있는 미니 프로그램 만들기 — 나만의 설비 검색기</h2>
     <div class="callout concept">
-      <b class="tag">오늘의 미니 프로젝트</b>
-      오늘 배운 조건 검색으로, 직접 실행하면서 재미를 느낄 수 있는 나만의 프로그램을
-      AI에게 만들어달라고 요청해보자.
+      <b class="tag">오늘의 미니 프로젝트 (노트북 12단계)</b>
+      설비번호를 입력하면 그 설비의 성적표를 보여주는 검색기를 AI에게 만들어 달라고 해 보자. 오늘 배운 조건 검색에
+      1차시의 <code>input()</code>과 3차시의 <code>if</code>/<code>else</code>를 합친 프로그램이다.
     </div>
     <div class="callout practice">
       <b class="tag">프롬프트 예시 — 그대로 물어보기</b>
-      "설비번호 열이 있는 DataFrame df에서, 사용자가 input()으로 설비번호(예: EQ-02)를 입력하면
-      그 설비의 기록 건수와 평균 온도를 보기 좋게 출력하는 파이썬 코드를 만들어줘."
+      "df라는 pandas DataFrame에 설비번호 열과 합격여부 열(1=합격, -1=불합격)이 있어. input()으로 설비번호(예: EQ-02)를 입력받아
+      그 설비의 기록 건수, 불합격 건수, 불합격률을 한 줄로 출력하고, 없는 설비번호면 안내 문구를 출력하는 코드를 만들어줘.
+      df는 새로 만들지 말고 그대로 써줘."
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
       <pre><code>target = "EQ-02"  # 실제로는 input("검색할 설비번호를 입력하세요: ")
 
 matched = df[df["설비번호"] == target]
-if len(matched) > 0:
-    print(f"🔍 {target} 검색 결과")
-    print(f"기록 건수: {len(matched)}건")
-    print(f"평균 온도: {matched['온도_섭씨'].mean():.1f}도")
+if len(matched) &gt; 0:
+    matched_fail = matched[matched["합격여부"] == -1]
+    rate = len(matched_fail) / len(matched) * 100
+    print(f"[{target}] 기록 {len(matched)}건, 불합격 {len(matched_fail)}건 ({rate:.1f}%)")
 else:
     print(f"{target} 설비 기록을 찾을 수 없습니다.")</code></pre>
     </div>
     <div class="callout success">
-      <b class="tag">실행 결과 예시</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">🔍 EQ-02 검색 결과
-기록 건수: 25건
-평균 온도: 300.1도</pre>
+      <b class="tag">실행 결과(입력값: EQ-02)</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">[EQ-02] 기록 25건, 불합격 5건 (20.0%)</pre>
     </div>
     <div class="callout warn">
       <b class="tag">더 놀아보기</b>
       <ul class="pt-list">
-        <li>존재하지 않는 설비번호(예: "EQ-99")를 입력했을 때도 안내 문구가 뜨도록 AI에게
-          추가로 요청해보자.</li>
-        <li><code>if</code>/<code>else</code>는 3차시에서 배운 조건문이다 — 검색 결과가 없을 때
-          (<code>len(matched) == 0</code>) 다른 문장을 출력하도록 쓰였다는 점만 확인하면 충분하다.</li>
+        <li>첫 줄을 <code>target = input("검색할 설비번호를 입력하세요: ")</code>로 바꾸고 EQ-01부터 EQ-04까지 차례로 입력해 보자. 위 설비별 표와 같은 숫자가 나오는가?</li>
+        <li><code>EQ-99</code>처럼 없는 번호나 <code>eq-02</code>처럼 소문자를 넣어 보자. 조건 검색 결과가 0행이라 <code>else</code> 쪽 문장이 나온다.</li>
       </ul>
     </div>
   </section>
 
   <section class="block">
     <h2>과제(다음 차시까지)</h2>
-    <ul class="pt-list">
-      <li>아래 과제를 Jupyter Notebook 파일 하나에 순서대로 작성, 각 결과를 확인할 수 있게 만들어 제출</li>
-    </ul>
+    <p>Jupyter Notebook 한 개에 순서대로 작성하고, 결과가 화면에 출력된 상태로 제출한다.</p>
     <div class="callout practice">
-      <b class="tag">과제 1 — 설비별 요약</b>
-      <code>EQ-01</code>, <code>EQ-03</code>, <code>EQ-04</code>에 대해서도 각각 조건 검색으로
-      행 개수와 불합격 건수를 확인하고, 어느 설비가 가장 불안정해 보이는지 문장으로 정리한다.
+      <b class="tag">과제 1 — 설비 네 대의 성적표</b>
+      <ul class="pt-list">
+        <li>EQ-01·EQ-02·EQ-03·EQ-04를 각각 조건 검색으로 골라 기록 건수, 불합격 건수, 불합격률을 출력한다.</li>
+        <li>강의의 "설비별로 따로 떼어 보면" 표와 숫자가 같은지 확인하고, 불합격률이 가장 높은 설비와 가장 낮은 설비를 문장으로 적는다.</li>
+      </ul>
     </div>
     <div class="callout practice">
-      <b class="tag">과제 2 — 압력 조건 검색</b>
-      <code>압력_Pa</code>가 1020 이상인 행만 골라내 몇 건인지 확인하고, 그중 불합격 비율도
-      계산해본다.
+      <b class="tag">과제 2 — 공정 하나 골라 따로 보기</b>
+      <ul class="pt-list">
+        <li>세정 말고 다른 공정(산화·포토·식각·증착 중 하나)을 골라 연습문제와 같은 방법으로 건수와 불합격률을 구한다.</li>
+        <li>그 공정의 불합격 기록만 골라 <code>설비번호</code>·<code>온도_섭씨</code> 두 열을 함께 꺼내 보고, 눈에 띄는 점을 한 문장으로 적는다.</li>
+      </ul>
     </div>
     <div class="callout practice">
-      <b class="tag">과제 3 — loc/iloc 종합</b>
-      <code>df.loc[df["압력_Pa"] &gt; 1015, ["설비번호", "압력_Pa", "합격여부"]]</code>로
-      압력이 높은 행의 세 열만 뽑아보고, <code>df.iloc[:5, :3]</code>으로 앞에서 5행·3열만
-      잘라내 두 결과가 각각 무엇을 기준으로 골라졌는지 한 문장씩 설명한다.
-    </div>
-    <div class="callout practice">
-      <b class="tag">과제 4(도전) — 두 조건 동시 검색</b>
-      <code>df[(df["설비번호"] == "EQ-02") &amp; (df["합격여부"] == -1)]</code>처럼 <code>&amp;</code>
-      기호로 조건 두 개를 동시에 적용하는 코드를 검색해서 실행해보고, 결과가 무엇을 의미하는지
-      설명해본다(5차시 이상값 제거에서 다시 쓰인다).
-    </div>
-    <div class="callout warn">
-      <b class="tag">체크포인트 — & 를 쓸 때는 조건마다 괄호가 필요하다</b>
-      <code>df[df["설비번호"] == "EQ-02" &amp; df["합격여부"] == -1]</code>처럼 괄호 없이 쓰면
-      연산 순서가 꼬여 오류가 나거나 잘못된 결과가 나온다. 위 예시처럼
-      <code>(df["설비번호"] == "EQ-02") &amp; (df["합격여부"] == -1)</code>처럼 각 조건을 반드시
-      괄호로 감싸야 한다. 그리고 <code>and</code>가 아니라 <code>&amp;</code>를 써야 한다는 점도
-      함께 기억하자(파이썬의 <code>and</code>는 True/False 목록(Series)끼리는 쓸 수 없어 오류가 난다).
+      <b class="tag">과제 3 — 내 말로 설명하기(코드 없음)</b>
+      노트북의 마크다운 셀에 "조건 검색을 엑셀 필터에 빗대어 설명하기"와 "전체 숫자만 볼 때와 따로 떼어 볼 때의 차이"를 각각 두세 문장으로 적는다.
     </div>
   </section>
 
   <section class="block">
     <h2>핵심 질문 → 데이터 연결</h2>
-    <div class="callout concept">EQ-02에서 발생한 불합격은 몇 건인가?</div>
+    <ul class="pt-list">
+      <li><b>질문</b>: EQ-02에서 발생한 불합격은 몇 건인가?</li>
+      <li><b>데이터로 답하기</b>: EQ-02 기록 25건 중 불합격은 <b>5건</b>, 불합격률은 <b>20.0%</b>다.
+        <code>df[df["설비번호"] == "EQ-02"]</code>로 고른 뒤 그 안에서 <code>합격여부 == -1</code>을 한 번 더 고르면 나온다.</li>
+      <li><b>한 걸음 더</b>: 전체 불합격률은 13.0%지만 설비별로 떼어 보면 EQ-04(22.7%)와 EQ-02(20.0%)가 높다. 불합격 5건은 온도도 공정도 제각각이었다.
+        원인이라고 단정하지 않고 "원인 후보로 더 살펴볼 설비"로 남겨 두는 것까지가 오늘의 해석이다.</li>
+    </ul>
   </section>
 
   <section class="block">
     <h2>다음 차시 예고</h2>
-    <div class="callout concept">5차시에는 Orange3로 먼저 데이터를 훑어본 뒤, 지저분한 데이터를 정제하는 방법을 배운다.</div>
+    <div class="callout concept">
+      <b class="tag">5차시 예고</b>
+      <ul class="pt-list">
+        <li>오늘 데이터는 빈 칸도 이상한 값도 없는 "깨끗한" 표였다. 실제 기록에는 빈 칸, 말이 안 되는 값(예: 음수 압력), 오타가 섞여 있다.</li>
+        <li>5차시에는 Orange3라는 프로그램으로 표를 먼저 눈으로 훑어본 뒤, 오늘 배운 조건 검색으로 이상한 값을 찾아 정리한다.
+          오늘 맛본 <code>loc</code>이 값을 고칠 때도 쓰인다는 것을 잠깐 구경한다.</li>
+      </ul>
+    </div>
   </section>
 
   <div class="nav-buttons">

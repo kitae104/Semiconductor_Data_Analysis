@@ -5,15 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>10차시. 모델 평가와 새 데이터 예측</title>
 <link rel="icon" href="../../assets/images/site/chip-favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
+<style>
+  .flow-svg,.bar-svg{display:block;margin:1.2rem auto;max-width:100%;height:auto;}
+  .flow-svg{width:900px;}
+  .bar-svg{width:640px;}
+  .flow-svg .fbox{fill:var(--card);stroke:var(--line);stroke-width:2;}
+  .flow-svg .fbox.active{stroke:var(--purple);fill:var(--purple-bg);}
+  .flow-svg .flabel{fill:var(--ink);font-weight:700;}
+  .flow-svg .fsub{fill:var(--muted);}
+  .flow-svg .farrow{stroke:var(--muted);stroke-width:2.5;}
+  .bar-svg .axis{stroke:var(--line);stroke-width:1.5;}
+  .bar-svg .bar{fill:var(--blue);fill-opacity:.55;}
+  .bar-svg .bar.high{fill:var(--orange);fill-opacity:.85;}
+  .bar-svg .bar.fail{fill:var(--red);fill-opacity:.8;}
+  .bar-svg .ref50{stroke:var(--red);stroke-width:2;stroke-dasharray:6 5;}
+  .bar-svg .ref30{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 4;}
+  .bar-svg .vlabel{fill:var(--ink);font-weight:700;font-size:12px;}
+  .bar-svg .xlabel{fill:var(--muted);font-size:12px;}
+  .bar-svg .rlabel{font-size:12px;font-weight:700;}
+</style>
 </head>
 <body>
 <header class="site-header">
   <div class="header-row">
-    <a class="brand" href="../../index.html"><img src="../../assets/images/site/chip-macro-logo.jpg" alt="" aria-hidden="true" class="brand-logo" width="34" height="34" /> 반도체 데이터 분석 10차시 과정
-      <small>Semiconductor Process Data Analysis</small>
-    </a>
+    <div class="brand-group">
+      <a class="brand" href="../../index.html"><img src="../../assets/images/site/chip-macro-logo.jpg" alt="" aria-hidden="true" class="brand-logo" width="34" height="34" />
+        <span class="brand-text">
+          <strong>반도체 데이터 분석 10차시 과정</strong>
+          <small>Semiconductor Process Data Analysis</small>
+        </span>
+      </a>
+    </div>
     <nav class="week-nav">
       <a href="../week01/index.html">1차시</a>
       <a href="../week02/index.html">2차시</a>
@@ -30,39 +57,81 @@
   <div class="progress-track"><div class="progress-fill" id="progressFill" data-week="10"></div></div>
 </header>
 
+<nav class="breadcrumb" aria-label="현재 위치">
+  <a href="../../index.html">홈</a>
+  <span class="sep">›</span>
+  <span>4부 · 예측</span>
+  <span class="sep">›</span>
+  <span class="current">10차시: 모델 평가와 새 데이터 예측</span>
+</nav>
+
 <main class="page">
 
-  <div class="hero">
-    <span class="badge blue">10차시 · 마지막 차시</span>
-    <h1>모델 평가와 새 데이터 예측</h1>
-    <p class="today-question">오늘의 질문: <b>"내가 만든 모델은 처음 보는 새로운 데이터에서도 믿을 만할까?"</b></p>
+  <div class="hero-with-stats">
+    <div class="hero">
+      <span class="badge blue">10차시 · 마지막 차시</span>
+      <h1>모델 평가와 새 데이터 예측</h1>
+      <p class="today-question">오늘의 질문: <b>"내가 만든 모델은 처음 보는 새로운 데이터에서도 믿을 만할까?"</b></p>
+    </div>
+    <div class="stat-panel">
+      <div class="sp-title">오늘의 예제 데이터</div>
+      <div class="sp-run">9차시 데이터를 그대로 쓴다(가상 데이터)</div>
+      <dl>
+        <div><dt>연습문제(train)</dt><dd>588건</dd></div>
+        <div><dt>모의고사(test)</dt><dd>147건</dd></div>
+        <div><dt>새 로트</dt><dd>9건</dd></div>
+        <div><dt>합격여부</dt><dd>1 합격 / -1 불합격</dd></div>
+      </dl>
+    </div>
   </div>
 
   <section class="block">
-    <h2>학습 목표</h2>
-    <ul class="goal-list">
-      <li>학습된 모델로 새 로트의 합격/불합격을 predict()로 예측할 수 있다.</li>
-      <li>predict_proba()로 예측의 확신 정도(확률)까지 확인할 수 있다.</li>
-      <li>Orange3 Predictions 위젯으로 같은 새 데이터를 예측하고 결과를 비교할 수 있다.</li>
-      <li>1~9차시에서 배운 내용을 한 문장씩 정리할 수 있다.</li>
-    </ul>
-    <ul class="pt-list">
-      <li><b>선수 지식</b>: 9차시 — 학습된 모델</li>
+    <span class="section-kicker"><span class="dot"></span>LEARNING OUTCOMES</span>
+    <h2>오늘의 학습 목표</h2>
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <span class="okicker">OUTCOME 01</span>
+        <h4>점수를 제대로 읽기</h4>
+        <div class="osub">Accuracy &amp; Baseline</div>
+      </div>
+      <div class="outcome-card">
+        <span class="okicker">OUTCOME 02</span>
+        <h4>새 로트 예측하기</h4>
+        <div class="osub">predict()</div>
+      </div>
+      <div class="outcome-card">
+        <span class="okicker">OUTCOME 03</span>
+        <h4>과정 전체 되짚기</h4>
+        <div class="osub">Week 1 → 10</div>
+      </div>
+    </div>
+    <ul class="goal-list" style="margin-top: 1rem">
+      <li>정확도만 보면 속는 경우를 오늘 데이터의 숫자(모델 80.3% vs 찍기 78.9%, 불합격 31건 중 9건만 잡음)로 설명할 수 있다.</li>
+      <li><code>predict()</code>로 새 로트 9건의 합격/불합격을 예측하고, 새 데이터의 열이 학습 때와 같아야 하는 이유를 말할 수 있다.</li>
+      <li><code>predict_proba()</code>로 "얼마나 확신하는지"를 확인하고, Orange3 결과와 다를 수 있는 이유를 말할 수 있다.</li>
+      <li>1~10차시의 큰 줄기(살핀다 → 함께 본다 → 관계를 찾는다 → 예측한다)를 한 문장으로 정리할 수 있다.</li>
     </ul>
   </section>
 
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
-      <li>모델을 만들었다고 끝이 아니다. 그 모델이 <b>학습에 쓰지 않은 새로운 데이터</b>에서도 잘 맞아야
-        실제 현장에서 믿고 쓸 수 있다. 새 로트에 <code>predict()</code>를 적용하는 것은 모델을 실제로
-        "써보는" 단계다. 모델을 얼마나 믿을지는 9차시의 test 데이터 결과와, 나중에 나올 실제 검사 결과로 판단한다.</li>
+      <li>9차시에 만든 모델은 "공부를 마친 학생"이다. 오늘은 그 학생의 <b>모의고사 점수를 제대로 읽고</b>,
+        정답지가 없는 <b>실제 시험</b>을 보게 한다.</li>
+      <li>점수를 잘못 읽으면 쓸모없는 모델을 믿게 된다. 그리고 모델은 결국 <b>처음 보는 로트</b>에 쓰려고 만드는 것이다.</li>
     </ul>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>시험 보는 학생</th><th>오늘의 모델</th><th>채점할 수 있나?</th></tr>
+        <tr><td>연습문제를 풀며 공부</td><td>연습문제(train) 588건으로 학습(<code>fit</code>)</td><td>-</td></tr>
+        <tr><td>모의고사</td><td>모의고사(test) 147건을 맞혀 보기</td><td>있다. 정답지(<code>합격여부</code>)가 있다</td></tr>
+        <tr><td>실제 시험</td><td>새 로트 9건 예측(<code>predict</code>)</td><td><b>아직 없다.</b> 실제 검사가 끝나야 안다</td></tr>
+      </table>
+    </div>
     <div class="callout concept">
-      <b class="tag">쉬운 예시</b>
-      9차시에서 만든 모델에 아직 검사 결과가 나오지 않은 새 로트 9건을 넣어 예측했더니 9건 모두 "합격 예상"이
-      나왔지만, 로트마다 "불합격일 확률"은 서로 달랐다. 이후 실제 검사 결과와 맞춰보면, 이 모델을 앞으로 얼마나 믿고
-      사용할 수 있는지 판단할 수 있다.
+      <b class="tag">예를 들면</b>
+      모의고사에서 "100문제 중 79문제를 맞혔다"는 말만 들으면 잘한 것 같다. 그런데 그 시험이 "답이 거의 다 ①번"인
+      시험이었다면? 전부 ①번으로 찍어도 79점이 나온다. 오늘 데이터가 바로 그렇다. 그래서 점수를 읽는 법부터 다시 본다.
     </div>
   </section>
 
@@ -70,140 +139,420 @@
     <h2>지난 시간 복습</h2>
     <div class="callout concept">
       <b class="tag">9차시 연결</b>
-      9차시에서는 <code>week09_pass_fail_train.csv</code>로 모델을 학습시켜 정확도(78.2%)와
-      혼동행렬을 확인했고, 온도_섭씨가 가장 중요한 특징이라는 것을 알았다. 오늘은 이 모델을
-      한 번도 본 적 없는 <b>새 로트 9건</b>에 적용해보고, 10차시에 걸쳐 배운 내용을 마무리한다.
+      <ul class="pt-list">
+        <li>9차시에는 공정 조건 6개를 <b>단서(Feature)</b>로, <code>합격여부</code>를 <b>정답(Label)</b>으로 삼아
+          결정 트리 모델을 학습시켰다. 결정 트리는 "온도가 294도보다 높은가?" 같은 질문을 이어 가며 답을 좁히는 스무고개 모델이다.</li>
+        <li>데이터를 연습문제(train) 80%, 모의고사(test) 20%로 나눴다(<code>train_test_split</code>).</li>
+        <li>오늘은 노트북 1단계에서 9차시와 <b>똑같은 설정</b>으로 모델을 다시 만들고 시작한다. <code>random_state=42</code>를
+          같게 두면 언제 실행해도 똑같이 나뉘고 똑같은 모델이 만들어진다.</li>
+      </ul>
+    </div>
+    <h3>단서 열 6개가 공장에서 뜻하는 것(한 줄 상기)</h3>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>열 이름</th><th>공장에서 뜻하는 것</th></tr>
+        <tr><td><code>온도_섭씨</code></td><td>작업하는 방(챔버) 안의 온도</td></tr>
+        <tr><td><code>압력_Pa</code></td><td>챔버 압력. 교육용 가상 값이라 크기 자체는 해석하지 않는다</td></tr>
+        <tr><td><code>가스유량_slm</code></td><td>챔버에 흘려 넣는 가스의 양</td></tr>
+        <tr><td><code>두께_nm</code></td><td>작업 뒤 웨이퍼 위에 남은 얇은 막의 두께(nm는 10억분의 1미터)</td></tr>
+        <tr><td><code>진공도_mTorr</code></td><td>챔버 안 공기를 얼마나 뺐는지를 아주 작은 압력 단위로 잰 값. 공기를 많이 뺄수록 숫자가 작다</td></tr>
+        <tr><td><code>습도_pct</code></td><td>클린룸 공기의 습도(%)</td></tr>
+        <tr><td><code>합격여부</code>(정답)</td><td>최종 검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
+      </table>
+    </div>
+    <div class="callout warn">
+      <b class="tag">부호 — 1~8차시와 같은 표기</b>
+      <ul class="pt-list">
+        <li>정답 열 <code>합격여부</code>는 1~8차시와 같다. <b>1 = 합격, -1 = 불합격</b></li>
+        <li>모델의 예측도 같은 표기로 나온다. 모델이 <code>-1</code>이라고 답하면 "불합격 예상"이다.</li>
+        <li>단, 확률(<code>predict_proba</code>)의 열 순서는 따로 확인해야 한다(STEP 04).</li>
+      </ul>
     </div>
   </section>
 
   <section class="block">
-    <h2>① 파이썬으로 새 로트 예측하기</h2>
-    <ul class="pt-list">
-      <li>9차시와 똑같은 방식으로 모델을 다시 학습 — 같은 <code>random_state</code>를 쓰면 항상 같은 모델이 만들어짐</li>
-      <li>정답이 없는 새 로트에 적용</li>
-    </ul>
+    <span class="step-badge">STEP 01</span>
+    <h2>9차시 모델 다시 만들기</h2>
+    <p>9차시 코드를 한 번에 모았다. 새로 배우는 내용은 없다. 실행 결과의 숫자 두 줄이 9차시와 같으면 된다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 9차시 모델 다시 만들기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 9차시 모델 다시 만들기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
-df = pd.read_csv("week09_pass_fail_train.csv").dropna()
+df = pd.read_csv("../../data/weekly/week09/week09_pass_fail_train.csv", encoding="utf-8-sig").dropna()
+print(df.shape)
+
 feature_cols = ["온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]
-X = df[feature_cols]
-y = df["검사결과"]
+X = df[feature_cols]   # 단서(Feature) 6개
+y = df["합격여부"]       # 정답(Label): 1 = 합격, -1 = 불합격
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
+print(len(X_train), len(X_test))
+
 model = DecisionTreeClassifier(max_depth=4, random_state=42)
 model.fit(X_train, y_train)</code></pre>
     </div>
-
-    <h3>새 로트 불러와서 예측하기</h3>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>new_lots = pd.read_csv("week09_new_lots_to_predict.csv")
-X_new = new_lots[feature_cols]
-
-new_lots["예측_검사결과"] = model.predict(X_new)
-print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결과"]])</code></pre>
-    </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">  공정명   설비번호  온도_섭씨  예측_검사결과
-0  식각  EQ-02  294.5        0
-1  산화  EQ-02  301.5        0
-2  식각  EQ-04  289.8        0
-3  포토  EQ-04  295.6        0
-4  식각  EQ-04  299.1        0
-5  포토  EQ-03  302.0        0
-6  산화  EQ-01  305.2        0
-7  산화  EQ-03  299.1        0
-8  세정  EQ-01  300.6        0</pre>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(735, 9)
+588 147
+DecisionTreeClassifier(max_depth=4, random_state=42)</pre>
     </div>
-    <div class="callout warn">
-      <b class="tag">결과 해석</b>
-      9개 로트 모두 "합격(0)"으로 예측되었다. 정답을 모르는 진짜 새 데이터이므로 지금 당장은
-      맞았는지 확인할 수 없다 — 실제 공정이라면 시간이 지나 검사 결과가 나와야 비교할 수 있다.
-      이것이 현업에서 예측 모델을 쓸 때의 현실이다.
-    </div>
-
-    <h3>확률까지 함께 보기 — predict_proba()</h3>
     <ul class="pt-list">
-      <li>모두 "합격"으로 예측됐다고 해서 모델이 모든 로트를 똑같이 확신하는 것은 아님</li>
-      <li><code>predict_proba()</code>로 "불합격일 확률"까지 확인</li>
+      <li><code>(735, 9)</code> — 빈칸이 있는 행 15개를 지우고(<code>dropna()</code>, 5차시) 735행이 남았다.</li>
+      <li><code>588 147</code> — 연습문제(train) 588건, 모의고사(test) 147건으로 나뉘었다.</li>
+      <li>마지막 줄은 학습을 마친 모델의 설정이다. 오류가 아니다.</li>
     </ul>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>proba = model.predict_proba(X_new)   # [합격일 확률, 불합격일 확률]
-new_lots["불합격_확률"] = proba[:, 1].round(3)
-
-print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결과", "불합격_확률"]])</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">  공정명   설비번호  온도_섭씨  예측_검사결과  불합격_확률
-0  식각  EQ-02  294.5        0   0.364
-1  산화  EQ-02  301.5        0   0.067
-2  식각  EQ-04  289.8        0   0.158
-3  포토  EQ-04  295.6        0   0.067
-4  식각  EQ-04  299.1        0   0.067
-5  포토  EQ-03  302.0        0   0.067
-6  산화  EQ-01  305.2        0   0.364
-7  산화  EQ-03  299.1        0   0.067
-8  세정  EQ-01  300.6        0   0.067</pre>
-    </div>
-    <div class="callout concept">
-      <b class="tag">결과 해석</b>
-      0번과 6번 로트는 불합격 확률이 36.4%로 다른 로트(6.7~15.8%)보다 눈에 띄게 높다. 두 로트는
-      진공도가 4.02, 4.35 mTorr로 9건 중 가장 낮다는 공통점이 있다. 모델이 진공도가 낮은 쪽을 불합격
-      쪽으로 판단했다는 뜻이고, 진공도는 8차시에서도 원인 후보로 짚었던 변수다(원인으로 확정된 것은
-      아니다). 반면 온도가 정상범위를 크게 벗어난 2번(289.8℃)은 15.8%에 그쳤다 — "예측은 같아도 확신의
-      정도는 다르고, 그 이유는 직접 확인해봐야 한다"는 것을 보여주는 좋은 예다. 실무라면 이런 "애매한" 로트를 우선 재검사 대상으로 삼을 수 있다.
-    </div>
-    <div class="code-block">
-      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>predict_proba()가 돌려주는 '불합격 확률 36%'를 일기예보의 '비 올 확률 30%'에 빗대서 설명해줘. 예측은 '합격'인데 불합격 확률이 36%라면 어떻게 받아들여야 하는지도 알려줘.</code></pre>
-    </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: "확률이 50%를 넘지 않아 합격으로 예측됐지만, 확률이 높을수록 더 주의해서 봐야 한다"는 설명이 있는지 보자.</p>
-
-    <div class="callout warn">
-      <b class="tag">체크포인트 — proba[:, 1]이 항상 "불합격 확률"은 아니다</b>
-      위 코드에서 <code>proba[:, 1]</code>이 불합격 확률인 이유는 <code>검사결과</code> 값이
-      0(합격)/1(불합격)이라 <code>model.classes_</code>가 <code>[0, 1]</code> 순서로 정렬되기
-      때문이다. 라벨이 문자열(예: "합격"/"불합격")이면 정렬 순서가 예상과 다를 수 있으므로, 새로운 데이터를 다룰
-      때는 항상 <code>print(model.classes_)</code>로 클래스 순서를 먼저 확인하는 습관을 들이자.
-    </div>
-    <div class="code-block">
-      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>라벨이 '사과', '바나나' 같은 문자열일 때 DecisionTreeClassifier의 model.classes_ 순서가 어떻게 되는지 보여주는 5줄짜리 재미있는 파이썬 예제를 만들어줘.</code></pre>
-    </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 직접 실행해서 classes_가 입력한 순서가 아니라 가나다(알파벳) 순서로 나오는지, predict_proba의 열 순서도 그와 같은지 확인하자.</p>
-
   </section>
 
   <section class="block">
-    <h2>② Orange3로 재확인하기</h2>
-    <div class="callout practice">
-      <b class="tag">위젯</b> Predictions
-      <p style="margin:.5rem 0 0;">9차시에서 Orange3로 만든 Tree 모델에 같은 새 로트
-      (<code>week09_new_lots_to_predict.csv</code>)를 연결해 <b>Predictions</b> 위젯으로
-      예측해본다. scikit-learn 결과(9개 모두 합격)와 같은지, 확률(Probability) 값도 비슷한
-      경향을 보이는지 비교한다.</p>
+    <span class="step-badge">STEP 02</span>
+    <h2>모델 평가 — 정확도만 보면 속는다</h2>
+
+    <h3>정확도란</h3>
+    <ul class="pt-list">
+      <li><b>정확도(Accuracy)</b> = 맞힌 개수 ÷ 전체 개수. 모의고사 점수와 같다.</li>
+      <li>모델이 모의고사(test) 147건을 풀게 하고(<code>model.predict(X_test)</code>), 정답과 비교해 점수를 낸다.</li>
+    </ul>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 정확도 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>from sklearn.metrics import accuracy_score
+
+pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, pred)
+print(f"모델 정확도: {accuracy:.1%}")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">모델 정확도: 80.3%</pre>
+    </div>
+    <p>80.3%면 괜찮은 점수일까? 판단하려면 <b>비교할 기준</b>이 있어야 한다.</p>
+
+    <h3>먼저 쉬운 예 — 전부 합격이라고 찍기</h3>
+    <ul class="pt-list">
+      <li>로트 100개 중 95개가 합격, 5개가 불합격이라고 하자. 불합격은 드물다.</li>
+      <li>아무것도 배우지 않고 "<b>전부 합격</b>"이라고 찍으면 95개를 맞힌다. 정확도 <b>95%</b>다.</li>
+      <li>그런데 정작 찾아야 할 불합격 5개는 <b>하나도</b> 못 잡았다. 점수는 높지만 쓸모없는 모델이다.</li>
+    </ul>
+    <div class="callout concept">
+      <b class="tag">비유 — 한 번도 울리지 않는 화재경보기</b>
+      1년 365일 중 불이 난 날이 하루라면, 한 번도 울리지 않는 경보기도 364일은 "맞혔다". 정확도는 99.7%지만
+      불이 난 그날을 놓쳤으니 경보기로서는 실패다. 드물게 일어나는 일을 잡는 것이 목적이면 정확도만 봐서는 안 된다.
+    </div>
+
+    <h3>오늘 데이터로 확인하기 — 기준선</h3>
+    <p>모의고사 147건에 합격·불합격이 몇 개인지 세고, "전부 합격"이라고 찍었을 때의 정확도를 구한다.
+    이 찍기 점수를 <b>기준선(baseline)</b>이라고 한다. 모델은 적어도 찍기보다는 나아야 한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 기준선 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(y_test.value_counts())
+
+baseline = (y_test == 1).mean()
+print(f"기준선(무조건 합격이라고 찍기) 정확도: {baseline:.1%}")</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">합격여부
+ 1    116
+-1     31
+Name: count, dtype: int64
+기준선(무조건 합격이라고 찍기) 정확도: 78.9%</pre>
     </div>
     <ul class="pt-list">
-      <li>Predictions 위젯 사용법 — <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a> 참고</li>
+      <li><code>y_test == 1</code>은 "정답이 1(합격)인가?"를 한 줄씩 True/False로 묻는다. 그 평균(<code>.mean()</code>)은 True의 비율, 곧 합격 비율이다.</li>
+      <li>147건 중 합격이 116건이라, 전부 합격이라고 찍어도 116 ÷ 147 = <b>78.9%</b>를 맞힌다.</li>
+      <li>모델 정확도 <b>80.3%</b>는 찍기(78.9%)보다 겨우 1.4%p 높다. 맞힌 개수로 보면 모델 118건, 찍기 116건으로 <b>2건 차이</b>다.</li>
+      <li>80%라는 숫자만 들으면 꽤 잘하는 것 같지만, 아무것도 배우지 않은 찍기도 79%다. 정확도는 이렇게 기준선과 함께 읽는다.</li>
     </ul>
+    <div class="callout warn">
+      <b class="tag">부호 주의</b>
+      기준선 코드의 <code>1</code>은 합격이다(1 = 합격, -1 = 불합격). <code>y_test == -1</code>이라고 쓰면 오류 없이
+      "전부 <b>불합격</b>이라고 찍기"의 점수(21.1%)가 나온다.
+    </div>
+
+    <h3>혼동행렬 — 어디서 맞히고 어디서 틀렸나</h3>
+    <p>정확도는 "몇 개 맞혔나" 한 숫자뿐이다. <b>혼동행렬</b>은 맞힘과 틀림을 네 칸으로 나눠 보여준다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 혼동행렬 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>from sklearn.metrics import confusion_matrix
+
+cm = confusion_matrix(y_test, pred, labels=[1, -1])
+print(cm)</code></pre>
+    </div>
+    <p><code>labels=[1, -1]</code>은 표의 순서를 "합격(1), 불합격(-1)" 순으로 정하라는 뜻이다(9차시와 같은 배치).
+    그래서 <b>윗줄 = 실제 합격, 아랫줄 = 실제 불합격, 왼쪽 칸 = 합격 예측, 오른쪽 칸 = 불합격 예측</b>이다.</p>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">[[109   7]
+ [ 22   9]]</pre>
+    </div>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th></th><th>모델: 합격(1)이라 함</th><th>모델: 불합격(-1)이라 함</th><th>합계</th></tr>
+        <tr><td><b>실제 합격(1)</b></td><td>109 — 맞힘</td><td>7 — 멀쩡한 로트를 불합격이라 함</td><td>116</td></tr>
+        <tr><td><b>실제 불합격(-1)</b></td><td><b>22 — 불합격을 놓침</b></td><td>9 — 불합격을 잡음</td><td>31</td></tr>
+      </table>
+    </div>
+    <ul class="pt-list">
+      <li>실제 불합격 31건 중 모델이 잡은 것은 <b>9건</b>(약 29%)이다. <b>22건</b>은 합격이라고 잘못 말했다.</li>
+      <li>찍기 모델은 불합격을 0건 잡는다. 오늘 모델은 9건을 잡았으니 아무것도 안 배운 것은 아니다.
+        하지만 불량을 놓치지 않는 것이 중요한 공장이라면 아직 믿고 쓰기 어렵다.</li>
+    </ul>
+    <div class="callout concept">
+      <b class="tag">모델 점수를 읽는 세 가지 질문</b>
+      <ul class="pt-list">
+        <li>① 찍기(기준선)보다 나은가? — 오늘: 80.3% vs 78.9%, 조금(2건) 낫다.</li>
+        <li>② 찾고 싶은 것(불합격)을 몇 개 잡았나? — 오늘: 31건 중 9건.</li>
+        <li>③ 멀쩡한 것을 몇 개 잘못 잡았나? — 오늘: 116건 중 7건.</li>
+      </ul>
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>머신러닝을 처음 배우는 사람이야. 불합격이 드문 데이터에서 '정확도가 높은데도 쓸모없는 모델'이 생기는 이유를 화재경보기 비유로 설명해줘. 혼동행렬의 네 칸이 화재경보기에서는 각각 어떤 상황인지도 알려줘.</code></pre>
+    </div>
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: "불이 났는데 울리지 않음"이 오늘 혼동행렬의 22건(불합격을 놓침)과 같은 칸인지 짚어보자.</p>
+  </section>
+
+  <section class="block">
+    <span class="step-badge">STEP 03</span>
+    <h2>새 로트 예측하기 — predict()</h2>
+
+    <h3>모의고사를 본 학생이 실제 시험을 본다</h3>
+    <ul class="pt-list">
+      <li>새 로트 9건은 공정은 끝났지만 <b>아직 최종 검사 결과가 없는</b> 로트라고 가정한다. 그래서 파일에 정답 열 <code>합격여부</code>가 없다.</li>
+      <li>모델에게 이 9건의 단서를 주고 "합격일까, 불합격일까?"를 묻는다. 이것이 <b>예측(<code>predict</code>)</b>이다.</li>
+      <li>실제 시험처럼 오늘은 채점할 수 없다. 맞았는지는 실제 검사 결과가 나온 뒤에야 안다.</li>
+    </ul>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 새 로트 불러오기 (노트북 3단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>new_lots = pd.read_csv("../../data/weekly/week09/week09_new_lots_to_predict.csv", encoding="utf-8-sig")
+print(new_lots.shape)
+print(new_lots)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(9, 8)
+  공정명   설비번호  온도_섭씨   압력_Pa  가스유량_slm   두께_nm  진공도_mTorr  습도_pct
+0  식각  EQ-02  294.5  1005.1     50.04   96.46       4.02    44.4
+1  산화  EQ-02  301.5  1007.2     55.68  100.65       5.38    46.8
+2  식각  EQ-04  289.8  1009.2     50.69   96.19       5.14    42.0
+3  포토  EQ-04  295.6  1019.5     49.10   98.97       4.96    44.6
+4  식각  EQ-04  299.1  1026.4     56.25  103.10       4.86    38.8
+5  포토  EQ-03  302.0  1026.1     51.59  103.76       4.81    50.9
+6  산화  EQ-01  305.2  1005.6     47.16  101.69       4.35    42.7
+7  산화  EQ-03  299.1   989.2     54.12   98.41       5.09    49.3
+8  세정  EQ-01  300.6  1031.7     49.89  102.78       4.54    41.2</pre>
+    </div>
+    <p>학습 데이터는 9열이었는데 새 로트는 8열이다. 빠진 하나가 정답 열 <code>합격여부</code>다.</p>
+
+    <h3>학습 때와 같은 단서만 골라 준다</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 단서 열 고르기 (노트북 3단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>X_new = new_lots[feature_cols]
+print(X_new.shape)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(9, 6)</pre>
+    </div>
+    <div class="callout danger">
+      <b class="tag">주의 — 새 데이터의 열 구성은 학습 때와 같아야 한다</b>
+      <ul class="pt-list">
+        <li>모델은 온도·압력·가스유량·두께·진공도·습도 <b>6개 단서를, 이 순서로</b> 보고 답하는 연습만 했다.
+          실제 시험에서도 <b>같은 단서</b>를 줘야 풀 수 있다.</li>
+        <li>의사가 체온·혈압으로 진단하는 연습을 했는데 진료실에서 키와 몸무게만 건넨다면 진단할 수 없는 것과 같다.</li>
+        <li>그래서 학습 때 쓴 <code>feature_cols</code> 리스트를 <b>그대로 다시</b> 쓴다. 새로 타이핑하면 오타나 순서 실수가 생긴다.</li>
+        <li>실제로 <code>model.predict(new_lots)</code>처럼 표를 통째로 넣으면 학습 때 없던 <code>공정명</code>·<code>설비번호</code>가
+          섞여 <code>ValueError: The feature names should match those that were passed during fit.</code> 오류가 나고,
+          그 아래에 <code>Feature names unseen at fit time: - 공정명 - 설비번호</code>(학습 때 못 본 열)가 표시된다.</li>
+      </ul>
+    </div>
+
+    <h3>예측하기</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 새 로트 예측 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>new_lots["예측_합격여부"] = model.predict(X_new)
+print(new_lots[["공정명", "설비번호", "온도_섭씨", "진공도_mTorr", "예측_합격여부"]])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">  공정명   설비번호  온도_섭씨  진공도_mTorr  예측_합격여부
+0  식각  EQ-02  294.5       4.02        1
+1  산화  EQ-02  301.5       5.38        1
+2  식각  EQ-04  289.8       5.14       -1
+3  포토  EQ-04  295.6       4.96        1
+4  식각  EQ-04  299.1       4.86        1
+5  포토  EQ-03  302.0       4.81        1
+6  산화  EQ-01  305.2       4.35        1
+7  산화  EQ-03  299.1       5.09        1
+8  세정  EQ-01  300.6       4.54        1</pre>
+    </div>
+    <ul class="pt-list">
+      <li>9건 중 8건은 <code>1</code>(합격 예상), <b>2번 로트만 <code>-1</code>(불합격 예상)</b>이다. 2번은 온도가 289.8도로 9건 중 가장 낮다.</li>
+      <li>그렇다면 합격으로 예측된 8건은 똑같이 안전하다는 뜻일까? 아래에서 "얼마나 확신하는지"를 확인한다.</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <span class="step-badge">STEP 04</span>
+    <h2>확률까지 보기 — predict_proba()</h2>
+    <ul class="pt-list">
+      <li>같은 "합격 예상"이라도 "거의 확실히 합격"과 "아슬아슬하게 합격"은 다르다. 일기예보에서 "비 안 옴"이라도
+        강수확률 5%와 40%는 다르게 받아들이는 것과 같다.</li>
+      <li>다만 이 확률은 "비슷한 과거 로트 묶음"의 불합격 비율이다(아래 결과 해석). 묶음에 든 기록 수가 적으면 몇 건만 바뀌어도 비율이 크게 흔들린다.</li>
+      <li><code>predict_proba()</code>는 로트마다 확률 두 숫자를 돌려준다. 두 숫자를 더하면 1이다.</li>
+      <li><b>두 숫자의 순서는 <code>model.classes_</code>에 적힌 순서를 따른다.</b> 그래서 확률을 보기 전에 <code>classes_</code>부터 출력한다.
+        오늘은 <code>[-1  1]</code>이 나온다. 숫자가 작은 -1이 앞에 오기 때문이다.</li>
+    </ul>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 확률 보기 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>proba = model.predict_proba(X_new)
+print(model.classes_)
+print(proba.round(3))</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">[-1  1]
+[[0.375 0.625]
+ [0.076 0.924]
+ [0.614 0.386]
+ [0.076 0.924]
+ [0.076 0.924]
+ [0.076 0.924]
+ [0.375 0.625]
+ [0.076 0.924]
+ [0.076 0.924]]</pre>
+    </div>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th><code>classes_</code></th><th>확률 표의 열</th><th>뜻</th></tr>
+        <tr><td><code>-1</code> (첫째)</td><td>왼쪽 = <b>0번 열</b></td><td><b>불합격(-1)일 확률</b></td></tr>
+        <tr><td><code>1</code> (둘째)</td><td>오른쪽 = 1번 열</td><td>합격(1)일 확률</td></tr>
+      </table>
+    </div>
+    <p>왼쪽(0번) 열, 곧 불합격(-1)일 확률만 꺼내 새 열로 붙인다. <code>proba[:, 0]</code>은 "모든 행(<code>:</code>)의 0번 열"이라는 뜻이다.
+    읽는 법만 알면 된다. 1번 열을 꺼내면 오류 없이 <b>합격</b> 확률이 붙으니 주의한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 불합격 확률 열 붙이기 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>new_lots["불합격_확률"] = proba[:, 0].round(3)  # classes_ [-1 1]의 0번 열 = 불합격(-1)
+print(new_lots[["공정명", "설비번호", "온도_섭씨", "진공도_mTorr", "예측_합격여부", "불합격_확률"]])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">  공정명   설비번호  온도_섭씨  진공도_mTorr  예측_합격여부  불합격_확률
+0  식각  EQ-02  294.5       4.02        1   0.375
+1  산화  EQ-02  301.5       5.38        1   0.076
+2  식각  EQ-04  289.8       5.14       -1   0.614
+3  포토  EQ-04  295.6       4.96        1   0.076
+4  식각  EQ-04  299.1       4.86        1   0.076
+5  포토  EQ-03  302.0       4.81        1   0.076
+6  산화  EQ-01  305.2       4.35        1   0.375
+7  산화  EQ-03  299.1       5.09        1   0.076
+8  세정  EQ-01  300.6       4.54        1   0.076</pre>
+    </div>
+
+    <svg class="bar-svg" viewBox="0 0 640 270" role="img"
+         aria-label="새 로트 9건의 불합격 확률 막대그래프. 2번이 61.4퍼센트로 50퍼센트 기준선을 넘고, 0번과 6번이 37.5퍼센트, 나머지는 7.6퍼센트다.">
+      <line class="axis" x1="50" y1="220" x2="620" y2="220"/>
+      <line class="axis" x1="50" y1="20" x2="50" y2="220"/>
+      <line class="ref50" x1="50" y1="120" x2="620" y2="120"/>
+      <text class="rlabel" x="616" y="112" text-anchor="end" fill="var(--red)">50% — 넘으면 불합격(-1)으로 예측</text>
+      <line class="ref30" x1="50" y1="160" x2="620" y2="160"/>
+      <text class="rlabel" x="616" y="153" text-anchor="end" fill="var(--muted)">30%</text>
+      <text class="xlabel" x="44" y="224" text-anchor="end">0%</text>
+      <text class="xlabel" x="44" y="124" text-anchor="end">50%</text>
+      <text class="xlabel" x="44" y="24" text-anchor="end">100%</text>
+
+      <rect class="bar high" x="62" y="145.0" width="44" height="75.0"/>
+      <text class="vlabel" x="84" y="139.0" text-anchor="middle">37.5%</text>
+      <text class="xlabel" x="84" y="240" text-anchor="middle">0번</text>
+      <rect class="bar" x="124" y="204.8" width="44" height="15.2"/>
+      <text class="vlabel" x="146" y="198.8" text-anchor="middle">7.6%</text>
+      <text class="xlabel" x="146" y="240" text-anchor="middle">1번</text>
+      <rect class="bar fail" x="186" y="97.2" width="44" height="122.8"/>
+      <text class="vlabel" x="208" y="91.2" text-anchor="middle">61.4%</text>
+      <text class="xlabel" x="208" y="240" text-anchor="middle">2번</text>
+      <rect class="bar" x="248" y="204.8" width="44" height="15.2"/>
+      <text class="vlabel" x="270" y="198.8" text-anchor="middle">7.6%</text>
+      <text class="xlabel" x="270" y="240" text-anchor="middle">3번</text>
+      <rect class="bar" x="310" y="204.8" width="44" height="15.2"/>
+      <text class="vlabel" x="332" y="198.8" text-anchor="middle">7.6%</text>
+      <text class="xlabel" x="332" y="240" text-anchor="middle">4번</text>
+      <rect class="bar" x="372" y="204.8" width="44" height="15.2"/>
+      <text class="vlabel" x="394" y="198.8" text-anchor="middle">7.6%</text>
+      <text class="xlabel" x="394" y="240" text-anchor="middle">5번</text>
+      <rect class="bar high" x="434" y="145.0" width="44" height="75.0"/>
+      <text class="vlabel" x="456" y="139.0" text-anchor="middle">37.5%</text>
+      <text class="xlabel" x="456" y="240" text-anchor="middle">6번</text>
+      <rect class="bar" x="496" y="204.8" width="44" height="15.2"/>
+      <text class="vlabel" x="518" y="198.8" text-anchor="middle">7.6%</text>
+      <text class="xlabel" x="518" y="240" text-anchor="middle">7번</text>
+      <rect class="bar" x="558" y="204.8" width="44" height="15.2"/>
+      <text class="vlabel" x="580" y="198.8" text-anchor="middle">7.6%</text>
+      <text class="xlabel" x="580" y="240" text-anchor="middle">8번</text>
+      <text class="xlabel" x="335" y="262" text-anchor="middle">새 로트 번호(위 표의 왼쪽 번호)</text>
+    </svg>
+    <p class="img-caption">위 실행 결과의 <code>불합격_확률</code>을 그대로 막대로 옮긴 그림. 50%를 넘은 2번만 불합격(-1)으로 예측됐고,
+    합격(1)으로 예측된 8건 사이에도 높이 차이가 있다.</p>
+
+    <h3>결과 해석 — 2번은 왜 불합격 예상이고, 0번·6번은 왜 높을까</h3>
+    <p>결정 트리는 새 로트를 <b>"비슷한 과거 로트 묶음"</b>에 넣고, 그 묶음의 불합격 비율을 확률로 말한다.
+    아래 묶음별 숫자는 강사가 트리를 열어 연습문제(train) 588건으로 확인한 값이다.</p>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>새 로트</th><th>들어간 묶음(트리의 갈래)</th><th>묶음 안 연습문제 로트</th><th>불합격 확률</th></tr>
+        <tr><td>2번</td><td>온도 약 294도 이하 + 압력 1009.0 초과 + 가스유량 53.94 이하</td><td>44건 중 27건 불합격</td><td><b>61.4%</b> → -1 예측</td></tr>
+        <tr><td>0번, 6번</td><td>온도 약 294~306도 + 진공도 약 4.42 이하</td><td>24건 중 9건 불합격</td><td>37.5%</td></tr>
+        <tr><td>1·3·4·5·7·8번</td><td>온도 약 294~306도 + 진공도 약 4.43~5.5</td><td>382건 중 29건 불합격</td><td>7.6%</td></tr>
+      </table>
+    </div>
+    <ul class="pt-list">
+      <li>2번은 온도가 289.8도로 9건 중 가장 낮다. 다만 2번의 묶음은 온도 하나가 아니라 압력·가스유량 기준까지 <b>여러 열을 함께</b> 써서 정해졌다.</li>
+      <li>0번(EQ-02)·6번(EQ-01)의 공통점은 <code>진공도_mTorr</code>가 <b>4.02, 4.35로 9건 중 가장 낮다</b>는 것이다. 온도는 294.5도와 305.2도로 서로 다르다.</li>
+      <li>0번·6번의 묶음은 연습문제 로트가 24건뿐이다. 기록 수가 적은 묶음의 비율은 몇 건만 달라져도 크게 흔들리므로, 37.5%를 정확한 값처럼 믿지 않는다.</li>
+    </ul>
+    <div class="callout warn">
+      <b class="tag">"온도가 낮아서, 진공도가 낮아서 불합격된다"고 말해도 될까?</b>
+      <ul class="pt-list">
+        <li>아직 안 된다. 모델은 "그런 묶음에 과거 불합격이 많았다"는 것을 기억할 뿐이다. 그 이유까지 아는 것은 아니다.</li>
+        <li>근거는 새 로트의 확률이 아니라 연습문제(train) 데이터의 비율에서 찾는다.
+          온도 약 294도 이하인 로트는 65건 중 34건(약 52%)이 불합격, 약 294~306도인 로트는 459건 중 56건(약 12%)이었다.
+          온도가 비슷한 로트 중에서는 진공도 약 4.42 이하 묶음이 24건 중 9건, 옆 묶음이 382건 중 29건 불합격이었다.</li>
+        <li>그래서 말할 수 있는 것은 "온도와 진공도가 불합격의 <b>원인 후보</b>로 더 살펴볼 만하다"까지다.
+          8차시에서도 진공도는 불합격의 원인 후보로 살펴본 열이다(다른 데이터라 숫자를 그대로 비교하지는 않는다).</li>
+        <li>실무라면 불합격 예상 로트와 확률이 상대적으로 높은 로트를 먼저 다시 확인하는 데 쓸 수 있다. 다만 오늘 데이터는 교육용 가상 데이터다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="step-badge">STEP 05</span>
+    <h2>Orange3로 재확인하기</h2>
+    <p>9차시에는 Orange3로 먼저 모델을 만들어 보고 코드로 확인했다. 오늘은 반대로, 코드로 예측한 같은 새 로트를
+    Orange3의 <b>예측(Predictions)</b> 위젯에 넣어 다시 확인한다.</p>
+    <div class="callout practice">
+      <b class="tag">따라 하기</b>
+      <ul class="pt-list">
+        <li>① 9차시 캔버스(파일(File) → 트리(Tree) → 학습·평가(Test and Score))를 연다. 파일(File) 위젯에서 <code>합격여부</code>가 categorical / target인지 다시 확인한다.</li>
+        <li>② 파일(File) 위젯을 하나 더 놓고 <code>week09_new_lots_to_predict.csv</code>를 연다(화면에는 "파일 (1)"로 보인다).</li>
+        <li>③ 예측(Predictions) 위젯을 놓고 <b>트리(Tree) → 예측(Predictions)</b>(모델), <b>파일 (1) → 예측(Predictions)</b>(데이터)으로 연결한다.</li>
+        <li>④ 예측 창의 "트리" 열에서 로트별 예측을 읽고, 위쪽 <b>Show probabilities for</b> 메뉴로 확률도 표시해 본다.</li>
+        <li>⑤ 위 코드 결과(2번만 -1, 그다음으로 0번·6번의 불합격 확률이 높음)와 같은지 실습지에 적는다. 확률 열도 -1과 1 중 어느 쪽 확률인지 열 이름을 보고 확인한다.</li>
+      </ul>
+      위젯 사용법은 <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>를 참고한다.
+    </div>
     <div class="oflow-wrap">
       <svg class="oflow-svg" viewBox="0 0 860 190" role="img"
-           aria-label="9차시 Tree 모델과 새 로트 CSV가 Predictions 위젯으로 모여 예측 결과를 만드는 Orange3 워크플로 다이어그램">
+           aria-label="학습 파일에서 만든 트리 모델과 새 로트 파일이 예측(Predictions) 위젯으로 모여 예측 결과를 만드는 Orange3 워크플로 다이어그램">
         <rect class="obox" x="10" y="15" width="230" height="56" rx="12"/>
-        <text x="125" y="38" text-anchor="middle" class="olabel" font-size="14">9차시 Tree 모델</text>
-        <text x="125" y="58" text-anchor="middle" class="osub" font-size="10">Orange3에서 학습된 모델</text>
+        <text x="125" y="38" text-anchor="middle" class="olabel" font-size="14">파일(File) → 트리(Tree)</text>
+        <text x="125" y="58" text-anchor="middle" class="osub" font-size="10">week09_pass_fail_train.csv</text>
 
         <rect class="obox" x="10" y="119" width="230" height="56" rx="12"/>
-        <text x="125" y="142" text-anchor="middle" class="olabel" font-size="14">새 로트 CSV</text>
+        <text x="125" y="142" text-anchor="middle" class="olabel" font-size="14">파일 (1)</text>
         <text x="125" y="162" text-anchor="middle" class="osub" font-size="10">week09_new_lots_to_predict.csv</text>
 
         <path class="oarrow" d="M240,43 H270 V95 H306" fill="none"/>
@@ -211,7 +560,7 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
         <polygon class="oarrowhead" points="306,87 323,95 306,103"/>
 
         <rect class="obox accent" x="310" y="61" width="220" height="68" rx="14"/>
-        <text x="420" y="90" text-anchor="middle" class="olabel" font-size="15">Predictions</text>
+        <text x="420" y="90" text-anchor="middle" class="olabel" font-size="15">예측 (Predictions)</text>
         <text x="420" y="112" text-anchor="middle" class="osub" font-size="11">새 로트 예측 실행</text>
 
         <line class="oarrow" x1="530" y1="95" x2="552" y2="95"/>
@@ -219,118 +568,194 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
 
         <rect class="obox" x="570" y="45" width="280" height="100" rx="14"/>
         <text x="710" y="76" text-anchor="middle" class="olabel" font-size="15">예측 결과</text>
-        <text x="710" y="98" text-anchor="middle" class="osub" font-size="11">합격 / 불합격</text>
-        <text x="710" y="118" text-anchor="middle" class="osub" font-size="11">확률(Probability) 포함</text>
+        <text x="710" y="98" text-anchor="middle" class="osub" font-size="11">1(합격) / -1(불합격)</text>
+        <text x="710" y="118" text-anchor="middle" class="osub" font-size="11">확률(Probability) 표시 가능</text>
       </svg>
     </div>
-    <p style="margin:.8rem 0 .2rem;"><b>실제 Orange3 화면으로 확인하기</b></p>
+    <p style="margin:.8rem 0 .2rem;"><b>실제 Orange3 화면</b></p>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week10_01_canvas.png" loading="lazy"
-           alt="그림 10-1. Tree 모델과 새 로트 데이터를 Predictions에 연결한 캔버스" data-shot="학습용 File → Tree → Predictions, 새 로트 File → Predictions로 연결한 캔버스">
-      <figcaption class="img-caption">그림 10-1. Tree 모델과 새 로트 데이터를 Predictions에 연결한 캔버스</figcaption>
+           alt="그림 10-1. 파일(File) → 트리(Tree) → 학습·평가(Test and Score) 캔버스에 파일 (1)과 예측 위젯을 추가해 연결한 화면" data-shot="학습용 파일 → 트리 → 예측, 새 로트 파일 (1) → 예측으로 연결한 캔버스">
+      <figcaption class="img-caption">그림 10-1. 트리 모델과 두 번째 파일 위젯을 예측(Predictions) 위젯에 연결한 캔버스</figcaption>
     </figure>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week10_02_predictions.png" loading="lazy"
-           alt="그림 10-2. Predictions가 보여주는 새 로트 예측 결과와 확률" data-shot="Predictions 창 — 새 로트별 예측 결과와 확률 열이 보이는 표">
-      <figcaption class="img-caption">그림 10-2. Predictions가 보여주는 새 로트 예측 결과와 확률</figcaption>
+           alt="그림 10-2. 예측(Predictions) 위젯 창. week09_new_lots_to_predict.csv 9건의 트리 예측(1/-1)과 확률 열이 보이는 표" data-shot="예측(Predictions) 위젯 — week09_new_lots_to_predict.csv 9건의 예측 결과(트리 열에 1/-1)와, Show probabilities for로 켠 확률 열이 보이는 표">
+      <figcaption class="img-caption">그림 10-2. 예측(Predictions) 창. 새 로트 9행이 보이고, 왼쪽 "트리" 열이 예측값(1/-1),
+      위쪽 "Show probabilities for" 메뉴로 확률 열을 표시한다.</figcaption>
     </figure>
-    <div class="callout warn">
-      <b class="tag">두 방식이 다르게 나온다면?</b>
-      Orange3 Tree는 기본 깊이 설정이 <code>max_depth=4</code>와 다르고, 공정명·설비번호까지 특징으로
-      쓰며, 결측 행을 지우지 않은 전체 데이터로 학습한다. 그래서 결과가 달라질 수 있다. 두 도구가 "같은 문제를 다른 방식으로 푸는 도구"라는 점을 다시 한번 확인하는
-      기회로 삼는다.
+    <h3>두 도구의 결과가 다를 수 있는 이유</h3>
+    <p>같은 데이터를 줘도 두 도구의 예측이나 확률이 다를 수 있다. 같은 문제집을 공부한 두 학생이 답을 다르게 쓰는 것과 같다.
+    공부한 범위와 방법이 조금씩 달랐기 때문이다.</p>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>다른 점</th><th>scikit-learn 코드</th><th>Orange3</th></tr>
+        <tr><td>공부한 문제 수</td><td>연습문제(train) 588건만으로 학습</td><td>파일에 들어 있는 전체 행으로 학습</td></tr>
+        <tr><td>보는 단서</td><td>숫자 열 6개</td><td><code>공정명</code>·<code>설비번호</code> 같은 글자 열도 단서로 쓸 수 있다</td></tr>
+        <tr><td>나무 키우는 규칙</td><td>깊이 4까지(<code>max_depth=4</code>)</td><td>위젯의 기본 설정(깊이 제한 등이 다르다)</td></tr>
+        <tr><td>빈칸 처리</td><td><code>dropna()</code>로 빈칸 있는 행을 지움</td><td>빈칸 있는 행도 Orange3 방식으로 다룬다</td></tr>
+      </table>
+    </div>
+    <div class="callout concept">
+      <b class="tag">정리</b>
+      결과가 다르면 "어느 한쪽이 계산을 틀렸다"가 아니라 "조건이 달랐다"로 읽는다. 어느 쪽 예측이 맞았는지는
+      두 도구 모두 실제 검사 결과가 나와야 알 수 있다.
     </div>
   </section>
 
   <section class="block">
-    <h2>10차시 되짚기 — 우리가 배운 것들</h2>
-    <table class="timetable">
-      <tr><th>차시</th><th>핵심 내용</th></tr>
-      <tr><td>1</td><td>반도체·웨이퍼·공정 개념, 변수와 print() 출력</td></tr>
-      <tr><td>2</td><td>리스트와 딕셔너리로 여러 값·이름표 붙은 값 다루기</td></tr>
-      <tr><td>3</td><td>조건문·반복문·함수로 직접 판정 로직 만들기</td></tr>
-      <tr><td>4</td><td>Pandas로 표 데이터 읽고 조건 검색하기</td></tr>
-      <tr><td>5</td><td>결측값·중복값·이상값 정제(EDA) + Orange3</td></tr>
-      <tr><td>6</td><td>다섯 가지 그래프로 데이터 패턴 확인 + Orange3</td></tr>
-      <tr><td>7</td><td>groupby로 설비 비교, 로트별 수율과 불량 파레토 + Orange3</td></tr>
-      <tr><td>8</td><td>상관관계로 원인 후보 찾기("원인 후보" ≠ "원인") + Orange3</td></tr>
-      <tr><td>9</td><td>머신러닝 분류 모델 학습, 정확도의 함정과 혼동행렬 + Orange3</td></tr>
-      <tr><td>10</td><td>새 데이터 예측, 확률로 확신 정도 확인, 전체 과정 회고 + Orange3</td></tr>
-    </table>
+    <span class="step-badge">STEP 06</span>
+    <h2>과정 전체 되짚기 — 10차시의 큰 줄기</h2>
+    <p>10차시 동안 한 일을 한 줄로 줄이면 아래 네 칸이다. 1~3차시의 파이썬 기초는 이 네 칸을 하기 위한 도구였다.</p>
+    <svg class="flow-svg" viewBox="0 0 900 150" role="img"
+         aria-label="10차시 과정의 큰 줄기: 데이터를 잘 살핀다, 여러 열을 함께 본다, 관계를 찾는다(원인 후보), 예측한다(예측이 맞아도 원인을 안 것은 아니다)">
+      <rect class="fbox" x="10" y="20" width="195" height="100" rx="12"/>
+      <text x="107" y="56" text-anchor="middle" class="flabel" font-size="15">① 잘 살핀다</text>
+      <text x="107" y="80" text-anchor="middle" class="fsub" font-size="11">빈칸·이상값·그래프</text>
+      <text x="107" y="100" text-anchor="middle" class="fsub" font-size="11">4~6차시</text>
+
+      <line class="farrow" x1="205" y1="70" x2="220" y2="70"/>
+      <polygon points="220,63 234,70 220,77" fill="var(--muted)"/>
+
+      <rect class="fbox" x="235" y="20" width="195" height="100" rx="12"/>
+      <text x="332" y="56" text-anchor="middle" class="flabel" font-size="15">② 함께 본다</text>
+      <text x="332" y="80" text-anchor="middle" class="fsub" font-size="11">설비·공정별로 나눠 비교</text>
+      <text x="332" y="100" text-anchor="middle" class="fsub" font-size="11">1·7차시</text>
+
+      <line class="farrow" x1="430" y1="70" x2="445" y2="70"/>
+      <polygon points="445,63 459,70 445,77" fill="var(--muted)"/>
+
+      <rect class="fbox" x="460" y="20" width="195" height="100" rx="12"/>
+      <text x="557" y="56" text-anchor="middle" class="flabel" font-size="15">③ 관계를 찾는다</text>
+      <text x="557" y="80" text-anchor="middle" class="fsub" font-size="11">원인이 아니라 원인 후보</text>
+      <text x="557" y="100" text-anchor="middle" class="fsub" font-size="11">8차시</text>
+
+      <line class="farrow" x1="655" y1="70" x2="670" y2="70"/>
+      <polygon points="670,63 684,70 670,77" fill="var(--muted)"/>
+
+      <rect class="fbox active" x="685" y="20" width="205" height="100" rx="12"/>
+      <text x="787" y="56" text-anchor="middle" class="flabel" font-size="15">④ 예측한다</text>
+      <text x="787" y="80" text-anchor="middle" class="fsub" font-size="11">맞혀도 원인을 안 것은 아님</text>
+      <text x="787" y="100" text-anchor="middle" class="fsub" font-size="11">9~10차시</text>
+    </svg>
+    <p class="img-caption">이 과정의 뼈대. 새 데이터를 만나도 이 순서로 다가가면 된다.</p>
+
+    <h3>차시별 한 문장</h3>
+    <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>차시</th><th>한 문장 정리</th><th>큰 줄기</th></tr>
+        <tr><td>1</td><td>공장은 작업마다 기록을 남기고, 우리는 그 숫자를 변수에 담아 문장으로 말하기 시작했다. 공정명과 함께 보며 "원인 후보"라는 말을 처음 만났다.</td><td>도구 · ② 맛보기</td></tr>
+        <tr><td>2</td><td>여러 측정값은 리스트에, 이름표가 붙은 값은 딕셔너리에 담았다.</td><td>도구</td></tr>
+        <tr><td>3</td><td><code>if</code>·<code>for</code>·함수로 합격/불합격 판정을 컴퓨터에 맡겼다.</td><td>도구</td></tr>
+        <tr><td>4</td><td>Pandas로 CSV 표를 읽고, 원하는 행만 조건으로 골라냈다.</td><td>도구 · ①</td></tr>
+        <tr><td>5</td><td>분석 전에 빈칸·중복·이상한 값부터 찾아 정리했다. 지저분한 데이터로는 결론도 흔들린다.</td><td>①</td></tr>
+        <tr><td>6</td><td>그래프로 그려 숫자 표에서는 안 보이던 모양과 차이를 봤다.</td><td>①</td></tr>
+        <tr><td>7</td><td>설비별로 묶어 비교하며(<code>groupby</code>) 수율·불량률의 차이를 숫자로 확인했다.</td><td>②</td></tr>
+        <tr><td>8</td><td>두 열이 함께 움직이는지(상관관계) 보고 원인 후보를 골랐다. 함께 움직인다고 원인인 것은 아니다.</td><td>③</td></tr>
+        <tr><td>9</td><td>여러 열을 단서로 합격/불합격을 맞히는 모델을 만들고 정확도를 쟀다.</td><td>④</td></tr>
+        <tr><td>10</td><td>모델 점수를 기준선과 비교해 읽고, 처음 보는 새 로트를 예측했다.</td><td>④</td></tr>
+      </table>
+    </div>
+
+    <h3>예측이 맞아도 원인을 안 것은 아니다</h3>
     <ul class="pt-list">
-      <li>1차시의 <code>print(pass_count)</code> 한 줄에서 시작 → 오늘은 데이터를 스스로 정제·시각화하고 원인 후보를 찾아 예측 모델까지 직접 제작</li>
-      <li>앞으로 새로운 공정 데이터를 받아도 오늘까지 배운 순서(읽기 → 정제 → 시각화 → 비교 → 원인 탐색 → 예측)를 그대로 적용 가능</li>
+      <li>길거리에 우산을 든 사람이 많으면 "오늘 비가 오겠구나"를 꽤 잘 맞힐 수 있다. 그렇다고 우산이 비의 원인은 아니다.</li>
+      <li>모델도 같다. 진공도가 낮은 묶음에서 불합격이 많았다는 것을 이용해 예측할 뿐, "왜" 불합격인지는 알려주지 않는다.</li>
+      <li>그래서 데이터 분석의 결론은 "이것이 원인이다"가 아니라 "이것이 <b>원인 후보</b>이니 현장에서 확인해 보자"로 끝난다.
+        1차시의 "용의자 ≠ 범인"과 같은 이야기다.</li>
     </ul>
     <div class="code-block">
       <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>반도체 공정 데이터 분석 입문 과정을 복습하려고 해. 결측값 처리, 상관관계와 '원인 후보', 정확도의 함정에 대한 OX 문제 3개를 내줘. 내가 답하면 그때 정답과 해설을 알려줘.</code></pre>
+      <pre style="white-space:pre-wrap;"><code>데이터 분석 입문 과정을 마쳤어. '예측을 잘한다'와 '원인을 안다'가 왜 다른지, 일상 예시 두 개로 설명해줘. 그리고 이 차이를 확인하는 OX 문제 3개를 내주고, 내가 답하면 해설해줘.</code></pre>
     </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: 해설에서 상관관계를 "원인"이 아니라 "원인 후보"로 표현하는지 확인하자. "원인"이라고 단정하면 AI의 답을 바로잡아보자.</p>
-
+    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">이렇게 확인해보자: AI의 해설이 데이터에서 찾은 관계를 "원인"이라고 단정하지 않고 "원인 후보"로 다루는지 보자.</p>
   </section>
 
   <section class="block">
-    <h2>실습: 새 로트 예측과 전체 회고 따라 하기</h2>
+    <span class="step-badge">STEP 07</span>
+    <h2>실습: 모델 평가와 새 로트 예측 따라 하기</h2>
+    <p>학생용 노트북 <code>week10_student.ipynb</code>를 열고 위에서 아래로 차례대로 진행한다.
+    <code>____</code>(밑줄 네 개)로 비어 있는 곳만 채우면 된다.</p>
     <div class="step">
       <div class="num">1</div>
-      <div class="content"><b>모델 다시 만들기</b> — 9차시와 동일한 코드로 모델을 학습시킨다.
-      (노트북 1단계)</div>
+      <div class="content"><b>모델 다시 만들기</b> — 9차시와 같은 설정으로 모델을 학습시킨다. <code>(735, 9)</code>와
+      <code>588 147</code>이 나오면 성공. (노트북 1단계)</div>
     </div>
     <div class="step">
       <div class="num">2</div>
-      <div class="content"><b>새 로트 예측</b> — <code>week09_new_lots_to_predict.csv</code>를
-      불러와 <code>predict()</code>로 예측한다. (노트북 2~3단계)</div>
+      <div class="content"><b>모델 평가</b> — 정확도, 기준선(무조건 합격 찍기), 혼동행렬을 차례로 확인한다. (노트북 2단계)</div>
     </div>
     <div class="step">
       <div class="num">3</div>
-      <div class="content"><b>확률 확인</b> — <code>predict_proba()</code>로 불합격 확률을
-      함께 확인하고, 어떤 로트가 더 애매한지 찾아본다. (노트북 4~5단계 — 4단계 끝 "확인하기" 셀에서
-      <code>print(model.classes_)</code>로 확률 열의 순서도 확인한다)</div>
+      <div class="content"><b>새 로트 예측</b> — 새 로트를 읽고 학습 때와 같은 단서 열을 골라 <code>predict()</code>로 예측한다. (노트북 3~4단계)</div>
     </div>
     <div class="step">
       <div class="num">4</div>
-      <div class="content"><b>Orange3로 재확인</b> — Predictions 위젯으로 같은 예측을 코드 없이
-      다시 확인한다. (노트북 대응 없음 — Orange3 화면에서 진행)</div>
+      <div class="content"><b>확률 확인</b> — <code>predict_proba()</code>로 불합격 확률을 붙이고 가장 높은 로트를 찾는다.
+      먼저 끝난 사람은 5단계 끝 "도전 문제"로 넘어간다. (노트북 5단계)</div>
     </div>
     <div class="step">
       <div class="num">5</div>
-      <div class="content"><b>전체 회고 작성</b> — 되짚기 표를 보며 가장 인상 깊었던 차시와
-      이유를 한 문장씩 적는다. (노트북 6단계 — 학생용 노트북의 회고 마크다운 셀에 적는다)</div>
+      <div class="content"><b>Orange3 재확인과 회고</b> — 예측 위젯으로 같은 새 로트를 확인하고(노트북 대응 없음), 과정 회고를 적는다.
+      이어서 AI 활용·연습문제·수료증 미니 프로그램으로 마무리한다. (노트북 6~10단계)</div>
     </div>
-    <p>여기까지가 오늘의 핵심 실습이다. 빠른 학습자는 노트북 6단계 끝의 "도전 문제 1" 셀(아래 「도전 실습」)도
-    풀어 본다. 이어서 노트북 7~10단계(AI에게 질문하기 · AI에게 코드 생성 요청하기 · 연습문제 · AI로 재미있는
-    미니 프로그램 만들기)로 마무리한다. 8단계 끝에는 AI 예시 코드를 오늘 새 로트 9건에 적용해 보는 셀이,
-    9단계 끝에는 기준을 0.3으로 낮춰 보는 셀이 이어진다.</p>
   </section>
 
   <section class="block">
     <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
+        <h4>기준선</h4><div class="en">Baseline</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>아무것도 배우지 않고 가장 흔한 답으로 찍었을 때의 점수.</dd>
+          <dt>쉬운 비유</dt><dd>답이 거의 다 ①번인 시험에서 전부 ①번으로 찍은 점수.</dd>
+          <dt>데이터에서의 예</dt><dd>test 147건을 전부 합격(1)이라 찍으면 78.9%. 모델은 80.3%로 2건 더 맞혔을 뿐이다.</dd>
+          <dt>자주 하는 오해</dt><dd>정확도가 70~80%대면 잘 만든 모델이라고 생각하기 쉽다. 기준선과 먼저 비교해야 한다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>혼동행렬</h4><div class="en">Confusion Matrix</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>정답과 예측을 맞힘·틀림 네 칸으로 나눠 센 표.</dd>
+          <dt>쉬운 비유</dt><dd>화재경보기가 "불났는데 울림 / 불났는데 안 울림 / 불 안 났는데 울림 / 조용함"을 센 기록.</dd>
+          <dt>데이터에서의 예</dt><dd><code>[[109 7] [22 9]]</code>(<code>labels=[1, -1]</code>) — 실제 불합격 31건 중 9건만 잡고 22건을 놓쳤다.</dd>
+          <dt>자주 하는 오해</dt><dd>아랫줄과 윗줄이 헷갈리기 쉽다. 줄(가로)은 실제, 칸(세로)은 예측이다.</dd>
+        </dl>
+      </div>
+      <div class="term-card">
         <h4>predict()</h4><div class="en">Predict</div>
         <dl>
-          <dt>한 줄 설명</dt><dd>학습된 모델에 새 데이터를 넣어 예측값을 얻는 메서드.</dd>
-          <dt>쉬운 비유</dt><dd>공부를 마친 학생에게 새 문제를 풀어보라고 하는 것.</dd>
-          <dt>데이터에서의 예</dt><dd><code>model.predict(X_new)</code></dd>
-          <dt>자주 하는 오해</dt><dd>새 데이터의 열 순서·이름이 학습 때와 달라도 된다고 착각하기 쉽다. 반드시 같은 Feature 열이어야 한다.</dd>
+          <dt>한 줄 설명</dt><dd>학습된 모델에 새 데이터를 넣어 답(1 또는 -1)을 받는 명령.</dd>
+          <dt>쉬운 비유</dt><dd>모의고사를 마친 학생이 실제 시험 문제를 푸는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>model.predict(X_new)</code> → 새 로트 9건 중 2번만 -1(불합격 예상), 나머지 8건은 1(합격 예상).</dd>
+          <dt>자주 하는 오해</dt><dd>새 데이터의 열이 학습 때와 달라도 될 거라 생각하기 쉽다. 같은 단서 열을 같은 순서로 줘야 한다.</dd>
         </dl>
       </div>
       <div class="term-card">
         <h4>predict_proba()</h4><div class="en">Predict Probability</div>
         <dl>
-          <dt>한 줄 설명</dt><dd>예측 결과 대신(또는 함께) 각 클래스일 확률을 돌려주는 메서드.</dd>
-          <dt>쉬운 비유</dt><dd>"합격"이라고 답은 같아도 "70% 확신" vs "99% 확신"은 다른 것과 같다.</dd>
-          <dt>데이터에서의 예</dt><dd><code>model.predict_proba(X_new)</code></dd>
-          <dt>자주 하는 오해</dt><dd>predict()의 결과만 보고 모든 예측이 똑같이 확실하다고 생각하기 쉽다.</dd>
+          <dt>한 줄 설명</dt><dd>답 대신 각 답일 확률([합격일 확률, 불합격일 확률])을 돌려주는 명령.</dd>
+          <dt>쉬운 비유</dt><dd>"비 안 옴"이라도 강수확률 5%와 40%는 다르게 준비한다.</dd>
+          <dt>데이터에서의 예</dt><dd>2번 0.614(불합격 예상), 0번·6번 0.375, 나머지 0.076. <code>classes_</code>가 <code>[-1 1]</code>이라 0번 열이 불합격 확률이다.</dd>
+          <dt>자주 하는 오해</dt><dd>확률이 50% 아래면 안전하다고 생각하기 쉽다. 상대적으로 높은 로트는 먼저 살펴볼 만하다.</dd>
         </dl>
       </div>
       <div class="term-card">
         <h4>일반화</h4><div class="en">Generalization</div>
         <dl>
-          <dt>한 줄 설명</dt><dd>학습에 쓰지 않은 새로운 데이터에서도 모델이 잘 동작하는 능력.</dd>
-          <dt>쉬운 비유</dt><dd>문제집만 외운 게 아니라 응용문제도 풀 수 있는 학생.</dd>
-          <dt>데이터에서의 예</dt><dd>학습에 쓰지 않은 test 데이터 147건에서 잰 정확도(78.2%)가 일반화 성능을 가늠하는 값이다.</dd>
-          <dt>자주 하는 오해</dt><dd>train 데이터에서 정확도가 높으면 새 데이터에서도 항상 잘 맞을 거라고 착각하기 쉽다.</dd>
+          <dt>한 줄 설명</dt><dd>공부에 쓰지 않은 처음 보는 데이터에서도 잘 맞히는 힘.</dd>
+          <dt>쉬운 비유</dt><dd>연습문제 답만 외운 학생이 아니라, 새 문제도 풀 줄 아는 학생.</dd>
+          <dt>데이터에서의 예</dt><dd>연습문제 점수(84.7%)보다 모의고사 점수(80.3%)가 일반화 실력에 가깝다.</dd>
+          <dt>자주 하는 오해</dt><dd>연습문제(train) 데이터 점수가 높으면 새 데이터에서도 잘 맞는다고 착각하기 쉽다(도전 실습).</dd>
+        </dl>
+      </div>
+      <div class="term-card">
+        <h4>원인 후보</h4><div class="en">Candidate Cause</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>데이터에서 "이것 때문일 수도 있다"고 보여 더 확인해볼 대상.</dd>
+          <dt>쉬운 비유</dt><dd>범인이 아니라 용의자. 조사해야 범인인지 안다.</dd>
+          <dt>데이터에서의 예</dt><dd>연습문제(train) 데이터에서 온도가 비슷한 로트 중 진공도 약 4.42 이하 묶음은 24건 중 9건(37.5%)이 불합격, 진공도 약 4.43~5.5 묶음은 382건 중 29건(7.6%) → 진공도는 불합격의 원인 후보.</dd>
+          <dt>자주 하는 오해</dt><dd>모델이 많이 참고한 열이나 예측을 잘 맞힌 열을 곧 원인이라고 여기기 쉽다.</dd>
         </dl>
       </div>
     </div>
@@ -339,268 +764,327 @@ print(new_lots[["공정명", "설비번호", "온도_섭씨", "예측_검사결�
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week09/week09_new_lots_to_predict.csv</code></li>
-      <li>예측 실습용 새 로트 9행(정답 라벨 없음)</li>
-      <li>학습은 9차시의 <code>week09_pass_fail_train.csv</code>를 그대로 재사용</li>
-      <li>자세한 설명: <a href="../../data/data_dictionary/week09_dictionary.html">데이터 설명서(9차시)</a> 참고 · 선택 심화 자료는 <a href="../../data/data_dictionary/week10_dictionary.html">10차시 데이터 설명서</a></li>
+      <li>학습: <code>data/weekly/week09/week09_pass_fail_train.csv</code> — 750행 9열, 빈칸 있는 행을 지우면 735행
+        (합격 1이 582건, 불합격 -1이 153건).</li>
+      <li>예측: <code>data/weekly/week09/week09_new_lots_to_predict.csv</code> — 새 로트 9행 8열, 정답 열 <code>합격여부</code> 없음.</li>
+      <li>둘 다 교육용으로 만든 <b>가상 데이터</b>다. 실제 회사의 생산 기록이 아니며, 오늘 예측 결과도 현업 판단에 쓰는 값이 아니다.</li>
+      <li><code>압력_Pa</code>는 단위와 값의 크기가 실제 공정과 맞지 않는 가상 값이라, 크기 자체를 해석하지 않고 숫자 열 하나로만 쓴다.</li>
+      <li>열 설명: <a href="../../data/data_dictionary/week09_dictionary.html">데이터 설명서(9차시)</a>.
+        더 해보고 싶은 사람을 위한 선택 심화 자료는 <a href="../../data/data_dictionary/week10_dictionary.html">10차시 데이터 설명서</a>
+        (<code>data/weekly/week10/week10_mini_project_dataset.csv</code>, 600행)에 있다. 수업 본 흐름에서는 쓰지 않는다.</li>
     </ul>
   </section>
 
   <section class="block">
     <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
-      <b class="tag">오류 1</b>
-      <code>KeyError: "[...] not in index"</code> 또는 <code>ValueError: The feature names should match those that were passed during fit.</code>
-      — 새 데이터의 Feature 열 이름·순서가 학습 때와 다른 경우다. <code>feature_cols</code> 리스트를 그대로 재사용하면 안전하다.
+      <b class="tag">오류 1 — 표를 통째로 넣었을 때</b>
+      <ul class="pt-list">
+        <li><code>ValueError: The feature names should match those that were passed during fit.</code>
+          (아래에 <code>Feature names unseen at fit time: - 공정명 - 설비번호</code>)</li>
+        <li>이유: <code>model.predict(new_lots)</code>처럼 학습 때 없던 열이 섞인 표를 넣었다.</li>
+        <li>해결: <code>X_new = new_lots[feature_cols]</code>로 학습 때와 같은 단서 열만 골라 넣는다.</li>
+      </ul>
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 2 — 단서 열의 순서나 개수가 다를 때</b>
+      <ul class="pt-list">
+        <li>순서가 다르면 같은 <code>ValueError</code> 아래에 <code>Feature names must be in the same order as they were in fit.</code>,
+          열이 빠지면 <code>Feature names seen at fit time, yet now missing:</code>가 나온다.</li>
+        <li>해결: 열 이름을 새로 타이핑하지 말고 1단계의 <code>feature_cols</code>를 그대로 쓴다.</li>
+      </ul>
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 3 — 새 로트에서 정답 열을 찾을 때</b>
+      <ul class="pt-list">
+        <li><code>KeyError: '합격여부'</code></li>
+        <li>이유: 새 로트에는 아직 검사 결과가 없어서 <code>new_lots["합격여부"]</code> 열이 없다.</li>
+        <li>해결: 새 로트는 채점할 수 없다. 정답과 비교하는 평가는 test 데이터(<code>y_test</code>)로만 한다.</li>
+      </ul>
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 4 — 1단계를 건너뛰었을 때</b>
+      <ul class="pt-list">
+        <li><code>NameError: name 'model' is not defined</code></li>
+        <li>이유: 모델을 만드는 1단계 셀을 실행하지 않았다(커널을 다시 시작한 뒤에도 마찬가지).</li>
+        <li>해결: 맨 위 셀부터 차례대로 다시 실행한다.</li>
+        <li>도전 문제에서 <code>NameError: name 'model2' is not defined</code>가 나면 <code>model2</code>를 만드는 도전 문제 첫 셀을 건너뛴 것이다.</li>
+      </ul>
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 5 — 빈칸 ____을 그대로 두었을 때</b>
+      <ul class="pt-list">
+        <li>메서드 자리: <code>AttributeError: 'DecisionTreeClassifier' object has no attribute '____'</code></li>
+        <li>값·변수 자리: <code>NameError: name '____' is not defined</code> / 비교 기호 자리: <code>SyntaxError: invalid syntax</code></li>
+        <li>1단계의 <code>fit</code> 빈칸을 비워 두면 그 아래 셀에서
+          <code>NotFittedError: This DecisionTreeClassifier instance is not fitted yet.</code>(아직 학습하지 않은 모델)가 난다.</li>
+        <li>5단계를 건너뛰면 9단계에서 <code>KeyError: '불합격_확률'</code>이 난다. 그 열을 만드는 셀을 먼저 실행한다.</li>
+      </ul>
     </div>
     <div class="callout warn">
-      <b class="tag">주의 — 정답 없는 예측의 한계</b>
-      새 로트는 정답(검사결과)이 없으므로, 오늘 당장 "모델이 맞았는지"는 확인할 수 없다.
-      예측은 참고 자료일 뿐, 실제 검사를 대체하지 않는다는 점을 항상 기억하자.
+      <b class="tag">주의 — 오류는 안 나지만 틀리는 것</b>
+      <ul class="pt-list">
+        <li>부호: 이 데이터는 1 = 합격, -1 = 불합격이다. 기준선에 <code>y_test == -1</code>을 쓰면 오류 없이 엉뚱한 값(21.1%)이 나온다.</li>
+        <li>확률 열: <code>classes_</code>가 <code>[-1 1]</code>이므로 불합격 확률은 <code>proba[:, 0]</code>이다. <code>proba[:, 1]</code>을 쓰면 오류 없이 합격 확률이 붙는다.</li>
+        <li><code>random_state=42</code>를 바꾸거나 빼면 오류 없이 강의와 다른 숫자가 나온다.</li>
+      </ul>
     </div>
   </section>
 
   <section class="block">
+    <span class="step-badge">STEP 08</span>
     <h2>도전 실습</h2>
     <div class="callout practice">
-      <b class="tag">도전 문제</b>
-      9차시의 모델을 <code>max_depth=8</code>로 다시 학습시킨 뒤, 같은 새 로트 9건에 대해
-      다시 예측해보자. 예측 결과나 확률이 달라지는가? 더 복잡한 모델이 항상 더 좋은 것은
-      아니라는 점을 9차시에서 배운 내용과 연결해 설명해보자.<br>
-      (노트북 6단계 끝 "도전 문제 1" 셀 — 다시 학습 → 예측 → 확률 비교 → test 정확도 비교, 네 셀로 나눠 중간 결과를 본다)
+      <b class="tag">도전 문제 — 더 깊은 나무로 다시 예측하기</b>
+      <ul class="pt-list">
+        <li>나무 깊이를 4에서 8로 늘린 <code>model2</code>(<code>max_depth=8</code>)를 같은 연습문제(train) 데이터로 학습시킨다.</li>
+        <li>새 로트 9건을 <code>model2.predict(X_new)</code>로 다시 예측해 <code>model</code>의 결과와 비교한다.</li>
+        <li><code>.score(X, y)</code>는 정확도를 한 번에 계산해 주는 명령이다. 연습문제(train) 데이터 점수와 test 점수를 두 모델 모두 구해 비교한다.</li>
+        <li>노트북 5단계 끝 "도전 문제" 셀에서 푼다.</li>
+      </ul>
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 도전 문제 (노트북 5단계 끝)</span><button class="copy-btn">복사</button></div>
+      <pre><code>model2 = DecisionTreeClassifier(max_depth=8, random_state=42)
+model2.fit(X_train, y_train)
+
+print(model2.predict(X_new))
+
+print(f"깊이 4 — 학습 데이터 정확도 {model.score(X_train, y_train):.1%}, test 정확도 {model.score(X_test, y_test):.1%}")
+print(f"깊이 8 — 학습 데이터 정확도 {model2.score(X_train, y_train):.1%}, test 정확도 {model2.score(X_test, y_test):.1%}")</code></pre>
+    </div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b>
+      <pre style="margin:.3rem 0 .5rem;white-space:pre-wrap;">DecisionTreeClassifier(max_depth=8, random_state=42)
+[-1  1  1  1  1  1  1  1  1]
+깊이 4 — 학습 데이터 정확도 84.7%, test 정확도 80.3%
+깊이 8 — 학습 데이터 정확도 94.2%, test 정확도 78.9%</pre>
+      <ul class="pt-list">
+        <li>깊이 8 모델은 0번 로트를 불합격(-1)으로, 2번 로트를 합격(1)으로 예측했다. 깊이 4 모델과 두 로트에서 답이 엇갈린다.</li>
+        <li>연습문제(train) 데이터 점수는 84.7% → 94.2%로 올랐지만, test 점수는 80.3% → 78.9%로 <b>내려가</b> 찍기(기준선)와 같아졌다.
+          연습문제 답을 더 잘 외웠지만 처음 보는 문제는 더 틀린 학생과 같다.</li>
+        <li>복잡한 모델이 항상 더 좋은 것은 아니다. 그래서 모델은 공부에 쓰지 않은 test 데이터로 평가한다.
+          새 로트 0번·2번의 실제 결과는 정답이 없으니 오늘은 어느 모델이 맞았는지 알 수 없다.</li>
+      </ul>
     </div>
   </section>
 
   <section class="block">
     <h2>결과 정리 &amp; 퀴즈</h2>
-    <p>퀴즈는 <a href="worksheet.html">실습지</a>와 아래 정리 문제로 확인한다.</p>
+    <p>더 많은 문제는 <a href="worksheet.html">실습지</a>에 있다.</p>
 
     <div class="quiz-item">
-      <div class="q">Q1. (객관식) <code>predict_proba()</code>가 돌려주는 값에 대한 설명으로
-      가장 알맞은 것은?</div>
+      <div class="q">Q1. (계산) 로트 100개 중 불합격이 5개다. 모델이 "전부 합격"이라고만 답하면 정확도는?</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: 95%. 합격 95개를 모두 맞혔기 때문이다. 하지만 불합격 5개는 하나도 잡지 못했다.
+      정확도만 보면 속는 대표적인 경우다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. (객관식) 오늘 혼동행렬 <code>[[109 7] [22 9]]</code>(<code>labels=[1, -1]</code>, 줄은 실제·칸은 예측)에서 "실제 불합격인데 합격이라고 놓친" 로트 수는?</div>
       <ul class="options">
-        <li>A. 예측이 맞았는지 틀렸는지를 알려준다</li>
-        <li>B. 각 클래스(합격/불합격)일 확률을 알려준다</li>
-        <li>C. 데이터에 결측값이 있는지 알려준다</li>
-        <li>D. 모델의 정확도를 다시 계산해준다</li>
+        <li>A. 109</li>
+        <li>B. 7</li>
+        <li>C. 22</li>
+        <li>D. 9</li>
       </ul>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. predict_proba()는 예측 결과 대신(또는 함께) 각 클래스일
-      확률을 돌려준다.</div>
+      <div class="answer-box">정답: C. 아랫줄이 실제 불합격(-1)이고, 그중 왼쪽 칸(합격이라 예측)이 놓친 22건이다. 9건은 잡은 것이다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q2. (참/거짓) 새 로트 9건은 정답(검사결과)이 있어서 예측이 맞았는지 바로
-      확인할 수 있다.</div>
+      <div class="q">Q3. (참/거짓) <code>print(model.classes_)</code>의 결과가 <code>[-1  1]</code>일 때, <code>proba[:, 1]</code>은 불합격일 확률이다.</div>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 거짓. 새 로트는 정답 라벨이 없는 진짜 새 데이터이므로,
-      지금 당장은 예측이 맞았는지 확인할 수 없다.</div>
+      <div class="answer-box">정답: 거짓. 확률 열은 <code>classes_</code> 순서를 따르므로 0번 열이 -1(불합격), 1번 열이 1(합격)일 확률이다.
+      불합격 확률은 <code>proba[:, 0]</code>이다. <code>합격여부</code>는 1~8차시와 같이 1 = 합격, -1 = 불합격이다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q3. (서술) 9개 로트 모두 "합격"으로 예측되었지만, 그중 두 로트의 불합격
-      확률이 다른 로트보다 높게 나왔다. 이 정보가 왜 유용한지 한 문장으로 설명해보자.</div>
+      <div class="q">Q4. (객관식) 새 로트를 예측할 때 모델에 넣을 데이터로 알맞은 것은?</div>
+      <ul class="options">
+        <li>A. <code>new_lots</code> 표 전체</li>
+        <li>B. <code>new_lots[feature_cols]</code></li>
+        <li>C. <code>new_lots["합격여부"]</code></li>
+        <li>D. <code>X_test</code></li>
+      </ul>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">정답: B. 학습 때와 같은 단서 열 6개를 같은 순서로 줘야 한다. A는 <code>ValueError</code>, C는 <code>KeyError</code>가 나고,
+      D는 새 로트가 아니라 모의고사 데이터다.</div>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q5. (서술) 합격(1)으로 예측된 8건 중 0번·6번의 불합격 확률은 37.5%, 나머지 6건은 7.6%였다. 이 정보를 어떻게 쓸 수 있을지, 그리고 "진공도가 원인이다"라고 단정해도 되는지 한두 문장으로 적어보자.</div>
       <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">예시 답안: "예측 결과(합격/불합격)만 보면 다 똑같아 보이지만,
-      확률을 함께 보면 상대적으로 더 위험한 로트를 골라 우선적으로 재검사하는 등 실무적으로
-      활용할 수 있다."</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q4. (서술) 10차시 동안 배운 내용 중 가장 기억에 남는 개념 하나를 골라,
-      그 이유를 두세 문장으로 적어보자.</div>
-      <button class="reveal-btn">작성 팁 보기</button>
-      <div class="answer-box">팁: "무엇을 배웠는지"보다 "어떤 순간에 이해가 확 되었는지"를
-      구체적으로 적으면 더 좋은 회고가 된다(예: 3차시에서 for+if를 직접 짜봤을 때 반복문이
-      왜 필요한지 체감했다 등).</div>
+      <div class="answer-box">예시 답안: "예측은 같아도 확신의 정도가 다르므로, 확률이 상대적으로 높은 0번·6번을 먼저 다시 확인할 수 있다.
+      두 로트의 진공도가 가장 낮았지만 이는 원인 후보일 뿐이고, 원인인지는 현장 확인이 필요하다."</div>
     </div>
   </section>
 
   <section class="block">
-    <h2>AI로 한 걸음 더 — 검색과 코드 생성 활용하기</h2>
-    <div class="callout concept">
-      <b class="tag">마지막 차시도 AI와 함께</b>
-      10차시 동안 배운 것들을 실무에 가깝게 확장하는 마지막 AI 활용 실습이다. 이제 스스로
-      필요한 코드를 AI에게 요청하고, 검증하고, 이해하는 흐름에 익숙해졌기를 바란다.
-    </div>
-
-    <h3>AI에게 검색하며 이해도 높이기</h3>
-    <ul class="pt-list">
-      <li>오늘은 학습된 모델로 새 데이터를 예측하고 확률까지 확인했다 — AI에게 물어보며
-        실무에서 더 필요한 개념을 알아보자.</li>
-    </ul>
+    <h2>AI로 한 걸음 더 — 질문하고 코드 받아보기</h2>
     <div class="callout practice">
-      <b class="tag">질문 프롬프트 따라 해보기 — 하나 이상 골라 AI에게 물어보기</b>
+      <b class="tag">질문해보기 — 하나 이상 골라서 (노트북 7단계)</b>
       <ul class="pt-list">
-        <li>"predict()와 predict_proba()는 내부적으로 어떻게 다른 계산을 하나요?"</li>
-        <li>"학습시킨 모델을 저장했다가 나중에 다시 불러와서 쓰려면 어떻게 하나요? (pickle, joblib)"</li>
-        <li>"새 데이터의 특징(feature) 값이 학습 데이터 범위를 벗어나면 예측이 부정확해질 수
-          있다는데, 왜 그런가요?"</li>
-        <li>"시간이 지나며 모델 성능이 떨어지는 현상을 뭐라고 부르나요? (data drift)"</li>
+        <li>"정확도가 95%인데도 쓸모없는 모델이 있을 수 있다는데, 화재경보기 예로 설명해줘."</li>
+        <li>"학습 데이터에서는 점수가 높은데 새 데이터에서는 점수가 낮아지는 현상을 뭐라고 불러? 초보자용으로 설명해줘."</li>
+        <li>"새 데이터가 학습 데이터의 값 범위를 벗어나면 예측을 믿기 어려운 이유를 알려줘."</li>
       </ul>
     </div>
-
-    <h3>AI에게 프롬프트로 코드 생성 요청하기</h3>
-    <ul class="pt-list">
-      <li>오늘 계산한 불합격 확률을 활용해서, 위험도 등급까지 함께 매기는 코드를 AI에게
-        요청해보자.</li>
-    </ul>
     <div class="callout practice">
-      <b class="tag">코드 생성 프롬프트 따라 해보기</b>
-      <ul class="pt-list">
-        <li>"로트 이름과 불합격 확률 리스트를 받아서, 확률이 높은 순서로 정렬하고 위험도
-          등급(높음/보통/낮음)을 함께 표시하는 코드를 만들어줘."</li>
-        <li>"예측 결과와 실제 결과를 비교해서, 틀린 예측만 골라 표로 보여주는 코드를 만들어줘."</li>
-      </ul>
+      <b class="tag">코드 받아보기 (노트북 8단계)</b>
+      "불합격 확률 p를 받아서 0.5 이상이면 '높음', 0.3 이상이면 '보통', 아니면 '낮음'을 돌려주는 함수 risk_level을 만들고,
+      new_lots["불합격_확률"] 열의 값마다 위험도를 출력하는 파이썬 코드를 만들어줘." (0.5, 0.3은 연습용으로 정한 기준이다.)
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
-      <pre><code>lots = ["LOT-A", "LOT-B", "LOT-C", "LOT-D"]
-fail_proba = [0.364, 0.067, 0.158, 0.067]
-
-for lot, p in sorted(zip(lots, fail_proba), key=lambda x: x[1], reverse=True):
-    if p >= 0.3:
-        risk = "높음"
-    elif p >= 0.15:
-        risk = "보통"
+      <pre><code>def risk_level(p):
+    if p &gt;= 0.5:
+        return "높음"
+    elif p &gt;= 0.3:
+        return "보통"
     else:
-        risk = "낮음"
-    print(f"{lot}: 불합격 확률 {p:.1%} → 위험도 {risk}")</code></pre>
+        return "낮음"
+
+for p in new_lots["불합격_확률"]:
+    print(f"불합격 확률 {p:.1%} → 위험도 {risk_level(p)}")</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">LOT-A: 불합격 확률 36.4% → 위험도 높음
-LOT-C: 불합격 확률 15.8% → 위험도 보통
-LOT-B: 불합격 확률 6.7% → 위험도 낮음
-LOT-D: 불합격 확률 6.7% → 위험도 낮음</pre>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">불합격 확률 37.5% → 위험도 보통
+불합격 확률 7.6% → 위험도 낮음
+불합격 확률 61.4% → 위험도 높음
+불합격 확률 7.6% → 위험도 낮음
+불합격 확률 7.6% → 위험도 낮음
+불합격 확률 7.6% → 위험도 낮음
+불합격 확률 37.5% → 위험도 보통
+불합격 확률 7.6% → 위험도 낮음
+불합격 확률 7.6% → 위험도 낮음</pre>
     </div>
     <div class="callout warn">
       <b class="tag">AI 코드를 다룰 때 꼭 지킬 점</b>
       <ul class="pt-list">
-        <li>위 예시의 <code>zip()</code>, <code>sorted(..., key=lambda ...)</code>는 오늘까지
-          배우지 않은 문법이다 — 10차시를 마친 지금은 AI에게 "이 코드 한 줄씩 설명해줘"라고
-          요청해서 스스로 해석해보는 것도 좋은 훈련이다.</li>
-        <li>AI가 만든 코드도 직접 실행해서 내가 기대한 결과가 맞는지 확인해야 한다.</li>
-        <li>위험도 등급 기준(0.3, 0.15)은 AI가 임의로 정한 값이다 — 실제 현장에서는 반드시
-          담당자·데이터로 기준을 검증해야 한다.</li>
+        <li><code>def</code>, <code>if</code>/<code>elif</code>/<code>else</code>, <code>for</code>는 3차시에 배운 문법이다. 한 줄씩 읽어 보자.</li>
+        <li><code>:.1%</code>는 0.614를 61.4%처럼 백분율로 보여주는 서식이다.</li>
+        <li>위험도 기준(0.5, 0.3)은 연습용으로 정한 값이다. 실제 현장이라면 담당자와 데이터로 기준을 정해야 한다.</li>
       </ul>
-    </div>
-    <div class="callout concept">
-      <b class="tag">10차시를 마치며</b>
-      이 과정 내내 함께한 AI 활용 습관 — "검색으로 이해 넓히기"와 "프롬프트로 코드 생성하고
-      검증하기" — 은 앞으로 어떤 데이터를 만나도 계속 쓸 수 있는 기술이다. 새로운 데이터를
-      받으면 오늘처럼 AI에게 물어보고, 직접 실행해 확인하는 습관을 이어가자.
     </div>
   </section>
 
   <section class="block">
     <h2>연습문제 — 위험 로트 개수 세기</h2>
-    <p>4차시에서 배운 조건 검색(불리언 인덱싱)을 새 로트의 <code>불합격_확률</code> 열에
-    다시 적용해보자.</p>
+    <p>4차시에서 배운 조건 검색을 <code>불합격_확률</code> 열에 다시 써 보자.</p>
     <div class="callout practice">
-      <b class="tag">직접 해보기</b>
-      <code>불합격_확률</code>이 0.5를 초과하는(50%보다 큰) 로트를 "위험 로트"로 정의하고,
-      몇 개인지 세어보자.
+      <b class="tag">직접 해보기 (노트북 9단계)</b>
+      불합격 확률이 0.5보다 큰 로트를 "위험 로트"로 정하고, 몇 개인지 세어 보자.
     </div>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">
       <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">risky_lots = new_lots[new_lots["불합격_확률"] &gt; 0.5]
 print(f"위험 로트(불합격 확률 50% 초과) 개수: {len(risky_lots)}개")</pre>
-      실행 결과: <code>위험 로트(불합격 확률 50% 초과) 개수: 0개</code> — 오늘 새 로트 9건은
-      가장 높은 불합격 확률도 36.4%였으므로, 기준을 0.5로 잡으면 위험 로트가 없다는 뜻이다.
-      <b>0개가 나와도 코드를 잘못 쓴 것이 아니다.</b> "해당하는 것이 없다"도 엄연한 분석
-      결과이며, 현장에서는 "이번 배치에는 즉시 조치가 필요한 로트가 없다"로 읽는다.
-      기준을 0.3으로 낮춰 <code>new_lots[new_lots["불합격_확률"] &gt;= 0.3]</code>로 세어보면
-      이번에는 <b>2개</b>(0번·6번)가 잡힌다 — 같은 데이터라도 기준을 어디에 두느냐에 따라
-      "위험 로트"의 수가 달라진다(<a href="worksheet.html">실습지</a> 8번 심화 실습에서 이어서 다룬다).
+      실행 결과: <code>위험 로트(불합격 확률 50% 초과) 개수: 1개</code><br>
+      0.5를 넘는 로트는 2번(61.4%) 하나다. STEP 03에서 <code>predict()</code>가 -1(불합격)로 예측한 로트와 같다.
+      <code>predict()</code>는 불합격 확률이 50%를 넘으면 -1을 고르기 때문이다.
     </div>
+    <p>기준을 0.3으로 낮추면 어떻게 될까? 아래는 완성된 코드다(노트북 9단계 "기준을 0.3으로 낮춰 보기").</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 기준을 0.3으로 낮춰 보기</span><button class="copy-btn">복사</button></div>
+      <pre><code>watch_lots = new_lots[new_lots["불합격_확률"] &gt;= 0.3]
+print(f"주의 로트(불합격 확률 30% 이상) 개수: {len(watch_lots)}개")
+print(watch_lots[["공정명", "설비번호", "진공도_mTorr", "불합격_확률"]])</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">주의 로트(불합격 확률 30% 이상) 개수: 3개
+  공정명   설비번호  진공도_mTorr  불합격_확률
+0  식각  EQ-02       4.02   0.375
+2  식각  EQ-04       5.14   0.614
+6  산화  EQ-01       4.35   0.375</pre>
+    </div>
+    <p>같은 데이터라도 기준을 어디에 두느냐에 따라 "위험 로트"의 수가 1개에서 3개로 달라진다. 기준을 낮추면 놓치는 로트는 줄지만,
+    멀쩡한 로트까지 다시 확인하게 될 수 있다.</p>
   </section>
 
   <section class="block">
-    <h2>AI로 재미있는 미니 프로그램 만들기 — 10차시 완주 인증서 만들기</h2>
+    <h2>AI로 재미있는 미니 프로그램 만들기 — 수료증 출력하기</h2>
     <div class="callout concept">
-      <b class="tag">10차시, 그리고 전체 과정의 마지막 미니 프로젝트</b>
-      10차시 동안 배운 모든 것을 되짚으며, 완주를 자축하는 나만의 프로그램을 AI에게 만들어달라고
-      요청해보자.
+      <b class="tag">마지막 미니 프로젝트 (노트북 10단계)</b>
+      10차시를 마친 기념으로, 나만의 수료증을 출력하는 프로그램을 AI에게 만들어 달라고 해 보자.
+      "AI에게 요청 → 실행 → 결과 확인"의 흐름을 마지막으로 한 번 더 경험한다.
     </div>
     <div class="callout practice">
       <b class="tag">프롬프트 예시 — 그대로 물어보기</b>
-      "input()으로 이름을 입력받고, 이모지나 별표(*)로 테두리를 두른 '10차시 반도체 데이터
-      분석 과정 수료증'을 이름과 함께 예쁘게 출력하는 파이썬 코드를 만들어줘."
+      "input()으로 이름을 입력받고, 별표(*)로 위아래 테두리를 두른 '반도체 데이터 분석 10차시 과정 수료증'을 이름과 함께 출력하는 파이썬 코드를 만들어줘."
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
       <pre><code>name = "지민"  # 실제로는 input("이름을 입력하세요: ")
 
-print("🎓" * 15)
-print("   10차시 반도체 데이터 분석 과정 수료증")
-print("   위 사람은 10차시 전체 과정을 성실히 마쳤음을 증명합니다.")
-print(f"   이름: {name}")
-print("🎓" * 15)</code></pre>
+print("*" * 40)
+print("  반도체 데이터 분석 10차시 과정 수료증")
+print(f"  이름: {name}")
+print("  데이터를 살피고, 함께 보고, 예측까지 해 보았습니다.")
+print("*" * 40)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과 예시</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓
-   10차시 반도체 데이터 분석 과정 수료증
-   위 사람은 10차시 전체 과정을 성실히 마쳤음을 증명합니다.
-   이름: 지민
-🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓🎓</pre>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">****************************************
+  반도체 데이터 분석 10차시 과정 수료증
+  이름: 지민
+  데이터를 살피고, 함께 보고, 예측까지 해 보았습니다.
+****************************************</pre>
     </div>
     <div class="callout warn">
       <b class="tag">더 놀아보기</b>
       <ul class="pt-list">
-        <li>가장 기억에 남는 차시 이름을 인증서에 함께 넣어달라고 AI에게 요청해보자.</li>
-        <li>색깔 이모지나 테두리 모양을 바꿔 더 화려하게 꾸며보자 — 10차시 동안 배운 모든 것을
-          이 마지막 프로그램에 자유롭게 녹여보면 된다.</li>
+        <li><code>"*" * 40</code>은 별표를 40번 이어 붙인 문자열이다. 숫자나 기호를 바꿔 테두리를 꾸며 보자.</li>
+        <li>가장 기억에 남는 차시를 한 줄 더 넣어 달라고 AI에게 다시 요청해 보자.</li>
       </ul>
     </div>
   </section>
 
   <section class="block">
-    <h2>과제 — 나만의 재실험</h2>
-    <ul class="pt-list">
-      <li>과정을 마무리하며, 지금까지 배운 도구로 스스로 질문을 정하고 답해보는 마지막 과제</li>
-    </ul>
+    <h2>과제 — 과정 마무리</h2>
+    <p>Jupyter Notebook 한 개에 작성하고, 결과가 화면에 출력된 상태로 제출한다.</p>
     <div class="callout practice">
-      <b class="tag">과제 1 — 조건 바꿔 재실험하기</b>
-      9차시 모델의 Feature 조합, <code>max_depth</code>, <code>test_size</code> 중 하나 이상을
-      바꿔 다시 학습시키고, 정확도·혼동행렬이 어떻게 달라지는지 비교한다.
+      <b class="tag">과제 1 — 예측 결과 정리 문장</b>
+      오늘 새 로트 9건의 예측 결과를 두세 문장으로 정리한다. 예측값, 불합격 확률이 가장 높은 로트, 그리고 "아직 채점할 수 없다"는 점을 포함한다.
     </div>
     <div class="callout practice">
-      <b class="tag">과제 2 — 나만의 새 로트 만들어 예측하기</b>
-      본인이 직접 값을 정한 가상의 로트 1~2개를 딕셔너리로 만들고(2차시 복습), DataFrame으로
-      바꿔 <code>predict()</code>와 <code>predict_proba()</code>로 예측해본다.
+      <b class="tag">과제 2 — 10차시 회고 한 문단</b>
+      "과정 전체 되짚기" 표를 보며 큰 줄기(살핀다 → 함께 본다 → 관계를 찾는다 → 예측한다)를 내 말로 설명하고,
+      가장 기억에 남는 차시와 이유를 한 가지 적는다.
     </div>
     <div class="callout practice">
-      <b class="tag">과제 3(도전) — 10차시 회고 정리하기</b>
-      "10차시 되짚기" 표를 참고해, 이 과정을 처음 듣는 사람에게 5문장 이내로 소개하는 글을
-      작성한다. 가장 유용했던 개념과 다음에 더 공부하고 싶은 주제를 한 가지씩 포함한다.
+      <b class="tag">과제 3(선택) — 조건 바꿔 재실험하기</b>
+      <code>feature_cols</code>에서 열 하나를 빼거나 <code>max_depth</code>를 바꿔 다시 학습시키고, test 정확도와 기준선(78.9%)을 비교한다.
+      새 로트 예측이 달라지는지도 확인한다. 열을 바꿨다면 <code>X_new</code>도 같은 <code>feature_cols</code>로 다시 만들어야 한다.
     </div>
   </section>
 
   <section class="block">
     <h2>핵심 질문 → 데이터 연결</h2>
-    <div class="callout concept">두 방식(scikit-learn/Orange3)의 예측이 같은가? 다르다면 왜 다를 수 있는가?</div>
-  </section>
-
-  <section class="block">
-    <h2>산출물</h2>
-    <ul class="goal-list">
-      <li>새 로트 예측 결과 정리 문장</li>
-      <li>1~9차시 핵심 내용 한 줄 회고</li>
-      <li>(선택) 다른 조건으로 재실험한 결과</li>
+    <ul class="pt-list">
+      <li><b>질문</b>: 두 방식(scikit-learn/Orange3)의 예측이 같은가? 다르다면 왜 다를 수 있는가?</li>
+      <li><b>데이터로 답하기</b>: scikit-learn 모델은 새 로트 9건 중 2번만 -1(불합격, 불합격 확률 61.4%)로 예측했고, 합격 예상 8건 중에서는 0번·6번의 불합격 확률이 37.5%로 높았다.
+        Orange3 결과는 각자 화면에서 확인해 실습지에 적는다.</li>
+      <li><b>다를 수 있는 이유</b>: 공부한 행 수, 쓰는 단서 열, 나무 키우는 규칙, 빈칸 처리 방식이 다르기 때문이다.
+        어느 쪽이 맞았는지는 실제 검사 결과가 나와야 안다.</li>
+      <li><b>그리고 믿을 만한가?</b>: 모의고사 점수(80.3%)가 찍기(78.9%)보다 2건 더 맞힌 정도이고 불합격 31건 중 9건만 잡았으므로,
+        이 모델의 예측을 그대로 믿기는 어렵다. 참고 자료로 쓰고, 확률이 높은 로트를 먼저 확인하는 정도가 알맞다.</li>
     </ul>
   </section>
 
   <section class="block">
     <h2>과정을 마치며</h2>
     <div class="callout success">
-      <b class="tag">수고하셨습니다!</b>
-      10차시 동안 프로그래밍 경험이 없는 상태에서 시작해 변수·리스트·조건문·반복문·함수 같은
-      파이썬 기초부터, Pandas로 데이터를 다루고, 그래프로 패턴을 확인하고, 원인 후보를 찾고,
-      마지막에는 머신러닝 모델까지 직접 만들어 새 데이터를 예측해봤다. 여기서 배운 순서
-      (읽기 → 정제 → 시각화 → 비교 → 원인 탐색 → 예측)는 반도체 공정뿐 아니라 다른 어떤
-      데이터를 만나도 그대로 적용할 수 있는 뼈대다.
+      <b class="tag">수고하셨습니다</b>
+      <ul class="pt-list">
+        <li>1차시에는 <code>print(pass_count)</code> 한 줄로 시작했다. 오늘은 데이터를 읽고, 살피고, 함께 보고, 모델을 만들어
+          처음 보는 로트까지 예측했다.</li>
+        <li>새 데이터를 만나면 이 순서를 떠올리자. <b>잘 살핀다 → 여러 열을 함께 본다 → 관계(원인 후보)를 찾는다 → 예측한다.</b></li>
+        <li>그리고 마지막 한 줄. 예측이 맞아도 원인을 안 것은 아니다. 데이터는 단서를 주고, 원인은 현장에서 확인한다.</li>
+      </ul>
     </div>
   </section>
 

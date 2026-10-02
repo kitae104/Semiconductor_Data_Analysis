@@ -31,9 +31,9 @@
 
 | 파일명 | 캡처할 화면 |
 |---|---|
-| `week05_01_canvas.png` | File → Data Table → Feature Statistics 세 위젯을 연결한 캔버스 전체 |
+| `week05_01_canvas.png` | File → Data Table → Column Statistics(버전에 따라 Feature Statistics) 세 위젯을 연결한 캔버스 전체 |
 | `week05_02_data_table.png` | Data Table 창 — 빈 칸(결측 셀)이 보이는 부분 |
-| `week05_03_feature_statistics.png` | Feature Statistics 창 — 온도_섭씨의 Max 값이 500 이상으로 보이는 부분 |
+| `week05_03_feature_statistics.png` | Column Statistics 창 — 온도_섭씨의 Max 값이 500 이상으로 보이는 부분 |
 
 ## 6차시 — `week06_process_visualization.csv`
 
@@ -64,7 +64,7 @@
 | 파일명 | 캡처할 화면 |
 |---|---|
 | `week09_01_canvas.png` | File → Tree → Test and Score 캔버스(File은 Test and Score에도 연결) |
-| `week09_02_file_target.png` | File 위젯 창 — 검사결과 열의 Type=categorical, Role=target으로 지정한 화면 |
+| `week09_02_file_target.png` | File 위젯 창 — 합격여부 열의 Type=categorical, Role=target으로 지정한 화면(값 칸에 -1, 1). **2026-10-02 데이터 표기 변경으로 다시 캡처 필요** |
 | `week09_03_test_and_score.png` | Test and Score — Tree 모델의 CA(정확도)가 보이는 결과 표 |
 
 ## 10차시 — `week09_pass_fail_train.csv` + `week09_new_lots_to_predict.csv`
@@ -72,7 +72,7 @@
 | 파일명 | 캡처할 화면 |
 |---|---|
 | `week10_01_canvas.png` | 학습용 File → Tree → Predictions, 새 로트 File → Predictions 캔버스 |
-| `week10_02_predictions.png` | Predictions — 새 로트별 예측 결과와 확률 열이 보이는 표 |
+| `week10_02_predictions.png` | Predictions — 새 로트 9건의 예측 결과(1/-1)와 확률 열이 보이는 표. **이전 캡처는 다른 데이터라 삭제함 — 다시 캡처 필요** |
 
 ## 캡처 자리 추가·변경하기
 

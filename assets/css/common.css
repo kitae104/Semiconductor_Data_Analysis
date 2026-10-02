@@ -149,6 +149,8 @@ body:has(#progressFill, .tab-strip) .toc-list a::before{content:counter(toc,deci
 
 @media (max-width:860px){
   .page-body{flex-direction:column;}
+  /* 세로 배치에서 align-items:flex-start 때문에 본문이 긴 코드 줄 폭만큼 늘어나 가로 스크롤이 생기던 문제 방지 */
+  .page-content{width:100%;}
   .toc-box{position:static; width:100%; flex:none; max-height:none;}
   .toc-list{flex-direction:row; flex-wrap:wrap; gap:.3rem;}
   .toc-list a{border:1px solid var(--line); padding:.3rem .6rem;}
@@ -312,6 +314,12 @@ table.data-preview tr:nth-child(even){background:var(--purple-bg);}
 /* 캡션은 그림과 붙지 않도록 위 간격을 둔다 */
 .img-caption{text-align:center; color:var(--muted); font-size:.85rem; margin:.9rem auto 1.4rem; max-width:720px; line-height:1.6;}
 .chart-img{max-width:100%; border:1px solid var(--line); display:block; margin:0 auto; box-shadow:var(--shadow-card);}
+/* 좁은 화면 가로 넘침 방지: 인라인 style의 고정 max-width를 덮고, 긴 파일 경로 같은 인라인 코드는 줄바꿈 허용 */
+@media (max-width:640px){ .chart-img{max-width:100% !important; height:auto !important;} }
+:not(pre) > code{overflow-wrap:anywhere;}
+pre{max-width:100%; overflow-x:auto;}
+.callout, .answer-box{overflow-wrap:break-word;}
+@media (max-width:640px){ table.timetable, table.data-preview{display:block; max-width:100%; overflow-x:auto;} }
 
 /* ---------- 스크롤 등장 애니메이션 (자동 적용, JS가 .reveal-init에 .revealed를 붙임) ---------- */
 .reveal-init{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}

@@ -62,7 +62,6 @@ semiconductor-data-analysis-course/
 │  └─ data_dictionary/        # 차시별 데이터 설명서
 ├─ notebooks/
 │  ├─ student/                # 학생용(TODO 포함)
-│  ├─ instructor/             # 강사 시연용(완성본 + 설명)
 │  └─ solutions/               # 정답본(완성본)
 ├─ lectures/week01~week10/    # HTML 강의자료, 실습지, 퀴즈, 운영안
 ├─ scripts/                   # 데이터 생성·검증 스크립트
@@ -128,8 +127,7 @@ start index.html
 | 구분 | 위치 | 특징 |
 | --- | --- | --- |
 | 학생용 | `notebooks/student/` | 핵심 코드 일부가 `# TODO`로 비어 있어 직접 채워야 함 |
-| 강사용 | `notebooks/instructor/` | 완성된 코드 + 예상 결과 + 설명 포인트 + 오류 대처법 |
-| 정답 | `notebooks/solutions/` | 학생용의 모든 TODO가 채워진 완성본 |
+| 정답 | `notebooks/solutions/` | 학생용의 모든 TODO가 채워진 완성본(실행 결과 저장). 강사 시연에도 사용 |
 | 강의 운영안 | `lectures/weekXX/instructor-guide.md` | 수업 흐름, 발문, 예상 오개념, 난이도별 과제 |
 
 ## 10. 데이터 출처 및 교육용 가공 안내

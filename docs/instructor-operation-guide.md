@@ -11,7 +11,7 @@
 - **학생 준비물 안내**: 로컬 Python/Jupyter 실습 환경, 노트북/랩톱.
 - **자료 배포**: 매 차시 수업 전 `data/weekly/weekXX/`의 CSV와 `notebooks/student/weekXX_student.ipynb`를
   학생들에게 공유한다(클라우드 드라이브, LMS 등).
-- **사전 실행 확인**: 매 차시 수업 전 `notebooks/instructor/weekXX_instructor.ipynb`를 처음부터 끝까지
+- **사전 실행 확인**: 매 차시 수업 전 `notebooks/solutions/weekXX_solution.ipynb`를 처음부터 끝까지
   한 번 실행해보고 이상이 없는지 확인한다.
 
 ## 2. 매 차시 공통 수업 흐름
@@ -34,7 +34,7 @@
   대부분 다음 차시 개념을 살짝 미리 보여주는 방식으로 설계되어 있다.
 - **느린 학습자**: "느린 학습자용 최소 과제"를 기준으로, 핵심 코드 1~2줄과 결과 해석 한 문장만
   완성해도 그 차시 목표를 달성한 것으로 인정한다.
-- **결시/보강**: 모든 차시가 `notebooks/instructor/`(시연) + `notebooks/solutions/`(정답) +
+- **결시/보강**: 모든 차시가 `notebooks/solutions/`(시연·정답) +
   `lectures/weekXX/index.html`(강의 전체 내용)로 자기주도 학습이 가능하도록 설계되어 있다.
 
 ## 4. 자주 발생하는 기술적 문제

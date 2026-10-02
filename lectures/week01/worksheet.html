@@ -24,16 +24,9 @@
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
-      <li>반도체 공정 데이터가 어디서, 왜 생기는지 모르면 앞으로 볼 숫자들이 "의미 없는 숫자 나열"에 그친다.
-        오늘 배운 <b>변수와 출력</b>은 그 숫자를 코드 안에 기억해두고 다시 꺼내 쓰는 가장 작은 단위로, 앞으로
-        10차시 내내 쓰는 모든 코드가 결국 이 위에 쌓인다.</li>
+      <li>공장에서 나온 숫자가 어디서, 왜 생겼는지 알아야 표가 "의미 있는 기록"으로 보인다.</li>
+      <li>변수와 출력은 그 숫자를 코드 안에 기억해두고 문장으로 꺼내 보는 가장 작은 단위다.</li>
     </ul>
-    <div class="callout concept">
-      <b class="tag">쉬운 예시</b>
-      매일 아침 "오늘 생산된 웨이퍼 중 합격/불합격이 몇 건인지" 확인해야 하는 담당자가 있다고 하자.
-      "합격 32, 불합격 8"이라는 숫자를 <code>pass_count</code>, <code>fail_count</code>라는 변수에 담아두면,
-      매번 다시 세지 않고 <code>print()</code>로 바로 꺼내 볼 수 있다 — 이것이 데이터를 코드로 다루는 첫걸음이다.
-    </div>
   </section>
 
   <section class="block">
@@ -41,7 +34,7 @@
     <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 웨이퍼</td><td rowspan="4">A. 반도체를 생산하는 공장<br>B. 함께 관리되는 웨이퍼 묶음<br>C. 칩을 만드는 둥근 원판<br>D. 공정을 수행하는 기계</td></tr>
+      <tr><td>① 웨이퍼</td><td rowspan="4">A. 반도체를 만드는 공장<br>B. 함께 이동하는 웨이퍼 묶음(보통 25장 내외)<br>C. 칩을 새기는 얇고 둥근 원판<br>D. 공정을 실제로 수행하는 기계</td></tr>
       <tr><td>② FAB</td></tr>
       <tr><td>③ 로트</td></tr>
       <tr><td>④ 설비</td></tr>
@@ -51,128 +44,146 @@
   </section>
 
   <section class="block">
-    <h2>2. 코드 빈칸 문제</h2>
+    <h2>2. 공정 작업 연결 문제</h2>
+    <p>작업 이름과 하는 일을 연결해보자.</p>
+    <table class="timetable">
+      <tr><th>작업</th><th>하는 일</th></tr>
+      <tr><td>① 포토</td><td rowspan="4">A. 필요한 재료를 얇은 막으로 한 겹 쌓는다<br>B. 빛을 비춰 회로 무늬를 찍는다<br>C. 남은 찌꺼기와 먼지를 씻어낸다<br>D. 무늬대로 필요 없는 부분을 깎아낸다</td></tr>
+      <tr><td>② 식각</td></tr>
+      <tr><td>③ 증착</td></tr>
+      <tr><td>④ 세정</td></tr>
+    </table>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① B  ② D  ③ A  ④ C. 이 작업들은 한 번씩만 하는 게 아니라 층마다 순서를 바꿔 가며 수백 번 반복된다.</div>
+  </section>
+
+  <section class="block">
+    <h2>3. 표 읽기 문제</h2>
+    <p>오늘 데이터(교육용 가상 데이터)의 한 행이다. 이 행을 한 문장으로 읽어보자.</p>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>측정시간</th><th>로트번호</th><th>웨이퍼번호</th><th>공정명</th><th>설비번호</th><th>온도_섭씨</th><th>압력_Pa</th><th>합격여부</th></tr>
+        <tr><td>2024-03-01 20:00</td><td>LOT-0227</td><td>4</td><td>식각</td><td>EQ-04</td><td>300.1</td><td>995.6</td><td>1</td></tr>
+      </table>
+    </div>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">"3월 1일 20시, LOT-0227 상자의 4번 웨이퍼를 EQ-04 설비에서 식각 작업했고,
+    온도는 300.1도였으며, 검사 결과는 합격(1)이었다."</div>
+  </section>
+
+  <section class="block">
+    <h2>4. 코드 빈칸 문제</h2>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>pass_count = 32
-fail_count ____ 8   # 8을 fail_count라는 이름에 저장
+fail_count ____ 8
 
 print(f"오늘 합격은 {pass_count}건, 불합격은 {____}건입니다.")</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">순서대로 <code>=</code>, <code>fail_count</code>.
-    <code>=</code>는 오른쪽 값을 왼쪽 이름에 저장하는 대입 연산자다.</div>
+    <code>=</code>는 오른쪽 값을 왼쪽 이름에 저장하라는 뜻이다.</div>
   </section>
 
   <section class="block">
-    <h2>3. 그래프 선택 문제</h2>
-    <p>합격/불합격처럼 "범주별 개수"를 비교하려면 어떤 그래프가 가장 적합할까?</p>
-    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
-      <li>① 선 그래프</li><li>② 막대그래프</li><li>③ 산점도</li>
-    </ul>
+    <h2>5. 자료형 맞히기</h2>
+    <p>각 값의 자료형을 <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code> 중에서 골라보자.</p>
+    <table class="timetable">
+      <tr><th>값</th><th>자료형</th></tr>
+      <tr><td><code>32</code></td><td>(  )</td></tr>
+      <tr><td><code>300.1</code></td><td>(  )</td></tr>
+      <tr><td><code>"EQ-03"</code></td><td>(  )</td></tr>
+      <tr><td><code>True</code></td><td>(  )</td></tr>
+    </table>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">정답: ② 막대그래프. 막대그래프는 범주(카테고리)별 개수나 크기를 비교할 때 가장 알아보기 쉽다.
-    (6차시에서 직접 그려본다.)</div>
+    <div class="answer-box">순서대로 <code>int</code>(정수), <code>float</code>(실수), <code>str</code>(문자열), <code>bool</code>(불리언).
+    따옴표로 감싸면 숫자처럼 보여도 문자열이다.</div>
   </section>
 
   <section class="block">
-    <h2>4. 결과 해석 문제</h2>
-    <p>오늘 살펴본 데이터에서 합격/불합격 열을 정리한 결과가 아래와 같았다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">합격(1)      32
-불합격(-1)    8</pre>
-    <p>이 결과를 보고 불합격 비율(%)을 계산해보자.</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">8 ÷ (32+8) × 100 = 20%. 즉 40건 중 20%가 불합격이다.</div>
-  </section>
-
-  <section class="block">
-    <h2>5. 분석 문장 작성 문제</h2>
-    <p>아래 빈칸을 채워 이번 차시 데이터를 한 문장으로 요약해보자.</p>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "이번 공정 기록 ____건 중 ____건이 합격했으며, 이는 전체의 약 ____%에 해당한다."
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>6. 도전 문제</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      오늘 데이터의 설비별 기록 건수는 <code>EQ-01</code> 13건, <code>EQ-02</code> 9건,
-      <code>EQ-03</code> 12건, <code>EQ-04</code> 6건이다. 네 값을 각각 변수에 저장한 뒤,
-      가장 많이 등장한 설비와 건수를 f-string으로
-      <code>"가장 많이 기록된 설비는 ___(___건)입니다."</code> 형태의 문장으로 출력해보자.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>7. 변수·자료형 빈칸 문제</h2>
+    <h2>6. f-string 결과 예측 문제</h2>
+    <p>아래 코드를 실행하면 무엇이 출력될지 먼저 예측해보자.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>pass_count ____ 32        # 32를 pass_count라는 이름에 저장
-equipment = "EQ-03"
-print(____(equipment))    # equipment의 자료형을 확인</code></pre>
+      <pre><code>equipment = "EQ-02"
+temperature = 301.46
+print(f"{equipment} 설비의 온도는 {temperature:.1f}도입니다.")</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>=</code>, <code>type</code>. <code>equipment</code>는
-    따옴표로 감싼 문자열(str)이므로 <code>&lt;class 'str'&gt;</code>이 출력된다.</div>
+    <div class="answer-box">정답: <code>EQ-02 설비의 온도는 301.5도입니다.</code> —
+    <code>:.1f</code>는 소수 첫째 자리까지 반올림해 보여준다.</div>
   </section>
 
   <section class="block">
-    <h2>8. f-string 결과 예측 문제</h2>
-    <p>아래 코드를 실행하면 무엇이 출력될지 먼저 예측해보고 정답을 확인하자.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>name = "하은"
-score = 92.345
-print(f"{name}님의 점수는 {score:.1f}점입니다.")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">정답: <code>하은님의 점수는 92.3점입니다.</code> —
-    <code>{score:.1f}</code>는 소수 첫째 자리까지만 반올림해 보여준다.</div>
-  </section>
-
-  <section class="block">
-    <h2>9. input() 오류 찾기 문제</h2>
+    <h2>7. input() 오류 찾기 문제</h2>
     <p>아래 코드는 실행하면 오류가 난다. 어디가 문제인지 찾아 고쳐보자.</p>
     <div class="code-block">
       <div class="code-label"><span>Python — 오류 있는 코드</span><button class="copy-btn">복사</button></div>
-      <pre><code>age = input("나이를 입력하세요: ")
-print(f"내년이면 {age + 1}살이 되네요!")</code></pre>
+      <pre><code>age_text = input("나이를 입력하세요: ")
+print(f"내년이면 {age_text + 1}살이 되네요!")</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">문제: <code>age</code>는 <code>input()</code>이 돌려준 문자열(str)이라
-    숫자 <code>1</code>과 바로 더할 수 없다(<code>TypeError</code>). 수정:
-    <code>age = int(input("나이를 입력하세요: "))</code>처럼 <code>int()</code>로 변환해야 한다.</div>
+    <div class="answer-box"><code>input()</code>으로 받은 <code>age_text</code>는 문자열이라 숫자 <code>1</code>과 더할 수 없다(<code>TypeError</code>).
+    <code>age = int(age_text)</code>로 바꾼 뒤 <code>{age + 1}</code>을 쓴다.</div>
   </section>
 
   <section class="block">
-    <h2>10. 심화 실습</h2>
+    <h2>8. 결과 해석과 문장 쓰기</h2>
+    <p>오늘 데이터의 <code>합격여부</code> 열을 세어 보니 아래와 같았다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">합격(1)      32건
+불합격(-1)    8건</pre>
     <div class="callout practice">
-      <b class="tag">심화</b>
-      아래처럼 합격 건수와 불합격 건수를 변수에 저장했다.
-      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;margin-top:.6rem;">pass_count = 32
-fail_count = 8</pre>
-      <code>total</code>(전체 건수)과 <code>pass_rate</code>(합격률) 변수를 직접 계산해서 만들고,
-      <code>f"전체 {total}건 중 합격 {pass_count}건, 합격률 {pass_rate:.1f}%"</code> 형태의 문장을
-      출력하는 코드를 작성해보자. <code>:.1f</code> 형식을 잊지 말고 사용한다.
+      <b class="tag">문장 작성</b>
+      불합격률을 계산하고 빈칸을 채워보자.
+      "이번 공정 기록 ____건 중 ____건이 불합격했으며, 이는 전체의 ____%에 해당한다."
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">8 ÷ 40 × 100 = 20. "이번 공정 기록 40건 중 8건이 불합격했으며, 이는 전체의 20%에 해당한다."</div>
+  </section>
+
+  <section class="block">
+    <h2>9. 여러 열 함께 보기 문제</h2>
+    <p>오늘 데이터(교육용 가상 데이터)의 불합격 8건을 공정명과 함께 세어 보니 아래와 같았다.</p>
+    <table class="timetable">
+      <tr><th>공정명</th><th>전체 기록</th><th>불합격</th></tr>
+      <tr><td>세정</td><td>10건</td><td>5건</td></tr>
+      <tr><td>포토</td><td>9건</td><td>2건</td></tr>
+      <tr><td>산화</td><td>6건</td><td>1건</td></tr>
+      <tr><td>증착</td><td>8건</td><td>0건</td></tr>
+      <tr><td>식각</td><td>7건</td><td>0건</td></tr>
+    </table>
+    <ol>
+      <li>불합격이 가장 많이 나온 공정은 무엇인가?</li>
+      <li>동료가 "그럼 세정이 불량의 원인이네!"라고 말했다. 이 말에 어떻게 답하면 좋을까?</li>
+    </ol>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">1) 세정(10건 중 5건). 2) "세정을 원인 후보로 더 살펴볼 만하지만, 아직 원인이라고 단정할 수는 없어.
+    기록이 40건뿐이라 우연일 수 있고, 앞 단계에서 생긴 문제가 세정 뒤 검사에서 드러났을 수도 있어."</div>
+  </section>
+
+  <section class="block">
+    <h2>10. 도전 — 합격률 문장 만들기</h2>
+    <div class="callout practice">
+      <b class="tag">도전</b>
+      <code>pass_count = 32</code>, <code>fail_count = 8</code>로 <code>total</code>(전체 건수)과
+      <code>pass_rate</code>(합격률)를 계산하고, <code>합격률은 80.0%입니다.</code>를 f-string으로 출력해보자.
+      (노트북 4단계 끝 "도전 문제")
     </div>
     <button class="reveal-btn">체크포인트 보기</button>
     <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
-      <code>pass_rate</code>는 <code>pass_count / total * 100</code> 순서로 계산해야 한다.
-      <code>pass_count / (total * 100)</code>처럼 괄호 위치가 달라지면 결과가 크게 작아지니
-      계산 순서를 꼭 확인하자.
+      <code>pass_rate = pass_count / total * 100</code> 순서로 계산한다. <code>pass_count / (total * 100)</code>처럼
+      괄호를 넣으면 0.008이라는 엉뚱한 값이 나온다. 출력에는 <code>{pass_rate:.1f}</code>를 쓴다.
     </div>
   </section>
 
   <section class="block">
-    <h2>11. AI 미니 프로젝트 도전 — 반도체 공정 운세 뽑기</h2>
+    <h2>11. AI 미니 프로젝트 — 반도체 공정 운세 뽑기</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
       AI 챗봇에게 "input()으로 이름을 입력받고, 반도체 공정 운세 문장 중 하나를 무작위로 골라
-      출력하는 파이썬 코드를 만들어줘"라고 요청해보자. 코드를 실습 노트북에 붙여넣어 실행하고,
-      마음에 드는 운세 문장 하나를 아래에 적어보자.
+      출력하는 파이썬 코드를 만들어줘"라고 요청해보자. 코드를 노트북 8단계 셀에 붙여넣어 실행하고,
+      나온 운세를 적어보자.
     </div>
     <div class="callout practice">
       <b class="tag">문장 작성</b>

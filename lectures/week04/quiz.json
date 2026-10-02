@@ -4,99 +4,89 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "DataFrame에서 열 두 개를 함께 선택하는 올바른 코드는?",
-      "options": [
-        "df[\"온도_섭씨\", \"압력_Pa\"]",
-        "df[[\"온도_섭씨\", \"압력_Pa\"]]",
-        "df(\"온도_섭씨\", \"압력_Pa\")",
-        "df.column(\"온도_섭씨\", \"압력_Pa\")"
-      ],
-      "answer": 1,
-      "explanation": "여러 열을 선택할 때는 대괄호 안에 리스트(대괄호)를 한 번 더 감싸야 한다."
-    },
-    {
-      "type": "multiple_choice",
-      "question": "CSV 파일을 읽어 DataFrame으로 만드는 Pandas 함수는?",
-      "options": [
-        "pd.open_csv()",
-        "pd.load_csv()",
-        "pd.read_csv()",
-        "pd.import_csv()"
-      ],
+      "question": "CSV 파일을 읽어 DataFrame(표)으로 만드는 Pandas 명령은?",
+      "options": ["pd.open_csv()", "pd.load_csv()", "pd.read_csv()", "print(csv)"],
       "answer": 2,
-      "explanation": "pd.read_csv()가 CSV 파일을 읽어 DataFrame으로 만드는 함수다."
-    },
-    {
-      "type": "true_false",
-      "question": "df[df[\"설비번호\"] == \"EQ-02\"]는 설비번호가 EQ-02인 행만 골라낸다.",
-      "answer": true,
-      "explanation": "조건식이 True인 행만 남기는 조건 검색(불리언 인덱싱)이다."
-    },
-    {
-      "type": "true_false",
-      "question": "df.sort_values(\"온도_섭씨\")는 기본적으로 온도가 높은 순서(내림차순)로 정렬한다.",
-      "answer": false,
-      "explanation": "ascending 옵션을 주지 않으면 기본값은 오름차순(작은 값이 먼저)이다. 내림차순은 ascending=False를 써야 한다."
+      "explanation": "pd.read_csv(\"경로\", encoding=\"utf-8-sig\")로 CSV를 읽어 DataFrame으로 만든다."
     },
     {
       "type": "term_matching",
       "question": "용어와 설명을 연결하시오.",
       "pairs": [
-        {"term": "CSV", "definition": "쉼표로 값을 구분한 텍스트 표 파일"},
         {"term": "DataFrame", "definition": "Pandas가 CSV를 읽어 만든 행·열 구조의 표"},
-        {"term": "조건 검색", "definition": "조건에 맞는 행만 골라내는 방법"},
-        {"term": "정렬", "definition": "특정 열을 기준으로 행 순서를 바꾸는 것"}
+        {"term": "Series", "definition": "표에서 열 하나를 꺼낸 것"},
+        {"term": "조건 검색", "definition": "행마다 True/False를 붙여 True인 행만 남기는 것"},
+        {"term": "정렬", "definition": "한 열의 값 크기 순서로 행을 다시 늘어놓는 것"}
       ]
     },
     {
+      "type": "multiple_choice",
+      "question": "df.shape를 실행했더니 (100, 8)이 나왔다. 이것의 뜻은?",
+      "options": [
+        "기록(행) 100건, 항목(열) 8개",
+        "열 100개, 행 8개",
+        "합격 100건, 불합격 8건",
+        "앞 100행 중 8행만 보여준다"
+      ],
+      "answer": 0,
+      "explanation": "shape는 (행 개수, 열 개수)다. 행 하나는 작업 1건의 기록, 열 하나는 기록 항목이다."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "설비번호와 온도_섭씨 두 열을 함께 꺼내는 올바른 코드는?",
+      "options": [
+        "df[\"설비번호\", \"온도_섭씨\"]",
+        "df[[\"설비번호\", \"온도_섭씨\"]]",
+        "df(\"설비번호\", \"온도_섭씨\")",
+        "df.column(\"설비번호\", \"온도_섭씨\")"
+      ],
+      "answer": 1,
+      "explanation": "여러 열은 열 이름 리스트를 넣어 대괄호가 두 겹 [[ ]]이 된다. 한 겹만 쓰면 KeyError가 난다."
+    },
+    {
       "type": "fill_blank",
-      "question": "값이 같은지 비교할 때 쓰는 연산자는 ____이다. (값을 저장할 때 쓰는 = 과 구분)",
+      "question": "설비번호가 EQ-02인 행만 고를 때 df[df[\"설비번호\"] ____ \"EQ-02\"]의 빈칸에 들어갈 비교 기호는?",
       "answer": "=="
     },
     {
-      "type": "fill_blank",
-      "question": "데이터를 정렬할 때 쓰는 Pandas 메서드는 df.____()이다.",
-      "answer": "sort_values"
-    },
-    {
       "type": "result_prediction",
-      "question": "EQ-02 기록 25건 중 불합격이 5건일 때, EQ-02의 불합격 비율(%)은?",
-      "answer": "20%",
-      "explanation": "5 ÷ 25 × 100 = 20.0%"
-    },
-    {
-      "type": "multiple_choice",
-      "question": "새로 읽은 DataFrame의 앞부분을 표로 빠르게 눈으로 확인하는 방법은?",
-      "options": ["df.head()", "df.shape", "df.columns"],
-      "answer": 0,
-      "explanation": "head()는 앞 5행을 표로 보여준다. shape는 (행 개수, 열 개수), columns는 열 이름 목록만 보여준다."
-    },
-    {
-      "type": "short_answer",
-      "question": "3차시의 for+if 방식과 오늘 배운 Pandas 조건 검색의 차이를 한 문장으로 설명해보시오.",
-      "sample_answer": "3차시에는 반복문으로 값을 하나씩 확인하며 조건을 검사했지만, Pandas는 조건식 한 줄로 표 전체에서 한 번에 원하는 행을 골라낼 수 있다."
-    },
-    {
-      "type": "multiple_choice",
-      "question": "df.iloc[0:3]이 돌려주는 행의 개수는?",
-      "options": [
-        "2개(위치 0, 1)",
-        "3개(위치 0, 1, 2)",
-        "4개(위치 0, 1, 2, 3)"
-      ],
-      "answer": 1,
-      "explanation": "iloc의 슬라이스는 파이썬 리스트처럼 끝 번호를 포함하지 않으므로 위치 0, 1, 2 세 개 행이 나온다."
-    },
-    {
-      "type": "fill_blank",
-      "question": "조건으로 행을 고르면서 특정 열도 함께 지정하고 싶을 때 쓰는 것은 df.____[조건, 열이름목록]이다.",
-      "answer": "loc"
+      "question": "0~4번 행의 설비번호가 EQ-02, EQ-04, EQ-02, EQ-02, EQ-01일 때 df[\"설비번호\"] == \"EQ-02\"의 앞 5개 결과는?",
+      "answer": "True, False, True, True, False",
+      "explanation": "조건에 맞는 0·2·3번 행에 True, 아닌 1·4번 행에 False가 붙는다. df[ ]로 감싸면 True인 행만 남는다."
     },
     {
       "type": "true_false",
-      "question": "df.iloc[0, \"온도_섭씨\"]처럼 iloc에 열 이름을 넣으면 정상적으로 값을 돌려준다.",
+      "question": "eq02 = df[df[\"설비번호\"] == \"EQ-02\"]를 실행하면 원래 표 df도 EQ-02 행 25개만 남도록 바뀐다.",
       "answer": false,
-      "explanation": "iloc은 정수 위치만 받는다. 열 이름으로 접근하려면 loc을 써야 하며, 이름을 넣으면 ValueError가 발생한다."
+      "explanation": "조건 검색의 결과는 새 표다. eq02에 25행이 저장되고, 원래 df는 100행 그대로다."
+    },
+    {
+      "type": "true_false",
+      "question": "df.sort_values(\"온도_섭씨\")는 기본적으로 온도가 높은 기록부터(내림차순) 보여준다.",
+      "answer": false,
+      "explanation": "기본은 작은 값부터(오름차순)다. 큰 값부터 보려면 ascending=False를 쓴다."
+    },
+    {
+      "type": "fill_blank",
+      "question": "0번 행의 온도_섭씨 값을 행 이름과 열 이름으로 꺼내는 코드는 df.____[0, \"온도_섭씨\"]이다.",
+      "answer": "loc"
+    },
+    {
+      "type": "result_prediction",
+      "question": "EQ-04 기록 22건 중 불합격이 5건일 때, EQ-04의 불합격률(%)을 소수 첫째 자리까지 구하면?",
+      "answer": "22.7%",
+      "explanation": "5 ÷ 22 × 100 = 22.72… → 22.7%. EQ-02(25건 중 5건, 20.0%)와 불합격 건수는 같지만 비율은 EQ-04가 더 높다."
+    },
+    {
+      "type": "true_false",
+      "question": "온도가 305도를 넘는 기록이 13건, 불합격 기록도 13건이므로 고온 기록은 모두 불합격이다.",
+      "answer": false,
+      "explanation": "고온 기록 hot 안에서 불합격만 다시 골라 보면 3건뿐이다. 숫자가 같아도 같은 기록이 아니다. 골라낸 기록을 다른 열과 함께 확인해야 한다."
+    },
+    {
+      "type": "short_answer",
+      "question": "전체 불합격률(13.0%)만 볼 때와 설비별로 따로 떼어 볼 때 무엇이 달라졌는지, 숫자를 넣어 설명해보시오.",
+      "sample_answer": "전체로는 100건 중 13건(13.0%)이 불합격이라 평범해 보였지만, 설비별로 떼어 보니 EQ-04(22.7%)와 EQ-02(20.0%)가 EQ-03(4.5%)·EQ-01(6.5%)보다 훨씬 높았다. 다만 기록이 적어 원인이라고 단정할 수는 없고, 원인 후보로 더 살펴볼 만하다."
     }
   ]
 }

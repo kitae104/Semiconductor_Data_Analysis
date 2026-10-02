@@ -1,8 +1,8 @@
 """Notebook 검증 스크립트.
 
 확인 항목(스펙 14장):
-- 위에서 아래로 실행했을 때 오류가 없는가 (instructor/solutions만 실제 실행; student는 TODO가
-  있어 실행이 막힐 수 있으므로 구조만 검사)
+- 위에서 아래로 실행했을 때 오류가 없는가 (solutions만 실제 실행; student는 TODO가
+  있어 실행이 막힐 수 있으므로 구조만 검사). 강사용 노트북은 2026-10-02 폐지했다.
 - 학생용 TODO가 정답 노트북에서 해결되어 있는가(정답 노트북에 'TODO' 문자열이 남아있지 않은지)
 - 데이터 경로가 실제로 존재하는가
 
@@ -14,7 +14,6 @@ import nbformat
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STUDENT = os.path.join(BASE, "notebooks", "student")
-INSTRUCTOR = os.path.join(BASE, "notebooks", "instructor")
 SOLUTIONS = os.path.join(BASE, "notebooks", "solutions")
 
 RESULTS = []
@@ -70,7 +69,6 @@ def validate_folder(folder, label, must_run=True, must_not_contain_todo=False):
 
 def main():
     validate_folder(STUDENT, "student", must_run=False)
-    validate_folder(INSTRUCTOR, "instructor", must_run=True)
     validate_folder(SOLUTIONS, "solutions", must_run=True, must_not_contain_todo=True)
 
     total = len(RESULTS)

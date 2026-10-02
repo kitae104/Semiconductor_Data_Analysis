@@ -4,76 +4,84 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "numbers = [10, 20, 30, 40]일 때 numbers[1]의 값은?",
-      "options": [
-        "10",
-        "20",
-        "30",
-        "오류가 난다"
-      ],
+      "question": "temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]일 때 temperatures[1]의 값은?",
+      "options": ["295.4", "298.1", "312.6", "오류가 난다"],
       "answer": 1,
-      "explanation": "인덱스는 0부터 시작하므로 numbers[0]이 10, numbers[1]이 20이다."
+      "explanation": "번호는 0부터 센다. temperatures[0]이 295.4, temperatures[1]이 두 번째 값 298.1이다."
     },
     {
       "type": "multiple_choice",
       "question": "다음 중 '딕셔너리'에 대한 설명으로 가장 알맞은 것은?",
       "options": [
-        "여러 값을 순서대로 담는 자료구조",
-        "값에 이름표(키)를 붙여 저장하는 자료구조",
-        "숫자만 저장할 수 있는 자료구조",
-        "값을 하나만 저장할 수 있는 자료구조"
+        "여러 값을 순서대로 한 줄에 담는 묶음",
+        "값마다 이름표(키)를 붙여 담는 묶음",
+        "숫자만 담을 수 있는 묶음",
+        "값을 하나만 담을 수 있는 상자"
       ],
       "answer": 1,
-      "explanation": "딕셔너리는 키-값 쌍으로 값에 이름표를 붙여 저장한다. 순서 대신 이름(키)으로 값을 찾는다."
+      "explanation": "딕셔너리는 이름표 붙은 사물함처럼 키로 값을 찾는다. 첫 번째 보기는 리스트, 네 번째 보기는 1차시의 변수에 대한 설명이다."
     },
     {
       "type": "true_false",
-      "question": "numbers[1:3]은 인덱스 1, 2, 3의 값을 모두 포함한다.",
+      "question": "temperatures[1:3]에는 1번, 2번, 3번 칸의 값이 모두 들어 있다.",
       "answer": false,
-      "explanation": "슬라이싱의 끝 인덱스는 포함되지 않는다. numbers[1:3]은 인덱스 1, 2만 포함한다."
+      "explanation": "슬라이싱에서 끝 번호 칸은 빠진다. 1번·2번 칸만 들어 있어 [298.1, 312.6]이고, 개수는 끝 - 시작 = 2개다."
     },
     {
       "type": "true_false",
-      "question": "딕셔너리에 없는 키로 값을 꺼내려고 하면 KeyError가 발생한다.",
+      "question": "딕셔너리에 없는 키로 값을 꺼내려고 하면 KeyError가 난다.",
       "answer": true,
-      "explanation": "딕셔너리는 정의된 키로만 값을 꺼낼 수 있다. 없는 키를 쓰면 KeyError가 발생한다."
+      "explanation": "예: equipment[\"압력_Pa\"]는 그 이름표가 없어서 KeyError: '압력_Pa'가 난다. 딕셔너리에 equipment[0]처럼 번호를 넣어도 KeyError: 0이 난다."
     },
     {
       "type": "term_matching",
       "question": "용어와 설명을 연결하시오.",
       "pairs": [
-        {"term": "리스트", "definition": "여러 값을 순서대로 담는 자료구조"},
-        {"term": "인덱스", "definition": "리스트에서 값의 위치를 나타내는 순서 번호(0부터 시작)"},
-        {"term": "딕셔너리", "definition": "값에 이름표(키)를 붙여 저장하는 자료구조"},
-        {"term": "키-값 쌍", "definition": "딕셔너리를 이루는 '이름표'와 '내용'의 짝"}
+        {"term": "리스트", "definition": "여러 값을 순서대로 한 줄에 담는 묶음(번호 붙은 약통)"},
+        {"term": "인덱스", "definition": "리스트에서 칸의 위치 번호(0부터 센다)"},
+        {"term": "딕셔너리", "definition": "값마다 이름표를 붙여 담는 묶음(이름표 붙은 사물함)"},
+        {"term": "키", "definition": "딕셔너리에서 값을 찾는 이름표"}
       ]
     },
     {
       "type": "fill_blank",
-      "question": "리스트 안 숫자를 모두 더하는 파이썬 함수는 ____()이다.",
-      "answer": "sum"
+      "question": "리스트 끝에 새 값을 붙이려면 temperatures.____(303.2)처럼 쓴다.",
+      "answer": "append"
     },
     {
       "type": "fill_blank",
-      "question": "리스트 안에 값이 몇 개 있는지 세는 파이썬 함수는 ____()이다.",
+      "question": "평균은 합계 ÷ 개수이므로 sum(temperatures) / ____(temperatures)로 구한다.",
       "answer": "len"
     },
     {
       "type": "result_prediction",
-      "question": "pressures = [1000.0, 1010.0, 1020.0, 990.0]일 때 평균값은?",
-      "answer": "1005.0",
-      "explanation": "(1000.0+1010.0+1020.0+990.0) / 4 = 1005.0"
+      "question": "temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]일 때 temperatures[-2:]의 결과는?",
+      "answer": "[301.0, 296.8]",
+      "explanation": "-2는 뒤에서 두 번째 칸이고, 끝 번호를 비우면 마지막 칸까지 꺼낸다."
     },
     {
       "type": "result_prediction",
-      "question": "equipment = {\"설비번호\": \"EQ-01\", \"온도_섭씨\": 301.2}일 때 equipment[\"설비번호\"]의 값은?",
-      "answer": "EQ-01",
-      "explanation": "딕셔너리는 키(\"설비번호\")로 값을 꺼낸다."
+      "question": "강의의 equipment_list(EQ-01 식각 301.2 / EQ-02 증착 308.7 / EQ-03 포토 297.5)에서 equipment_list[1][\"온도_섭씨\"]의 값은?",
+      "answer": "308.7",
+      "explanation": "1번 행(두 번째 설비 EQ-02)으로 가서 온도_섭씨 칸을 읽는다. 항상 [행 번호] 먼저, [키] 다음이다."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "딕셔너리의 리스트를 표에 비유할 때, 딕셔너리 하나는 표의 무엇에 해당하는가?",
+      "options": ["열 이름 하나", "가로 한 줄(행) 하나", "표 전체", "칸 하나의 값"],
+      "answer": 1,
+      "explanation": "딕셔너리 하나 = 표의 한 행 = 기록 1건이다. 딕셔너리의 키는 열 이름, 리스트 전체는 표 전체에 해당한다."
+    },
+    {
+      "type": "true_false",
+      "question": "하루 온도 6건의 평균이 학습용 정상 범위(295~305도) 안이면, 6건 모두 정상 범위 안이라고 말할 수 있다.",
+      "answer": false,
+      "explanation": "강의 예제는 평균 301.2도로 범위 안이었지만 최고값 312.6도는 범위를 벗어났다. 평균은 튀는 값을 다른 값들 사이에 섞어 숨긴다."
     },
     {
       "type": "short_answer",
-      "question": "리스트와 딕셔너리를 각각 언제 사용하는 것이 더 알맞은지, 오늘 배운 예시를 들어 한 문장으로 설명해보시오.",
-      "sample_answer": "여러 온도 값을 순서대로 담을 때는 리스트가, 설비번호·공정명·온도처럼 값마다 의미(이름표)가 다를 때는 딕셔너리가 더 알맞다."
+      "question": "EQ-02 설비의 온도 4건 [302.5, 299.8, 298.8, 305.6]을 요약해 한두 문장으로 설명해보시오. 평균과 최고값을 함께 쓰시오.",
+      "sample_answer": "EQ-02의 평균 온도는 301.7도로 학습용 정상 범위(295~305도) 안이지만, 최고 온도 305.6도는 범위를 0.6도 넘었다. 평균만 보면 이 값을 놓치므로 최고·최저를 함께 봐야 한다."
     }
   ]
 }

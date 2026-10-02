@@ -44,7 +44,7 @@
       <li>Orange3를 실행해 새 워크플로를 시작할 수 있다.</li>
       <li>위젯을 캔버스에 놓고 서로 연결해 워크플로를 만들 수 있다.</li>
       <li><b>File</b> 위젯으로 실습용 CSV를 불러올 수 있다.</li>
-      <li>5~10차시에서 실제로 쓰는 위젯(Data Table, Feature Statistics, Scatter Plot, Box Plot,
+      <li>5~10차시에서 실제로 쓰는 위젯(Data Table, Column Statistics, Scatter Plot, Box Plot,
         Distributions, Correlations, Tree, Test and Score, Predictions)이 각각 무엇을
         보여주는지 설명할 수 있다.</li>
       <li>자주 발생하는 문제(연결 실패, 한글 깨짐 등)를 스스로 해결할 수 있다.</li>
@@ -207,7 +207,7 @@
       File 창 아래 표에는 열마다 <b>Type</b>(숫자 numeric / 범주 categorical / 글자 text 등)과
       <b>Role</b>(feature: 재료로 쓰는 열, target: 맞힐 정답 열, meta: 참고용 열)이 표시된다.
       Orange3가 자동으로 정해 주므로 5~8차시에는 그대로 두면 된다. <b>9차시</b>에는 맞힐 열
-      (검사결과)의 Role을 <b>target</b>, Type을 <b>categorical</b>로 바꿔야 한다. 칸을
+      (합격여부)의 Role을 <b>target</b>, Type을 <b>categorical</b>로 바꿔야 한다. 칸을
       더블클릭하면 바꿀 수 있고, 바꾼 뒤에는 오른쪽 아래 <b>Apply</b>를 누른다.
     </div>
     <div class="step">
@@ -265,7 +265,7 @@
     빈칸으로 보이므로, 어느 열에 결측이 많은지 눈으로 훑어보기 좋다. 열 머리글을 클릭하면 정렬도
     된다.</div>
 
-    <h3>Feature Statistics — 5차시</h3>
+    <h3>Column Statistics(버전에 따라 Feature Statistics) — 5차시</h3>
     <div class="callout concept">각 열의 평균·최솟값·최댓값·표준편차 등을 표와 막대그래프로 한눈에
     보여준다. Max/Min 값이 상식적인 범위를 벗어나 있으면 이상값 후보를 빠르게 찾을 수 있다.</div>
 
@@ -297,7 +297,7 @@
 
     <h3>Tree — 9차시</h3>
     <div class="callout concept">클릭만으로 의사결정나무 분류 모델을 학습시키는 위젯. Target
-    Variable(예: 검사결과)을 지정하면, 나머지 열을 특징으로 사용해 자동으로 모델을 만든다. 파이썬의
+    Variable(예: 합격여부)을 지정하면, 나머지 열을 특징으로 사용해 자동으로 모델을 만든다. 파이썬의
     <code>DecisionTreeClassifier</code>와 같은 원리다.</div>
 
     <h3>Test and Score — 9차시</h3>
@@ -316,7 +316,7 @@
     <div class="tablewrap">
       <table class="data-preview">
         <tr><th>차시</th><th>사용 위젯</th><th>먼저 확인하는 것</th></tr>
-        <tr><td>5차시</td><td>File → Data Table → Feature Statistics</td><td>결측 셀, 극단값</td></tr>
+        <tr><td>5차시</td><td>File → Data Table → Column Statistics</td><td>결측 셀, 극단값</td></tr>
         <tr><td>6차시</td><td>Scatter Plot · Box Plot · Distributions</td><td>온도-두께 관계, 설비별 분포</td></tr>
         <tr><td>7차시</td><td>Box Plot · Distributions</td><td>설비별 온도·합격 분포 차이</td></tr>
         <tr><td>8차시</td><td>File → Correlations</td><td>변수 쌍의 상관관계 순위</td></tr>
@@ -350,9 +350,9 @@
     </div>
     <div class="callout danger">
       <b class="tag">Tree/Test and Score에서 오류가 나요</b>
-      Target Variable(정답 열, 예: 검사결과)이 지정되어 있는지 확인한다. 파이썬의 Feature/Label
+      Target Variable(정답 열, 예: 합격여부)이 지정되어 있는지 확인한다. 파이썬의 Feature/Label
       나누기와 같은 개념으로, Orange3에서도 "무엇을 맞힐지" 미리 알려줘야 한다. File 위젯 창의
-      열 목록에서 검사결과의 Role을 <b>target</b>, Type을 <b>categorical</b>로 바꾸고
+      열 목록에서 합격여부의 Role을 <b>target</b>, Type을 <b>categorical</b>로 바꾸고
       <b>Apply</b>를 누른다(위 "첫 워크플로" 절의 알아두기 참고). Type이 numeric으로 남아 있으면
       Orange3는 합격/불합격 분류가 아니라 숫자 맞히기(회귀)로 처리한다.
     </div>

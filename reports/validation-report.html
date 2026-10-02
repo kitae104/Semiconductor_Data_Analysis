@@ -43,12 +43,12 @@
   <h2>2. 데이터 검증 (scripts/validate_datasets.py)</h2>
   <p>모든 차시 CSV에 대해 파일 존재, UTF-8 with BOM 인코딩 정상 로드, 필수 열 존재,
   합격/불합격 값 범위, 의도된 결측값·이상값·패턴(예: week04 결측/중복/음수압력,
-  week06 EQ-04 최고불량률, week07 수율 계산 일치, week09/10 검사결과 0/1 범위)을 확인했다.</p>
+  week06 EQ-04 최고불량률, week07 수율 계산 일치, week09/10 합격여부 1/-1 범위)을 확인했다.</p>
   <table>
     <tr><th>검증 항목 그룹</th><th>결과</th></tr>
     <tr><td>파일 존재 및 인코딩</td><td class="pass">PASS (11개 파일)</td></tr>
     <tr><td>필수 열 존재</td><td class="pass">PASS (11개 파일)</td></tr>
-    <tr><td>합격/불합격·검사결과 값 범위</td><td class="pass">PASS</td></tr>
+    <tr><td>합격/불합격(합격여부) 값 범위</td><td class="pass">PASS</td></tr>
     <tr><td>week04 의도된 결측/중복/이상값</td><td class="pass">PASS</td></tr>
     <tr><td>week06 EQ-04 최고 불량률 패턴</td><td class="pass">PASS</td></tr>
     <tr><td>week07 수율_pct 계산 일치, 검사수량=양품+불량</td><td class="pass">PASS</td></tr>

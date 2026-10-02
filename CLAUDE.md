@@ -32,7 +32,7 @@ Windows 환경에서는 `python`을 사용한다(`python3`는 Microsoft Store �
 
 ## 하네스: 강의 콘텐츠 제작
 
-**목표:** 한 차시를 이루는 8종 산출물(강의 HTML·실습지·퀴즈·운영안·노트북 3종·데이터+데이터사전)을
+**목표:** 한 차시를 이루는 7종 산출물(강의 HTML·실습지·퀴즈·운영안·노트북 2종(학생용·정답)·데이터+데이터사전)을
 함께 움직이고 실제로 검증해, 일부만 고쳐 어긋나는 일을 막는다.
 
 **트리거:** 차시 콘텐츠 개선·보완, 전 차시 품질 감사, 사이트/디자인 개편 요청 시
@@ -60,3 +60,5 @@ python .claude/skills/course-consistency-audit/scripts/check_course_consistency.
 | 2026-09-27 | 섹션 템플릿·콜아웃 예시에서 이모지 제거, "제목·태그·버튼에 이모지 금지" 규칙 추가 | skills/lecture-material-authoring, skills/curriculum-spec | 전 차시 이모지 일괄 제거 후 템플릿이 이모지를 다시 들여오지 않게 하기 위함 |
 | 2026-09-27 | 실습지 체크포인트 해설을 접는 규칙(`reveal-btn` + `callout … answer-box`) 추가 | skills/lecture-material-authoring | 심화 문제 바로 아래 체크포인트가 결과("결과는 3건이다" 등)를 먼저 보여줘 학생이 풀기 전에 답을 보게 됐다 |
 | 2026-09-28 | "노트북이 원본" → "강의 HTML이 기준"으로 전환. 노트북 셀 출력 단위 분할·셀마다 초보자 주석·도전 문제(강의 본문 근거 빈칸 + 참고 셀)·seed/한글 폰트·빌드 스크립트 재생성·`git checkout -- notebooks/` 금지 규칙 추가 | skills/notebook-authoring, skills/course-build | 전 차시 강의↔노트북 일치화 작업에서 사용자가 기준을 강의 HTML로 지정. 작업 중 되돌리기 명령으로 30개 노트북이 초기화되는 사고가 있었다 |
+| 2026-10-02 | 초보자·비전공자 눈높이 개정(1차시 기준 확정): 강사용 노트북 폐지(정답 노트북으로 시연), 정답 노트북 주석은 꼭 필요한 곳만, 학생용은 풀이에 필요한 설명+주의점만, 반도체·공정 설명은 생활 비유 중심, "여러 열 함께 보기"·"원인 후보"를 1차시부터 직관으로 도입 | skills/notebook-authoring, skills/lecture-material-authoring, skills/course-build, scripts/validate_notebooks.py, check_course_consistency.py | 사용자 요청: 초보자에게 공정·상관관계·다변수 설명이 어렵고 노트북 주석이 과다 |
+| 2026-10-02 | 9·10차시 `검사결과`(0/1) → `합격여부`(1=합격/-1=불합격)로 전 차시 표기 통일, 검사 스크립트가 `data-shot` 이미지 빈자리를 FAIL 대신 "캡처 대기" WARN으로 처리 | scripts/generate_weekly_data.py, scripts/validate_datasets.py, skills/course-consistency-audit | 같은 1이 차시마다 반대 뜻이라 초보자 혼동. 잘못 찍힌 Orange3 캡처는 지우고 자리만 남김 |

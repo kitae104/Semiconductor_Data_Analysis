@@ -24,16 +24,10 @@
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
-      <li>불량이 발생했을 때 "왜"인지 알아야 재발을 막을 수 있는데, 수많은 변수 중 무엇이 관련 있는지
-        눈으로 짐작하기는 어렵다. 상관관계 분석은 "함께 움직이는 변수 쌍"을 숫자로 찾아주는 도구로, 불량
-        원인을 좁혀가는 첫 단서로 쓰인다.</li>
+      <li>불량이 나오면 "그때 무엇이 달랐나"를 찾아야 한다. 상관관계는 여러 공정 값 중 "어디부터 볼지"를 정해 준다.</li>
+      <li>데이터가 만들어 주는 것은 용의자 명단(원인 후보)까지다. 그래서 숫자와 함께 "원인 후보"라고 말하는 연습을 한다.</li>
+      <li>오늘 데이터는 교육용 가상 데이터이고, <code>합격여부</code>는 1 = 합격, -1 = 불합격이다.</li>
     </ul>
-    <div class="callout concept">
-      <b class="tag">쉬운 예시</b>
-      불합격이 유독 많았던 날의 온도 기록을 보니 정상 범위(295~305도)를 벗어난 값이 많았다면, "온도"가
-      불량과 관련 있는 원인 후보로 떠오른다. 다만 상관관계가 있다고 곧바로 "온도가 원인이다"라고 단정할
-      수는 없다 — 그래서 "원인"이 아니라 <b>"원인 후보"</b>라고 부른다.
-    </div>
   </section>
 
   <section class="block">
@@ -41,140 +35,163 @@
     <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 이상치</td><td rowspan="4">A. 두 변수가 함께 움직이는 정도(-1~1)<br>B. 상관관계는 확인됐지만 아직 원인으로 확정되지 않은 변수<br>C. 정상 범위를 크게 벗어난 측정값<br>D. 한 변수의 변화가 실제로 다른 변수를 일으키는 관계</td></tr>
-      <tr><td>② 상관관계</td></tr>
-      <tr><td>③ 인과관계</td></tr>
+      <tr><td>① 상관계수</td><td rowspan="4">A. 두 값을 함께 움직이게 만드는 숨은 다른 원인(예: 더운 날씨)<br>B. 함께 움직이는 정도를 -1~1 사이 점수로 나타낸 값<br>C. 결과와 함께 움직여 "먼저 확인해 볼 곳"으로 떠오른 값<br>D. 한 값의 변화가 실제로 다른 값의 변화를 일으키는 관계</td></tr>
+      <tr><td>② 인과관계</td></tr>
+      <tr><td>③ 제3의 요인</td></tr>
       <tr><td>④ 원인 후보</td></tr>
     </table>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① C  ② A  ③ D  ④ B</div>
+    <div class="answer-box">① B  ② D  ③ A  ④ C</div>
   </section>
 
   <section class="block">
-    <h2>2. 코드 빈칸 문제</h2>
+    <h2>2. 산점도 모양 읽기</h2>
+    <p>설명을 읽고 "같이 오른다 / 반대로 움직인다 / 관계없다" 중 하나를 골라 적어보자.</p>
+    <table class="timetable">
+      <tr><th>산점도 설명</th><th>관계</th></tr>
+      <tr><td>① 점들이 오른쪽 위로 올라가는 좁은 띠를 이룬다.</td><td>(          )</td></tr>
+      <tr><td>② 점들이 방향 없이 둥근 구름처럼 퍼져 있다.</td><td>(          )</td></tr>
+      <tr><td>③ 점들이 오른쪽 아래로 내려가는 띠를 이룬다.</td><td>(          )</td></tr>
+    </table>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① 같이 오른다(양의 상관) ② 관계없다 ③ 반대로 움직인다(음의 상관).
+    오늘 데이터에서 온도-두께 산점도가 ①, 습도-두께 산점도가 ② 모양이었다.</div>
+  </section>
+
+  <section class="block">
+    <h2>3. 상관계수 크기 읽기</h2>
+    <p>강의의 학습용 기준(|r| 0.7 이상 강함, 0.3~0.7 중간, 0.3 미만 약함)으로 판정해보자.</p>
+    <table class="timetable">
+      <tr><th>상관계수 r</th><th>방향(같이 오름 / 반대로)</th><th>세기(강함 / 중간 / 약함)</th></tr>
+      <tr><td>① 0.71 (온도-두께)</td><td>(          )</td><td>(          )</td></tr>
+      <tr><td>② -0.85</td><td>(          )</td><td>(          )</td></tr>
+      <tr><td>③ 0.35</td><td>(          )</td><td>(          )</td></tr>
+      <tr><td>④ -0.01 (습도-두께)</td><td>—</td><td>(          )</td></tr>
+    </table>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① 같이 오름, 강함 ② 반대로, 강함(부호를 떼면 0.85) ③ 같이 오름, 중간 ④ 약함(뚜렷한 관계 없음).
+    부호는 방향, 크기는 세기다. ②가 ①보다 더 강하다.</div>
+  </section>
+
+  <section class="block">
+    <h2>4. 코드 빈칸 문제</h2>
+    <p>노트북 2·4단계와 같은 코드다.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>vac_low, vac_high = 4.5, 5.5
+      <pre><code># (1) 온도와 두께의 상관계수
+r_temp = df["온도_섭씨"].____(df["두께_nm"])
 
-# 정상 범위를 벗어난 행 찾기
-vac_outlier = df[(df["진공도_mTorr"] ____ vac_low) | (df["진공도_mTorr"] ____ vac_high)]
+# (2) 진공도가 정상 범위(4.5~5.5)를 벗어난 기록
+vac_out = df[(df["진공도_mTorr"] &lt; 4.5) ____ (df["진공도_mTorr"] &gt; 5.5)]
 
-# 온도와 두께의 상관계수 계산
-r = df["온도_섭씨"].____(df["두께_nm"])</code></pre>
+# (3) 범위 밖 기록 중 불합격 비율
+fail_out = len(vac_out[vac_out["합격여부"] ____ -1]) / len(vac_out) * 100</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>&lt;</code>, <code>&gt;</code>, <code>corr</code></div>
+    <div class="answer-box">순서대로 <code>corr</code>, <code>|</code>, <code>==</code>.
+    "또는"은 <code>|</code>, 같다는 비교는 <code>=</code>가 아니라 <code>==</code>이다.</div>
   </section>
 
   <section class="block">
-    <h2>3. 그래프 선택 문제</h2>
-    <p>두 숫자 변수(온도, 두께) 사이의 관계를 한눈에 확인하려면 어떤 그래프가 가장 적합할까?</p>
+    <h2>5. 결과 해석 문제</h2>
+    <p>노트북 4단계를 실행했더니 아래와 같았다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">범위 밖: 78건, 범위 안: 372건
+범위 밖 불합격률: 25.6%
+범위 안 불합격률: 8.1%</pre>
+    <ol>
+      <li>범위 밖 불합격률은 범위 안의 약 몇 배인가?</li>
+      <li>전체 불합격률(11.1%)과 비교하면 범위 밖 불합격률은 어떤가?</li>
+    </ol>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">1) 약 3배(25.6 ÷ 8.1 ≈ 3.2). 2) 전체 기준선 11.1%보다 훨씬 높다.
+    그래서 진공도는 불합격의 원인 후보로 더 살펴볼 만하다.</div>
+  </section>
+
+  <section class="block">
+    <h2>6. 여러 변수 함께 보기 문제</h2>
+    <p>같은 방법(정상 범위 밖/안 불합격률)으로 진공도와 온도를 계산한 결과다(가상 데이터).</p>
+    <table class="timetable">
+      <tr><th>변수</th><th>범위 밖 불합격률</th><th>범위 안 불합격률</th></tr>
+      <tr><td>진공도(4.5~5.5 mTorr)</td><td>25.6%</td><td>8.1%</td></tr>
+      <tr><td>온도(295~305℃)</td><td>9.8%</td><td>11.5%</td></tr>
+    </table>
+    <ol>
+      <li>둘 중 불합격의 원인 후보로 더 살펴볼 만한 것은 무엇인가?</li>
+      <li>진공도 결과만 있을 때보다 온도 결과를 함께 놓았을 때 무엇을 더 자신 있게 말할 수 있게 되었나?</li>
+    </ol>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">1) 진공도. 2) "범위를 벗어난 기록이면 어떤 값이든 불합격이 많은 것"이 아니라는 것.
+    온도는 범위를 벗어나도 불합격률이 오르지 않았으므로, 진공도의 25.6%가 특별히 높은 값이라고 말할 수 있다.
+    비교 대상이 있어야 "높다"는 판단에 근거가 생긴다.</div>
+  </section>
+
+  <section class="block">
+    <h2>7. 상관관계 vs 인과관계 판별 문제</h2>
+    <p>다음 중 "함께 움직이지만 원인-결과라고 단정할 수 없는" 예를 모두 골라보자.</p>
     <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
-      <li>① 막대그래프</li><li>② 산점도</li><li>③ 원 그래프</li>
+      <li>① 여름에 아이스크림 판매량과 물놀이 사고가 함께 늘어난다</li>
+      <li>② 전등 스위치를 누르면 불이 켜진다</li>
+      <li>③ 온도가 높은 기록일수록 두께가 두껍다(r = 0.71)</li>
+      <li>④ 진공도가 범위를 벗어난 기록에서 불합격률이 높았다</li>
     </ul>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">정답: ② 산점도. 산점도는 두 숫자 변수의 관계(양의 상관/음의 상관/무관)를
-    점의 흩어진 모양으로 보여준다.</div>
+    <div class="answer-box">정답: ①, ③, ④. ①은 더운 날씨라는 제3의 요인이 있다. ③과 ④는 데이터에서 함께 일어난 것을 본 것이라
+    원인 후보까지만 말할 수 있다(같은 시간대의 다른 조건이 함께 달랐을 수 있다). ②는 눌러 보면 바로 확인되는 원인-결과다.</div>
   </section>
 
   <section class="block">
-    <h2>4. 결과 해석 문제</h2>
-    <p>실습에서 얻은 결과가 아래와 같았다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">정상 범위 안 불합격률(%): 8.06
-정상 범위 밖 불합격률(%): 25.64</pre>
-    <p>이 결과를 보고, 진공도 이탈이 불합격의 원인 후보가 될 수 있는지 이유와 함께 적어보자.</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">불합격률이 8.06%에서 25.64%로 약 3배 이상 높아졌으므로, 진공도 이탈은
-    불합격의 원인 후보로 볼 수 있다. 다만 이것만으로 "원인"이라고 단정할 수는 없고, 추가 검증이
-    필요하다.</div>
-  </section>
-
-  <section class="block">
-    <h2>5. 상관관계 vs 인과관계 판별 문제</h2>
-    <p>다음 중 "상관관계는 있지만 인과관계라고 단정할 수 없는" 예시를 모두 골라보자.</p>
-    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
-      <li>① 아이스크림 판매량과 익사 사고 건수가 여름철에 함께 늘어난다</li>
-      <li>② 불을 붙이면 물이 끓기 시작한다</li>
-      <li>③ 냉각수온도가 오른 뒤 공정온도가 뒤따라 오르는 것처럼 보인다</li>
-      <li>④ 습도와 불합격 사이에는 뚜렷한 상관관계가 없다</li>
-    </ul>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">정답: ①, ③. 둘 다 상관관계(또는 시간 순서)는 보이지만 제3의 요인 가능성이
-    있어 원인으로 단정할 수 없다. ②는 물리적 메커니즘이 분명한 인과관계의 예시이고, ④는 애초에
-    상관관계 자체가 거의 없는 대조군 사례다.</div>
-  </section>
-
-  <section class="block">
-    <h2>6. 분석 문장 작성 문제</h2>
-    <p>아래 빈칸을 채워 이번 차시 분석 결과를 한 문장으로 요약해보자.</p>
+    <h2>8. 원인 후보 문장 작성</h2>
+    <p>빈칸을 채워 오늘의 결론을 한 문장으로 완성해보자(노트북 5단계).</p>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      "____가 정상 범위를 벗어나면 불합격률이 ____%에서 ____%로 높아진다. 따라서 ____는
-      불합격의 원인 후보로 볼 수 있으나, 확정하려면 추가 ____이(가) 필요하다."
+      "____가 정상 범위를 벗어나면 불합격률이 ____%에서 ____%로 높아졌다. 같은 방법으로 본 온도는 ____%와 ____%로 큰 차이가 없었다.
+      따라서 ____는 불합격의 원인 후보로 더 살펴볼 만하다. 다만 원인이라고 단정하려면 추가 확인이 필요하다."
     </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">진공도 / 8.1 / 25.6 / 9.8 / 11.5 / 진공도</div>
   </section>
 
   <section class="block">
-    <h2>7. 도전 문제</h2>
+    <h2>9. 도전 — 압력도 같은 방법으로</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      압력_Pa 열에 대해서도 정상 범위(교육용 기준 995~1025 Pa) 안/밖 불합격률을 비교해보고, 진공도만큼 원인 후보로
-      볼 수 있는지 자신의 근거를 들어 판단해보자. (노트북 7단계 "도전 문제 1" 셀에서 계산한다)
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>8. 심화 실습</h2>
-    <div class="callout practice">
-      <b class="tag">심화</b>
-      먼저 두 조건을 각각 변수로 만들어 두자. 변수로 만들어 두면 아래 네 집단을 짧게 쓸 수 있다.
-    </div>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>vac_out  = (df["진공도_mTorr"] &lt; 4.5) | (df["진공도_mTorr"] &gt; 5.5)
-pres_out = (df["압력_Pa"] &lt; 995) | (df["압력_Pa"] &gt; 1025)   # 교육용 정상 범위</code></pre>
-    </div>
-    <div class="callout practice">
-      <b class="tag">심화</b>
-      이제 네 집단으로 나누어 각각의 <b>건수</b>와 <b>불합격률</b>을 구해보자 —
-      ① 진공도만 이탈 <code>df[vac_out &amp; ~pres_out]</code>
-      ② 압력만 이탈 <code>df[~vac_out &amp; pres_out]</code>
-      ③ 둘 다 이탈 <code>df[vac_out &amp; pres_out]</code>
-      ④ 둘 다 정상 <code>df[~(vac_out | pres_out)]</code>
+      압력_Pa의 학습용 정상 범위 995~1025로 범위 밖/안 건수와 불합격률을 구하고(노트북 5단계 끝 "도전 문제"),
+      진공도·온도 결과와 나란히 놓아 압력을 불합격의 원인 후보로 볼 수 있을지 근거 숫자를 넣어 적어보자.
     </div>
     <button class="reveal-btn">체크포인트 보기</button>
     <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
-      <b>비율보다 건수를 먼저 보자.</b> ③은 <b>4건</b>뿐이다. 4건에서 나온 비율은 불합격이 1건만
-      달라져도 0%에서 50%까지 출렁인다 — <b>비율을 비교할 수 없는 크기</b>다. 반면 ①(74건)과
-      ②(36건)는 ④(336건)와 견줄 만하다. 이 세 집단의 불합격률을 비교해, 압력이 진공도에
-      <b>추가 정보를 주는지</b> 한 문장으로 적어보자.
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box">
-      <b class="tag">체크포인트</b>
-      <code>df["진공도_mTorr"] &lt; 4.5</code>처럼 비교식을 <code>&amp;</code>·<code>|</code>·<code>~</code>와
-      함께 쓸 때는 각 비교식을 괄호로 감싸야 한다. 위처럼 <code>vac_out</code>·<code>pres_out</code>으로
-      미리 만들어 두면 괄호 없이 써도 된다. 예: <code>both = df[vac_out &amp; pres_out]</code>,
-      <code>either = df[vac_out | pres_out]</code>, <code>neither = df[~(vac_out | pres_out)]</code>.
-      괄호를 빼먹으면 조건이 의도와 다르게 계산된다.
+      범위 밖 40건, 범위 안 410건이 나와야 한다. 범위 밖 불합격률(7.5%)이 범위 안(11.5%)보다 오히려 낮다.
+      진공도와 달리 압력은 불합격의 원인 후보로 보기 어렵다. 압력_Pa는 가상 값이라 크기를 실제 공정 압력으로 해석하지 않는다.
     </div>
   </section>
 
   <section class="block">
-    <h2>9. AI 미니 프로젝트 도전 — 원인 후보 추리 게임</h2>
+    <h2>10. 연습 — EQ-02의 진동</h2>
+    <div class="callout practice">
+      <b class="tag">연습</b>
+      설비별 평균 진동을 구하면 EQ-02가 0.678로 가장 높다. EQ-02의 불합격률을 구해(노트북 8단계) 전체 불합격률 11.1%와 비교하고,
+      진동을 불합격의 원인 후보로 올려도 될지 적어보자.
+    </div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b>
+      EQ-02 불합격률은 11.6%로 전체 11.1%와 거의 같다. 진동은 설비 점검거리일 수는 있지만, 불합격의 원인 후보로 올릴 근거는 약하다.
+      진동 열만 봤다면 "EQ-02 때문"이라고 오해했을 것이다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>11. AI 미니 프로젝트 — 관계 점수 막대판</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      AI 챗봇에게 "변수 이름과 상관계수가 담긴 딕셔너리를 받아서, 절댓값이 큰 순서로 정렬해
-      '용의선상 원인 후보 랭킹'처럼 🔎 이모지와 함께 출력하는 파이썬 코드를 만들어줘"라고
-      요청해보자. 온도-두께, 습도-불합격, 진동-불합격 상관계수를 넣어 실행하고, 1위로 뽑힌
-      원인 후보를 아래에 적어보자.
+      AI 챗봇에게 "변수 쌍 이름과 상관계수가 담긴 딕셔너리를 받아서, 절댓값이 0.7 이상이면 '강함', 0.3 이상이면 '중간',
+      그보다 작으면 '약함'이라고 판정하고, 절댓값 크기만큼 ■ 막대를 그려 출력하는 파이썬 코드를 만들어줘"라고 요청해보자.
+      노트북 9단계 셀에 붙여넣어 실행한다.
     </div>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      "AI가 뽑아준 1위 원인 후보는 ______________________________이다. (단, 이는 아직
-      확정된 원인이 아니라 원인 후보일 뿐이다.)"<br>
-      그리고 그 1위가 정말 "불합격"과의 관계인지, 대조군(습도)이 높은 순위에 올라 있지는 않은지도 확인해보자.
+      "막대가 가장 긴 쌍은 ______________이고, 판정은 ______이다. 이 쌍은 ______의 원인 후보다(무엇의 후보인지 적기)."
     </div>
   </section>
 

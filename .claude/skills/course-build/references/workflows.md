@@ -41,7 +41,7 @@ Agent(subagent_type: "general-purpose", model: "opus", run_in_background: true,
       prompt: ".claude/agents/domain-reviewer.md 를 읽고 그 역할로 수행하라.
                .claude/skills/semiconductor-content-guard/SKILL.md 와
                .claude/skills/curriculum-spec/SKILL.md 를 먼저 읽어라.
-               감사 대상: week{XX} 산출물 8종 전부.
+               감사 대상: week{XX} 산출물 7종 전부.
                기계 검사 결과(이미 확인된 항목이므로 중복 보고하지 말 것):
                {해당 차시의 00_machine_audit.md 발췌}
                산출물: _workspace/audit_week{XX}.md — domain-reviewer 출력 형식을 따르되

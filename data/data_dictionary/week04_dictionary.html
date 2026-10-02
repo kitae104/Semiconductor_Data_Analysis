@@ -76,14 +76,14 @@
 <th>예시</th>
 <th>결측값 가능 여부</th>
 </tr></thead><tbody>
-<tr><td>측정시간</td><td>측정 시각</td><td>문자열(날짜시간)</td><td>-</td><td>2024-03-10 14:00</td><td>없음</td></tr>
-<tr><td>로트번호</td><td>로트 식별 번호</td><td>문자열</td><td>-</td><td>LOT-0300</td><td>없음</td></tr>
-<tr><td>설비번호</td><td>공정 설비</td><td>문자열</td><td>-</td><td>EQ-02</td><td>없음</td></tr>
-<tr><td>공정명</td><td>공정 종류</td><td>문자열</td><td>-</td><td>세정</td><td>없음</td></tr>
-<tr><td>온도_섭씨</td><td>챔버 온도</td><td>실수</td><td>℃</td><td>299.4</td><td>없음</td></tr>
-<tr><td>압력_Pa</td><td>챔버 압력</td><td>실수</td><td>Pa</td><td>1015.2</td><td>없음</td></tr>
-<tr><td>가스유량_slm</td><td>공정 가스 유량</td><td>실수</td><td>slm</td><td>50.1</td><td>없음</td></tr>
-<tr><td>합격여부</td><td>검사 결과</td><td>정수</td><td>-</td><td>1(합격) / -1(불합격)</td><td>없음</td></tr>
+<tr><td>측정시간</td><td>그 작업을 기록한 날짜와 시각</td><td>문자열(날짜시간)</td><td>-</td><td>2024-03-10 14:00</td><td>없음</td></tr>
+<tr><td>로트번호</td><td>함께 이동하는 웨이퍼 묶음(택배 상자 하나)의 번호</td><td>문자열</td><td>-</td><td>LOT-0300</td><td>없음</td></tr>
+<tr><td>설비번호</td><td>작업을 한 기계의 번호(EQ-01~EQ-04)</td><td>문자열</td><td>-</td><td>EQ-02</td><td>없음</td></tr>
+<tr><td>공정명</td><td>어떤 작업이었는지(산화·포토·식각·증착·세정)</td><td>문자열</td><td>-</td><td>세정</td><td>없음</td></tr>
+<tr><td>온도_섭씨</td><td>설비 안(챔버)의 온도를 센서로 잰 값</td><td>실수</td><td>℃</td><td>299.4</td><td>없음</td></tr>
+<tr><td>압력_Pa</td><td>설비 안(챔버)의 압력을 센서로 잰 값. 아래 "압력_Pa 값의 한계" 참고</td><td>실수</td><td>Pa</td><td>1015.2</td><td>없음</td></tr>
+<tr><td>가스유량_slm</td><td>작업에 쓰는 가스가 흘러 들어간 양(slm = 1분에 몇 리터, 표준 상태 기준)</td><td>실수</td><td>slm</td><td>50.1</td><td>없음</td></tr>
+<tr><td>합격여부</td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b>(0이 아니다)</td><td>정수</td><td>-</td><td>1(합격) / -1(불합격)</td><td>없음</td></tr>
 </tbody></table></div>
   </section>
 
@@ -107,12 +107,26 @@
 
   <section class="block">
     <h2>이번 차시 분석 질문</h2>
-<ul class="pt-list"><li><code>EQ-02</code>에서 발생한 불합격은 몇 건인가?</li><li>온도가 가장 높았던 상위 5건은 어떤 조건인가?</li></ul>
+<ul class="pt-list"><li><code>EQ-02</code>에서 발생한 불합격은 몇 건인가? → 25건 중 5건(20.0%)</li><li>전체(합격 87건, 불합격 13건, 13.0%)로 볼 때와 설비별로 따로 떼어 볼 때 무엇이 다른가?</li><li>온도가 가장 높았던 상위 5건은 어떤 조건인가? → 310.1~308.2℃, 그중 불합격은 1건</li></ul>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>설비번호</th>
+<th>전체 기록</th>
+<th>불합격</th>
+<th>불합격률</th>
+</tr></thead><tbody>
+<tr><td>EQ-01</td><td>31건</td><td>2건</td><td>6.5%</td></tr>
+<tr><td>EQ-02</td><td>25건</td><td>5건</td><td>20.0%</td></tr>
+<tr><td>EQ-03</td><td>22건</td><td>1건</td><td>4.5%</td></tr>
+<tr><td>EQ-04</td><td>22건</td><td>5건</td><td>22.7%</td></tr>
+<tr><td>전체</td><td>100건</td><td>13건</td><td>13.0%</td></tr>
+</tbody></table></div>
+<p>공정별 기록/불합격: 산화 23건/1건, 포토 20건/3건, 식각 15건/2건, 증착 24건/4건, 세정 18건/3건. 온도 305℃ 초과 기록은 13건이고 그중 불합격은 3건이다(불합격 13건과 같은 기록이 아니다).</p>
   </section>
 
   <section class="block">
     <h2>실제 현업 데이터와 다른 점</h2>
-<p>완전한 가상 데이터다. 결측값은 아직 넣지 않았다(결측값 처리는 5차시 주제).</p>
+<p>완전한 가상 데이터다. 결측값은 아직 넣지 않았다(결측값 처리는 5차시 주제). 가상 데이터라 설비와 공정이 무작위로 짝지어져 있다. 실제 공장에서는 설비마다 맡는 공정이 정해져 있다.</p>
   </section>
 
   <div class="nav-buttons">

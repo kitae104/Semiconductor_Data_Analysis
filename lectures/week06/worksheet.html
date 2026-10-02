@@ -24,173 +24,195 @@
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
-      <li>숫자로만 나열된 표는 수백 행만 넘어가도 패턴을 눈으로 알아채기 어렵다. 그래프는 온도·압력 같은
-        값의 변화와 설비 간 차이를 한눈에 보여줘서, 어디를 더 자세히 조사해야 할지 훨씬 빠르게 판단하게
-        해준다.</li>
+      <li>숫자 요약(평균)은 "얼마인가"를, 그래프는 "어떤 모양인가"를 알려준다. 둘을 함께 봐야 놓치지 않는다.</li>
+      <li>오늘 데이터에서 설비 4대의 평균 온도는 302~304℃로 비슷했지만, 박스플롯으로 그리자 EQ-02만 크게 들쭉날쭉했다.</li>
     </ul>
-    <div class="callout concept">
-      <b class="tag">쉬운 예시</b>
-      설비 4대의 온도를 표로만 보면 숫자가 너무 많아 비교가 쉽지 않다. 하지만 박스플롯 하나로 그리면
-      "EQ-02만 유난히 온도가 들쭉날쭉하다"는 사실이 한눈에 보인다 — 표를 한 줄씩 읽지 않고도 문제 설비를
-      바로 짐작할 수 있다.
-    </div>
   </section>
 
   <section class="block">
-    <h2>1. 그래프 종류 연결 문제</h2>
-    <p>왼쪽 상황과 오른쪽 그래프 종류를 알맞게 연결해보자.</p>
+    <h2>1. 질문과 그래프 연결 문제</h2>
+    <p>왼쪽 질문에 답하기에 가장 알맞은 그래프를 연결해보자.</p>
     <table class="timetable">
-      <tr><th>상황</th><th>그래프 후보</th></tr>
-      <tr><td>① 시간에 따른 온도 변화를 보고 싶다</td><td rowspan="5">A. 히스토그램<br>B. 박스플롯<br>C. 산점도<br>D. 막대그래프<br>E. 선 그래프</td></tr>
-      <tr><td>② 설비별 측정 건수를 비교하고 싶다</td></tr>
-      <tr><td>③ 온도 값이 어느 구간에 몰려 있는지 보고 싶다</td></tr>
-      <tr><td>④ 온도와 두께의 관계를 보고 싶다</td></tr>
-      <tr><td>⑤ 설비별 온도의 퍼짐(변동)을 비교하고 싶다</td></tr>
+      <tr><th>질문</th><th>그래프 후보</th></tr>
+      <tr><td>① 시간이 지나며 온도가 어떻게 변했나?</td><td rowspan="5">A. 히스토그램<br>B. 박스플롯<br>C. 산점도<br>D. 막대그래프<br>E. 선 그래프</td></tr>
+      <tr><td>② 설비마다 기록이 몇 건인가?</td></tr>
+      <tr><td>③ 온도 값이 주로 어디에 몰려 있나?</td></tr>
+      <tr><td>④ 온도가 높으면 두께도 두꺼운가?</td></tr>
+      <tr><td>⑤ 어느 설비의 온도가 가장 들쭉날쭉한가?</td></tr>
     </table>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">① E  ② D  ③ A  ④ C  ⑤ B</div>
   </section>
 
   <section class="block">
-    <h2>2. 코드 빈칸 문제</h2>
+    <h2>2. 그래프 "하나"가 뜻하는 것</h2>
+    <p>각 그래프에서 표시 하나가 무엇을 뜻하는지 연결해보자.</p>
+    <table class="timetable">
+      <tr><th>표시</th><th>뜻 후보</th></tr>
+      <tr><td>① 산점도의 점 하나</td><td rowspan="4">A. 온도 구간 하나에 들어간 기록 수<br>B. 기록(행) 하나<br>C. 설비 하나의 값 전체를 요약한 것<br>D. 설비 하나의 기록 건수</td></tr>
+      <tr><td>② 막대그래프의 막대 하나</td></tr>
+      <tr><td>③ 히스토그램의 막대 하나</td></tr>
+      <tr><td>④ 박스플롯의 상자 하나</td></tr>
+    </table>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① B  ② D  ③ A  ④ C. 막대그래프와 히스토그램은 둘 다 막대지만, 막대그래프의 가로축은 이름(설비),
+    히스토그램의 가로축은 숫자 구간(온도)이다.</div>
+  </section>
+
+  <section class="block">
+    <h2>3. 박스플롯 부분 이름 맞히기</h2>
+    <p>박스플롯의 각 부분과 뜻을 연결해보자.</p>
+    <table class="timetable">
+      <tr><th>부분</th><th>뜻 후보</th></tr>
+      <tr><td>① 상자 안 가로선</td><td rowspan="4">A. 다른 값들과 멀리 떨어진 값<br>B. 가운데 절반(50%)의 기록이 들어 있는 범위<br>C. 줄 세웠을 때 한가운데 값(중앙값)<br>D. 동그라미를 뺀 가장 큰 값·가장 작은 값까지 뻗은 선</td></tr>
+      <tr><td>② 상자</td></tr>
+      <tr><td>③ 수염</td></tr>
+      <tr><td>④ 동그라미 점</td></tr>
+    </table>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① C  ② B  ③ D  ④ A. 동그라미 점은 "잘못된 값"이 아니라 "멀리 떨어진 값"이라는 표시다.</div>
+  </section>
+
+  <section class="block">
+    <h2>4. 코드 빈칸 문제</h2>
+    <p>노트북의 빈칸과 같은 자리다. 강의 코드를 보지 않고 먼저 떠올려 보자.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>import pandas as pd
-import matplotlib.pyplot as plt
+      <pre><code>df["측정시간"] = pd.____(df["측정시간"])       # ① 글자를 날짜로
 
-df = pd.read_csv("week06_process_visualization.csv")
-df["측정시간"] = pd.____________(df["측정시간"])   # 문자열을 날짜 형식으로 변환
-
-plt.____________(df["온도_섭씨"], bins=18)   # 히스토그램 그리기
-plt.title("온도 분포 히스토그램")
+plt.____(df["온도_섭씨"], bins=10)              # ② 히스토그램
 plt.show()
 
-df.____________(column="온도_섭씨", by="설비번호")   # 설비별 박스플롯 그리기
+plt.____(df["온도_섭씨"], df["두께_nm"])        # ③ 산점도
+plt.show()
+
+df.____(column="온도_섭씨", by="설비번호")      # ④ 설비별 박스플롯
 plt.show()</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>to_datetime</code>, <code>hist</code>, <code>boxplot</code></div>
+    <div class="answer-box">① <code>to_datetime</code>  ② <code>hist</code>  ③ <code>scatter</code>  ④ <code>boxplot</code></div>
   </section>
 
   <section class="block">
-    <h2>3. 그래프 해석</h2>
-    <p>아래는 6차시 강의에서 실제 데이터로 그린 박스플롯이다 (<code>index.html</code>의
-    "박스플롯 — 그룹별 분포와 이상값" 절과 동일한 이미지).</p>
-    <div class="tablewrap" style="border:none;">
-      <img src="../../assets/images/week06/box_temperature_by_equipment.png"
-           alt="설비별 온도 박스플롯" style="max-width:100%;border-radius:8px;border:1px solid var(--line);">
-    </div>
-    <p>이 그래프를 보고 다음 질문에 답해보자.</p>
+    <h2>5. 박스플롯 해석</h2>
+    <p>강의와 노트북 6단계에서 그린 설비별 온도 박스플롯이다(교육용 가상 데이터).</p>
+    <img class="chart-img" src="../../assets/images/week06/nb_box_temperature.png"
+         alt="설비별 온도 박스플롯. EQ-02의 상자가 다른 설비보다 위아래로 길다." style="max-width:520px;">
     <ol>
-      <li>네 설비 중 상자(box)와 수염이 가장 넓게 퍼져 있는 설비는 어디인가?</li>
-      <li>그 설비의 온도가 불안정하다면, 합격률에는 어떤 영향을 줄 것으로 예상하는가?</li>
+      <li>상자가 가장 긴 설비는 어디인가?</li>
+      <li>네 설비의 가운데 선(중앙값)은 서로 많이 다른가, 비슷한가?</li>
+      <li>EQ-03의 동그라미 점은 지워야 할 잘못된 값인가?</li>
     </ol>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      1) EQ-02. 다른 설비의 온도 표준편차가 약 3.0~3.2℃인 것에 비해 EQ-02는 약 5.37℃로 가장 크게 퍼져 있다.<br>
-      2) "온도가 불안정하면 정상범위(295~305℃)를 벗어나 불합격이 늘 것"이라고 <b>예상</b>해볼 수 있다.
-      그런데 실제로 세어보면 정상범위 <b>밖</b> 42건의 불합격 비율은 <b>14.3%</b>, <b>안</b> 138건은
-      <b>10.9%</b>다 — 예상한 방향이긴 하지만 <b>차이가 3.4%p로 크지 않다</b>. 게다가 온도 표준편차가
-      가장 <b>작은</b> EQ-04도 불합격 비율이 16.0%로 높다. 즉 지금 데이터만으로는 온도와 설비 중
-      무엇이 불합격과 이어지는지 <b>갈라낼 수 없다</b> — 온도 불안정은 아직 "원인 후보"일 뿐이다
-      (8차시에서 자세히 다룬다).
-    </div>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">1) EQ-02. 상자 범위가 300.6~307.3℃로 폭 6.7℃다(다른 설비 3.1~4.1℃).
+    2) 비슷하다. 모두 302~303℃ 근처다. "보통 온도"는 같고 흔들리는 폭이 다르다.
+    3) 아니다. 다른 값들과 멀리 떨어져 있다는 표시일 뿐, 실제로 측정된 정상 값일 수 있다. 지우기 전에 이유를 먼저 살펴본다.</div>
   </section>
 
   <section class="block">
-    <h2>4. 결과 해석 문제</h2>
-    <p>실습에서 <code>df["온도_섭씨"].corr(df["두께_nm"])</code>를 계산했더니 결과가
-    <code>0.81</code>이었다.</p>
-    <p>이 숫자를 보고 온도와 두께의 관계를 설명해보자.</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">상관계수가 1에 가까울수록 강한 양의 상관관계다. 0.81은 비교적 강한 양의
-    상관관계로, 온도가 높을수록 두께도 두꺼워지는 경향이 있다는 뜻이다. 다만 상관관계가
-    있다고 해서 온도가 두께의 "원인"이라고 단정할 수는 없다.</div>
+    <h2>6. 산점도 해석</h2>
+    <p>노트북 5단계에서 그린 온도와 두께 산점도다.</p>
+    <img class="chart-img" src="../../assets/images/week06/nb_scatter_temp_thickness.png"
+         alt="온도와 두께 산점도. 점들이 오른쪽 위로 기울어 있다." style="max-width:520px;">
+    <ol>
+      <li>점들은 오른쪽 위 / 오른쪽 아래 / 둥글게 흩어짐 중 어느 모양인가? 그 모양은 무엇을 뜻하나?</li>
+      <li>동료가 "온도가 두께의 원인이네!"라고 말했다. 어떻게 답하면 좋을까?</li>
+    </ol>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">1) 오른쪽 위. 온도가 높은 기록일수록 두께도 두꺼운 편이다(두 값이 함께 움직인다).
+    2) "함께 움직이는 건 맞지만, 그것만으로 원인이라고 할 수는 없어. 아이스크림 판매와 물놀이 사고가 더운 날씨 때문에
+    함께 늘어나듯, 다른 무언가가 둘을 함께 움직였을 수도 있어. 지금은 원인 후보까지만 말할 수 있어."</div>
   </section>
 
   <section class="block">
-    <h2>5. 분석 문장 작성 문제</h2>
-    <p>아래 빈칸을 채워 이번 차시 데이터를 한 문장으로 요약해보자.</p>
+    <h2>7. 숫자와 그림 함께 보기</h2>
+    <p>아래는 설비별 평균 온도다. 이 표만 본 동료가 "네 설비 온도 상태는 다 비슷하네"라고 말했다.</p>
+    <table class="timetable">
+      <tr><th>설비</th><th>평균 온도</th></tr>
+      <tr><td>EQ-01</td><td>302.8℃</td></tr>
+      <tr><td>EQ-02</td><td>303.7℃</td></tr>
+      <tr><td>EQ-03</td><td>302.2℃</td></tr>
+      <tr><td>EQ-04</td><td>302.7℃</td></tr>
+    </table>
+    <p>이 말에서 무엇이 빠졌는지, 오늘 그린 그래프를 근거로 한두 문장으로 설명해보자.</p>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">"평균은 비슷하지만 퍼짐이 다르다. 박스플롯에서 EQ-02만 상자가 길고(300.6~307.3℃),
+    학습용 정상 범위(295~305℃) 밖 기록도 EQ-02는 37건 중 14건으로 다른 설비(46~50건 중 9~10건)보다 많다.
+    평균 하나로는 들쭉날쭉한 정도가 보이지 않는다."</div>
+  </section>
+
+  <section class="block">
+    <h2>8. 결과 해석과 문장 쓰기</h2>
+    <p>노트북 7단계 숫자 요약의 일부다.</p>
+    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">       mean  std    25%    75%
+EQ-01  302.8  3.2  301.0  304.4
+EQ-02  303.7  5.4  300.6  307.3
+EQ-03  302.2  3.1  300.7  303.8
+EQ-04  302.7  3.0  300.4  304.5</pre>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      "설비 ____의 온도 표준편차는 약 ____℃로 가장 크며, 불합격 비율도 약 ____%로 다른
-      설비보다 높다. 온도와 두께 사이에는 상관계수 약 ____의 관계가 있다."
+      빈칸을 채워보자.
+      "네 설비의 평균 온도는 ____~____℃로 비슷하지만, 설비 ____의 표준편차가 ____로 가장 커서 온도가 가장 들쭉날쭉하다."
     </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">"네 설비의 평균 온도는 302.2~303.7℃로 비슷하지만, 설비 EQ-02의 표준편차가 5.4로 가장 커서
+    온도가 가장 들쭉날쭉하다."</div>
   </section>
 
   <section class="block">
-    <h2>6. 도전 문제</h2>
+    <h2>9. 선 그래프 해석</h2>
+    <p>노트북 2단계에서 그린 시간에 따른 온도 선 그래프다.</p>
+    <img class="chart-img" src="../../assets/images/week06/nb_line_temperature.png"
+         alt="시간에 따른 온도 선 그래프. 흔들리면서 전체적으로 조금씩 올라간다." style="max-width:560px;">
+    <p>선이 위아래로 많이 흔들린다. 그래도 이 그래프에서 읽을 수 있는 "전체 흐름"은 무엇인가?
+    전체 평균 온도(302.8℃) 하나만 알 때와 비교해 무엇을 더 알 수 있나?</p>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">시간이 지날수록 온도가 서서히 올라간다(드리프트). 3월 평균은 301.4℃, 4월 평균은 304.8℃다.
+    전체 평균 하나로는 이런 "시간에 따른 변화"가 보이지 않는다.</div>
+  </section>
+
+  <section class="block">
+    <h2>10. 도전 — 설비별 진동 박스플롯</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      <code>df.boxplot(column="진동_mm_s", by="설비번호")</code>를 실행해 설비별 진동 값의
-      박스플롯을 직접 그려보자. 온도 박스플롯과 같은 설비가 가장 넓게 퍼져 있는지 확인하고,
-      이 결과로 떠올릴 수 있는 "원인 후보"를 한 문장으로 적어보자.
-      (노트북 8단계 "도전 문제 1" 셀에 쓰면 된다)
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>7. 심화 실습</h2>
-    <div class="callout practice">
-      <b class="tag">심화</b>
-      <code>plt.scatter(df["두께_nm"], df["진동_mm_s"], c=df["합격여부"])</code>로 산점도를 그려
-      점 색깔로 합격(1)과 불합격(-1)을 구분해보자. 그리고
-      <code>df["두께_nm"].corr(df["진동_mm_s"])</code>도 계산해보자 — 값은 약 <b>0.12</b>로,
-      두께와 진동 사이에는 이렇다 할 관계가 없다. 그 위에서 불합격(다른 색) 점들이 특별히 몰려
-      있는 구간이 있는지 관찰해 한 문장으로 적어보자.
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout concept answer-box">
-      <b class="tag">체크포인트 — 한 가지를 더 확인하자</b>
-      불합격 점이 진동이 높은 쪽에 몰려 보일 것이다. 실제로 진동 상위 25%(약 0.55 이상) 45건의
-      불합격 비율은 <b>17.8%</b>로 전체(11.7%)보다 높다. 그런데 같은 산점도를 <code>c=</code>에
-      합격여부 대신 <b>설비별로 색을 나눠</b> 다시 그려보면, 진동이 높은 점은 거의 전부
-      <b>EQ-02</b>다(EQ-02 진동 평균 0.61 vs 나머지 약 0.50). 그래서 EQ-02를 빼고 다시 세어보면
-      진동 상위 25%의 불합격 비율은 오히려 <b>5.6%</b>로 내려간다.<br><br>
-      즉 "진동이 높아서 불합격"인지 "EQ-02라서 진동도 높고 불합격도 많은 것"인지 이 그래프
-      하나로는 <b>갈라낼 수 없다</b>. 이렇게 뒤에 숨어서 두 값을 동시에 움직이는 제3의 요인을
-      <b>교란 요인(confounder)</b>이라고 부른다. 진동도 EQ-02도 지금은 <b>원인 후보</b>이고,
-      이런 상황을 어떻게 다루는지가 <b>8차시</b>의 주제다.
+      온도 박스플롯 코드에서 <code>column=</code>의 열 이름만 <code>진동_mm_s</code>로 바꿔 설비별 진동 박스플롯을 그려보자.
+      EQ-02 상자의 <b>위치(높이)</b>와 <b>길이(퍼짐)</b>를 다른 설비와 비교해 한 문장으로 적는다. (노트북 7단계 끝 "도전 문제")
     </div>
     <button class="reveal-btn">체크포인트 보기</button>
     <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
-      <code>c=</code>에 넣는 값은 숫자형이어야 색으로 자동 구분된다. <code>합격여부</code>는 이미
-      1/-1 숫자라 바로 쓸 수 있지만, 만약 "합격"/"불합격" 같은 문자열 열이었다면 먼저 숫자로
-      바꾼 뒤 넣어야 한다.
+      EQ-02의 진동 상자는 다른 설비보다 위쪽에 있고(가운데 선 약 0.60, 다른 설비 약 0.49~0.50) 길이도 길다.
+      문장은 "EQ-02를 먼저 더 살펴볼 만하다"까지 쓰고, 무엇 때문인지 단정하지 않는다.
     </div>
   </section>
 
   <section class="block">
-    <h2>8. 그래프 선택 이유 설명하기</h2>
-    <p>아래 두 상황에서 어떤 그래프를 쓸지 고르고, 왜 그 그래프를 골랐는지 한 문장으로
-    설명해보자(정답 그래프 종류뿐 아니라 이유도 함께 적어보는 것이 핵심이다).</p>
-    <ol>
-      <li>"압력_Pa 값이 정상 범위 근처에 잘 모여 있는지, 아니면 넓게 퍼져 있는지 확인하고
-      싶다." → 어떤 그래프? 왜?</li>
-      <li>"처리시간_sec이 진동_mm_s와 함께 커지는 경향이 있는지 확인하고 싶다." → 어떤
-      그래프? 왜?</li>
-    </ol>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      1) 히스토그램. 숫자 변수 하나가 어떤 값 근처에 몰려 있는지(분포 모양)를 보고 싶은
-      상황이기 때문이다.<br>
-      2) 산점도. 숫자 변수 두 개(처리시간_sec, 진동_mm_s)가 함께 움직이는 관계가 있는지
-      보고 싶은 상황이기 때문이다.
+    <h2>11. 연습 — 불합격 기록을 설비별 막대그래프로</h2>
+    <div class="callout practice">
+      <b class="tag">연습</b>
+      <code>합격여부</code>는 <b>1 = 합격, -1 = 불합격</b>이다. <code>df[df["합격여부"] == -1]</code>로 불합격 기록만 골라
+      설비별 건수를 <code>value_counts()</code>로 세고, <code>plt.bar(...)</code>로 그려보자. (노트북 10단계)
+      그리고 "불합격 건수가 가장 많은 설비"를 적어보자.
+    </div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b>
+      EQ-04와 EQ-02가 8건으로 같다(EQ-03 3건, EQ-01 2건). 그런데 전체 기록 수는 EQ-04 50건, EQ-02 37건이다.
+      건수만으로 "둘이 같다"고 할 수 있을까? 7차시에서 비율로 다시 계산한다.
+      결과가 0건이면 <code>"-1"</code>처럼 따옴표를 붙이지 않았는지 확인한다.
     </div>
   </section>
 
   <section class="block">
-    <h2>9. AI 미니 프로젝트 도전 — 나만의 이모지 막대그래프</h2>
+    <h2>12. AI 미니 프로젝트 — 글자 막대그래프</h2>
     <div class="callout practice">
       <b class="tag">도전</b>
-      AI 챗봇에게 "설비 이름과 숫자 값이 담긴 딕셔너리를 받아서, matplotlib 없이 🌡️ 이모지를
-      숫자만큼 반복 출력해서 텍스트로 막대그래프를 그려주는 파이썬 코드를 만들어줘"라고
-      요청해보자. 코드를 실행하고, 이모지를 다른 것으로 바꾸거나 실제 데이터로 그려보자.
+      AI 챗봇에게 "설비 이름과 숫자가 담긴 딕셔너리를 받아서, matplotlib 없이 ■ 글자를 숫자만큼 반복 출력해 텍스트 막대그래프를
+      그리는 파이썬 코드를 만들어줘"라고 요청해보자. 노트북 11단계 셀에 붙여넣어 실행하고, 숫자를 11번에서 센 불합격 건수로 바꿔 보자.
     </div>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      "AI가 만들어준 이모지 막대그래프에서 가장 값이 큰 설비는 ______________이었다."
+      "글자 막대그래프에서 막대가 가장 긴 설비는 ______________이었다."
     </div>
   </section>
 

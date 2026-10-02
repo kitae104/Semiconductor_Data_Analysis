@@ -362,8 +362,8 @@ def _week09_features(rng, n):
     temp = rng.normal(300, 5, size=n)
     pressure = rng.normal(1012, 10, size=n)
     vacuum = rng.normal(5.0, 0.4, size=n)
-    gas = rng.normal(50, 3, size=n)          # 검사결과와 무관/약한 변수(대조군)
-    humidity = rng.normal(45, 4, size=n)     # 검사결과와 무관/약한 변수(대조군)
+    gas = rng.normal(50, 3, size=n)          # 합격여부와 무관한 변수(대조군)
+    humidity = rng.normal(45, 4, size=n)     # 합격여부와 무관한 변수(대조군)
     thickness = 100 + (temp - 300) * 0.55 + rng.normal(0, 2.0, size=n)
     return equip, process, temp, pressure, vacuum, gas, humidity, thickness
 
@@ -381,7 +381,9 @@ def gen_week09():
         + (np.abs(thickness - 100) > 5).astype(float) * 0.15
     )
     fail_prob = np.clip(0.06 + risk, 0.03, 0.85)
-    result = np.array([rng.choice([0, 1], p=[1 - p, p]) for p in fail_prob])  # 0=합격, 1=불합격
+    result = np.array([rng.choice([0, 1], p=[1 - p, p]) for p in fail_prob])  # 난수 순서 유지용 0/1 추첨
+    # 2026-10-02: 1~8차시와 같은 규약으로 저장(1=합격, -1=불합격). 추첨 순서는 그대로라 다른 열 값은 바뀌지 않는다.
+    passfail = np.where(result == 1, -1, 1)
 
     df = pd.DataFrame({
         "공정명": process,
@@ -392,7 +394,7 @@ def gen_week09():
         "두께_nm": np.round(thickness, 2),
         "진공도_mTorr": np.round(vacuum, 2),
         "습도_pct": np.round(humidity, 1),
-        "검사결과": result,
+        "합격여부": passfail,
     })
 
     # 결측치 소량 삽입(4~5주차 정제 복습용)
@@ -458,8 +460,9 @@ def gen_week10():
     cooling = rng.normal(20, 1.2, size=n)
     humidity = rng.normal(45, 3.5, size=n)
 
-    result = np.array([rng.choice([0, 1], p=[1 - p, p]) for p in fail_prob])  # 0=정상, 1=이상
+    result = np.array([rng.choice([0, 1], p=[1 - p, p]) for p in fail_prob])  # 난수 순서 유지용 0/1 추첨
     defect = np.where(result == 1, rng.choice(DEFECT_TYPES, size=n), "")
+    passfail = np.where(result == 1, -1, 1)  # 1~8차시와 같은 규약(1=합격, -1=불합격)
 
     df = pd.DataFrame({
         "측정시간": [t.strftime("%Y-%m-%d %H:%M") for t in ts],
@@ -477,7 +480,7 @@ def gen_week10():
         "냉각수온도_섭씨": np.round(cooling, 2),
         "습도_pct": np.round(humidity, 1),
         "불량유형": defect,
-        "검사결과": result,
+        "합격여부": passfail,
     })
     save_csv(df, "week10", "week10_mini_project_dataset.csv")
     return df

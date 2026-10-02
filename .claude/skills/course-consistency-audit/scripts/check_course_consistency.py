@@ -2,10 +2,10 @@
 
 `scripts/validate_datasets.py`(데이터 자체)와 `scripts/validate_notebooks.py`(노트북 실행)가
 잡지 못하는 **산출물 사이의 불일치**를 잡는다. 한 차시를 고칠 때 강의 HTML·실습지·퀴즈·운영안·
-노트북 3종·주차 데이터·데이터사전 중 일부만 고치고 나머지를 두면 학생이 바로 막히기 때문이다.
+노트북 2종·주차 데이터·데이터사전 중 일부만 고치고 나머지를 두면 학생이 바로 막히기 때문이다.
 
 검사 항목
-  1. 차시별 필수 산출물 8종 존재 여부
+  1. 차시별 필수 산출물 7종 존재 여부
   2. quiz.json 스키마(타입별 필수 키, 보기 인덱스 범위, week 번호 일치)
   3. HTML이 참조하는 상대경로(css/js/img/a href) 대상 파일 존재
   4. HTML class 속성이 common.css/print.css 또는 같은 문서의 <style>에 정의되어 있는지
@@ -122,8 +122,17 @@ def check_html(scope: str, path: str, css_classes: set[str], week: int | None) -
 
     # 3. 상대경로 참조 대상 존재
     refs = re.findall(r'(?:href|src)="([^"#?][^"]*)"', html)
+    # data-shot이 달린 <img>는 캡처를 기다리는 의도된 빈자리다(common.js가 점선 상자로 표시).
+    # 파일이 없어도 깨진 경로가 아니라 "캡처 대기"로 따로 알린다.
+    shot_srcs = set(re.findall(r'<img\b[^>]*\bsrc="([^"]+)"[^>]*\bdata-shot="', html, flags=re.S))
+    pending = sorted(s for s in shot_srcs
+                     if not os.path.exists(os.path.normpath(os.path.join(here, s.split("?")[0]))))
+    warn_if(scope, f"{rel} 캡처 대기 이미지 없음", not pending,
+            f"새 캡처 필요(점선 상자로 표시됨): {pending}" if pending else "")
     missing = []
     for ref in refs:
+        if ref in shot_srcs:
+            continue
         if ref.startswith(("http://", "https://", "mailto:", "data:", "//", "#")):
             continue
         target = os.path.normpath(os.path.join(here, ref.split("#")[0].split("?")[0]))
@@ -254,7 +263,6 @@ def step_titles(md_cells: list[str]) -> list[str]:
 def check_notebooks(scope: str, week: int) -> None:
     paths = {
         "student": os.path.join(BASE, "notebooks", "student", f"week{week:02d}_student.ipynb"),
-        "instructor": os.path.join(BASE, "notebooks", "instructor", f"week{week:02d}_instructor.ipynb"),
         "solutions": os.path.join(BASE, "notebooks", "solutions", f"week{week:02d}_solution.ipynb"),
     }
     present = {}
@@ -341,14 +349,14 @@ EXC_MSG_RE = re.compile(r"`([A-Z][A-Za-z]*(?:Error|Exception)): ([^`]{3,80})`")
 
 
 def week_corpus(week: int) -> str:
-    """해당 차시의 강의·실습지·노트북 3종을 한 덩어리 문자열로 모은다."""
+    """해당 차시의 강의·실습지·노트북 2종을 한 덩어리 문자열로 모은다."""
     parts = []
     folder = os.path.join(BASE, "lectures", f"week{week:02d}")
     for name in ("index.html", "worksheet.html", "quiz.json"):
         p = os.path.join(folder, name)
         if os.path.exists(p):
             parts.append(read(p))
-    for kind, suffix in (("student", "student"), ("instructor", "instructor"), ("solutions", "solution")):
+    for kind, suffix in (("student", "student"), ("solutions", "solution")):
         p = os.path.join(BASE, "notebooks", kind, f"week{week:02d}_{suffix}.ipynb")
         if os.path.exists(p):
             code, md = notebook_sources(p)

@@ -187,7 +187,7 @@ python .claude/skills/course-consistency-audit/scripts/check_course_consistency.
 # 2. 인과 표현 전수 확인 (8~10차시) — 문맥은 사람이 읽는다
 grep -rn "원인" lectures/week08 lectures/week09 lectures/week10 \
   notebooks/student/week08_student.ipynb notebooks/solutions/week08_solution.ipynb \
-  notebooks/instructor/week08_instructor.ipynb data/data_dictionary/week08_dictionary.md
+  data/data_dictionary/week08_dictionary.md
 
 # 3. 센서 의미 단정 확인 (전 범위)
 grep -rn "Sensor[0-9]" lectures notebooks data/data_dictionary docs

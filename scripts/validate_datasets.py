@@ -86,21 +86,21 @@ def main():
                         ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "진공도_mTorr", "두께_nm", "진동_mm_s", "냉각수온도_섭씨", "습도_pct", "합격여부"])
 
     w9train = validate_week("week09", "week09_pass_fail_train.csv",
-                             ["공정명", "설비번호", "온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct", "검사결과"])
+                             ["공정명", "설비번호", "온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct", "합격여부"])
     if w9train is not None:
-        check("week09_train 검사결과 값 범위(0/1)", set(w9train["검사결과"].unique()) <= {0, 1})
+        check("week09_train 합격여부 값 범위(1/-1)", set(w9train["합격여부"].unique()) <= {1, -1})
         check("week09_train 결측값 존재(정제 복습용, 의도된 패턴)", w9train.isna().sum().sum() > 0)
 
     w9new = validate_week("week09", "week09_new_lots_to_predict.csv",
                            ["공정명", "설비번호", "온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"])
     if w9new is not None:
-        check("week09_new 정답 레이블(검사결과) 미포함", "검사결과" not in w9new.columns)
+        check("week09_new 정답 레이블(합격여부) 미포함", "합격여부" not in w9new.columns)
 
     w10 = validate_week("week10", "week10_mini_project_dataset.csv",
                          ["측정시간", "로트번호", "웨이퍼번호", "설비번호", "공정명", "작업조", "온도_섭씨", "압력_Pa",
-                          "진공도_mTorr", "두께_nm", "진동_mm_s", "처리시간_sec", "냉각수온도_섭씨", "습도_pct", "불량유형", "검사결과"])
+                          "진공도_mTorr", "두께_nm", "진동_mm_s", "처리시간_sec", "냉각수온도_섭씨", "습도_pct", "불량유형", "합격여부"])
     if w10 is not None:
-        check("week10 검사결과 값 범위(0/1)", set(w10["검사결과"].unique()) <= {0, 1})
+        check("week10 합격여부 값 범위(1/-1)", set(w10["합격여부"].unique()) <= {1, -1})
 
     print("\n=== 재현성(hash) 확인: 스크립트를 다시 실행해 동일 파일인지 비교하세요 ===")
     for week in sorted(os.listdir(WEEKLY)):

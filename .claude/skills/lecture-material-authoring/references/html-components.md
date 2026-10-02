@@ -231,7 +231,7 @@ print(df.head())</code></pre>
 실제 결과 이미지를 우선 쓴다** — 진짜 산출물이기 때문이다.
 
 ```html
-<img class="chart-img" src="../../assets/images/week06/hist_temperature.png" alt="온도 분포 히스토그램">
+<img class="chart-img" src="../../assets/images/week06/nb_hist_temperature.png" alt="온도 분포 히스토그램">
 <p class="img-caption">6차시 실습에서 생성한 온도 히스토그램</p>
 ```
 
