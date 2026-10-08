@@ -10,12 +10,12 @@
     },
     {
       "type": "multiple_choice",
-      "question": "다음 중 실행하면 오류가 나는 코드는?",
+      "question": "if 줄을 이렇게 썼을 때 문법 오류가 나는 것은? (다음 줄은 올바르게 들여썼다고 가정)",
       "options": [
-        "if temp > 305:",
-        "if temp = 305:",
-        "if temp == 305:",
-        "if temp >= 305:"
+        "if score > 80:",
+        "if score = 80:",
+        "if score == 80:",
+        "if score >= 80:"
       ],
       "answer": 1,
       "explanation": "'같은가?'는 == 로 묻는다. = 를 조건 자리에 쓰면 SyntaxError가 난다."
@@ -34,9 +34,9 @@
     },
     {
       "type": "result_prediction",
-      "question": "temperature = 301.0일 때\nif temperature > 305:\n    print(\"온도가 범위보다 높습니다!\")\nprint(\"판정 끝\")\n을 실행하면 무엇이 출력되는가?",
-      "answer": "판정 끝",
-      "explanation": "301.0은 305보다 크지 않아 들여쓴 줄은 건너뛴다. 들여쓰지 않은 print(\"판정 끝\")은 if와 상관없이 실행된다."
+      "question": "score = 75일 때\nif score > 80:\n    print(\"80점을 넘었습니다!\")\nprint(\"채점 끝\")\n을 실행하면 무엇이 출력되는가?",
+      "answer": "채점 끝",
+      "explanation": "75는 80보다 크지 않아 들여쓴 줄은 건너뛴다. 들여쓰지 않은 print(\"채점 끝\")만 실행된다."
     },
     {
       "type": "fill_blank",
@@ -51,9 +51,15 @@
     },
     {
       "type": "result_prediction",
-      "question": "temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]에서 295 이상 305 이하인 값의 개수는?",
-      "answer": "4",
-      "explanation": "312.6만 학습용 정상 범위(295~305)를 벗어난다. 5 - 1 = 4"
+      "question": "쉬운 예제: scores = [72, 85, 90, 64, 88]를 for로 돌며 score >= 80 일 때만 pass_count를 1씩 늘렸다. 출력되는 pass_count는?",
+      "answer": "3",
+      "explanation": "85, 90, 88 세 개가 80 이상이다. 72와 64는 80보다 작아 세지 않는다."
+    },
+    {
+      "type": "result_prediction",
+      "question": "allowance = [5000, 3000, 7000, 2000]을 for로 돌며 total += money 로 더했다. 마지막 total은?",
+      "answer": "17000",
+      "explanation": "5000 + 3000 + 7000 + 2000 = 17000"
     },
     {
       "type": "multiple_choice",
@@ -69,29 +75,53 @@
     },
     {
       "type": "result_prediction",
-      "question": "def judge_pass(temp):\n    if 295 <= temp <= 305:\n        return \"합격\"\n    else:\n        return \"불합격\"\n일 때 judge_pass(312.6)의 결과는?",
-      "answer": "불합격",
-      "explanation": "312.6은 305보다 커서 if 조건이 거짓이므로 else의 return \"불합격\"이 실행된다."
+      "question": "def judge_score(score):\n    if score >= 80:\n        return \"합격\"\n    else:\n        return \"불합격\"\n일 때 judge_score(80)의 결과는?",
+      "answer": "합격",
+      "explanation": ">= 는 \"크거나 같은가?\"라서 80은 조건이 참이다."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "쉬운 예제의 judge_score(점수가 80 이상이면 \"합격\")를 공정 온도용 judge_pass로 바꾸려 한다. 학습용 정상 범위가 295~305℃일 때 if 줄에 알맞은 것은?",
+      "options": [
+        "if temp >= 80:",
+        "if 295 <= temp <= 305:",
+        "if temp = 300:",
+        "if temperatures >= 295:"
+      ],
+      "answer": 1,
+      "explanation": "함수 모양은 그대로 두고 조건 줄만 범위 조건으로 바꾼다. = 하나는 저장이라 조건 자리에 쓰면 SyntaxError가 나고, temperatures는 온도 하나가 아니라 리스트 전체다."
     },
     {
       "type": "term_matching",
       "question": "용어와 설명을 연결하시오.",
       "pairs": [
-        {"term": "조건문(if)", "definition": "조건이 참일 때만 정해 둔 코드를 실행하게 하는 문장"},
-        {"term": "반복문(for)", "definition": "리스트의 값을 처음부터 하나씩 꺼내 같은 일을 반복하는 문장"},
-        {"term": "함수(def)", "definition": "자주 쓰는 계산을 이름 붙여 저장해 둔 레시피"},
-        {"term": "return", "definition": "함수가 만든 결과를 부른 쪽에 돌려주는 키워드"}
+        {
+          "term": "조건문(if)",
+          "definition": "조건이 참일 때만 정해 둔 코드를 실행하게 하는 문장"
+        },
+        {
+          "term": "반복문(for)",
+          "definition": "리스트의 값을 처음부터 하나씩 꺼내 같은 일을 반복하는 문장"
+        },
+        {
+          "term": "함수(def)",
+          "definition": "자주 쓰는 계산을 이름 붙여 저장해 둔 레시피"
+        },
+        {
+          "term": "return",
+          "definition": "함수가 만든 결과를 부른 쪽에 돌려주는 키워드"
+        }
       ]
     },
     {
       "type": "true_false",
-      "question": "종합 실습에서 온도 규칙(judge_pass)으로 '불합격'이 나온 12건은 실제 검사(합격여부)에서도 모두 불합격(-1)이었다.",
+      "question": "강의 \"반도체 데이터로 확인하기\"에서 온도 규칙(judge_pass)으로 '불합격'이 나온 12건은 실제 검사(합격여부)에서도 모두 불합격(-1)이었다.",
       "answer": false,
       "explanation": "12건 중 실제 불합격(-1)은 3건이고 9건은 합격(1)했다. 규칙 하나로 합격·불합격이 다 설명되지 않는다."
     },
     {
       "type": "short_answer",
-      "question": "오늘 종합 실습 결과를 처음 보는 사람에게 두 문장으로 설명해보시오.",
+      "question": "강의 \"반도체 데이터로 확인하기\"(기록 30건) 결과를 처음 보는 사람에게 두 문장으로 설명해보시오.",
       "sample_answer": "판정 함수로 기록 30건을 학습용 정상 범위(295~305℃) 기준으로 판정하니 12건이 범위 밖이었다. 그러나 실제 검사 불합격은 3건이고 범위 밖 12건 중 9건은 합격했으므로, 온도 규칙 하나로는 합격·불합격을 다 설명할 수 없다."
     }
   ]

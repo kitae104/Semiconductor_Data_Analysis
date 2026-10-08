@@ -22,21 +22,20 @@
   </div>
 
   <section class="block">
-    <h2>왜 이걸 배워야 할까?</h2>
+    <h2>시작하기 전에</h2>
     <ul class="pt-list">
-      <li>전체를 한꺼번에 보면 괜찮아 보여도, 설비별로 나눠 보면 한 곳만 유독 나쁠 수 있다.
-        오늘 데이터도 전체 합격률은 88.0%지만 EQ-04는 75.0%였다.</li>
-      <li><code>groupby</code>는 "같은 이름표끼리 모아서 바구니마다 계산"하는 도구다. 이것으로 설비별·로트별 비교를 한 줄에 한다.</li>
+      <li>모든 문제는 반도체 데이터 <code>week07_equipment_yield.csv</code>(300행, 로트 75개 × 웨이퍼 4장)로 푼다. 교육용 <b>가상 데이터</b>다
+        (실제 로트는 보통 25장 안팎, 이 데이터는 연습용 4장).</li>
+      <li><code>합격여부</code>는 <b>1 = 합격, -1 = 불합격</b>이다. 학생용 노트북 5~7단계에 같은 문제가 있다.</li>
+      <li>코드는 강의의 쉬운 예제(쪽지시험)와 같은 모양이다. 표·열 이름만 바꾼다: <code>quiz</code> → <code>df</code>, 반 → 설비번호, 이름 → 로트번호, 정답 → 합격.</li>
     </ul>
-    <p>오늘 데이터는 교육용 <b>가상 데이터</b>다. <code>합격여부</code>는 <b>1 = 합격, -1 = 불합격</b>이다.</p>
   </section>
 
   <section class="block">
-    <h2>1. 용어 연결 문제</h2>
-    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <h2>개념 확인 — 용어 연결</h2>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 수율</td><td rowspan="4">A. 검사한 것 중 불량의 비율<br>B. 많은 순서로 세운 막대에 누적 비율 선을 겹친 그림<br>C. 만든(검사한) 것 중 정상 제품의 비율<br>D. 같은 값을 가진 줄끼리 모아 모음마다 계산하게 해 주는 기능</td></tr>
+      <tr><td>① 수율</td><td rowspan="4">A. 검사한 웨이퍼 중 불량의 비율<br>B. 불량 유형을 많은 순서로 세운 막대에 누적 비율 선을 겹친 그림<br>C. 검사한 웨이퍼 중 정상(합격)의 비율<br>D. 설비번호가 같은 줄끼리 모아 설비마다 계산하게 해 주는 기능</td></tr>
       <tr><td>② 불량률</td></tr>
       <tr><td>③ groupby</td></tr>
       <tr><td>④ 파레토 차트</td></tr>
@@ -46,176 +45,116 @@
   </section>
 
   <section class="block">
-    <h2>2. 계산 문제 — 수율과 불량률</h2>
-    <ol>
-      <li>사과 250개를 땄는데 230개가 상품이었다. 수율(%)과 불량률(%)은?</li>
-      <li>오늘 데이터의 어느 로트는 웨이퍼 4장 중 3장이 합격했다. 이 로트의 수율(%)은?</li>
-    </ol>
+    <h2>문제 1 — 데이터 읽고 전체 합격률</h2>
+    <p>CSV를 <code>df</code>로 읽고, <code>합격</code> 열을 만들어 합격 장수와 전체 합격률(%)을 구하라. (노트북 5단계)</p>
+    <p class="img-caption">힌트: 강의 파이썬 ①의 <code>quiz["정답"] = quiz["정답여부"] == 1</code>과 같은 모양.</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) 수율 230 ÷ 250 × 100 = 92%, 불량률 20 ÷ 250 × 100 = 8%.
-    2) 3 ÷ 4 × 100 = 75%. 한 로트가 4장이라 로트 수율은 0·25·50·75·100% 중 하나다.</div>
-  </section>
-
-  <section class="block">
-    <h2>3. 손으로 groupby 해 보기</h2>
-    <p>아래는 연습용으로 만든 작은 표다(오늘 데이터 아님). 설비별로 묶어 합격률을 손으로 계산해보자.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>설비</th><th>합격</th></tr>
-        <tr><td>가</td><td>True</td></tr>
-        <tr><td>나</td><td>False</td></tr>
-        <tr><td>가</td><td>True</td></tr>
-        <tr><td>가</td><td>False</td></tr>
-        <tr><td>나</td><td>True</td></tr>
-        <tr><td>가</td><td>True</td></tr>
-      </table>
+    <div class="answer-box">
+      <pre style="margin:.3rem 0;white-space:pre-wrap;">df = pd.read_csv("../../data/weekly/week07/week07_equipment_yield.csv", encoding="utf-8-sig")
+df["합격"] = df["합격여부"] == 1
+print(df["합격"].sum(), "장 합격")       → 264 장 합격
+print(df["합격"].mean() * 100)          → 88.0</pre>
+      300장 중 264장 합격, 전체 합격률 88.0%(불합격 36장, 12.0%).
     </div>
-    <ol>
-      <li>"가" 바구니와 "나" 바구니에는 각각 몇 줄이 들어가는가? (<code>count()</code>)</li>
-      <li>바구니마다 합격은 몇 장인가? (<code>sum()</code>)</li>
-      <li>바구니마다 합격률(%)은? (<code>mean() * 100</code>)</li>
-      <li>"나"의 합격률을 믿고 "나 설비는 절반이 불량"이라고 말해도 될까?</li>
-    </ol>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) 가 4줄, 나 2줄. 2) 가 3장, 나 1장. 3) 가 3 ÷ 4 × 100 = 75%, 나 1 ÷ 2 × 100 = 50%.
-    4) 조심해야 한다. "나"는 2장뿐이라 1장만 달라져도 합격률이 50%p씩 바뀐다. 비율 옆에 장수를 함께 적는다.</div>
   </section>
 
   <section class="block">
-    <h2>4. 코드 빈칸 문제</h2>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code># (가) 합격이면 True인 열 만들기
-df["합격"] = df["합격여부"] == ____
-
-# (나) 설비별 합격률
-pass_rate = df.________("설비번호")["합격"].mean() * 100
-
-# (다) 설비별 처리 장수
-print(df.groupby("설비번호")["합격"].______())
-
-# (라) 불합격 웨이퍼의 불량 유형별 건수(많은 순)
-defect_counts = df[df["합격여부"] == ____]["불량유형"].____________()</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">(가) <code>1</code> (나) <code>groupby</code> (다) <code>count</code> (라) <code>-1</code>, <code>value_counts</code>.
-    이 데이터는 1이 합격, -1이 불합격이다.</div>
-  </section>
-
-  <section class="block">
-    <h2>5. 개수가 아니라 비율로 비교하기</h2>
-    <p>오늘 데이터를 설비별로 묶어 센 결과다.</p>
+    <h2>문제 2 — 설비별 처리 장수와 합격 장수, 불량률</h2>
+    <p><code>count()</code>와 <code>sum()</code>으로 설비별 처리 장수와 합격 장수를 구하고, 표의 불량률(%)을 손으로 계산하라. (노트북 5단계)</p>
+    <p class="img-caption">힌트: 강의 파이썬 ②의 <code>quiz.groupby("반")["정답"]</code> → <code>df.groupby("설비번호")["합격"]</code>.</p>
     <table class="timetable">
-      <tr><th>설비</th><th>처리 장수</th><th>불합격 장수</th><th>불량률(%)</th></tr>
-      <tr><td>EQ-01</td><td>104</td><td>2</td><td>(  )</td></tr>
-      <tr><td>EQ-02</td><td>52</td><td>7</td><td>(  )</td></tr>
-      <tr><td>EQ-03</td><td>56</td><td>5</td><td>(  )</td></tr>
-      <tr><td>EQ-04</td><td>88</td><td>22</td><td>(  )</td></tr>
+      <tr><th>설비</th><th>처리 장수</th><th>합격 장수</th><th>불합격 장수</th><th>불량률(%)</th></tr>
+      <tr><td>EQ-01</td><td>(  )</td><td>(  )</td><td>(  )</td><td>(  )</td></tr>
+      <tr><td>EQ-02</td><td>(  )</td><td>(  )</td><td>(  )</td><td>(  )</td></tr>
+      <tr><td>EQ-03</td><td>(  )</td><td>(  )</td><td>(  )</td><td>(  )</td></tr>
+      <tr><td>EQ-04</td><td>(  )</td><td>(  )</td><td>(  )</td><td>(  )</td></tr>
     </table>
-    <ol>
-      <li>설비별 불량률을 소수 첫째 자리까지 구해보자.</li>
-      <li>EQ-02에서 불합격이 1장 더 나왔다면(52장 중 8장) 합격률은 몇 %가 되는가? 원래 합격률은 86.5%다.</li>
-    </ol>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) EQ-01 2 ÷ 104 × 100 ≈ 1.9%, EQ-02 7 ÷ 52 × 100 ≈ 13.5%, EQ-03 5 ÷ 56 × 100 ≈ 8.9%, EQ-04 22 ÷ 88 × 100 = 25.0%.
-    처리 장수가 서로 달라서 장수가 아니라 비율로 비교한다.<br>
-    2) 44 ÷ 52 × 100 ≈ 84.6%. 1장 때문에 약 1.9%p가 떨어진다. 장수가 적을수록 1장의 무게가 크다.</div>
+    <div class="answer-box">
+      <code>df.groupby("설비번호")["합격"].count()</code> / <code>.sum()</code><br>
+      EQ-01 104·102·2 → 1.9% / EQ-02 52·45·7 → 13.5% / EQ-03 56·51·5 → 8.9% / EQ-04 88·66·22 → 25.0%.
+      처리 장수가 달라서 장수가 아니라 비율로 비교한다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>6. 여러 열 함께 보기 — 결과 해석 문제</h2>
-    <p>EQ-04 기록만 골라 로트별 수율을 구하고 <code>value_counts()</code>로 센 결과다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">22 개 로트
-11 개 로트가 수율 80% 미만
-합격
-100.0    11
-75.0      4
-50.0      4
-25.0      2
-0.0       1
-Name: count, dtype: int64</pre>
-    <ol>
-      <li>EQ-04의 로트 중 수율 100%인 로트는 몇 개인가?</li>
-      <li>설비별 합격률(EQ-04 75.0%)만 봤을 때와 비교해, 로트번호를 함께 보니 새로 알게 된 점은 무엇인가?</li>
-    </ol>
-    <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">1) 11개. 2) "EQ-04가 모든 로트에서 조금씩 나쁜 것이 아니라, 로트 22개 중 11개는 수율 100%이고
-    나머지 11개에서 크게 나빴다. 일부 로트에 문제가 몰려 있다."</div>
+    <h2>문제 3 — 설비별 합격률</h2>
+    <p>설비별 합격률(%)을 <code>pass_rate</code>에 저장하고 소수 첫째 자리까지 출력하라. EQ-02에서 불합격이 1장 더 나오면 합격률은? (노트북 5단계)</p>
+    <p class="img-caption">힌트: 강의 파이썬 ②의 <code>class_rate = quiz.groupby("반")["정답"].mean() * 100</code>과 같은 모양.</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <code>pass_rate = df.groupby("설비번호")["합격"].mean() * 100</code>, <code>print(pass_rate.round(1))</code><br>
+      EQ-01 98.1 / EQ-02 86.5 / EQ-03 91.1 / EQ-04 75.0. EQ-02가 1장 더 불합격이면 44 ÷ 52 × 100 ≈ 84.6%(약 1.9%p 하락) — 장수가 적을수록 1장의 무게가 크다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>7. 문장 쓰기 — "원인"과 "원인 후보"</h2>
-    <p>동료가 "EQ-04 합격률이 제일 낮으니까 EQ-04가 불량의 원인이네!"라고 말했다. 아래 사실을 근거로 답해보자.</p>
-    <ul class="pt-list">
-      <li>수율 80% 미만 로트 21개 중 11개가 EQ-04에서 나왔다.</li>
-      <li>EQ-04의 로트 22개 중 11개는 수율 100%다.</li>
-      <li>수율이 가장 낮은 LOT-0008(0%)은 EQ-04에서 나왔고, 증착 작업이었으며 B조가 맡았다.</li>
-    </ul>
+    <h2>문제 4 — 설비별 평균 온도</h2>
+    <p>설비별 평균 온도를 소수 첫째 자리까지 구하라. 합격률처럼 크게 다른가? (노트북 5단계)</p>
+    <p class="img-caption">힌트: 강의 파이썬 ②의 <code>"풀이시간_초"</code> 자리에 <code>"온도_섭씨"</code>.</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <code>print(df.groupby("설비번호")["온도_섭씨"].mean().round(1))</code><br>
+      EQ-01 300.2 / EQ-02 300.1 / EQ-03 299.3 / EQ-04 301.7. 합격률은 크게 달랐지만 평균 온도는 비슷하다 — 열 하나만 보면 EQ-04를 못 찾는다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 5 — 로트별 수율과 80% 미만 로트 수</h2>
+    <p>로트별 수율(%)을 <code>lot_yield</code>에 저장해 앞 5개를 보고, 수율 80% 미만 로트 수를 세어라. (노트북 6단계)</p>
+    <p class="img-caption">힌트: 강의 파이썬 ③의 <code>stu_rate</code> 두 줄과 같은 모양(<code>"이름"</code> → <code>"로트번호"</code>).</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <code>lot_yield = df.groupby("로트번호")["합격"].mean() * 100</code>, <code>print(lot_yield.head())</code>,
+      <code>print((lot_yield &lt; 80).sum(), "개 로트가 수율 80% 미만")</code><br>
+      앞 5개는 모두 100.0이지만 75개 중 <b>21개</b>가 80% 미만이다. 로트당 4장이라 수율은 0·25·50·75·100% 중 하나다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 6 — 수율이 가장 낮은 로트 열어 보기</h2>
+    <p>수율이 가장 낮은 로트를 찾고, 그 로트를 <code>설비번호</code>·<code>공정명</code>·<code>작업조</code>·<code>불량유형</code>과 함께 보라. (노트북 6단계)</p>
+    <p class="img-caption">힌트: 강의 파이썬 ③의 "최저 정답률 학생"과 같은 모양(<code>stu_rate</code> → <code>lot_yield</code>).</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <code>print(lot_yield.sort_values().head(1))</code>, <code>print(df[df["로트번호"] == "LOT-0008"][["설비번호", "공정명", "작업조", "불량유형"]])</code><br>
+      LOT-0008(0%) — 4장 모두 EQ-04 · 증착 · B조, 불량유형은 정렬 불량·두께 불량·패턴 불량·파티클. 설비·작업·근무조가 함께 있어 무엇 탓인지 가릴 수 없다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 7 — EQ-04의 로트만 보기</h2>
+    <p>EQ-04 기록만 골라 로트별 수율을 구하고 <code>value_counts()</code>로 세어라. EQ-04 로트는 모두 몇 개이고, 100%와 80% 미만은 각각 몇 개인가? (노트북 6단계)</p>
+    <p class="img-caption">힌트: 강의 파이썬 ③의 "B반 학생별 정답률"과 같은 모양(<code>"B반"</code> → <code>"EQ-04"</code>).</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <code>eq04 = df[df["설비번호"] == "EQ-04"]</code> 후 로트별 수율의 <code>value_counts()</code>: 100.0 11 / 75.0 4 / 50.0 4 / 25.0 2 / 0.0 1.<br>
+      모두 22개, 100%는 11개, 80% 미만은 4 + 4 + 2 + 1 = 11개. EQ-04는 늘 나쁜 게 아니라 일부 로트에서 크게 나빴다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 8 — 불량 유형 줄 세우기(파레토)</h2>
+    <p>불합격(-1) 웨이퍼의 불량 유형별 건수를 <code>defect_counts</code>에 저장해 출력하고, 많은 순 막대그래프를 그려라. 상위 3가지는 전체 불량의 몇 %인가? (노트북 7단계)</p>
+    <p class="img-caption">힌트: 강의 파이썬 ④의 <code>wrong_counts</code> 코드와 같은 모양(<code>정답여부</code> → <code>합격여부</code>, <code>오답유형</code> → <code>불량유형</code>).</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <code>defect_counts = df[df["합격여부"] == -1]["불량유형"].value_counts()</code>, <code>plt.bar(defect_counts.index, defect_counts)</code><br>
+      두께 불량 11 / 패턴 불량 6 / 파티클 5 / 오염 5 / 정렬 불량 4 / 식각 부족 4 / 전기적 특성 불량 1(36건).
+      상위 3가지 (11 + 6 + 5) ÷ 36 × 100 ≈ 61.1%. 파레토는 줄일 순서만 알려줄 뿐, 두께 불량이 왜 생겼는지는 알려주지 않는다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 9 — 결과를 "원인 후보"로 정리하기</h2>
+    <p>동료가 "EQ-04 합격률이 제일 낮으니까 EQ-04가 불량의 원인이네!"라고 했다. 문제 3·5·6·7 결과를 근거로 한두 문장으로 답하라. (노트북 7단계)</p>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
       "____________________________________________________________"
     </div>
     <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">예시 답안: "EQ-04는 저수율 로트가 가장 많아 원인 후보로 먼저 살펴볼 만해. 하지만 EQ-04 로트의 절반은 수율 100%이고,
-    가장 나쁜 로트에는 증착 작업과 B조도 함께 있었어. 그래서 아직 EQ-04가 원인이라고 단정할 수는 없어."</div>
-  </section>
-
-  <section class="block">
-    <h2>8. 파레토 문제</h2>
-    <p>불합격 웨이퍼의 불량 유형을 많은 순으로 센 결과다(전체 36건).</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">두께 불량        11
-패턴 불량         6
-파티클           5
-오염            5
-정렬 불량         4
-식각 부족         4
-전기적 특성 불량     1</pre>
-    <ol>
-      <li>많은 순서로 세운 막대그래프에 누적 비율 선을 겹친 그림의 이름은?
-        <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
-          <li>① 히스토그램</li><li>② 파레토 차트</li><li>③ 산점도</li>
-        </ul>
-      </li>
-      <li>상위 3가지 유형은 전체 불량의 몇 %인가? (소수 첫째 자리까지)</li>
-      <li>"두께 불량이 가장 많으니 두께 불량이 수율이 낮은 원인이다"라는 말은 왜 조심해야 할까?</li>
-    </ol>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) ② 파레토 차트. 2) (11 + 6 + 5) ÷ 36 × 100 = 22 ÷ 36 × 100 ≈ 61.1%.
-    3) 파레토는 "무엇부터 줄일지" 순서를 알려줄 뿐, 두께 불량이 왜 생겼는지는 알려주지 않는다. 이유는 다른 열과 함께 더 살펴봐야 한다.</div>
-  </section>
-
-  <section class="block">
-    <h2>9. 도전 — 설비×작업조 두 기준으로 묶기</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      <code>df.groupby(["설비번호", "작업조"])["합격"].mean() * 100</code>으로 조합별 합격률을,
-      <code>df.groupby(["설비번호", "작업조"])["합격"].count()</code>로 조합별 장수를 구해보자. (노트북 6단계 끝 "도전 문제")
-      <ol>
-        <li>합격률이 가장 낮은 조합은?</li>
-        <li>합격률이 100%인 조합 중 장수가 가장 적은 것은? 그 100%를 얼마나 믿을 수 있을까?</li>
-      </ol>
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box">
-      <b class="tag">체크포인트</b>
-      1) EQ-04 B조 69.4%(36장). EQ-04는 A조 81.2%, C조 75.0%로 세 조 모두 낮은 편이다.
-      2) EQ-02 B조 100%(8장). 8장뿐이라 1장만 불합격해도 87.5%가 된다. 비율 옆에 장수를 함께 본다.
-      EQ-03에는 C조 기록이 없어서 결과가 11줄이다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>10. AI 미니 프로젝트 — 설비 랭킹 발표 프로그램</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      AI 챗봇에게 "pass_rate라는 pandas Series에 설비별 합격률(%)이 들어 있어. 높은 순서로 정렬해서 1~3등에게
-      메달 이모지를 붙여 시상식처럼 발표하는 파이썬 코드를 만들어줘"라고 요청해보자. 코드를 노트북 10단계 셀에 붙여넣어 실행하고,
-      1위로 발표된 설비를 적어보자.
-    </div>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "AI가 발표한 오늘의 1위 설비: ______________________________"
-    </div>
+    <div class="answer-box">예시 답안: "EQ-04는 합격률 75.0%로 가장 낮고 80% 미만 로트 21개 중 11개가 나와 원인 후보로 먼저 살펴볼 만해.
+    하지만 로트 22개 중 11개는 100%이고 가장 나쁜 LOT-0008엔 증착·B조도 있었으니 원인이라고 단정할 수는 없어."</div>
   </section>
 
   <div class="nav-buttons">

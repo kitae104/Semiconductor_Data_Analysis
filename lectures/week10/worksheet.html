@@ -22,24 +22,19 @@
   </div>
 
   <section class="block">
-    <h2>왜 이걸 배워야 할까?</h2>
+    <h2>시작하기 전에</h2>
     <ul class="pt-list">
-      <li>9차시에 만든 모델은 "공부를 마친 학생"이다. 오늘은 모의고사(test) 점수를 제대로 읽고, 정답지가 없는 실제 시험(새 로트)을 보게 한다.</li>
-      <li>정확도 하나만 보면 쓸모없는 모델을 믿게 될 수 있다. 그리고 예측이 맞아도 원인을 안 것은 아니다.</li>
+      <li>모든 문제는 반도체 데이터(<code>week09_pass_fail_train.csv</code>, 새 로트 <code>week09_new_lots_to_predict.csv</code>)로 푼다. 교육용 가상 데이터다.</li>
+      <li>코드는 강의 쉬운 예제에서 <code>easy_</code>를 떼고 파일·열 이름을 바꾼 모양이다. 노트북 5~6단계에 같은 번호의 문제가 있다.</li>
+      <li>부호: <code>합격여부</code> 1 = 합격, -1 = 불합격. <code>classes_</code>가 <code>[-1  1]</code>이라 확률 표의 0번 열이 불합격 확률이다.</li>
     </ul>
-    <div class="callout warn">
-      <b class="tag">부호와 확률 열</b>
-      정답 열 <code>합격여부</code>는 1~8차시와 같은 표기다(<b>1 = 합격, -1 = 불합격</b>). 확률 표의 열 순서는 <code>model.classes_</code>(<code>[-1  1]</code>)를 따르므로
-      <b>0번 열이 불합격(-1)일 확률</b>이다.
-    </div>
   </section>
 
   <section class="block">
-    <h2>1. 용어 연결 문제</h2>
-    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <h2>개념 확인 — 용어 연결</h2>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 기준선</td><td rowspan="4">A. 학습된 모델에 새 데이터를 넣어 답(1 또는 -1)을 받는 명령<br>B. 정답과 예측을 맞힘·틀림 네 칸으로 나눠 센 표<br>C. 아무것도 배우지 않고 가장 흔한 답으로 찍었을 때의 점수<br>D. 각 답일 확률을 돌려주는 명령</td></tr>
+      <tr><td>① 기준선</td><td rowspan="4">A. 학습된 모델에 새 로트를 넣어 합격(1)/불합격(-1)을 받는 명령<br>B. 실제 합격·불합격과 예측을 네 칸으로 나눠 센 표<br>C. 모든 로트를 가장 흔한 답(합격)으로 찍었을 때의 점수<br>D. 로트마다 불합격·합격일 확률을 돌려주는 명령</td></tr>
       <tr><td>② 혼동행렬</td></tr>
       <tr><td>③ predict()</td></tr>
       <tr><td>④ predict_proba()</td></tr>
@@ -49,178 +44,175 @@
   </section>
 
   <section class="block">
-    <h2>2. 정확도의 함정 — 계산 문제</h2>
+    <h2>문제 1. 모델 다시 만들기</h2>
+    <p>할 일: <code>week09_pass_fail_train.csv</code>로 9차시 모델을 다시 만든다. 힌트: 강의 STEP 01 쉬운 예제와 같은 모양. (노트북 5단계 문제 1)</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 노트북 빈칸과 같다</span><button class="copy-btn">복사</button></div>
+      <pre><code>y = df["__________"]       # 정답(Label): 1 = 합격, -1 = 불합격
+
+model.__________(X_train, y_train)</code></pre>
+    </div>
     <ol>
-      <li>로트 100개 중 합격이 95개, 불합격이 5개다. "전부 합격"이라고 찍으면 정확도는 몇 %인가? 이때 불합격은 몇 개 잡는가?</li>
-      <li>오늘 test 데이터는 합격(1) 116건, 불합격(-1) 31건이다. "전부 합격"이라고 찍으면 정확도는 몇 %인가? (소수 첫째 자리까지)</li>
-      <li>오늘 모델의 정확도는 80.3%였다. 이 모델은 찍기(기준선)보다 얼마나 나은가? 맞힌 개수로 비교해 보자.</li>
+      <li>빈칸 두 곳에 들어갈 것은?</li>
+      <li><code>df.shape</code>, <code>X.shape</code>, train·test 개수는?</li>
+    </ol>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">1) <code>합격여부</code>, <code>fit</code>  2) <code>(735, 9)</code>, <code>(735, 6)</code>, 588건 / 147건</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 2. 정확도와 기준선</h2>
+    <p>할 일: 모델 정확도와 "전부 합격" 기준선을 구해 비교한다. 힌트: 강의 STEP 02 쉬운 예제(정확도와 기준선)와 같은 모양. (노트북 5단계 문제 2)</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 노트북 빈칸과 같다</span><button class="copy-btn">복사</button></div>
+      <pre><code>baseline = (y_test == __).mean()</code></pre>
+    </div>
+    <ol>
+      <li>빈칸에 들어갈 숫자는?</li>
+      <li>test 147건의 합격·불합격 수, 기준선, 모델 정확도는?</li>
+      <li>모델은 찍기보다 몇 건 더 맞혔나?</li>
     </ol>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">
-      1) 95%, 불합격은 0개를 잡는다. 점수는 높지만 찾아야 할 것을 하나도 못 찾았다.<br>
-      2) 116 ÷ 147 × 100 = 78.9% (노트북 2단계 기준선 셀의 결과와 같다)<br>
-      3) 조금(1.4%p) 낫다. 맞힌 개수로는 모델 118건, 찍기 116건으로 2건 차이다. 80%라는 숫자만 보면 잘하는 것 같지만 찍기도 79%다.
+      1) <code>1</code>(1 = 합격. -1을 넣으면 오류 없이 21.1%가 나온다)<br>
+      2) 합격 116건, 불합격 31건. 기준선 116 ÷ 147 = 78.9%, 모델 80.3%<br>
+      3) 118건 vs 116건, 2건 더. 정확도 80%만 보고 믿을 만하다고 할 수 없다.
     </div>
   </section>
 
   <section class="block">
-    <h2>3. 혼동행렬 읽기</h2>
-    <p>오늘 모델의 혼동행렬은 아래와 같다(<code>labels=[1, -1]</code>). 윗줄은 실제 합격, 아랫줄은 실제 불합격이고, 왼쪽 칸은 합격 예측, 오른쪽 칸은 불합격 예측이다.</p>
+    <h2>문제 3. 혼동행렬</h2>
+    <p>할 일: 혼동행렬을 구하고 읽는다. 힌트: 강의 STEP 02 쉬운 예제(혼동행렬)와 같은 모양. 줄은 실제(위 합격, 아래 불합격), 칸은 예측. (노트북 5단계 문제 3)</p>
     <div class="code-block">
-      <div class="code-label"><span>실행 결과</span><button class="copy-btn">복사</button></div>
-      <pre><code>[[109   7]
- [ 22   9]]</code></pre>
+      <div class="code-label"><span>Python — 노트북 빈칸과 같다</span><button class="copy-btn">복사</button></div>
+      <pre><code>cm = confusion_matrix(y_test, ____, labels=[1, -1])</code></pre>
     </div>
     <ol>
-      <li>실제 불합격인데 모델이 합격이라고 놓친 로트는 몇 건인가?</li>
-      <li>실제 불합격 로트는 모두 몇 건이고, 그중 모델이 잡은 것은 몇 건인가?</li>
-      <li>실제 합격인데 모델이 불합격이라고 한 로트는 몇 건인가?</li>
+      <li>빈칸에 들어갈 변수 이름은?</li>
+      <li>실제 불합격 중 잡은 것과 놓친 것은 각각 몇 건인가?</li>
+      <li>실제 합격인데 불합격이라고 한 로트는?</li>
     </ol>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) 22건  2) 31건(22 + 9) 중 9건(약 29%)  3) 7건</div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b>
+      1) <code>pred</code>  결과 <code>[[109 7] [22 9]]</code><br>
+      2) 31건 중 9건 잡음(약 29%), 22건 놓침  3) 7건
+    </div>
   </section>
 
   <section class="block">
-    <h2>4. 코드 빈칸 문제</h2>
-    <p>노트북 3~5단계의 빈칸과 같다.</p>
+    <h2>문제 4. 새 로트 예측하기</h2>
+    <p>할 일: 새 로트 9건을 읽고 학습 때와 같은 단서 열로 예측한다. 힌트: 강의 STEP 03 쉬운 예제(예보된 7일)와 같은 모양. (노트북 6단계 문제 4)</p>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 노트북 빈칸과 같다</span><button class="copy-btn">복사</button></div>
       <pre><code>X_new = new_lots[__________]
 
-new_lots["예측_합격여부"] = model.__________(X_new)
-
-proba = model.__________(X_new)
-new_lots["불합격_확률"] = proba[:, __].round(3)</code></pre>
+new_lots["예측_합격여부"] = model.__________(X_new)</code></pre>
     </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>feature_cols</code>, <code>predict</code>, <code>predict_proba</code>, <code>0</code>.
-    <code>classes_</code>가 <code>[-1  1]</code>이라 0번 열이 불합격(-1)일 확률이다.
-    <code>feature_cols</code>는 1단계에서 만든 단서 열 6개의 목록이라, 학습 때와 같은 열을 같은 순서로 고를 수 있다.</div>
+    <ol>
+      <li>빈칸 두 곳에 들어갈 것은?</li>
+      <li><code>new_lots</code>는 몇 열이고, 학습 데이터(9열)에서 빠진 열은? 불합격(-1)으로 예측된 로트는?</li>
+    </ol>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b>
+      1) <code>feature_cols</code>, <code>predict</code>  2) 8열, <code>합격여부</code>(아직 검사 전). -1은 2번 로트 하나다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>5. 왜 열 구성이 같아야 할까?</h2>
-    <p>친구가 <code>model.predict(new_lots)</code>처럼 새 로트 표를 통째로 넣었더니 오류가 났다.</p>
+    <h2>문제 5. 불합격 확률</h2>
+    <p>할 일: 로트마다 불합격(-1) 확률을 <code>불합격_확률</code> 열로 붙인다. 힌트: 강의 STEP 04 쉬운 예제(취소 확률)와 같은 모양. (노트북 6단계 문제 5)</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 노트북 빈칸과 같다</span><button class="copy-btn">복사</button></div>
+      <pre><code>proba = model.__________(X_new)
+new_lots["불합격_확률"] = proba[:, 0].round(3)</code></pre>
+    </div>
     <ol>
-      <li>어떤 오류가 나는가? 오류 메시지 아래에 어떤 열 이름이 나오는가?</li>
-      <li>이 오류가 나는 이유를 "모의고사·실제 시험" 비유로 한 문장으로 설명해보자.</li>
+      <li>빈칸에 들어갈 메서드는?</li>
+      <li>둘째 줄의 <code>proba[:, 0]</code>은 무엇을 꺼내는가? 왜 0번인가?</li>
+      <li>불합격 확률이 50%를 넘은 로트와, 합격(1)으로 예측된 로트 중 <b>불합격 확률</b>이 가장 높은 로트는?</li>
+    </ol>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b>
+      1) <code>predict_proba</code>  2) 모든 줄(<code>:</code>)의 0번 칸, 곧 왼쪽 세로줄. <code>classes_</code>가 <code>[-1  1]</code>이라 0번이 불합격(-1) 확률이다.<br>
+      3) 2번(61.4%, 문제 4의 -1 로트와 같다). 합격 예측 중에서는 0번·6번(37.5%), 나머지는 7.6%.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 6. 왜 열 구성이 같아야 할까?</h2>
+    <p>노트북 6단계 문제 4 둘째 셀 맨 아래 <code># model.predict(new_lots)</code> 줄의 <code>#</code>을 지우고 실행해 보자(확인 후 다시 <code>#</code>을 붙인다).</p>
+    <ol>
+      <li>어떤 오류가 나고, 아래에 어떤 열 이름이 나오는가?</li>
+      <li>이유를 "모의고사·실제 시험" 비유로 한 문장으로 설명해보자.</li>
     </ol>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">
-      1) <code>ValueError: The feature names should match those that were passed during fit.</code> — 아래에 학습 때 못 본 열
-      <code>공정명</code>, <code>설비번호</code>가 나온다.<br>
-      2) 예시: "모델은 온도·압력·가스유량·두께·진공도·습도 6개 단서로 답하는 연습만 했으므로, 실제 시험에서도 같은 단서를
-      같은 순서로 줘야 문제를 풀 수 있다."
+      1) <code>ValueError: The feature names should match those that were passed during fit.</code> — 아래에 <code>공정명</code>, <code>설비번호</code>.<br>
+      2) 예시: "6개 단서로 연습한 모델에게는 실제 시험에서도 같은 단서를 같은 순서로 줘야 한다."
     </div>
   </section>
 
   <section class="block">
-    <h2>6. 결과 해석 문제</h2>
-    <p>새 로트 9건을 예측한 결과, 2번만 불합격(-1)으로 예측되었고 나머지 8건은 합격(1)으로 예측되었다. 불합격 확률은 2번 61.4%, 0번·6번 37.5%, 나머지 7.6%였다.</p>
+    <h2>문제 7. 결과 해석</h2>
+    <p>문제 4·5의 결과를 보고 답한다.</p>
     <ol>
-      <li>예측 결과(1/-1)만 보고서에 적으면 놓치게 되는 정보는 무엇인가?</li>
-      <li>합격(1)으로 예측된 로트 중 불합격 확률이 가장 높은 로트는 몇 번과 몇 번인가? 두 로트의 공통점은 무엇인가? (노트북 5단계 표를 보고 답한다)</li>
-      <li>"그러니 진공도가 낮은 것이 불합격의 원인이다"라고 단정해도 될까?</li>
+      <li>예측(1/-1)만 적으면 놓치는 정보는?</li>
+      <li>0번·6번 로트의 공통점은?</li>
+      <li>"진공도가 낮은 것이 불합격의 원인이다"라고 단정해도 될까?</li>
     </ol>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">
-      1) 같은 합격 예상이라도 확신의 정도가 다르다는 정보(37.5% vs 7.6%). 어떤 로트를 먼저 다시 확인할지 정할 수 없게 된다.<br>
-      2) 0번과 6번(둘 다 37.5%). 진공도가 4.02, 4.35로 9건 중 가장 낮다. 온도는 294.5도와 305.2도로 서로 다르다.<br>
-      3) 안 된다. 모델은 "진공도가 낮은 묶음에 과거 불합격이 많았다"를 이용했을 뿐이다. 근거도 정답 없는 새 로트가 아니라 연습문제(train) 데이터에서 찾는다(온도가 비슷한 로트 중 진공도 약 4.42 이하 묶음 24건 중 9건 불합격 vs 옆 묶음 382건 중 29건).
-      그래서 진공도는 불합격의 <b>원인 후보</b>로 더 살펴볼 만하다고까지만 쓴다.
+      1) 확신의 정도(37.5% vs 7.6%). 먼저 확인할 로트를 정할 수 없다.<br>
+      2) 진공도 4.02, 4.35로 9건 중 가장 낮다.<br>
+      3) 안 된다. 근거는 train 비율(진공도 약 4.42 이하 24건 중 9건 vs 옆 묶음 382건 중 29건)이고, 말할 수 있는 것은 <b>원인 후보</b>까지다.
     </div>
   </section>
 
   <section class="block">
-    <h2>7. 분석 문장 작성 문제</h2>
-    <p>아래 빈칸을 채워 오늘 실습 결과를 한 문장으로 요약해보자.</p>
+    <h2>문제 8. 분석 문장 작성</h2>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      "새 로트 ____건 중 ____번 로트만 불합격(-1)으로 예측되었고(불합격 확률 약 ____%), 합격으로 예측된 로트 중에서는
-      ____번과 ____번(둘 다 약 ____%)의 불합격 확률이 높았다. 정답이 없는 새 데이터라 맞았는지는 ________________ 알 수 있다."
+      "새 로트 ____건 중 ____번 로트만 불합격(-1)으로 예측되었고(불합격 확률 약 ____%), 합격 예측 중에서는
+      ____번과 ____번(둘 다 약 ____%)의 불합격 확률이 높았다. 맞았는지는 ________________ 알 수 있다."
     </div>
     <button class="reveal-btn">체크포인트 보기</button>
     <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
-      9 / 2 / 61.4% / 0번, 6번 / 37.5% / 실제 검사 결과가 나와야.
-      0번·6번의 확률이 <b>똑같은</b> 이유는 결정 트리가 두 로트를 같은 묶음(갈래)에 넣었기 때문이다. 같은 묶음에 들어간 로트는 확률도 같다.
+      9 / 2 / 61.4% / 0번, 6번 / 37.5% / 실제 검사 결과가 나와야. 0번·6번은 같은 묶음에 들어가 확률도 같다.
     </div>
   </section>
 
   <section class="block">
-    <h2>8. Orange3 재확인 기록</h2>
-    <p>예측(Predictions) 위젯으로 같은 새 로트를 예측하고 아래 표를 채워보자.</p>
+    <h2>문제 9. Orange3 재확인 기록</h2>
+    <p>예측(Predictions) 위젯 결과를 채운다. (노트북 대응 없음)</p>
     <table class="timetable">
       <tr><th>확인할 것</th><th>scikit-learn(코드)</th><th>Orange3(예측 위젯)</th></tr>
       <tr><td>예측이 -1(불합격)인 로트</td><td>2번</td><td>____________</td></tr>
       <tr><td>불합격 확률이 가장 높은 로트</td><td>2번(61.4%), 그다음 0번·6번(37.5%)</td><td>____________</td></tr>
-      <tr><td>같은가, 다른가?</td><td colspan="2">____________________________________</td></tr>
+      <tr><td>같은가, 다른가? 다르다면 이유는?</td><td colspan="2">____________________________________</td></tr>
     </table>
-    <p>결과가 달랐다면, 다를 수 있는 이유를 하나 이상 적어보자.</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">Orange3 칸은 화면에서 직접 확인한 값을 적는다(정해진 답이 없다). 다를 수 있는 이유: 공부한 행 수가 다르다(코드는 연습문제(train) 588건,
-    Orange3는 파일 전체), 쓰는 단서가 다르다(Orange3는 공정명·설비번호도 쓸 수 있다), 나무 키우는 규칙(깊이 등)이 다르다,
-    빈칸 처리 방식이 다르다. 결과가 다르다고 어느 한쪽이 틀린 것은 아니다.</div>
+    <div class="answer-box">Orange3 칸은 화면에서 확인한 값을 적는다. 다를 수 있는 이유: 학습 행 수(588건 vs 파일 전체), 단서(Orange3는 공정명·설비번호도 사용 가능), 깊이 설정, 빈칸 처리.</div>
   </section>
 
   <section class="block">
-    <h2>9. 과정 회고 — 큰 줄기 잇기</h2>
-    <p>각 차시를 큰 줄기의 어느 칸과 연결할 수 있을지 골라보자.</p>
+    <h2>문제 10. 과정 회고 — 큰 줄기 잇기</h2>
+    <p>각 차시를 큰 줄기의 어느 칸과 연결할까? (노트북 7단계)</p>
     <table class="timetable">
       <tr><th>차시에서 한 일</th><th>큰 줄기 후보</th></tr>
-      <tr><td>① 5차시: 빈칸·중복·이상한 값 찾아 정리하기</td><td rowspan="4">A. 데이터를 잘 살핀다<br>B. 여러 열을 함께 본다<br>C. 관계를 찾는다(원인 후보)<br>D. 예측한다</td></tr>
+      <tr><td>① 5차시: 공정 기록의 빈칸·중복·이상한 값 정리하기</td><td rowspan="4">A. 데이터를 잘 살핀다<br>B. 함께 본다(설비·공정별로 나눠 비교)<br>C. 관계를 찾는다(원인 후보)<br>D. 예측한다</td></tr>
       <tr><td>② 7차시: 설비별로 묶어 불량률 비교하기</td></tr>
-      <tr><td>③ 8차시: 두 열이 함께 움직이는지 보기</td></tr>
+      <tr><td>③ 8차시: 두 열의 관계(상관관계)를 보고 원인 후보 고르기</td></tr>
       <tr><td>④ 9·10차시: 모델로 새 로트 맞히기</td></tr>
     </table>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">① A  ② B  ③ C  ④ D</div>
     <div class="callout practice">
       <b class="tag">회고 작성</b>
-      "10차시 동안 나는 데이터를 ________________고, ________________고, ________________고, ________________는 것을 배웠다.
-      가장 기억에 남는 차시는 ____차시인데, 그 이유는 ________________________________ 때문이다."
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>10. 연습문제 — 위험 로트 개수 세기</h2>
-    <p>불합격 확률이 0.5보다 큰 로트를 "위험 로트"로 정하고, 몇 개인지 세어보자(4차시 조건 검색). 노트북 9단계와 같다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>risky_lots = new_lots[new_lots["불합격_확률"] ____ 0.5]
-print(f"위험 로트(불합격 확률 50% 초과) 개수: {len(risky_lots)}개")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸은 <code>&gt;</code>. 결과는 <b>1개</b>(2번, 61.4%)다. <code>predict()</code>가 -1로 예측한 로트와 같다.
-    <code>predict()</code>는 불합격 확률이 50%를 넘으면 -1을 고르기 때문이다. 기준을 0.3으로 낮추면
-    (<code>new_lots[new_lots["불합격_확률"] &gt;= 0.3]</code>) <b>3개</b>(0번·2번·6번)가 잡힌다.</div>
-  </section>
-
-  <section class="block">
-    <h2>11. 심화 실습 — 더 깊은 나무</h2>
-    <div class="callout practice">
-      <b class="tag">심화</b>
-      강의 「도전 실습」처럼 <code>max_depth=8</code>인 <code>model2</code>를 만들어, 두 모델의 연습문제(train) 데이터 정확도와 test 정확도를 비교해보자.
-      그리고 결과를 "연습문제 답을 외운 학생"에 빗대어 한 문장으로 적어보자. (노트북 5단계 끝 "도전 문제")
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box">
-      <b class="tag">체크포인트</b>
-      깊이 4는 연습문제 84.7% / test 80.3%, 깊이 8은 연습문제 94.2% / test 78.9%(찍기와 같음)다. 깊이 8은 새 로트 0번을 불합격(-1), 2번을 합격(1)으로 예측해 깊이 4와 답이 엇갈린다.
-      공부한 문제는 더 잘 맞히지만 처음 보는 문제는 더 틀린다. 복잡한 모델이 항상 더 좋은 것은 아니다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>12. AI 미니 프로젝트 — 수료증 출력하기</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      AI 챗봇에게 "input()으로 이름을 입력받고, 별표(*)로 위아래 테두리를 두른 '반도체 데이터 분석 10차시 과정 수료증'을
-      이름과 함께 출력하는 파이썬 코드를 만들어줘"라고 요청해보자. 노트북 10단계에 붙여넣어 실행하고, 가장 기억에 남는 차시를 한 줄 더 넣어 달라고 다시 요청해보자.
-    </div>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "내 수료증에 추가한 한 줄: ______________________________"
+      "10차시 동안 나는 데이터를 ________고, ________고, ________고, ________는 것을 배웠다. 가장 기억에 남는 차시는 ____차시, 이유는 ________________."
     </div>
   </section>
 

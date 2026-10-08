@@ -4,10 +4,15 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]일 때 temperatures[1]의 값은?",
-      "options": ["295.4", "298.1", "312.6", "오류가 난다"],
+      "question": "week_temps = [21.5, 23.0, 30.5, 24.0, 22.5, 25.0, 23.5](월~일 기온)일 때 week_temps[1]의 값은?",
+      "options": [
+        "21.5",
+        "23.0",
+        "30.5",
+        "오류가 난다"
+      ],
       "answer": 1,
-      "explanation": "번호는 0부터 센다. temperatures[0]이 295.4, temperatures[1]이 두 번째 값 298.1이다."
+      "explanation": "번호는 0부터 센다. week_temps[1]은 두 번째 값(화요일) 23.0이다."
     },
     {
       "type": "multiple_choice",
@@ -19,69 +24,92 @@
         "값을 하나만 담을 수 있는 상자"
       ],
       "answer": 1,
-      "explanation": "딕셔너리는 이름표 붙은 사물함처럼 키로 값을 찾는다. 첫 번째 보기는 리스트, 네 번째 보기는 1차시의 변수에 대한 설명이다."
+      "explanation": "딕셔너리는 이름표(키)로 값을 찾는다. 첫 번째 보기는 리스트 설명이다."
     },
     {
       "type": "true_false",
-      "question": "temperatures[1:3]에는 1번, 2번, 3번 칸의 값이 모두 들어 있다.",
+      "question": "week_temps[1:3]에는 1번, 2번, 3번 칸의 값이 모두 들어 있다.",
       "answer": false,
-      "explanation": "슬라이싱에서 끝 번호 칸은 빠진다. 1번·2번 칸만 들어 있어 [298.1, 312.6]이고, 개수는 끝 - 시작 = 2개다."
+      "explanation": "끝 번호 칸은 빠진다. [23.0, 30.5] 두 개만 들어 있다."
     },
     {
       "type": "true_false",
       "question": "딕셔너리에 없는 키로 값을 꺼내려고 하면 KeyError가 난다.",
       "answer": true,
-      "explanation": "예: equipment[\"압력_Pa\"]는 그 이름표가 없어서 KeyError: '압력_Pa'가 난다. 딕셔너리에 equipment[0]처럼 번호를 넣어도 KeyError: 0이 난다."
+      "explanation": "없는 이름표(예: student[\"혈액형\"])나 번호(student[0])를 쓰면 KeyError가 난다."
     },
     {
       "type": "term_matching",
       "question": "용어와 설명을 연결하시오.",
       "pairs": [
-        {"term": "리스트", "definition": "여러 값을 순서대로 한 줄에 담는 묶음(번호 붙은 약통)"},
-        {"term": "인덱스", "definition": "리스트에서 칸의 위치 번호(0부터 센다)"},
-        {"term": "딕셔너리", "definition": "값마다 이름표를 붙여 담는 묶음(이름표 붙은 사물함)"},
-        {"term": "키", "definition": "딕셔너리에서 값을 찾는 이름표"}
+        {
+          "term": "리스트",
+          "definition": "여러 값을 순서대로 한 줄에 담는 묶음(번호 붙은 약통)"
+        },
+        {
+          "term": "인덱스",
+          "definition": "리스트에서 칸의 위치 번호(0부터 센다)"
+        },
+        {
+          "term": "딕셔너리",
+          "definition": "값마다 이름표를 붙여 담는 묶음(이름표 붙은 사물함)"
+        },
+        {
+          "term": "키",
+          "definition": "딕셔너리에서 값을 찾는 이름표"
+        }
       ]
     },
     {
       "type": "fill_blank",
-      "question": "리스트 끝에 새 값을 붙이려면 temperatures.____(303.2)처럼 쓴다.",
+      "question": "리스트 끝에 새 값을 붙이려면 cart.____(\"사과\")처럼 쓴다.",
       "answer": "append"
     },
     {
+      "type": "result_prediction",
+      "question": "cart = [\"우유\", \"빵\", \"계란\"]에 cart.append(\"사과\")를 한 번 실행한 뒤 len(cart)의 값은?",
+      "answer": "4",
+      "explanation": "append()는 맨 끝에 하나를 붙여 3개가 4개가 된다."
+    },
+    {
       "type": "fill_blank",
-      "question": "평균은 합계 ÷ 개수이므로 sum(temperatures) / ____(temperatures)로 구한다.",
+      "question": "평균은 합계 ÷ 개수이므로 sum(week_temps) / ____(week_temps)로 구한다.",
       "answer": "len"
     },
     {
       "type": "result_prediction",
-      "question": "temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]일 때 temperatures[-2:]의 결과는?",
-      "answer": "[301.0, 296.8]",
-      "explanation": "-2는 뒤에서 두 번째 칸이고, 끝 번호를 비우면 마지막 칸까지 꺼낸다."
+      "question": "week_temps = [21.5, 23.0, 30.5, 24.0, 22.5, 25.0, 23.5](월~일 기온)일 때 주말 기온만 꺼내는 week_temps[5:]의 결과는?",
+      "answer": "[25.0, 23.5]",
+      "explanation": "5번 칸(토요일)부터 끝까지 꺼내므로 주말 두 날이 나온다."
     },
     {
       "type": "result_prediction",
-      "question": "강의의 equipment_list(EQ-01 식각 301.2 / EQ-02 증착 308.7 / EQ-03 포토 297.5)에서 equipment_list[1][\"온도_섭씨\"]의 값은?",
-      "answer": "308.7",
-      "explanation": "1번 행(두 번째 설비 EQ-02)으로 가서 온도_섭씨 칸을 읽는다. 항상 [행 번호] 먼저, [키] 다음이다."
+      "question": "쉬운 예제의 friends(지민 15 서울 / 서준 16 부산 / 하은 15 대전)에서 friends[1][\"이름\"]의 값은?",
+      "answer": "서준",
+      "explanation": "1번 행(두 번째 친구)의 이름 칸이다. [행 번호] 먼저, [키] 다음."
     },
     {
       "type": "multiple_choice",
       "question": "딕셔너리의 리스트를 표에 비유할 때, 딕셔너리 하나는 표의 무엇에 해당하는가?",
-      "options": ["열 이름 하나", "가로 한 줄(행) 하나", "표 전체", "칸 하나의 값"],
+      "options": [
+        "열 이름 하나",
+        "가로 한 줄(행) 하나",
+        "표 전체",
+        "칸 하나의 값"
+      ],
       "answer": 1,
-      "explanation": "딕셔너리 하나 = 표의 한 행 = 기록 1건이다. 딕셔너리의 키는 열 이름, 리스트 전체는 표 전체에 해당한다."
+      "explanation": "딕셔너리 하나 = 표의 한 행이다. 키는 열 이름, 리스트 전체는 표 전체다."
     },
     {
       "type": "true_false",
       "question": "하루 온도 6건의 평균이 학습용 정상 범위(295~305도) 안이면, 6건 모두 정상 범위 안이라고 말할 수 있다.",
       "answer": false,
-      "explanation": "강의 예제는 평균 301.2도로 범위 안이었지만 최고값 312.6도는 범위를 벗어났다. 평균은 튀는 값을 다른 값들 사이에 섞어 숨긴다."
+      "explanation": "강의 '반도체 데이터로 확인하기'에서 평균 301.2도는 범위 안이지만 최고 312.6도는 범위 밖이었다. 평균은 튀는 값을 숨긴다."
     },
     {
       "type": "short_answer",
-      "question": "EQ-02 설비의 온도 4건 [302.5, 299.8, 298.8, 305.6]을 요약해 한두 문장으로 설명해보시오. 평균과 최고값을 함께 쓰시오.",
-      "sample_answer": "EQ-02의 평균 온도는 301.7도로 학습용 정상 범위(295~305도) 안이지만, 최고 온도 305.6도는 범위를 0.6도 넘었다. 평균만 보면 이 값을 놓치므로 최고·최저를 함께 봐야 한다."
+      "question": "강의 '반도체 데이터로 확인하기'(실습지 문제 9)에서 꺼낸 행은 'LOT-0097 로트: EQ-04 설비, 포토 작업 / 온도 308.7도, 합격여부 1'이었다. 온도와 합격여부를 함께 보고 한두 문장으로 설명해보시오.",
+      "sample_answer": "LOT-0097의 온도는 308.7도로 학습용 정상 범위(295~305도)를 벗어났지만 합격여부는 1(합격)이다. 그래서 온도 하나만 보고 불량이라고 단정할 수 없고, 다른 기록과 함께 살펴봐야 한다."
     }
   ]
 }

@@ -24,18 +24,16 @@
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
-      <li>검사 결과가 나오기 전에 "이 로트는 불합격일 것 같다"를 미리 알면, 다음 공정으로 보내기 전에 막을 수 있다.</li>
-      <li>머신러닝은 지난 기록(문제+정답)을 보고 규칙을 스스로 찾는다. 오늘은 그 규칙이 얼마나 믿을 만한지 숫자로 따져 본다.</li>
-      <li>이 실습지의 데이터는 교육용으로 만든 가상 데이터다.</li>
+      <li>검사 전에 불합격을 미리 알면 다음 공정으로 보내기 전에 막을 수 있다. 오늘은 그 예측이 얼마나 믿을 만한지 반도체 데이터로 따진다.</li>
+      <li>모든 문제는 반도체 기록 <code>week09_pass_fail_train.csv</code>(교육용 가상 데이터)로 푼다. 코드는 강의 쉬운 예제에서 <code>easy_</code>를 떼고 파일·열 이름만 바꾼 모양이다.</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>1. 용어 연결 문제</h2>
-    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <h2>개념 확인 1. 용어 연결</h2>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① Feature</td><td rowspan="5">A. 맞히고 싶은 정답(답안지)<br>B. 모델이 보고 규칙을 찾는 기록(연습문제)<br>C. 예측할 때 보고 판단하는 단서(문제지)<br>D. 모델이 한 번도 보지 않은, 채점용 기록(모의고사)<br>E. 실제 정답과 예측을 짝지어 네 칸으로 센 표</td></tr>
+      <tr><td>① Feature</td><td rowspan="5">A. 맞히고 싶은 정답 — <code>합격여부</code><br>B. 모델이 보고 규칙을 찾는 기록(연습문제) — 588건<br>C. 예측할 때 보는 단서 — 공정 조건 6개 열<br>D. 모델이 한 번도 보지 않은 채점용 기록(모의고사) — 147건<br>E. 실제 정답과 예측을 짝지어 네 칸으로 센 표</td></tr>
       <tr><td>② Label</td></tr>
       <tr><td>③ train</td></tr>
       <tr><td>④ test</td></tr>
@@ -46,111 +44,133 @@
   </section>
 
   <section class="block">
-    <h2>2. 사람이 쓴 규칙과 모델이 찾은 규칙</h2>
-    <p>3차시에 사람이 쓴 규칙과 오늘 모델이 찾은 첫 질문들이다.</p>
-    <table class="timetable">
-      <tr><th>누가</th><th>규칙</th></tr>
-      <tr><td>사람(3차시)</td><td>온도가 295~305℃ 사이면 합격</td></tr>
-      <tr><td>모델(오늘)</td><td>온도가 293.95℃ 이하인가? → 온도가 306.05℃ 이하인가? → 진공도가 5.49 mTorr 이하인가?</td></tr>
-    </table>
-    <ol>
-      <li>두 규칙을 만든 방법의 차이를 한 문장으로 써 보자.</li>
-      <li>모델이 규칙을 찾으려면 지난 기록에 무엇이 반드시 있어야 할까?</li>
-    </ol>
-    <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">1) 3차시 규칙은 사람이 기준을 정해 직접 썼고, 오늘 규칙은 모델이 지난 기록을 보고 스스로 찾았다.
-    2) 문제(공정 조건)와 함께 정답(합격여부)이 있어야 한다. 정답이 있어야 어떤 질문이 합격과 불합격을 잘 가르는지 알 수 있다.</div>
-  </section>
-
-  <section class="block">
-    <h2>3. 부호 확인 문제</h2>
-    <p>오늘 정답 열 <code>합격여부</code>에서 합격과 불합격은 각각 어떤 숫자인가? 1~8차시와 같은 표기다.</p>
-    <table class="timetable">
-      <tr><th>열</th><th>합격</th><th>불합격</th></tr>
-      <tr><td><code>합격여부</code></td><td>(  )</td><td>(  )</td></tr>
-    </table>
-    <ol>
-      <li>"합격인 기록의 비율"을 구하는 코드 <code>(y_test == ____).mean()</code>의 빈칸은?</li>
-      <li>혼동행렬을 만들 때 <code>labels=[1, -1]</code>을 붙이는 이유는?</li>
-    </ol>
+    <h2>개념 확인 2. 부호</h2>
+    <p><code>합격여부</code>에서 합격은 (  ), 불합격은 (  )이다. 혼동행렬에 <code>labels=[1, -1]</code>을 붙이는 이유는?</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">합격 1, 불합격 -1. 1) 빈칸은 <code>1</code>. 2) 합격(1)을 먼저, 불합격(-1)을 다음에 놓아
-    "윗줄 = 실제 합격, 왼쪽 칸 = 합격으로 예측"이 되게 하려고. 빼면 숫자가 작은 -1(불합격)이 첫 줄로 와서 표가 뒤집힌다.</div>
+    <div class="answer-box">합격 1, 불합격 -1. 합격(1)을 윗줄·왼쪽 칸에 놓기 위해서다. 빼면 -1이 첫 줄로 와서 표가 뒤집힌다.</div>
   </section>
 
   <section class="block">
-    <h2>4. 코드 빈칸 문제</h2>
-    <p>노트북 1~6단계의 빈칸과 같다.</p>
+    <h2>문제 1. 데이터 읽고 빈칸 정리하기 (노트북 9단계)</h2>
+    <p>반도체 CSV를 읽고 빈칸이 있는 행을 지운 뒤 몇 건이 남는지 구하자. 힌트: 강의 "데이터 읽고 빈칸 정리하기" 쉬운 예제와 같은 모양.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = df.____()                       # ① 빈칸 있는 행 지우기
+      <pre><code>df = pd.____("../../data/weekly/week09/week09_pass_fail_train.csv", encoding="utf-8-sig")   # ① CSV 읽기
+print(df.shape)
+print(df.head())
+print(df.isna().sum())
 
-X = df[feature_cols]
-y = df[____]                         # ② 정답 열
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=____, random_state=42, stratify=y   # ③ 20%
-)
-
-model = DecisionTreeClassifier(max_depth=4, random_state=42)
-model.____(X_train, y_train)         # ④ 학습시키기
-
-pred = model.____(X_test)            # ⑤ 모의고사 답 예측하기
-cm = ____(y_test, pred, labels=[1, -1])   # ⑥ 혼동행렬</code></pre>
+df = df.____()                       # ② 빈칸 있는 행 지우기
+print(df.shape)</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① <code>dropna</code> ② <code>"합격여부"</code> ③ <code>0.2</code> ④ <code>fit</code> ⑤ <code>predict</code> ⑥ <code>confusion_matrix</code></div>
+    <div class="answer-box">① <code>read_csv</code> ② <code>dropna</code>. <code>(750, 9)</code> → <code>(735, 9)</code>. 빈칸이 있는 15행(온도 1, 압력 3, 가스유량 3, 습도 8)이 지워졌다.</div>
   </section>
 
   <section class="block">
-    <h2>5. 스무고개 따라가기</h2>
-    <p>강의의 트리 그림을 보고, 아래 로트가 어느 갈래로 가는지 따라가 보자.</p>
+    <h2>문제 2. Feature와 Label 나누기 (노트북 9단계)</h2>
+    <p>공정 조건 6개 열을 <code>X</code>에, <code>합격여부</code>를 <code>y</code>에 담고 정답 개수를 세자. 힌트: 쉬운 예제의 <code>easy_feature_cols</code>, <code>"진행여부"</code> 자리.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>feature_cols = ["온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]
+
+X = df[____]                         # ① 열 이름 목록 변수
+y = df[____]                         # ② 정답 열
+print(X.shape)
+print(y.value_counts())</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① <code>feature_cols</code> ② <code>"합격여부"</code>. <code>(735, 6)</code>, 합격(1) 582건, 불합격(-1) 153건.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 3. train/test 나누기 (노트북 10단계)</h2>
+    <p>80% / 20%로 나누고 모의고사의 합격·불합격 개수를 확인하자. 힌트: 쉬운 예제의 <code>train_test_split</code>에서 <code>easy_</code>를 뗀다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=____, random_state=42, stratify=____   # ① 20% ② 정답 변수
+)
+print(X_train.shape, X_test.shape)
+print(y_test.value_counts())</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① <code>0.2</code> ② <code>y</code>. <code>(588, 6) (147, 6)</code>, 모의고사 합격 116건 · 불합격 31건.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 4. 결정트리 학습시키기 (노트북 10단계)</h2>
+    <p>연습문제로 <code>model</code>을 학습시키자. 힌트: 쉬운 예제의 <code>easy_model.fit(...)</code>.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>model = DecisionTreeClassifier(max_depth=4, random_state=42)
+model.____(X_train, y_train)         # ① 학습시키기</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① <code>fit</code>. <code>DecisionTreeClassifier(max_depth=4, random_state=42)</code>가 표시되면 정상이다.</div>
+  </section>
+
+  <section class="block">
+    <h2>개념 확인 3. 스무고개 따라가기</h2>
+    <p>강의 "반도체 데이터로 확인하기"의 트리 그림을 보고, 아래 로트가 도착하는 갈래의 학습용 불합격 비율을 구하자.
+    3차시 규칙("295~305℃면 합격")과 모델 규칙은 만든 방법이 어떻게 다른가?</p>
     <table class="timetable">
       <tr><th>로트</th><th>온도_섭씨</th><th>진공도_mTorr</th></tr>
-      <tr><td>가</td><td>300.0</td><td>5.7</td></tr>
-      <tr><td>나</td><td>300.0</td><td>5.0</td></tr>
+      <tr><td>A</td><td>300.0</td><td>5.7</td></tr>
+      <tr><td>B</td><td>300.0</td><td>5.0</td></tr>
     </table>
-    <p>각 로트가 도착하는 갈래의 학습용 불합격 비율은 몇 %인가?</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">가: 질문 1 아니오(300 &gt; 293.95) → 질문 2 예(300 ≤ 306.05) → 질문 3 아니오(5.7 &gt; 5.49) → 불합격 34.0% 갈래.
-    나: 같은 길로 가다 질문 3에서 예(5.0 ≤ 5.49) → 불합격 9.4% 갈래. 온도가 같아도 진공도에 따라 갈래가 달라진다.
-    (그림은 위쪽 질문 3개만 그린 것이고, 실제 모델은 그 아래에서 질문을 더 한다.)</div>
+    <div class="answer-box">A: 질문 1 아니오 → 질문 2 예 → 질문 3 아니오(5.7 &gt; 5.49) → 34.0%. B: 질문 3 예 → 9.4%.
+    3차시 규칙은 사람이 정했고, 모델 규칙(293.95~306.05℃, 진공도 5.49 이하)은 기록(문제+정답)에서 모델이 찾았다.</div>
   </section>
 
   <section class="block">
-    <h2>6. 정확도 계산 문제</h2>
-    <p>모의고사 147건 중 실제 합격은 116건, 불합격은 31건이다. 모델은 118건을 맞혔다.</p>
-    <ol>
-      <li>모델의 정확도는 약 몇 %인가? (소수 첫째 자리까지)</li>
-      <li>147건 모두 "합격"이라고 찍으면 정확도는 약 몇 %인가?</li>
-    </ol>
+    <h2>문제 5. 정확도 (노트북 11단계)</h2>
+    <p>모의고사의 답을 예측하고 정확도를 구하자. 힌트: 쉬운 예제의 <code>easy_model.predict(...)</code>.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>pred = model.____(X_test)            # ① 모의고사 답 예측하기
+accuracy = accuracy_score(y_test, pred)
+print(f"모델 정확도: {accuracy:.1%}")</code></pre>
+    </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) 118 ÷ 147 × 100 ≈ 80.3% 2) 116 ÷ 147 × 100 ≈ 78.9%.
-    모델이 찍기보다 2건 더 맞혔을 뿐이다. 합격이 대부분인 데이터에서는 정확도 하나로 모델의 실력을 판단하기 어렵다.</div>
+    <div class="answer-box">① <code>predict</code>. <code>모델 정확도: 80.3%</code>(147건 중 118건).</div>
   </section>
 
   <section class="block">
-    <h2>7. 혼동행렬 네 칸 읽기</h2>
-    <p>실습에서 <code>confusion_matrix(y_test, pred, labels=[1, -1])</code>로 얻은 실제 혼동행렬이다. 윗줄 = 실제 합격, 아랫줄 = 실제 불합격, 왼쪽 = 합격 예측, 오른쪽 = 불합격 예측.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">[[109   7]
- [ 22   9]]</pre>
+    <h2>문제 6. "무조건 합격" 찍기와 비교 (노트북 11단계)</h2>
+    <p>147건 모두 "합격"이라고 찍었을 때의 정확도를 구하고 문제 5와 비교하자. 힌트: 쉬운 예제의 <code>(easy_y_test == 1).mean()</code>.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>baseline = (y_test == ____).mean()   # ① 합격을 뜻하는 숫자
+print(f"무조건 '합격'이라고 찍었을 때 정확도: {baseline:.1%}")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① <code>1</code>. 78.9%(116 ÷ 147). 모델(118건)과 2건 차이뿐이라 정확도 하나로는 판단하기 어렵다.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 7. 혼동행렬 네 칸 읽기 (노트북 11단계)</h2>
+    <p>혼동행렬을 출력하고 네 칸이 공장에서 무슨 일인지 적자. 힌트: 쉬운 예제의 <code>confusion_matrix(...)</code>, <code>labels=[1, -1]</code>은 그대로.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>cm = ____(y_test, pred, labels=[1, -1])   # ① 혼동행렬을 만드는 함수
+print(cm)</code></pre>
+    </div>
     <table class="timetable">
-      <tr><th>숫자</th><th>공장에서 무슨 일인가?</th></tr>
-      <tr><td>109</td><td></td></tr>
-      <tr><td>7</td><td></td></tr>
-      <tr><td>22</td><td></td></tr>
-      <tr><td>9</td><td></td></tr>
+      <tr><th>칸</th><th>숫자</th><th>공장에서 무슨 일인가?</th></tr>
+      <tr><td>윗줄 왼쪽</td><td></td><td></td></tr>
+      <tr><td>윗줄 오른쪽</td><td></td><td></td></tr>
+      <tr><td>아랫줄 왼쪽</td><td></td><td></td></tr>
+      <tr><td>아랫줄 오른쪽</td><td></td><td></td></tr>
     </table>
-    <p>이 중 공장에 가장 위험한 칸은 무엇이고, 왜 그런가?</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">109: 멀쩡한 로트를 합격으로 맞힘 / 7: 멀쩡한 로트를 불량으로 의심(헛경보, 다시 검사하는 비용) /
-    22: 불량 로트를 합격으로 놓침 / 9: 불량 로트를 미리 잡아냄.
-    가장 위험한 칸은 22다. 아무도 의심하지 않은 채 다음 공정이나 고객에게 가기 때문이다.</div>
+    <div class="answer-box">① <code>confusion_matrix</code>. <code>[[109 7] [22 9]]</code>: 109 = 합격을 맞힘 / 7 = 헛경보 / 22 = 불량을 합격으로 놓침 / 9 = 불량을 잡아냄.
+    가장 위험한 칸은 22다. 의심받지 않고 다음 공정이나 고객에게 간다.</div>
   </section>
 
   <section class="block">
-    <h2>8. 여러 열 함께 보기 문제</h2>
-    <p>오늘 데이터(빈칸 정리 후 735건)를 온도와 진공도의 정상 범위로 나눠 센 결과다.</p>
+    <h2>개념 확인 4. 여러 열 함께 보기</h2>
     <table class="timetable">
       <tr><th>온도(295~305℃)</th><th>진공도(4.5~5.5 mTorr)</th><th>기록</th><th>불합격 비율</th></tr>
       <tr><td>범위 안</td><td>범위 안</td><td>401건</td><td>8.0%</td></tr>
@@ -158,70 +178,35 @@ cm = ____(y_test, pred, labels=[1, -1])   # ⑥ 혼동행렬</code></pre>
       <tr><td>범위 안</td><td>범위 밖</td><td>95건</td><td>32.6%</td></tr>
       <tr><td>범위 밖</td><td>범위 밖</td><td>46건</td><td>56.5%</td></tr>
     </table>
-    <ol>
-      <li>온도만 보고 "온도가 정상이면 안심"이라고 하면 무엇을 놓치는가?</li>
-      <li>이 표가 모델에 Feature를 여러 개 넣는 이유와 어떻게 이어지는가?</li>
-    </ol>
+    <p>온도만 보고 "온도가 정상이면 안심"이라고 하면 무엇을 놓치는가?</p>
     <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">1) 온도가 범위 안이어도 진공도가 범위를 벗어난 95건은 불합격 비율이 32.6%나 된다.
-    2) 열 하나만 보면 놓치는 불량이 있어서, 여러 열을 함께 보면 더 잘 가려낼 수 있다. 모델은 열 6개를 한꺼번에 놓고 질문을 고른다.</div>
+    <div class="answer-box">온도가 범위 안이어도 진공도만 벗어난 95건은 불합격 32.6%다. 열 하나만 보면 놓치는 불량이 있어 모델에 여러 열을 함께 넣는다.</div>
   </section>
 
   <section class="block">
-    <h2>9. 결과 해석과 문장 쓰기</h2>
-    <p>모델이 많이 참고한 열(중요도)은 온도_섭씨 48.8%, 진공도_mTorr 21.1%, 압력_Pa 16.7%, 가스유량_slm 9.2%, 두께_nm 4.2%, 습도_pct 0.0%였다.</p>
+    <h2>문제 8. 중요도와 원인 후보 — 결과 문장 쓰기 (노트북 12단계)</h2>
+    <p>모델이 많이 참고한 열을 출력하고, 아래 범위 비교 표와 함께 결과 문장을 쓰자. 힌트: 쉬운 예제의 <code>zip(easy_feature_cols, ...)</code>.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>for name, importance in zip(____, model.feature_importances_):   # ① 열 이름 목록 변수
+    print(f"{name}: {importance:.1%}")</code></pre>
+    </div>
+    <table class="timetable">
+      <tr><th>열(정상 범위)</th><th>범위 밖 불합격</th><th>범위 안 불합격</th></tr>
+      <tr><td>온도(295~305℃)</td><td>37.7%(239건)</td><td>12.7%(496건)</td></tr>
+      <tr><td>진공도(4.5~5.5 mTorr)</td><td>40.4%(141건)</td><td>16.2%(594건)</td></tr>
+      <tr><td>가스유량(47~53 slm)</td><td>20.3%(241건)</td><td>21.1%(494건)</td></tr>
+    </table>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
       "모의고사 ____건에서 모델 정확도는 ____%로, 무조건 합격이라고 찍은 ____%보다 조금 높았다. 실제 불합격 ____건 중 ____건을 잡았고
-      ____건을 놓쳤다. 모델이 가장 많이 참고한 열은 ____이지만, 이것은 원인이 아니라 ______이다."
+      ____건을 놓쳤다. 모델이 가장 많이 참고한 열은 ____(중요도 ____%)이고, 이 열이 범위 밖인 기록의 불합격 비율은 ____%로 범위 안(____%)보다 높았다.
+      그래서 이 열은 원인이 아니라 ______이다."
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">"모의고사 147건에서 모델 정확도는 80.3%로, 무조건 합격이라고 찍은 78.9%보다 조금 높았다. 실제 불합격 31건 중 9건을 잡았고
-    22건을 놓쳤다. 모델이 가장 많이 참고한 열은 온도_섭씨(48.8%)이지만, 이것은 원인이 아니라 원인 후보이다."</div>
-  </section>
-
-  <section class="block">
-    <h2>10. 도전 — 질문을 8번까지 늘리면?</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      <code>max_depth=8</code>인 모델을 만들어 연습문제(train)와 모의고사(test) 정확도를 각각 재고, <code>max_depth=4</code> 모델과 비교해 보자.
-      연습문제 점수만 크게 오르고 모의고사 점수가 떨어진다면 무슨 뜻인지 한 문장으로 써 보자. (노트북 7단계 끝 "도전 문제")
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box">
-      <b class="tag">체크포인트</b>
-      실행 결과: max_depth=4는 연습문제 84.7% / 모의고사 80.3%, max_depth=8은 연습문제 94.2% / 모의고사 78.9%.
-      연습문제를 외워서 맞힌 것(과대적합)이다. 실력은 반드시 모의고사로 잰다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>11. 연습 — 진공도 하나만 넣어 보기</h2>
-    <div class="callout practice">
-      <b class="tag">연습</b>
-      Feature를 <code>진공도_mTorr</code> 하나만 넣어 학습시키고 정확도와 혼동행렬을 출력해 보자. 6개 열 모델(80.3%, 불합격 9건 잡음)과
-      비교해 열 하나만 넣으면 무엇을 놓치는지 한 문장으로 써 보자. (노트북 11단계)
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box">
-      <b class="tag">체크포인트</b>
-      정확도는 76.9%로 "무조건 합격" 찍기(78.9%)보다도 낮고, 혼동행렬은 <code>[[110 6] [28 3]]</code>이다. 불합격 31건 중 3건만 잡았다.
-      진공도 하나로는 온도가 벗어난 불량을 볼 수 없다. 이번 분할에서는 6개 열 모델이 더 많이 잡았다(모의고사가 147건뿐이라 몇 건 차이는 흔들릴 수 있다).
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>12. AI 미니 프로젝트 — 합격 예측 미니 데모</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      AI 챗봇에게 "학습된 분류 모델 model과 열 이름 목록 feature_cols가 있어. 공정 조건 6개 값을 표 한 행으로 만들어
-      model.predict()로 예측하고, 결과가 1이면 '합격일 것 같아요!', -1이면 '불합격 위험이 있어요'라고 알려주는 파이썬 코드를
-      만들어줘"라고 요청해보자. 노트북 12단계 셀에 붙여넣어 실행하고, 값을 바꿔 가며 결과를 적어보자.
-    </div>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "내가 넣은 값: ______________________ → 예측 결과: ______________"
-    </div>
+    <div class="answer-box">① <code>feature_cols</code>. 중요도: 온도 48.8%, 압력 16.7%, 가스유량 9.2%, 두께 4.2%, 진공도 21.1%, 습도 0.0%.
+    문장: 147 / 80.3 / 78.9 / 31 / 9 / 22 / 온도_섭씨 / 48.8 / 37.7 / 12.7 / 원인 후보.
+    가스유량은 중요도 9.2%지만 범위 밖/안 차이(20.3% / 21.1%)가 없어 원인 후보로 올리지 않는다.</div>
   </section>
 
   <div class="nav-buttons">

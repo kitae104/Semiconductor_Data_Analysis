@@ -22,134 +22,191 @@
   </div>
 
   <section class="block">
-    <h2>왜 이걸 배워야 할까?</h2>
-    <ul class="pt-list">
-      <li>공장의 센서는 하루에도 여러 번 값을 잰다. 여러 값을 한 번에 담아야 평균·최고·최저를 함께 보고 "튀는 값"을 찾을 수 있다(리스트).</li>
-      <li>숫자만 있으면 어느 설비의 무슨 값인지 모른다. 값마다 이름표를 붙여 둔다(딕셔너리).</li>
-      <li>딕셔너리를 리스트에 여러 개 담으면 표가 된다. 4차시에 배우는 표 데이터의 기초다.</li>
-    </ul>
-    <p>모든 숫자는 교육용 가상 데이터다. 정상 온도 범위 295~305도는 이 과정에서 정한 학습용 기준이다.</p>
+    <h2>푸는 법</h2>
+    <p>모든 문제는 반도체 데이터(교육용 가상 데이터)로 푼다. 노트북 8~10단계의 같은 번호 문제에 <code>____</code>를 채워 실행한다.
+    힌트의 "쉬운 예제"는 강의와 노트북 1~7단계의 코드다. 정상 온도 범위 295~305도는 학습용 기준이다.</p>
   </section>
 
   <section class="block">
-    <h2>1. 용어 연결 문제</h2>
-    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <h2>용어 연결</h2>
+    <p>왼쪽 용어와 오른쪽 설명을 연결해보자.</p>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 리스트</td><td rowspan="4">A. 값마다 이름표(키)를 붙여 담는 묶음. 중괄호 { }<br>B. 리스트에서 칸의 위치 번호(0부터 센다)<br>C. 여러 값을 순서대로 한 줄에 담는 묶음. 대괄호 [ ]<br>D. 딕셔너리에서 값을 찾는 이름표</td></tr>
+      <tr><td>① 리스트</td><td rowspan="4">A. 설비 한 대의 기록처럼 값마다 이름표(키)를 붙인 묶음 { }<br>B. 하루 온도 리스트에서 몇 번째 측정인지 나타내는 번호(0부터)<br>C. 하루 온도 여러 개를 순서대로 담은 묶음 [ ]<br>D. <code>"온도_섭씨"</code>처럼 값을 찾는 이름표</td></tr>
       <tr><td>② 딕셔너리</td></tr>
       <tr><td>③ 인덱스</td></tr>
       <tr><td>④ 키</td></tr>
     </table>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① C  ② A  ③ B  ④ D. 리스트 = 번호 붙은 약통, 딕셔너리 = 이름표 붙은 사물함.</div>
+    <div class="answer-box">① C  ② A  ③ B  ④ D</div>
   </section>
 
   <section class="block">
-    <h2>2. 인덱스 빈칸 문제</h2>
-    <p>강의의 온도 리스트로 빈칸을 채워보자. (노트북 2단계와 같은 문제)</p>
+    <h2>문제 1. 인덱스로 꺼내기 (노트북 8단계)</h2>
+    <p>한 설비가 하루에 다섯 번 잰 온도에서 세 번째 값과 마지막 값을 꺼내자.<br>
+    힌트: 쉬운 예제 <code>week_temps[2]</code>, <code>week_temps[-1]</code>과 같은 모양.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]
-
-print(temperatures[____])    # 첫 번째 값 295.4
-print(temperatures[____])    # 세 번째 값 312.6
-print(temperatures[____])    # 마지막 값 296.8 (뒤에서부터 세기)</code></pre>
+print(temperatures[0])    # 첫 번째 값
+print(temperatures[____])    # 세 번째 값
+print(temperatures[____])   # 마지막 값</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>0</code>, <code>2</code>, <code>-1</code>. 번호는 "맨 앞 칸에서 몇 칸 떨어졌나"라서 첫 칸이 0번이다.
-    칸이 5개면 번호는 0~4번이고, <code>temperatures[5]</code>는 <code>IndexError</code>가 난다.</div>
+    <div class="answer-box"><code>2</code>, <code>-1</code> → 295.4, 312.6, 296.8. 세 번째 측정 312.6이 정상 범위를 넘었다.</div>
   </section>
 
   <section class="block">
-    <h2>3. 슬라이싱 결과 예측 문제</h2>
-    <p>같은 <code>temperatures</code>(값 5개)로 실행하면 무엇이 나올지 먼저 적어보자.</p>
-    <table class="timetable">
-      <tr><th>코드</th><th>예상 결과</th></tr>
-      <tr><td><code>temperatures[1:3]</code></td><td>(          )</td></tr>
-      <tr><td><code>temperatures[:2]</code></td><td>(          )</td></tr>
-      <tr><td><code>temperatures[-2:]</code></td><td>(          )</td></tr>
-    </table>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box"><code>[298.1, 312.6]</code>, <code>[295.4, 298.1]</code>, <code>[301.0, 296.8]</code>.
-    끝 번호 칸은 빠지고, 꺼내지는 개수는 끝 - 시작이다(<code>[1:3]</code>은 2개).</div>
-  </section>
-
-  <section class="block">
-    <h2>4. 최고·최저·평균 계산 문제</h2>
-    <p>오늘 데이터 파일에서 EQ-03 설비의 기록 7건의 온도를 옮겨 왔다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">eq03_temps = [303.8, 303.4, 292.2, 308.5, 307.5, 298.5, 304.0]</pre>
-    <ol>
-      <li>최고값, 최저값을 구하는 코드를 쓰고 값을 적어보자.</li>
-      <li>평균을 구하는 코드를 쓰고, 소수 첫째 자리까지 적어보자.</li>
-      <li>최고값과 최저값은 각각 몇 번 칸에 있는가?</li>
-    </ol>
-    <p>노트북 5단계 코드에서 리스트 이름만 바꿔 실행해 확인해도 된다.</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) <code>max(eq03_temps)</code> → 308.5, <code>min(eq03_temps)</code> → 292.2<br>
-    2) <code>sum(eq03_temps) / len(eq03_temps)</code> → 2117.9 ÷ 7 = 302.557… → 302.6도<br>
-    3) 최고 308.5는 3번 칸(네 번째 값), 최저 292.2는 2번 칸(세 번째 값)</div>
-  </section>
-
-  <section class="block">
-    <h2>5. 결과 해석 문제 — 평균에 숨는 값</h2>
-    <p>4번 문제의 결과를 학습용 정상 범위(295~305도)와 비교해보자.</p>
-    <ol>
-      <li>평균 302.6도는 정상 범위 안인가?</li>
-      <li>7개 값 중 정상 범위를 벗어난 값은 몇 개이고, 무엇인가?</li>
-      <li>평균만 보고 "EQ-03 온도 정상"이라고 보고하면 무엇을 놓치는가?</li>
-    </ol>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) 안이다. 2) 3개 — 292.2(범위보다 낮음), 308.5, 307.5(범위보다 높음).
-    3) 평균은 높은 값과 낮은 값이 섞여 가운데로 모이기 때문에, 위아래로 범위를 벗어난 값 3개가 드러나지 않는다.
-    평균·최고·최저를 함께 봐야 한다.</div>
-  </section>
-
-  <section class="block">
-    <h2>6. 딕셔너리 결과 예측 문제</h2>
-    <p>아래 코드를 실행하면 무엇이 출력될지 예측해보자.</p>
+    <h2>문제 2. 슬라이싱 (노트북 8단계)</h2>
+    <p>1번·2번 칸(298.1, 312.6)을 한 번에 꺼내고, 나머지 두 줄의 결과를 예측하자.<br>
+    힌트: 쉬운 예제 <code>week_temps[1:3]</code>과 같은 모양. 끝 칸은 빠진다.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>equipment = {"설비번호": "EQ-01", "공정명": "식각", "온도_섭씨": 301.2}
-equipment["온도_섭씨"] = 305.5
-equipment["합격여부"] = 1
-print(equipment["온도_섭씨"])
-print(equipment)</code></pre>
+      <pre><code>print(temperatures[____:____])   # 1번 칸부터 3번 칸 앞까지
+print(temperatures[:2])    # 처음부터 2번 칸 앞까지
+print(temperatures[2:])    # 2번 칸부터 끝까지</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box"><code>305.5</code> 그리고 <code>{'설비번호': 'EQ-01', '공정명': '식각', '온도_섭씨': 305.5, '합격여부': 1}</code>.
-    있던 키(온도_섭씨)는 값이 바뀌고, 없던 키(합격여부)는 새로 생긴다. 합격여부 1 = 합격, -1 = 불합격.</div>
+    <div class="answer-box"><code>1:3</code> → <code>[298.1, 312.6]</code>, <code>[295.4, 298.1]</code>, <code>[312.6, 301.0, 296.8]</code></div>
   </section>
 
   <section class="block">
-    <h2>7. 표를 딕셔너리의 리스트로 옮기기</h2>
-    <p>오늘 데이터 파일의 두 행이다. 이 표를 <code>rows</code>라는 딕셔너리의 리스트로 옮겨 적어보자. 열 이름이 키가 된다.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>로트번호</th><th>공정명</th><th>설비번호</th><th>온도_섭씨</th><th>합격여부</th></tr>
-        <tr><td>LOT-0184</td><td>식각</td><td>EQ-04</td><td>312.4</td><td>-1</td></tr>
-        <tr><td>LOT-0015</td><td>식각</td><td>EQ-04</td><td>303.0</td><td>1</td></tr>
-      </table>
+    <h2>문제 3. 개수 세기와 추가 (노트북 8단계)</h2>
+    <p>칸 수를 세고, 오후에 잰 303.2를 끝에 붙이자(셀은 한 번만 실행).<br>
+    힌트: 쉬운 예제 <code>len(cart)</code>, <code>cart.append("사과")</code>와 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(____(temperatures))
+
+temperatures.____(303.2)
+print(temperatures)
+print(len(temperatures))</code></pre>
     </div>
-    <ol>
-      <li><code>rows = [ … ]</code> 코드를 써보자.</li>
-      <li>첫 번째 행의 합격여부를 꺼내는 코드는? 그 값은 무슨 뜻인가?</li>
-      <li>두 번째 행의 온도를 꺼내는 코드는?</li>
-    </ol>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">rows = [
-    {"로트번호": "LOT-0184", "공정명": "식각", "설비번호": "EQ-04", "온도_섭씨": 312.4, "합격여부": -1},
-    {"로트번호": "LOT-0015", "공정명": "식각", "설비번호": "EQ-04", "온도_섭씨": 303.0, "합격여부": 1},
-]</pre>
-      2) <code>rows[0]["합격여부"]</code> → -1, 불합격이라는 뜻이다(이 파일 20행 중 유일한 불합격).
-      3) <code>rows[1]["온도_섭씨"]</code> → 303.0. 언제나 <code>[행 번호]</code> 먼저, <code>[키]</code> 다음이다.
-    </div>
+    <div class="answer-box"><code>len</code>, <code>append</code> → 5, <code>[295.4, 298.1, 312.6, 301.0, 296.8, 303.2]</code>, 6. 7이 나오면 append 셀을 두 번 실행한 것이다.</div>
   </section>
 
   <section class="block">
-    <h2>8. 오류 찾기 문제</h2>
-    <p>아래 세 줄은 각각 오류가 난다. 무슨 오류인지, 어떻게 고치면 되는지 적어보자.</p>
+    <h2>문제 4. 최고·최저·평균 (노트북 8단계)</h2>
+    <p>값 6개(문제 3에서 303.2를 붙인 리스트)의 최고·최저·합계·평균을 구하고, "오늘 온도는 정상"이라고 말해도 되는지 한 문장으로 적자.<br>
+    힌트: 쉬운 예제 "이번 주 기온 요약"에서 <code>week_temps</code>를 <code>temperatures</code>로 바꾼다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>temperatures = [295.4, 298.1, 312.6, 301.0, 296.8, 303.2]   # 하루 6번 잰 온도
+print(len(temperatures))
+
+print(____(temperatures))
+print(____(temperatures))
+print(sum(temperatures))
+
+average = ____(temperatures) / ____(temperatures)
+print(f"평균 온도는 {average:.1f}도입니다.")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>max</code>, <code>min</code>, <code>sum</code>, <code>len</code> → 6, 312.6, 295.4, 1807.1, <code>평균 온도는 301.2도입니다.</code><br>
+    평균은 정상 범위 안이지만 최고 312.6도(2번 칸)는 7.6도 넘었다. 평균만 보고 정상이라고 하면 이 값을 놓친다.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 5. EQ-03 설비 온도 7건 요약 (노트북 8단계)</h2>
+    <p>오늘 데이터 파일의 EQ-03 기록 7건이다. 최고·최저·평균을 구하고, 정상 범위 밖 값이 몇 개인지 세어 보자.<br>
+    힌트: 문제 4 코드에서 리스트 이름만 <code>eq03_temps</code>로 바꾼다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>eq03_temps = [303.8, 303.4, 292.2, 308.5, 307.5, 298.5, 304.0]
+print(____(eq03_temps))
+print(____(eq03_temps))
+
+average = ____(eq03_temps) / ____(eq03_temps)
+print(f"EQ-03 평균 온도는 {average:.1f}도입니다.")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>max</code>, <code>min</code>, <code>sum</code>, <code>len</code> → 308.5(3번 칸), 292.2(2번 칸), <code>EQ-03 평균 온도는 302.6도입니다.</code><br>
+    범위 밖 값은 3개(292.2, 308.5, 307.5)다. 위아래로 벗어난 값이 평균 302.6도에 섞여 드러나지 않는다.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 6. 딕셔너리 만들고 꺼내기 (노트북 9단계)</h2>
+    <p>설비 기록(EQ-01, 식각, 301.2도)을 <code>equipment</code>로 만들고 설비번호와 온도를 꺼내자.<br>
+    힌트: 쉬운 예제 <code>student = {...}</code>, <code>student["이름"]</code>과 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>equipment = {
+    "설비번호": "EQ-01",
+    "공정명": ____,
+    "온도_섭씨": ____,
+}
+print(equipment)
+
+print(equipment[____])
+print(equipment[____])</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>"식각"</code>, <code>301.2</code>, <code>"설비번호"</code>, <code>"온도_섭씨"</code> → <code>{'설비번호': 'EQ-01', '공정명': '식각', '온도_섭씨': 301.2}</code>, EQ-01, 301.2</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 7. 값 바꾸기와 키 추가 (노트북 9단계)</h2>
+    <p>온도를 305.5로 바꾸고 <code>합격여부</code>에 1(합격)을 추가한 뒤 문장으로 출력하자. 합격여부는 1 = 합격, -1 = 불합격.<br>
+    힌트: 쉬운 예제 <code>student["나이"] = 16</code>, <code>student["동아리"] = "과학반"</code>과 같은 모양.
+    마지막 줄 빈칸은 f-string 안이라 작은따옴표(<code>'공정명'</code>)로 쓴다(강의 "따옴표 규칙").</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>equipment["온도_섭씨"] = ____   # 있던 키 → 값 바꾸기
+equipment[____] = 1        # 없던 키 → 새로 추가(1 = 합격)
+print(equipment)
+
+print(f"{equipment['설비번호']} 설비는 {equipment[____]} 공정, 온도는 {equipment[____]}도입니다.")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>305.5</code>, <code>"합격여부"</code>, <code>'공정명'</code>, <code>'온도_섭씨'</code>(f-string 안은 작은따옴표) →
+    <code>{'설비번호': 'EQ-01', '공정명': '식각', '온도_섭씨': 305.5, '합격여부': 1}</code>, <code>EQ-01 설비는 식각 공정, 온도는 305.5도입니다.</code></div>
+  </section>
+
+  <section class="block">
+    <h2>문제 8. 설비 3대의 표 (노트북 10단계)</h2>
+    <p>설비 3대(설명용 값)의 행 수, 0번 행의 온도, 1번 행의 설비번호를 꺼내자.<br>
+    힌트: 쉬운 예제 <code>len(friends)</code>, <code>friends[0]["나이"]</code>, <code>friends[1]["이름"]</code>과 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>equipment_list = [
+    {"설비번호": "EQ-01", "공정명": "식각", "온도_섭씨": 301.2},
+    {"설비번호": "EQ-02", "공정명": "증착", "온도_섭씨": 308.7},
+    {"설비번호": "EQ-03", "공정명": "포토", "온도_섭씨": 297.5},
+]
+print(____(equipment_list))
+print(equipment_list[0])
+
+print(equipment_list[____]["온도_섭씨"])   # 0번 행의 온도_섭씨 칸
+print(equipment_list[1][____])    # 1번 행의 설비번호 칸</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>len</code>, <code>0</code>, <code>"설비번호"</code> → 3, <code>{'설비번호': 'EQ-01', '공정명': '식각', '온도_섭씨': 301.2}</code>, 301.2, EQ-02</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 9. 오늘 데이터 한 행 읽기 (노트북 10단계)</h2>
+    <p>CSV 앞 3행을 옮긴 <code>records</code>(노트북에 완성 코드)에서 두 번째 행을 <code>row</code>로 꺼내 문장으로 읽고, 아래 문장을 완성하자.<br>
+    힌트: 쉬운 예제 <code>friend = friends[1]</code>, <code>friend['이름']</code>과 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>row = records[____]
+print(f"{row['로트번호']} 로트: {row['설비번호']} 설비, {row[____]} 작업")
+print(f"온도 {row['온도_섭씨']}도, 합격여부 {row['합격여부']}")</code></pre>
+    </div>
+    <div class="callout practice">
+      <b class="tag">문장 작성</b>
+      "LOT-0097의 온도는 ____도로 학습용 정상 범위를 (벗어났다 / 벗어나지 않았다). 그런데 합격여부는 ____(____)이다.
+      그래서 온도 하나만 보고 ____라고 단정할 수 없다."
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>1</code>, <code>'공정명'</code> → <code>LOT-0097 로트: EQ-04 설비, 포토 작업</code> / <code>온도 308.7도, 합격여부 1</code><br>
+    "LOT-0097의 온도는 308.7도로 학습용 정상 범위를 벗어났다. 그런데 합격여부는 1(합격)이다. 그래서 온도 하나만 보고 불량이라고 단정할 수 없다."</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 10. 오류 찾기 (실습지 전용)</h2>
+    <p>세 줄은 각각 오류가 난다. 무슨 오류인지, 어떻게 고치는지 적자.</p>
     <div class="code-block">
       <div class="code-label"><span>Python — 오류 있는 코드</span><button class="copy-btn">복사</button></div>
       <pre><code>temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]
@@ -160,56 +217,9 @@ print(equipment["압력_Pa"])     # (나)
 print(equipment[0])             # (다)</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">(가) <code>IndexError: list index out of range</code> — 칸은 0~4번뿐이다. 마지막 값은 <code>temperatures[4]</code> 또는 <code>temperatures[-1]</code>.<br>
-    (나) <code>KeyError: '압력_Pa'</code> — 없는 이름표다. <code>print(equipment)</code>로 있는 키를 확인한다.<br>
-    (다) <code>KeyError: 0</code> — 딕셔너리는 칸 번호가 아니라 키로 꺼낸다. <code>equipment["설비번호"]</code>처럼 쓴다.</div>
-  </section>
-
-  <section class="block">
-    <h2>9. 분석 문장 쓰기</h2>
-    <p>노트북 9단계에서 꺼낸 행은 다음과 같았다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">LOT-0097 로트: EQ-04 설비, 포토 작업
-온도 308.7도, 합격여부 1</pre>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      온도와 합격여부를 함께 보고 빈칸을 채워보자.
-      "LOT-0097의 온도는 ____도로 학습용 정상 범위를 (벗어났다 / 벗어나지 않았다). 그런데 합격여부는 ____(____)이다.
-      그래서 온도 하나만 보고 ____라고 단정할 수 없다."
-    </div>
-    <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">"LOT-0097의 온도는 308.7도로 학습용 정상 범위를 벗어났다. 그런데 합격여부는 1(합격)이다.
-    그래서 온도 하나만 보고 불량이라고 단정할 수 없다."</div>
-  </section>
-
-  <section class="block">
-    <h2>10. 도전 — 온도만 모으기, 행 추가하기</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      노트북 9단계의 <code>records</code>(앞 3행)로 두 가지를 해보자. (노트북 9단계 끝 "도전 문제 1·2")
-      <ol>
-        <li>세 행의 <code>온도_섭씨</code>만 꺼내 <code>record_temps</code> 리스트를 만들고 <code>max()</code>로 최고 온도를 구한다.</li>
-        <li>4번째 행(LOT-0160, 포토, EQ-04, 295.7, 1)을 딕셔너리로 만들어 <code>records.append(...)</code>로 붙이고 <code>len(records)</code>를 확인한다.</li>
-      </ol>
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box">
-      <b class="tag">체크포인트</b>
-      1) <code>record_temps</code>는 <code>[302.5, 308.7, 303.8]</code>, 최고는 308.7(1번 행, LOT-0097).
-      2) <code>len(records)</code>가 4면 성공이다. 5 이상이 나오면 append 셀을 여러 번 실행한 것이니 9단계 첫 셀부터 다시 실행한다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>11. AI 미니 프로젝트 — 오늘의 럭키 설비 뽑기</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      AI 챗봇에게 "설비 정보 딕셔너리 4개를 리스트에 담고, random.choice()로 하나를 무작위로 뽑아 '오늘의 럭키 설비'를
-      출력하는 파이썬 코드를 만들어줘"라고 요청해보자. 코드를 노트북 13단계 셀에 붙여넣어 실행하고, 어떤 설비가 뽑혔는지 적어보자.
-    </div>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "오늘의 럭키 설비: ______________________________"
-    </div>
+    <div class="answer-box">(가) <code>IndexError: list index out of range</code> — 칸은 0~4번. <code>temperatures[-1]</code>로 고친다.<br>
+    (나) <code>KeyError: '압력_Pa'</code> — 없는 키. <code>print(equipment)</code>로 확인한다.<br>
+    (다) <code>KeyError: 0</code> — 딕셔너리는 키로 꺼낸다(<code>equipment["설비번호"]</code>).</div>
   </section>
 
   <div class="nav-buttons">

@@ -24,18 +24,16 @@
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
-      <li>"온도가 정상 범위 안이면 규칙상 통과(합격 판정)" 같은 판정을 사람이 수십만 줄에 하나씩 할 수는 없다. 규칙(<code>if</code>)을 알려주고
-        반복(<code>for</code>)을 시키면 컴퓨터가 같은 기준으로 끝까지 판정한다. 자주 쓰는 판정은 함수(<code>def</code>)로 저장해 둔다.</li>
-      <li>이 실습지의 정상 범위 295~305℃는 이 과정의 <b>학습용 기준</b>이고, 데이터는 교육용 <b>가상 데이터</b>다.</li>
+      <li>모든 문제는 공정 온도·가상 공장 기록(반도체 데이터)으로 푼다. 힌트의 "○단계"는 같은 모양의 쉬운 예제가 있는 노트북 단계다.</li>
+      <li>295~305℃는 이 과정의 <b>학습용 기준</b>이고, 공정 데이터는 교육용 <b>가상 데이터</b>다.</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>1. 용어 연결 문제</h2>
-    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <h2>용어 연결</h2>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 비교 연산자</td><td rowspan="5">A. 리스트의 값을 처음부터 하나씩 꺼내 같은 일을 반복하는 문장<br>B. 조건이 참일 때만 정해 둔 코드를 실행하게 하는 문장<br>C. 자주 쓰는 계산을 이름 붙여 저장해 둔 레시피<br>D. 함수가 만든 결과를 부른 쪽에 돌려주는 키워드<br>E. 두 값을 비교해 True/False로 답하는 기호</td></tr>
+      <tr><td>① 비교 연산자</td><td rowspan="5">A. 온도 리스트의 값을 처음부터 하나씩 꺼내 같은 판정을 반복하는 문장<br>B. 온도가 범위 안일 때만 정해 둔 코드를 실행하게 하는 문장<br>C. 온도 판정 규칙에 이름을 붙여 저장해 둔 레시피<br>D. 함수가 만든 판정 결과를 부른 쪽에 돌려주는 키워드<br>E. <code>temperature &gt; 305</code>처럼 두 값을 비교해 True/False로 답하는 기호</td></tr>
       <tr><td>② 조건문(if)</td></tr>
       <tr><td>③ 반복문(for)</td></tr>
       <tr><td>④ 함수(def)</td></tr>
@@ -46,23 +44,56 @@
   </section>
 
   <section class="block">
-    <h2>2. 비교 연산자 결과 예측 문제</h2>
-    <p><code>temperature = 293.8</code>, <code>equipment = "EQ-02"</code>일 때 각 줄의 결과가 <code>True</code>인지 <code>False</code>인지 적어보자.</p>
-    <table class="timetable">
-      <tr><th>코드</th><th>결과</th></tr>
-      <tr><td><code>print(temperature &gt; 305)</code></td><td>(      )</td></tr>
-      <tr><td><code>print(temperature &lt; 295)</code></td><td>(      )</td></tr>
-      <tr><td><code>print(equipment == "EQ-02")</code></td><td>(      )</td></tr>
-      <tr><td><code>print(equipment != "EQ-02")</code></td><td>(      )</td></tr>
-    </table>
+    <h2>문제 1 — 공정 온도에 질문하기 (노트북 8단계)</h2>
+    <p>할 일: 온도 312.6, 설비 EQ-03에 네 가지 질문을 던지고, 305보다 크면 경고를 출력한다.<br>
+    힌트: 1단계(시험 점수)와 같은 모양. <code>score</code> → <code>temperature</code>, <code>subject</code> → <code>equipment</code>, 80 → 305.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>temperature = 312.6
+equipment = "EQ-03"
+
+print(temperature &gt; 305)
+print(temperature &lt;= 305)
+print(equipment ____ "EQ-03")
+print(equipment != "EQ-03")
+
+if temperature ____ 305:
+    print("온도가 범위보다 높습니다!")
+print("판정 끝")</code></pre>
+    </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>False</code>, <code>True</code>, <code>True</code>, <code>False</code>.
-    <code>==</code>는 "같은가?", <code>!=</code>는 "다른가?"를 묻는다. 값을 저장하는 <code>=</code>와 다르다.</div>
+    <div class="answer-box">빈칸: <code>==</code>, <code>&gt;</code>. 출력: <code>True</code>, <code>False</code>, <code>True</code>, <code>False</code>,
+    <code>온도가 범위보다 높습니다!</code>, <code>판정 끝</code>.</div>
   </section>
 
   <section class="block">
-    <h2>3. 오류 찾기 문제 — 콜론과 들여쓰기</h2>
-    <p>아래 코드는 실행하면 오류가 난다. 어디가 문제인지 찾아 고쳐보자.</p>
+    <h2>문제 2 — 공정 온도를 범위로 판정하기 (노트북 8단계)</h2>
+    <p>할 일: 301.0을 범위 안/밖으로, 293.8을 높음·정상·낮음으로 판정한다.<br>
+    힌트: 2단계(체온)와 같은 모양. 36.0 → 295, 37.5 → 305.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>temperature = 301.0
+
+if 295 &lt;= temperature &lt;= 305:
+    print("정상 범위입니다.")
+____:
+    print("범위 밖입니다.")
+
+temperature = 293.8
+
+if temperature &gt; 305:
+    print("높음")
+____ temperature &gt;= 295:
+    print("정상")
+else:
+    print("낮음")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">빈칸: <code>else</code>, <code>elif</code>. 출력: <code>정상 범위입니다.</code>, <code>낮음</code>(293.8은 범위 아래쪽).</div>
+  </section>
+
+  <section class="block">
+    <h2>오류 찾기 — 콜론과 들여쓰기 (노트북 8단계 아래 빈 셀에 붙여 넣어 실행)</h2>
     <div class="code-block">
       <div class="code-label"><span>Python — 오류 있는 코드</span><button class="copy-btn">복사</button></div>
       <pre><code>temperature = 301.0
@@ -72,79 +103,137 @@ else
     print("범위 밖입니다.")</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">문제 두 곳:
-    ① <code>if</code> 다음 줄 <code>print("정상 범위입니다.")</code>가 들여쓰기 되어 있지 않다 → 앞에 스페이스 4칸.
-    파이썬은 이것부터 발견해 <code>IndentationError: expected an indented block after 'if' statement on line 2</code>를 낸다.
-    ② <code>else</code> 끝에 콜론이 없다 → <code>else:</code>. 고치지 않으면 <code>SyntaxError: expected ':'</code>가 난다.</div>
+    <div class="answer-box">① <code>if</code> 다음 줄에 스페이스 4칸(없으면 <code>IndentationError: expected an indented block after 'if' statement on line 2</code>).
+    ② <code>else</code> → <code>else:</code>(없으면 <code>SyntaxError: expected ':'</code>).</div>
   </section>
 
   <section class="block">
-    <h2>4. 코드 빈칸 문제 — 개수 세기</h2>
-    <p>정상 범위(295~305) 안인 온도의 개수를 세는 코드다. 빈칸을 채우고 결과를 예측해보자.</p>
+    <h2>문제 3 — 정상 범위인 온도 세기 (노트북 9단계)</h2>
+    <p>할 일: 온도 5개를 출력하고, 295~305 안인 값의 개수를 센다.<br>
+    힌트: 3단계(80점 이상 세기)와 같은 모양. 조건 <code>score &gt;= 80</code> 대신 <code>295 &lt;= temp &lt;= 305</code>.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
       <pre><code>temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]
+
+for temp ____ temperatures:
+    print(temp)
+
 normal_count = 0
 
-____ temp in temperatures:
+for temp in temperatures:
     ____ 295 &lt;= temp &lt;= 305:
-        normal_count ____ 1
+        normal_count = normal_count ____ 1
 
 print(f"정상 범위인 값은 {normal_count}개입니다.")</code></pre>
     </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>for</code>, <code>if</code>, <code>+=</code>. 결과는 <code>정상 범위인 값은 4개입니다.</code>
-    (312.6만 범위 밖이다). <code>normal_count = 0</code>은 반복문 밖에서 한 번만 쓴다.</div>
-  </section>
-
-  <section class="block">
-    <h2>5. 결과 예측 문제 — 세 갈래 판정</h2>
-    <p>아래 코드에서 <code>temperature</code>에 세 값을 차례로 넣으면 각각 무엇이 출력될까?</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>if temperature &gt; 305:
-    print("높음")
-elif temperature &gt;= 295:
-    print("정상")
-else:
-    print("낮음")</code></pre>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b>
+      빈칸: <code>in</code>, <code>if</code>, <code>+</code>. 결과 <code>정상 범위인 값은 4개입니다.</code>(312.6만 범위 밖).
+      <code>normal_count = 0</code>이 반복문 안에 있으면 틀린 숫자가 나온다.
     </div>
-    <table class="timetable">
-      <tr><th>temperature</th><th>출력</th></tr>
-      <tr><td><code>308.0</code></td><td>(      )</td></tr>
-      <tr><td><code>300.0</code></td><td>(      )</td></tr>
-      <tr><td><code>290.0</code></td><td>(      )</td></tr>
-    </table>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>높음</code>, <code>정상</code>, <code>낮음</code>. 위에서부터 묻다가 처음으로 참인 곳에서 멈춘다.
-    300.0은 첫 질문(305보다 큰가?)이 거짓, 둘째 질문(295 이상인가?)이 참이라 "정상"이다.</div>
   </section>
 
   <section class="block">
-    <h2>6. 함수 빈칸 문제 — judge_pass</h2>
+    <h2>문제 4 — 온도 5개의 합계와 평균 (노트북 9단계)</h2>
+    <p>할 일: 문제 3의 온도 5개 합계와 평균을 소수 첫째 자리까지 출력한다.<br>
+    힌트: 4단계(용돈 합계)와 같은 모양. <code>money</code> → <code>temp</code>.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>____ judge_pass(temp):
+      <pre><code>total = 0
+
+for temp in temperatures:
+    total ____ temp
+
+average = total / len(temperatures)
+print(f"합계 {total:.1f}, 평균 {average:.1f}")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">빈칸: <code>+=</code>. 결과 <code>합계 1503.9, 평균 300.8</code>. 평균은 범위 안이어도 312.6이 섞여 있다.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 5 — 온도가 높은 설비 골라내기 (노트북 9단계)</h2>
+    <p>할 일: 노트북 9단계의 <code>equipment_list</code>(설비 3대: EQ-01 301.2, EQ-02 308.7, EQ-03 297.5)에서 온도가 305도를 넘는 설비 번호만 담는다.<br>
+    힌트: 5단계(80점 넘은 학생)와 같은 모양. <code>"점수"</code> → <code>"온도_섭씨"</code>, <code>"이름"</code> → <code>"설비번호"</code>.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>hot_equipment = []
+
+for eq in equipment_list:
+    if eq["온도_섭씨"] ____ 305:
+        hot_equipment.____(eq["설비번호"])
+
+print(f"온도가 305도를 넘는 설비: {hot_equipment}")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">빈칸: <code>&gt;</code>, <code>append</code>. 결과 <code>온도가 305도를 넘는 설비: ['EQ-02']</code>(308.7도).</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 6 — 평균 함수와 judge_pass 만들기 (노트북 10단계)</h2>
+    <p>할 일: 평균 함수에 온도 5개를 넣고, 온도 판정 함수 <code>judge_pass</code>로 온도 5개를 판정한다.<br>
+    힌트: 6단계(<code>calculate_average</code>, <code>judge_score</code>)와 같은 모양. 빈칸은 6단계 평균 함수 이름, <code>return</code>, 판정 함수 이름이다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(____(temperatures))
+
+def judge_pass(temp):
     if 295 &lt;= temp &lt;= 305:
         ____ "합격"
     else:
         ____ "불합격"
 
-print(judge_pass(294.9))</code></pre>
+print(judge_pass(301.0))
+print(judge_pass(312.6))
+
+for temp in temperatures:
+    result = ____(temp)
+    print(f"{temp}도 → {result}")</code></pre>
     </div>
-    <ol>
-      <li>빈칸 세 곳에 들어갈 키워드는?</li>
-      <li>마지막 줄은 무엇을 출력할까?</li>
-    </ol>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) 순서대로 <code>def</code>, <code>return</code>, <code>return</code>.
-    <code>def</code>는 레시피를 적는 것(정의), <code>return</code>은 결과를 돌려주는 것이다.
-    2) <code>불합격</code>. 294.9는 295보다 작아 범위 밖이다.</div>
+    <div class="answer-box">빈칸: <code>calculate_average</code>, <code>return</code>, <code>return</code>, <code>judge_pass</code>.
+    결과 <code>300.78</code>(문제 4는 <code>:.1f</code>로 반올림해 300.8로 보였다), <code>합격</code>, <code>불합격</code>, 온도 5개 중 312.6만 "불합격". 이 판정은 실제 검사 결과(<code>합격여부</code>)와 다르다.</div>
   </section>
 
   <section class="block">
-    <h2>7. 결과 해석과 문장 쓰기</h2>
-    <p>오늘 종합 실습(가상 기록 30건)의 결과를 정리하면 아래와 같다.</p>
+    <h2>문제 7 — 기록 30건을 온도 규칙으로 걸러내기 (노트북 11단계)</h2>
+    <p>할 일: 노트북의 <code>records</code>(30건, <code>합격여부</code> 1 = 합격, -1 = 불합격)에서 <code>judge_pass</code>로 "불합격" 판정된 기록 수를 센다.<br>
+    힌트: 7단계(학생 명단 불합격 세기)와 같은 모양. <code>judge_score(student["점수"])</code> → <code>judge_pass(record["온도_섭씨"])</code>.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>rule_fail = 0
+
+for record in records:
+    if ____(record["온도_섭씨"]) == "불합격":
+        rule_fail ____ 1
+
+print(f"온도 규칙으로 걸러낸 기록: {rule_fail}건")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">빈칸: <code>judge_pass</code>, <code>+=</code>. 결과 <code>온도 규칙으로 걸러낸 기록: 12건</code>.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 8 — 실제 불합격 세기 (노트북 11단계)</h2>
+    <p>할 일: <code>합격여부</code>가 불합격(-1)인 기록 수를 센다.<br>
+    힌트: 7단계와 같은 개수 세기 모양. 조건만 <code>record["합격여부"] == ____</code>.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>real_fail = 0
+
+for record in records:
+    if record["합격여부"] == ____:
+        real_fail += 1
+
+print(f"실제 검사에서 불합격(-1)한 기록: {real_fail}건")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">빈칸: <code>-1</code>. 결과 <code>실제 검사에서 불합격(-1)한 기록: 3건</code>.</div>
+  </section>
+
+  <section class="block">
+    <h2>결과 해석과 문장 쓰기</h2>
     <div class="tablewrap">
       <table class="timetable">
         <tr><th>온도 규칙의 판정</th><th>기록 수</th><th>실제 합격(1)</th><th>실제 불합격(-1)</th></tr>
@@ -154,58 +243,12 @@ print(judge_pass(294.9))</code></pre>
     </div>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      빈칸을 채워보자.
       "판정 함수로 기록 30건을 판정하니 ____건이 범위 밖으로 걸러졌다. 그러나 실제 검사 불합격은 ____건이고,
       범위 밖 기록 중 ____건은 합격했다. 따라서 온도 규칙 하나로는 합격·불합격을 ____."
     </div>
     <button class="reveal-btn">예시 답안 보기</button>
     <div class="answer-box">"판정 함수로 기록 30건을 판정하니 12건이 범위 밖으로 걸러졌다. 그러나 실제 검사 불합격은 3건이고,
-    범위 밖 기록 중 9건은 합격했다. 따라서 온도 규칙 하나로는 합격·불합격을 다 설명할 수 없다."
-    규칙은 "더 살펴볼 기록"을 골라 주는 첫 번째 거름망이고, 다른 열도 함께 봐야 한다.</div>
-  </section>
-
-  <section class="block">
-    <h2>8. 도전 — 합격률 구하기</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      <code>records</code>를 한 번 돌면서 <code>합격여부</code>가 1이면 <code>pass_count</code>를, 아니면 <code>fail_count</code>를 1씩 늘리고,
-      <code>pass_count / len(records) * 100</code>으로 합격률을 구해 출력해보자. (노트북 6단계 "도전 문제 1")
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box">
-      <b class="tag">체크포인트</b>
-      결과는 <code>합격 27건, 불합격 3건, 합격률 90.0%</code>다. 합격과 불합격을 더하면 30이어야 한다.
-      둘을 동시에 셀 때는 <code>if</code> / <code>else</code>로 나누고, 두 변수 모두 반복문 밖에서 0으로 시작한다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>9. 도전 — 범위 밖인데 합격한 기록 찾기</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      <code>judge_pass</code>로는 "불합격"인데 실제 <code>합격여부</code>는 1인 기록의 로트번호만 <code>surprise_list</code>에 모아보자.
-      <code>if</code> 안에 <code>if</code>를 한 번 더 쓴다. (노트북 6단계 "도전 문제 2")
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box">
-      <b class="tag">체크포인트</b>
-      <code>len(surprise_list)</code>는 <code>9</code>다. 안쪽 <code>if</code>는 8칸, 그 안의 <code>append</code> 줄은 12칸 들여쓴다.
-      칸 수가 어긋나면 <code>IndentationError</code>가 난다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>10. AI 미니 프로젝트 — 온도 뽑기 심판 프로그램</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      AI 챗봇에게 "290부터 320 사이의 임의의 온도를 5번 뽑아서, judge_pass 함수로 합격/불합격을 판정하고 합격이면 ✅,
-      불합격이면 ❌를 붙여 심판처럼 발표하는 파이썬 코드를 만들어줘. random 모듈을 사용하고, if/else와 for만 써줘."라고 요청해보자.
-      코드를 노트북 10단계 셀에 붙여넣어 실행한다(5단계 <code>judge_pass</code> 셀을 먼저 실행해 둔다).
-    </div>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "AI가 만들어준 온도 뽑기 결과 한 줄: ______________________________"
-    </div>
+    범위 밖 기록 중 9건은 합격했다. 따라서 온도 규칙 하나로는 합격·불합격을 다 설명할 수 없다."</div>
   </section>
 
   <div class="nav-buttons">

@@ -156,6 +156,52 @@
 <p>완전한 가상 데이터다. 설비별 특성과 저수율 로트의 연결은 "그룹 비교"와 "공통점 찾기" 학습을 위해 의도적으로 설계했다.</p>
   </section>
 
+  <section class="block">
+    <h2>생활 예제 데이터 — week07_easy_quiz_results.csv</h2>
+<h3>목적</h3>
+<p>반도체 데이터(<code>week07_equipment_yield.csv</code>)로 설비별 합격률과 로트 수율을 구하기 전에, 반별 쪽지시험 기록으로 <b>같은 모양의 <code>groupby</code> 계산</b>(개수·합·평균, 그룹별 비율, 낮은 그룹 열어 보기, 파레토 <code>value_counts</code>)을 먼저 익히는 <b>생활 예제용 가상 데이터</b>다. 강의·노트북은 파이썬 개념을 이 데이터(쉬운 예제)로 설명하고, 반도체 데이터는 강의 "반도체 데이터로 확인하기"와 실습지·노트북 뒷부분(5~7단계)에서 같은 모양의 코드로 다룬다. 강의의 groupby 개념도(반별로 모아 정답 비율 계산)도 이 데이터의 실제 값이다. 수업 코드에서는 반도체 표 <code>df</code>와 섞이지 않도록 이 표의 이름을 <code>quiz</code>로 쓴다.</p>
+<h3>가상 상황</h3>
+<p>세 반(A반·B반·C반)에서 두 명씩, 모두 6명이 4문항짜리 쪽지시험을 봤다. 문항마다 맞았는지, 틀렸다면 왜 틀렸는지를 적었다.</p>
+<h3>행 하나의 의미</h3>
+<p>한 행 = 학생 1명이 푼 문항 1개. 학생 1명 = 4행(반도체 데이터에서 로트 1개 = 웨이퍼 4장과 같은 모양).</p>
+<h3>열 설명</h3>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>열 이름</th>
+<th>쉬운 설명</th>
+<th>데이터 형식</th>
+<th>단위</th>
+<th>예시</th>
+<th>결측값 가능 여부</th>
+</tr></thead><tbody>
+<tr><td>반</td><td>학생의 반(반도체 데이터의 설비번호 자리)</td><td>문자열</td><td>-</td><td>B반</td><td>없음</td></tr>
+<tr><td>이름</td><td>학생 이름(반도체 데이터의 로트번호 자리)</td><td>문자열</td><td>-</td><td>예린</td><td>없음</td></tr>
+<tr><td>문제번호</td><td>몇 번 문항인지(1~4, 반도체 데이터의 웨이퍼번호 자리)</td><td>정수</td><td>-</td><td>2</td><td>없음</td></tr>
+<tr><td>풀이시간_초</td><td>그 문항을 푸는 데 걸린 시간</td><td>정수</td><td>초</td><td>110</td><td>없음</td></tr>
+<tr><td>오답유형</td><td>틀렸을 때 왜 틀렸는지(계산 실수·문제 잘못 읽음·개념 부족). 맞았으면 빈 값 <code>NaN</code>(반도체 데이터의 불량유형 자리)</td><td>문자열</td><td>-</td><td>계산 실수</td><td>있음(정답일 때)</td></tr>
+<tr><td>정답여부</td><td>채점 결과. <b>1 = 정답, -1 = 오답</b>(반도체 데이터의 합격여부와 같은 1/-1 표기)</td><td>정수</td><td>-</td><td>-1</td><td>없음</td></tr>
+</tbody></table></div>
+<h3>수업에서 새로 만드는 열</h3>
+<ul class="pt-list"><li><code>정답</code> — <code>quiz[&quot;정답&quot;] = quiz[&quot;정답여부&quot;] == 1</code>로 만드는 True/False 열(CSV에는 없다). 반도체 수업의 <code>df[&quot;합격&quot;] = df[&quot;합격여부&quot;] == 1</code>과 같은 모양이다. <code>sum()</code>은 맞힌 문항 수, <code>mean() * 100</code>은 정답률(%)이 된다.</li></ul>
+<h3>의도적으로 포함된 패턴(실제 값)</h3>
+<ul class="pt-list"><li>크기 24행 x 6열(3반 x 2명 x 4문항). 전체 24문항 중 18문항 정답, 전체 정답률 75.0%.</li><li><b>반별 정답률</b>(<code>groupby(&quot;반&quot;)[&quot;정답&quot;]</code>): 문항 수(count) 각 8 / 정답 수(sum) A반 7, B반 5, C반 6 / 정답률 A반 87.5%, B반 62.5%, C반 75.0%.</li><li>반별 평균 풀이시간(<code>groupby(&quot;반&quot;)[&quot;풀이시간_초&quot;].mean()</code>): A반 61.2초, B반 76.9초, C반 67.8초.</li><li><b>학생별 정답률</b>(로트 수율과 같은 계산): 지민 100.0, 서준 100.0, 하은 75.0, 도윤 75.0, 시우 75.0, 예린 25.0. 80% 미만 4명, 최저는 예린 25.0% 하나뿐이다. 학생 한 명이 4문항이라 정답률은 0·25·50·75·100% 다섯 값만 나온다 (반도체 로트 수율과 같다).</li><li><b>B반을 따로 떼어 보면</b>: 서준 100.0%, 예린 25.0%. B반 전체가 아니라 한 학생이 낮았다. 반도체 7차시의 "EQ-04 전체가 아니라 일부 로트가 문제였다"와 같은 발견 장치다.</li><li>예린의 문항 기록: 1번 문제 잘못 읽음(85초), 2번 계산 실수(110초), 3번 정답(95초), 4번 개념 부족(120초).</li><li><b>오답유형 파레토</b>(<code>quiz[quiz[&quot;정답여부&quot;] == -1][&quot;오답유형&quot;].value_counts()</code>): 계산 실수 3, 문제 잘못 읽음 2, 개념 부족 1 (비율 50.0%·33.3%·16.7%).</li></ul>
+<h3>반도체 데이터와 짝이 되는 연산</h3>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>생활 예제</th>
+<th>반도체(week07_equipment_yield.csv)</th>
+</tr></thead><tbody>
+<tr><td><code>quiz[&quot;정답&quot;] = quiz[&quot;정답여부&quot;] == 1</code></td><td><code>df[&quot;합격&quot;] = df[&quot;합격여부&quot;] == 1</code></td></tr>
+<tr><td><code>quiz.groupby(&quot;반&quot;)[&quot;정답&quot;].mean() * 100</code> → A 87.5 / B 62.5 / C 75.0</td><td><code>df.groupby(&quot;설비번호&quot;)[&quot;합격&quot;].mean() * 100</code></td></tr>
+<tr><td><code>quiz.groupby(&quot;반&quot;)[&quot;풀이시간_초&quot;].mean()</code></td><td><code>df.groupby(&quot;설비번호&quot;)[&quot;온도_섭씨&quot;].mean()</code></td></tr>
+<tr><td><code>quiz.groupby(&quot;이름&quot;)[&quot;정답&quot;].mean() * 100</code> → 80% 미만 4명</td><td><code>df.groupby(&quot;로트번호&quot;)[&quot;합격&quot;].mean() * 100</code> → 80% 미만 21개</td></tr>
+<tr><td><code>quiz[quiz[&quot;반&quot;] == &quot;B반&quot;].groupby(&quot;이름&quot;)[&quot;정답&quot;].mean() * 100</code></td><td><code>df[df[&quot;설비번호&quot;] == &quot;EQ-04&quot;].groupby(&quot;로트번호&quot;)[&quot;합격&quot;].mean() * 100</code></td></tr>
+<tr><td><code>quiz[quiz[&quot;정답여부&quot;] == -1][&quot;오답유형&quot;].value_counts()</code></td><td><code>df[df[&quot;합격여부&quot;] == -1][&quot;불량유형&quot;].value_counts()</code></td></tr>
+</tbody></table></div>
+<h3>실제 데이터와 다른 점</h3>
+<p>생활 예제용으로 손으로 정한 가상 값이며 실제 학생 성적이 아니다. <code>scripts/generate_weekly_data.py</code>의 <code>gen_easy_week07()</code>가 고정 값으로 만든다. 한 반에 두 명뿐이라 반별 정답률은 학생 한 명에 따라 크게 흔들린다 ("건수가 적은 쪽의 비율은 흔들리기 쉽다"를 보여 줄 때도 쓸 수 있다).</p>
+  </section>
+
   <div class="nav-buttons">
     <a href="week06_dictionary.html">← 6차시 데이터 설명서</a>
     <a class="home" href="../../lectures/week07/index.html">7차시 강의로 돌아가기</a>

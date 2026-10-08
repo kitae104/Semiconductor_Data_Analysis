@@ -22,16 +22,15 @@
   </div>
 
   <section class="block">
-    <h2>왜 이걸 배워야 할까?</h2>
+    <h2>실습지 사용법</h2>
     <ul class="pt-list">
-      <li>1차시에는 40줄 표를 눈으로 셌다. 100줄, 10만 줄이 되면 눈으로는 셀 수 없다. Pandas는 표를 코드로 열고, 고르고, 줄 세운다.</li>
-      <li>전체 숫자 하나(불합격 13.0%)만 보면 놓치는 것이, 설비별로 따로 떼어 보면 보인다. 조건 검색이 그 도구다.</li>
+      <li>모든 문제는 반도체 공정 기록 <code>week04_process_filtering.csv</code>(교육용 가상 데이터, 100행 8열)로 푼다. <code>합격여부</code>는 1 = 합격, -1 = 불합격.</li>
+      <li>코드는 강의 카페 예제와 같은 모양이다. 노트북 9~12단계의 <code>____</code>를 채운다.</li>
     </ul>
   </section>
 
   <section class="block">
-    <h2>1. 용어 연결 문제</h2>
-    <p>왼쪽 용어와 오른쪽 설명을 알맞게 연결해보자.</p>
+    <h2>개념 확인 1 — 용어 연결</h2>
     <table class="timetable">
       <tr><th>용어</th><th>설명 후보</th></tr>
       <tr><td>① DataFrame</td><td rowspan="4">A. 행마다 True/False를 붙여 True인 행만 남기는 것<br>B. Pandas가 CSV를 읽어 만든 행·열 구조의 표<br>C. 한 열의 값 크기 순서로 행을 다시 늘어놓는 것<br>D. 표에서 열 하나를 꺼낸 것(행 번호표가 붙은 값 한 줄)</td></tr>
@@ -44,8 +43,7 @@
   </section>
 
   <section class="block">
-    <h2>2. 열 이름 읽기 문제</h2>
-    <p>오늘 데이터(교육용 가상 데이터)의 열 이름과, 그 열이 공장에서 뜻하는 것을 연결해보자.</p>
+    <h2>개념 확인 2 — 열 이름 읽기</h2>
     <table class="timetable">
       <tr><th>열 이름</th><th>뜻 후보</th></tr>
       <tr><td>① 로트번호</td><td rowspan="4">A. 작업을 한 기계의 번호<br>B. 검사 결과(1 = 합격, -1 = 불합격)<br>C. 웨이퍼 묶음(택배 상자 하나)의 번호<br>D. 어떤 작업이었는지(산화·포토·식각·증착·세정)</td></tr>
@@ -58,93 +56,169 @@
   </section>
 
   <section class="block">
-    <h2>3. 코드 빈칸 문제</h2>
-    <p>노트북 1·4·6단계와 같은 코드다. 빈칸을 채워보자.</p>
+    <h2>문제 1 — 반도체 데이터 읽기 (노트북 9단계)</h2>
+    <p>CSV를 읽어 <code>df</code>에 저장하고 앞 5행을 보자. 힌트: 카페 예제 <code>cafe = pd.read_csv(...)</code>와 같은 모양.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>import pandas as pd
-
-df = pd.________("../../data/weekly/week04/week04_process_filtering.csv", encoding="utf-8-sig")
-
-# 설비번호가 EQ-02인 행만 골라내기
-eq02 = df[df["설비번호"] ____ "EQ-02"]
-
-# 온도_섭씨가 높은 순서로 상위 5건 보기
-df.________("온도_섭씨", ascending=False).head(5)</code></pre>
+      <pre><code>df = pd.____("../../data/weekly/week04/week04_process_filtering.csv", encoding="utf-8-sig")
+df.head()</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>read_csv</code>, <code>==</code>, <code>sort_values</code>.
-    <code>=</code> 하나는 "저장하라"는 뜻이라 조건식에 쓰면 <code>SyntaxError</code>가 난다.</div>
+    <div class="answer-box"><code>read_csv</code>. 0번 행은 LOT-0141, EQ-02, 산화, 297.6℃, 합격(1)이다.</div>
   </section>
 
   <section class="block">
-    <h2>4. 열 선택 문제 — 대괄호 몇 겹?</h2>
-    <p>설비번호·온도_섭씨·합격여부 세 열을 함께 꺼내는 코드로 올바른 것은?</p>
-    <ul class="options" style="list-style:none;padding:0;display:grid;gap:.4rem;">
-      <li>① <code>df["설비번호", "온도_섭씨", "합격여부"]</code></li>
-      <li>② <code>df[["설비번호", "온도_섭씨", "합격여부"]]</code></li>
-      <li>③ <code>df("설비번호", "온도_섭씨", "합격여부")</code></li>
-    </ul>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">정답: ②. 바깥 <code>[ ]</code>는 "표에서 꺼내 줘", 안쪽 <code>[ ]</code>는 열 이름 리스트다.
-    ①은 세 이름을 합친 열 하나를 찾다가 <code>KeyError</code>가 난다. 열 하나만 꺼낼 때는 <code>df["온도_섭씨"]</code>처럼 한 겹이다.</div>
-  </section>
-
-  <section class="block">
-    <h2>5. 체크 표시 예측 문제</h2>
-    <p>오늘 데이터의 0~4번 행이다.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th></th><th>설비번호</th><th>온도_섭씨</th><th>합격여부</th></tr>
-        <tr><td>0</td><td>EQ-02</td><td>297.6</td><td>1</td></tr>
-        <tr><td>1</td><td>EQ-04</td><td>300.4</td><td>1</td></tr>
-        <tr><td>2</td><td>EQ-02</td><td>296.9</td><td>-1</td></tr>
-        <tr><td>3</td><td>EQ-02</td><td>297.2</td><td>1</td></tr>
-        <tr><td>4</td><td>EQ-01</td><td>296.7</td><td>1</td></tr>
-      </table>
+    <h2>문제 2 — 크기와 열 이름 (노트북 9단계)</h2>
+    <p><code>df</code>의 크기와 열 이름을 출력하자. 힌트: <code>cafe.shape</code>, <code>cafe.columns</code>와 같은 모양(괄호 없음).</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.____)
+print(df.____)</code></pre>
     </div>
-    <ol>
-      <li><code>df["합격여부"] == -1</code>은 0~4번 행에 각각 True/False 중 무엇을 붙일까?</li>
-      <li>이 5행만 있는 표에서 <code>df[df["합격여부"] == -1]</code>을 하면 몇 번 행이 남을까?</li>
-    </ol>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) False, False, True, False, False. 이 데이터는 -1이 불합격이다.
-    2) 2번 행 하나만 남는다(EQ-02, 296.9도, 불합격). 행 번호는 원래 번호 2가 그대로 따라온다.</div>
+    <div class="answer-box"><code>shape</code> → <code>(100, 8)</code>(작업 기록 100건, 항목 8개), <code>columns</code> → 측정시간~합격여부 8개 열 이름.</div>
   </section>
 
   <section class="block">
-    <h2>6. 결과 해석 문제 — 따로 떼어 보기</h2>
-    <p>네 설비를 조건 검색으로 하나씩 골라 센 결과다(교육용 가상 데이터).</p>
+    <h2>문제 3 — 열 선택 (노트북 9단계)</h2>
+    <p>① 온도 열 하나, ② 설비번호·온도_섭씨·합격여부 세 열을 꺼내자. 힌트: <code>cafe["가격_원"]</code>, <code>cafe[["메뉴", "가격_원", "평가"]]</code>와 같은 모양. ②는 빈칸 두 곳에 <code>[</code>와 <code>]</code>를 하나씩 넣어 대괄호 두 겹을 만든다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df[____].head())
+print(df[____"설비번호", "온도_섭씨", "합격여부"____].head())</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">① <code>"온도_섭씨"</code> ② <code>[</code>, <code>]</code> — 여러 열은 대괄호 두 겹. 한 겹이면 <code>KeyError</code>.
+    2번 행은 EQ-02, 296.9도, 불합격(-1)이다.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 4 — EQ-02 기록만 고르기 (노트북 10단계)</h2>
+    <p>EQ-02 체크 표시를 보고, EQ-02 기록만 <code>eq02</code>에 저장하자. 힌트: <code>check = cafe["종류"] == "커피"</code>, <code>coffee = cafe[...]</code>와 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>check = df["설비번호"] ____ "EQ-02"
+print(check.head())
+eq02 = df[df["설비번호"] == ____]
+print(eq02.shape)</code></pre>
+    </div>
+    <p>0~4번 행 설비번호가 EQ-02, EQ-04, EQ-02, EQ-02, EQ-01일 때 <code>check.head()</code>를 먼저 예측해 보자.</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>==</code>, <code>"EQ-02"</code>. True, False, True, True, False → <code>(25, 8)</code>. 원래 <code>df</code>(100행)는 그대로다.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 5 — 305도 초과 기록 (노트북 10단계)</h2>
+    <p>305도를 넘는 기록만 <code>hot</code>에 저장하고 세자. 힌트: <code>pricey = cafe[cafe["가격_원"] &gt; 5000]</code>와 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>hot = df[df["온도_섭씨"] ____ 305]
+print(len(hot))</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>&gt;</code> → 13건.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 6 — 불합격, 고온 중 불합격 (노트북 10단계)</h2>
+    <p>불합격을 <code>fail</code>에 담고, <code>hot</code> 안에서 불합격만 한 번 더 골라 세자. 힌트: <code>bad</code>, <code>pricey_bad = pricey[pricey["평가"] == -1]</code>와 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>fail = df[df["합격여부"] == ____]
+print(fail.shape)
+hot_fail = ____[hot["합격여부"] == -1]
+print(len(hot_fail))</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>-1</code>, <code>hot</code> → <code>(13, 8)</code>, 3.</div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b>
+      고온 13건, 불합격 13건이지만 겹치는 것은 3건이다(불합격 13건 중 10건은 305도 이하). 숫자가 같아도 같은 기록이 아니다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 7 — 온도 상위 5건 (노트북 11단계)</h2>
+    <p>온도가 높은 순서로 5건을 보고 불합격이 몇 건인지 세자. 힌트: <code>cafe.sort_values("가격_원", ascending=False)</code>와 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>df.sort_values("온도_섭씨", ascending=____).head(5)</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>False</code> → 310.1, 308.6, 308.4, 308.4, 308.2℃. 불합격은 11번 행 1건뿐이다.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 8 — loc으로 꺼내기 (노트북 11단계)</h2>
+    <p>0번 행의 온도, EQ-02 행의 로트번호·온도_섭씨·합격여부를 꺼내자. 힌트: <code>cafe.loc[0, "가격_원"]</code>, <code>coffee_view</code>와 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.____[0, "온도_섭씨"])
+eq02_view = df.loc[df[____] == "EQ-02", ["로트번호", "온도_섭씨", "합격여부"]]
+print(eq02_view.head())</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>loc</code> → <code>297.6</code>, <code>"설비번호"</code> → 0·2·3·8·14번 행(2번 LOT-0156이 불합격).</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 9 — EQ-02 불합격률 (노트북 12단계)</h2>
+    <p>EQ-02의 불합격 건수와 불합격률을 구하자. 힌트: 디저트 예제(<code>dessert</code>, <code>dessert_bad</code>, <code>bad_rate</code>)와 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>eq02 = df[df["설비번호"] == "EQ-02"]
+eq02_fail = eq02[eq02["합격여부"] == -1]
+fail_rate = len(eq02_fail) / ____(eq02) * 100
+
+print(f"EQ-02 불합격 건수: {len(eq02_fail)}건")
+print(f"EQ-02 불합격률: {fail_rate:.1f}%")</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>len</code> → 5건, 20.0%(25건 중 5건).</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 10 — 불합격 기록 여러 열 함께 보기 (노트북 12단계)</h2>
+    <p>불합격 5건의 로트번호·공정명·온도_섭씨를 함께 보자. 힌트: <code>dessert_bad[["주문번호", "메뉴", "가격_원"]]</code>과 같은 모양.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(eq02_fail[["로트번호", ____, "온도_섭씨"]])</code></pre>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>"공정명"</code> → LOT-0156(세정, 296.9), LOT-0074(식각, 299.3), LOT-0218(식각, 304.9), LOT-0217(증착, 301.4), LOT-0162(세정, 307.8).</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 11 — EQ-04와 비교 (노트북 12단계)</h2>
+    <p>문제 9를 EQ-04로 바꿔 불합격 건수와 불합격률을 구하자.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
+      <pre><code>eq04 = df[df["설비번호"] == ____]
+eq04_fail = eq04[eq04["합격여부"] == -1]
+eq04_rate = len(eq04_fail) / len(eq04) * ____
+
+print(f"EQ-04 불합격 건수: {len(eq04_fail)}건")
+print(f"EQ-04 불합격률: {eq04_rate:.1f}%")</code></pre>
+    </div>
+    <p>결과로 아래 표의 ②를 채우고, ①도 계산해 보자. 불합격 <b>건수</b>가 가장 많은 설비와 <b>비율</b>이 가장 높은 설비는?</p>
     <table class="timetable">
       <tr><th>설비번호</th><th>전체 기록</th><th>불합격</th><th>불합격률</th></tr>
       <tr><td>EQ-01</td><td>31건</td><td>2건</td><td>6.5%</td></tr>
       <tr><td>EQ-02</td><td>25건</td><td>5건</td><td>( ① )</td></tr>
       <tr><td>EQ-03</td><td>22건</td><td>1건</td><td>4.5%</td></tr>
       <tr><td>EQ-04</td><td>22건</td><td>5건</td><td>( ② )</td></tr>
-      <tr><td>전체</td><td>100건</td><td>13건</td><td>13.0%</td></tr>
     </table>
-    <ol>
-      <li>①과 ②를 소수 첫째 자리까지 계산해보자.</li>
-      <li>불합격 <b>건수</b>가 가장 많은 설비와 불합격 <b>비율</b>이 가장 높은 설비는 각각 어디인가?</li>
-    </ol>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">1) ① 5 ÷ 25 × 100 = 20.0%  ② 5 ÷ 22 × 100 = 22.7%
-    2) 건수는 EQ-02와 EQ-04가 5건으로 같다. 비율은 기록이 더 적은 EQ-04(22.7%)가 가장 높다.
-    무엇을 기준으로 세느냐에 따라 답이 달라지므로 건수와 비율을 함께 본다.</div>
+    <div class="answer-box"><code>"EQ-04"</code>, <code>100</code>. ① 5 ÷ 25 × 100 = 20.0% ② 5 ÷ 22 × 100 = 22.7%.
+    건수는 EQ-02·EQ-04가 5건으로 같고, 비율은 EQ-04가 가장 높다. 건수와 비율을 함께 본다.</div>
   </section>
 
   <section class="block">
-    <h2>7. 분석 문장 작성 문제 — 여러 열 함께 보기</h2>
-    <p>EQ-02의 불합격 5건을 로트번호·공정명·온도_섭씨와 함께 꺼낸 결과다.</p>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">        로트번호 공정명  온도_섭씨
-2   LOT-0156  세정  296.9
-21  LOT-0074  식각  299.3
-44  LOT-0218  식각  304.9
-84  LOT-0217  증착  301.4
-85  LOT-0162  세정  307.8</pre>
+    <h2>결과 해석 — 분석 문장 작성 (문제 9·10 결과)</h2>
     <div class="callout practice">
       <b class="tag">문장 작성</b>
-      빈칸을 채워 문장을 완성해보자. 학습용 정상 온도 범위는 295~305℃다.
+      빈칸을 채워보자(학습용 정상 온도 범위 295~305℃).
       "EQ-02 기록 ____건 중 ____건이 불합격(____%)이었다. 불합격 5건 중 ____건은 온도가 정상 범위 안이었고,
       공정도 세정·식각·증착으로 섞여 있었다."
     </div>
@@ -152,56 +226,7 @@ df.________("온도_섭씨", ascending=False).head(5)</code></pre>
     <button class="reveal-btn">예시 답안 보기</button>
     <div class="answer-box">"EQ-02 기록 25건 중 5건이 불합격(20.0%)이었다. 불합격 5건 중 4건은 온도가 정상 범위 안이었고,
     공정도 세정·식각·증착으로 섞여 있었다."<br>
-    답하기: "EQ-02를 원인 후보로 더 살펴볼 만하지만, 아직 원인이라고 단정할 수는 없어. 기록이 25건뿐이라 우연일 수도 있고,
-    비율로는 EQ-04(22.7%)가 더 높기도 해."</div>
-  </section>
-
-  <section class="block">
-    <h2>8. loc 맛보기 문제</h2>
-    <p><code>df.loc[행, 열]</code>은 쉼표 앞이 행, 뒤가 열이다. 0번 행의 온도_섭씨 값은 297.6이다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code># ① 0번 행의 온도_섭씨 값 하나 꺼내기
-print(df.____[0, "온도_섭씨"])
-
-# ② EQ-02 행만 고르면서 로트번호·온도_섭씨 두 열만 보기
-df.loc[df["설비번호"] == "EQ-02", ____]</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① <code>loc</code> ② <code>["로트번호", "온도_섭씨"]</code> — 열이 여러 개라 열 이름 리스트를 넣는다.
-    <code>loc</code>은 값을 고칠 때도 쓸 수 있다(5차시에서 잠깐 다시 본다).</div>
-  </section>
-
-  <section class="block">
-    <h2>9. 도전 — EQ-02가 아닌 설비와 온도 하위 5건</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      <ul class="pt-list">
-        <li>① <code>df[df["설비번호"] != "EQ-02"]</code>로 EQ-02를 뺀 기록을 고르고, 그 안의 불합격률을 구해 EQ-02(20.0%)와 비교해보자. (노트북 8단계 "도전 문제 1")</li>
-        <li>② <code>df.sort_values("온도_섭씨").head(5)</code>로 온도가 가장 낮은 5건을 보고, 어느 설비의 기록인지와 불합격 건수를 적어보자. (노트북 8단계 "도전 문제 2")</li>
-      </ul>
-    </div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box">
-      <b class="tag">체크포인트</b>
-      ① EQ-02 외 75건 중 불합격 8건(10.7%)으로 EQ-02(20.0%)보다 낮다.
-      ② 287.0~292.9℃의 5건이 모두 EQ-01 기록이고, 불합격은 0건이다. 온도가 가장 낮은 기록이 한 설비에 몰려 있다는 것도
-      여러 열을 함께 꺼냈기 때문에 보이는 점이다. 다만 5건뿐이라 우연일 수 있다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>10. AI 미니 프로젝트 — 나만의 설비 검색기</h2>
-    <div class="callout practice">
-      <b class="tag">도전</b>
-      AI 챗봇에게 "df라는 pandas DataFrame에 설비번호 열과 합격여부 열(1=합격, -1=불합격)이 있어. input()으로 설비번호를 입력받아
-      그 설비의 기록 건수, 불합격 건수, 불합격률을 한 줄로 출력하고, 없는 설비번호면 안내 문구를 출력하는 코드를 만들어줘.
-      df는 새로 만들지 말고 그대로 써줘."라고 요청해보자. 노트북 12단계 셀에 붙여넣어 실행하고, EQ-01~EQ-04를 차례로 입력해 6번 표와 비교하자.
-    </div>
-    <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "내가 만든 설비 검색기로 확인한 결과, 불합격률이 가장 높은 설비는 ______이고 ____%였다."
-    </div>
+    답하기: "EQ-02는 원인 후보로 더 살펴볼 만하지만 원인이라고 단정할 수는 없어. 기록이 25건뿐이고, 비율로는 EQ-04(22.7%)가 더 높아."</div>
   </section>
 
   <div class="nav-buttons">
