@@ -130,7 +130,8 @@
 
     <h3>비교 연산자와 if</h3>
     <p>비교 연산자로 질문하면 파이썬은 <code>True</code>(참) 또는 <code>False</code>(거짓)로 답한다.
-    <code>if 조건:</code> 다음 줄을 <b>4칸 들여쓰면</b> 조건이 참일 때만 실행된다.</p>
+    <code>if 조건:</code> 다음 줄을 <b>4칸 들여쓰면</b> 조건이 참일 때만 실행된다.
+    Jupyter에서는 콜론 뒤에 Enter를 치면 4칸이 자동으로 들어가고, Tab 키 한 번도 4칸이다.</p>
     <table class="timetable">
       <tr><th>연산자</th><th>묻는 내용</th></tr>
       <tr><td><code>&gt;</code> / <code>&lt;</code></td><td>큰가? / 작은가?</td></tr>
@@ -296,6 +297,27 @@ print(f"합계 {total}원, 평균 {average}원")</code></pre>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">합계 17000원, 평균 4250.0원</pre>
     </div>
 
+
+    <h3>zip — 두 목록을 짝지어 함께 꺼내기</h3>
+    <p>이름 목록과 점수 목록처럼 <b>순서가 서로 대응하는 목록 두 개</b>를 같이 읽고 싶을 때가 있다. <code>zip(A, B)</code>는 지퍼가 양쪽 이빨을 한 칸씩 맞물리듯,
+    두 목록에서 <b>같은 자리의 값을 한 쌍씩</b> 묶어 준다. <code>for</code> 뒤에 변수 이름을 <b>두 개</b> 쓰면 한 쌍이 앞 변수, 뒤 변수에 하나씩 나뉘어 담긴다.</p>
+
+    <h4>쉬운 예제 — 이름과 점수 짝짓기</h4>
+    <div class="code-block">
+      <div class="code-label"><span>Python — zip으로 두 목록 함께 꺼내기</span><button class="copy-btn">복사</button></div>
+      <pre><code>names = ["민지", "준호", "서연"]
+exam_scores = [85, 72, 93]
+
+for name, score in zip(names, exam_scores):
+    print(name, score)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">민지 85
+준호 72
+서연 93</pre>
+    </div>
+    <p>첫 번째 반복에서는 <code>"민지"</code>와 <code>85</code>가 짝이 되어 <code>name</code>, <code>score</code>에 들어온다. 9차시에서 "열 이름 목록"과 "중요도 목록"을 짝지어 출력할 때 같은 방식을 다시 쓴다.</p>
 
     <h3>"딕셔너리의 리스트"에서 골라내기</h3>
     <p>꺼낼 때마다 딕셔너리 하나(사람 한 명, 설비 한 대)가 통째로 들어온다. 조건에 맞을 때만 <code>append()</code>(2차시)로 새 리스트에 담는다.</p>
@@ -513,7 +535,9 @@ for record in records:
 
 print(f"실제 검사에서 불합격(-1)한 기록: {real_fail}건")</code></pre>
       </div>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">LOT-0186 294.9 1
+      <div class="callout success">
+        <b class="tag">실행 결과</b>
+        <pre style="margin:.3rem 0 0;white-space:pre-wrap;">LOT-0186 294.9 1
 LOT-0186 293.8 -1
 LOT-0141 314.1 1
 LOT-0032 320.3 1
@@ -526,6 +550,7 @@ LOT-0197 291.0 1
 LOT-0046 316.6 1
 LOT-0085 307.0 -1
 실제 검사에서 불합격(-1)한 기록: 3건</pre>
+      </div>
       <div class="tablewrap">
         <table class="timetable">
           <tr><th>온도 규칙의 판정</th><th>기록 수</th><th>실제 합격(1)</th><th>실제 불합격(-1)</th></tr>
@@ -633,6 +658,7 @@ LOT-0085 307.0 -1
         <tr><td><code>NameError: name 'judge_pass' is not defined</code></td><td><code>def</code> 셀을 실행하지 않음, 철자 다름</td><td>함수 셀부터 다시 실행</td></tr>
       </table>
     </div>
+    <p>오류 메시지의 <code>line 3</code> 같은 줄 번호는 내 코드에서 문제가 난 줄을 가리킨다(코드마다 다르다).</p>
     <div class="callout warn">
       <b class="tag">주의</b>
       오류 없이 개수가 0이나 1로 나오면 <code>pass_count = 0</code> 같은 줄이 반복문 안에 들어가 있지 않은지 본다.

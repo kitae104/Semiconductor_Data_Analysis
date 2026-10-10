@@ -135,8 +135,8 @@ Pa인데(1 mTorr ≈ 0.133 Pa) 같은 행의 `압력_Pa`는 평균 약 1,013.9 P
 ### 이번 차시 핵심 수치(실제 실행 결과, `dropna()` 후 `test_size=0.2`, `random_state=42`, `stratify=y`, `max_depth=4`)
 - 학습 데이터 116행 → 92행 / 24행. 모델 정확도 91.7%, 기준선(무조건 진행) 70.8%, 전부 취소라고 찍으면 29.2%.
 - 혼동행렬(`labels=[1, -1]`): `[[16, 1], [1, 6]]`(9차시와 같다).
-- 새 날 예측 `model.predict(X_new)`: `[1, -1, -1, -1, 1, 1, 1]` → 7월 31일(비)·8월 1일(폭염)·8월 2일(강풍)은 취소, 나머지는 진행.
-- `model.classes_` = `[-1, 1]`이므로 `predict_proba(X_new)[:, 0]`이 **취소 확률**이다:
+- 새 날 예측 `easy_model.predict(easy_X_new)`: `[1, -1, -1, -1, 1, 1, 1]` → 7월 31일(비)·8월 1일(폭염)·8월 2일(강풍)은 취소, 나머지는 진행.
+- `easy_model.classes_` = `[-1, 1]`이므로 `easy_model.predict_proba(easy_X_new)[:, 0]`이 **취소 확률**이다:
   0.016, 1.000, 1.000, 1.000, 0.375, 0.016, 0.016.
   8월 3일(약한 비)은 진행으로 예측하지만 취소 확률이 0.375다 — 학습 데이터에서 약한 비가 온 날 8일 중 3일이
   취소였기 때문이다. 8월 4일(풍속 8.5)은 트리의 기준(9.9 m/s)보다 약해 0.016이다.
@@ -151,8 +151,8 @@ Pa인데(1 mTorr ≈ 0.133 Pa) 같은 행의 `압력_Pa`는 평균 약 1,013.9 P
 | 생활 예제 | 반도체(week09_pass_fail_train.csv / week09_new_lots_to_predict.csv) |
 | --- | --- |
 | `new_days = pd.read_csv(".../week10_easy_outdoor_class_new_days.csv", encoding="utf-8-sig")` → (7, 5) | `new_lots = pd.read_csv(".../week09_new_lots_to_predict.csv", encoding="utf-8-sig")` → (9, 8) |
-| `new_days["예측_진행여부"] = model.predict(X_new)` | `new_lots["예측_합격여부"] = model.predict(X_new)` |
-| `new_days["취소_확률"] = proba[:, 0].round(3)` | `new_lots["불합격_확률"] = proba[:, 0].round(3)` |
+| `new_days["예측_진행여부"] = easy_model.predict(easy_X_new)` | `new_lots["예측_합격여부"] = model.predict(X_new)` |
+| `new_days["취소_확률"] = easy_proba[:, 0].round(3)` | `new_lots["불합격_확률"] = proba[:, 0].round(3)` |
 | 약한 비 날 취소 확률 0.375 | 2번 로트 불합격 확률 0.614, 0·6번 로트 0.375 |
 
 ### 실제 데이터와 다른 점

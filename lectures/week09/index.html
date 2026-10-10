@@ -128,7 +128,7 @@
   <section class="block">
     <h2>머신러닝 개념 이해하기</h2>
     <ul class="pt-list">
-      <li><b>머신러닝</b>: 지난 기록(문제+정답)을 주면 컴퓨터가 규칙을 찾고, 그 규칙으로 새 문제의 답을 예측한다.</li>
+      <li><b>머신러닝</b>: 지난 기록(문제+정답)을 주면 컴퓨터가 규칙을 찾고, 그 규칙으로 새 문제의 답을 예측한다. 이렇게 찾은 규칙 묶음을 <b>모델</b>이라 부른다.</li>
       <li>생활 예: 지난 날씨와 "야외 체육 수업을 했나"의 기록으로 "내일 수업을 할 수 있을까"를 맞힌다. 오늘은 이 쉬운 예제로 먼저 따라 하고 반도체 데이터에 적용한다.</li>
     </ul>
     <svg class="learn-svg" viewBox="0 0 720 150" role="img"
@@ -167,6 +167,18 @@
         <tr><td><code>강수량_mm</code></td><td>내린 비의 양(0 = 비 없음)</td><td>Feature</td></tr>
         <tr><td><code>진행여부</code></td><td>1 = 진행, -1 = 취소</td><td><b>Label</b></td></tr>
       </table>
+    </div>
+
+    <div class="callout concept">
+      <b class="tag">단위 읽는 법</b>
+      쉬운 예제 날씨 데이터에서 새로 나오는 단위다.
+      <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+        <tr><td><code>m/s (풍속_m_s)</code></td><td>미터 퍼 세컨드 (초속 몇 미터)</td><td>바람의 빠르기. 5m/s는 1초에 5m 부는 바람</td></tr>
+        <tr><td><code>mm (강수량_mm)</code></td><td>밀리미터</td><td>내린 비의 높이. 1mm는 1㎡에 비 1리터가 쌓인 양</td></tr>
+      </table>
+      </div>
     </div>
 
     <h3>반도체 데이터의 열</h3>
@@ -268,7 +280,8 @@
       <b class="tag">위젯 순서 — 파일(File) → 트리(Tree) → 학습·평가(Test and Score)</b>
       <ul class="pt-list">
         <li><b>파일(File)</b>: <code>week09_pass_fail_train.csv</code>를 열고 <code>합격여부</code>를 유형 <b>범주형(categorical)</b>, 역할 <b>목표(target)</b>로 바꾼 뒤 <b>적용(Apply)</b>.</li>
-        <li><b>트리(Tree)</b>를 연결하고, 파일과 트리를 모두 <b>학습·평가(Test and Score)</b>에 연결한다. <b>CA</b> 열이 정확도다.</li>
+        <li><b>트리(Tree)</b>를 놓고, 파일과 트리를 모두 <b>학습·평가(Test and Score)</b>에 연결한다. <b>CA</b> 열이 정확도다.</li>
+        <li>파일 → 트리 연결은 학습·평가에는 없어도 되지만(그림 9-1), 10차시 예측(Predictions)에는 필요하니 지금 이어 두어도 좋다.</li>
       </ul>
     </div>
     <p>위젯이 처음이라면 → <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a></p>
@@ -297,8 +310,8 @@
     <p style="margin:.8rem 0 .2rem;"><b>실제 Orange3 화면으로 확인하기</b></p>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week09_01_canvas.png" loading="lazy"
-           alt="그림 9-1. 파일 → 트리 → 학습·평가 캔버스" data-shot="File → Tree → Test and Score를 연결한 캔버스(File은 Test and Score에도 연결)">
-      <figcaption class="img-caption">그림 9-1. 파일(File) → 트리(Tree) → 학습·평가(Test and Score) 캔버스</figcaption>
+           alt="그림 9-1. 파일과 트리를 학습·평가에 연결한 캔버스" data-shot="File → Tree → Test and Score를 연결한 캔버스(File은 Test and Score에도 연결)">
+      <figcaption class="img-caption">그림 9-1. 파일(File)과 트리(Tree)를 학습·평가(Test and Score)에 연결한 캔버스</figcaption>
     </figure>
     <figure style="margin:1rem 0;">
       <img class="chart-img" src="../../assets/images/orange3/week09_02_file_target.png" loading="lazy"
@@ -488,7 +501,7 @@ print(easy_cm)</code></pre>
 풍속_m_s: 5.4%
 강수량_mm: 69.8%</pre>
     </div>
-    <p><code>zip(A, B)</code>는 두 목록에서 같은 자리의 값을 한 쌍씩 꺼낸다(첫 쌍은 <code>"최고기온_섭씨"</code>와 약 0.248). <code>for</code> 뒤에 이름을 두 개 쓰면 한 쌍이 <code>name</code>과 <code>importance</code>에 하나씩 나뉘어 담긴다.
+    <p><code>zip(A, B)</code>는 3차시에서 해 본 대로 두 목록에서 같은 자리의 값을 한 쌍씩 꺼낸다(첫 쌍은 <code>"최고기온_섭씨"</code>와 약 0.248). <code>for</code> 뒤에 이름을 두 개 쓰면 한 쌍이 <code>name</code>과 <code>importance</code>에 하나씩 나뉘어 담긴다.
     결과: 강수량이 기록을 가장 잘 갈랐고, 습도는 쓰이지 않았다.</p>
 
     <div class="callout concept">

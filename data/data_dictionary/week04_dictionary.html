@@ -88,6 +88,19 @@
   </section>
 
   <section class="block">
+    <h2>단위 읽는 법</h2>
+<p>새로 나오는 단위는 하나다.</p>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>표기</th>
+<th>읽는 법</th>
+<th>뜻</th>
+</tr></thead><tbody>
+<tr><td>slm (가스유량_slm)</td><td>에스엘엠 (분당 표준 리터)</td><td>1분 동안 흘러 들어간 가스의 양을 리터로 잰 값. 수도꼭지에서 1분에 몇 리터 나오는지와 비슷하다</td></tr>
+</tbody></table></div>
+  </section>
+
+  <section class="block">
     <h2>정상 범위 (교육용 예시)</h2>
 <p>온도 295~305℃, 압력 995~1025 Pa, 가스유량 47~53 slm.</p>
   </section>
@@ -163,10 +176,10 @@
 <th>생활 예제</th>
 <th>반도체(week04_process_filtering.csv)</th>
 </tr></thead><tbody>
-<tr><td><code>df[df[&quot;종류&quot;] == &quot;커피&quot;]</code> → 5행</td><td><code>df[df[&quot;설비번호&quot;] == &quot;EQ-02&quot;]</code> → 25행</td></tr>
-<tr><td><code>df[df[&quot;가격_원&quot;] &gt; 5000]</code> → 5건</td><td><code>df[df[&quot;온도_섭씨&quot;] &gt; 305]</code> → 13건</td></tr>
-<tr><td><code>df[df[&quot;평가&quot;] == -1]</code> → 4건</td><td><code>df[df[&quot;합격여부&quot;] == -1]</code> → 13건</td></tr>
-<tr><td><code>df.sort_values(&quot;가격_원&quot;, ascending=False).head(5)</code></td><td><code>df.sort_values(&quot;온도_섭씨&quot;, ascending=False).head(5)</code></td></tr>
+<tr><td><code>cafe[cafe[&quot;종류&quot;] == &quot;커피&quot;]</code> → 5행</td><td><code>df[df[&quot;설비번호&quot;] == &quot;EQ-02&quot;]</code> → 25행</td></tr>
+<tr><td><code>cafe[cafe[&quot;가격_원&quot;] &gt; 5000]</code> → 5건</td><td><code>df[df[&quot;온도_섭씨&quot;] &gt; 305]</code> → 13건</td></tr>
+<tr><td><code>cafe[cafe[&quot;평가&quot;] == -1]</code> → 4건</td><td><code>df[df[&quot;합격여부&quot;] == -1]</code> → 13건</td></tr>
+<tr><td><code>cafe.sort_values(&quot;가격_원&quot;, ascending=False).head(5)</code></td><td><code>df.sort_values(&quot;온도_섭씨&quot;, ascending=False).head(5)</code></td></tr>
 <tr><td><code>len(dessert_bad) / len(dessert) * 100</code> → 50.0%</td><td><code>len(eq02_fail) / len(eq02) * 100</code> → 20.0%</td></tr>
 </tbody></table></div>
 <h3>실제 데이터와 다른 점</h3>

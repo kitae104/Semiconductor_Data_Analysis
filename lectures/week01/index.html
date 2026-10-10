@@ -245,6 +245,17 @@
       </table>
     </div>
     <p class="img-caption">40행 중 앞 6행. 다섯 번째 행: "3월 2일 13시, LOT-0093의 1번 웨이퍼를 EQ-04에서 포토 작업, 299.0도, 불합격(-1)".</p>
+        <div class="callout concept">
+      <b class="tag">단위 읽는 법</b>
+      열 이름 끝의 <code>_섭씨</code>, <code>_Pa</code>처럼 <b>밑줄(_) 뒤는 그 열 숫자의 단위</b>다. 처음 보는 단위는 아래처럼 읽는다.
+      <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+        <tr><td><code>℃ (온도_섭씨)</code></td><td>섭씨 몇 도</td><td>온도 단위. 얼음이 어는 물 0℃, 끓는 물 100℃ 기준</td></tr>
+        <tr><td><code>Pa (압력_Pa)</code></td><td>파스칼</td><td>압력 단위. 넓이를 누르는 힘의 세기. 숫자가 클수록 세게 누른다</td></tr>
+      </table>
+      </div>
+    </div>
     <div class="callout warn">
       <b class="tag">가상 값이라는 점 기억하기</b>
       온도·압력(Pa, 파스칼)은 교육용 숫자라 실제 공정 조건과 다르다. 값의 크기는 해석하지 않고 기록끼리 비교만 한다.
@@ -509,8 +520,8 @@ print(f"세정 기록 {clean_total}건 중 불합격률은 {clean_rate:.1f}%입�
     <div class="callout warn">
       <b class="tag">체크포인트 — 셀은 위에서 아래로</b>
       <ul class="pt-list">
-        <li>위 셀을 건너뛰면 <code>NameError</code>가 난다. 빈칸을 안 채우면 <code>NameError: name '____' is not defined</code>.</li>
-        <li>이상하면 "커널 → 다시 시작 후 모두 실행"으로 맨 위부터 다시 실행한다.</li>
+        <li>위 셀을 건너뛰면 <code>NameError</code>가 난다. 빈칸을 안 채우면 <code>NameError: name '____' is not defined</code>(빈칸 자리에 따라 <code>SyntaxError</code>나 <code>ValueError</code>가 나기도 한다).</li>
+        <li>이상하면 "커널 → 다시 시작 후 모두 실행"(Kernel 메뉴의 Restart … Run All 항목)으로 맨 위부터 다시 실행한다. <b>커널</b>은 노트북 뒤에서 코드를 실제로 실행하는 프로그램이다.</li>
       </ul>
     </div>
     <div class="step"><div class="num">1</div><div class="content"><b>쉬운 예제</b> — 변수·자료형·f-string·계산·input()을 카페 주문으로 실행한다. (노트북 1~5단계)</div></div>

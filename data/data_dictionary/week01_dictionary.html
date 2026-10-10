@@ -76,14 +76,28 @@
 <th>예시</th>
 <th>결측값 가능 여부</th>
 </tr></thead><tbody>
-<tr><td>측정시간</td><td>기록이 저장된 시각</td><td>문자열(날짜시간)</td><td>-</td><td>2024-03-05 10:00</td><td>없음</td></tr>
-<tr><td>로트번호</td><td>웨이퍼 묶음(로트) 식별 번호</td><td>문자열</td><td>-</td><td>LOT-0231</td><td>없음</td></tr>
-<tr><td>웨이퍼번호</td><td>로트 안에서 웨이퍼 순번</td><td>정수</td><td>-</td><td>7</td><td>없음</td></tr>
-<tr><td>공정명</td><td>수행한 공정 종류</td><td>문자열</td><td>-</td><td>식각</td><td>없음</td></tr>
-<tr><td>설비번호</td><td>공정을 수행한 설비</td><td>문자열</td><td>-</td><td>EQ-02</td><td>없음</td></tr>
-<tr><td>온도_섭씨</td><td>공정 진행 중 챔버 온도</td><td>실수</td><td>℃</td><td>300.2</td><td>없음</td></tr>
-<tr><td>압력_Pa</td><td>공정 진행 중 챔버 압력</td><td>실수</td><td>Pa</td><td>1010.5</td><td>없음</td></tr>
+<tr><td>측정시간</td><td>기록이 저장된 시각</td><td>문자열(날짜시간)</td><td>-</td><td>2024-03-01 08:00</td><td>없음</td></tr>
+<tr><td>로트번호</td><td>웨이퍼 묶음(로트) 식별 번호</td><td>문자열</td><td>-</td><td>LOT-0398</td><td>없음</td></tr>
+<tr><td>웨이퍼번호</td><td>로트 안에서 웨이퍼 순번</td><td>정수</td><td>-</td><td>4</td><td>없음</td></tr>
+<tr><td>공정명</td><td>수행한 공정 종류(산화·포토·식각·증착·세정)</td><td>문자열</td><td>-</td><td>산화</td><td>없음</td></tr>
+<tr><td>설비번호</td><td>공정을 수행한 설비</td><td>문자열</td><td>-</td><td>EQ-03</td><td>없음</td></tr>
+<tr><td>온도_섭씨</td><td>공정 진행 중 설비 안(챔버: 웨이퍼를 넣고 작업하는 밀폐된 방)에서 센서가 잰 온도</td><td>실수</td><td>℃</td><td>295.0</td><td>없음</td></tr>
+<tr><td>압력_Pa</td><td>공정 진행 중 챔버 안 압력(Pa = 파스칼, 압력 단위)</td><td>실수</td><td>Pa</td><td>1019.7</td><td>없음</td></tr>
 <tr><td>합격여부</td><td>검사 결과</td><td>정수</td><td>-</td><td>1(합격) / -1(불합격)</td><td>없음</td></tr>
+</tbody></table></div>
+  </section>
+
+  <section class="block">
+    <h2>단위 읽는 법</h2>
+<p>열 이름 끝의 _섭씨, _Pa처럼 밑줄(_) 뒤는 그 열 숫자의 단위다. 처음 보는 단위는 아래처럼 읽는다.</p>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>표기</th>
+<th>읽는 법</th>
+<th>뜻</th>
+</tr></thead><tbody>
+<tr><td>℃ (온도_섭씨)</td><td>섭씨 몇 도</td><td>온도 단위. 얼음이 어는 물 0℃, 끓는 물 100℃ 기준</td></tr>
+<tr><td>Pa (압력_Pa)</td><td>파스칼</td><td>압력 단위. 넓이를 누르는 힘의 세기. 숫자가 클수록 세게 누른다</td></tr>
 </tbody></table></div>
   </section>
 
@@ -107,11 +121,13 @@
   <section class="block">
     <h2>의도적으로 포함된 패턴</h2>
 <p>1차시는 "관찰"이 목표이므로 결측값이나 극단적 이상값을 넣지 않았다. 합격 확률 85%로 생성해 현실적인 비율만 반영했다(실제 생성 결과: 합격 32건 80% / 불합격 8건 20%).</p>
+<p>실제 생성 결과(강의 "숫자 하나보다 여러 열을 함께 볼 때"에서 쓰는 값):</p>
+<ul class="pt-list"><li>공정명별 기록/불합격: 세정 10/5, 포토 9/2, 산화 6/1, 증착 8/0, 식각 7/0.</li><li>학습용 정상 온도 범위(295~305℃) 밖 2건(305.5℃ 불합격, 293.6℃ 합격). 불합격 8건 중 7건은 범위 안.</li><li><code>합격여부</code>는 공정·온도와 무관하게 무작위로 만들었다. "세정에 불합격이 몰린 것"은 우연이므로 강의에서도 "원인"이 아니라 "원인 후보"로만 다룬다.</li></ul>
   </section>
 
   <section class="block">
     <h2>이번 차시 분석 질문</h2>
-<ul class="pt-list"><li>데이터에는 몇 개의 행과 열이 있는가?</li><li>합격과 불합격은 각각 몇 건인가?</li><li>어떤 설비들이 등장하는가?</li></ul>
+<ul class="pt-list"><li>데이터에는 몇 개의 행과 열이 있는가?</li><li>합격과 불합격은 각각 몇 건인가?</li><li>어떤 설비들이 등장하는가?</li><li>불합격만 볼 때와 공정명을 함께 볼 때 무엇이 달라지는가?</li></ul>
   </section>
 
   <section class="block">
