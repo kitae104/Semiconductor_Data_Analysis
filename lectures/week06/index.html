@@ -122,6 +122,18 @@
         <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
       </table>
     </div>
+
+    <div class="callout concept">
+      <b class="tag">단위 읽는 법</b>
+      그래프의 축 이름에도 나오는 단위다.
+      <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+        <tr><td><code>nm (두께_nm)</code></td><td>나노미터</td><td>길이. 1nm는 10억분의 1m. 머리카락 굵기의 수만 분의 1 정도</td></tr>
+        <tr><td><code>mm/s (진동_mm_s)</code></td><td>밀리미터 퍼 세컨드 (1초에 몇 mm)</td><td>움직이는 빠르기. 값이 클수록 설비가 더 크게 흔들린다</td></tr>
+      </table>
+      </div>
+    </div>
   </section>
 
   <section class="block">
@@ -222,7 +234,7 @@ ice["날짜"].head(3)</code></pre>
 1   2024-06-04
 2   2024-06-05
 Name: 날짜, dtype: datetime64[us]</pre>
-      <code>datetime64</code>가 "날짜로 알아본다"는 표시다(버전에 따라 <code>[ns]</code>).
+      <code>datetime64</code>가 "날짜로 알아본다"는 표시다. 뒤의 <code>[us]</code>는 저장 단위라 신경 쓰지 않아도 된다(버전에 따라 <code>[ns]</code>).
     </div>
 
     <h3>그래프 코드의 공통 틀</h3>

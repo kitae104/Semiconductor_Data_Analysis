@@ -117,6 +117,18 @@
         <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
       </table>
     </div>
+        <div class="callout concept">
+      <b class="tag">단위 읽는 법</b>
+      이번 차시에 새로 나오는 단위들이다. 열 이름의 밑줄 뒤가 단위인 규칙은 1차시와 같다.
+      <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+        <tr><td><code>cm (키_cm)</code></td><td>센티미터</td><td>길이. 100cm = 1m</td></tr>
+        <tr><td><code>kg (몸무게_kg)</code></td><td>킬로그램</td><td>무게. 1kg = 1000g</td></tr>
+        <tr><td><code>sec (처리시간_sec)</code></td><td>초 (영어로 second의 줄임)</td><td>시간. 60초 = 1분</td></tr>
+      </table>
+      </div>
+    </div>
     <p style="color:var(--muted);font-size:.9rem;">값과 정상 범위(온도 295~305, 압력 995~1025, 가스유량 47~53)는 학습용이라 실제 공정 조건으로 해석하지 않는다.</p>
 
     <h3>데이터는 왜 지저분해질까</h3>
@@ -454,6 +466,7 @@ print(minus_pressure[["설비번호", "공정명", "압력_Pa", "합격여부"]]
 79  EQ-02  산화 -26.981234   1.0</pre>
     </div>
     <ul class="pt-list">
+      <li><code>1.0</code>은 1(합격)과 같다. 빈칸(NaN)이 섞인 열은 숫자가 소수로 저장돼 <code>1.0</code>처럼 보인다.</li>
       <li><b>공장 말로 읽기</b> — 모두 <b>합격(1)</b>이다. 200도 넘게 뜨거웠는데 통과했으니 온도 기록 오류를 먼저 의심할 만하다(쉬운 예제의 몸무게 66.0kg과 같은 생각법).</li>
       <li>고온 2건과 가스유량 이상값 2건이 모두 <b>EQ-03</b>(6건 중 4건). "EQ-03 센서를 점검해보자"는 <b>확인할 단서</b>까지만 말한다 — 6건뿐이라 우연일 수 있다.</li>
     </ul>

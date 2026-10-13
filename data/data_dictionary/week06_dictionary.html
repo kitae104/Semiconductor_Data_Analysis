@@ -90,6 +90,20 @@
   </section>
 
   <section class="block">
+    <h2>단위 읽는 법</h2>
+<p>그래프의 축 이름에도 나오는 단위다.</p>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>표기</th>
+<th>읽는 법</th>
+<th>뜻</th>
+</tr></thead><tbody>
+<tr><td>nm (두께_nm)</td><td>나노미터</td><td>길이. 1nm는 10억분의 1m. 머리카락 굵기의 수만 분의 1 정도</td></tr>
+<tr><td>mm/s (진동_mm_s)</td><td>밀리미터 퍼 세컨드 (1초에 몇 mm)</td><td>움직이는 빠르기. 값이 클수록 설비가 더 크게 흔들린다</td></tr>
+</tbody></table></div>
+  </section>
+
+  <section class="block">
     <h2>정상 범위 (교육용 예시)</h2>
 <p>온도 295~305℃, 두께 97~103nm, 진동 0.40~0.60 mm/s. 이 과정에서 학습용으로 정한 범위이며 실제 공정 규격이 아니다.</p>
   </section>
@@ -141,19 +155,19 @@
 <tr><td>판매량_개</td><td>그날 판 아이스크림 개수</td><td>정수</td><td>개</td><td>71</td><td>없음</td></tr>
 </tbody></table></div>
 <h3>의도적으로 포함된 패턴(실제 값)</h3>
-<ul class="pt-list"><li>크기 21행 x 5열. 요일마다 3일씩.</li><li><b>시간이 지나며 오르는 흐름(선 그래프)</b>: 첫 주 평균 기온 24.8℃ → 셋째 주 28.7℃, 첫 주 평균 판매량 85.7개 → 셋째 주 115.0개.</li><li><b>막대그래프</b>: <code>df[&quot;날씨&quot;].value_counts()</code> → 맑음 12, 흐림 6, 비 3.</li><li><b>히스토그램</b>: 판매량은 46~147개, 평균 98.1개, 중앙값 95개. <code>bins=5</code>이면 구간별 3·4·6·4·4일.</li><li><b>산점도</b>: 기온이 높은 날 많이 팔린다. 기온-판매량 상관계수 0.91(상관계수 자체는 8차시에서 다룬다).</li><li><b>박스플롯(날씨별 판매량)</b>: 비 오는 날이 가장 낮다. 중앙값 맑음 99.0, 흐림 99.0, 비 61.0 / 평균 맑음 101.5, 흐림 109.3, 비 62.3. 흐린 날 평균이 맑은 날보다 높은 것은 맑은 날 12일 중 5일이 최고기온 25.4℃ 이하로 선선해 50~88개만 팔렸기 때문이다(흐린 날 6일은 모두 25℃ 초과). "흐리면 더 팔린다"고 읽지 않도록 강사가 짚는다.</li></ul>
+<ul class="pt-list"><li>크기 21행 x 5열. 요일마다 3일씩.</li><li><b>시간이 지나며 오르는 흐름(선 그래프)</b>: 첫 주 평균 기온 24.8℃ → 셋째 주 28.7℃, 첫 주 평균 판매량 85.7개 → 셋째 주 115.0개.</li><li><b>막대그래프</b>: <code>ice[&quot;날씨&quot;].value_counts()</code> → 맑음 12, 흐림 6, 비 3.</li><li><b>히스토그램</b>: 판매량은 46~147개, 평균 98.1개, 중앙값 95개. <code>bins=5</code>이면 구간별 3·4·6·4·4일.</li><li><b>산점도</b>: 기온이 높은 날 많이 팔린다. 기온-판매량 상관계수 0.91(상관계수 자체는 8차시에서 다룬다).</li><li><b>박스플롯(날씨별 판매량)</b>: 비 오는 날이 가장 낮다. 중앙값 맑음 99.0, 흐림 99.0, 비 61.0 / 평균 맑음 101.5, 흐림 109.3, 비 62.3. 흐린 날 평균이 맑은 날보다 높은 것은 맑은 날 12일 중 5일이 최고기온 25.4℃ 이하로 선선해 50~88개만 팔렸기 때문이다(흐린 날 6일은 모두 25℃ 초과). "흐리면 더 팔린다"고 읽지 않도록 강사가 짚는다.</li></ul>
 <h3>반도체 데이터와 짝이 되는 연산</h3>
 <div class="tablewrap"><table class="timetable">
 <thead><tr>
 <th>생활 예제</th>
 <th>반도체(week06_process_visualization.csv)</th>
 </tr></thead><tbody>
-<tr><td><code>df[&quot;날짜&quot;] = pd.to_datetime(df[&quot;날짜&quot;])</code></td><td><code>df[&quot;측정시간&quot;] = pd.to_datetime(df[&quot;측정시간&quot;])</code></td></tr>
-<tr><td><code>plt.plot(df[&quot;날짜&quot;], df[&quot;판매량_개&quot;])</code></td><td><code>plt.plot(df[&quot;측정시간&quot;], df[&quot;온도_섭씨&quot;])</code></td></tr>
-<tr><td><code>df[&quot;날씨&quot;].value_counts()</code> → 막대그래프</td><td><code>df[&quot;설비번호&quot;].value_counts()</code> → 막대그래프</td></tr>
-<tr><td><code>plt.hist(df[&quot;판매량_개&quot;], bins=5)</code></td><td><code>plt.hist(df[&quot;온도_섭씨&quot;], bins=10)</code></td></tr>
-<tr><td><code>plt.scatter(df[&quot;최고기온_섭씨&quot;], df[&quot;판매량_개&quot;])</code></td><td><code>plt.scatter(df[&quot;온도_섭씨&quot;], df[&quot;두께_nm&quot;])</code></td></tr>
-<tr><td><code>df.boxplot(column=&quot;판매량_개&quot;, by=&quot;날씨&quot;)</code></td><td><code>df.boxplot(column=&quot;온도_섭씨&quot;, by=&quot;설비번호&quot;)</code></td></tr>
+<tr><td><code>ice[&quot;날짜&quot;] = pd.to_datetime(ice[&quot;날짜&quot;])</code></td><td><code>df[&quot;측정시간&quot;] = pd.to_datetime(df[&quot;측정시간&quot;])</code></td></tr>
+<tr><td><code>plt.plot(ice[&quot;날짜&quot;], ice[&quot;판매량_개&quot;])</code></td><td><code>plt.plot(df[&quot;측정시간&quot;], df[&quot;온도_섭씨&quot;])</code></td></tr>
+<tr><td><code>ice[&quot;날씨&quot;].value_counts()</code> → 막대그래프</td><td><code>df[&quot;설비번호&quot;].value_counts()</code> → 막대그래프</td></tr>
+<tr><td><code>plt.hist(ice[&quot;판매량_개&quot;], bins=5)</code></td><td><code>plt.hist(df[&quot;온도_섭씨&quot;], bins=10)</code></td></tr>
+<tr><td><code>plt.scatter(ice[&quot;최고기온_섭씨&quot;], ice[&quot;판매량_개&quot;])</code></td><td><code>plt.scatter(df[&quot;온도_섭씨&quot;], df[&quot;두께_nm&quot;])</code></td></tr>
+<tr><td><code>ice.boxplot(column=&quot;판매량_개&quot;, by=&quot;날씨&quot;)</code></td><td><code>df.boxplot(column=&quot;온도_섭씨&quot;, by=&quot;설비번호&quot;)</code></td></tr>
 </tbody></table></div>
 <h3>실제 데이터와 다른 점</h3>
 <p>생활 예제용 가상 데이터다(시드 1006으로 고정해 생성, <code>gen_easy_week06()</code>). 실제 가게 기록이나 기상 관측값이 아니다.</p>

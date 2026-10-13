@@ -94,6 +94,17 @@
         <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td><td>상품 / 불량품 판정</td></tr>
       </table>
     </div>
+
+    <div class="callout concept">
+      <b class="tag">단위 읽는 법</b>
+      7차시에 새로 나오는 단위는 하나다. <code>압력_Pa</code>와 다른 단위이므로 숫자를 서로 비교하지 않는다.
+      <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+        <tr><td><code>mTorr (진공도_mTorr)</code></td><td>밀리토르</td><td>아주 낮은 압력의 단위. 값이 작을수록 챔버 안 공기를 더 많이 뺀 상태(진공에 가깝다)</td></tr>
+      </table>
+      </div>
+    </div>
     <p><b>불량 유형</b>: 두께 불량(막 두께가 기준을 벗어남) · 패턴 불량(회로 무늬가 틀어짐) · 파티클(작은 이물 알갱이) · 오염(있으면 안 되는 물질) ·
     정렬 불량(위아래 층 무늬가 어긋남) · 식각 부족(덜 깎임) · 전기적 특성 불량(전기 검사 기준 벗어남).</p>
     <p class="img-caption">불량유형은 검사에서 발견된 불량의 종류다. 같은 줄의 <code>공정명</code> 작업 때문에 생겼다는 뜻은 아니다.</p>
@@ -383,6 +394,7 @@ Name: 정답, dtype: float64
     </div>
     <p><code>stu_rate &lt; 80</code>은 학생마다 True/False를 만들고, <code>.sum()</code>이 True(=1)만 센다(5차시 <code>isna().sum()</code>과 같은 원리). 괄호가 있어야 비교를 먼저 한다.</p>
     <p><code>stu_rate</code>는 숫자 한 줄(Series)이라 열 이름 없이 <code>sort_values()</code>만 쓴다. 기본은 작은 값부터라 <code>head(1)</code>이 가장 낮은 학생이다. 그 학생의 기록을 여러 열과 함께 본다.</p>
+    <p>둘째 줄 끝의 <code>[["반", "문제번호", ...]]</code>처럼 대괄호를 두 겹 쓰면 <b>여러 열을 골라</b> 표로 본다. 안쪽 대괄호가 열 이름 목록이다(열 하나는 <code>["반"]</code>, 여러 개는 <code>[["반", "문제번호"]]</code>).</p>
     <div class="code-block">
       <div class="code-label"><span>Python — 최저 정답률 학생</span><button class="copy-btn">복사</button></div>
       <pre><code>print(stu_rate.sort_values().head(1))

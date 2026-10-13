@@ -176,9 +176,13 @@ print("가스유량 200 이상:", len(big_gas), "건")</code></pre>
       <pre><code>print(hot[["설비번호", "공정명", "____", "합격여부"]])
 print(minus_pressure[["설비번호", "공정명", "____", "합격여부"]])</code></pre>
     </div>
-    <pre style="background:#0f172a;color:#e2e8f0;padding:.8rem 1rem;border-radius:8px;">     설비번호 공정명       온도_섭씨  합격여부
+    <div class="callout success">
+      <b class="tag">실행 결과(첫 줄)</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">     설비번호 공정명       온도_섭씨  합격여부
 17  EQ-03  식각  540.315405   1.0
 67  EQ-03  증착  557.727366   1.0</pre>
+      <code>1.0</code>은 1(합격)과 같다. 빈칸이 섞인 열이라 소수로 보인다.
+    </div>
     <ol>
       <li>두 기록의 검사 결과는? 무엇을 의심해볼 수 있을까?</li>
       <li>두 기록의 공통점은?</li>

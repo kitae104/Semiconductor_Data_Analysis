@@ -63,7 +63,7 @@
 
 | 파일명 | 캡처할 화면 |
 |---|---|
-| `week09_01_canvas.png` | File → Tree → Test and Score 캔버스(File은 Test and Score에도 연결) |
+| `week09_01_canvas.png` | File → Tree → Test and Score 캔버스(File은 Test and Score에도 연결). **현재 캡처에는 File → Tree 연결선이 없다** — 강의 문구는 이에 맞춰 두었으나(2026-10-10), 다시 캡처할 때는 File → Tree도 이어서 찍는다 |
 | `week09_02_file_target.png` | File 위젯 창 — 합격여부 열의 Type=categorical, Role=target으로 지정한 화면(값 칸에 -1, 1). **2026-10-02 데이터 표기 변경으로 다시 캡처 필요** |
 | `week09_03_test_and_score.png` | Test and Score — Tree 모델의 CA(정확도)가 보이는 결과 표 |
 

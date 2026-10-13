@@ -61,7 +61,8 @@
 
 ## 실습 중 오류 대응
 - `NameError: name 'pass_count' is not defined`: 위 셀을 건너뜀 → 맨 위부터 차례로 실행.
-- `NameError: name '____' is not defined`: 빈칸을 안 채움.
+- `NameError: name '____' is not defined`: 빈칸을 안 채움. 빈칸 위치에 따라 다른 오류가 난다 — 문제 7 `print(____"...")`는
+  `SyntaxError`(invalid syntax), 문제 8 `{fail_rate:____}`는 `ValueError`(서식 빈칸). 모두 "빈칸을 채웠나?"부터 확인한다.
 - `SyntaxError: leading zeros in decimal integer literals are not permitted`: `equipment = EQ-04`처럼 따옴표 누락.
 - `TypeError: can only concatenate str (not "int") to str`: `more_text + cups`처럼 `int()` 없이 더함.
   `fail_count + more_text` 순서면 메시지가 `unsupported operand type(s) for +: 'int' and 'str'`로 바뀌지만 원인은 같다.

@@ -71,7 +71,7 @@
 - `NameError: name 'df' is not defined`: 9단계 문제 1 셀을 실행하지 않았거나 실패했다. 맨 처음 난 오류부터 본다.
 - `NameError: name 'cafe' is not defined` / `name 'pd' is not defined`: 1단계 셀(`import pandas as pd`)을 실행하지 않았다(커널을 다시 시작했다면 1단계부터).
 - `NameError: name 'hot' is not defined`: 문제 5 셀을 건너뛰고 문제 6을 실행했다.
-- `SyntaxError: invalid syntax`: 비교 기호·대괄호 자리의 `____`를 채우지 않았다.
+- `SyntaxError: invalid syntax`: 비교 기호·대괄호 자리의 `____`를 채우지 않았다. 문제 3②·5처럼 `____` 바로 뒤에 값이 오면 `SyntaxError: invalid syntax. Perhaps you forgot a comma?`로 나온다 — 쉼표를 넣으라는 뜻이 아니라 빈칸을 채우라는 뜻이라고 알려 준다.
 - `AttributeError: 'DataFrame' object has no attribute '____'`: `print(df.____)`, `df.____[0, "온도_섭씨"]` 빈칸을 채우지 않았다.
 - `NameError: name '____' is not defined`: `hot_fail = ____[...]`, `df[____]` 빈칸을 채우지 않았다.
 - `FileNotFoundError: [Errno 2] No such file or directory: 'week04_process_filtering.csv'`: 경로를 줄여 썼다. 강의 경로를 그대로 복사한다.

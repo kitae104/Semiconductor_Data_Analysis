@@ -218,6 +218,7 @@ print(week_temps[5:])    # 5번 칸부터 끝까지(주말)</code></pre>
     <h3>개수 세기와 값 추가하기 — len(), append()</h3>
     <ul class="pt-list">
       <li><code>len(리스트)</code>는 칸 수를 세고, <code>리스트.append(값)</code>은 맨 끝에 값을 붙인다.</li>
+      <li><code>cart.append</code>의 점(<code>.</code>)은 "<code>cart</code>의"라는 뜻이다. 그 리스트에 딸린 기능을 부른다.</li>
     </ul>
 
     <h4>쉬운 예제 — 장바구니</h4>
@@ -356,7 +357,7 @@ print(f"{student['이름']} 학생은 {student['나이']}살, 동아리는 {stud
     </div>
     <div class="callout warn">
       <b class="tag">따옴표 규칙</b>
-      f-string 바깥이 큰따옴표면 안쪽 키는 작은따옴표(<code>'이름'</code>)로 쓴다. 겹치면 <code>SyntaxError: f-string: unmatched '['</code>가 난다.
+      f-string 바깥이 큰따옴표면 안쪽 키는 작은따옴표(<code>'이름'</code>)로 쓴다. 겹치면 <code>SyntaxError: f-string: unmatched '['</code>가 난다(파이썬 3.11 이하. 3.12부터는 오류가 안 나지만, 어느 버전에서나 되도록 작은따옴표로 쓴다).
     </div>
 
   </section>
@@ -437,11 +438,14 @@ print(sum(temperatures))
 average = sum(temperatures) / len(temperatures)
 print(f"평균 온도는 {average:.1f}도입니다.")</code></pre>
       </div>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">6
+      <div class="callout success">
+        <b class="tag">실행 결과</b>
+        <pre style="margin:.3rem 0 0;white-space:pre-wrap;">6
 312.6
 295.4
 1807.1
 평균 온도는 301.2도입니다.</pre>
+      </div>
       <div class="tablewrap">
         <table class="timetable">
           <tr><th>무엇을 봤나</th><th>값</th><th>정상 범위(295~305도) 안?</th></tr>
@@ -479,9 +483,12 @@ row = records[1]
 print(f"{row['로트번호']} 로트: {row['설비번호']} 설비, {row['공정명']} 작업")
 print(f"온도 {row['온도_섭씨']}도, 합격여부 {row['합격여부']}")</code></pre>
       </div>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">3
+      <div class="callout success">
+        <b class="tag">실행 결과</b>
+        <pre style="margin:.3rem 0 0;white-space:pre-wrap;">3
 LOT-0097 로트: EQ-04 설비, 포토 작업
 온도 308.7도, 합격여부 1</pre>
+      </div>
       <p><b>공장 말로 읽기</b> — 308.7도는 정상 범위를 벗어났지만 합격여부는 1(합격)이다. 온도 하나만 보고 "불량"이라고 단정할 수 없다.
       범위 밖 값은 "더 살펴볼 기록"이라는 단서다.</p>
     </div>
@@ -494,7 +501,8 @@ LOT-0097 로트: EQ-04 설비, 포토 작업
     반도체 데이터로 푼다(<code>____</code> 채우기).</p>
     <div class="callout warn">
       <b class="tag">체크포인트</b>
-      셀을 건너뛰면 <code>NameError</code>가 난다. append 셀은 한 번만. 이상하면 "커널 → 다시 시작 후 모두 실행".
+      셀을 건너뛰면 <code>NameError</code>가 난다. 빈칸을 안 채우면 <code>NameError: name '____' is not defined</code>, 점 뒤 빈칸(<code>temperatures.____(303.2)</code>)은 <code>AttributeError: 'list' object has no attribute '____'</code>.
+      append 셀은 한 번만. 이상하면 "커널 → 다시 시작 후 모두 실행".
     </div>
     <div class="step"><div class="num">1</div><div class="content"><b>쉬운 예제 — 리스트</b>: 일주일 기온·장바구니로 인덱스·슬라이싱·len·append·max/min/sum. (노트북 1~4단계)</div></div>
     <div class="step"><div class="num">2</div><div class="content"><b>쉬운 예제 — 딕셔너리</b>: 학생 정보, 친구 3명의 표. (노트북 5~7단계)</div></div>
@@ -585,7 +593,7 @@ LOT-0097 로트: EQ-04 설비, 포토 작업
         <tr><th>오류</th><th>원인</th><th>해결</th></tr>
         <tr><td><code>IndexError: list index out of range</code></td><td>없는 칸 번호(<code>week_temps[7]</code>)</td><td><code>len()</code>으로 확인. 마지막 번호 = 칸 수 - 1</td></tr>
         <tr><td><code>KeyError: '혈액형'</code>, <code>KeyError: 0</code></td><td>없는 키, 오타, 딕셔너리에 번호 사용</td><td><code>print(student)</code>로 키 확인</td></tr>
-        <tr><td><code>SyntaxError: f-string: unmatched '['</code></td><td>f-string 안에서 큰따옴표 겹침</td><td>안쪽 키는 작은따옴표 <code>f"{student['이름']}"</code></td></tr>
+        <tr><td><code>SyntaxError: f-string: unmatched '['</code></td><td>f-string 안에서 큰따옴표 겹침(파이썬 3.11 이하)</td><td>안쪽 키는 작은따옴표 <code>f"{student['이름']}"</code></td></tr>
         <tr><td><code>TypeError: list indices must be integers or slices, not str</code></td><td><code>friends["이름"][1]</code>처럼 순서 바꿈</td><td><code>friends[1]["이름"]</code></td></tr>
       </table>
     </div>

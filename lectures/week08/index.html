@@ -155,12 +155,23 @@
         <tr><td><code>설비번호</code>, <code>공정명</code></td><td>어느 기계(EQ-01~EQ-04)가 어떤 작업을 했는지</td><td>어느 오븐으로 무엇을 구웠는지</td></tr>
         <tr><td><code>온도_섭씨</code></td><td>챔버 안 온도(℃)</td><td>오븐 온도</td></tr>
         <tr><td><code>압력_Pa</code></td><td>챔버 압력 기록(가상 값, 크기를 실제 조건으로 해석하지 않는다)</td><td>압력솥 안의 압력</td></tr>
-        <tr><td><code>진공도_mTorr</code></td><td>챔버 안에 남은 기체의 압력. 작을수록 공기를 많이 뺀 상태</td><td>진공 포장 용기 안의 공기</td></tr>
+        <tr><td><code>진공도_mTorr</code></td><td>챔버 안에 남은 기체의 압력(mTorr는 아주 낮은 압력을 재는 단위). 작을수록 공기를 많이 뺀 상태</td><td>진공 포장 용기 안의 공기</td></tr>
         <tr><td><code>두께_nm</code></td><td>웨이퍼 위에 쌓인 막의 두께(nm = 10억분의 1m)</td><td>페인트 두께</td></tr>
         <tr><td><code>진동_mm_s</code>, <code>냉각수온도_섭씨</code></td><td>설비 떨림, 설비를 식히는 물의 온도</td><td>세탁기 떨림, 엔진 냉각수</td></tr>
-        <tr><td><code>습도_pct</code></td><td>클린룸 공기 속 물기(%)</td><td>일기예보의 습도</td></tr>
+        <tr><td><code>습도_pct</code></td><td>클린룸(1차시: 먼지를 극도로 줄인 작업실) 공기 속 물기(%)</td><td>일기예보의 습도</td></tr>
         <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td><td>시험 합격/불합격</td></tr>
       </table>
+    </div>
+
+    <div class="callout concept">
+      <b class="tag">단위 읽는 법</b>
+      열 이름 끝 <code>_pct</code>는 퍼센트(%)를 뜻한다.
+      <div class="tablewrap">
+      <table class="timetable">
+        <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+        <tr><td><code>pct, % (습도_pct)</code></td><td>퍼센트</td><td>백분율. 100 중에 몇인지. 습도 45%는 공기가 머금을 수 있는 물기의 45%</td></tr>
+      </table>
+      </div>
     </div>
     <div class="tablewrap">
       <table class="data-preview">
