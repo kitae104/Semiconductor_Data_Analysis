@@ -57,6 +57,7 @@
 
   <section class="block">
     <h2>가상 상황</h2>
+<div class="callout concept"><b class="tag">공정 지도 위치</b>공정 지도 <b>②~⑤(산화·포토·식각·증착/이온주입) + 세정</b>의 설비 센서 기록이다.</div>
 <p>공장 데이터에 흔히 끼어드는 문제(빈 칸, 같은 기록의 중복 저장, 튀는 값, 잘못된 날짜 형식, 오타 등)를 재현했다. 현실에서는 센서가 잠깐 꺼지거나 통신이 끊겨 빈칸이 생기고, 같은 기록이 두 번 전송돼 중복이 생기며, 센서 고장·단위 실수·입력 실수 또는 실제 설비 문제로 튀는 값이 생긴다. 이 데이터의 오류는 연습을 위해 일부러 넣은 것이라 하나하나의 실제 이유는 없다.</p>
   </section>
 
@@ -80,7 +81,7 @@
 <tr><td>로트번호</td><td>로트 식별 번호</td><td>문자열</td><td>-</td><td>LOT-0044</td><td>없음</td></tr>
 <tr><td>설비번호</td><td>공정 설비</td><td>문자열</td><td>-</td><td>EQ-03</td><td>없음</td></tr>
 <tr><td>공정명</td><td>공정 종류</td><td>문자열</td><td>-</td><td>식각 (오타: <code>중착</code>, <code>식각 </code>, <code>포토공정</code>)</td><td>없음</td></tr>
-<tr><td>온도_섭씨</td><td>챔버 온도</td><td>실수</td><td>℃</td><td>301.0 (500℃ 이상 이상값 2건)</td><td><b>있음(3건)</b></td></tr>
+<tr><td>온도_C</td><td>챔버 온도</td><td>실수</td><td>℃</td><td>301.0 (500℃ 이상 이상값 2건)</td><td><b>있음(3건)</b></td></tr>
 <tr><td>압력_Pa</td><td>챔버 압력</td><td>실수</td><td>Pa</td><td>1011.3 (음수값 2건)</td><td><b>있음(2건)</b></td></tr>
 <tr><td>가스유량_slm</td><td>가스 유량</td><td>실수</td><td>slm</td><td>49.8 (음수/200 이상 이상값 2건)</td><td><b>있음(3건)</b></td></tr>
 <tr><td>처리시간_sec</td><td>처리 소요 시간</td><td>실수</td><td>sec</td><td>121.4</td><td>없음</td></tr>
@@ -100,6 +101,8 @@
 <tr><td>cm (키_cm)</td><td>센티미터</td><td>길이. 100cm = 1m</td></tr>
 <tr><td>kg (몸무게_kg)</td><td>킬로그램</td><td>무게. 1kg = 1000g</td></tr>
 <tr><td>sec (처리시간_sec)</td><td>초 (영어로 second의 줄임)</td><td>시간. 60초 = 1분</td></tr>
+<tr><td>C (온도_C)</td><td>섭씨 몇 도(℃)</td><td>Celsius(섭씨)의 첫 글자</td></tr>
+<tr><td>pt (수학점수_pt)</td><td>점</td><td>points(점수)의 줄임</td></tr>
 </tbody></table></div>
   </section>
 
@@ -122,7 +125,7 @@
 
   <section class="block">
     <h2>이번 차시 분석 질문</h2>
-<ul class="pt-list"><li>결측값은 열별로 몇 개씩 있는가?</li><li>정제 전후 행 개수와 평균 온도는 어떻게 달라지는가?(실제: 113행 → 102행, 평균 온도 304.9℃ → 300.6℃로 약 4.3℃ 차이, 평균 압력 994.4 → 1013.6. 정제 순서는 합격여부 빈 행 제거 → 측정값 빈칸 중앙값 대체 → 중복 제거 → 이상값 행 제거)</li><li>이상값 행을 지우기 전에 다른 열과 함께 보면 무엇이 보이는가?(실제: 이상값 6건 모두 합격(1), 그중 4건이 EQ-03 기록. 오염 위치는 무작위로 정했으므로 이 쏠림은 우연이다. 수업에서는 "확인할 단서"로만 다룬다)</li><li>(5차시 실습 범위 밖) 공정명 오타 3건과 형식이 다른 측정시간 2건은 "입력 오류"의 예로 데이터에 남아 있다. 5차시에서는 이름만 소개하고 코드로 고치지 않는다.</li></ul>
+<ul class="pt-list"><li>결측값은 열별로 몇 개씩 있는가?</li><li>정리 전후 행 개수와 평균 온도는 어떻게 달라지는가?(실제, 노트북 순서: <code>dropna()</code> 113 → 104행 → <code>drop_duplicates()</code> 101행 → 범위 밖 행 제외(온도 ≤ 400, 압력 ≥ 0, 0 ≤ 가스유량 &lt; 200) <b>95행</b>. 평균 온도 304.9℃ → 300.6℃로 약 4.3℃ 차이)</li><li>정리 전 <code>describe()</code>: 온도 count 110, mean 304.9, max 557.7 / 압력 min -42.9 / 가스유량 min -5.0, max 250.0. 중복 행 3.</li><li>Orange 실측(<code>_2_dirty_process_done.ows</code>): Impute(평균, 합격여부 빈 행 삭제) 113 → 111행 → Select Rows <b>105행</b>, 정리 후 온도 Mean 300.75(Median 300.8, Min 291.3, Max 310.9), 압력 Mean 1013.10, 가스유량 Mean 50.09. Impute 설정을 다르게 하면(새 위젯에서 실측, <code>_workspace/measure_w05_impute.py</code>): 합격여부 개별 설정을 빠뜨리면 빈 합격여부 2칸이 최빈값 "1"(합격)로 채워져 113 → <b>107행</b>(온도 Mean 300.63), 위쪽 Default Method를 Remove instances로 고르면 104 → <b>98행</b>, 아무것도 고르지 않으면(Don't impute) Select Rows가 조건 열이 빈 8행도 지워 <b>99행</b>이 된다. 파이썬(95행)과 행 수가 다른 것이 정상이다 — 파이썬은 빈칸 행과 중복 행을 지우고, Orange는 빈칸을 평균으로 채우고 중복을 남긴다.</li><li>이상값 행을 지우기 전에 다른 열과 함께 보면 무엇이 보이는가?(실제: 이상값 6건 모두 합격(1), 그중 4건이 EQ-03 기록. 오염 위치는 무작위로 정했으므로 이 쏠림은 우연이다. 수업에서는 "확인할 단서"로만 다룬다)</li><li>(5차시 실습 범위 밖) 공정명 오타 3건과 형식이 다른 측정시간 2건은 "입력 오류"의 예로 데이터에 남아 있다. 5차시에서는 이름만 소개하고 코드로 고치지 않는다.</li></ul>
   </section>
 
   <section class="block">
@@ -133,7 +136,7 @@
   <section class="block">
     <h2>생활 예제 데이터 — week05_easy_class_records.csv</h2>
 <h3>목적</h3>
-<p>반도체 데이터(<code>week05_dirty_process_data.csv</code>)를 정리하기 전에, 학급 학생 기록으로 <b>같은 정리 순서</b> (<code>describe()</code> → 정리 전 값 기억 → <code>isna().sum()</code> → <code>dropna(subset=...)</code> → 중앙값 <code>fillna()</code> → <code>duplicated()</code>·<code>drop_duplicates()</code> → 이상값 찾기·확인·제거 → 정리 전후 비교)를 먼저 연습하는 <b>생활 예제용 가상 데이터</b>다.</p>
+<p>반도체 데이터(<code>week05_dirty_process_data.csv</code>)를 정리하기 전에, 학급 학생 기록으로 <b>같은 정리 순서</b> (<code>describe()</code> → 정리 전 값 기억 → <code>isna().sum()</code> → <code>dropna()</code> → <code>duplicated()</code>·<code>drop_duplicates()</code> → 범위 조건으로 튀는 값 찾기·빼기 → 정리 전후 비교)를 먼저 연습하는 <b>생활 예제용 가상 데이터</b>다.</p>
 <h3>가상 상황</h3>
 <p>담임 선생님이 세 반(1반·2반·3반) 학생 14명의 키·몸무게·수학 점수를 표로 옮겨 적다가 실수를 몇 군데 했다.</p>
 <h3>행 하나의 의미</h3>
@@ -152,26 +155,73 @@
 <tr><td>반</td><td>학생의 반. 빈칸이면 어느 반인지 추측할 수 없어 행을 지운다(반도체 데이터의 합격여부 자리)</td><td>문자열</td><td>-</td><td>1반</td><td>있음(1칸)</td></tr>
 <tr><td>키_cm</td><td>학생의 키</td><td>실수</td><td>cm</td><td>165.2</td><td>있음(1칸)</td></tr>
 <tr><td>몸무게_kg</td><td>학생의 몸무게</td><td>실수</td><td>kg</td><td>55.1</td><td>있음(1칸)</td></tr>
-<tr><td>수학_점수</td><td>수학 시험 점수(0~100점)</td><td>정수</td><td>점</td><td>85</td><td>없음</td></tr>
+<tr><td>수학점수_pt</td><td>수학 시험 점수(0~100점)</td><td>정수</td><td>pt(점)</td><td>85</td><td>없음</td></tr>
 </tbody></table></div>
 <h3>정상 범위 (교육용 예시)</h3>
 <p>키 140~200cm, 몸무게 35~100kg, 수학 점수 0~100점. 이 범위는 학습용으로 정한 것이다.</p>
 <h3>의도적으로 포함된 패턴(실제 값)</h3>
-<ul class="pt-list"><li>크기 15행 x 5열.</li><li><b>결측 3칸</b>: <code>반</code> 1칸(조예준), <code>키_cm</code> 1칸(최수아), <code>몸무게_kg</code> 1칸(장서준). 열마다 15행 중 1칸(6.7%).</li><li><b>완전 중복 1행</b>: 마지막 행(행 번호 14)이 박지호(1반, 171.0, 63.5, 78)를 한 번 더 적은 것이다. <code>students.duplicated().sum()</code> = 1.</li><li><b>입력 실수 이상값 1개</b>: 정도윤의 키 <code>1720.0</code>(172.0을 소수점 없이 잘못 적음). <code>students[students[&quot;키_cm&quot;] &gt; 250]</code>로 1건 찾는다.</li><li>정리 전 <code>describe()</code>: 키 count 14, mean 276.6, 50%(중앙값) 166.75, max 1720.0 / 몸무게 mean 56.4 / 수학 점수 mean 83.1. 평균 키 276.6cm는 이상값 하나 때문에 생긴 값이고, 중앙값 166.75cm는 거의 흔들리지 않는다(빈칸을 평균이 아니라 중앙값으로 채우는 이유).</li><li>강의와 같은 순서로 정리한 실제 결과: <code>dropna(subset=[&quot;반&quot;])</code> → 14행 / 중앙값으로 채우기(키 165.2, 몸무게 53.6 — 반 빈칸 행을 지운 뒤 계산) / <code>drop_duplicates()</code> → 13행 / <code>students[students[&quot;키_cm&quot;] &lt;= 250]</code> → 12행.</li><li>정리 전후 비교: 행 15 → 12, 평균 키 276.6 → 164.8, 평균 몸무게 56.4 → 54.6.</li></ul>
+<ul class="pt-list"><li>크기 15행 x 5열.</li><li><b>결측 3칸</b>: <code>반</code> 1칸(조예준), <code>키_cm</code> 1칸(최수아), <code>몸무게_kg</code> 1칸(장서준). 열마다 15행 중 1칸(6.7%).</li><li><b>완전 중복 1행</b>: 마지막 행(행 번호 14)이 박지호(1반, 171.0, 63.5, 78)를 한 번 더 적은 것이다. <code>students.duplicated().sum()</code> = 1.</li><li><b>입력 실수 이상값 1개</b>: 정도윤의 키 <code>1720.0</code>(172.0을 소수점 없이 잘못 적음). <code>students[students[&quot;키_cm&quot;] &gt; 250]</code>로 1건 찾는다.</li><li>정리 전 <code>describe()</code>: 키 count 14, mean 276.6, 50%(중앙값) 166.75, max 1720.0 / 몸무게 mean 56.4 / 수학 점수 mean 83.1. 평균 키 276.6cm는 이상값 하나 때문에 생긴 값이고, 중앙값 166.75cm는 거의 흔들리지 않는다(튀는 값을 먼저 확인해야 하는 이유. Orange 3.35 Impute에는 중앙값으로 채우는 방법이 없고, 오늘은 평균(Average)으로 채운다).</li><li>노트북(v3)과 같은 순서로 정리한 실제 결과: <code>dropna()</code> → 12행(빈칸이 있는 3행 삭제) / <code>drop_duplicates()</code> → 11행 / <code>students[students[&quot;키_cm&quot;] &lt;= 250]</code> → 10행.</li><li>정리 전후 비교: 행 15 → 10, 평균 키 276.6 → 163.8.</li></ul>
 <h3>반도체 데이터와 짝이 되는 연산</h3>
 <div class="tablewrap"><table class="timetable">
 <thead><tr>
 <th>생활 예제</th>
 <th>반도체(week05_dirty_process_data.csv)</th>
 </tr></thead><tbody>
-<tr><td><code>students.dropna(subset=[&quot;반&quot;])</code></td><td><code>df.dropna(subset=[&quot;합격여부&quot;])</code></td></tr>
-<tr><td><code>for col in [&quot;키_cm&quot;, &quot;몸무게_kg&quot;]:</code> 중앙값으로 <code>fillna</code></td><td><code>for col in [&quot;온도_섭씨&quot;, &quot;압력_Pa&quot;, &quot;가스유량_slm&quot;]:</code> 중앙값으로 <code>fillna</code></td></tr>
+<tr><td><code>students.dropna()</code> → 12행</td><td><code>df.dropna()</code> → 104행</td></tr>
 <tr><td><code>students.duplicated().sum()</code> → 1</td><td><code>df.duplicated().sum()</code> → 3</td></tr>
-<tr><td><code>students[students[&quot;키_cm&quot;] &gt; 250]</code> → 1건</td><td><code>df[df[&quot;온도_섭씨&quot;] &gt; 400]</code> → 2건</td></tr>
-<tr><td>평균 키 276.6 → 164.8</td><td>평균 온도 304.9 → 300.6</td></tr>
+<tr><td><code>students[students[&quot;키_cm&quot;] &gt; 250]</code> → 1건</td><td>온도 &gt; 400 2건 · 압력 &lt; 0 2건 · 가스유량 &lt; 0 또는 ≥ 200 2건</td></tr>
+<tr><td>평균 키 276.6 → 163.8</td><td>평균 온도 304.9 → 300.6</td></tr>
 </tbody></table></div>
 <h3>실제 데이터와 다른 점</h3>
 <p>생활 예제용으로 손으로 정한 가상 값이며 실제 학생 기록이 아니다. 오류는 학습을 위해 일부러 넣었다. <code>scripts/generate_weekly_data.py</code>의 <code>gen_easy_week05()</code>가 고정 값으로 만든다.</p>
+  </section>
+
+  <section class="block">
+    <h2>Orange 워밍업 데이터 — week05_orange_cleanroom_env.csv</h2>
+<h3>목적</h3>
+<p>5차시 PART 2 Orange 워밍업용 데이터다. Feature Statistics로 빈칸·튀는 값을 찾고, Impute(빈칸 채우기)로 빈칸을 평균으로 채웠을 때 <b>튀는 값이 남아 있으면 채운 값도 엉터리가 되는</b> 장면을 직접 본다. Orange에서는 <code>orange/week05_orange_cleanroom_env.tab</code>을 연다.</p>
+<h3>가상 상황</h3>
+<p>반도체 공장의 클린룸(먼지를 아주 적게 관리하는 방, 병원 수술실을 떠올리면 된다) 세 구역에서 하루 동안 1시간마다 공기 상태를 기록했다. 센서가 가끔 값을 놓치거나(빈칸), 고장 신호로 99,999 같은 값을 남기기도 한다는 설정이다(99,999는 이 기록에서 쓰는 오류 코드이며 일반 규칙이 아니다).</p>
+<div class="callout concept"><b class="tag">공정 지도 위치</b>공정 지도 <b>②~⑥이 이루어지는 FAB의 클린룸</b>(① 웨이퍼 제조는 보통 웨이퍼 제조사에서, ⑦⑧도 별도의 청정 공간에서 진행)의 환경 기록이다. 특정 공정 단계가 아니라 그 방의 공기 기록이다.</div>
+<h3>행 하나의 의미</h3>
+<p>한 행 = 한 구역의 한 시각 기록(3구역 × 24시간 = 72행).</p>
+<h3>열 설명</h3>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>열 이름</th>
+<th>쉬운 설명</th>
+<th>데이터 형식</th>
+<th>단위</th>
+<th>예시</th>
+<th>결측값 가능 여부</th>
+</tr></thead><tbody>
+<tr><td>측정시간</td><td>기록 시각(2024-03-04 00:00부터 1시간 간격)</td><td>날짜시간</td><td>-</td><td>2024-03-04 00:00</td><td>없음</td></tr>
+<tr><td>구역</td><td>클린룸 구역</td><td>문자열(범주)</td><td>-</td><td>A구역</td><td>없음</td></tr>
+<tr><td>파티클_count_per_m3</td><td>공기 1m³ 안의 먼지 입자 수</td><td>정수</td><td>개/m³</td><td>912 (이 기록에서 쓰는 오류 코드 99999 1건)</td><td><b>있음(4건)</b></td></tr>
+<tr><td>온도_C</td><td>방 안 온도</td><td>실수</td><td>℃</td><td>22.5</td><td>없음</td></tr>
+<tr><td>습도_pct</td><td>방 안 습도</td><td>실수</td><td>%</td><td>47.8</td><td><b>있음(3건)</b></td></tr>
+<tr><td>차압_Pa</td><td>클린룸 안과 바깥의 공기 압력 차이(안쪽이 높아야 먼지가 들어오지 않는다)</td><td>실수</td><td>Pa</td><td>12.5 (음수 -5.0 1건)</td><td><b>있음(2건)</b></td></tr>
+</tbody></table></div>
+<h3>단위 읽는 법</h3>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>표기</th>
+<th>읽는 법</th>
+<th>뜻</th>
+</tr></thead><tbody>
+<tr><td>count_per_m3 (파티클_count_per_m3)</td><td>세제곱미터당 개수</td><td>가로·세로·높이 1m 공기 상자 안에 든 입자 수</td></tr>
+<tr><td>C (온도_C)</td><td>섭씨 몇 도</td><td>Celsius(섭씨)의 첫 글자</td></tr>
+<tr><td>pct (습도_pct)</td><td>퍼센트</td><td>percent의 줄임</td></tr>
+<tr><td>Pa (차압_Pa)</td><td>파스칼</td><td>압력 단위</td></tr>
+</tbody></table></div>
+<h3>정상 범위 (교육용 예시)</h3>
+<p>파티클 500~2,000개/m³, 온도 22.0 ± 0.5℃, 습도 45 ± 3%, 차압 12 ± 2 Pa. 실제 클린룸 등급 기준이 아니라 이 과정에서 쓰는 학습용 예시 기준이다.</p>
+<h3>의도적으로 포함된 패턴(실제 생성 결과)</h3>
+<ul class="pt-list"><li>결측: 파티클 4 · 습도 3 · 차압 2(모두 서로 다른 행, 9행).</li><li>튀는 값: 파티클 <b>99,999</b> 1행(08:00 B구역, 이 기록에서 쓰는 오류 코드), 차압 <b>-5.0</b> 1행(01:00 A구역).</li><li>정상 파티클 평균은 약 1,089개/m³(99,999 제외 67행). B구역 평균(약 1,235)이 A·C(약 1,026·1,008)보다 조금 높다.</li><li><b>Orange Impute(Average) 실측</b>: 파티클 빈칸 4칸이 <b>2543.66</b>으로 채워진다(99,999를 포함한 평균, 정상 평균의 약 2.3배). 습도는 44.907, 차압은 11.881로 채워진다.</li><li>Orange Select Rows(파티클 is below 10000, 차압 is at least 0) 뒤 <b>70행</b>. 정리 후 파티클 Max는 채운 값 2543.66, 평균 1180.0. 튀는 값을 먼저 지우지 않고 평균으로 채웠기 때문에 생긴 결과다.</li></ul>
+<h3>이번 차시 분석 질문</h3>
+<ul class="pt-list"><li>빈칸은 열마다 몇 개이고, 파티클의 가장 큰 값은 얼마인가?</li><li>빈칸을 평균으로 채우면 어떤 값이 들어가고, 왜 그 값이 이상한가?</li></ul>
+<h3>실제 데이터와 다른 점</h3>
+<p>교육용 가상 데이터이며 실제 공장의 클린룸 기록이 아니다. 클린룸 등급·파티클 기준을 나타내지 않는다. <code>scripts/generate_weekly_data.py</code>의 <code>gen_orange_week05()</code>(시드 205)가 만든다.</p>
   </section>
 
   <div class="nav-buttons">

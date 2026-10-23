@@ -2,3 +2,4 @@
 .superpowers/
 _workspace/
 _workspace_prev/
+__pycache__/

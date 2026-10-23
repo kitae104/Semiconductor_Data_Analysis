@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="2차시 ② 설비 온도 기록 20건 요약하기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 설비 온도 기록(20행)이 들어왔는지 확인하세요.
+② Feature Statistics(열 통계)를 File에 이어 온도_C의 Min·Max·Mean을 읽으세요.
+③ Data Table(표 보기)을 File에 잇고 설비번호 열 이름을 눌러 정렬하세요. EQ-03 행만 모아 보고 그중 가장 높은 온도를 찾으세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVYgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMGndlZWswMl9weXRob25fYmFz
+aWNzXzEudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjDouLi8uLi9kYXRhL3dlZWts
+eS93ZWVrMDIvb3JhbmdlL3dlZWswMl9weXRob25fYmFzaWNzXzEudGFilIwFdGl0bGWUjACUjAVz
+aGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRfdXJsc5RdlIwDdXJs
+lGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNvbnRleHRfc2V0dGlu
+Z3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

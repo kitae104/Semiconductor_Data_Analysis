@@ -160,6 +160,22 @@
                 </article>
 
                 <article class="term-card" data-cat="basic">
+                    <h3>클린룸 <span class="term-en">Cleanroom</span></h3>
+                    <p>공기 속 먼지(파티클) 수와 온도·습도·압력을 엄격히 관리하는 생산 공간. 공정 지도에서는 ②~⑥이 이 안에서 이루어진다(① 웨이퍼 제조는 보통 웨이퍼 제조사에서, ⑦⑧도 별도의 청정 공간에서 진행).</p>
+                    <p class="term-meta"><b>비유</b>수술실보다 훨씬 깨끗하게 관리하는 방.</p>
+                    <p class="term-meta"><b>예</b><code>week05_orange_cleanroom_env.csv</code>의 <code>파티클_count_per_m3</code>, <code>차압_Pa</code> 열(5차시).</p>
+                    <p class="term-meta"><b>오해</b>한 번 청소해 두면 계속 깨끗하다고 생각하기 쉽지만, 사람·장비에서 먼지가 계속 생겨 센서로 늘 감시한다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
+                    <h3>차압 <span class="term-en">Differential Pressure</span></h3>
+                    <p>두 공간의 압력 차이. 클린룸에서는 안쪽 압력에서 바깥 압력을 뺀 값으로 본다.</p>
+                    <p class="term-meta"><b>비유</b>문을 열면 바람이 안에서 밖으로 나가게 해 먼지가 못 들어오게 하는 것.</p>
+                    <p class="term-meta"><b>예</b><code>차압_Pa</code> 열 — 양수면 안쪽 압력이 높아 먼지가 못 들어온다(5차시).</p>
+                    <p class="term-meta"><b>오해</b>차압이 클수록 무조건 좋다고 생각하기 쉽지만, 정해진 범위를 유지하는 것이 목적이다. 음수는 바깥 공기가 들어올 수 있다는 경고 신호다.</p>
+                </article>
+
+                <article class="term-card" data-cat="basic">
                     <h3>로트 <span class="term-en">Lot</span></h3>
                     <p>함께 관리되는 웨이퍼의 묶음(보통 25장 내외).</p>
                     <p class="term-meta"><b>비유</b>같은 상자에 담겨 함께 이동하는 물건 묶음.</p>

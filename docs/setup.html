@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수강 전 준비 — 프로그램 설치와 실습 키트</title>
+<link rel="icon" href="../assets/images/site/chip-favicon.png" type="image/png">
+<link rel="stylesheet" href="../assets/css/common.css">
+<link rel="stylesheet" href="../assets/css/print.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-row">
+    <a class="brand" href="../index.html"><img src="../assets/images/site/chip-macro-logo.jpg" alt="" aria-hidden="true" class="brand-logo" width="34" height="34" /> 반도체 데이터 분석 10차시 과정
+      <small>Semiconductor Process Data Analysis</small>
+    </a>
+    <nav class="week-nav">
+      <a href="../lectures/week01/index.html">1차시</a>
+      <a href="../lectures/week02/index.html">2차시</a>
+      <a href="../lectures/week03/index.html">3차시</a>
+      <a href="../lectures/week04/index.html">4차시</a>
+      <a href="../lectures/week05/index.html">5차시</a>
+      <a href="../lectures/week06/index.html">6차시</a>
+      <a href="../lectures/week07/index.html">7차시</a>
+      <a href="../lectures/week08/index.html">8차시</a>
+      <a href="../lectures/week09/index.html">9차시</a>
+      <a href="../lectures/week10/index.html">10차시</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+
+  <div class="hero">
+    <span class="badge purple">수강 전 준비 · 전 차시 공통</span>
+    <h1>수강 전 준비 — 프로그램 설치와 실습 키트</h1>
+    <p class="today-question">이 페이지로 확인할 질문: <b>"첫 수업 전에, 내 컴퓨터에서 노트북과 Orange 파일이 제대로 열릴까?"</b></p>
+  </div>
+
+  <section class="block">
+    <h2>이 페이지에서 할 일</h2>
+    <ul class="goal-list">
+      <li>파이썬과 Jupyter Notebook을 설치한다.</li>
+      <li>Orange3(마우스로 데이터를 분석하는 프로그램)를 설치한다.</li>
+      <li>실습 키트(<code>student_kit.zip</code>)를 내려받아 <b>폴더째</b> 압축을 푼다.</li>
+      <li>1차시 노트북과 Orange 파일을 한 번씩 열어 본다.</li>
+    </ul>
+    <div class="callout warn">
+      <b class="tag">미리 알아두기</b>
+      이 과정의 실습은 <b>Windows</b> 기준으로 안내한다. Mac도 같은 순서로 하면 되고, 메뉴 이름만 조금 다르다.
+      설치 중 막히면 그 단계의 화면을 캡처해 첫 수업 때 강사에게 보여 주면 된다.
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="step-badge">STEP 01</span>
+    <h2>파이썬 설치하기</h2>
+    <ol class="pt-list">
+      <li><a href="https://www.python.org/downloads/">python.org/downloads</a>에서 노란색 <b>Download Python 3.x</b> 버튼을 눌러 설치 파일을 받는다.</li>
+      <li>설치 파일을 실행하고, 첫 화면 아래의 <b>Add python.exe to PATH</b>에 꼭 체크한 뒤 <b>Install Now</b>를 누른다.</li>
+      <li>설치가 끝나면 시작 메뉴에서 <b>명령 프롬프트</b>(cmd)를 열고 아래 한 줄을 실행한다. <code>Python 3.</code>으로 시작하는 버전이 보이면 성공이다.</li>
+    </ol>
+    <div class="code-block">
+      <div class="code-label"><span>명령 프롬프트 — 파이썬 버전 확인</span><button class="copy-btn">복사</button></div>
+      <pre><code>python --version</code></pre>
+    </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/setup/setup_01_python_path.png" loading="lazy"
+           alt="그림 S-1. 파이썬 설치 첫 화면에서 Add python.exe to PATH에 체크한 모습" data-shot="파이썬 설치 첫 화면 — 아래쪽 'Add python.exe to PATH' 체크 상자에 체크하고 Install Now를 누르기 직전">
+      <figcaption class="img-caption">그림 S-1. 설치 첫 화면 — "Add python.exe to PATH"에 체크한다</figcaption>
+    </figure>
+    <div class="callout danger">
+      <b class="tag">'python'은(는) 내부 또는 외부 명령이 아닙니다</b>
+      PATH 체크를 빠뜨린 경우다. 설치 파일을 다시 실행해 <b>Modify</b> → 다음 화면에서
+      <b>Add Python to environment variables</b>에 체크하고 마친 뒤, 명령 프롬프트를 새로 열어 다시 확인한다.
+      Microsoft Store 창이 뜨는 경우도 같은 원인이다.
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="step-badge">STEP 02</span>
+    <h2>Jupyter Notebook과 실습 도구 설치하기</h2>
+    <p>명령 프롬프트에 아래 한 줄을 붙여 넣고 Enter를 누른다. 노트북을 여는 프로그램(Jupyter)과 표·그래프·머신러닝
+    도구(pandas, matplotlib, scikit-learn)를 한 번에 설치한다. 글자가 많이 지나가다가 <code>Successfully installed</code>가
+    보이면 끝난 것이다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>명령 프롬프트 — 실습 도구 설치</span><button class="copy-btn">복사</button></div>
+      <pre><code>python -m pip install jupyter pandas matplotlib scikit-learn</code></pre>
+    </div>
+    <div class="callout concept">
+      <b class="tag">저장소를 통째로 받은 경우</b>
+      과정 저장소 폴더에서 설치할 때는 README 5절처럼 <code>pip install -r requirements.txt</code>를 써도 된다.
+      설치되는 도구는 같다.
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="step-badge">STEP 03</span>
+    <h2>Orange3 설치하기</h2>
+    <ol class="pt-list">
+      <li><a href="https://orangedatamining.com/download/">orangedatamining.com/download</a>에서 내 운영체제(Windows / macOS)용 설치 파일을 받는다.</li>
+      <li>설치 파일을 실행하고 기본 설정 그대로 <b>Next</b>를 눌러 설치한다.</li>
+      <li>시작 메뉴에서 <b>Orange</b>를 실행한다. 처음 실행할 때는 창이 뜰 때까지 기다린다.</li>
+    </ol>
+    <div class="callout warn">
+      <b class="tag">버전</b>
+      이 과정의 Orange 파일과 화면 설명은 <b>Orange 3.35</b>로 만들고 확인했다. 더 새 버전에서도 대부분 그대로 열리지만,
+      위젯 모양이나 메뉴 이름이 조금 다를 수 있다. 화면이 다르면 강사에게 알린다.
+    </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/setup/setup_02_orange_first_run.png" loading="lazy"
+           alt="그림 S-2. Orange3를 처음 실행한 화면" data-shot="Orange3 첫 실행 화면 — 시작 안내 창(Welcome)이 떠 있는 상태 또는 왼쪽 위젯 목록과 빈 캔버스">
+      <figcaption class="img-caption">그림 S-2. Orange3 첫 실행 화면</figcaption>
+    </figure>
+  </section>
+
+  <section class="block">
+    <span class="step-badge">STEP 04</span>
+    <h2>실습 키트 내려받고 압축 풀기</h2>
+    <div class="btn-row">
+      <a class="btn-primary" href="../dist/student_kit.zip">실습 키트 내려받기 (student_kit.zip)</a>
+    </div>
+    <ol class="pt-list" style="margin-top:1rem;">
+      <li>내려받은 <code>student_kit.zip</code>을 <b>마우스 오른쪽 클릭 → 모두 압축 풀기</b>로 푼다(Mac은 더블클릭). 바탕화면이나 문서 폴더처럼 찾기 쉬운 곳에 둔다.</li>
+      <li>압축을 풀면 <code>semiconductor_kit</code> 폴더 하나가 생긴다. 안은 아래처럼 생겼다.</li>
+    </ol>
+    <div class="tablewrap">
+      <table class="data-preview">
+        <tr><th>폴더</th><th>들어 있는 것</th></tr>
+        <tr><td><code>notebooks/student/</code></td><td>차시별 실습 노트북(<code>week01_student.ipynb</code> …)</td></tr>
+        <tr><td><code>data/weekly/weekXX/</code></td><td>실습 데이터(CSV). 안의 <code>orange/</code> 폴더에는 Orange가 여는 같은 데이터(<code>.tab</code>)가 있다</td></tr>
+        <tr><td><code>orange3/weekXX/</code></td><td>Orange 파일. <code>_start.ows</code> = 시작 파일, <code>_done.ows</code> = 완성본</td></tr>
+        <tr><td><code>README_학생용.txt</code></td><td>키트 사용법 요약</td></tr>
+      </table>
+    </div>
+    <div class="callout danger">
+      <b class="tag">가장 중요한 규칙 — 폴더 구조를 바꾸지 않는다</b>
+      노트북과 Orange 파일은 서로의 자리를 기준으로 데이터를 찾는다(예: 노트북은 <code>../../data/weekly/...</code>).
+      파일을 하나씩 꺼내 다른 곳으로 옮기거나, 폴더 이름을 바꾸면 데이터를 찾지 못한다.
+      zip 파일 안에서 바로 노트북을 열지 말고, <b>반드시 압축을 푼 다음</b> 연다.
+    </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/setup/setup_03_kit_folders.png" loading="lazy"
+           alt="그림 S-3. 압축을 푼 semiconductor_kit 폴더의 모습" data-shot="파일 탐색기 — 압축을 푼 semiconductor_kit 폴더 안에 data, notebooks, orange3 폴더와 README_학생용.txt가 보이는 화면">
+      <figcaption class="img-caption">그림 S-3. 압축을 푼 키트 폴더</figcaption>
+    </figure>
+  </section>
+
+  <section class="block">
+    <span class="step-badge">STEP 05</span>
+    <h2>노트북 열어 보기</h2>
+    <ol class="pt-list">
+      <li>파일 탐색기에서 <code>semiconductor_kit</code> 폴더를 연다.</li>
+      <li>위쪽 주소 표시줄을 한 번 클릭하고 <code>cmd</code>라고 입력한 뒤 Enter를 누른다. 그 폴더에서 명령 프롬프트가 열린다.</li>
+      <li>아래 한 줄을 실행하면 웹 브라우저에 Jupyter 화면이 열린다.</li>
+      <li><code>notebooks</code> → <code>student</code> → <code>week01_student.ipynb</code>를 클릭해 연다.</li>
+      <li>첫 셀을 클릭하고 <b>Shift + Enter</b>. <code>파이썬 준비 완료!</code>가 나오면 성공이다.</li>
+    </ol>
+    <div class="code-block">
+      <div class="code-label"><span>명령 프롬프트 — Jupyter 열기(semiconductor_kit 폴더에서)</span><button class="copy-btn">복사</button></div>
+      <pre><code>python -m notebook</code></pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">명령 프롬프트 창은 닫지 않는다</b>
+      Jupyter가 켜져 있는 동안 명령 프롬프트 창이 함께 열려 있어야 한다. 실습을 마칠 때는 브라우저 탭을 닫고,
+      명령 프롬프트 창에서 <code>Ctrl + C</code>를 눌러 끈다.
+    </div>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/setup/setup_04_jupyter_week01.png" loading="lazy"
+           alt="그림 S-4. Jupyter에서 week01_student.ipynb의 첫 셀을 실행한 화면" data-shot="Jupyter 화면 — week01_student.ipynb를 열고 첫 셀을 실행해 '파이썬 준비 완료!'가 출력된 모습">
+      <figcaption class="img-caption">그림 S-4. 1차시 노트북의 첫 셀을 실행한 화면</figcaption>
+    </figure>
+  </section>
+
+  <section class="block">
+    <span class="step-badge">STEP 06</span>
+    <h2>Orange 파일(.ows) 열어 보기</h2>
+    <ol class="pt-list">
+      <li><code>orange3/week01/week01_1_town_start.ows</code>를 더블클릭한다. Orange가 열리며 캔버스에 <b>File</b> 위젯이 하나 보인다.</li>
+      <li>더블클릭으로 열리지 않으면 Orange를 먼저 실행하고 메뉴 <b>File → Open</b>에서 그 파일을 고른다.</li>
+      <li>캔버스의 File 위젯을 더블클릭한다. 위쪽에 파일 이름(<code>week01_orange_town_population.tab</code>)이 보이고,
+        아래 정보 칸에 30행이 들어왔다고 나오면 성공이다.</li>
+    </ol>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/setup/setup_05_ows_open.png" loading="lazy"
+           alt="그림 S-5. week01_1_town_start.ows를 연 Orange 캔버스와 File 위젯 창" data-shot="Orange — week01_1_town_start.ows를 연 캔버스(File 위젯 1개와 안내 메모)와, File 위젯을 더블클릭해 데이터 30행이 들어온 창">
+      <figcaption class="img-caption">그림 S-5. 시작 파일을 열고 File 위젯을 확인한 화면</figcaption>
+    </figure>
+  </section>
+
+  <section class="block">
+    <h2>File 위젯에 "파일을 찾을 수 없다"는 오류가 날 때</h2>
+    <p>File 위젯에 빨간 글씨(<code>File not found</code> 등)가 보이거나 파일 이름이 빨간색이면, Orange가 데이터 파일을
+    찾지 못한 것이다. 아래 순서로 확인한다.</p>
+    <ol class="pt-list">
+      <li><b>압축을 풀었는가?</b> zip 안에서 바로 연 경우 임시 폴더에서 열려 데이터를 찾지 못한다. 압축을 푼 폴더의 <code>.ows</code>를 다시 연다.</li>
+      <li><b>폴더 구조가 그대로인가?</b> <code>semiconductor_kit</code> 안에 <code>orange3</code>와 <code>data</code>가 나란히 있어야 한다. <code>.ows</code> 파일만 다른 곳으로 옮겼다면 원래 자리로 돌려놓는다.</li>
+      <li><b>그래도 안 되면 직접 고른다.</b> File 위젯 창의 폴더 아이콘을 눌러 <code>data/weekly/weekXX/orange/</code> 폴더의 <code>.tab</code> 파일을 고른다. CSV가 아니라 <b>orange 폴더 안의 .tab</b>을 고른다.</li>
+      <li><b>처음부터 다시</b>: 키트 zip을 새로 내려받아 다른 곳에 압축을 풀고 다시 연다.</li>
+    </ol>
+    <figure style="margin:1rem 0;">
+      <img class="chart-img" src="../assets/images/setup/setup_06_file_not_found.png" loading="lazy"
+           alt="그림 S-6. File 위젯에 파일을 찾을 수 없다는 오류가 보이는 화면" data-shot="Orange File 위젯 창 — 파일 이름이 빨간색이고 'File not found' 오류가 보이는 화면, 폴더 아이콘 위치 표시">
+      <figcaption class="img-caption">그림 S-6. 데이터 파일을 찾지 못했을 때의 File 위젯</figcaption>
+    </figure>
+    <div class="callout warn">
+      <b class="tag">Orange에서 저장할 때</b>
+      실습한 워크플로를 저장하면(<code>Ctrl + S</code>) Orange가 데이터 위치를 내 컴퓨터 기준으로 바꿔 저장할 수 있다.
+      그 컴퓨터에서는 계속 열리지만, 폴더를 옮기면 다시 이 오류가 난다. 막히면 키트의 <code>_done.ows</code>나
+      <code>_start.ows</code>를 다시 열면 된다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>준비 끝 확인</h2>
+    <div class="callout success">
+      <b class="tag">세 가지가 되면 첫 수업 준비 완료</b>
+      <ul class="pt-list">
+        <li>명령 프롬프트에서 <code>python --version</code>이 버전을 보여 준다.</li>
+        <li><code>week01_student.ipynb</code>의 첫 셀이 <code>파이썬 준비 완료!</code>를 출력한다.</li>
+        <li><code>week01_1_town_start.ows</code>의 File 위젯에 데이터 30행이 들어온다.</li>
+      </ul>
+    </div>
+    <p>Orange 사용법은 <a href="orange3-guide.html">부록. Orange3 시작하기</a>에 더 자세히 있다. 키트의 데이터는 모두
+    교육용 가상 데이터다.</p>
+  </section>
+
+  <div class="nav-buttons">
+    <a class="home" href="../index.html">전체 목차로 돌아가기</a>
+    <a href="../lectures/week01/index.html">1차시로 이동 →</a>
+  </div>
+
+</main>
+
+<button id="backToTop" title="맨 위로">↑</button>
+<footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · 수강 전 준비 · 교육용 자료(가상 데이터 사용)</footer>
+
+<script src="../assets/js/common.js"></script>
+</body>
+</html>

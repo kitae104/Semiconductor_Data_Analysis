@@ -35,32 +35,43 @@
   <div class="hero">
     <span class="badge blue">5차시</span>
     <h1>데이터 훑어보기와 정리(EDA)</h1>
-    <p class="today-question">오늘의 질문: <b>"코드를 한 줄도 쓰기 전에, 이 데이터에 어떤 문제가 있어 보이는지 먼저 확인할 수 있을까?"</b></p>
+    <p class="today-question">오늘의 질문: <b>"공장 기록에 섞인 빈칸·중복·튀는 값을 정리하면, 평균은 얼마나 달라질까?"</b></p>
+    <p class="lede"><b>오늘의 미션</b> — 입사 다섯째 날, 센서 기록에 빈칸·중복·튀는 값이 섞여 있다. 정리해서 믿을 수 있는 평균 온도를 보고하자.
+    (신입 데이터 담당자의 10일 이야기와 공장·데이터는 모두 교육용 가상이다.)</p>
+    <img class="chart-img" src="../../assets/images/orange3/week05_01_mission_before_after.png"
+         alt="오늘 끝에 Orange3로 보게 될 정리 전과 정리 후의 Feature Statistics 두 창"
+         data-shot="week05_2_dirty_process_done.ows에서 Feature Statistics (정리 전) 창과 Feature Statistics (정리 후) 창을 나란히 띄운 화면 — 두 창 모두 온도_C 행의 Mean(정리 전 304.94, 정리 후 300.75)이 보이게">
   </div>
 
   <section class="block">
     <h2>학습 목표</h2>
     <ul class="goal-list">
-      <li>공장 데이터에 빈칸·중복·튀는 값이 왜 생기는지, 그대로 두면 평균이 어떻게 틀어지는지 설명할 수 있다.</li>
-      <li>Orange3로 CSV를 열어 빈칸과 튀는 값이 있는 열을 먼저 눈으로 찾을 수 있다.</li>
-      <li>Pandas로 결측값·중복값·이상값을 찾고, 지울지 채울지 골라 정리할 수 있다.</li>
-      <li>정리 전후의 행 개수와 평균을 비교해 한 문장으로 해석할 수 있다.</li>
+      <li>빈칸·중복·튀는 값이 왜 생기고, 평균을 어떻게 틀어지게 하는지 설명할 수 있다.</li>
+      <li><code>describe()</code>와 <code>isna().sum()</code>으로 문제가 있는 열을 찾을 수 있다.</li>
+      <li><code>dropna()</code>·<code>drop_duplicates()</code>·범위 조건으로 표를 정리하고, 정리 전후의 행 수와 평균을 비교할 수 있다.</li>
+      <li>Orange3 Impute로 빈칸을 채워 보고, 튀는 값이 남은 채로 평균을 채우면 생기는 문제를 말할 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 4차시 — <code>read_csv</code>, 열 선택, 조건 검색 / 3차시 — <code>for</code> 반복문 / 1차시 — f-string</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 4차시 — <code>read_csv</code>, 조건 검색 / 3차시 — Orange Select Rows / 2차시 — Orange Feature Statistics</p>
+  </section>
+
+  <section class="block">
+    <h2>오늘 수업 구성</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>반 학생 기록으로 빈칸·중복·튀는 값을 찾고 지운 뒤, 같은 코드로 공장 기록을 훑어본다</td></tr>
+          <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>클린룸 환경 기록으로 Impute(빈칸 채우기)를 익히고, 같은 위젯으로 공장 기록을 정리한다</td></tr>
+          <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개 + Orange 1문제 + 해석 문장 1개</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
-    <p>공장 데이터에는 빈칸·중복·튀는 값이 끼어든다. 정리하지 않으면 코드는 돌아가도 숫자가 틀린다(오늘 실습에서 직접 계산하는 결과).</p>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>항목</th><th>정리 전</th><th>정리 후</th><th>무엇이 달라졌나</th></tr>
-        <tr><td>행 개수</td><td>113행</td><td>102행</td><td>중복 3행, 결과가 빈 2행, 튀는 값이 있는 6행을 덜어냈다</td></tr>
-        <tr><td>평균 온도</td><td>304.9</td><td>300.6</td><td>540도·557도 기록 2건이 평균을 끌어올리고 있었다</td></tr>
-        <tr><td>평균 압력</td><td><b>994.4</b></td><td>1013.6</td><td>음수 압력 2건이 평균을 끌어내려 학습용 정상 범위(995~1025) 밖처럼 보였다</td></tr>
-        <tr><td>최고 온도</td><td>557.7</td><td>310.9</td><td>"가장 뜨거웠던 기록"이 완전히 다른 값이 됐다</td></tr>
-      </table>
-    </div>
+    <p>공장 기록에는 빈칸·중복·튀는 값이 끼어든다. 정리하지 않으면 코드는 돌아가도 숫자가 틀린다.</p>
+    <p>오늘 쓰는 반 학생 기록에서도, 키를 잘못 적은 값(1720cm) 하나 때문에 평균 키가 <b>276.6cm</b>로 나온다. 정리하면 <b>163.8cm</b>다.</p>
     <div class="callout concept">
       <b class="tag">비유 — 가계부</b>
       같은 영수증을 두 번 적은 가계부로는 지출을 믿을 수 없다. 분석 전에 데이터를 훑어보고 정리하는 일을 <b>EDA</b>(탐색적 데이터 분석)라고 한다.
@@ -69,143 +80,57 @@
 
   <section class="block">
     <h2>지난 시간 복습</h2>
-    <ul class="pt-list">
-      <li>4차시: <code>pd.read_csv()</code>로 읽고, <code>df[df["설비번호"] == "EQ-02"]</code>처럼 조건 검색, <code>df[["로트번호", "온도_섭씨"]]</code>처럼 여러 열 선택.</li>
-      <li>오늘은 같은 조건 검색으로 "말이 안 되는 값"을 찾고, 1차시의 <b>"여러 열을 함께 본다"</b>를 이상값에 다시 쓴다.</li>
-    </ul>
-  </section>
-
-  <section class="block">
-    <h2>데이터 정리 개념 이해하기</h2>
-
-    <h3>먼저 쉬운 예제로 — 반 학생 기록 15줄</h3>
-    <p>개념은 <b>쉬운 예제(반 학생 기록)</b>로 익히고, 반도체 데이터는 뒤의 "반도체 데이터로 확인하기"와 실습지에서 다룬다.
-    <code>week05_easy_class_records.csv</code>(15행 5열)는 <b>생활 예제용 가상 데이터</b>다.</p>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>행</th><th>이름</th><th>반</th><th>키_cm</th><th>몸무게_kg</th><th>수학_점수</th></tr>
-        <tr><td>0</td><td>김민준</td><td>1반</td><td>165.2</td><td>55.1</td><td>85</td></tr>
-        <tr><td>1</td><td>이서연</td><td>1반</td><td>158.4</td><td>48.3</td><td>92</td></tr>
-        <tr><td>2</td><td>박지호</td><td>1반</td><td>171.0</td><td>63.5</td><td>78</td></tr>
-        <tr><td>3</td><td>최수아</td><td>1반</td><td></td><td>50.2</td><td>88</td></tr>
-        <tr><td>4</td><td>정도윤</td><td>2반</td><td>1720.0</td><td>66.0</td><td>74</td></tr>
-        <tr><td>5</td><td>강하린</td><td>2반</td><td>160.5</td><td>51.8</td><td>95</td></tr>
-        <tr><td>6</td><td>조예준</td><td></td><td>168.3</td><td>59.4</td><td>81</td></tr>
-        <tr><td>7</td><td>윤지우</td><td>2반</td><td>155.9</td><td>46.7</td><td>69</td></tr>
-        <tr><td>8</td><td>장서준</td><td>2반</td><td>174.6</td><td></td><td>90</td></tr>
-        <tr><td>9</td><td>임하은</td><td>3반</td><td>162.1</td><td>52.9</td><td>83</td></tr>
-        <tr><td>10</td><td>한시우</td><td>3반</td><td>169.8</td><td>61.2</td><td>76</td></tr>
-        <tr><td>11</td><td>오유나</td><td>3반</td><td>157.3</td><td>47.5</td><td>98</td></tr>
-        <tr><td>12</td><td>서주원</td><td>3반</td><td>176.2</td><td>70.3</td><td>72</td></tr>
-        <tr><td>13</td><td>신채원</td><td>3반</td><td>161.7</td><td>53.6</td><td>87</td></tr>
-        <tr><td>14</td><td>박지호</td><td>1반</td><td>171.0</td><td>63.5</td><td>78</td></tr>
-      </table>
+    <div class="quiz-item">
+      <div class="q">Q1. 4차시 기록 100건에서 <code>df[df["설비번호"] == "EQ-02"]</code>를 실행하면 무엇이 나올까?</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">설비번호가 EQ-02인 행만 모인 표(25행). 오늘은 같은 조건 검색으로 평소 범위를 크게 벗어난 값을 찾고 뺀다.</div>
     </div>
-    <div class="callout practice"><b class="tag">눈으로 찾아보기</b> 위 표에서 빈칸, 두 번 적힌 학생, 말이 안 되는 숫자를 찾아보자.</div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸 3칸(최수아 키, 조예준 반, 장서준 몸무게) / 두 번 적힌 박지호(2행 = 14행) / 정도윤 키 1720.0cm.
-    113줄 반도체 데이터는 눈으로 찾기 어려우니 코드로 찾는다.</div>
-
-    <h3>오늘 반도체 데이터의 열</h3>
-    <p><code>week05_dirty_process_data.csv</code>(113행 9열, 교육용 가상 데이터). 한 행 = 공정 작업 1건.</p>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>열</th><th>공장에서의 뜻</th></tr>
-        <tr><td><code>측정시간</code>, <code>로트번호</code>, <code>설비번호</code>, <code>공정명</code></td><td>언제, 어느 웨이퍼 묶음을, 어느 기계(EQ-01~EQ-04)에서, 어떤 작업(포토·식각·증착·세정·산화)으로</td></tr>
-        <tr><td><code>온도_섭씨</code>, <code>압력_Pa</code>, <code>가스유량_slm</code></td><td>센서가 잰 설비 안의 온도·압력, 흘려 넣은 가스의 양(slm: 1분 동안 흐른 가스 리터)</td></tr>
-        <tr><td><code>처리시간_sec</code></td><td>작업에 걸린 시간(초)</td></tr>
-        <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
-      </table>
-    </div>
-        <div class="callout concept">
-      <b class="tag">단위 읽는 법</b>
-      이번 차시에 새로 나오는 단위들이다. 열 이름의 밑줄 뒤가 단위인 규칙은 1차시와 같다.
-      <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
-        <tr><td><code>cm (키_cm)</code></td><td>센티미터</td><td>길이. 100cm = 1m</td></tr>
-        <tr><td><code>kg (몸무게_kg)</code></td><td>킬로그램</td><td>무게. 1kg = 1000g</td></tr>
-        <tr><td><code>sec (처리시간_sec)</code></td><td>초 (영어로 second의 줄임)</td><td>시간. 60초 = 1분</td></tr>
-      </table>
-      </div>
-    </div>
-    <p style="color:var(--muted);font-size:.9rem;">값과 정상 범위(온도 295~305, 압력 995~1025, 가스유량 47~53)는 학습용이라 실제 공정 조건으로 해석하지 않는다.</p>
-
-    <h3>데이터는 왜 지저분해질까</h3>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>문제</th><th>한 줄 뜻</th><th>반 학생 기록</th><th>공장에서 생기는 이유(예)</th><th>반도체 데이터</th></tr>
-        <tr><td><b>결측값</b></td><td>칸이 비어 있다</td><td>빈칸 3칸</td><td>센서 꺼짐, 통신 끊김, 입력 누락</td><td>10칸</td></tr>
-        <tr><td><b>중복값</b></td><td>같은 기록이 두 번 저장됐다</td><td>박지호 두 번</td><td>같은 기록을 다시 보냄, 파일 합치다 겹침</td><td>3행</td></tr>
-        <tr><td><b>이상값</b></td><td>값은 있는데 말이 안 되게 튄다</td><td>키 1720cm</td><td>센서 고장, 입력 실수, <b>또는 진짜 설비 문제</b></td><td>6건</td></tr>
-        <tr><td><b>입력 오류</b></td><td>같은 뜻인데 글자·형식이 다르다</td><td>없음</td><td>오타, 설비마다 다른 날짜 형식</td><td>공정명 3건, 측정시간 2건(오늘은 이름만)</td></tr>
-      </table>
-    </div>
-    <ul class="pt-list">
-      <li>두 데이터의 오류는 연습용으로 일부러 넣었다. 표의 이유는 현장에서 흔한 예다.</li>
-      <li>빈칸은 Pandas에서 <code>NaN</code>(값 없음)이다. 키를 안 잰 학생은 0cm가 아니다 — 0으로 채우면 평균이 틀어진다.</li>
-      <li>순서: 훑어보기 → 결측값 → 중복값 → 이상값 → 정리 전후 비교.</li>
-    </ul>
-  </section>
-
-  <section class="block">
-    <h2>① Orange3로 먼저 훑어보기</h2>
-    <p>코드 없이 반도체 CSV를 열어본다. 왼쪽 <b>Data</b> 묶음에서 위젯 세 개를 캔버스로 끌어다 놓고 선으로 잇는다
-    (처음이면 <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>).</p>
-    <ol>
-      <li><b>File</b> — 더블클릭 → 폴더 아이콘 → <code>week05_dirty_process_data.csv</code> 선택.</li>
-      <li><b>Data Table</b> — File과 잇고 더블클릭. 빈칸은 <b><code>?</code></b>로 보인다.</li>
-      <li><b>Column Statistics</b>(버전에 따라 Feature Statistics) — Data Table과 잇고 <b>Min.</b>, <b>Max.</b>, <b>Missing</b> 칸을 본다.</li>
-    </ol>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week05_01_canvas.png" loading="lazy"
-           alt="그림 5-1. File, Data Table, Column Statistics 세 위젯을 선으로 연결한 Orange3 캔버스" data-shot="File → Data Table → Column Statistics 세 위젯을 연결한 캔버스 전체 화면">
-      <figcaption class="img-caption">그림 5-1. 세 위젯을 연결한 Orange3 캔버스</figcaption>
-    </figure>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week05_02_data_table.png" loading="lazy"
-           alt="그림 5-2. Data Table에서 빈칸이 물음표로 보이고, 왼쪽 Info에 1.3% missing data가 표시된다" data-shot="Data Table 창 — 빈칸(결측 셀)이 ?로 보이는 부분">
-      <figcaption class="img-caption">그림 5-2. Data Table — 빈칸은 <code>?</code>. Info 칸의 missing 비율은 넘어가도 된다. 열별 빈칸 개수는 Column Statistics의 Missing 칸에서 본다.</figcaption>
-    </figure>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week05_03_feature_statistics.png" loading="lazy"
-           alt="그림 5-3. Column Statistics에서 온도_섭씨의 Max가 557.727로 다른 값보다 크게 튄다" data-shot="Column Statistics 창 — 온도_섭씨의 Max 값이 500 이상으로 보이는 부분">
-      <figcaption class="img-caption">그림 5-3. Column Statistics — 열마다 평균·중앙값·최솟값·최댓값·빈칸 수가 한 줄로 나온다.</figcaption>
-    </figure>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>볼 곳</th><th>보이는 값</th><th>뜻</th></tr>
-        <tr><td>Missing 칸</td><td>온도 3, 압력 2, 가스유량 3, 합격여부 2</td><td>빈칸이 있는 열</td></tr>
-        <tr><td>온도_섭씨 Max.</td><td>557.727</td><td>정상 범위(295~305)보다 훨씬 크다 → 이상값 후보</td></tr>
-        <tr><td>압력_Pa Min.</td><td>-42.9105</td><td>압력이 음수다 → 이상값 후보</td></tr>
-        <tr><td>가스유량_slm Min. / Max.</td><td>-5.00 / 250.00</td><td>음수, 평소(약 50)의 5배 → 이상값 후보</td></tr>
-        <tr><td>온도_섭씨 Mean / Median</td><td>304.941 / 300.45</td><td>평균이 중앙값보다 크다 → 큰 값이 평균을 끌어올리는 중</td></tr>
-      </table>
-    </div>
-    <div class="callout warn">
-      <b class="tag">주의</b> Column Statistics 입력 숫자가 113이 아니면 Data Table에서 행이 선택된 것이다. <b>Clear Selection</b>을 누른다.
-      중복 행은 눈으로 찾기 어렵다 — 이제 파이썬으로 확인한다.
+    <div class="quiz-item">
+      <div class="q">Q2. 파이썬의 조건 검색과 같은 일을 하는 Orange 위젯은?</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">Select Rows(행 고르기). 오늘 PART 2에서 튀는 값을 거를 때 다시 쓴다.</div>
     </div>
   </section>
 
-  <section class="block">
-    <h2>② 파이썬으로 숫자 요약 보기 — describe()</h2>
-    <p><code>describe()</code>는 숫자 열마다 개수·평균·최솟값·최댓값을 한 번에 요약한다(Column Statistics의 코드판).
-    반 학생 기록을 <code>students</code>에 담는다.</p>
+  <section class="block" id="part1">
+    <h2><span class="step-badge">PART 1</span> 파이썬 — 빈칸·중복·튀는 값 정리하기</h2>
+    <p><b>실습 파일 받기</b> — <a href="../../dist/week05_kit.zip">5차시 키트(week05_kit.zip)</a>를 받아 압축을 푼다.
+    과정 전체를 한 번에 받으려면 <a href="../../dist/student_kit.zip">전체 키트(student_kit.zip)</a>를 쓴다. 폴더 구조는 그대로 둔다.</p>
+    <p>노트북 <code>notebooks/student/week05_student.ipynb</code>를 열고 맨 위 "막혔을 때" 셀을 먼저 읽는다.
+    개념은 <b>반 학생 기록</b>(<code>week05_easy_class_records.csv</code>, 15행 5열, 생활 예제용 가상 데이터)으로 익힌다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>열</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td><code>이름</code>, <code>반</code></td><td>학생 이름과 반</td></tr>
+          <tr><td><code>키_cm</code>, <code>몸무게_kg</code></td><td>키(센티미터), 몸무게(킬로그램). 밑줄 뒤가 단위다</td></tr>
+          <tr><td><code>수학점수_pt</code></td><td>수학 점수. <code>_pt</code>는 점수(points)라는 뜻</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>이 표에는 빈칸 3칸, 두 번 적은 학생 1명, 잘못 적은 키 1개가 일부러 섞여 있다. 하나씩 찾아서 정리한다.</p>
+  </section>
 
-    <h3>쉬운 예제 — 반 학생 기록</h3>
+  <section class="block">
+    <h2>숫자 요약 보기 — describe()</h2>
+    <p><code>describe()</code>는 숫자 열마다 개수·평균·최솟값·최댓값을 한 번에 보여 준다. 2차시 Orange Feature Statistics의 코드판이다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 쉬운 예제: 읽고 요약하기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 읽고 요약하고, 정리 전 값 기억하기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
 students = pd.read_csv("../../data/weekly/week05/week05_easy_class_records.csv", encoding="utf-8-sig")
 print(students.shape)
-print(students.describe())</code></pre>
+
+print(students.describe())
+
+before_count = len(students)
+before_height = round(students["키_cm"].mean(), 1)
+print(before_count, before_height)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(15, 5)
-              키_cm     몸무게_kg      수학_점수
+              키_cm     몸무게_kg    수학점수_pt
 count    14.000000  14.000000  15.000000
 mean    276.571429  56.428571  83.066667
 std     415.497775   7.537132   8.639334
@@ -213,107 +138,72 @@ min     155.900000  46.700000  69.000000
 25%     160.800000  50.600000  77.000000
 50%     166.750000  54.350000  83.000000
 75%     171.000000  62.925000  89.000000
-max    1720.000000  70.300000  98.000000</pre>
+max    1720.000000  70.300000  98.000000
+15 276.6</pre>
     </div>
     <ul class="pt-list">
-      <li><code>count</code> 14 → 키·몸무게에 빈칸이 하나씩. <code>max</code> 1720.0 → 튀는 값.</li>
-      <li><code>mean</code>(평균) 276.6 vs <code>50%</code>(중앙값) 166.75 → 튀는 값 하나가 평균만 끌어올렸다. 글자 열(이름·반)은 나오지 않는다.</li>
-      <li><code>std</code>·<code>25%</code>·<code>75%</code>는 오늘은 넘어간다(<code>25%</code>·<code>75%</code>는 6차시 박스플롯에서 다시 본다).</li>
+      <li><code>count</code>가 14다 → 15명 중 키·몸무게가 하나씩 비어 있다. <code>max</code> 1720.0 → 튀는 값이다.</li>
+      <li><code>mean</code>(평균) 276.6과 <code>50%</code>(중앙값, 크기순 한가운데 값) 166.75가 크게 다르다 → 튀는 값 하나가 평균만 끌어올렸다.</li>
+      <li><code>round(값, 1)</code>은 소수 첫째 자리까지 반올림한다. 정리 전 값은 마지막에 비교하려고 변수에 담아 둔다.</li>
+      <li><code>std</code>·<code>25%</code>·<code>75%</code> 줄과, 다른 출력 끝에 붙는 <code>dtype</code> 줄은 오늘 보지 않는다. 글자 열(이름·반)은 <code>describe()</code>에 나오지 않는다.</li>
     </ul>
-
-    <h3>쉬운 예제 — 정리 전 값 기억해 두기</h3>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 쉬운 예제: 정리 전 값 저장</span><button class="copy-btn">복사</button></div>
-      <pre><code>before_students = len(students)
-before_height = students["키_cm"].mean()
-before_weight = students["몸무게_kg"].mean()
-
-print(f"정리 전: {before_students}명, 평균 키 {before_height:.1f}, 평균 몸무게 {before_weight:.1f}")</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">정리 전: 15명, 평균 키 276.6, 평균 몸무게 56.4</pre>
-    </div>
-    <p><code>열.mean()</code>은 평균, <code>열.median()</code>은 중앙값을 바로 구한다. 2차시에 <code>sum() / len()</code>으로 하던 계산을 한 번에 하는 것이다(빈칸 NaN은 빼고 계산한다).</p>
-    <div class="callout warn"><b class="tag">주의</b> 이 셀은 정리 전에 한 번만 실행한다. 다시 실행하면 마지막 비교에서 전후가 똑같이 나온다.</div>
-  </section>
-
-  <section class="block">
-    <h2>결측값 세고 처리하기 — isna(), dropna(), fillna()</h2>
-    <p><code>isna()</code>는 칸마다 "비어 있나?"를 True/False로 바꾸고, <code>.sum()</code>이 True를 세어 열별 빈칸 개수가 나온다.</p>
-
-    <h3>쉬운 예제 — 빈칸 세기</h3>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 쉬운 예제: 빈칸 세기</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(students.isna().sum())</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">이름        0
-반         1
-키_cm      1
-몸무게_kg    1
-수학_점수     0
-dtype: int64</pre>
-    </div>
-
-    <h3>지울까, 채울까 — dropna()와 fillna()</h3>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>방법</th><th>이럴 때</th><th>반 학생 기록</th></tr>
-        <tr><td><code>dropna()</code> — 행 지우기</td><td>짐작해서 채우면 안 되는 값(반·검사 결과)</td><td>조예준의 <code>반</code></td></tr>
-        <tr><td><code>fillna(값)</code> — 채우기</td><td>측정값 한 칸만 비고 나머지는 멀쩡</td><td>최수아의 키, 장서준의 몸무게</td></tr>
-      </table>
-    </div>
     <div class="callout concept">
-      <b class="tag">비유 — 용돈</b>
-      용돈 1·1·2·2·100만 원의 평균은 21.2만 원, 중앙값(크기순 한가운데 값)은 2만 원이다. 튀는 값에 덜 흔들리는 <b>중앙값</b>으로 채운다.
-    </div>
-
-    <h3>쉬운 예제 — 반이 빈 행은 지우고, 키·몸무게 빈칸은 채우기</h3>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 쉬운 예제: 지우기와 채우기</span><button class="copy-btn">복사</button></div>
-      <pre><code>students = students.dropna(subset=["반"])
-print(students.shape)
-
-for col in ["키_cm", "몸무게_kg"]:
-    median_value = students[col].median()
-    students[col] = students[col].fillna(median_value)
-
-print(students.isna().sum())</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(14, 5)
-이름        0
-반         0
-키_cm      0
-몸무게_kg    0
-수학_점수     0
-dtype: int64</pre>
-    </div>
-    <ul class="pt-list">
-      <li><code>subset=["반"]</code>은 "이 열이 빈 행만 지워라". 앞의 <code>students =</code>로 다시 저장해야 반영된다.</li>
-      <li><code>for</code>로 두 열을 돌며 중앙값(키 165.2, 몸무게 53.6)으로 빈칸을 채웠다.</li>
-      <li><code>col</code>에는 반복할 때마다 <code>"키_cm"</code>, <code>"몸무게_kg"</code>가 차례로 들어간다. <code>=</code> 왼쪽에 <code>students[col]</code>을 쓰면 그 열을 빈칸을 채운 값으로 바꿔 저장한다.</li>
-    </ul>
-    <div class="code-block">
-      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람이야. 빈칸(결측값)을 지우는 것과 채우는 것은 각각 언제 쓰는지, 반 학생들 시험 점수표를 예로 들어 초보자 눈높이로 설명해줘.</code></pre>
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>평균 중앙값 차이</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람에게 평균과 중앙값의 차이를 반 학생 키 예시로 3문장 안에 설명해줘. 키를 잘못 적은 값이 하나 섞였을 때 둘 중 어느 쪽이 더 크게 흔들리는지도 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "평균은 모든 값을 더해 개수로 나누므로 튀는 값 하나에 크게 끌려가고, 중앙값은 크기순 한가운데 값이라 덜 흔들린다"는 내용이 들어 있다.</div>
     </div>
   </section>
 
   <section class="block">
-    <h2>중복값 찾고 지우기</h2>
-    <p><code>duplicated()</code>는 앞의 행과 <b>모든 칸이 같은</b> 행을 True로 표시하고, <code>drop_duplicates()</code>는 그 여분을 지운다.</p>
-
-    <h3>쉬운 예제 — 두 번 적힌 학생</h3>
+    <h2>빈칸 세고 지우기 — isna(), dropna()</h2>
+    <p>빈칸은 pandas에서 <code>NaN</code>(값 없음)으로 읽힌다. 키를 안 잰 학생은 0cm가 아니다 — 0과 빈칸은 다르다.</p>
+    <ul class="pt-list">
+      <li><code>isna().sum()</code> — 칸마다 "비었나?"를 확인하고, 열마다 빈칸 개수를 센다.</li>
+      <li><code>dropna()</code> — 빈칸이 하나라도 있는 행을 지운다. 결과를 <code>students =</code>로 다시 저장해야 남는다.</li>
+    </ul>
     <div class="code-block">
-      <div class="code-label"><span>Python — 쉬운 예제: 세고, 들여다보고, 지우기</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(students.duplicated().sum())
+      <div class="code-label"><span>Python — 빈칸 세고 지우기 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(students.isna().sum())
 
-dup = students[students.duplicated()]
-print(dup[["이름", "반", "키_cm", "몸무게_kg"]])
+students = students.dropna()
+print(students.shape)</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">이름         0
+반          1
+키_cm       1
+몸무게_kg     1
+수학점수_pt    0
+dtype: int64
+(12, 5)</pre>
+    </div>
+    <p>빈칸이 있는 3행이 지워져 15행 → 12행이 됐다.</p>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>pandas NaN 뜻</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>pandas에서 NaN이 무엇인지 프로그래밍을 처음 배우는 사람에게 쉬운 말로 설명해줘. 숫자 0과 무엇이 다른지도 예를 들어 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "NaN은 값이 없다(빈칸)는 표시이고, 0은 잰 값이 0이라는 뜻이라 서로 다르다", "평균을 낼 때 NaN은 빼고 계산한다"는 내용이 들어 있다.</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>중복 행 찾고 지우기 — duplicated(), drop_duplicates()</h2>
+    <p><code>duplicated()</code>는 앞의 행과 <b>모든 칸이 같은</b> 행을 찾고, <code>.sum()</code>이 그 개수를 센다. <code>drop_duplicates()</code>는 그 복사본만 지운다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 중복 행 세고 지우기 (노트북 3단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(students.duplicated().sum())
 
 students = students.drop_duplicates()
 print(students.shape)</code></pre>
@@ -321,223 +211,348 @@ print(students.shape)</code></pre>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">1
-     이름   반   키_cm  몸무게_kg
-14  박지호  1반  171.0    63.5
-(13, 5)</pre>
+(11, 5)</pre>
     </div>
-    <p><code>students[students.duplicated()]</code>는 4차시 <code>df[조건]</code>과 같은 모양이다(<code>duplicated()</code>가 True인 행만 고른다).
-    원본(2행)은 남고 여분(14행)만 지워져 <b>1행만</b> 줄었다.</p>
+    <p>두 번 적은 박지호의 복사본 1행만 지워져 12행 → 11행이 됐다. 원래 행은 남는다.</p>
   </section>
 
   <section class="block">
-    <h2>이상값 찾기 — 지우기 전에 들여다보기</h2>
-    <p>이상값은 값이 <b>있어서</b> <code>isna()</code>로 안 잡힌다. 조건 검색으로 찾고, 지우기 전에 <b>다른 열과 함께</b> 본다.</p>
-    <div class="callout concept">
-      <b class="tag">비유 — 건강검진</b>
-      혈압 300이 나오면 의사는 지우지 않고 다시 재고 다른 결과와 함께 본다. 기계 고장일 수도, 진짜 위험 신호일 수도 있다.
-    </div>
-
-    <h3>쉬운 예제 — 키 1720cm</h3>
+    <h2>튀는 값 찾고 빼기 — 범위 조건</h2>
+    <p>튀는 값(이상값)은 값이 <b>있어서</b> <code>isna()</code>로는 안 잡힌다. 4차시에 배운 조건 검색으로 찾는다. 사람 키가 250cm를 넘는 일은 거의 없으니, 오늘은 250cm를 넘으면 잘못 적은 값으로 본다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 쉬운 예제: 찾고, 다른 열과 함께 보기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 튀는 값 찾기 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>tall = students[students["키_cm"] &gt; 250]
-print("키 250 초과:", len(tall), "명")
-
-print(tall[["이름", "반", "키_cm", "몸무게_kg"]])</code></pre>
+print(tall)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">키 250 초과: 1 명
-    이름   반    키_cm  몸무게_kg
-4  정도윤  2반  1720.0    66.0</pre>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">    이름   반    키_cm  몸무게_kg  수학점수_pt
+4  정도윤  2반  1720.0    66.0       74</pre>
     </div>
-    <p>몸무게 66.0kg은 평범하다 → 172.0을 적다 소수점을 빠뜨린 입력 실수를 의심할 수 있다.</p>
-  </section>
-
-  <section class="block">
-    <h2>이상값 지우기 — 무엇을 지우고 무엇을 남길까</h2>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>선택</th><th>언제</th><th>방법</th></tr>
-        <tr><td>행을 지운다</td><td>기록 오류가 분명할 때</td><td>조건 검색으로 정상 행만 남긴다(오늘 실습)</td></tr>
-        <tr><td>값만 고친다</td><td>한 칸만 튀고 올바른 값이 확실할 때(1720 → 172.0)</td><td><code>df.loc[조건, "열이름"] = 새 값</code> (오늘은 구경만)</td></tr>
-        <tr><td>남겨두고 표시한다</td><td>진짜 문제의 신호일 수 있을 때</td><td>따로 모아 담당자에게 확인 요청</td></tr>
-      </table>
-    </div>
-    <p>오늘 이상값은 연습용 기록 오류라 행을 지운다. 찾을 때 쓴 조건의 <b>반대</b>만 남긴다.</p>
-
-    <h3>쉬운 예제 — 키 250 이하만 남기기</h3>
+    <p>몸무게 66.0kg은 평범하다 → 172.0을 적다가 소수점을 빠뜨린 입력 실수로 볼 수 있다. 지우기 전에 이렇게 <b>다른 열과 함께</b> 본다.</p>
+    <p>찾을 때 쓴 조건의 <b>반대</b>(<code>&lt;=</code>)로 남길 행만 고르고, 정리 전후 평균을 비교한다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 쉬운 예제: 이상값이 있는 행 지우기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 튀는 값 빼고 전후 비교하기 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>students = students[students["키_cm"] &lt;= 250]
-print(students.shape)</code></pre>
+print(students.shape)
+
+after_height = round(students["키_cm"].mean(), 1)
+print("정리 전 평균 키:", before_height)
+print("정리 후 평균 키:", after_height)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(12, 5)</pre>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(10, 5)
+정리 전 평균 키: 276.6
+정리 후 평균 키: 163.8</pre>
     </div>
-    <div class="code-block">
-      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>너는 반도체 공장의 공정 엔지니어야. 압력 센서에 -42라는 값이 찍혔을 때, 그 기록을 지울지, 값을 고칠지, 그대로 두고 설비를 먼저 확인할지 초보자에게 역할극으로 설명해줘.</code></pre>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>정리 전후 비교하기</h2>
-
-    <h3>쉬운 예제 — 반 학생 기록 정리 전후</h3>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 쉬운 예제: 정리 전후 비교</span><button class="copy-btn">복사</button></div>
-      <pre><code>after_height = students["키_cm"].mean()
-after_weight = students["몸무게_kg"].mean()
-
-print(f"학생 수: {before_students} → {len(students)}")
-print(f"평균 키: {before_height:.1f} → {after_height:.1f}")
-print(f"평균 몸무게: {before_weight:.1f} → {after_weight:.1f}")</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">학생 수: 15 → 12
-평균 키: 276.6 → 164.8
-평균 몸무게: 56.4 → 54.6</pre>
+    <p>15행이 10행이 되고, 평균 키가 276.6 → 163.8로 바뀌었다. 튀는 값 하나가 평균을 이만큼 흔들었다.</p>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>센서 측정값 튀는 이유</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>공장 센서 기록에 갑자기 튀는 값이 찍히는 흔한 이유를 데이터 분석을 처음 배우는 사람에게 3가지로 설명해줘. 튀는 값이 있으면 곧 불량이라는 뜻인지도 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 센서 고장·통신 오류·입력 실수(소수점·단위)처럼 <b>기록이 잘못된 경우</b>와 실제 설비 상태가 바뀐 경우를 함께 말하고,
+      "튀는 값이 곧 불량이라고 단정하지 않고 다른 열과 함께 확인한다"는 내용이 들어 있다.</div>
     </div>
   </section>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>반도체 데이터(<code>df</code>)도 쉬운 예제와 같은 순서로 정리한다(전체 과정은 <a href="worksheet.html">실습지</a> 문제 1~10).
-    바꾸는 것은 <code>students</code> → <code>df</code>와 열 이름이다. 결과 열 <code>합격여부</code>(1 = 합격, -1 = 불합격)는 반처럼 빈 행을 지우고,
-    측정값 <code>온도_섭씨</code>·<code>압력_Pa</code>·<code>가스유량_slm</code>은 키처럼 중앙값으로 채운다. 여기서는 핵심 세 가지만 확인한다.</p>
-
-    <h3>확인 1 — Orange3에서 본 빈칸이 코드로도 같을까?</h3>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 반도체 데이터 읽기</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.read_csv("../../data/weekly/week05/week05_dirty_process_data.csv", encoding="utf-8-sig")
-print(df.shape)</code></pre>
+    <p>공장 기록 <code>week05_dirty_process_data.csv</code>(113행 9열, 교육용 가상 데이터)에도 빈칸·중복·튀는 값을 일부러 섞었다.
+    한 행 = 공정 작업 1건이다. 위 코드에서 표 이름만 <code>students</code> → <code>df</code>로 바뀐다.</p>
+    <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 — 이 단계 설비들의 센서 기록이다(1차시 공정 지도 그림은 PART 2에서 다시 본다).</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
+        <tbody>
+          <tr><td><code>측정시간</code>, <code>로트번호</code>, <code>설비번호</code>, <code>공정명</code></td><td>언제, 어느 웨이퍼 묶음을, 어느 기계(EQ-01~EQ-04)에서, 어떤 작업(산화·포토·식각·증착·세정)으로</td></tr>
+          <tr><td><code>온도_C</code></td><td>설비 안의 온도. <code>_C</code> = 섭씨 도(℃)</td></tr>
+          <tr><td><code>압력_Pa</code>, <code>가스유량_slm</code></td><td>설비 안의 압력(파스칼), 흘려 넣은 가스의 양(<code>slm</code>은 가스 흐름 양의 단위)</td></tr>
+          <tr><td><code>처리시간_sec</code></td><td>작업에 걸린 초(<code>sec</code> = second)</td></tr>
+          <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
+        </tbody>
+      </table>
     </div>
+    <p style="color:var(--muted);font-size:.9rem;">값과 정상 범위(온도 295~305, 압력 995~1025, 가스유량 47~53)는 학습용이라 실제 공정 조건으로 해석하지 않는다.</p>
+
+    <h3>확인 1 — 숫자 요약으로 이상한 열 찾기</h3>
     <div class="code-block">
-      <div class="code-label"><span>Python — 빈칸 세기</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(df.isna().sum())</code></pre>
+      <div class="code-label"><span>Python — 공장 기록 읽고 요약하기 (노트북 6단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>df = pd.read_csv("../../data/weekly/week05/week05_dirty_process_data.csv", encoding="utf-8-sig")
+print(df.shape)
+
+print(df.describe())</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(113, 9)
-측정시간        0
+             온도_C        압력_Pa    가스유량_slm    처리시간_sec        합격여부
+count  110.000000   111.000000  110.000000  113.000000  111.000000
+mean   304.941298   994.361336   51.350000  119.922124    0.585586
+std     33.576979   140.252613   19.933578    5.191128    0.814287
+min    291.300000   -42.910520   -5.000000  107.300000   -1.000000
+25%    298.100000  1007.850000   48.755000  116.500000    1.000000
+50%    300.450000  1013.100000   49.940000  119.800000    1.000000
+75%    302.500000  1017.500000   51.377500  123.400000    1.000000
+max    557.727366  1033.100000  250.000000  132.300000    1.000000</pre>
+    </div>
+    <p><b>공장 말로 읽기</b> — 온도 최댓값 557.7도는 평소(300도 안팎)와 동떨어진다. 압력이 음수(-42.9)이고 가스유량에 -5와 250이 있다.
+    반 기록의 키 1720cm와 같은 "튀는 값 후보"다.
+    <code>합격여부</code>의 mean 0.59는 1과 -1의 평균일 뿐 합격률(59%)이 아니다.</p>
+
+    <h3>확인 2 — 빈칸과 중복은 몇 개일까</h3>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 빈칸과 중복 세기 (노트북 6단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>print(df.isna().sum())
+
+print(df.duplicated().sum())</code></pre>
+    </div>
+    <div class="callout success">
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">측정시간        0
 로트번호        0
 설비번호        0
 공정명         0
-온도_섭씨       3
+온도_C        3
 압력_Pa       2
 가스유량_slm    3
 처리시간_sec    0
 합격여부        2
-dtype: int64</pre>
+dtype: int64
+3</pre>
     </div>
-    <p><b>공장 말로 읽기</b> — 빈칸 10칸, Orange3 Missing 칸과 같다. Orange3로 못 찾은 중복 3행은 <code>duplicated().sum()</code>이 찾는다(실습지 문제 6).</p>
+    <p><b>공장 말로 읽기</b> — 센서 값(온도·압력·가스유량)과 검사 결과에 빈칸이 모두 10칸 있고, 같은 기록이 두 번 저장된 행이 3개다.
+    이대로 평균을 내면 믿을 수 없다.</p>
 
-    <h3>확인 2 — 이상값을 지우기 전에 여러 열과 함께 보면?</h3>
-    <p>교육용 기준: 온도 400 초과, 가스유량 0 미만 또는 200 이상, 압력 0 미만(이 과정에서는 압력이 0보다 작을 수 없다고 정한다).</p>
+    <h3>확인 3 — 크게 튀는 온도는 어떤 기록일까</h3>
+    <p>반 기록에서 키 250 초과를 찾았던 것과 같은 모양으로, 온도 400 초과 기록을 찾아 다른 열과 함께 본다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 이상값 세고 다른 열과 함께 보기</span><button class="copy-btn">복사</button></div>
-      <pre><code>hot = df[df["온도_섭씨"] &gt; 400]
-minus_pressure = df[df["압력_Pa"] &lt; 0]
-minus_gas = df[df["가스유량_slm"] &lt; 0]
-big_gas = df[df["가스유량_slm"] &gt;= 200]
-
-print("온도 400 초과:", len(hot), "건")
-print("압력 0 미만:", len(minus_pressure), "건")
-print("가스유량 0 미만:", len(minus_gas), "건")
-print("가스유량 200 이상:", len(big_gas), "건")
-
-print(hot[["설비번호", "공정명", "온도_섭씨", "합격여부"]])
-print(minus_pressure[["설비번호", "공정명", "압력_Pa", "합격여부"]])</code></pre>
+      <div class="code-label"><span>Python — 튀는 온도 찾기 (노트북 6단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>hot = df[df["온도_C"] &gt; 400]
+print(hot)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">온도 400 초과: 2 건
-압력 0 미만: 2 건
-가스유량 0 미만: 1 건
-가스유량 200 이상: 1 건
-     설비번호 공정명       온도_섭씨  합격여부
-17  EQ-03  식각  540.315405   1.0
-67  EQ-03  증착  557.727366   1.0
-     설비번호 공정명      압력_Pa  합격여부
-37  EQ-04  식각 -42.910520   1.0
-79  EQ-02  산화 -26.981234   1.0</pre>
-    </div>
-    <ul class="pt-list">
-      <li><code>1.0</code>은 1(합격)과 같다. 빈칸(NaN)이 섞인 열은 숫자가 소수로 저장돼 <code>1.0</code>처럼 보인다.</li>
-      <li><b>공장 말로 읽기</b> — 모두 <b>합격(1)</b>이다. 200도 넘게 뜨거웠는데 통과했으니 온도 기록 오류를 먼저 의심할 만하다(쉬운 예제의 몸무게 66.0kg과 같은 생각법).</li>
-      <li>고온 2건과 가스유량 이상값 2건이 모두 <b>EQ-03</b>(6건 중 4건). "EQ-03 센서를 점검해보자"는 <b>확인할 단서</b>까지만 말한다 — 6건뿐이라 우연일 수 있다.</li>
-    </ul>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">                측정시간      로트번호   설비번호 공정명        온도_C   압력_Pa  가스유량_slm  \
+17  2024-03-08 16:00  LOT-0096  EQ-03  식각  540.315405  1009.6     49.59
+67  2024-03-23 19:00  LOT-0322  EQ-03  증착  557.727366  1017.0     48.94
 
-    <h3>확인 3 — 정리하면 평균은 얼마나 달라질까?</h3>
-    <p>정리하기 <b>전에</b> 실습지 문제 2에서 <code>before_rows = len(df)</code>, <code>before_temp = df["온도_섭씨"].mean()</code>,
-    <code>before_pressure = df["압력_Pa"].mean()</code>로 값을 저장해 두고, 문제 3~9로 정리한 뒤 비교한다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 정리 전후 비교</span><button class="copy-btn">복사</button></div>
-      <pre><code>after_temp = df["온도_섭씨"].mean()
-after_pressure = df["압력_Pa"].mean()
-
-print(f"행 개수: {before_rows} → {len(df)}")
-print(f"평균 온도: {before_temp:.1f} → {after_temp:.1f}")
-print(f"평균 압력: {before_pressure:.1f} → {after_pressure:.1f}")</code></pre>
+    처리시간_sec  합격여부
+17     120.3   1.0
+67     121.1   1.0</pre>
     </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">행 개수: 113 → 102
-평균 온도: 304.9 → 300.6
-평균 압력: 994.4 → 1013.6</pre>
-    </div>
-    <p><b>공장 말로 읽기</b> — 고온 2건이 평균 온도를 4.3 끌어올렸고, 음수 압력 2건이 평균 압력을 정상 범위(995~1025) 밖처럼 보이게 했다.
-    113건 중 몇 건이 결론을 뒤집는다 — 계산 전에 먼저 살펴야 하는 이유다.</p>
+    <p><b>공장 말로 읽기</b> — 540도·557도 기록 2건은 이 기록의 평소 범위(295~305도)에서 크게 벗어났다. 그런데 압력·가스유량은 평범하고 둘 다 합격(1)이다.
+    키 1720cm·몸무게 66kg처럼 온도 기록 쪽을 먼저 의심해 볼 만하다. 표가 넓으면 pandas가 두 덩어리로 나눠 보여 준다(<code>\</code>는 "다음 줄에 이어짐"). <code>1.0</code>은 1(합격)과 같다.
+    정리해서 평균 온도가 얼마나 바뀌는지는 PART 3 실습지 문제 2·3에서 직접 구한다.</p>
   </section>
 
   <section class="block">
-    <h2>실습: 데이터 정리 따라 하기</h2>
-    <p><code>week05_student.ipynb</code>를 위에서 아래로 실행한다. 쉬운 예제 셀은 완성돼 있고, 반도체 실습 셀의 <code>____</code>를
-    <a href="worksheet.html">실습지</a> 문제를 보며 채운다.</p>
-    <div class="callout warn"><b class="tag">체크포인트</b> <code>students</code>와 <code>df</code>는 셀마다 바뀐다. 숫자가 다르면 "커널 → 다시 시작 후 모두 실행".</div>
-    <div class="step"><div class="num">1</div><div class="content"><b>Orange3로 훑어보기</b> — 빈칸과 튀는 값을 눈으로 찾는다. (Orange3 화면)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>쉬운 예제 따라 하기</b> — 요약 → 결측값 → 중복값 → 이상값 → 전후 비교. (노트북 1~6단계)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>반도체: 읽고 요약하기·결측값</b> — 실습지 문제 1~5. (노트북 7단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>반도체: 중복값·이상값</b> — 실습지 문제 6~9. (노트북 8단계)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>반도체: 정리 전후 비교</b> — 실습지 문제 10, 해석 한 문장. (노트북 9단계)</div></div>
-    <div class="step"><div class="num">6</div><div class="content"><b>AI로 한 걸음 더</b> — 질문하고 AI 코드를 실행해 비교한다. (노트북 10~11단계)</div></div>
+    <h2>실습 따라 하기</h2>
+    <p>학생용 노트북을 위에서 아래로 실행한다. 1~6단계는 코드가 완성돼 있다.</p>
+    <div class="step"><div class="num">1</div><div class="content"><b>숫자 요약</b> — 반 기록을 읽고 <code>describe()</code>로 빈칸·튀는 값의 흔적을 본다. (노트북 1단계)</div></div>
+    <div class="step"><div class="num">2</div><div class="content"><b>빈칸 세고 지우기</b> — <code>isna().sum()</code> → <code>dropna()</code>, 15행 → 12행. (노트북 2단계)</div></div>
+    <div class="step"><div class="num">3</div><div class="content"><b>중복 행 지우기</b> — <code>duplicated().sum()</code> → <code>drop_duplicates()</code>, 12행 → 11행. (노트북 3단계)</div></div>
+    <div class="step"><div class="num">4</div><div class="content"><b>튀는 값 찾고 빼기</b> — 키 250 초과를 찾고, 250 이하만 남겨 평균 키를 비교한다. (노트북 4~5단계)</div></div>
+    <div class="step"><div class="num">5</div><div class="content"><b>공장 기록 훑어보기</b> — 같은 코드로 <code>df</code>의 요약·빈칸·중복을 보고, 400도 넘는 온도 기록을 찾는다. (노트북 6단계)</div></div>
+    <div class="step"><div class="num">6</div><div class="content"><b>반도체 데이터 실습</b> — 7단계의 문제 1~3은 PART 3에서 실습지를 보며 푼다. (노트북 7단계)</div></div>
+    <div class="callout warn"><b class="tag">체크포인트</b> 숫자가 위 결과와 다르면 셀을 건너뛰었거나 같은 셀을 두 번 실행한 것이다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.</div>
+  </section>
+
+  <section class="block" id="part2">
+    <h2><span class="step-badge">PART 2</span> Orange3 — 빈칸 채우기와 튀는 값</h2>
+    <p>PART 1에서는 빈칸 행을 <b>지웠다</b>. Orange에서는 빈칸을 <b>채우는</b> 방법을 본다. 채울 때 무엇을 조심해야 하는지가 오늘의 핵심이다.</p>
+
+    <h3>워크플로 열기</h3>
+    <ol>
+      <li>PART 1에서 받은 키트 폴더를 그대로 둔다(데이터 경로가 폴더 구조에 맞춰져 있다).</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 <code>orange3/week05/week05_1_cleanroom_start.ows</code>를 연다.</li>
+      <li>캔버스에 File 위젯 하나와 ①~④ 안내 메모가 보이면 준비가 끝난 것이다. 막히면 같은 폴더의 <code>_done.ows</code>(완성본)를 연다.</li>
+    </ol>
+    <img class="chart-img" src="../../assets/images/orange3/week05_02_cleanroom_start.png"
+         alt="week05_1_cleanroom_start.ows를 연 Orange3 캔버스"
+         data-shot="week05_1_cleanroom_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 위쪽 ①~④ 안내 메모가 보이게">
+
+    <h3>위젯 이름표</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
+        <tbody>
+          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>키트의 데이터가 이미 연결돼 있다. 더블클릭해 행 수를 확인한다</td></tr>
+          <tr><td><code>Feature Statistics</code></td><td>Data</td><td>열 통계</td><td>열마다 Mean(평균)·Median(중앙값)·Min.·Max.·Missing(빈칸 수)을 본다(2차시에 써 봤다)</td></tr>
+          <tr><td><code>Impute</code></td><td>Transform</td><td>빈칸 채우기</td><td><b>오늘 새 위젯.</b> 빈칸을 그 열의 평균으로 채운다(Average/Most frequent)</td></tr>
+          <tr><td><code>Select Rows</code></td><td>Transform</td><td>행 고르기</td><td>조건에 맞는 행만 남긴다(3차시에 써 봤다). 튀는 값을 거른다</td></tr>
+          <tr><td><code>Data Table</code></td><td>Data</td><td>표 보기</td><td>채운 뒤·정리 뒤의 표를 눈으로 본다</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><b>행 수는 어디서 보나</b> — 위젯 창 맨 아래 상태 표시줄에 들어온 행 수와 내보낸 행 수가 숫자로 보인다. Data Table은 왼쪽 Info 칸에도 행 수가 나온다.</p>
+    <div class="callout warn"><b class="tag">주의</b> Data Table 뒤에는 위젯을 잇지 않는다. Data Table이 내보내는 것은 화면에서 고른 행뿐이다. 보기 위젯은 File·Impute·Select Rows에서 갈래로 잇는다.</div>
+
+    <h3>오늘 데이터는 공정 지도의 어디일까</h3>
+    <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png" alt="반도체 8대 공정 흐름을 생활 비유로 그린 공정 지도">
+    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). 클린룸은 공정 지도의 ②~⑥(웨이퍼 위에 회로를 만드는 단계)이 이루어지는 FAB의 방이다.</p>
+    <ul class="pt-list">
+      <li>워밍업 <code>week05_orange_cleanroom_env.csv</code> — <b>공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸</b>(특정 공정 단계가 아니라 그 방의 공기 기록. ① 웨이퍼 제조는 보통 웨이퍼 제조사에서 하고, ⑦⑧도 별도의 청정 공간을 쓴다).</li>
+      <li>반도체 <code>week05_dirty_process_data.csv</code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비의 센서 기록.</li>
+    </ul>
+
+    <h3>워밍업 — 클린룸 환경 기록</h3>
+    <p>반도체는 <b>클린룸</b>(먼지를 극도로 줄인 방)에서 만든다. 수술실을 떠올리면 된다. 회로가 아주 가늘어서, 공기 속 아주 작은 입자(<b>파티클</b>)가 웨이퍼에 내려앉으면 회로가 끊기거나 붙는 결함이 될 수 있다.
+    그래서 공장은 클린룸의 파티클 수·온도·습도를 계속 재서 기록한다.</p>
+    <p><code>week05_orange_cleanroom_env.csv</code>(72행, 교육용 가상 데이터)는 클린룸 세 구역(A·B·C)을 하루 동안 24번씩 잰 기록이다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>열</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td><code>측정시간</code>, <code>구역</code></td><td>언제, 어느 구역에서 쟀나</td></tr>
+          <tr><td><code>파티클_count_per_m3</code></td><td>공기 1세제곱미터(m³) 안의 입자 개수. 평소 1,000개 안팎(실제로는 일정 크기 이상 입자만 센다. 이 데이터는 크기를 정하지 않은 교육용 값이다)</td></tr>
+          <tr><td><code>온도_C</code>, <code>습도_pct</code></td><td>방 온도(섭씨 도), 습도(퍼센트)</td></tr>
+          <tr><td><code>차압_Pa</code></td><td>방 안과 바깥의 공기 압력 차이(파스칼). 안쪽을 바깥보다 높게(양수) 유지해야 바깥 먼지가 들어오지 않는다. 평소 12 안팎</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <img class="chart-img" src="../../assets/images/generated/week05_cleanroom_particles.png" alt="클린룸 세 구역의 하루 파티클 수 선 그래프. B구역 한 시각에 99,999 센서 오류 코드가 있다">
+    <p class="img-caption">클린룸 세 구역의 하루 먼지 입자 수. 08:00 B구역 기록의 99,999는 이 기록의 오류 코드(축 밖), 세로 점선은 기록이 빈 시각이다(교육용 가상 데이터, 실제 등급 기준 아님).</p>
+    <p>그래프의 99,999는 실제 먼지 수가 아니다. <b>이 기록에서는 센서가 측정에 실패하면 99,999를 남기도록 정해 두었다</b>(오류 코드). 이 값을 그대로 두고 빈칸을 채우면 무슨 일이 생기는지 Orange로 본다.</p>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>반도체 클린룸 왜 필요</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>반도체 공장에 클린룸이 왜 필요한지 반도체를 처음 배우는 사람에게 3문장으로 설명해줘. 공기 속 먼지 입자를 어떻게 관리하는지도 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "회로가 아주 가늘어 눈에 안 보이는 먼지 하나도 회로를 망칠 수 있어, 공기를 걸러 입자 수를 낮게 유지하고 계속 잰다"는 내용이 들어 있다.
+      몇 개까지 괜찮은지는 클린룸 등급 규격마다 다르다. 오늘 쓰는 10,000 같은 선은 교육용 예시다.</div>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="content"><b>정리 전 훑어보기</b> — 왼쪽 Data 묶음에서 <code>Feature Statistics</code>를 끌어 와 File과 잇고 더블클릭한다.
+    Missing 칸에서 파티클 <b>4</b> · 습도 <b>3</b> · 차압 <b>2</b>, 파티클 Max <b>99999</b>, 차압 Min <b>-5.0</b>을 찾는다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week05_03_cleanroom_stats_before.png"
+         alt="클린룸 기록의 Feature Statistics 정리 전 창"
+         data-shot="week05_1_cleanroom_done.ows의 Feature Statistics (정리 전) 창 — 파티클_count_per_m3 행의 Max 99999와 Missing 4, 습도_pct 행 Missing 3, 차압_Pa 행 Min -5.0과 Missing 2가 보이게">
+    <div class="step"><div class="num">2</div><div class="content"><b>빈칸 채우기</b> — 왼쪽 Transform 묶음에서 <code>Impute</code>를 끌어 와 <b>File과</b> 잇고 더블클릭한다. 위쪽 <b>Default Method</b>에서 <b>Average/Most frequent</b>를 고른다
+    (숫자 열은 평균, 글자 열은 가장 흔한 값으로 채운다는 뜻).
+    Impute에 <code>Data Table</code>을 이어 연다. 채운 칸에는 표시가 없으니, <code>파티클_count_per_m3</code> 열 머리글을 눌러 큰 값부터 정렬하면 99999 바로 아래에 똑같은 값 4개가 모여 보인다. 그 값이 빈칸에 채워진 숫자다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week05_04_cleanroom_filled_table.png"
+         alt="Impute 뒤 Data Table에서 파티클 빈칸이 2543.66으로 채워진 모습"
+         data-shot="week05_1_cleanroom_done.ows의 Data Table (채운 뒤) 창 — 파티클_count_per_m3 열에서 2543.66으로 채워진 칸 하나 이상이, 위아래 행의 1,000 안팎 값과 함께 보이게">
+    <button class="reveal-btn">채운 값 확인 보기</button>
+    <div class="callout danger answer-box">
+      <b class="tag">채운 값을 보자</b> 빈칸 4칸이 모두 <b>2543.66</b>으로 채워졌다. 평소 값(1,000 안팎, 오류 코드를 뺀 평균 1,089.1)의 2배가 넘는다.
+      Impute는 그 열의 평균으로 채우는데, 평균 안에 99,999가 들어가 평균이 끌려 올라갔기 때문이다.
+      <b>튀는 값이 남은 채로 평균을 내 빈칸을 채우면, 채운 값도 엉터리가 된다 — 그래서 채우기 전에 튀는 값부터 확인한다.</b>
+    </div>
+    <div class="step"><div class="num">3</div><div class="content"><b>튀는 값 거르기</b> — Transform 묶음의 <code>Select Rows</code>를 Impute에 잇는다. 창에서 <b>Add Condition</b>을 누르고 열 → 연산자 → 숫자 순서로 고르는 일을 조건마다 되풀이해 두 줄을 넣는다:
+    <code>파티클_count_per_m3</code> <b>is below</b> 10000, <code>차압_Pa</code> <b>is at least</b> 0. Select Rows에 <code>Feature Statistics</code>를 하나 더 잇는다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week05_05_cleanroom_stats_after.png"
+         alt="Select Rows 뒤 Feature Statistics 정리 후 창"
+         data-shot="week05_1_cleanroom_done.ows의 Feature Statistics (정리 후) 창 — 파티클_count_per_m3 행의 Mean 1180.0과 Max 2543.66이 보이고, 창 아래 상태 표시줄에 들어온 행 수 70이 보이게">
+    <p><b>읽을 것</b> — 72행 중 오류 코드 행과 음수 차압 행이 빠져 <b>70행</b>이 남는다. 그런데 정리 후 파티클 Max가 <b>2543.66</b>, 바로 아까 채운 값이다.
+    99,999는 지웠지만, 그 값으로 계산해 채운 숫자는 표에 그대로 남았다. 튀는 값을 먼저 확인하고 채웠다면 채운 값이 이렇게 끌려 올라가지 않았다.</p>
+    <p>차압 -5.0은 바깥 공기가 밀려 들어올 수 있는 방향이라, 센서 오류인지 실제 상황인지 따로 확인할 값이다. 오늘은 평균 계산에서만 뺀다.</p>
+
+    <h3>반도체 — 지저분한 공장 기록 정리하기</h3>
+    <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 이 절은 강사가 화면으로 보여 준다. 학생은 따라 누르지 않고 순서와 숫자만 눈으로 확인한다. 직접 해 보는 것은 PART 3 실습지 문제 4에서 한 번 한다.</div>
+    <p>같은 위젯으로 PART 1의 공장 기록(113행)을 정리한다. <b>File → Open</b>으로 <code>orange3/week05/week05_2_dirty_process_start.ows</code>를 연다.</p>
+    <div class="step"><div class="num">1</div><div class="content"><b>정리 전 훑어보기</b> — File에 <code>Feature Statistics</code>를 잇는다. <code>온도_C</code>의 Missing <b>3</b>, Max <b>557.73</b>,
+    <code>압력_Pa</code> Min <b>-42.91</b>, <code>가스유량_slm</code> Min <b>-5</b> · Max <b>250</b>을 찾는다. PART 1의 <code>describe()</code>와 같은 숫자다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week05_06_process_stats_before.png"
+         alt="공장 기록의 Feature Statistics 정리 전 창"
+         data-shot="week05_2_dirty_process_done.ows의 Feature Statistics (정리 전) 창 — 온도_C 행의 Missing 3과 Max 557.73, 압력_Pa 행 Min -42.91, 가스유량_slm 행 Min -5와 Max 250이 보이게">
+    <div class="step"><div class="num">2</div><div class="content"><b>빈칸 채우기 + 결과 빈 행 지우기</b> — File에 <code>Impute</code>를 잇고 Default Method를 <b>Average/Most frequent</b>로 고른다.
+    그다음 아래쪽 <b>Individual Attribute Settings</b> 칸의 <b>왼쪽 열 목록</b>에서 <code>합격여부</code>를 누르고, <b>오른쪽 버튼</b> 중 <b>Remove instances with unknown values</b>를 고른다. 검사 결과는 지어내 채우면 안 되기 때문이다.</div></div>
+    <div class="callout warn"><b class="tag">주의</b> 같은 이름의 버튼이 위쪽 Default Method 칸에도 있다. 위쪽에서 Remove instances with unknown values를 누르면 빈칸이 하나라도 있는 행이 모두 지워져 98행이 남는다. 반대로 아래쪽 합격여부 설정을 빠뜨리면 합격여부 빈칸 2개가 "합격(1)"으로 채워져 107행이 남는다. 위쪽은 Average/Most frequent, 아래쪽은 합격여부만 Remove instances다.</div>
+    <img class="chart-img" src="../../assets/images/orange3/week05_07_process_impute.png"
+         alt="Impute 창에서 합격여부만 Remove instances with unknown values로 지정한 모습"
+         data-shot="week05_2_dirty_process_done.ows의 Impute (빈칸 채우기) 창 — 위쪽 Default Method가 Average/Most frequent이고, 아래쪽 Individual Attribute Settings의 왼쪽 열 목록에서 합격여부를 고른 채 오른쪽 버튼 Remove instances with unknown values가 선택된 상태">
+    <div class="step"><div class="num">3</div><div class="content"><b>평소 범위를 크게 벗어난 값 거르기</b> — Impute에 <code>Select Rows</code>를 잇고 Add Condition으로 조건 네 줄을 넣는다(가스유량은 같은 열을 두 번 넣는다):
+    <code>온도_C</code> <b>is at most</b> 400, <code>압력_Pa</code> <b>is at least</b> 0, <code>가스유량_slm</code> <b>is at least</b> 0, <code>가스유량_slm</code> <b>is below</b> 200.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week05_08_process_select_rows.png"
+         alt="Select Rows 창의 조건 네 줄"
+         data-shot="week05_2_dirty_process_done.ows의 Select Rows (행 고르기) 창 — 조건 네 줄(온도_C is at most 400, 압력_Pa is at least 0, 가스유량_slm is at least 0, 가스유량_slm is below 200)이 모두 보이게">
+    <div class="step"><div class="num">4</div><div class="content"><b>정리 결과 읽기</b> — Select Rows에 <code>Data Table</code>과 <code>Feature Statistics</code>를 각각 잇는다.
+    Data Table 왼쪽 Info에서 <b>105</b>행, Feature Statistics에서 <code>온도_C</code> Mean <b>300.75</b>(화면에 300.7로 보일 수 있다)를 읽는다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week05_09_process_table_after.png"
+         alt="정리 결과 Data Table 왼쪽 Info에 105행이 보이는 모습"
+         data-shot="week05_2_dirty_process_done.ows의 Data Table (정리 결과) 창 — 왼쪽 Info 칸의 행 수 105가 보이게">
+    <img class="chart-img" src="../../assets/images/orange3/week05_10_process_stats_after.png"
+         alt="정리 후 Feature Statistics에서 온도_C Mean 300.75"
+         data-shot="week05_2_dirty_process_done.ows의 Feature Statistics (정리 후) 창 — 온도_C 행의 Mean 300.75(또는 300.7), Min 291.3, Max 310.9가 보이게">
+    <p>Orange 흐름은 113행 → Impute 뒤 111행(합격여부 빈 2행 삭제) → Select Rows 뒤 <b>105행</b>이다. 정리 후 온도는 Min 291.3, Max 310.9로 평소 범위 근처에 모였다.
+    압력 빈칸은 음수 값에 끌려 내려간 평균(994.36)으로 채워졌다 — 클린룸에서 본 것과 같은 일이다.</p>
+
+    <h3>파이썬 결과와 비교</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>파이썬(실습지 문제 2·3)</th><th>Orange(오늘 PART 2)</th></tr></thead>
+        <tbody>
+          <tr><td>빈칸</td><td>빈칸이 있는 행을 <b>지운다</b></td><td>측정값 빈칸은 평균으로 <b>채우고</b>, 합격여부가 빈 행만 지운다</td></tr>
+          <tr><td>중복 행</td><td>지운다</td><td>남긴다(중복을 지우는 위젯을 넣지 않았다)</td></tr>
+          <tr><td>튀는 값</td><td>범위 조건으로 뺀다</td><td>Select Rows로 뺀다</td></tr>
+          <tr><td>남은 행 / 평균 온도</td><td>○○행 / ○○○.○도 (실습지에서 직접 구한다)</td><td>105행 / 300.75도</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><b>한 문장으로</b> — 파이썬은 빈칸 행과 중복 행을 지우고, Orange는 빈칸을 평균으로 채우고 중복을 남긴다. 무엇을 지우고 무엇을 채웠는지에 따라 남는 행 수와 평균이 달라진다.
+    두 도구의 결과가 같지 않은 것이 정상이다.</p>
+  </section>
+
+  <section class="block" id="part3">
+    <h2><span class="step-badge">PART 3</span> 실습지</h2>
+    <p><a href="worksheet.html">5차시 실습지</a>를 열고 순서대로 푼다.</p>
+    <ol>
+      <li><b>문제 1~3 (파이썬)</b> — 노트북 7단계의 <code>____</code>를 채운다. 공장 기록을 요약하고, 빈칸·중복 행을 지우고, 교육용 기준 밖의 값을 뺀 뒤 평균 온도를 비교한다.</li>
+      <li><b>문제 4 (Orange)</b> — <code>week05_2_dirty_process_start.ows</code>에서 위젯을 이어 105행과 평균 온도를 읽고, 문제 3과 다른 이유를 한 줄로 쓴다.</li>
+      <li><b>문제 5 (해석 문장)</b> — 정리 전후 평균 온도를 한 문장으로 보고한다.</li>
+    </ol>
+    <p>다 풀면 실습지의 "정답 보기"로 확인하고, 문제 5의 문장을 옆 사람에게 읽어 준다.</p>
   </section>
 
   <section class="block">
     <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
-        <h4>EDA</h4><div class="en">Exploratory Data Analysis</div>
-        <dl><dt>한 줄 설명</dt><dd>분석 전에 데이터를 훑어보고 상태를 파악하는 일.</dd>
-          <dt>데이터에서의 예</dt><dd>Orange3 Column Statistics, <code>students.describe()</code></dd></dl>
+        <h4>결측값</h4><div class="en">Missing Value (NaN)</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>값이 있어야 할 칸이 비어 있는 것. pandas에서는 <code>NaN</code>, Orange에서는 <code>?</code>로 보인다.</dd>
+          <dt>쉬운 비유</dt><dd>출석부에 체크도 결석 표시도 없는 칸.</dd>
+          <dt>데이터에서의 예</dt><dd><code>df.isna().sum()</code> → 온도 3, 압력 2, 가스유량 3, 합격여부 2</dd>
+          <dt>자주 하는 오해</dt><dd>빈칸을 0과 같다고 생각한다. 0은 "잰 값이 0", 빈칸은 "기록이 없음"이다.</dd>
+        </dl>
       </div>
       <div class="term-card">
-        <h4>결측값</h4><div class="en">Missing Value</div>
-        <dl><dt>한 줄 설명</dt><dd>비어 있는 칸. Pandas <code>NaN</code>, Orange3 <code>?</code>. 0과 다르다.</dd>
-          <dt>데이터에서의 예</dt><dd><code>students.isna().sum()</code> → 반·키·몸무게 1칸씩</dd></dl>
+        <h4>중복 행</h4><div class="en">Duplicate</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>모든 칸이 똑같은 행이 두 번 이상 저장된 것.</dd>
+          <dt>쉬운 비유</dt><dd>가계부에 같은 영수증을 두 번 적은 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>df.duplicated().sum()</code> → 3</dd>
+          <dt>자주 하는 오해</dt><dd>중복 3건을 지우면 6행이 사라진다고 생각한다. 복사본 3행만 지워진다.</dd>
+        </dl>
       </div>
       <div class="term-card">
-        <h4>중복값</h4><div class="en">Duplicate</div>
-        <dl><dt>한 줄 설명</dt><dd>모든 칸이 같은 행이 두 번 이상 저장된 것. 지우면 복사본만 사라진다.</dd>
-          <dt>데이터에서의 예</dt><dd><code>students.duplicated().sum()</code> → 1(박지호)</dd></dl>
+        <h4>튀는 값(이상값)</h4><div class="en">Outlier</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>다른 값들과 동떨어지게 큰 값이나 작은 값.</dd>
+          <dt>쉬운 비유</dt><dd>건강검진에서 혈압 300 — 지우기 전에 다시 재고 다른 결과와 함께 본다.</dd>
+          <dt>데이터에서의 예</dt><dd>키 1720cm, 온도 557.7도, 클린룸 기록의 파티클 99,999(이 기록에서 정한 센서 오류 코드)</dd>
+          <dt>자주 하는 오해</dt><dd><code>isna()</code>로 잡힌다고 생각한다. 값이 있으므로 범위 조건으로 찾는다.</dd>
+        </dl>
       </div>
       <div class="term-card">
-        <h4>이상값</h4><div class="en">Outlier</div>
-        <dl><dt>한 줄 설명</dt><dd>동떨어지게 튀는 값. 지우기 전에 먼저 확인할 값.</dd>
-          <dt>데이터에서의 예</dt><dd>키 1720cm, 온도 540.3·557.7, 압력 -42.9</dd></dl>
-      </div>
-      <div class="term-card">
-        <h4>중앙값</h4><div class="en">Median</div>
-        <dl><dt>한 줄 설명</dt><dd>크기순 한가운데 값. 튀는 값에 덜 흔들린다.</dd>
-          <dt>데이터에서의 예</dt><dd>키 평균 276.6, 중앙값 166.75(<code>describe()</code>의 <code>50%</code>)</dd></dl>
-      </div>
-      <div class="term-card">
-        <h4>지우기 vs 채우기</h4><div class="en">dropna vs fillna</div>
-        <dl><dt>한 줄 설명</dt><dd>결과 빈칸은 행을 지우고, 측정값 빈칸은 채운다. <code>students = students.dropna(...)</code>처럼 다시 저장한다.</dd>
-          <dt>데이터에서의 예</dt><dd>반 → 지우기, 키·몸무게 → 중앙값으로 채우기</dd></dl>
+        <h4>빈칸 채우기</h4><div class="en">Impute</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>빈칸을 지우지 않고 어떤 값(오늘은 그 열의 평균)으로 채우는 것.</dd>
+          <dt>쉬운 비유</dt><dd>결석한 날 점수를 반 평균으로 적어 두기.</dd>
+          <dt>데이터에서의 예</dt><dd>클린룸 파티클 빈칸 4칸 → 2543.66</dd>
+          <dt>자주 하는 오해</dt><dd>채운 값은 늘 믿을 만하다고 생각한다. 튀는 값이 섞인 평균으로 채우면 채운 값도 튄다.</dd>
+        </dl>
       </div>
     </div>
   </section>
@@ -545,8 +560,11 @@ print(f"평균 압력: {before_pressure:.1f} → {after_pressure:.1f}")</code></
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week05/week05_easy_class_records.csv</code> — 15행 5열, 쉬운 예제용 가상 데이터. 결측 3칸, 중복 1행, 이상값 1개.</li>
-      <li><code>data/weekly/week05/week05_dirty_process_data.csv</code> — 113행 9열, 교육용 가상 데이터. 결측 10칸, 중복 3행, 이상값 6건, 공정명 오타 3건, 형식이 다른 측정시간 2건. Orange3와 Pandas가 같은 파일을 쓴다.</li>
+      <li><code>data/weekly/week05/week05_easy_class_records.csv</code> — 15행 5열, 생활 예제용 가상 데이터(PART 1). 빈칸 3칸, 중복 1행, 잘못 적은 키 1개.</li>
+      <li><code>data/weekly/week05/week05_orange_cleanroom_env.csv</code> — 72행 6열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+        빈칸: 파티클 4 · 습도 3 · 차압 2, 파티클 99,999 1행, 차압 -5.0 1행. <b>공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸.</b></li>
+      <li><code>data/weekly/week05/week05_dirty_process_data.csv</code> — 113행 9열, 교육용 가상 데이터(PART 1·2·3). 빈칸 10칸, 중복 3행, 튀는 값 6건.
+        공정명 오타 3건과 형식이 다른 측정시간 값 2건도 있지만 오늘은 다루지 않는다. <b>공정 지도 위치: ②~⑤ + 세정 설비의 센서 기록.</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week05_dictionary.html">데이터 설명서</a></li>
     </ul>
   </section>
@@ -554,92 +572,80 @@ print(f"평균 압력: {before_pressure:.1f} → {after_pressure:.1f}")</code></
   <section class="block">
     <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
-      <b class="tag">오류 1 — 열 이름 오타</b> <code>KeyError: '온도'</code> — <code>온도_섭씨</code>처럼 정확히 쓴다(<code>print(df.columns)</code>로 확인).
+      <b class="tag">오류 1 — 지운 결과를 저장하지 않음</b> <code>students.dropna()</code>만 쓰면 오류 없이 지나가지만 <code>print(students.shape)</code>는 그대로 <code>(15, 5)</code>다.
+      <code>students = students.dropna()</code>처럼 앞에 <code>=</code>로 다시 저장한다.
     </div>
     <div class="callout danger">
-      <b class="tag">오류 2 — 쉬운 예제 열 이름을 그대로 둠</b> <code>KeyError: ['반']</code> — <code>df.dropna(subset=["반"])</code>처럼 반도체에 없는 열을 썼다. <code>"합격여부"</code>로 바꾼다.
+      <b class="tag">오류 2 — isna 뒤 괄호 빠뜨림</b> <code>students.isna.sum()</code> → <code>AttributeError: 'function' object has no attribute 'sum'</code>.
+      <code>isna().sum()</code>처럼 함수마다 <code>()</code>를 붙인다.
     </div>
     <div class="callout danger">
-      <b class="tag">오류 3 — 괄호 누락</b> <code>AttributeError: 'function' object has no attribute 'sum'</code> — <code>df.duplicated().sum()</code>처럼 괄호를 붙인다.
-    </div>
-    <div class="callout danger">
-      <b class="tag">오류 4 — 숫자를 따옴표로 감쌈</b> <code>TypeError: Invalid comparison between dtype=float64 and str</code> — <code>"400"</code>이 아니라 <code>400</code>.
+      <b class="tag">오류 3 — 조건 방향 반대</b> 남길 행을 고를 때 <code>clean[clean["온도_C"] &gt;= 400]</code>처럼 부등호를 거꾸로 쓰면 오류 없이 <code>(2, 9)</code>가 나온다.
+      정상 행이 다 지워지고 튀는 값 2행만 남은 것이다. "찾을 때는 <code>&gt;</code>, 남길 때는 그 반대 <code>&lt;=</code>"를 떠올린다.
     </div>
     <div class="callout warn">
-      <b class="tag">주의</b> 앞의 <code>df =</code>를 빼면 오류 없이 <code>df</code>가 그대로다. 행을 지워도 맨 왼쪽 번호는 다시 매겨지지 않는다(102행인데 맨 끝 번호는 109번이다).
+      <b class="tag">빈칸을 그대로 두고 실행하면</b> 노트북의 <code>____</code>를 채우지 않으면 <code>AttributeError: 'Series' object has no attribute '____'</code>(<code>Series</code> = 표의 열 하나)나
+      <code>SyntaxError: invalid syntax. Perhaps you forgot a comma?</code>가 난다. 쉼표 문제가 아니라 빈칸을 아직 안 채웠다는 뜻이다.
     </div>
   </section>
 
   <section class="block">
     <h2>결과 정리 &amp; 퀴즈</h2>
-    <p>더 많은 문제는 <a href="worksheet.html">실습지</a>에 있다.</p>
+    <ul class="pt-list">
+      <li>반 기록: 15행 → 빈칸 행 지우기 12 → 중복 지우기 11 → 튀는 값 빼기 10행. 평균 키 276.6 → 163.8.</li>
+      <li>공장 기록(파이썬): 빈칸 행 → 중복 행 → 범위 밖 행 순서로 지웠다. 남은 행 수와 평균 온도는 실습지 문제 2·3에서 직접 구한 값이다(아래 "핵심 질문 → 데이터 연결"에서 확인).</li>
+      <li>공장 기록(Orange): 빈칸을 평균으로 채우고 중복을 남겨 <b>105행</b>, 평균 온도 <b>300.75</b>. 정리 방법이 달라 숫자가 다른 것이 정상이다.</li>
+      <li>클린룸: 99,999가 남은 채로 평균을 내 채웠더니 빈칸이 2543.66으로 채워졌다 → 채우기 전에 튀는 값부터 확인한다.</li>
+    </ul>
+    <div class="callout success">
+      <b class="tag">오늘의 반도체 이해 포인트</b>
+      <ul class="pt-list">
+        <li>반도체는 클린룸(먼지를 극도로 줄인 방)에서 만들고, 공기 속 입자(파티클)·온도·습도를 계속 감시한다. 입자가 웨이퍼에 내려앉으면 가는 회로에 결함이 생길 수 있기 때문이다.</li>
+        <li>센서 기록에는 빈칸과 99,999 같은 오류 코드가 섞인다. 정리한 뒤에야 평균을 믿을 수 있다.</li>
+      </ul>
+    </div>
+    <p>복습 문제 전체는 <code>quiz.json</code>(수업 후 자율 복습)에 있다. 아래는 그중 일부다.</p>
 
     <div class="quiz-item">
-      <div class="q">Q1. (객관식) 결측값(NaN)에 대한 설명으로 가장 알맞은 것은?</div>
+      <div class="q">Q1. (객관식) <code>describe()</code> 결과에서 키_cm의 <code>count</code>가 14였다(전체 15명). 이것이 뜻하는 것은?</div>
       <ul class="options">
-        <li>A. 값이 0으로 기록된 것</li>
-        <li>B. 값이 있어야 할 칸이 비어 있는 것</li>
-        <li>C. 다른 값들과 동떨어지게 튀는 값</li>
-        <li>D. 똑같은 행이 두 번 저장된 것</li>
+        <li>A. 키가 14cm인 학생이 있다</li>
+        <li>B. 키 칸 하나가 비어 있다</li>
+        <li>C. 같은 학생이 14번 적혔다</li>
+        <li>D. 키 평균이 14다</li>
       </ul>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. C는 이상값, D는 중복값이다.</div>
+      <div class="answer-box">정답: B. <code>count</code>는 빈칸이 아닌 값의 개수다. 15 − 14 = 1칸이 비어 있다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q2. (객관식) 쉬운 예제의 <code>students.dropna(subset=["반"])</code>를 반도체 데이터에 적용할 때 <code>subset</code>에 넣을 열은?</div>
+      <div class="q">Q2. (객관식) 클린룸 기록에서 Impute로 파티클 빈칸을 평균으로 채웠더니 2543.66이 들어갔다. 평소 값은 1,000 안팎이다. 왜 이렇게 큰 값이 들어갔을까?</div>
       <ul class="options">
-        <li>A. <code>"온도_섭씨"</code></li>
-        <li>B. <code>"합격여부"</code></li>
-        <li>C. <code>"설비번호"</code></li>
-        <li>D. <code>"반"</code> 그대로</li>
+        <li>A. Impute는 그 열의 가장 큰 값으로 채우기 때문에</li>
+        <li>B. 센서 오류 코드 99,999가 평균 계산에 들어가 평균을 끌어올렸기 때문에</li>
+        <li>C. 빈칸이 4칸이라 평균에 4를 곱했기 때문에</li>
+        <li>D. B구역 먼지가 실제로 많았기 때문에</li>
       </ul>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. 짐작해서 채우면 안 되는 검사 결과다. 온도는 중앙값으로 채운다.</div>
+      <div class="answer-box">정답: B. 튀는 값이 남은 채로 평균을 내면 채운 값도 튄다. 그래서 채우기 전에 튀는 값부터 확인한다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q3. (결과 예측) 반 학생 기록의 키는 평균 276.6cm, 중앙값 166.75cm였다. 평균이 큰 까닭은?</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 키 1720.0cm 이상값 하나가 평균만 끌어올렸다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q4. (객관식) 고온 이상값 2건이 모두 합격이었고 같은 설비(EQ-03) 기록이었다. 가장 알맞은 태도는?</div>
-      <ul class="options">
-        <li>A. 이상값이니 바로 지우고 잊는다</li>
-        <li>B. 합격했으니 그대로 평균을 낸다</li>
-        <li>C. 확인할 단서로 보고 EQ-03 센서 점검을 제안한다</li>
-        <li>D. EQ-03이 불량의 원인이라고 결론 내린다</li>
-      </ul>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: C. 6건뿐이라 우연일 수 있어 D처럼 단정할 수 없다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q5. (서술) 반도체 데이터를 정리하기 전과 후를 한 문장으로 비교해보자.</div>
+      <div class="q">Q3. (서술) 실습지 문제 3에서 정리 전과 정리 후의 평균 온도가 달랐다. 왜 달라졌는지 한 문장으로 설명해 보자.</div>
       <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">"113행을 정리해 102행이 남았고, 평균 온도는 304.9에서 300.6으로, 평균 압력은 994.4에서 1013.6으로 바뀌었다."</div>
+      <div class="answer-box">"정리 전 304.9도, 정리 후 300.6도다. 540도·557도처럼 이 기록의 평소 범위(295~305도)에서 크게 벗어난 온도 2개 등 튀는 값이 평균을 끌어올리고 있었다."</div>
     </div>
   </section>
 
   <section class="block">
     <h2>AI로 한 걸음 더 — 질문하고 코드 받아보기</h2>
-    <div class="callout practice">
-      <b class="tag">질문해보기 — 하나 이상 골라서 (노트북 10단계)</b>
-      <ul class="pt-list">
-        <li>"데이터에 빈칸이 있을 때 지우는 것과 채우는 것은 각각 언제 쓰나요? 공장 데이터 예시로 설명해주세요."</li>
-        <li>"평균과 중앙값의 차이를 용돈 이야기로 설명해주세요."</li>
-        <li>"이상값을 무조건 지우면 안 되는 이유를 예시와 함께 알려주세요."</li>
-      </ul>
-    </div>
-    <div class="callout practice">
-      <b class="tag">코드 받아보기 (노트북 11단계)</b>
-      "week05_dirty_process_data.csv를 읽어서, 열마다 빈칸이 몇 개이고 전체의 몇 %인지 한 줄씩 출력하는 파이썬 코드를 만들어줘.
-      for 반복문과 f-string을 써줘."
+    <p>ChatGPT에 아래처럼 물어 받은 코드의 예시다. <code>for</code>는 3차시에 배운 반복문이다. 노트북 8단계에서 실행해 확인 2의 <code>isna().sum()</code> 결과와 같은지 비교한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>week05_dirty_process_data.csv를 pandas로 읽어서(encoding="utf-8-sig"), 열마다 빈칸 개수와 빈칸 비율(%)을 한 줄씩 출력하는 짧은 코드를 만들어 줘.</code></pre>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — AI가 만들어 준 코드 예시 (노트북 8단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
 data = pd.read_csv("../../data/weekly/week05/week05_dirty_process_data.csv", encoding="utf-8-sig")
@@ -655,45 +661,44 @@ for col in data.columns:
 로트번호: 빈칸 0개 (0.0%)
 설비번호: 빈칸 0개 (0.0%)
 공정명: 빈칸 0개 (0.0%)
-온도_섭씨: 빈칸 3개 (2.7%)
+온도_C: 빈칸 3개 (2.7%)
 압력_Pa: 빈칸 2개 (1.8%)
 가스유량_slm: 빈칸 3개 (2.7%)
 처리시간_sec: 빈칸 0개 (0.0%)
 합격여부: 빈칸 2개 (1.8%)</pre>
     </div>
     <div class="callout warn">
-      <b class="tag">AI 코드를 다룰 때</b> 직접 실행해 확인 1 결과와 비교하고, 경로와 <code>encoding="utf-8-sig"</code>를 맞춘다. 회사의 실제 데이터는 AI에 붙여넣지 않는다.
+      <b class="tag">AI 코드를 다룰 때</b> 직접 실행해 숫자를 확인하고, 경로와 <code>encoding="utf-8-sig"</code>를 맞춘다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.
     </div>
   </section>
 
   <section class="block">
     <h2>과제(다음 차시까지)</h2>
-    <p>Jupyter Notebook 한 개에 작성하고, 결과가 출력된 상태로 제출한다.</p>
     <div class="callout practice">
-      <b class="tag">과제 1 — 정리 파이프라인 다시 해보기</b>
-      원본을 새로 읽어 오늘 순서(결측 → 중복 → 이상값)대로 정리한 뒤, 정리 전후 평균 가스유량(<code>가스유량_slm</code>)을 f-string으로 비교한다.
+      <b class="tag">과제 1 — 가스유량 평균도 비교하기</b>
+      실습지 문제 3과 같은 모양으로, 정리 전 <code>df</code>와 정리 후 <code>clean</code>의 평균 가스유량(<code>가스유량_slm</code>)을 <code>round(값, 1)</code>로 출력하고 한 문장으로 비교한다.
     </div>
     <div class="callout practice">
-      <b class="tag">과제 2 — 이상값 들여다보기</b>
-      <code>minus_gas</code>, <code>big_gas</code>를 설비번호·공정명·합격여부와 함께 출력하고 관찰을 두 문장으로 적는다("원인이다"가 아니라 "확인할 단서"로).
-    </div>
-    <div class="callout practice">
-      <b class="tag">과제 3 — 내 말로 설명하기(코드 없음)</b>
-      "빈칸·중복·이상값이 생기는 이유"와 "정리하지 않고 평균을 내면 생기는 일"을 각각 두세 문장으로 적는다.
+      <b class="tag">과제 2 — 내 말로 설명하기(코드 없음)</b>
+      "빈칸을 지우는 방법과 채우는 방법은 각각 무엇이 좋고 무엇이 위험한가"를 클린룸 2543.66 장면을 예로 들어 두세 문장으로 적는다.
     </div>
   </section>
 
   <section class="block">
     <h2>핵심 질문 → 데이터 연결</h2>
     <ul class="pt-list">
-      <li><b>질문</b>: Orange3에서 본 문제와 Pandas로 찾은 문제가 같은가? 정제 전후 평균 온도는 얼마나 달라지는가?</li>
-      <li><b>답</b>: 빈칸 10칸과 튀는 값은 두 도구에서 같았고, 중복 3행은 코드로 찾았다. 평균 온도는 304.9 → 300.6(4.3 하락).</li>
+      <li><b>질문</b>: 공장 기록에 섞인 빈칸·중복·튀는 값을 정리하면, 평균은 얼마나 달라질까?</li>
+      <li><b>답(파이썬)</b>: 실습지 문제 2·3에서 직접 구한다.
+        <button class="reveal-btn">실습지 결과 보기</button>
+        <div class="answer-box">113행을 정리해 95행이 남았고, 평균 온도는 304.9 → 300.6으로 약 4.3도 내려갔다.</div></li>
+      <li><b>답(Orange)</b>: 빈칸을 채우고 중복을 남기면 105행, 평균 온도 300.75. 무엇을 지우고 채우는지에 따라 결과가 달라진다.</li>
     </ul>
   </section>
 
   <section class="block">
     <h2>다음 차시 예고</h2>
-    <p>6차시에는 데이터를 <b>그래프</b>로 본다. 히스토그램·박스플롯에서 오늘 찾은 튀는 값이 그림으로 보인다. Orange3로 먼저 그린 뒤 Matplotlib으로 그린다.</p>
+    <p>6차시에는 정리한 숫자를 <b>그래프</b>로 본다. 표로는 안 보이던 공정의 모습을 막대·히스토그램·산점도로 본다. Orange에서는 웨이퍼 위 어디에 불량이 생겼는지 웨이퍼 맵을 그린다.</p>
+    <p><b>다음 날 미션</b> — 내일 회의에서 쓸 그래프 3장을 만들자: 설비별 건수, 온도 분포, 온도와 두께의 관계.</p>
   </section>
 
   <div class="nav-buttons">

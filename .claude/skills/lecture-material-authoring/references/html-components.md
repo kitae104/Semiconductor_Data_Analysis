@@ -8,7 +8,9 @@
 
 - [페이지 골격](#페이지-골격)
 - [히어로](#히어로)
+- [오늘 수업 구성과 PART 섹션](#오늘-수업-구성과-part-섹션)
 - [콜아웃](#콜아웃)
+- [찾아보기 상자](#찾아보기-상자)
 - [코드 블록](#코드-블록)
 - [용어 카드](#용어-카드)
 - [표](#표)
@@ -112,6 +114,67 @@
 
 배지 색: `blue`(강의) · `purple`(실습/도전) · `green`(정상/합격) · `warn`(주의) · `danger`(이상).
 
+**오늘의 미션(v3)** — 오늘의 질문 바로 아래 한 줄, 그 아래 오늘 끝에 Orange로 볼 그림 자리.
+
+```html
+<p class="lede"><b>오늘의 미션</b> — 입사 첫날, 공장 기록표 40건을 받았다. 합격·불합격이 몇 건인지 한 문장으로 보고하자.</p>
+<img class="chart-img" src="../../assets/images/orange3/week01_mission.png"
+     alt="오늘 끝에 Orange3로 보게 될 합격·불합격 막대" data-shot="2_process_done.ows의 Distributions 창 — 합격여부 막대 두 개">
+```
+
+---
+
+## 오늘 수업 구성과 PART 섹션
+
+v3(2026-10-23) 강의는 PART 세 개다. "오늘 수업 구성" 표는 학습 목표 다음에 두고, **시간 열을 두지 않는다**.
+
+```html
+<section class="block">
+  <h2>오늘 수업 구성</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>생활 예제로 변수와 출력을 배우고, 반도체 기록으로 확인한다</td></tr>
+        <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>동물 데이터로 위젯을 익히고, 같은 위젯으로 공정 기록을 본다</td></tr>
+        <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개 + Orange 1문제 + 해석 문장 1개</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+```
+
+PART 머리 섹션은 `section.block > h2` 구조를 지켜 자동 목차에 잡히게 한다.
+
+```html
+<section class="block" id="part1">
+  <h2><span class="step-badge">PART 1</span> 파이썬 — 변수와 출력</h2>
+  <p>노트북 <code>week01_student.ipynb</code>를 열고 맨 위 "막혔을 때" 셀을 먼저 읽는다.</p>
+</section>
+<!-- 이어서 개념 섹션들, 반도체 데이터로 확인하기, 실습 따라 하기 -->
+<section class="block" id="part2">
+  <h2><span class="step-badge">PART 2</span> Orange3 — 표를 눈으로 보기</h2>
+  …위젯 이름표 표, 워밍업, 반도체, 파이썬 결과와 비교…
+</section>
+<section class="block" id="part3">
+  <h2><span class="step-badge">PART 3</span> 실습지</h2>
+  …
+</section>
+```
+
+9·10차시는 `id="part1"`이 Orange3, `id="part2"`가 파이썬 최소 + ChatGPT 체험이다(id는 위치 기준).
+
+**위젯 이름표** — PART 2(9·10차시는 PART 1) 첫머리의 표. 영어 이름은 Orange 3.35 화면 그대로 쓴다.
+
+```html
+<div class="tablewrap">
+  <table>
+    <thead><tr><th>위젯(화면 이름)</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
+    <tbody><tr><td><code>Distributions</code></td><td>분포 막대</td><td>합격·불합격이 각각 몇 건인지 막대로 본다</td></tr></tbody>
+  </table>
+</div>
+```
+
 ---
 
 ## 콜아웃
@@ -133,6 +196,30 @@
 | `success` | 정상 결과, 성공 기준 |
 | `warn` | 주의, 흔한 혼동 |
 | `danger` | 오류, 금지 |
+
+---
+
+## 찾아보기 상자
+
+v3(2026-10-23) 신규. 기존 `callout concept` + `tag`만 쓴다(새 클래스 없음). 확인 포인트는 정답 토글과 같은 규칙 —
+`reveal-btn` **바로 다음 형제**가 `answer-box`여야 열린다. 버튼 글자는 "~ 보기"로 끝낸다.
+
+```html
+<div class="callout concept">
+  <b class="tag">찾아보기</b>
+  <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+  <p><b>검색어</b> <code>웨이퍼 왜 둥근가</code></p>
+  <div class="code-block">
+    <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+    <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게 웨이퍼가 왜 둥근지 3문장으로 쉽게 설명해줘.</code></pre>
+  </div>
+  <button class="reveal-btn">확인 포인트 보기</button>
+  <div class="answer-box">좋은 답이라면 "실리콘 덩어리(잉곳)를 둥글게 키운 뒤 얇게 자른다"는 내용이 들어 있다.</div>
+</div>
+```
+
+- 한 상자에 질문이 여러 개면 검색어·복사 블록 묶음을 반복하고, 확인 포인트 토글은 상자 끝에 하나만 둔다.
+- 검사 스크립트가 차시당 상자 수(3~6)를 센다 — 태그 글자는 정확히 `찾아보기`로 쓴다.
 
 ---
 

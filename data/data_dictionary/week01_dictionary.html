@@ -58,6 +58,7 @@
   <section class="block">
     <h2>가상 상황</h2>
 <p>가상의 반도체 공장(FAB)에서 여러 설비(EQ-01~EQ-04)가 웨이퍼를 가공하며 남긴 기록이다.</p>
+<div class="callout concept"><b class="tag">공정 지도 위치</b>공정 지도 <b>②~⑤(산화·포토·식각·증착/이온주입) + 세정</b>의 설비 기록이다. 공정 지도는 1차시 그림 <code>week01_process_flow.png</code>의 ①~⑧ 번호를 말한다(세정은 단계 사이마다 하는 작업이라 번호가 없다).</div>
   </section>
 
   <section class="block">
@@ -81,7 +82,7 @@
 <tr><td>웨이퍼번호</td><td>로트 안에서 웨이퍼 순번</td><td>정수</td><td>-</td><td>4</td><td>없음</td></tr>
 <tr><td>공정명</td><td>수행한 공정 종류(산화·포토·식각·증착·세정)</td><td>문자열</td><td>-</td><td>산화</td><td>없음</td></tr>
 <tr><td>설비번호</td><td>공정을 수행한 설비</td><td>문자열</td><td>-</td><td>EQ-03</td><td>없음</td></tr>
-<tr><td>온도_섭씨</td><td>공정 진행 중 설비 안(챔버: 웨이퍼를 넣고 작업하는 밀폐된 방)에서 센서가 잰 온도</td><td>실수</td><td>℃</td><td>295.0</td><td>없음</td></tr>
+<tr><td>온도_C</td><td>공정 진행 중 설비 안(챔버: 웨이퍼를 넣고 작업하는 밀폐된 방)에서 센서가 잰 온도</td><td>실수</td><td>℃</td><td>295.0</td><td>없음</td></tr>
 <tr><td>압력_Pa</td><td>공정 진행 중 챔버 안 압력(Pa = 파스칼, 압력 단위)</td><td>실수</td><td>Pa</td><td>1019.7</td><td>없음</td></tr>
 <tr><td>합격여부</td><td>검사 결과</td><td>정수</td><td>-</td><td>1(합격) / -1(불합격)</td><td>없음</td></tr>
 </tbody></table></div>
@@ -89,14 +90,14 @@
 
   <section class="block">
     <h2>단위 읽는 법</h2>
-<p>열 이름 끝의 _섭씨, _Pa처럼 밑줄(_) 뒤는 그 열 숫자의 단위다. 처음 보는 단위는 아래처럼 읽는다.</p>
+<p>열 이름 끝의 _C, _Pa처럼 밑줄(_) 뒤는 그 열 숫자의 단위다. 처음 보는 단위는 아래처럼 읽는다.</p>
 <div class="tablewrap"><table class="timetable">
 <thead><tr>
 <th>표기</th>
 <th>읽는 법</th>
 <th>뜻</th>
 </tr></thead><tbody>
-<tr><td>℃ (온도_섭씨)</td><td>섭씨 몇 도</td><td>온도 단위. 얼음이 어는 물 0℃, 끓는 물 100℃ 기준</td></tr>
+<tr><td>C (온도_C)</td><td>섭씨 몇 도(℃). Celsius(섭씨)의 첫 글자</td><td>온도 단위. 얼음이 어는 물 0℃, 끓는 물 100℃ 기준</td></tr>
 <tr><td>Pa (압력_Pa)</td><td>파스칼</td><td>압력 단위. 넓이를 누르는 힘의 세기. 숫자가 클수록 세게 누른다</td></tr>
 </tbody></table></div>
   </section>
@@ -107,8 +108,8 @@
   </section>
 
   <section class="block">
-    <h2>온도_섭씨 값의 한계 (교육용 가상 데이터)</h2>
-<p><code>온도_섭씨</code>는 공정 종류와 관계없이 약 300℃ 근처(293.6~305.5℃)로 만든 가상 값이다. 실제 공장에서는 작업마다 온도가 크게 다르다(예: 포토는 실내 온도 근처, 산화는 수백~천 도 이상). 실습에서는 온도의 절대값을 실제 공정 조건으로 해석하지 않고, 기록끼리 비교하는 <b>수치 열 하나</b>로만 다룬다.</p>
+    <h2>온도_C 값의 한계 (교육용 가상 데이터)</h2>
+<p><code>온도_C</code>는 공정 종류와 관계없이 약 300℃ 근처(293.6~305.5℃)로 만든 가상 값이다. 실제 공장에서는 작업마다 온도가 크게 다르다(예: 포토는 실내 온도 근처, 산화는 수백~천 도 이상). 실습에서는 온도의 절대값을 실제 공정 조건으로 해석하지 않고, 기록끼리 비교하는 <b>수치 열 하나</b>로만 다룬다.</p>
   </section>
 
   <section class="block">
@@ -121,8 +122,8 @@
   <section class="block">
     <h2>의도적으로 포함된 패턴</h2>
 <p>1차시는 "관찰"이 목표이므로 결측값이나 극단적 이상값을 넣지 않았다. 합격 확률 85%로 생성해 현실적인 비율만 반영했다(실제 생성 결과: 합격 32건 80% / 불합격 8건 20%).</p>
-<p>실제 생성 결과(강의 "숫자 하나보다 여러 열을 함께 볼 때"에서 쓰는 값):</p>
-<ul class="pt-list"><li>공정명별 기록/불합격: 세정 10/5, 포토 9/2, 산화 6/1, 증착 8/0, 식각 7/0.</li><li>학습용 정상 온도 범위(295~305℃) 밖 2건(305.5℃ 불합격, 293.6℃ 합격). 불합격 8건 중 7건은 범위 안.</li><li><code>합격여부</code>는 공정·온도와 무관하게 무작위로 만들었다. "세정에 불합격이 몰린 것"은 우연이므로 강의에서도 "원인"이 아니라 "원인 후보"로만 다룬다.</li></ul>
+<p>실제 생성 결과(강의 PART 2 Orange Distributions "Split by 공정명"과 실습지 문제 1~4 "설비 EQ-03 / Split by 설비번호"에서 쓰는 값):</p>
+<ul class="pt-list"><li>공정명별 기록/불합격: 세정 10/5, 포토 9/2, 산화 6/1, 증착 8/0, 식각 7/0.</li><li>설비번호별 기록/불합격: EQ-01 13/2, EQ-02 9/1, EQ-03 12/3, EQ-04 6/2(EQ-03 불합격률 25.0%).</li><li>학습용 정상 온도 범위(295~305℃) 밖 2건(305.5℃ 불합격, 293.6℃ 합격). 불합격 8건 중 7건은 범위 안.</li><li><code>합격여부</code>는 공정·온도와 무관하게 무작위로 만들었다. "세정에 불합격이 몰린 것"은 우연이므로 강의에서도 "원인"이 아니라 "원인 후보"로만 다룬다.</li></ul>
   </section>
 
   <section class="block">
@@ -133,6 +134,48 @@
   <section class="block">
     <h2>실제 현업 데이터와 다른 점</h2>
 <p>완전한 가상 데이터이며 실제 반도체 기업의 생산 데이터가 아니다. 설비와 공정도 무작위로 짝지어져 있어 설비 한 대가 여러 공정에 등장한다(실제 공장에서는 설비마다 맡는 공정이 정해져 있다). 열 이름과 값의 범위는 첨부된 <code>반도체_공정_샘플.csv</code>의 구조를 참고해 교육 목적으로 재구성했다.</p>
+  </section>
+
+  <section class="block">
+    <h2>Orange 워밍업 데이터 — week01_orange_town_population.csv</h2>
+<h3>목적</h3>
+<p>Orange3 캔버스를 처음 만나는 1차시 PART 2 워밍업용 데이터다. 반도체 데이터를 열기 전에, 누구나 아는 "우리 동네" 표로 File → Data Table(행·열 세기) → Distributions(가장 흔한 값 찾기)를 먼저 해 본다. Orange에서는 같은 이름의 <code>orange/week01_orange_town_population.tab</code>을 연다.</p>
+<h3>가상 상황</h3>
+<p>가상의 도시에 있는 5개 구(햇살구·바람구·강변구·숲속구·새빛구), 구마다 6개 동의 인구 기록이다. 구·동 이름과 숫자는 모두 지어낸 것이며 실제 지역 통계가 아니다.</p>
+<h3>행 하나의 의미</h3>
+<p>한 행 = 동 하나(30개 동).</p>
+<h3>열 설명</h3>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>열 이름</th>
+<th>쉬운 설명</th>
+<th>데이터 형식</th>
+<th>단위</th>
+<th>예시</th>
+<th>결측값 가능 여부</th>
+</tr></thead><tbody>
+<tr><td>구</td><td>동이 속한 구(5개)</td><td>문자열(범주)</td><td>-</td><td>햇살구</td><td>없음</td></tr>
+<tr><td>동</td><td>동 이름(30개, 모두 다름). Orange에서는 표에만 보이는 이름 열(meta)</td><td>문자열</td><td>-</td><td>햇살1동</td><td>없음</td></tr>
+<tr><td>인구_count</td><td>그 동에 사는 사람 수</td><td>정수</td><td>명(count)</td><td>29903</td><td>없음</td></tr>
+<tr><td>면적_km2</td><td>동의 넓이</td><td>실수</td><td>km²(제곱킬로미터)</td><td>4.7</td><td>없음</td></tr>
+<tr><td>주요연령대</td><td>그 동에서 가장 많은 나이대</td><td>문자열(범주)</td><td>-</td><td>40~50대</td><td>없음</td></tr>
+</tbody></table></div>
+<h3>단위 읽는 법</h3>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>표기</th>
+<th>읽는 법</th>
+<th>뜻</th>
+</tr></thead><tbody>
+<tr><td>count (인구_count)</td><td>개수(명)</td><td>세어서 나온 수</td></tr>
+<tr><td>km2 (면적_km2)</td><td>제곱킬로미터</td><td>가로 1km × 세로 1km 넓이가 1km²</td></tr>
+</tbody></table></div>
+<h3>의도적으로 포함된 패턴(실제 생성 결과)</h3>
+<ul class="pt-list"><li>30행 × 5열. 인구 8,646~43,066명(평균 약 26,499명), 면적 0.8~6.3km².</li><li><code>주요연령대</code> 개수를 고정했다: <b>40~50대 12 · 20~30대 9 · 60대이상 6 · 10대이하 3</b>. Distributions에서 가장 높은 막대는 40~50대(12)다.</li><li>새빛구(새로 지은 아파트가 많은 동네라는 설정)는 6개 동 중 5개 동이 20~30대다. 다른 4개 구는 20~30대가 1개 동씩이다. Distributions의 Split by에서 <code>구</code>를 고르면 새빛구만 20~30대가 많다.</li></ul>
+<h3>이번 차시 분석 질문</h3>
+<ul class="pt-list"><li>표는 몇 행 몇 열인가?(Orange Data Table 정보: 30행, 4개 열 + 이름 열 1개)</li><li>가장 흔한 주요연령대는 무엇이고 몇 개 동인가?</li></ul>
+<h3>실제 데이터와 다른 점</h3>
+<p>생활 공공데이터 모양을 흉내 낸 교육용 가상 데이터다. <code>scripts/generate_weekly_data.py</code>의 <code>gen_orange_week01()</code>(시드 201)이 만든다.</p>
   </section>
 
   <div class="nav-buttons">

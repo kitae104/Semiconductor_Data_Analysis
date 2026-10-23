@@ -227,6 +227,7 @@ def build_page(week, md):
 <footer class="site-footer">반도체 및 반도체 공정 데이터 분석 10차시 과정 · {week}차시 데이터 설명서 · 교육용 자료(가상 데이터 사용)</footer>
 
 <script src="../../assets/js/common.js"></script>
+<script async src="../../assets/js/analytics.js"></script>
 </body>
 </html>
 """

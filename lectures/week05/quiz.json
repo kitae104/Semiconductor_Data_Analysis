@@ -4,138 +4,70 @@
   "questions": [
     {
       "type": "multiple_choice",
-      "question": "결측값(NaN)에 대한 설명으로 가장 알맞은 것은?",
-      "options": [
-        "값이 0으로 기록된 것",
-        "값이 있어야 할 칸이 비어 있는 것",
-        "다른 값들과 동떨어지게 튀는 값",
-        "똑같은 행이 두 번 저장된 것"
-      ],
+      "question": "반 학생 15명의 기록에서 students.describe()를 실행했더니 키_cm의 count가 14였다. 이것이 뜻하는 것은?",
+      "options": ["키가 14cm인 학생이 있다", "키 칸 하나가 비어 있다", "같은 학생이 14번 적혔다", "키 평균이 14다"],
       "answer": 1,
-      "explanation": "0은 '잰 값이 0'이라 결측값과 다르다. 튀는 값은 이상값, 두 번 저장된 행은 중복값이다."
-    },
-    {
-      "type": "term_matching",
-      "question": "공장에서 생긴 일과 데이터에 남는 문제를 연결하시오.",
-      "pairs": [
-        {
-          "term": "결측값",
-          "definition": "통신이 끊겨 온도 값이 들어오지 않았다"
-        },
-        {
-          "term": "중복값",
-          "definition": "같은 기록이 서버에 두 번 저장됐다"
-        },
-        {
-          "term": "이상값",
-          "definition": "센서가 고장 나 540도가 찍혔다"
-        },
-        {
-          "term": "입력 오류",
-          "definition": "작업자가 '증착'을 '중착'으로 입력했다"
-        }
-      ]
-    },
-    {
-      "type": "true_false",
-      "question": "반 학생 기록에서 키 빈칸(NaN)을 0으로 채워도 평균 키는 달라지지 않는다.",
-      "answer": false,
-      "explanation": "빈칸은 '값이 없음'이다. 160cm 안팎의 키들 사이에 0을 넣으면 평균이 크게 내려간다."
-    },
-    {
-      "type": "multiple_choice",
-      "question": "열마다 빈칸이 몇 개인지 세는 코드로 알맞은 것은?",
-      "options": [
-        "students.dropna().sum()",
-        "students.isna().sum()",
-        "students.duplicated().sum()",
-        "students.describe().sum()"
-      ],
-      "answer": 1,
-      "explanation": "isna()가 빈칸을 True로 바꾸고, .sum()이 True를 세어 열별 빈칸 개수(반·키·몸무게 1칸씩)를 알려준다."
-    },
-    {
-      "type": "multiple_choice",
-      "question": "반 학생 기록에서 반 칸이 빈 행(조예준)은 어떻게 처리하는 것이 알맞은가?",
-      "options": [
-        "학생이 가장 많은 반으로 채운다",
-        "1반으로 채운다",
-        "그 행을 지운다(dropna)",
-        "0으로 채운다"
-      ],
-      "answer": 2,
-      "explanation": "어느 반인지는 짐작해서 채울 수 없다. '짐작으로 채울 수 없는 값(반, 검사 결과)은 행을 지우고, 측정값 한 칸은 중앙값으로 채운다.'"
-    },
-    {
-      "type": "multiple_choice",
-      "question": "쉬운 예제에서 students.dropna(subset=[\"반\"])로 반이 빈 행을 지웠다. 같은 코드를 반도체 데이터(df)에 적용할 때 subset에 넣을 열은?",
-      "options": [
-        "\"온도_섭씨\"",
-        "\"합격여부\"",
-        "\"설비번호\"",
-        "\"반\" 그대로"
-      ],
-      "answer": 1,
-      "explanation": "반처럼 짐작해서 채우면 안 되는 값은 검사 결과인 합격여부다. \"반\"을 그대로 두면 없는 열이라 KeyError가 난다."
-    },
-    {
-      "type": "true_false",
-      "question": "students.dropna(subset=[\"반\"])만 실행하면(앞에 students = 없이) students에서 그 행이 바로 사라진다.",
-      "answer": false,
-      "explanation": "dropna()는 원래 표를 바꾸지 않는다. students = students.dropna(subset=[\"반\"])처럼 다시 저장해야 한다."
-    },
-    {
-      "type": "result_prediction",
-      "question": "용돈이 1만, 1만, 2만, 2만, 100만 원인 다섯 명이 있다. 평균과 중앙값은 각각 얼마인가?",
-      "answer": "평균 21.2만 원, 중앙값 2만 원",
-      "explanation": "평균 = (1+1+2+2+100) ÷ 5 = 21.2만 원, 크기순 한가운데 값이 중앙값 2만 원이다."
-    },
-    {
-      "type": "result_prediction",
-      "question": "반 학생 기록의 키는 평균 276.6cm, 중앙값 166.75cm였다. 반 빈칸 1행, 중복 1행, 키 250cm 초과 1행(정도윤 1720.0cm)을 지우면 15행은 몇 행이 되고, 평균 키는 어떻게 바뀌는가?",
-      "answer": "12행, 평균 키 276.6cm → 164.8cm",
-      "explanation": "15 - 1(반 빈칸) - 1(중복) - 1(키 1720.0) = 12행. 평균 키 276.6cm는 1720.0cm 하나가 끌어올린 값이었다."
+      "explanation": "count는 빈칸이 아닌 값의 개수다. 15명 중 14개만 있으니 키 칸 1개가 비어 있다."
     },
     {
       "type": "fill_blank",
-      "question": "중복 행의 여분을 지우는 Pandas 함수는 students.____()이다.",
-      "answer": "drop_duplicates",
-      "explanation": "duplicated()로 세고, drop_duplicates()로 지운다."
-    },
-    {
-      "type": "result_prediction",
-      "question": "111행인 df에 중복 행이 3건 있다(df.duplicated().sum()의 결과가 3). df = df.drop_duplicates()를 실행하면 몇 행이 남는가?",
-      "answer": "108행",
-      "explanation": "111 - 3 = 108. 원본은 남기고 복사본 3행만 지운다."
+      "question": "열마다 빈칸(NaN) 개수를 세는 코드: print(students.isna().____())",
+      "answer": "sum",
+      "explanation": "isna()가 칸마다 비었는지(True/False)를 표시하고, sum()이 True의 개수를 센다."
     },
     {
       "type": "true_false",
-      "question": "이상값도 결측값처럼 isna()로 찾을 수 있다.",
+      "question": "students.dropna()만 실행하면 students 표에서 빈칸이 있는 행이 지워진다.",
       "answer": false,
-      "explanation": "이상값은 값이 '있어서' isna()에 안 잡힌다. students[students[\"키_cm\"] > 250]처럼 조건 검색으로 찾는다."
-    },
-    {
-      "type": "multiple_choice",
-      "question": "고온 이상값 2건(540.3도, 557.7도)이 모두 합격이었고, 둘 다 EQ-03 설비 기록이었다. 가장 알맞은 태도는?",
-      "options": [
-        "이상값이니 바로 지우고 더 보지 않는다",
-        "합격했으니 문제없는 값으로 보고 그대로 평균을 낸다",
-        "기록 오류인지 진짜 설비 문제인지 확인할 단서로 보고, EQ-03 센서 점검을 제안한다",
-        "EQ-03이 불량의 원인이라고 결론 내린다"
-      ],
-      "answer": 2,
-      "explanation": "이상값은 지우기 전에 확인할 대상이다. 6건뿐이라 우연일 수 있어 원인이라고 단정할 수 없다."
+      "explanation": "dropna()는 지운 결과를 새로 돌려줄 뿐 원래 표를 바꾸지 않는다. students = students.dropna()처럼 다시 저장해야 한다. 저장하지 않으면 shape가 (15, 5) 그대로다."
     },
     {
       "type": "result_prediction",
-      "question": "정리 전 평균 압력은 994.4, 정리 후는 1013.6이었다. 학습용 정상 범위가 995~1025일 때, 정리 전 평균만 보고 내릴 수 있는 잘못된 결론과 평균이 바뀐 까닭은?",
-      "answer": "'압력이 정상보다 낮다'는 잘못된 결론. 음수 압력 2건(이 과정의 기준으로는 있을 수 없는 값)이 평균을 끌어내리고 있었다.",
-      "explanation": "이 과정의 기준(0보다 작을 수 없는 압력)으로는 있을 수 없는 음수 기록 2건(-42.9, -27.0)을 정리하면 1013.6으로 범위 한가운데다."
+      "question": "공장 기록 df(113행)에서 print(df.duplicated().sum())의 결과는 3이었다. 빈칸은 그대로 두고 df.drop_duplicates()만 하면 몇 행이 남을까?",
+      "answer": "110행",
+      "explanation": "중복 행 3개는 복사본이다. 복사본 3행만 지워지고 원래 행은 남으므로 113 − 3 = 110행이다."
+    },
+    {
+      "type": "true_false",
+      "question": "온도 557.7도 같은 튀는 값은 isna().sum()으로 찾을 수 있다.",
+      "answer": false,
+      "explanation": "튀는 값은 값이 들어 있어서 빈칸 검사(isna)에 잡히지 않는다. df[df[\"온도_C\"] > 400]처럼 범위 조건으로 찾는다."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "정리한 표 clean에서 온도가 400 이하인 행만 남기는 코드는?",
+      "options": ["clean = clean[clean[\"온도_C\"] > 400]", "clean = clean[clean[\"온도_C\"] <= 400]", "clean = clean[clean[\"온도_C\"] <= \"400\"]", "clean = clean[\"온도_C\"] <= 400"],
+      "answer": 1,
+      "explanation": "남길 행의 조건을 대괄호 안에 넣는다. >는 반대로 튀는 값만 남기고, \"400\"처럼 숫자를 따옴표로 감싸면 TypeError가 난다. 마지막 보기는 표가 아니라 True/False 목록을 저장한다."
+    },
+    {
+      "type": "term_matching",
+      "question": "오늘 배운 클린룸 기록의 말과 뜻을 연결하시오.",
+      "pairs": [
+        { "term": "클린룸", "definition": "반도체를 만드는, 먼지를 극도로 줄인 방" },
+        { "term": "파티클", "definition": "공기 속 아주 작은 입자. 웨이퍼에 내려앉으면 결함이 될 수 있다" },
+        { "term": "99,999(오늘 클린룸 기록)", "definition": "이 기록에서 센서가 측정에 실패했을 때 남기도록 정한 오류 코드" },
+        { "term": "결측값(NaN)", "definition": "값이 있어야 할 칸이 비어 있는 것" }
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "question": "Orange Feature Statistics에서 온도_C 행의 Missing 칸에 3이 보였다. 이것이 뜻하는 것은?",
+      "options": ["온도가 3도인 기록이 있다", "온도 칸 3개가 비어 있다", "온도 튀는 값이 3개다", "온도 열이 3번 중복됐다"],
+      "answer": 1,
+      "explanation": "Missing은 그 열의 빈칸 수다. 파이썬 df.isna().sum()의 온도_C 결과 3과 같다."
+    },
+    {
+      "type": "multiple_choice",
+      "question": "클린룸 기록에서 Orange Impute(Average/Most frequent)로 파티클 빈칸을 채웠더니 2543.66이 들어갔다. 평소 값은 1,000 안팎이다. 가장 알맞은 설명은?",
+      "options": ["Impute는 그 열의 가장 큰 값으로 채운다", "센서 오류 코드 99,999가 평균 계산에 들어가 평균이 끌려 올라갔다", "빈칸이 4칸이라 평균에 4를 곱했다", "그 시각에 실제로 먼지가 많았다"],
+      "answer": 1,
+      "explanation": "Impute는 그 열의 평균으로 채우는데, 평균 안에 99,999가 들어 있었다. 튀는 값이 남은 채로 평균을 내 채우면 채운 값도 튄다. 그래서 채우기 전에 튀는 값부터 확인한다."
     },
     {
       "type": "short_answer",
-      "question": "오늘 반도체 데이터를 정리하기 전과 후를 비교해, 데이터를 먼저 살펴봐야 하는 이유를 숫자를 넣어 한두 문장으로 설명해보시오.",
-      "sample_answer": "원본 113행에서 중복·결과 누락·이상값을 정리해 102행이 남았고, 평균 온도는 304.9에서 300.6으로 4.3 내려갔다. 113건 중 고온 기록 2건이 평균을 이만큼 움직였으므로, 계산하기 전에 데이터를 먼저 살펴보고 정리해야 한다."
+      "question": "공장 기록을 파이썬으로 정리했더니 평균 온도가 304.9도에서 300.6도로 바뀌었다. 왜 달라졌는지, 그리고 센서 기록을 정리해야 하는 이유를 한두 문장으로 쓰시오.",
+      "sample_answer": "540도·557도처럼 이 기록의 평소 범위(295~305도)에서 크게 벗어난 온도 2개 등 튀는 값이 평균을 약 4.3도 끌어올리고 있었다. 센서 기록에는 빈칸·오류 값이 섞이므로, 정리한 뒤의 평균(300.6도)을 믿고 보고해야 한다."
     }
   ]
 }

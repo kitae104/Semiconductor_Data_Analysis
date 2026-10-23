@@ -16,7 +16,7 @@
   물리적 의미를 절대 단정하지 않는다.
 - 상관관계·모델 예측 결과를 다루는 콘텐츠(8·9·10차시)에서는 "원인"이 아니라 "원인 후보"라는
   표현을 사용한다.
-- 커리큘럼 구성은 `docs/curriculum.md`(v2)를 기준으로 하며, v1 대비 변경 배경과 각 문서/폴더의
+- 커리큘럼 구성은 `docs/curriculum.md`(v3)를 기준으로 하며, v1→v2→v3 변경 배경과 각 문서/폴더의
   최신화 여부는 `docs/restructure-plan.md`를 참고한다.
 
 ## 자주 쓰는 명령
@@ -63,3 +63,5 @@ python .claude/skills/course-consistency-audit/scripts/check_course_consistency.
 | 2026-10-02 | 초보자·비전공자 눈높이 개정(1차시 기준 확정): 강사용 노트북 폐지(정답 노트북으로 시연), 정답 노트북 주석은 꼭 필요한 곳만, 학생용은 풀이에 필요한 설명+주의점만, 반도체·공정 설명은 생활 비유 중심, "여러 열 함께 보기"·"원인 후보"를 1차시부터 직관으로 도입 | skills/notebook-authoring, skills/lecture-material-authoring, skills/course-build, scripts/validate_notebooks.py, check_course_consistency.py | 사용자 요청: 초보자에게 공정·상관관계·다변수 설명이 어렵고 노트북 주석이 과다 |
 | 2026-10-02 | 9·10차시 `검사결과`(0/1) → `합격여부`(1=합격/-1=불합격)로 전 차시 표기 통일, 검사 스크립트가 `data-shot` 이미지 빈자리를 FAIL 대신 "캡처 대기" WARN으로 처리 | scripts/generate_weekly_data.py, scripts/validate_datasets.py, skills/course-consistency-audit | 같은 1이 차시마다 반대 뜻이라 초보자 혼동. 잘못 찍힌 Orange3 캡처는 지우고 자리만 남김 |
 | 2026-10-08 | 전 차시 "쉬운 예제로 설명, 반도체는 핵심만" 구조로 개정: 강의 개념 설명은 생활 예제(1~3차시 코드 속 값, 4~10차시 `weekXX_easy_*.csv`)로만, 아래 "반도체 데이터로 확인하기"에서 핵심 2~4개, 실습지·노트북 뒷부분은 전부 반도체 문제. 설명은 꼭 필요한 것만. 도전 실습·연습문제·AI 미니 프로그램 절 제거("AI로 한 걸음 더"·과제 유지), 노트북 출력 단위 셀 분할 | skills/lecture-material-authoring, skills/notebook-authoring, skills/curriculum-spec, docs/curriculum.md, scripts/generate_weekly_data.py, scripts/validate_datasets.py | 사용자 요청: 10-02 개정 후에도 파이썬이 처음인 수강생에게 어렵다 |
+| 2026-10-23 | v3 재설계: 차시를 PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지로(9·10차시는 Orange3 → 파이썬 최소 + ChatGPT 체험 → 실습지), 파이썬 활성 개념 차시당 4개 이하, Orange3를 1~10차시 본 활동으로(워밍업 데이터 → 반도체 `.tab`, `_start`/`_done.ows` 쌍), 실습지 기본 5문제(파이썬 3 + Orange 1 + 해석 1), 퀴즈 8~10문항, 찾아보기 상자(검색어·ChatGPT 질문·접힌 확인 포인트, 차시당 3~6개, 비평가), "오늘의 미션" 이야기, 노트북 "막혔을 때" 셀·빌더 `scripts/notebook_builders/` 추적. 분량 비율(파이썬 ≈ 80 : Orange ≈ 40 : 실습지 ≈ 30)은 스킬 내부 기준으로만 두고 **시간 정보 제거 정책은 유지** | docs/curriculum.md, docs/restructure-plan.md, skills/curriculum-spec, skills/lecture-material-authoring(+references), skills/notebook-authoring | 사용자 요청: 10-08 개정 후에도 파이썬 비중이 커서 초보자가 무겁다. Orange3로 "데이터 분석이 뭔지" 체감하며 재미있게 적응하게 한다(계획 승인 후 진행, 1·5차시 시범 먼저) |
+| 2026-10-23 | v3 데이터 방향 개정(사용자 결정): Orange 내장 데이터(zoo·iris·titanic 등) 사용 금지 → 워밍업은 직접 만든 가상 데이터 `weekXX_orange_<주제>.csv`(1~3차시 생활 공공데이터풍, 4~10차시 반도체·공정 이해용: 공정 흐름표·클린룸·웨이퍼 맵·챔버 센서·웨이퍼 패턴), 열 이름은 한국어 + 영문/SI 단위(`온도_C`, `가격_KRW`, `승차인원_count`)로 하고 기존 CSV는 그 차시 재작성 때만 이름 변경(값 불변), 이해용 그림은 `scripts/generate_figures.py`로 데이터에서 생성, 9·10차시 실습지 파이썬 2 + Orange 2 + 해석 1, 10차시 ChatGPT 응답 예시에 일부러 심은 오류 2개로 "틀린 곳 찾기" | docs/curriculum.md, docs/restructure-plan.md, skills/curriculum-spec, skills/lecture-material-authoring, skills/notebook-authoring | 사용자: 일반 데이터로는 수업 후 반도체·공정 이해가 쌓이지 않는다. 단위 표기 혼재(`_섭씨`/`_C`)도 정리 |

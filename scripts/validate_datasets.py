@@ -7,13 +7,18 @@
 - 주차별 의도한 결측값/이상값이 존재하는가
 - 수율 계산이 올바른가 (week07)
 - 데이터가 재현 가능한가 (동일 스크립트 재실행 시 동일 결과인지 해시로 확인)
+- Orange용 .tab 파생본(weekXX/orange/)이 CSV마다 있고 행 수·열 이름·값이 CSV와 같은가
 
 실행: python scripts/validate_datasets.py
 결과는 콘솔에 출력되고, 요약이 reports/validation-report.html 생성 시 사용된다.
 """
 import os
+import sys
 import hashlib
 import pandas as pd
+
+sys.dont_write_bytecode = True  # scripts/__pycache__를 남기지 않는다
+from generate_weekly_data import ORANGE_COLUMN_RENAMES, ORANGE_CLASS_COLUMNS as ONE_MINUS_ONE  # noqa: E402  (scripts/ 폴더의 생성 스크립트, 실행하지 않고 상수만 읽음)
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WEEKLY = os.path.join(BASE, "data", "weekly")
@@ -66,7 +71,7 @@ def validate_easy():
         check("easy04 별로예요 비율 1위는 디저트(의도된 패턴)", bad_rate.idxmax() == "디저트", str(bad_rate.to_dict()))
 
     e5 = validate_week("week05", "week05_easy_class_records.csv",
-                       ["이름", "반", "키_cm", "몸무게_kg", "수학_점수"])
+                       ["이름", "반", "키_cm", "몸무게_kg", "수학점수_pt"])
     if e5 is not None:
         check("easy05 15행", len(e5) == 15, str(len(e5)))
         check("easy05 결측 3칸(반·키·몸무게 각 1)",
@@ -169,14 +174,133 @@ def validate_easy():
         check("easy10 예보 데이터에 정답(진행여부) 없음", "진행여부" not in e10n.columns)
 
 
+def validate_orange_warmups():
+    """Orange 워밍업 데이터(weekXX_orange_*.csv, 스펙 부록 A) — 행 수·열 이름과 심은 패턴(aha 확인)을 실측으로 확인한다."""
+    print("\n=== Orange 워밍업 데이터 ===")
+    a1 = validate_week("week01", "week01_orange_town_population.csv", ["구", "동", "인구_count", "면적_km2", "주요연령대"])
+    if a1 is not None:
+        vc = a1["주요연령대"].value_counts().to_dict()
+        check("A-1 30행, 동 30개 고유", len(a1) == 30 and a1["동"].nunique() == 30, str(a1.shape))
+        check("A-1 주요연령대 40~50대 12 · 20~30대 9 · 60대이상 6 · 10대이하 3",
+              vc == {"40~50대": 12, "20~30대": 9, "60대이상": 6, "10대이하": 3}, str(vc))
+        top = a1.groupby("구")["주요연령대"].agg(lambda s: s.value_counts().idxmax())
+        check("A-1 20~30대가 가장 많은 구는 새빛구뿐", list(top[top == "20~30대"].index) == ["새빛구"], str(top.to_dict()))
+    a2 = validate_week("week02", "week02_orange_subway_ridership.csv", ["역이름", "노선", "시간대", "승차인원_count", "하차인원_count"])
+    if a2 is not None:
+        ride = a2["승차인원_count"]
+        check("A-2 24행", len(a2) == 24, str(len(a2)))
+        check("A-2 승차 최댓값 = 중앙역·출근, 6,000 초과는 그 1행",
+              a2.loc[ride.idxmax(), ["역이름", "시간대"]].tolist() == ["중앙역", "출근"] and (ride > 6000).sum() == 1)
+        check("A-2 승차 최솟값 = 강변역·낮", a2.loc[ride.idxmin(), ["역이름", "시간대"]].tolist() == ["강변역", "낮"])
+        check("A-2 승차 평균 2,500~3,000, 최댓값이 평균의 3배 이상",
+              2500 <= ride.mean() <= 3000 and ride.max() >= 3 * ride.mean(), f"평균 {ride.mean():.1f}")
+    a3 = validate_week("week03", "week03_orange_air_quality.csv", ["날짜", "PM10_ug_m3", "PM2_5_ug_m3", "기온_C", "습도_pct", "등급"])
+    if a3 is not None:
+        pm = a3["PM10_ug_m3"]
+        check("A-3 등급 좋음 7 · 보통 15 · 나쁨 6 · 매우나쁨 2",
+              a3["등급"].value_counts().to_dict() == {"보통": 15, "좋음": 7, "나쁨": 6, "매우나쁨": 2})
+        check("A-3 PM10 > 80 8일, 그중 습도 > 70 3일", (pm > 80).sum() == 8 and ((pm > 80) & (a3["습도_pct"] > 70)).sum() == 3)
+        grade = pd.cut(pm, [-1, 30, 80, 150, 10 ** 6], labels=["좋음", "보통", "나쁨", "매우나쁨"]).astype(str)
+        check("A-3 등급이 PM10 구간 규칙과 일치", (grade == a3["등급"]).all())
+    a4 = validate_week("week04", "week04_orange_process_flow.csv",
+                       ["공정순서", "공정명", "구분", "반복여부", "하는일", "생활비유", "주요설비", "대표측정값", "측정단위"])
+    if a4 is not None:
+        check("A-4 8행, 반복여부 '여러 번' 5행(②~⑥ — 금속 배선도 여러 층)", len(a4) == 8
+              and list(a4.loc[a4["반복여부"] == "여러 번", "공정순서"]) == [2, 3, 4, 5, 6])
+    a5 = validate_week("week05", "week05_orange_cleanroom_env.csv", ["측정시간", "구역", "파티클_count_per_m3", "온도_C", "습도_pct", "차압_Pa"])
+    if a5 is not None:
+        p = a5["파티클_count_per_m3"]
+        na = a5.isna().sum()
+        check("A-5 72행, 결측 파티클 4 · 습도 3 · 차압 2(서로 다른 행)",
+              len(a5) == 72 and (na["파티클_count_per_m3"], na["습도_pct"], na["차압_Pa"]) == (4, 3, 2)
+              and a5.isna().any(axis=1).sum() == 9, str(na.to_dict()))
+        check("A-5 튀는 값 파티클 99,999 1행 · 차압 -5.0 1행", (p == 99999).sum() == 1 and (a5["차압_Pa"] == -5.0).sum() == 1)
+        normal = p[p < 10000].mean()
+        check("A-5 평균으로 채운 값(99,999 포함 평균)이 정상 평균의 2배 이상", p.mean() >= 2 * normal,
+              f"채움 {p.mean():.1f} / 정상 {normal:.1f}")
+    a6 = validate_week("week06", "week06_orange_wafer_map.csv", ["웨이퍼ID", "다이_X", "다이_Y", "중심거리_mm", "합격여부"])
+    if a6 is not None:
+        fail = a6["합격여부"] == -1
+        check("A-6 다이 317개, 불합격 55~75개, 그중 85% 이상 가장자리",
+              len(a6) == 317 and 55 <= fail.sum() <= 75 and (a6.loc[fail, "중심거리_mm"] > 112).mean() >= 0.85,
+              f"불합격 {fail.sum()}")
+    a7 = validate_week("week07", "week07_orange_wafer_lots.csv", ["웨이퍼ID", "설비번호", "다이_X", "다이_Y", "중심거리_mm", "불량패턴", "합격여부"])
+    if a7 is not None:
+        y = (a7["합격여부"] == 1).groupby(a7["설비번호"]).mean() * 100
+        check("A-7 3,804행, 식각-3 수율이 가장 낮고 최고와 10%p 이상 차이",
+              len(a7) == 3804 and y.idxmin() == "식각-3" and y.max() - y.min() >= 10, str(y.round(1).to_dict()))
+    a8 = validate_week("week08", "week08_orange_chamber_sensor.csv",
+                       ["측정시간", "RF파워_W", "챔버압력_mTorr", "가스유량_sccm", "누적사용시간_hr", "챔버온도_C", "식각률_nm_min"])
+    if a8 is not None:
+        r = a8.drop(columns="측정시간").corr()["식각률_nm_min"]
+        check("A-8 상관 RF +0.75~0.85 · 누적사용시간 -0.6~-0.4 · 가스 +0.2~0.4 · 압력·온도 |r|<0.1",
+              0.75 <= r["RF파워_W"] <= 0.85 and -0.6 <= r["누적사용시간_hr"] <= -0.4 and 0.2 <= r["가스유량_sccm"] <= 0.4
+              and abs(r["챔버압력_mTorr"]) < 0.1 and abs(r["챔버온도_C"]) < 0.1, str(r.round(3).to_dict()))
+    feats = ["불량다이수_count", "중심불량비율_pct", "가장자리불량비율_pct", "직선불량비율_pct"]
+    a9 = validate_week("week09", "week09_orange_wafer_patterns.csv", ["웨이퍼ID"] + feats + ["불량패턴"])
+    if a9 is not None:
+        check("A-9 240행(정상 120 · 중심형 40 · 가장자리형 40 · 스크래치형 40)",
+              a9["불량패턴"].value_counts().to_dict() == {"정상": 120, "중심형": 40, "가장자리형": 40, "스크래치형": 40})
+        normal = a9[a9["불량패턴"] == "정상"]["불량다이수_count"]
+        check("A-9 정상 웨이퍼 불량 다이 3~8개", normal.between(3, 8).all())
+    a10 = validate_week("week10", "week10_orange_new_wafers.csv", ["웨이퍼ID"] + feats)
+    if a10 is not None:
+        check("A-10 10행, 정답 열(불량패턴) 없음", len(a10) == 10 and "불량패턴" not in a10.columns)
+    # A-9 Tree 교차검증 정확도와 A-10 모델 의견 갈림은 Orange가 필요해 validate_orange_workflows 쪽 실측 보고로 확인한다.
+
+
+def validate_orange_tabs():
+    """Orange용 .tab 파생본 검증 — CSV마다 하나, BOM 없음, 3행 헤더, 행 수·열·값이 CSV와 같음."""
+    print("\n=== Orange용 .tab 파생본 ===")
+    for week in sorted(os.listdir(WEEKLY)):
+        wdir = os.path.join(WEEKLY, week)
+        if not os.path.isdir(wdir):
+            continue
+        for f in sorted(os.listdir(wdir)):
+            if not f.endswith(".csv"):
+                continue
+            stem = f[:-4]
+            tab = os.path.join(wdir, "orange", stem + ".tab")
+            if not check(f"{stem}.tab 파일 존재", os.path.exists(tab), tab):
+                continue
+            with open(tab, "rb") as fh:
+                head = fh.read(3)
+            check(f"{stem}.tab BOM 없음", head != b"\xef\xbb\xbf")
+            csv = pd.read_csv(os.path.join(wdir, f), encoding="utf-8-sig", dtype=str, keep_default_na=False)
+            t = pd.read_csv(tab, sep="\t", encoding="utf-8", dtype=str, keep_default_na=False, skiprows=[1, 2])
+            types = pd.read_csv(tab, sep="\t", encoding="utf-8", dtype=str, keep_default_na=False, nrows=2)
+            renames = ORANGE_COLUMN_RENAMES.get(week, {})
+            csv = csv.rename(columns=renames)  # .tab에서만 바꾼 열 이름(generate_weekly_data.ORANGE_COLUMN_RENAMES)
+            check(f"{stem}.tab 열 이름이 CSV와 같음(차시별 이름 바꾸기 반영)", list(t.columns) == list(csv.columns),
+                  f"tab {list(t.columns)} / csv {list(csv.columns)}")
+            check(f"{stem}.tab 행 수가 CSV와 같음({len(csv)}행)", len(t) == len(csv), str(len(t)))
+            if list(t.columns) != list(csv.columns) or len(t) != len(csv):
+                continue
+            diff = []
+            for col in csv.columns:
+                a, b = csv[col], t[col]
+                if types.loc[1, col] == "class" and col in ONE_MINUS_ONE:  # 결과 열은 1.0 → 1로 정리해 저장한다
+                    a = a.map(lambda v: v if v == "" else str(int(float(v))))
+                    check(f"{stem}.tab {col} 범주형 1/-1(class)", types.loc[0, col] == "1 -1", types.loc[0, col])
+                if not a.equals(b):
+                    diff.append(col)
+            check(f"{stem}.tab 값이 CSV와 같음", not diff, f"다른 열: {diff}")
+
+
 def main():
     w1 = validate_week("week01", "week01_semiconductor_process_overview.csv",
-                        ["측정시간", "로트번호", "웨이퍼번호", "공정명", "설비번호", "온도_섭씨", "압력_Pa", "합격여부"])
+                        ["측정시간", "로트번호", "웨이퍼번호", "공정명", "설비번호", "온도_C", "압력_Pa", "합격여부"])
     if w1 is not None:
         check("week01 합격여부 값 범위", set(w1["합격여부"].unique()) <= {1, -1})
 
-    validate_week("week02", "week02_python_basics_1.csv",
-                  ["로트번호", "공정명", "설비번호", "온도_섭씨", "합격여부"])
+    w2 = validate_week("week02", "week02_python_basics_1.csv",
+                       ["로트번호", "공정명", "설비번호", "온도_C", "합격여부"])
+    if w2 is not None:
+        eq03 = w2.loc[w2["설비번호"] == "EQ-03", "온도_C"]
+        check("week02 20행, 온도 최저 292.2 · 최고 317.9", len(w2) == 20 and w2["온도_C"].min() == 292.2
+              and w2["온도_C"].max() == 317.9, f"{len(w2)}행")
+        check("week02 EQ-03 7건, 최고 308.5 · 최저 292.2(강의·실습지 수치)",
+              len(eq03) == 7 and eq03.max() == 308.5 and eq03.min() == 292.2, str(eq03.tolist()))
 
     validate_week("week03", "week03_python_basics_2.csv",
                   ["로트번호", "공정명", "설비번호", "온도_섭씨", "합격여부"])
@@ -185,7 +309,7 @@ def main():
                   ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "가스유량_slm", "합격여부"])
 
     w5 = validate_week("week05", "week05_dirty_process_data.csv",
-                        ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "가스유량_slm", "처리시간_sec", "합격여부"])
+                        ["측정시간", "로트번호", "설비번호", "공정명", "온도_C", "압력_Pa", "가스유량_slm", "처리시간_sec", "합격여부"])
     if w5 is not None:
         check("week05 결측값 존재(의도된 패턴)", w5.isna().sum().sum() > 0)
         check("week05 중복 행 존재(의도된 패턴)", w5.duplicated().sum() > 0)
@@ -223,6 +347,8 @@ def main():
         check("week10 합격여부 값 범위(1/-1)", set(w10["합격여부"].unique()) <= {1, -1})
 
     validate_easy()
+    validate_orange_warmups()
+    validate_orange_tabs()
 
     print("\n=== 재현성(hash) 확인: 스크립트를 다시 실행해 동일 파일인지 비교하세요 ===")
     for week in sorted(os.listdir(WEEKLY)):
@@ -230,7 +356,12 @@ def main():
         if not os.path.isdir(wdir):
             continue
         for f in sorted(os.listdir(wdir)):
-            print(f"{week}/{f}: md5={file_hash(os.path.join(wdir, f))}")
+            if os.path.isfile(os.path.join(wdir, f)):
+                print(f"{week}/{f}: md5={file_hash(os.path.join(wdir, f))}")
+        odir = os.path.join(wdir, "orange")
+        if os.path.isdir(odir):
+            for f in sorted(os.listdir(odir)):
+                print(f"{week}/orange/{f}: md5={file_hash(os.path.join(odir, f))}")
 
     total = len(RESULTS)
     passed = sum(1 for _, s, _ in RESULTS if s == "PASS")
@@ -239,4 +370,5 @@ def main():
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")   # 출력을 파일로 돌려도 Windows 기본 인코딩(cp949) 때문에 죽지 않게
     main()

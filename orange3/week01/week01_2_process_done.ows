@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="1차시 ② 반도체 공정 데이터 둘러보기 (완성)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+		<node id="1" name="Data Table" qualified_name="Orange.widgets.data.owtable.OWTable" project_name="Orange3" version="" title="Data Table (표 보기)" position="(300.0, 320.0)" />
+		<node id="2" name="Distributions" qualified_name="Orange.widgets.visualize.owdistributions.OWDistributions" project_name="Orange3" version="" title="Distributions (분포 막대)" position="(300.0, 460.0)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+	</links>
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: File → Data Table(표 보기), File → Distributions(분포 막대, 합격여부).
+합격(1)과 불합격(-1) 막대의 높이를 파이썬에서 센 개수와 비교해 보세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVgAEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMKXdlZWswMV9zZW1pY29uZHVj
+dG9yX3Byb2Nlc3Nfb3ZlcnZpZXcudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjEku
+Li8uLi9kYXRhL3dlZWtseS93ZWVrMDEvb3JhbmdlL3dlZWswMV9zZW1pY29uZHVjdG9yX3Byb2Nl
+c3Nfb3ZlcnZpZXcudGFilIwFdGl0bGWUjACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwG
+c291cmNllEsAjAtyZWNlbnRfdXJsc5RdlIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJv
+bEFyZWFWaXNpYmxllIiMEGNvbnRleHRfc2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+		<properties node_id="2" format="pickle">gASV7gEAAAAAAAB9lCiMCmF1dG9fYXBwbHmUiIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGN1bXVs
+YXRpdmVfZGlzdHKUiYwTZml0dGVkX2Rpc3RyaWJ1dGlvbpRLAIwJaGlkZV9iYXJzlImMDWtkZV9z
+bW9vdGhpbmeUSwqMCnNob3dfcHJvYnOUiYwMc29ydF9ieV9mcmVxlImMD3N0YWNrZWRfY29sdW1u
+c5SJjAtfX3ZlcnNpb25fX5RLAYwQY29udGV4dF9zZXR0aW5nc5RdlIwVb3Jhbmdld2lkZ2V0LnNl
+dHRpbmdzlIwHQ29udGV4dJSTlCmBlH2UKIwGdmFsdWVzlH2UKIwEY3ZhcpSMDO2VqeqyqeyXrOu2
+gJRLZYaUjA5udW1iZXJfb2ZfYmluc5RLA0r+////hpSMCXNlbGVjdGlvbpSPlEr+////hpSMA3Zh
+cpRoFUtlhpRoCksBdYwKYXR0cmlidXRlc5R9lCiMCeqzteygleuqhZRLAYwM7ISk67mE67KI7Zi4
+lEsBjAjsmKjrj4RfQ5RLAowJ7JWV66ClX1BhlEsCaBVLAXWMBW1ldGFzlH2UKIwM7Lih7KCV7Iuc
+6rCElEsEjAzroZztirjrsojtmLiUSwOMD+ybqOydtO2NvOuyiO2YuJRLAnV1YmF1Lg==
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

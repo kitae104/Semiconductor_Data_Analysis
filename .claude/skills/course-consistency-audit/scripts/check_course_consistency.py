@@ -14,13 +14,16 @@
   7. 노트북 규약: student에 TODO 존재, solutions에 TODO 부재, 세 노트북의 단계 제목 정렬
   8. 주차 CSV utf-8-sig 로드 가능 + 데이터사전에 모든 열 이름 등장
   9. 표현 규칙: 인과 단정, 가짜 실시간 표현, fab.csv 센서 의미 단정
+ 10. v3(2026-10-23): .ows 내장 데이터 경로 금지·basedir 경로·start/done 짝·강의의 .ows 링크(항상 검사),
+     PART 앵커·실습지 5문제·찾아보기 3~6·반도체 이해 포인트·시간 표기·한국어 단위 접미사·노트북 v3 구조
+     (강의에 id="part1"이 있는 차시만. 없으면 INFO "v3 미적용")
 
 사용법
     python .claude/skills/course-consistency-audit/scripts/check_course_consistency.py            # 전 차시
     python .claude/skills/course-consistency-audit/scripts/check_course_consistency.py --week 4   # 특정 차시
     python .claude/skills/course-consistency-audit/scripts/check_course_consistency.py --week 4 5 --json
 
-종료 코드: FAIL이 하나라도 있으면 1, 아니면 0. WARN은 종료 코드에 영향을 주지 않는다.
+종료 코드: FAIL이 하나라도 있으면 1, 아니면 0. WARN·INFO는 종료 코드에 영향을 주지 않는다.
 """
 from __future__ import annotations
 
@@ -401,6 +404,123 @@ def check_guide_claims(scope: str, rel_guide: str, text: str, week: int) -> None
             if orphan_fig else "")
 
 
+# --------------------------------------------------------------------------- v3 (2026-10-23)
+# v3 재설계(PART 1·2·3, Orange 본 활동, 찾아보기, 실습지 5문제) 규칙. 아직 다시 만들지 않은 차시까지 FAIL로
+# 덮지 않도록, 강의에 id="part1"이 있으면 v3 차시로 보고 아래 검사를 적용하고 없으면 INFO("v3 미적용")만 남긴다.
+# 단, .ows 이식성(sample-datasets 금지)·강의의 .ows 링크·start/done 짝은 차시와 관계없이 항상 검사한다.
+
+OWS_FILE_QNAME = "Orange.widgets.data.owfile.OWFile"
+TIME_RE = re.compile(r"\d+\s*분(?![석류야포위산리할의배모자])(?:\s*동안)?|\d+\s*시간(?!대|마다|\s*간격|\s*단위)|분\s*동안")
+KOREAN_UNIT_RE = re.compile(r"[가-힣A-Za-z0-9]_(섭씨|원|개|초|잔|점수)(?![가-힣A-Za-z0-9_])")
+WORKSHEET_PROBLEM_RE = re.compile(r"<h2[^>]*>\s*(?:문제\s*)?\d+[.\s]")
+LOOKUP_BOX = '<b class="tag">찾아보기</b>'
+
+
+def ows_file_props(path: str) -> list[bytes]:
+    """.ows의 File 위젯 설정(pickle을 base64로 푼 바이트). Orange 없이 읽는다."""
+    import base64
+    import xml.etree.ElementTree as ET
+    root = ET.parse(path).getroot()
+    ids = {n.get("id") for n in root.iter("node") if n.get("qualified_name") == OWS_FILE_QNAME}
+    out = []
+    for prop in root.iter("properties"):
+        if prop.get("node_id") in ids:
+            text = prop.text or ""
+            out.append(base64.decodebytes(text.encode("ascii")) if prop.get("format") == "pickle" else text.encode())
+    return out
+
+
+def check_ows(scope: str, week: int, v3: bool) -> None:
+    folder = os.path.join(BASE, "orange3", scope)
+    files = sorted(f for f in os.listdir(folder) if f.endswith(".ows")) if os.path.isdir(folder) else []
+    for f in files:
+        rel = f"orange3/{scope}/{f}"
+        props = ows_file_props(os.path.join(folder, f))
+        check(scope, f"{rel} 내장 데이터(sample-datasets) 경로 없음", not any(b"sample-datasets" in p for p in props))
+        check(scope, f"{rel} File 경로가 basedir + orange/*.tab",
+              bool(props) and all(b"basedir" in p and re.search(rb"/orange/[\w.-]+\.tab", p) for p in props))
+    stems = {f[:-len("_start.ows")] for f in files if f.endswith("_start.ows")}
+    stems |= {f[:-len("_done.ows")] for f in files if f.endswith("_done.ows")}
+    for stem in sorted(stems):
+        check(scope, f"orange3/{scope}/{stem} start/done 짝",
+              f"{stem}_start.ows" in files and f"{stem}_done.ows" in files)
+    if v3:
+        warn_if(scope, f"orange3/{scope}/ .ows 4개(①·② × start/done)", len(files) == 4, f"{len(files)}개: {files}")
+    else:
+        record(scope, f"orange3/{scope}/ .ows {len(files)}개", "INFO", "v3 미적용 차시")
+
+
+def text_of_notebook_markdown(path: str) -> str:
+    _, md_cells = notebook_sources(path)
+    return "\n".join(md_cells)
+
+
+def check_v3(scope: str, week: int) -> None:
+    folder = os.path.join(BASE, "lectures", scope)
+    index_path = os.path.join(folder, "index.html")
+    index = read(index_path) if os.path.exists(index_path) else ""
+    v3 = 'id="part1"' in index
+
+    # 강의의 .ows 링크(항상)
+    for href in sorted(set(re.findall(r'href="([^"#?]+\.ows)"', index))):
+        target = os.path.normpath(os.path.join(folder, href))
+        check(scope, f"lectures/{scope}/index.html → {href} 존재", os.path.exists(target))
+    check_ows(scope, week, v3)
+
+    if not v3:
+        record(scope, "v3 규칙(PART 앵커·실습지 5문제·찾아보기·시간 표기·반도체 이해 포인트)", "INFO",
+               'v3 미적용 — 강의에 id="part1"이 없어 v3 검사를 건너뜀')
+        return
+
+    rel_index = f"lectures/{scope}/index.html"
+    for part in ("part1", "part2", "part3"):
+        n = len(re.findall(rf'id="{part}"', index))
+        check(scope, f'{rel_index} id="{part}" 정확히 1개', n == 1, f"{n}개")
+        warn_if(scope, f'{rel_index} "오늘 수업 구성"에서 #{part}로 링크', f'href="#{part}"' in index)
+
+    worksheet = os.path.join(folder, "worksheet.html")
+    if os.path.exists(worksheet):
+        n = len(WORKSHEET_PROBLEM_RE.findall(read(worksheet)))
+        warn_if(scope, f"lectures/{scope}/worksheet.html 문제 5개", n == 5, f"{n}개")
+
+    boxes = index.count(LOOKUP_BOX)
+    warn_if(scope, f"{rel_index} 찾아보기 상자 3~6개", 3 <= boxes <= 6, f"{boxes}개")
+    warn_if(scope, f"{rel_index} '오늘의 반도체 이해 포인트' 문장", "반도체 이해 포인트" in index)
+    guide = os.path.join(folder, "instructor-guide.md")
+    if os.path.exists(guide):
+        gtext = read(guide)
+        warn_if(scope, f"lectures/{scope}/instructor-guide.md '여기서 쉬기' 표시", "여기서 쉬기" in gtext)
+        warn_if(scope, f"lectures/{scope}/instructor-guide.md 반도체 이해 포인트(수업 마무리 질문)",
+                "반도체 이해 포인트" in gtext or "수업 마무리 질문" in gtext)
+
+    # 시간 표기(시간 정보 제거 정책): 강의·실습지·퀴즈·운영안·노트북 마크다운
+    targets = [(f"lectures/{scope}/{n}", os.path.join(folder, n))
+               for n in ("index.html", "worksheet.html", "quiz.json", "instructor-guide.md")]
+    for kind in ("student", "solutions"):
+        nb = os.path.join(BASE, "notebooks", kind, f"{scope}_{'student' if kind == 'student' else 'solution'}.ipynb")
+        targets.append((os.path.relpath(nb, BASE).replace("\\", "/"), nb))
+    for rel, path in targets:
+        if not os.path.exists(path):
+            continue
+        text = text_of_notebook_markdown(path) if path.endswith(".ipynb") else re.sub(r"<[^>]+>", " ", read(path))
+        hits = sorted(set(m.group(0).strip() for m in TIME_RE.finditer(text)))
+        warn_if(scope, f"{rel} 시간 표기 없음", not hits, f"검출: {hits[:8]}")
+        units = sorted(set(m.group(0)[1:] for m in KOREAN_UNIT_RE.finditer(text)))
+        warn_if(scope, f"{rel} 한국어 단위 접미사(_섭씨·_원·_개·_초·_잔·_점수) 없음", not units, f"검출: {units[:8]}")
+
+    # 노트북 v3 구조(스펙 검증 6)
+    student = os.path.join(BASE, "notebooks", "student", f"{scope}_student.ipynb")
+    if os.path.exists(student):
+        _, md_cells = notebook_sources(student)
+        warn_if(scope, f"notebooks/student/{scope}_student.ipynb 첫 마크다운 셀이 '막혔을 때'",
+                bool(md_cells) and "막혔을 때" in md_cells[0])
+        problems = len(re.findall(r"^### 문제 \d", "\n".join(md_cells), re.M))
+        want = 2 if week >= 9 else 3
+        warn_if(scope, f"notebooks/student/{scope}_student.ipynb 반도체 실습 문제 {want}개", problems == want, f"{problems}개")
+        warn_if(scope, f"notebooks/student/{scope}_student.ipynb 'AI에게 질문하며' 단계 없음",
+                not any("AI에게 질문하며" in c for c in md_cells))
+
+
 def check_week(week: int, css_classes: set[str]) -> None:
     scope = f"week{week:02d}"
     folder = os.path.join(BASE, "lectures", scope)
@@ -419,6 +539,7 @@ def check_week(week: int, css_classes: set[str]) -> None:
             warn_if(scope, f"{rel_guide} '{heading}' 섹션", f"## {heading}" in text or heading in text)
     check_notebooks(scope, week)
     check_data(scope, week)
+    check_v3(scope, week)
 
 
 def check_landing(css_classes: set[str]) -> None:
@@ -449,6 +570,7 @@ def main() -> int:
 
     fails = [r for r in RESULTS if r[2] == "FAIL"]
     warns = [r for r in RESULTS if r[2] == "WARN"]
+    infos = [r for r in RESULTS if r[2] == "INFO"]
 
     if args.json:
         print(json.dumps(
@@ -457,12 +579,12 @@ def main() -> int:
             ensure_ascii=False, indent=2))
     else:
         for scope, name, status, detail in RESULTS:
-            if args.quiet and status == "PASS":
+            if args.quiet and status in ("PASS", "INFO"):
                 continue
             suffix = f" — {detail}" if detail and status != "PASS" else ""
             print(f"[{status}] ({scope}) {name}{suffix}")
-        print(f"\n검사 {len(RESULTS)}건 · PASS {len(RESULTS) - len(fails) - len(warns)} · "
-              f"WARN {len(warns)} · FAIL {len(fails)}")
+        print(f"\n검사 {len(RESULTS)}건 · PASS {len(RESULTS) - len(fails) - len(warns) - len(infos)} · "
+              f"WARN {len(warns)} · FAIL {len(fails)} · INFO {len(infos)}")
 
     return 1 if fails else 0
 

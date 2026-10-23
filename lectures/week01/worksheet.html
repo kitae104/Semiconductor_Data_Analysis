@@ -18,158 +18,99 @@
 <main class="page">
   <div class="hero">
     <span class="badge purple">1차시 실습지</span>
-    <h1>반도체 공정과 데이터 처음 만나기 + 변수·출력 — 실습지</h1>
+    <h1>반도체 공정과 데이터 처음 만나기 — 실습지</h1>
+    <p class="lede">공장 기록표(교육용 가상 데이터) 40건 가운데 설비 <b>EQ-03</b> 한 대의 기록을 들여다본다. EQ-03의 기록은 12건, 그중 불합격(<code>합격여부</code> = -1)은 3건이다.</p>
   </div>
 
   <section class="block">
-    <h2>1. 용어 연결 문제</h2>
-    <table class="timetable">
-      <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 웨이퍼</td><td rowspan="4">A. 반도체를 만드는 공장<br>B. 함께 이동하는 웨이퍼 묶음(보통 25장 내외)<br>C. 칩을 새기는 얇고 둥근 원판<br>D. 공정을 실제로 수행하는 기계</td></tr>
-      <tr><td>② FAB</td></tr>
-      <tr><td>③ 로트</td></tr>
-      <tr><td>④ 설비</td></tr>
-    </table>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① C  ② A  ③ B  ④ D</div>
-  </section>
-
-  <section class="block">
-    <h2>2. 공정 작업 연결 문제</h2>
-    <table class="timetable">
-      <tr><th>작업</th><th>하는 일</th></tr>
-      <tr><td>① 포토</td><td rowspan="4">A. 필요한 재료를 얇은 막으로 한 겹 쌓는다<br>B. 빛을 비춰 회로 무늬를 찍는다<br>C. 남은 찌꺼기와 먼지를 씻어낸다<br>D. 무늬대로 필요 없는 부분을 깎아낸다</td></tr>
-      <tr><td>② 식각</td></tr>
-      <tr><td>③ 증착</td></tr>
-      <tr><td>④ 세정</td></tr>
-    </table>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① B  ② D  ③ A  ④ C</div>
-  </section>
-
-  <section class="block">
-    <h2>3. 표 읽기 문제</h2>
-    <p>오늘 데이터(교육용 가상 데이터)의 한 행을 한 문장으로 읽어보자.</p>
-    <div class="tablewrap">
-      <table class="data-preview">
-        <tr><th>측정시간</th><th>로트번호</th><th>웨이퍼번호</th><th>공정명</th><th>설비번호</th><th>온도_섭씨</th><th>압력_Pa</th><th>합격여부</th></tr>
-        <tr><td>2024-03-01 20:00</td><td>LOT-0227</td><td>4</td><td>식각</td><td>EQ-04</td><td>300.1</td><td>995.6</td><td>1</td></tr>
-      </table>
-    </div>
-    <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">"3월 1일 20시, LOT-0227의 4번 웨이퍼를 EQ-04에서 식각 작업, 300.1도, 합격(1)."</div>
-  </section>
-
-  <section class="block">
-    <h2>4. 합격·불합격 건수 저장하기 (노트북 6단계)</h2>
-    <p>4~10번은 오늘 데이터(교육용 가상 데이터, <code>합격여부</code> 1 = 합격, -1 = 불합격)의 값으로 푼다.
-    합격 32건, 불합격 8건을 저장하도록 빈칸을 채워보자. 힌트: 강의 쉬운 예제 <code>coffee_price = 4500</code>과 같은 모양.</p>
+    <h2>문제 1. EQ-03의 기록 수와 불합격 수를 변수에 담기 (노트북 7단계 문제 1)</h2>
+    <p>EQ-03의 기록 12건과 불합격 3건을 저장하도록 빈칸을 채우고 실행하자.</p>
+    <p>힌트: 강의 "반도체 데이터로 확인하기" 확인 1의 <code>pass_count = 32</code>와 같은 모양이다.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>pass_count = ____
-fail_count = ____
+      <pre><code># TODO: eq03_count에 12, eq03_fail에 3을 저장하세요.
+eq03_count = ____
+eq03_fail = ____
 
-print(pass_count)
-print(fail_count)</code></pre>
+print(eq03_count)
+print(eq03_fail)</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>32</code>, <code>8</code>. 출력도 <code>32</code>, <code>8</code>.</div>
+    <div class="answer-box">빈칸은 순서대로 <code>12</code>, <code>3</code>. 출력은 <code>12</code>, <code>3</code> 두 줄이다.</div>
   </section>
 
   <section class="block">
-    <h2>5. 합격·불합격 문장 만들기 (노트북 6단계)</h2>
-    <p><code>오늘 합격은 32건, 불합격은 8건입니다.</code>가 나오도록 빈칸을 채워보자. 힌트: 쉬운 예제 <code>f"{menu} {cups}잔 …"</code>과 같은 모양.</p>
+    <h2>문제 2. f-string으로 EQ-03 보고 문장 만들기 (노트북 7단계 문제 2)</h2>
+    <p><code>EQ-03 기록 12건 중 불합격은 3건입니다.</code>가 나오도록 빈칸을 채우자.</p>
+    <p>힌트: 강의 "print()와 f-string" 절의 <code>f"{menu} {cups}잔 …"</code>과 같은 모양이다. <code>____</code>는 빈칸 표시일 뿐이라, 밑줄 개수와 상관없이 필요한 만큼 쓴다.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(f"오늘 합격은 {____}건, 불합격은 {____}건입니다.")</code></pre>
+      <pre><code># TODO: 따옴표 앞 글자 하나와 불합격 건수가 든 변수 이름을 채우세요.
+print(____"EQ-03 기록 {eq03_count}건 중 불합격은 {____}건입니다.")</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>pass_count</code>, <code>fail_count</code>.</div>
+    <div class="answer-box">빈칸은 순서대로 <code>f</code>, <code>eq03_fail</code>. 출력: <code>EQ-03 기록 12건 중 불합격은 3건입니다.</code><br>
+    <code>f</code>를 빼면 중괄호가 글자 그대로 나온다.</div>
   </section>
 
   <section class="block">
-    <h2>6. 설비 값의 자료형 (노트북 6단계)</h2>
-    <p>설비번호 EQ-04을 저장하도록 빈칸을 채우고, 출력될 자료형 네 줄을 예측해보자. 힌트: 쉬운 예제 <code>menu = "아메리카노"</code>와 같은 모양.</p>
+    <h2>문제 3. EQ-03 불합격률 계산하고 자료형 확인하기 (노트북 7단계 문제 3)</h2>
+    <p>불합격률 = 불합격 건수 ÷ 전체 건수 × 100. 힌트: 강의 확인 2의 <code>fail_rate</code> 계산과 같은 모양이다.</p>
+    <div class="callout warn">
+      <b class="tag">주의</b>
+      나누는 수는 EQ-03의 기록 수(<code>eq03_count</code>, 12)다. 공장 전체의 <code>total_count</code>(40)나 카페의 <code>total</code>(10)을 쓰면 오류 없이 엉뚱한 숫자가 나온다.
+    </div>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>temperature = 300.1        # 실수(float)
-equipment = ____           # 문자열(str)
-is_pass = True             # 불리언(bool)
-
-print(type(pass_count))
-print(type(temperature))
-print(type(equipment))
-print(type(is_pass))</code></pre>
+      <div class="code-label"><span>Python — 불합격률</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 불합격 건수와 전체 건수가 든 변수 이름을 채우세요.
+eq03_rate = ____ / ____ * 100
+print(f"EQ-03 불합격률은 {eq03_rate}%입니다.")</code></pre>
+    </div>
+    <p>이어서 <code>eq03_rate</code>의 자료형을 확인하자. 결과가 무엇일지 먼저 예측해 본다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 자료형</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 자료형을 알려 주는 함수 이름을 채우세요.
+print(____(eq03_rate))</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸은 <code>"EQ-04"</code>(따옴표를 빼면 <code>SyntaxError</code>). 출력은 순서대로
-    <code>&lt;class 'int'&gt;</code>, <code>&lt;class 'float'&gt;</code>, <code>&lt;class 'str'&gt;</code>, <code>&lt;class 'bool'&gt;</code>.</div>
+    <div class="answer-box">빈칸은 <code>eq03_fail</code>, <code>eq03_count</code>, 그리고 <code>type</code>. 출력: <code>EQ-03 불합격률은 25.0%입니다.</code>, <code>&lt;class 'float'&gt;</code><br>
+    3 ÷ 12 × 100 = 25.0. 나누기(<code>/</code>)의 결과는 소수점이 있는 수라서 자료형은 <code>float</code>다. 공장 전체 불합격률(20.0%)보다 높다.</div>
   </section>
 
   <section class="block">
-    <h2>7. 설비 온도 문장 만들기 (노트북 6단계)</h2>
-    <p><code>EQ-04 설비의 온도는 300.1도입니다.</code>가 나오도록 빈칸을 채워보자. 힌트: f-string 글자 하나, 300.1이 든 변수 이름.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(____"{equipment} 설비의 온도는 {____}도입니다.")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>f</code>, <code>temperature</code>. <code>f</code>를 빼면 중괄호가 글자 그대로 나온다.</div>
-  </section>
-
-  <section class="block">
-    <h2>8. 불합격률 계산하기 (노트북 7단계)</h2>
-    <p>전체 건수와 불합격률을 구하고 빈칸을 채워보자. 힌트: 쉬운 예제 <code>ice_count / total * 100</code>, <code>{ice_rate:.1f}</code>와 같은 모양.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>total = pass_count ____ fail_count
-fail_rate = ____ / total * 100
-print(total, fail_rate)
-
-print(f"전체 {total}건 중 불합격률은 {fail_rate:____}%입니다.")</code></pre>
-    </div>
+    <h2>문제 4. Orange로 불합격이 가장 많은 설비 찾기</h2>
+    <p>Orange 3.35에서 <code>orange3/week01/week01_2_process_start.ows</code>를 연다(강의 PART 2에서 이어 붙인 화면이 있으면 그대로 써도 된다).</p>
+    <ol class="pt-list">
+      <li>File 위젯에 <code>Distributions</code>(분포 막대)를 잇고 더블클릭한다.</li>
+      <li>왼쪽 Variable 목록에서 <code>합격여부</code>를 클릭한다.</li>
+      <li>왼쪽 아래 Columns 칸의 <code>Split by</code>를 <code>설비번호</code>로 바꾼다. 막대가 설비마다 다른 색으로 나뉜다.</li>
+      <li>불합격(<code>-1</code>) 막대에 마우스를 올리고 잠시 기다린다. 툴팁 표에서 설비마다 불합격이 몇 건인지 읽는다.</li>
+    </ol>
     <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "이번 공정 기록 ____건 중 ____건이 불합격했으며, 이는 전체의 ____%에 해당한다."
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸은 <code>+</code>, <code>fail_count</code>, <code>.1f</code>. 출력 <code>40 20.0</code>, <code>전체 40건 중 불합격률은 20.0%입니다.</code><br>
-    "이번 공정 기록 40건 중 8건이 불합격했으며, 이는 전체의 20%에 해당한다."</div>
-  </section>
-
-  <section class="block">
-    <h2>9. 세정 공정만 따로 보기 (노트북 7단계)</h2>
-    <p>공정명과 함께 세어 보니 세정 기록 10건 중 불합격이 5건이었다. 세정의 불합격률을 구해보자. 힌트: 8번과 같은 모양.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>clean_total = 10
-clean_fail = 5
-clean_rate = ____ / clean_total * 100
-print(f"세정 기록 {clean_total}건 중 불합격률은 {clean_rate:.1f}%입니다.")</code></pre>
-    </div>
-    <p>동료가 "그럼 세정이 불량의 원인이네!"라고 말했다. 어떻게 답하면 좋을까?</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸은 <code>clean_fail</code>. 출력 <code>세정 기록 10건 중 불합격률은 50.0%입니다.</code>(전체 20.0%).<br>
-    예시 답: "세정은 원인 후보일 뿐 원인이라고 단정할 수 없어. 40건뿐이라 우연일 수 있어."</div>
-  </section>
-
-  <section class="block">
-    <h2>10. 추가 불합격 건수 더하기 (노트북 8단계)</h2>
-    <p>추가 불합격 건수를 입력받아 합계를 구한다(연습용 상황). 빈칸을 채우고 2를 입력했을 때의 출력을 적어보자.
-    힌트: 쉬운 예제 <code>more_cups = int(more_text)</code>와 같은 모양.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>more_text = input("추가로 나온 불합격 건수를 입력하세요: ")
-print(type(more_text))
-
-more_fail = ____(more_text)
-print(f"불합격은 모두 {fail_count + more_fail}건입니다.")</code></pre>
+      <b class="tag">적어 보기</b>
+      불합격 막대 안 설비별 개수: EQ-01 ____ · EQ-02 ____ · EQ-03 ____ · EQ-04 ____<br>
+      불합격이 가장 많은 설비는 ______. 문제 1의 <code>eq03_fail</code>과 비교하면 (같다 / 다르다).
     </div>
     <button class="reveal-btn">체크포인트 보기</button>
     <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
-      빈칸은 <code>int</code>. 출력: <code>&lt;class 'str'&gt;</code>, <code>불합격은 모두 10건입니다.</code> <code>int()</code>를 빼면 <code>TypeError</code>가 난다.
+      불합격 8건 중 EQ-01 <b>2</b> · EQ-02 <b>1</b> · EQ-03 <b>3</b> · EQ-04 <b>2</b>. 불합격이 가장 많은 설비는 <b>EQ-03</b>이고, 문제 1의 <code>eq03_fail</code> 3과 <b>같다</b>.<br>
+      툴팁 표의 맨 윗줄은 막대 전체(<code>-1: 8</code>, 20.00 %)이고, 아래 줄이 설비별 개수다.<br>
+      막혔으면 같은 폴더의 <code>week01_2_process_done.ows</code>를 열고 Distributions에서 Split by만 바꾼다.
     </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 5. 해석 문장 쓰기</h2>
+    <p>EQ-03 결과를 팀장에게 보고하는 문장을 빈칸을 채워 완성하자.</p>
+    <div class="callout practice">
+      <b class="tag">문장 작성</b>
+      "공장 기록 40건 중 ____건(____%)이 불합격이고, 설비 EQ-03은 12건 중 ____건(____%)이 불합격이다. 이 숫자만으로 알 수 없는 것은 ____________이다."
+    </div>
+    <p>힌트: 강의 "반도체 데이터로 확인하기"의 "숫자 하나로는 모르는 것" 상자를 떠올려 보자.</p>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">"공장 기록 40건 중 <b>8건(20.0%)</b>이 불합격이고, 설비 EQ-03은 12건 중 <b>3건(25.0%)</b>이 불합격이다. 이 숫자만으로 알 수 없는 것은 <b>EQ-03 때문에 불합격이 났는지</b>이다."<br>
+    EQ-03의 불합격률이 전체보다 높아 더 살펴볼 만하다. 하지만 기록이 12건뿐이라 우연일 수 있고, EQ-03 기록에는 여러 공정이 섞여 있다. 그래서 EQ-03은 원인이 아니라 원인 후보까지만 말한다.</div>
   </section>
 
   <div class="nav-buttons">
