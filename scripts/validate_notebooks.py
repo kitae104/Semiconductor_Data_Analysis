@@ -10,6 +10,8 @@
 """
 import os
 import glob
+import shutil
+import tempfile
 import nbformat
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,11 +34,15 @@ def execute_notebook(path):
     except ImportError:
         from nbconvert.preprocessors import ExecutePreprocessor as NotebookClient  # fallback name
     nb = nbformat.read(path, as_version=4)
-    client = NotebookClient(
-        nb, timeout=120, kernel_name="python3",
-        resources={"metadata": {"path": os.path.dirname(path)}},
-    )
-    client.execute()
+    # 노트북은 CSV 파일 이름만 쓴다. 실습 환경처럼 CSV를 모아 둔 임시 폴더에서 실행한다.
+    with tempfile.TemporaryDirectory() as work:
+        for csv in glob.glob(os.path.join(BASE, "data", "weekly", "week*", "week*.csv")):
+            shutil.copy(csv, work)
+        client = NotebookClient(
+            nb, timeout=120, kernel_name="python3",
+            resources={"metadata": {"path": work}},
+        )
+        client.execute()
     return nb
 
 

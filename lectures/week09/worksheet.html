@@ -91,7 +91,7 @@ print(f"온도_C 한 열 정확도: {round(acc1 * 100, 1)}%")</pre>
 
   <section class="block">
     <h2>문제 3 — Orange: 웨이퍼 패턴 트리의 첫 질문과 정확도 읽기</h2>
-    <p>PART 1에서 만든 <code>week09_1_patterns</code> 캔버스를 그대로 쓴다. 닫았다면 키트의 <code>orange3/week09/week09_1_patterns_start.ows</code>를 열어 캔버스 메모 ②·③대로 다시 잇는다(막히면 <code>week09_1_patterns_done.ows</code>).</p>
+    <p>PART 1에서 만든 <code>week09_1_patterns</code> 캔버스를 그대로 쓴다. 닫았다면 키트의 <code>week09_1_patterns_start.ows</code>를 열어 캔버스 메모 ②·③대로 다시 잇는다(막히면 <code>week09_1_patterns_done.ows</code>).</p>
     <ol>
       <li><code>Tree Viewer</code>를 열어 맨 위 상자(뿌리)의 <b>첫 질문</b>을 읽는다 — 상자 맨 아래 열 이름과, 아래로 뻗은 선 옆의 조건. 상자 안 숫자까지 보려면 왼쪽 <b>Show details in non-leaves</b>에 체크한다.</li>
       <li><code>Test and Score</code>를 열어 Number of folds가 <b>10</b>인지 확인하고, Tree 줄의 <b>CA</b>를 읽는다. 표에는 AUC·CA·F1·Prec·Recall·MCC가 나오는데, <b>CA 한 칸만 읽는다</b> — 첫 숫자 칸 AUC는 정확도가 아니다.</li>
@@ -122,7 +122,7 @@ print(f"온도_C 한 열 정확도: {round(acc1 * 100, 1)}%")</pre>
 
   <section class="block">
     <h2>문제 4 — Orange: 공정 기록 트리 채점하고 놓친 불합격 세기</h2>
-    <p>PART 1에서 만든 <code>week09_2_passfail</code> 캔버스(Distributions·Tree·Tree Viewer가 이어진 상태)에 이어 붙인다. 닫았다면 <code>orange3/week09/week09_2_passfail_start.ows</code>를 열어 캔버스 메모 ②·③부터 다시 잇는다.</p>
+    <p>PART 1에서 만든 <code>week09_2_passfail</code> 캔버스(Distributions·Tree·Tree Viewer가 이어진 상태)에 이어 붙인다. 닫았다면 <code>week09_2_passfail_start.ows</code>를 열어 캔버스 메모 ②·③부터 다시 잇는다.</p>
     <ol>
       <li>왼쪽 <b>Evaluate</b> 묶음의 <code>Test and Score</code>를 <b>File과</b> 잇고, <b>Tree도</b> Test and Score에 잇는다. Number of folds를 <b>10</b>으로 고른다(캔버스 메모 ④).</li>
       <li>Evaluate 묶음의 <code>Confusion Matrix</code>를 <b>Test and Score에</b> 잇고 더블클릭한다. Show가 <b>Number of instances</b>인지 본다.</li>

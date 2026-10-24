@@ -17,10 +17,10 @@ nb = NotebookPair("week04", "4차시 실습 — Pandas 가장 기본적인 부�
 # --- 생활 예제: 카페 주문 12건(완성 코드, 실행하며 관찰) -----------------------------------
 nb.add(
     step(1, "CSV 파일 읽기 — read_csv"),
-    md("카페 주문 12건(교육용 가상 데이터)입니다. `pd.read_csv(\"파일 경로\", encoding=\"utf-8-sig\")`로 표를 읽어 `cafe`에 담습니다."),
+    md("카페 주문 12건(교육용 가상 데이터)입니다. `pd.read_csv(\"파일 이름\", encoding=\"utf-8-sig\")`로 표를 읽어 `cafe`에 담습니다."),
     code('import pandas as pd\n'
          '\n'
-         'cafe = pd.read_csv("../../data/weekly/week04/week04_easy_cafe_orders.csv", encoding="utf-8-sig")\n'
+         'cafe = pd.read_csv("week04_easy_cafe_orders.csv", encoding="utf-8-sig")\n'
          'cafe.head()'),
     look_up("CSV 파일이란"),
 
@@ -65,9 +65,9 @@ nb.add(
     step(7, "반도체 데이터로 확인하기 — 공정 기록 100건"),
     md("공정 기록 100건(교육용 가상 데이터)입니다. 1~5단계와 같은 코드에서 파일 이름·표 이름·열 이름만 바뀝니다. "
        "`합격여부`: 1 = 합격, -1 = 불합격."),
-    code('df = pd.read_csv("../../data/weekly/week04/week04_process_filtering.csv", encoding="utf-8-sig")\n'
+    code('df = pd.read_csv("week04_process_filtering.csv", encoding="utf-8-sig")\n'
          'print(df.shape)',
-         'df = pd.read_csv("../../data/weekly/week04/week04_process_filtering.csv", encoding="utf-8-sig")\n'
+         'df = pd.read_csv("week04_process_filtering.csv", encoding="utf-8-sig")\n'
          '# TODO: 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요.\n'
          'print(df.____)'),
     code("print(df.columns)"),

@@ -15,7 +15,7 @@ PART 2가 수동적이지 않게 1·2단계에 학생 빈칸 4개(dropna, "합�
 """
 from _common import NotebookPair, code, look_up, md, step
 
-DATA = "../../data/weekly/week09/week09_pass_fail_train.csv"
+DATA = "week09_pass_fail_train.csv"
 
 # ChatGPT 응답 예시(완성 코드). "직접 바꿔 보기" 정답 셀은 이 코드에서 나누는 줄의 stratify=y만 뺀 것이다.
 SPLIT_LINE = "X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)\n"

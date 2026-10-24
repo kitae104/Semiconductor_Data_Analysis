@@ -6,8 +6,8 @@
 - 정답본 = 학생용의 빈칸을 채운 것. code(정답, 학생용)로 한 셀에 두 버전을 같이 적는다.
 - 맨 위 마크다운 셀에 제목과 "막혔을 때" 안내가 자동으로 들어간다.
 - 저장 뒤 자체 점검: 정답에 TODO/____ 없음, 학생용에 빈칸 1개 이상, `## N단계.` 제목이 두 노트북에서 같고
-  1부터 차례대로, read_csv에 encoding="utf-8-sig", ../../data 경로가 실제 파일을 가리킴.
-- 정답본은 nbclient로 실행해(작업 폴더 notebooks/solutions) 출력을 저장한다. 실행 시각 메타데이터는 남기지 않고,
+  1부터 차례대로, read_csv에 encoding="utf-8-sig", 파일 이름만 쓰고(경로 없음) 그 이름이 data/weekly/에 실제로 있음.
+- 정답본은 nbclient로 실행해(주차 CSV를 모아 둔 임시 작업 폴더에서) 출력을 저장한다. 노트북에는 파일 이름만 적혀 있다. 실행 시각 메타데이터는 남기지 않고,
   셀 id를 고정해 같은 정의면 같은 파일이 나온다.
 
 차시 스크립트 예(scripts/notebook_builders/week05.py):
@@ -17,7 +17,7 @@
     nb = NotebookPair("week05", "5차시 실습 — 결측값·이상값 정리")
     nb.add(step(1, "데이터 읽기"))
     nb.add(code('import pandas as pd\\n'
-                'df = pd.read_csv("../../data/weekly/week05/week05_easy_class_records.csv", encoding="utf-8-sig")\\n'
+                'df = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8-sig")\\n'
                 'df.head()'))
     nb.add(look_up("평균과 중앙값 차이"))
     nb.add(step(2, "반도체 데이터 실습 — 결측값 세기"))
@@ -29,10 +29,13 @@
         nb.cli()      # python scripts/notebook_builders/week05.py [--no-execute]
 """
 import argparse
+import glob
 import hashlib
 import os
 import re
+import shutil
 import sys
+import tempfile
 
 import nbformat
 from nbformat.v4 import new_code_cell, new_markdown_cell, new_notebook
@@ -42,7 +45,8 @@ NOTEBOOKS = os.path.join(BASE, "notebooks")
 
 BLANK = "____"
 STEP_RE = re.compile(r"^## (\d+)단계\. (.+)$", re.M)
-DATA_REF_RE = re.compile(r"\.\./\.\./data/[^\"'\\\s)]+")
+DATA_REF_RE = re.compile(r"(week\d\d_[A-Za-z0-9_]+\.csv)")
+READ_CSV_PATH_RE = re.compile(r"""read_csv\(\s*["']([^"']*)["']""")
 READ_CSV_RE = re.compile(r"read_csv\(([^)]*)\)")
 
 STUCK_CELL = """## 막혔을 때
@@ -171,17 +175,23 @@ class NotebookPair:
                 for args in READ_CSV_RE.findall(c.source):
                     if "utf-8-sig" not in args:
                         errors.append(f"{variant}: read_csv에 encoding=\"utf-8-sig\" 없음: read_csv({args})")
-                for ref in DATA_REF_RE.findall(c.source):
-                    if not os.path.exists(os.path.normpath(os.path.join(folder, ref))):
-                        errors.append(f"{variant}: 데이터 경로가 없음: {ref}")
+                for arg in READ_CSV_PATH_RE.findall(c.source):
+                    if "/" in arg or "\\" in arg:
+                        errors.append(f"{variant}: read_csv에 경로가 들어 있음(파일 이름만 써야 함): {arg}")
+                for ref in set(DATA_REF_RE.findall(c.source)):
+                    if not glob.glob(os.path.join(BASE, "data", "weekly", "week*", ref)):
+                        errors.append(f"{variant}: 데이터 파일이 없음: {ref}")
         return errors, warnings
 
     # -- 실행 ------------------------------------------------------------------
     def execute_solution(self, nb, path):
         from nbclient import NotebookClient
-        client = NotebookClient(nb, timeout=300, kernel_name="python3", record_timing=False,
-                                resources={"metadata": {"path": os.path.dirname(path)}})
-        client.execute()
+        with tempfile.TemporaryDirectory() as work:   # 노트북은 파일 이름만 쓰므로 CSV를 같은 곳에 모아 둔다
+            for csv in glob.glob(os.path.join(BASE, "data", "weekly", "week*", "week*.csv")):
+                shutil.copy(csv, work)
+            client = NotebookClient(nb, timeout=300, kernel_name="python3", record_timing=False,
+                                    resources={"metadata": {"path": work}})
+            client.execute()
         return nb
 
     def build(self, execute=True):

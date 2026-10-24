@@ -25,9 +25,9 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 - Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
 - 학생 키트: `dist/week07_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 폴더 구조를 바꾸지 않게 한다.
-- 시연: `notebooks/solutions/week07_solution.ipynb`(출력 저장됨) / 학생: `notebooks/student/week07_student.ipynb`
-- Orange: `orange3/week07/week07_1_waferlots_start.ows`·`_done.ows`, `week07_2_yield_start.ows`·`_done.ows`
-- 데이터: `data/weekly/week07/week07_easy_quiz_results.csv`(PART 1 생활 예제), `week07_orange_wafer_lots.csv`(PART 2 워밍업), `week07_equipment_yield.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
+- 시연: `week07_solution.ipynb`(출력 저장됨) / 학생: `week07_student.ipynb`
+- Orange: `week07_1_waferlots_start.ows`·`_done.ows`, `week07_2_yield_start.ows`·`_done.ows`
+- 데이터: `week07_easy_quiz_results.csv`(PART 1 생활 예제), `week07_orange_wafer_lots.csv`(PART 2 워밍업), `week07_equipment_yield.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
 - 그림: `assets/images/generated/week07_wafer_maps_by_equipment.png`(웨이퍼 12장 맵 — 워밍업 Scatter Plot 확인 뒤에 보여 준다)
 
 ## 오늘 데이터 핵심 수치(실제 실행 결과, 강의 중 반드시 확인)
@@ -74,7 +74,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `orange3/week07/week07_1_waferlots_start.ows`를 연다. File을 더블클릭해 3,804행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] 키트를 압축 푼 폴더 그대로에서 `week07_1_waferlots_start.ows`를 연다. File을 더블클릭해 3,804행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
 - [ ] File → Pivot Table(Transform 묶음): 처음에는 Rows `합격여부`, Columns `None`(대각선 표)이 뜬다 — Rows `설비번호`, Columns `합격여부`로 바꾼다. Aggregations Count(기본 체크). 식각-3 -1 칸 214.0. "다이를 센다"를 말로 짚는다. 강의의 "세어 본 결과 보기"는 학생이 계산한 뒤 연다.
 - [ ] File → Select Rows(Transform): 첫 줄에 `합격여부 is 1`이 이미 들어 있다. **줄을 추가하지 말고** 첫 줄을 `설비번호` is `식각-3`으로 바꾼다 → 1,268행. 1,054행이면 첫 줄이 남아 합격 다이만 골라진 것(빨간 점 0개).
 - [ ] Select Rows → Scatter Plot(Visualize): 처음에는 x `웨이퍼ID`, y `설비번호`(세로줄 점) — Axis x `다이_X`, Axis y `다이_Y`로 바꾸고 Color `합격여부` 확인. 창을 정사각형에 가깝게 키운다. 가장자리 고리를 학생이 말로 먼저 설명하게 한 뒤 "보이는 것 확인 보기"를 연다.

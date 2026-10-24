@@ -21,7 +21,7 @@ Orange 막대로 직접 세어 확인한다. 오늘의 미션: "입사 첫날, �
 
 ## 준비물
 
-- 프로젝터, 시연용 `notebooks/solutions/week01_solution.ipynb`(출력 저장됨). 학생은 `notebooks/student/week01_student.ipynb`.
+- 프로젝터, 시연용 `week01_solution.ipynb`(출력 저장됨). 학생은 `week01_student.ipynb`.
 - Orange 3.35, 실습 키트 `dist/week01_kit.zip`(전체: `dist/student_kit.zip`). 수업 전에 키트를 풀어 Jupyter(`python -m notebook`)와 `_start.ows` 두 개가 열리는지 미리 확인한다.
 - 강의 그림 두 장: `assets/images/generated/week01_wafer_to_chip.png`, `week01_process_flow.png`(공정 지도).
 - 찾아보기용 인터넷 연결(선택).
@@ -29,7 +29,7 @@ Orange 막대로 직접 세어 확인한다. 오늘의 미션: "입사 첫날, �
 ## 오늘 데이터 핵심 수치(실제 실행 결과, 강의 중 반드시 확인)
 
 - 모두 교육용 가상 데이터다. 온도(약 300 ℃)·압력(약 1,000 Pa)은 실제 공정 조건과 다르며 값의 크기는 해석하지 않는다.
-- `data/weekly/week01/week01_semiconductor_process_overview.csv`: 40행 8열. 공정 지도 ②~⑤와 세정의 설비 기록.
+- `week01_semiconductor_process_overview.csv`: 40행 8열. 공정 지도 ②~⑤와 세정의 설비 기록.
   - `합격여부` 1(합격) **32**, -1(불합격) **8**. 합격률 80.0%, 불합격률 20.0%.
   - 공정명별 기록 수(불합격 수): 세정 10(5) · 포토 9(2) · 증착 8(0) · 식각 7(0) · 산화 6(1).
   - 설비별 기록 수(불합격 수): EQ-01 13(2) · EQ-03 12(3) · EQ-02 9(1) · EQ-04 6(2). 불합격이 가장 많은 설비는 EQ-03.
@@ -63,7 +63,7 @@ Orange 막대로 직접 세어 확인한다. 오늘의 미션: "입사 첫날, �
 
 ## Orange 시연 체크리스트
 
-1. 키트 압축을 푼 `semiconductor_kit` 폴더에서 Orange 메뉴 File > Open → `orange3/week01/week01_1_town_start.ows`.
+1. 키트 압축을 푼 `semiconductor_kit` 폴더에서 Orange 메뉴 File > Open → `week01_1_town_start.ows`.
 2. File 위젯 더블클릭 → 파일 이름 `week01_orange_town_population.tab`과 열 목록이 보이는지 확인. 빨간 글씨면 폴더 구조가 바뀐 것이다(키트를 다시 풀게 한다).
 3. File 오른쪽 반원을 끌어 빈 곳에 놓기 → 목록에서 Data Table. Info 칸의 `30 instances`, `1 meta attribute`(동)를 읽어 준다.
 4. File에서 한 갈래 더 → Distributions. Variable 목록에서 `주요연령대`를 직접 클릭한다(Orange가 전에 고른 열을 기억해 다른 열이 먼저 보일 수 있다). 40~50대 막대에 마우스를 올리고 잠시 기다려 툴팁 12를 읽는다.

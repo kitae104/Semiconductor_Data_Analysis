@@ -14,8 +14,8 @@ ChatGPT 체험은 코드가 아니라 보고서(글)를 받으므로, 붙여 넣
 """
 from _common import NotebookPair, code, look_up, md, step
 
-TRAIN = "../../data/weekly/week09/week09_pass_fail_train.csv"
-NEW = "../../data/weekly/week09/week09_new_lots_to_predict.csv"
+TRAIN = "week09_pass_fail_train.csv"
+NEW = "week09_new_lots_to_predict.csv"
 
 nb = NotebookPair("week10", "10차시 실습 — 모델 평가와 새 데이터 예측")
 

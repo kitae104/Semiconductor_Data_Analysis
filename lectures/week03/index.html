@@ -493,7 +493,7 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
       <div class="answer-box">좋은 답이라면 등급이 농도 구간으로 나뉜다는 내용이 들어 있다. PM10 기준으로 흔히 좋음 0~30, 보통 31~80, 나쁨 81~150, 매우나쁨 151 이상(단위 µg/m³)이다. PM2.5는 더 작은 먼지라서 구간 숫자가 다르다. 기준은 나라·시기마다 다를 수 있다.</div>
     </div>
 
-    <div class="step"><div class="num">1</div><div class="content">Orange 3.35를 켜고 맨 위 메뉴 File &gt; Open으로 <code>orange3/week03/week03_1_air_start.ows</code>를 연다. File 위젯을 더블클릭해 <code>week03_orange_air_quality.tab</code>이 들어왔는지 확인하고 창을 닫는다.</div></div>
+    <div class="step"><div class="num">1</div><div class="content">Orange 3.35를 켜고 맨 위 메뉴 File &gt; Open으로 <code>week03_1_air_start.ows</code>를 연다. File 위젯을 더블클릭해 <code>week03_orange_air_quality.tab</code>이 들어왔는지 확인하고 창을 닫는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week03_01_air_start_canvas.png"
          alt="시작 파일을 연 Orange 화면. 가운데 캔버스에 File 위젯 하나와 ①~④ 안내 메모가 있다"
          data-shot="week03_1_air_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 ①~④ 안내 메모가 보이게">
@@ -531,7 +531,7 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
 
     <h3>반도체 데이터 — 설비 기록 30건</h3>
     <p>PART 1에서 딕셔너리의 리스트로 옮겨 적은 그 표다. 공정 지도 ②~⑤와 세정에서 남긴 기록이고, 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 오늘은 PART 1 확인 2처럼 설비 EQ-04의 기록에서 연습용 기준 밖 기록을 고른다.</p>
-    <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>orange3/week03/week03_2_records_start.ows</code>를 연다. File을 더블클릭해 <code>week03_python_basics_2.tab</code>이 들어왔는지 확인한다.</div></div>
+    <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>week03_2_records_start.ows</code>를 연다. File을 더블클릭해 <code>week03_python_basics_2.tab</code>이 들어왔는지 확인한다.</div></div>
     <div class="step"><div class="num">2</div><div class="content">File에 <code>Select Rows</code>를 잇고 더블클릭한다. 이미 있는 조건 한 줄을 <code>설비번호</code> · <code>is</code> · <code>EQ-04</code>로 바꾼다. Select Rows에 <code>Data Table</code>을 이어 몇 행인지 센다.</div></div>
     <div class="step"><div class="num">3</div><div class="content">Select Rows로 돌아가 Add Condition을 누르고 <code>온도_C</code> · <code>is outside</code> · 왼쪽 칸 <code>295</code>, 오른쪽 칸 <code>305</code>로 정한다. Data Table의 행 수와 <code>합격여부</code> 열을 본다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week03_06_records_select_rows_eq04.png"
@@ -614,8 +614,8 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
       <table>
         <thead><tr><th>파일</th><th>크기</th><th>쓰는 곳</th></tr></thead>
         <tbody>
-          <tr><td><code>data/weekly/week03/week03_python_basics_2.csv</code></td><td>30행 5열</td><td>설비 기록표(공정 지도 ②~⑤와 세정). 파이썬 확인 1·2와 실습(값을 옮겨 적은 리스트), Orange 반도체 데이터(<code>orange/</code> 폴더의 같은 이름 <code>.tab</code>)</td></tr>
-          <tr><td><code>data/weekly/week03/week03_orange_air_quality.csv</code></td><td>30행 6열</td><td>Orange 워밍업 — 우리 동네 대기환경</td></tr>
+          <tr><td><code>week03_python_basics_2.csv</code></td><td>30행 5열</td><td>설비 기록표(공정 지도 ②~⑤와 세정). 파이썬 확인 1·2와 실습(값을 옮겨 적은 리스트), Orange 반도체 데이터(<code>orange/</code> 폴더의 같은 이름 <code>.tab</code>)</td></tr>
+          <tr><td><code>week03_orange_air_quality.csv</code></td><td>30행 6열</td><td>Orange 워밍업 — 우리 동네 대기환경</td></tr>
         </tbody>
       </table>
     </div>

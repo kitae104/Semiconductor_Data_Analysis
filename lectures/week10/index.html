@@ -145,7 +145,7 @@
     <p class="img-caption">새로 들어온 웨이퍼 10장(빨간 칸 = 불합격 다이, 불량 다이 수만 표시). 세 모델은 어떤 모양이라고 답할까? 모델끼리 답이 갈리는 웨이퍼를 찾아보자(교육용 가상 데이터).</p>
 
     <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>orange3/week10/week10_1_newwafers_start.ows</code>를 연다.</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>week10_1_newwafers_start.ows</code>를 연다.</li>
       <li>캔버스에 File 위젯 두 개와 ①~⑤ 안내 메모가 보이면 준비가 끝난 것이다. 막히면 같은 폴더의 <code>week10_1_newwafers_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week10_02_newwafers_start.png"
@@ -187,7 +187,7 @@
 
     <h3>반도체 — 공정 기록 모델 셋을 기준선과 함께 읽기</h3>
     <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 이 절의 1~2(캔버스 메모 ②)는 강사 시연이다. 강사가 화면으로 보여 준다. 학생은 따라 누르지 않고 순서와 숫자만 눈으로 확인한다. 3(Predictions)은 PART 3 실습지 문제 4에서 직접 한다.</div>
-    <p>9차시 공정 기록(학습용 750행)과 아직 검사하지 않은 새 로트 9개다. <b>File → Open</b>으로 <code>orange3/week10/week10_2_newlots_start.ows</code>를 연다. 위 File = 학습용, 아래 File = 새 로트다.
+    <p>9차시 공정 기록(학습용 750행)과 아직 검사하지 않은 새 로트 9개다. <b>File → Open</b>으로 <code>week10_2_newlots_start.ows</code>를 연다. 위 File = 학습용, 아래 File = 새 로트다.
     설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).</p>
     <div class="tablewrap">
       <table>
@@ -250,7 +250,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 
-df = pd.read_csv("../../data/weekly/week09/week09_pass_fail_train.csv", encoding="utf-8-sig").dropna()
+df = pd.read_csv("week09_pass_fail_train.csv", encoding="utf-8-sig").dropna()
 features = ["온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]
 X = df[features]
 y = df["합격여부"]
@@ -274,7 +274,7 @@ print(f"정확도: {round(acc * 100, 1)}%")</code></pre>
     <p>새 로트 파일(교육용 가상 데이터)에는 정답(<code>합격여부</code>) 열이 없다. 모델이 맞혀야 할 대상이다.</p>
     <div class="code-block">
       <div class="code-label"><span>Python — 새 로트 읽기 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>new_lots = pd.read_csv("../../data/weekly/week09/week09_new_lots_to_predict.csv", encoding="utf-8-sig")
+      <pre><code>new_lots = pd.read_csv("week09_new_lots_to_predict.csv", encoding="utf-8-sig")
 print(new_lots.shape)</code></pre>
     </div>
     <div class="callout success">
@@ -446,13 +446,13 @@ print(new_lots[new_lots["예측"] == -1][["공정명", "설비번호", "온도_C
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week09/week09_orange_wafer_patterns.csv</code> — 240행 6열, 교육용 가상 데이터(PART 1 워밍업 학습용, 9차시와 같은 파일. Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code>week09_orange_wafer_patterns.csv</code> — 240행 6열, 교육용 가상 데이터(PART 1 워밍업 학습용, 9차시와 같은 파일. Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         <b>공정 지도 위치: ⑦ EDS 웨이퍼 맵 요약.</b></li>
-      <li><code>data/weekly/week10/week10_orange_new_wafers.csv</code> — 10행 5열, 교육용 가상 데이터(PART 1 워밍업 새 데이터, 정답 열 없음).
+      <li><code>week10_orange_new_wafers.csv</code> — 10행 5열, 교육용 가상 데이터(PART 1 워밍업 새 데이터, 정답 열 없음).
         <b>공정 지도 위치: ⑦ EDS 새 웨이퍼 맵 요약.</b></li>
-      <li><code>data/weekly/week09/week09_pass_fail_train.csv</code> — 750행 9열(빈칸 있는 행을 지우면 735행), 교육용 가상 데이터(PART 1·2·3 학습용). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+      <li><code>week09_pass_fail_train.csv</code> — 750행 9열(빈칸 있는 행을 지우면 735행), 교육용 가상 데이터(PART 1·2·3 학습용). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
         <b>공정 지도 위치: ②~⑤ + 세정 공정 조건 → ⑦ 결과.</b></li>
-      <li><code>data/weekly/week09/week09_new_lots_to_predict.csv</code> — 9행 8열, 교육용 가상 데이터(PART 1·2·3 새 데이터, 정답 열 없음).
+      <li><code>week09_new_lots_to_predict.csv</code> — 9행 8열, 교육용 가상 데이터(PART 1·2·3 새 데이터, 정답 열 없음).
         <b>공정 지도 위치: ②~⑤ + 세정을 마쳤지만 아직 ⑦ 검사 전인 새 로트.</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week10_dictionary.html">10차시 데이터 설명서</a>, <a href="../../data/data_dictionary/week09_dictionary.html">9차시 데이터 설명서</a></li>
     </ul>

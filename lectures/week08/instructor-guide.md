@@ -28,9 +28,9 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 - Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
 - 학생 키트: `dist/week08_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 폴더 구조를 바꾸지 않게 한다.
-- 시연: `notebooks/solutions/week08_solution.ipynb`(출력 저장됨) / 학생: `notebooks/student/week08_student.ipynb`
-- Orange: `orange3/week08/week08_1_chamber_start.ows`·`_done.ows`, `week08_2_anomaly_start.ows`·`_done.ows`
-- 데이터: `data/weekly/week08/week08_easy_weather_sales.csv`(PART 1 생활 예제), `data/weekly/week08/week08_orange_chamber_sensor.csv`(PART 2 워밍업), `data/weekly/week08/week08_anomaly_root_cause.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
+- 시연: `week08_solution.ipynb`(출력 저장됨) / 학생: `week08_student.ipynb`
+- Orange: `week08_1_chamber_start.ows`·`_done.ows`, `week08_2_anomaly_start.ows`·`_done.ows`
+- 데이터: `week08_easy_weather_sales.csv`(PART 1 생활 예제), `week08_orange_chamber_sensor.csv`(PART 2 워밍업), `week08_anomaly_root_cause.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
 
 ## 오늘 데이터 핵심 수치(실제 실행 결과, 강의 중 반드시 확인)
 
@@ -79,7 +79,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `orange3/week08/week08_1_chamber_start.ows`를 연다. File 위젯을 더블클릭해 200행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] 키트를 압축 푼 폴더 그대로에서 `week08_1_chamber_start.ows`를 연다. File 위젯을 더블클릭해 200행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
 - [ ] **Unsupervised** 묶음(Data 아님)에서 Correlations를 끌어 와 File에 잇는다. 맨 위 칸 Pearson correlation, 그 아래 칸 (All combinations) 확인. 1위 +0.781, 2위 -0.516, 3위 +0.500(측정시간 쌍 — "이 기록(약 17일)에는 세정이 한 번뿐이라 누적사용시간이 두 구간 모두 시각과 함께 올랐고, 리셋 때문에 1이 아니라 +0.5 정도로 잡혔다. 세정이 여러 번 있는 긴 기록이면 0에 가까워진다"고 한 줄 설명). 학생은 강의의 "읽을 것 보기"를 직접 읽은 뒤 연다.
 - [ ] Visualize 묶음 Scatter Plot을 **File에** 잇고 Axis x RF파워_W, Axis y 식각률_nm_min. 오른쪽 위로 올라가는 띠. 워밍업에서는 Find Informative Projections 버튼이 꺼져 있다(툴팁 "Color variable is not selected") — 결과 열이 없어서다.
 - [ ] 강의의 "워밍업 정리 보기"는 학생이 1·2위를 읽은 뒤 연다.

@@ -17,7 +17,7 @@ nb.add(
     md("반 학생 15명의 기록(교육용 가상 데이터)입니다. 빈칸 3칸, 똑같이 두 번 적은 행 1개, 잘못 적은 키 1개가 섞여 있습니다."),
     code('import pandas as pd\n'
          '\n'
-         'students = pd.read_csv("../../data/weekly/week05/week05_easy_class_records.csv", encoding="utf-8-sig")\n'
+         'students = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8-sig")\n'
          'print(students.shape)'),
     code("print(students.describe())"),
     code('before_count = len(students)\n'
@@ -54,7 +54,7 @@ nb.add(
 nb.add(
     step(6, "반도체 데이터로 확인하기 — 지저분한 공장 기록"),
     md("공정 기록 113행(교육용 가상 데이터)에 빈칸·중복·튀는 값을 일부러 섞었습니다. 1~3단계와 같은 코드에서 표 이름만 바뀝니다."),
-    code('df = pd.read_csv("../../data/weekly/week05/week05_dirty_process_data.csv", encoding="utf-8-sig")\n'
+    code('df = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig")\n'
          'print(df.shape)'),
     code("print(df.describe())"),
     code("print(df.isna().sum())"),
@@ -124,7 +124,7 @@ nb.add(
        "아래는 받은 코드의 예시입니다. `for`는 3차시에 배운 반복문입니다. 실행해서 6단계 `isna().sum()` 결과와 같은지 확인하세요."),
     code('import pandas as pd\n'
          '\n'
-         'data = pd.read_csv("../../data/weekly/week05/week05_dirty_process_data.csv", encoding="utf-8-sig")\n'
+         'data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig")\n'
          '\n'
          'for col in data.columns:\n'
          '    count = data[col].isna().sum()\n'

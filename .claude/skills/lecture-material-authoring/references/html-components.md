@@ -218,14 +218,14 @@ v3(2026-10-23) 신규. 기존 `callout concept` + `tag`만 쓴다(새 클래스 
   <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
   <pre><code>import pandas as pd
 
-df = pd.read_csv("../../data/weekly/week04/week04_process_filtering.csv", encoding="utf-8-sig")
+df = pd.read_csv("week04_process_filtering.csv", encoding="utf-8-sig")
 print(df.head())</code></pre>
 </div>
 ```
 
 - 라벨에 설명을 덧붙일 수 있다: `<span>Python — 특정 설비만 찾기</span>`
 - `<code>` 안은 **HTML 이스케이프**가 필요하다: `<` → `&lt;`, `&` → `&amp;`
-- 경로는 노트북 기준(`../../data/...`)으로 쓴다. 학생이 노트북에 그대로 붙여넣기 때문이다.
+- 파일은 **이름만** 쓴다(폴더 경로 없음). 설명 문장에서도 `data/weekly/…` 같은 위치를 적지 않는다.
 
 ---
 

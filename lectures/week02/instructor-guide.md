@@ -20,7 +20,7 @@
 
 ## 준비물
 
-- 프로젝터, 시연용 `notebooks/solutions/week02_solution.ipynb`(출력 저장됨). 학생은 `notebooks/student/week02_student.ipynb`.
+- 프로젝터, 시연용 `week02_solution.ipynb`(출력 저장됨). 학생은 `week02_student.ipynb`.
 - Orange 3.35, 실습 키트 `dist/week02_kit.zip`(전체: `dist/student_kit.zip`). 수업 전에 키트를 풀어 Jupyter(`python -m notebook`)와 `_start.ows` 두 개가 열리는지 미리 확인한다.
 - 생성 그림은 없다(Orange 화면만 쓴다).
 - 찾아보기용 인터넷 연결(선택).
@@ -28,7 +28,7 @@
 ## 오늘 데이터 핵심 수치(실제 실행 결과, 강의 중 반드시 확인)
 
 - 모두 교육용 가상 데이터다. 온도(약 300 ℃)는 실제 공정 조건과 다르며 값의 크기는 해석하지 않는다. 295~305는 이 과정의 연습용 기준이다.
-- `data/weekly/week02/week02_python_basics_1.csv`: 20행 5열(`로트번호`, `공정명`, `설비번호`, `온도_C`, `합격여부`). 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정의 설비 온도 기록.
+- `week02_python_basics_1.csv`: 20행 5열(`로트번호`, `공정명`, `설비번호`, `온도_C`, `합격여부`). 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정의 설비 온도 기록.
   - 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록): EQ-01 산화 1 · EQ-02 식각 1·증착 2·세정 1 · EQ-03 산화 2·세정 4·증착 1 · EQ-04 포토 2·식각 3·산화 2·증착 1.
   - 설비별 기록 수: EQ-01 1 · EQ-02 4 · EQ-03 7 · EQ-04 8.
   - 표 전체 온도: Mean 303.8 · Median 303.6 · Min 292.2(EQ-03) · Max 317.9(EQ-04, LOT-0059).
@@ -69,7 +69,7 @@
 
 ## Orange 시연 체크리스트
 
-1. 키트 압축을 푼 `semiconductor_kit` 폴더에서 Orange 메뉴 File > Open → `orange3/week02/week02_1_subway_start.ows`.
+1. 키트 압축을 푼 `semiconductor_kit` 폴더에서 Orange 메뉴 File > Open → `week02_1_subway_start.ows`.
 2. File 위젯 더블클릭 → `week02_orange_subway_ridership.tab`과 열 목록이 보이는지 확인. 빨간 글씨면 폴더 구조가 바뀐 것이다(키트를 다시 풀게 한다).
 3. 왼쪽 Data 묶음에서 Feature Statistics를 끌어 와 File과 잇기. `승차인원_count` 행의 Mean 2876.58과 Max 9872를 짚는다. Mode 칸(314)을 최고·최저로 착각하지 않게 "Max. 칸"을 손으로 가리킨다. Distribution(작은 그림)·Median·Dispersion은 오늘 읽지 않는다고 말한다. 글자 열(노선·시간대)의 Mean 칸이 빈 것은 정상이다. `역이름`(meta)이 목록에 없는 것도 한 줄 설명한다.
 4. File에서 한 갈래 더 → Data Table. `승차인원_count` 열 머리를 **두 번** 눌러 큰 값부터 정렬(한 번 = 작은 값부터). 맨 위 중앙역·출근 9872를 학생에게 먼저 묻고 확인한다.

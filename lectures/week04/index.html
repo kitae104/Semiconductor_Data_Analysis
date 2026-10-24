@@ -116,7 +116,7 @@
     <p><b>CSV</b>는 칸을 쉼표(,)로 나눠 적은 표 파일이다. <code>pd.read_csv()</code>로 읽으면 행과 열이 있는 표가 된다. 이 표를 <b>DataFrame</b>이라고 부른다.</p>
     <ul class="pt-list">
       <li><code>import pandas as pd</code> — Pandas를 불러와 짧은 이름 <code>pd</code>로 쓴다.</li>
-      <li><code>"../../data/weekly/week04/…"</code> — 파일이 있는 곳(경로). <code>../../</code>는 "노트북이 있는 폴더에서 두 칸 위(키트 맨 위 폴더)로 올라가라"는 뜻이다. 키트 폴더 구조를 그대로 두고, 경로도 강의 코드 그대로 쓴다.</li>
+      <li><code>"week04_easy_cafe_orders.csv"</code> — 읽을 파일의 이름. 노트북과 같은 곳에 있는 파일이라 이름만 쓰면 된다. 강의 코드 그대로 쓴다.</li>
       <li><code>encoding="utf-8-sig"</code> — 한글이 깨지지 않게 읽는 방법. 오늘 파일은 모두 이렇게 읽는다.</li>
       <li><code>cafe.head()</code> — 앞 5행만 보여 준다. 셀 마지막 줄에 쓰면 표 모양으로 나온다.</li>
     </ul>
@@ -124,7 +124,7 @@
       <div class="code-label"><span>Python — 카페 주문 기록 읽기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-cafe = pd.read_csv("../../data/weekly/week04/week04_easy_cafe_orders.csv", encoding="utf-8-sig")
+cafe = pd.read_csv("week04_easy_cafe_orders.csv", encoding="utf-8-sig")
 cafe.head()</code></pre>
     </div>
     <div class="callout success">
@@ -321,7 +321,7 @@ print(len(pricey_bad))</code></pre>
     <h3>확인 1 — 기록은 몇 건이고, 어떤 칸이 있을까</h3>
     <div class="code-block">
       <div class="code-label"><span>Python — 공정 기록 읽기 (노트북 7단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.read_csv("../../data/weekly/week04/week04_process_filtering.csv", encoding="utf-8-sig")
+      <pre><code>df = pd.read_csv("week04_process_filtering.csv", encoding="utf-8-sig")
 print(df.shape)
 
 print(df.columns)</code></pre>
@@ -443,7 +443,7 @@ print(len(fail) / len(df) * 100)</code></pre>
         </tbody>
       </table>
     </div>
-    <div class="step"><div class="num">1</div><div class="content">Orange 3.35를 켜고 맨 위 메뉴 File &gt; Open으로 <code>orange3/week04/week04_1_flow_start.ows</code>를 연다. File 위젯을 더블클릭해 8행이 들어왔는지 확인하고 창을 닫는다. 막히면 같은 폴더의 <code>week04_1_flow_done.ows</code>(완성본)를 연다.</div></div>
+    <div class="step"><div class="num">1</div><div class="content">Orange 3.35를 켜고 맨 위 메뉴 File &gt; Open으로 <code>week04_1_flow_start.ows</code>를 연다. File 위젯을 더블클릭해 8행이 들어왔는지 확인하고 창을 닫는다. 막히면 같은 폴더의 <code>week04_1_flow_done.ows</code>(완성본)를 연다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week04_02_flow_start_canvas.png"
          alt="week04_1_flow_start.ows를 연 Orange3 캔버스. File 위젯 하나와 안내 메모가 있다"
          data-shot="week04_1_flow_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 위쪽 ①~④ 안내 메모가 보이게">
@@ -478,7 +478,7 @@ print(len(fail) / len(df) * 100)</code></pre>
 
     <h3>반도체 — 공정 기록에서 설비 하나 고르기</h3>
     <p>같은 위젯으로 PART 1의 공정 기록 100건을 본다. PART 1 확인 2처럼 <b>EQ-01</b>을 고른다. EQ-02는 PART 3 실습지 문제 4에서 직접 고른다.</p>
-    <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>orange3/week04/week04_2_filtering_start.ows</code>를 연다. File을 더블클릭해 100행이 들어왔는지 확인한다.</div></div>
+    <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>week04_2_filtering_start.ows</code>를 연다. File을 더블클릭해 100행이 들어왔는지 확인한다.</div></div>
     <div class="step"><div class="num">2</div><div class="content">File에 <code>Select Columns</code>를 잇는다. Features의 <code>공정명</code>·<code>압력_Pa</code>·<code>가스유량_slm</code>, Metas의 <code>측정시간</code>·<code>로트번호</code>를 Ignored로 옮긴다.
     Features에 <code>설비번호</code>·<code>온도_C</code>, Target에 <code>합격여부</code>가 남으면 된다. PART 1의 <code>df[["설비번호", "온도_C", "합격여부"]]</code>와 같은 세 열이다.</div></div>
     <div class="callout warn"><b class="tag">주의</b> <code>합격여부</code>는 Target에 그대로 둔다. Ignored로 보내면 다음 Select Rows에서 <code>합격여부</code> 조건을 만들 수 없다.</div>
@@ -565,10 +565,10 @@ print(len(fail) / len(df) * 100)</code></pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week04/week04_easy_cafe_orders.csv</code> — 12행 7열, 생활 예제용 가상 데이터(PART 1 개념).</li>
-      <li><code>data/weekly/week04/week04_orange_process_flow.csv</code> — 8행 9열, 교육용으로 직접 만든 표(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code>week04_easy_cafe_orders.csv</code> — 12행 7열, 생활 예제용 가상 데이터(PART 1 개념).</li>
+      <li><code>week04_orange_process_flow.csv</code> — 8행 9열, 교육용으로 직접 만든 표(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         <code>반복여부</code>가 "여러 번"인 단계 5개. <b>공정 지도 위치: 공정 지도 전체(①~⑧)를 표로 만든 것.</b></li>
-      <li><code>data/weekly/week04/week04_process_filtering.csv</code> — 100행 8열, 교육용 가상 데이터(PART 1·2·3). 설비 EQ-01~EQ-04, 전체 불합격 13건.
+      <li><code>week04_process_filtering.csv</code> — 100행 8열, 교육용 가상 데이터(PART 1·2·3). 설비 EQ-01~EQ-04, 전체 불합격 13건.
         <b>공정 지도 위치: ②~⑤ + 세정 공정의 기록(설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록).</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week04_dictionary.html">데이터 설명서</a></li>
     </ul>
@@ -577,9 +577,9 @@ print(len(fail) / len(df) * 100)</code></pre>
   <section class="block">
     <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
-      <b class="tag">오류 1 — 파일 이름·경로 오타</b> 폴더·파일 이름을 한 글자라도 틀리면(아래는 <code>week04</code> 폴더를 <code>week4</code>로 쓴 경우)
-      <code>FileNotFoundError: [Errno 2] No such file or directory: '../../data/weekly/week4/week04_process_filtering.csv'</code>가 난다.
-      메시지 끝의 경로를 강의 코드와 한 글자씩 비교하고, 노트북을 키트의 <code>notebooks/student</code> 폴더에서 열었는지 확인한다.
+      <b class="tag">오류 1 — 파일 이름 오타</b> 파일 이름을 한 글자라도 틀리면(아래는 <code>process</code>를 <code>proces</code>로 쓴 경우)
+      <code>FileNotFoundError: [Errno 2] No such file or directory: 'week04_proces_filtering.csv'</code>가 난다.
+      메시지 끝의 파일 이름을 강의 코드와 한 글자씩 비교한다.
     </div>
     <div class="callout danger">
       <b class="tag">오류 2 — 열 이름 오타</b> <code>df["온도_c"]</code>처럼 대문자 C를 소문자로 쓰면 <code>KeyError: '온도_c'</code>가 난다.

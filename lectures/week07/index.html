@@ -102,7 +102,7 @@
       <div class="code-label"><span>Python — 쪽지시험 기록 읽기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-quiz = pd.read_csv("../../data/weekly/week07/week07_easy_quiz_results.csv", encoding="utf-8-sig")
+quiz = pd.read_csv("week07_easy_quiz_results.csv", encoding="utf-8-sig")
 print(quiz.shape)
 
 quiz.head()</code></pre>
@@ -257,7 +257,7 @@ plt.show()</code></pre>
     <div class="callout practice"><b class="tag">해보기</b> 노트북 4단계에는 <code>groupby(____)</code> 빈칸이 하나 있다. 2단계에서 <code>"반"</code>이 있던 자리에 작업조 열 이름을 넣는다. 아래 결과와 같게 나오면 맞다.</div>
     <div class="code-block">
       <div class="code-label"><span>Python — 공장 기록 읽고 작업조별 불합격률 구하기 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.read_csv("../../data/weekly/week07/week07_equipment_yield.csv", encoding="utf-8-sig")
+      <pre><code>df = pd.read_csv("week07_equipment_yield.csv", encoding="utf-8-sig")
 print(df.shape)
 
 df["불합격"] = df["합격여부"] == -1
@@ -400,7 +400,7 @@ print((lot_fail &gt; 20).sum())</code></pre>
 
     <h3>워크플로 열기</h3>
     <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>orange3/week07/week07_1_waferlots_start.ows</code>를 연다.</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>week07_1_waferlots_start.ows</code>를 연다.</li>
       <li>캔버스에 File 위젯 하나와 ①~④ 안내 메모가 보이면 준비가 끝난 것이다. File을 더블클릭해 3,804행이 들어왔는지 본다. 막히면 같은 폴더의 <code>week07_1_waferlots_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week07_02_waferlots_start.png"
@@ -448,7 +448,7 @@ print((lot_fail &gt; 20).sum())</code></pre>
 
     <h3>반도체 — 공장 기록을 Orange로 보기</h3>
     <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 이 절은 강사가 화면으로 보여 준다(캔버스 메모 ③). 학생은 따라 누르지 않고 순서만 눈으로 확인한다. 메모 ②의 Pivot Table은 PART 3 실습지 문제 4에서 직접 한다.</div>
-    <p><b>File → Open</b>으로 <code>orange3/week07/week07_2_yield_start.ows</code>를 연다. PART 1의 공장 기록(300행)이 File에 들어 있다.</p>
+    <p><b>File → Open</b>으로 <code>week07_2_yield_start.ows</code>를 연다. PART 1의 공장 기록(300행)이 File에 들어 있다.</p>
     <div class="step"><div class="num">1</div><div class="content"><b>설비마다 온도의 퍼짐 — 상자 그림</b>(캔버스 메모 ③) — File에 <code>Box Plot</code>을 잇는다. 처음에는 Variable이 <code>웨이퍼번호</code>, Subgroups가 <code>합격여부</code>로 잡혀 있다. Variable 목록에서 <code>온도_C</code>, Subgroups 목록에서 <code>설비번호</code>를 클릭한다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week07_06_yield_boxplot.png"
          alt="공장 기록의 Box Plot 창. 온도_C를 설비번호로 나눈 상자 네 개"
@@ -527,10 +527,10 @@ print((lot_fail &gt; 20).sum())</code></pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week07/week07_easy_quiz_results.csv</code> — 24행 6열, 생활 예제용 가상 데이터(PART 1 개념). 정답 18 · 오답 6.</li>
-      <li><code>data/weekly/week07/week07_orange_wafer_lots.csv</code> — 3,804행 7열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code>week07_easy_quiz_results.csv</code> — 24행 6열, 생활 예제용 가상 데이터(PART 1 개념). 정답 18 · 오답 6.</li>
+      <li><code>week07_orange_wafer_lots.csv</code> — 3,804행 7열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         식각 설비 3대 × 웨이퍼 4장 × 다이 317개. <b>공정 지도 위치: ④ 식각 설비 3대를 거친 웨이퍼의 ⑦ EDS(전기 검사) 결과.</b></li>
-      <li><code>data/weekly/week07/week07_equipment_yield.csv</code> — 300행 11열, 교육용 가상 데이터(PART 1·2·3). 로트 75개 × 웨이퍼 4장. 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.
+      <li><code>week07_equipment_yield.csv</code> — 300행 11열, 교육용 가상 데이터(PART 1·2·3). 로트 75개 × 웨이퍼 4장. 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.
         <b>공정 지도 위치: ②~⑤ + 세정 설비 기록과 ⑦ 뒤 최종 합격 여부.</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week07_dictionary.html">데이터 설명서</a></li>
     </ul>

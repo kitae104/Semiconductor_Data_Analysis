@@ -20,7 +20,7 @@
 
 ## 준비물
 
-- 프로젝터, 시연용 `notebooks/solutions/week03_solution.ipynb`(출력 저장됨). 학생은 `notebooks/student/week03_student.ipynb`.
+- 프로젝터, 시연용 `week03_solution.ipynb`(출력 저장됨). 학생은 `week03_student.ipynb`.
 - Orange 3.35, 실습 키트 `dist/week03_kit.zip`(전체: `dist/student_kit.zip`). 수업 전에 키트를 풀어 Jupyter(`python -m notebook`)와 `_start.ows` 두 개가 열리는지 미리 확인한다.
 - 강의 그림: `assets/images/generated/week03_pm10_grade_bands.png`(PM10 등급 구간).
 - 찾아보기용 인터넷 연결(선택).
@@ -28,7 +28,7 @@
 ## 오늘 데이터 핵심 수치(실제 실행 결과, 강의 중 반드시 확인)
 
 - 모두 교육용 가상 데이터다. 온도(약 300 ℃)는 실제 공정 조건과 다르며 값의 크기는 해석하지 않는다. 295~305도는 이 과정의 **연습용 기준**이다(실제로는 공정·제품마다 규격이 따로 있다).
-- `data/weekly/week03/week03_python_basics_2.csv`: 30행 5열(`로트번호`, `공정명`, `설비번호`, `온도_C`, `합격여부`). 공정 지도 ②~⑤와 세정에서 남긴 기록. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 노트북 딕셔너리에는 `공정명`을 뺀 네 열만 옮겼다.
+- `week03_python_basics_2.csv`: 30행 5열(`로트번호`, `공정명`, `설비번호`, `온도_C`, `합격여부`). 공정 지도 ②~⑤와 세정에서 남긴 기록. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 노트북 딕셔너리에는 `공정명`을 뺀 네 열만 옮겼다.
   - `합격여부` 1(합격) **27**, -1(불합격) **3**. 합격여부는 그 공정 뒤 검사 결과로 행마다 따로 매긴 값이다(LOT-0186은 식각 행 1, 증착 행 -1).
   - 연습용 기준 밖 **12건**(높은 쪽 > 305: 8건, 낮은 쪽 < 295: 4건). 그중 실제 불합격 **3건**(LOT-0186 증착 EQ-03 293.8 · LOT-0195 포토 EQ-02 293.8 · LOT-0085 식각 EQ-04 307.0), 나머지 9건은 합격.
   - 기준 안 18건은 **모두 합격**이다. 이 데이터로는 "기준 안인데 불합격"을 보여 줄 수 없다 — 그런 말을 하지 않는다.
@@ -67,7 +67,7 @@
 
 ## Orange 시연 체크리스트
 
-1. 키트 압축을 푼 `semiconductor_kit` 폴더에서 Orange 메뉴 File > Open → `orange3/week03/week03_1_air_start.ows`.
+1. 키트 압축을 푼 `semiconductor_kit` 폴더에서 Orange 메뉴 File > Open → `week03_1_air_start.ows`.
 2. File 위젯 더블클릭 → 파일 이름 `week03_orange_air_quality.tab`과 열 목록이 보이는지 확인. 빨간 글씨면 폴더 구조가 바뀐 것이다(키트를 다시 풀게 한다).
 3. 왼쪽 **Transform** 묶음에서 Select Rows를 끌어 와 File과 잇는다(Data 묶음이 아니다). 더블클릭하면 **조건 한 줄이 이미 있다**(`PM10_ug_m3 equals …`). 이 줄을 `PM10_ug_m3` · `is greater than` · `80`으로 바꾼다. Add Condition은 아직 누르지 않는다.
 4. Select Rows에 Data Table을 잇고 Info 칸의 행 수 8을 읽는다. 등급 열이 나쁨·매우나쁨뿐인 것을 보여 주고 "등급은 PM10 값으로 정한 판정이라 딱 맞는다 — 반도체에서는 어떨까?"로 넘긴다.

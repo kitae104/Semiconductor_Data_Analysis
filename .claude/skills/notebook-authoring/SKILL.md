@@ -62,7 +62,7 @@ v3 수업은 PART 1·2·3이다(1~8차시: 파이썬 → Orange3 → 실습지, 
 
 ```python
 # TODO: read_csv로 CSV 파일을 읽어 df에 저장하세요.
-df = pd.____("../../data/weekly/week04/week04_process_filtering.csv", encoding="utf-8-sig")
+df = pd.____("week04_process_filtering.csv", encoding="utf-8-sig")
 ```
 
 | 규칙 | 이유 |
@@ -78,17 +78,17 @@ df = pd.____("../../data/weekly/week04/week04_process_filtering.csv", encoding="
 
 ## 경로와 인코딩
 
-노트북은 `notebooks/{종류}/`에서 실행되므로 데이터는 **`../../data/weekly/weekXX/`** 다.
+**파일 이름만 쓴다**(2026-10-24). 실습 환경에서는 CSV가 노트북과 같은 곳에 놓여 있다. 저장소에서는 빌더·`validate_notebooks.py`가 `data/weekly/week*/`의 CSV를 임시 폴더에 모아 그곳에서 실행한다(노트북을 저장소 폴더에서 바로 열면 CSV가 없어 `FileNotFoundError`가 난다).
 
 ```python
 import pandas as pd
 
-df = pd.read_csv("../../data/weekly/week04/week04_process_filtering.csv", encoding="utf-8-sig")
+df = pd.read_csv("week04_process_filtering.csv", encoding="utf-8-sig")
 ```
 
 | 규칙 | 이유 |
 |---|---|
-| 상대경로만 쓴다 | 저장소를 어디에 두든 동작한다. 절대경로는 다른 PC에서 깨진다 |
+| 폴더 경로 없이 파일 이름만 쓴다 | 강의 코드와 글자까지 같아야 하고, 학생이 경로를 틀릴 일이 없다 |
 | `encoding="utf-8-sig"` | 주차 CSV가 `utf-8-sig`로 저장돼 있다. 빼면 pandas 버전·환경에 따라 첫 열 이름에 BOM이 붙어 `KeyError`가 날 수 있다(pandas 3.0.2에서는 자동 제거됨). 학생 PC 버전이 제각각이라 항상 쓴다 |
 | 한글 열 이름 | 대부분의 주차 CSV가 한글 열을 쓴다. `df["온도_섭씨"]` 형태 |
 
@@ -114,7 +114,6 @@ plt.rcParams["axes.unicode_minus"] = False
 
 | 차이 | 이유 |
 |---|---|
-| 데이터 경로 `"weekXX_….csv"` → `"../../data/weekly/weekXX/weekXX_….csv"` | 노트북은 `notebooks/{종류}/`에서 실행된다 |
 | `input()` → 예시 값 대입(`target = "EQ-02"  # 실제로는 input(...)`) | 자동 실행 검증이 입력을 기다리다 멈춘다 |
 | 셀 분할, 설명 주석, `# (중간 확인)` 줄 | 아래 "셀은 출력 단위로" 절 |
 | 일부러 오류를 보여주는 강의 코드 → 주석 처리한 줄 또는 마크다운 코드 블록 | 정답은 위에서 아래로 자동 실행된다 |
@@ -232,6 +231,6 @@ python -c "import nbformat; from nbclient import NotebookClient; nb=nbformat.rea
 - [ ] 학생용에 빈칸이 있고, 정답에는 `TODO`/`____`가 없는가
 - [ ] 그 차시의 강사용 노트북이 남아 있지 않은가
 - [ ] 모든 `read_csv`에 `encoding="utf-8-sig"`가 있는가
-- [ ] 경로가 `../../data/weekly/...` 상대경로인가
+- [ ] `read_csv`에 폴더 경로 없이 파일 이름만 썼는가
 - [ ] 세 검증 명령을 **실제로 실행**했고 출력을 보고서에 실었는가
 - [ ] 강의 자료에 실릴 확정 코드와 실제 출력을 보고서에 적었는가

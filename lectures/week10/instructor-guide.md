@@ -26,10 +26,10 @@
 
 - Jupyter 환경, 프로젝터, Orange3 3.35(`docs/orange3-guide.html`)
 - 학생 키트: `dist/week10_kit.zip`(또는 전체 `dist/student_kit.zip`). 10차시 키트는 9차시 데이터 폴더도 함께 담고 있다. 압축을 푼 폴더 구조를 바꾸지 않게 한다.
-- 시연: `notebooks/solutions/week10_solution.ipynb`(출력 저장됨) / 학생: `notebooks/student/week10_student.ipynb`
-- Orange: `orange3/week10/week10_1_newwafers_start.ows`·`_done.ows`, `week10_2_newlots_start.ows`·`_done.ows`
-- 데이터(모두 교육용 가상 데이터): `data/weekly/week09/week09_orange_wafer_patterns.csv`(워밍업 학습용), `data/weekly/week10/week10_orange_new_wafers.csv`(워밍업 새 데이터),
-  `data/weekly/week09/week09_pass_fail_train.csv`(반도체 학습용), `data/weekly/week09/week09_new_lots_to_predict.csv`(반도체 새 데이터). Orange는 각 파일의 `orange/*.tab`을 연다.
+- 시연: `week10_solution.ipynb`(출력 저장됨) / 학생: `week10_student.ipynb`
+- Orange: `week10_1_newwafers_start.ows`·`_done.ows`, `week10_2_newlots_start.ows`·`_done.ows`
+- 데이터(모두 교육용 가상 데이터): `week09_orange_wafer_patterns.csv`(워밍업 학습용), `week10_orange_new_wafers.csv`(워밍업 새 데이터),
+  `week09_pass_fail_train.csv`(반도체 학습용), `week09_new_lots_to_predict.csv`(반도체 새 데이터). Orange는 각 파일의 `orange/*.tab`을 연다.
 - 그림: `assets/images/generated/week10_new_wafer_maps.png`(정답 라벨 없음)
 - ChatGPT를 쓸 수 없는 교실이면 강의의 "응답 예시"로 같은 활동을 한다(강사가 화면으로 함께 읽어도 된다).
 
@@ -91,7 +91,7 @@
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `orange3/week10/week10_1_newwafers_start.ows`를 연다. File 두 개(위: 학습 웨이퍼 240장, 아래: 새 웨이퍼 10장)가 데이터를 읽었는지 더블클릭해 행 수를 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다(10차시 키트는 9차시 데이터 폴더도 쓴다).
+- [ ] 키트를 압축 푼 폴더 그대로에서 `week10_1_newwafers_start.ows`를 연다. File 두 개(위: 학습 웨이퍼 240장, 아래: 새 웨이퍼 10장)가 데이터를 읽었는지 더블클릭해 행 수를 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다(10차시 키트는 9차시 데이터 폴더도 쓴다).
 - [ ] Model 묶음: Tree(**Limit the maximal tree depth to** 4)·kNN·Logistic Regression → 위 File.
 - [ ] Evaluate 묶음: Test and Score ← 위 File + 세 모델. **Number of folds 10**으로 바꾼다(기본 5). CA 0.942 · 0.900 · 0.971(기준선 50% — 정상 120/240과 함께 말한다).
 - [ ] Predictions ← **아래 File** + 세 모델. Predictions 표 바로 위 줄의 Show probabilities for → **Classes known to the model**(새 데이터에 정답 열이 없어 기본값은 (None)이고 확률이 안 보인다. 다른 두 항목은 회색으로 꺼져 있다. `_start.ows` 메모 ⑤(워밍업)·④(반도체)와 같은 안내). N-04·N-10 줄에서 답이 갈린다.

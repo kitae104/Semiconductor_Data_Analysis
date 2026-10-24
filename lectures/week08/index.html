@@ -115,7 +115,7 @@
       <div class="code-label"><span>Python — 가게 기록 읽고 첫 5행 보기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-shop = pd.read_csv("../../data/weekly/week08/week08_easy_weather_sales.csv", encoding="utf-8-sig")
+shop = pd.read_csv("week08_easy_weather_sales.csv", encoding="utf-8-sig")
 print(shop.shape)
 
 shop.head()</code></pre>
@@ -348,7 +348,7 @@ print(out_rate)</code></pre>
     <h3>확인 1 — 압력과 두께는 함께 움직일까</h3>
     <div class="code-block">
       <div class="code-label"><span>Python — 공정 기록 읽고 압력-두께 상관계수 구하기 (노트북 6단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.read_csv("../../data/weekly/week08/week08_anomaly_root_cause.csv", encoding="utf-8-sig")
+      <pre><code>df = pd.read_csv("week08_anomaly_root_cause.csv", encoding="utf-8-sig")
 print(df.shape)
 
 r_press = df["압력_Pa"].corr(df["두께_nm"])
@@ -463,7 +463,7 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
 
     <h3>워크플로 열기</h3>
     <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>orange3/week08/week08_1_chamber_start.ows</code>를 연다.</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>week08_1_chamber_start.ows</code>를 연다.</li>
       <li>캔버스에 File 위젯 하나와 ①~③ 안내 메모가 보이면 준비가 끝난 것이다. File을 더블클릭해 200행이 들어왔는지 본다. 막히면 같은 폴더의 <code>week08_1_chamber_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week08_02_chamber_start.png"
@@ -498,7 +498,7 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
 
     <h3>반도체 — 공정 센서 기록을 Orange로 보기</h3>
     <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 이 절은 강사가 화면으로 보여 준다. 학생은 따라 누르지 않고 순서와 그림만 눈으로 확인한다. Correlations로 1위 쌍을 읽는 일은 PART 3 실습지 문제 4에서 직접 한다.</div>
-    <p>강사가 <b>File → Open</b>으로 <code>orange3/week08/week08_2_anomaly_start.ows</code>를 연다. File에는 PART 1의 공정 센서 기록 450행이 들어 있다. 캔버스 메모 ②는 학생이 실습지 문제 4에서 하고, ③④는 지금 강사 화면에서 본다.</p>
+    <p>강사가 <b>File → Open</b>으로 <code>week08_2_anomaly_start.ows</code>를 연다. File에는 PART 1의 공정 센서 기록 450행이 들어 있다. 캔버스 메모 ②는 학생이 실습지 문제 4에서 하고, ③④는 지금 강사 화면에서 본다.</p>
     <div class="step"><div class="num">1</div><div class="content"><b>온도와 두께를 합격 여부 색으로 보기</b> — 강사가 File에 <code>Scatter Plot</code>을 잇고 <b>Axis x</b> = <code>온도_C</code>, <b>Axis y</b> = <code>두께_nm</code>, <b>Color</b> = <code>합격여부</code>로 고른다(새로 이으면 처음에는 x 설비번호 · y 공정명으로 뜬다. Color는 처음부터 합격여부다).</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week08_05_anomaly_scatter.png"
          alt="공정 센서 기록의 Scatter Plot. 온도가 높을수록 두께가 큰 띠 위에 합격·불합격 점이 색으로 나뉘어 있다"
@@ -611,10 +611,10 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week08/week08_easy_weather_sales.csv</code> — 30행 7열, 생활 예제용 가상 데이터(PART 1). 아이스크림 가게 30일 기록.</li>
-      <li><code>data/weekly/week08/week08_orange_chamber_sensor.csv</code> — 200행 7열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code>week08_easy_weather_sales.csv</code> — 30행 7열, 생활 예제용 가상 데이터(PART 1). 아이스크림 가게 30일 기록.</li>
+      <li><code>week08_orange_chamber_sensor.csv</code> — 200행 7열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         열 사이 관계는 교육용 가상 관계다. <b>공정 지도 위치: ④ 식각 챔버 안 센서 기록.</b></li>
-      <li><code>data/weekly/week08/week08_anomaly_root_cause.csv</code> — 450행 12열, 교육용 가상 데이터(PART 1·2·3). 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+      <li><code>week08_anomaly_root_cause.csv</code> — 450행 12열, 교육용 가상 데이터(PART 1·2·3). 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
         <b>공정 지도 위치: ②~⑤ + 세정 설비의 센서 기록과 합격 여부(공정 중간 검사 + ⑦ EDS 결과를 모은 교육용 설정).</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week08_dictionary.html">데이터 설명서</a></li>
     </ul>

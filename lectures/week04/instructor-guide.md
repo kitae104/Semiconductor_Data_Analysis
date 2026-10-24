@@ -30,9 +30,9 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 - Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
 - 학생 키트: `dist/week04_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 `semiconductor_kit` 폴더 구조를 바꾸지 않게 한다.
-- 시연: `notebooks/solutions/week04_solution.ipynb`(출력 저장됨) / 학생: `notebooks/student/week04_student.ipynb`
-- Orange: `orange3/week04/week04_1_flow_start.ows`·`_done.ows`, `week04_2_filtering_start.ows`·`_done.ows`
-- 데이터: `data/weekly/week04/week04_easy_cafe_orders.csv`(PART 1 생활 예제), `data/weekly/week04/week04_orange_process_flow.csv`(PART 2 워밍업), `data/weekly/week04/week04_process_filtering.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
+- 시연: `week04_solution.ipynb`(출력 저장됨) / 학생: `week04_student.ipynb`
+- Orange: `week04_1_flow_start.ows`·`_done.ows`, `week04_2_filtering_start.ows`·`_done.ows`
+- 데이터: `week04_easy_cafe_orders.csv`(PART 1 생활 예제), `week04_orange_process_flow.csv`(PART 2 워밍업), `week04_process_filtering.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
 - 강의 그림: `assets/images/generated/week01_process_flow.png`(1차시 공정 지도, 오늘 워밍업 표가 원천 데이터)
 
 ## 오늘 데이터 핵심 수치(실제 실행 결과, 강의 중 반드시 확인)
@@ -84,7 +84,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `orange3/week04/week04_1_flow_start.ows`를 연다. File 위젯을 더블클릭해 8행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] 키트를 압축 푼 폴더 그대로에서 `week04_1_flow_start.ows`를 연다. File 위젯을 더블클릭해 8행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
 - [ ] Select Columns는 **Transform** 묶음에 있다. File에 잇고 더블클릭 → 왼쪽 Ignored / 오른쪽 Features·Target·Metas 상자를 보여 준다. 열을 눌러 고르고 가운데 `<` 버튼(또는 끌어다 놓기)으로 Ignored에 보낸다. 되돌리기는 Reset.
 - [ ] 워밍업: Features의 구분·측정단위, Metas의 주요설비·대표측정값을 Ignored로 → Select Rows(Select Columns에 잇는다) `반복여부 is 여러 번` → Data Table, `공정순서` 열 머리글 클릭 → 5행.
 - [ ] `week04_2_filtering_start.ows`(100행) → Select Columns: Features의 공정명·압력_Pa·가스유량_slm, Metas의 측정시간·로트번호를 Ignored로. **합격여부는 Target에 둔다**고 말로 경고한다.
@@ -126,7 +126,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## 실습 중 오류 대응
 
-- `FileNotFoundError: [Errno 2] No such file or directory: '../../data/weekly/week4/week04_process_filtering.csv'`: 폴더·파일 이름 오타(이 예는 `week04` 폴더를 `week4`로 씀). 메시지 끝의 경로를 강의 코드와 비교하고, 노트북을 키트의 `notebooks/student`에서 열었는지 확인한다.
+- `FileNotFoundError: [Errno 2] No such file or directory: 'week04_proces_filtering.csv'`: 파일 이름 오타(이 예는 `process`를 `proces`로 씀). 메시지 끝의 파일 이름을 강의 코드와 한 글자씩 비교한다.
 - `KeyError: '온도_c'`: 열 이름 대소문자. `print(df.columns)`로 확인한다.
 - `KeyError: ('설비번호', '온도_C', '합격여부')`: 여러 열을 대괄호 한 겹으로 썼다. 두 겹으로 감싼다.
 - `TypeError: 'tuple' object is not callable`: `shape()`처럼 괄호를 붙였다.

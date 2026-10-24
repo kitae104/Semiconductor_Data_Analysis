@@ -27,9 +27,9 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 - Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
 - 학생 키트: `dist/week05_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 폴더 구조를 바꾸지 않게 한다.
-- 시연: `notebooks/solutions/week05_solution.ipynb`(출력 저장됨) / 학생: `notebooks/student/week05_student.ipynb`
-- Orange: `orange3/week05/week05_1_cleanroom_start.ows`·`_done.ows`, `week05_2_dirty_process_start.ows`·`_done.ows`
-- 데이터: `data/weekly/week05/week05_easy_class_records.csv`(PART 1 생활 예제), `data/weekly/week05/week05_orange_cleanroom_env.csv`(PART 2 워밍업), `data/weekly/week05/week05_dirty_process_data.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
+- 시연: `week05_solution.ipynb`(출력 저장됨) / 학생: `week05_student.ipynb`
+- Orange: `week05_1_cleanroom_start.ows`·`_done.ows`, `week05_2_dirty_process_start.ows`·`_done.ows`
+- 데이터: `week05_easy_class_records.csv`(PART 1 생활 예제), `week05_orange_cleanroom_env.csv`(PART 2 워밍업), `week05_dirty_process_data.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
 
 ## 오늘 데이터 핵심 수치(실제 실행 결과, 강의 중 반드시 확인)
 
@@ -75,7 +75,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `orange3/week05/week05_1_cleanroom_start.ows`를 연다. File 위젯을 더블클릭해 72행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] 키트를 압축 푼 폴더 그대로에서 `week05_1_cleanroom_start.ows`를 연다. File 위젯을 더블클릭해 72행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
 - [ ] File → Feature Statistics: 파티클 Missing 4, Max 99999 / 습도 Missing 3 / 차압 Missing 2, Min -5.0.
 - [ ] File → Impute(Transform 묶음): Default Method를 **Average/Most frequent**로 바꾼다(기본값은 Don't impute). Impute → Data Table: `파티클_count_per_m3` 열 머리글을 눌러 큰 값부터 정렬하면 99999 아래에 2543.66 4칸이 모인다. 강의의 "채운 값 확인 보기"는 학생이 찾은 뒤 연다.
 - [ ] Impute → Select Rows(`파티클_count_per_m3` is below 10000, `차압_Pa` is at least 0) → Feature Statistics: 70행, 파티클 Max 2543.66.

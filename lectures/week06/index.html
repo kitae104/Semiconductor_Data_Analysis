@@ -106,7 +106,7 @@ import matplotlib.pyplot as plt
 plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams["axes.unicode_minus"] = False
 
-ice = pd.read_csv("../../data/weekly/week06/week06_easy_icecream_daily.csv", encoding="utf-8-sig")
+ice = pd.read_csv("week06_easy_icecream_daily.csv", encoding="utf-8-sig")
 ice.head()</code></pre>
     </div>
     <div class="callout success">
@@ -249,7 +249,7 @@ plt.show()</code></pre>
     <h3>확인 1 — 공정마다 기록은 몇 건일까 (막대)</h3>
     <div class="code-block">
       <div class="code-label"><span>Python — 공정 기록 읽고 공정명별 건수 막대 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.read_csv("../../data/weekly/week06/week06_process_visualization.csv", encoding="utf-8-sig")
+      <pre><code>df = pd.read_csv("week06_process_visualization.csv", encoding="utf-8-sig")
 print(df.shape)
 
 process_counts = df["공정명"].value_counts()
@@ -410,7 +410,7 @@ plt.show()</code></pre>
 
     <h3>워크플로 열기</h3>
     <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>orange3/week06/week06_1_wafermap_start.ows</code>를 연다.</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>week06_1_wafermap_start.ows</code>를 연다.</li>
       <li>캔버스에 File 위젯 하나와 ①~④ 안내 메모가 보이면 준비가 끝난 것이다. File을 더블클릭해 317행이 들어왔는지 본다. 막히면 같은 폴더의 <code>week06_1_wafermap_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week06_02_wafermap_start.png"
@@ -446,7 +446,7 @@ plt.show()</code></pre>
 
     <h3>반도체 — 공정 기록을 Orange로 그리기</h3>
     <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 1~2단계는 강사가 화면으로 보여 준다. 학생은 따라 누르지 않고 순서만 눈으로 확인한다. 3단계(상자 그림)는 PART 3 실습지 문제 4에서 직접 한다.</div>
-    <p><b>File → Open</b>으로 <code>orange3/week06/week06_2_process_start.ows</code>를 연다. PART 1의 공정 기록(180행)이 File에 들어 있다.</p>
+    <p><b>File → Open</b>으로 <code>week06_2_process_start.ows</code>를 연다. PART 1의 공정 기록(180행)이 File에 들어 있다.</p>
     <div class="step"><div class="num">1</div><div class="content"><b>온도 분포</b> — File에 <code>Distributions</code>를 잇는다. Variable 목록에서 <code>온도_C</code>를 클릭하고, 왼쪽 아래 <b>Split by</b>를 <code>None</code>으로 바꾼다(처음에는 <code>합격여부</code>로 잡혀 막대 색이 나뉜다).
     파이썬 <code>plt.hist</code>와 같은 질문 — "온도가 어디에 몰렸나" — 에 답하는 그림이다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week06_06_process_distributions.png"
@@ -534,10 +534,10 @@ plt.show()</code></pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week06/week06_easy_icecream_daily.csv</code> — 21행 5열, 생활 예제용 가상 데이터(PART 1 개념). 날씨별 날 수 맑음 12 · 흐림 6 · 비 3.</li>
-      <li><code>data/weekly/week06/week06_orange_wafer_map.csv</code> — 317행 5열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code>week06_easy_icecream_daily.csv</code> — 21행 5열, 생활 예제용 가상 데이터(PART 1 개념). 날씨별 날 수 맑음 12 · 흐림 6 · 비 3.</li>
+      <li><code>week06_orange_wafer_map.csv</code> — 317행 5열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         다이 317개 중 불합격 64개. <b>공정 지도 위치: ⑦ EDS(전기 검사) 결과.</b></li>
-      <li><code>data/weekly/week06/week06_process_visualization.csv</code> — 180행 10열, 교육용 가상 데이터(PART 1·2·3). 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+      <li><code>week06_process_visualization.csv</code> — 180행 10열, 교육용 가상 데이터(PART 1·2·3). 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
         <b>공정 지도 위치: ②~⑤ + 세정 설비 기록</b>(<code>두께_nm</code>은 작업 뒤 잰 웨이퍼 위 막의 두께라는 설정).</li>
       <li>열 설명: <a href="../../data/data_dictionary/week06_dictionary.html">데이터 설명서</a></li>
     </ul>

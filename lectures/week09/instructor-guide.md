@@ -29,9 +29,9 @@
 
 - Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
 - 학생 키트: `dist/week09_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 폴더 구조를 바꾸지 않게 한다.
-- 시연: `notebooks/solutions/week09_solution.ipynb`(출력 저장됨) / 학생: `notebooks/student/week09_student.ipynb`
-- Orange: `orange3/week09/week09_1_patterns_start.ows`·`_done.ows`, `week09_2_passfail_start.ows`·`_done.ows`
-- 데이터: `data/weekly/week09/week09_orange_wafer_patterns.csv`(PART 1 워밍업), `data/weekly/week09/week09_pass_fail_train.csv`(반도체, PART 1·2·3). Orange는 각 파일의 `orange/*.tab`을 연다.
+- 시연: `week09_solution.ipynb`(출력 저장됨) / 학생: `week09_student.ipynb`
+- Orange: `week09_1_patterns_start.ows`·`_done.ows`, `week09_2_passfail_start.ows`·`_done.ows`
+- 데이터: `week09_orange_wafer_patterns.csv`(PART 1 워밍업), `week09_pass_fail_train.csv`(반도체, PART 1·2·3). Orange는 각 파일의 `orange/*.tab`을 연다.
 - 그림: `assets/images/generated/week09_wafer_pattern_examples.png`(강의 워밍업 절), `week01_process_flow.png`(공정 지도)
 - ChatGPT를 못 쓰는 교실: 노트북 3단계 응답 예시 셀로 같은 활동을 한다(강의에 "실제 AI 응답 아님" 표기).
 
@@ -81,7 +81,7 @@
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `orange3/week09/week09_1_patterns_start.ows`를 연다. File 위젯을 더블클릭해 240행, 목표 열 `불량패턴`이 들어왔는지 확인한다. 파일 이름이 빨갛게 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] 키트를 압축 푼 폴더 그대로에서 `week09_1_patterns_start.ows`를 연다. File 위젯을 더블클릭해 240행, 목표 열 `불량패턴`이 들어왔는지 확인한다. 파일 이름이 빨갛게 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
 - [ ] **Model** 묶음 Tree → File. Tree 창의 **Limit the maximal tree depth to** 100 → **4**(체크 상자는 켜진 채). 그다음 **Visualize** 묶음 Tree Viewer → **Tree**(File 아님).
 - [ ] Tree Viewer는 처음에 끝 상자(잎)에만 숫자가 보인다. 왼쪽 Display 칸의 **Show details in non-leaves**에 체크하게 한다(공정 기록의 `-1 · 56.0%, 42/75`도 중간 상자라 체크해야 보인다).
 - [ ] Tree Viewer 상자 읽는 법을 한 번 짚는다: 굵은 글자 = 그 갈래에서 가장 많은 답, `75.0%, 30/40` 같은 숫자 = 40장 중 30장, 상자 맨 아래 열 이름 = 다음 질문, 선 옆 `≤ 숫자`/`> 숫자` = 답. 예시는 뿌리 상자가 아닌 것으로 든다(뿌리 질문은 실습지 문제 3 답). 그림이 크면 왼쪽 Zoom. 정보 줄의 nodes = 상자 전체 수, leaves = 끝 상자 수.

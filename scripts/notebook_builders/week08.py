@@ -23,7 +23,7 @@ nb.add(
        "**기준선** = 전체에서 불만인 날의 비율입니다. 나중에 \"특정 조건에서 더 높은가?\"를 이 숫자와 비교합니다."),
     code('import pandas as pd\n'
          '\n'
-         'shop = pd.read_csv("../../data/weekly/week08/week08_easy_weather_sales.csv", encoding="utf-8-sig")\n'
+         'shop = pd.read_csv("week08_easy_weather_sales.csv", encoding="utf-8-sig")\n'
          'print(shop.shape)'),
     code("shop.head()"),
     code('bad_all = shop[shop["손님평가"] == -1]\n'
@@ -85,7 +85,7 @@ nb.add(
     md("공정 센서 기록 450건(교육용 가상 데이터)입니다. 2~4단계와 같은 코드에서 표 이름과 열 이름만 바뀝니다. "
        "온도 295~305℃는 이 과정의 연습용 기준입니다(실제 공정 규격 아님). "
        "`합격여부`: 1 = 합격, -1 = 불합격. 설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록입니다."),
-    code('df = pd.read_csv("../../data/weekly/week08/week08_anomaly_root_cause.csv", encoding="utf-8-sig")\n'
+    code('df = pd.read_csv("week08_anomaly_root_cause.csv", encoding="utf-8-sig")\n'
          'print(df.shape)'),
     code('r_press = df["압력_Pa"].corr(df["두께_nm"])\n'
          'print(round(r_press, 2))'),

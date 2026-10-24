@@ -20,7 +20,7 @@ nb.add(
     code("import pandas as pd\n"
          "import matplotlib.pyplot as plt\n"
          "\n" + MPL_KOREAN),
-    code('ice = pd.read_csv("../../data/weekly/week06/week06_easy_icecream_daily.csv", encoding="utf-8-sig")\n'
+    code('ice = pd.read_csv("week06_easy_icecream_daily.csv", encoding="utf-8-sig")\n'
          'ice.head()'),
 
     step(2, "막대그래프 — 날씨별 날 수"),
@@ -77,7 +77,7 @@ nb.add(
 nb.add(
     step(5, "반도체 데이터로 확인하기 — 공정 기록 180건"),
     md("공정 기록 180건(교육용 가상 데이터)입니다. 2~4단계와 같은 4줄 틀에서 표 이름과 열 이름만 바뀝니다."),
-    code('df = pd.read_csv("../../data/weekly/week06/week06_process_visualization.csv", encoding="utf-8-sig")\n'
+    code('df = pd.read_csv("week06_process_visualization.csv", encoding="utf-8-sig")\n'
          'print(df.shape)'),
     code('process_counts = df["공정명"].value_counts()\n'
          'plt.bar(process_counts.index, process_counts)\n'

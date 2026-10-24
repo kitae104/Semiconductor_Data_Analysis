@@ -94,7 +94,7 @@ EQ-02와 같고 비율은 EQ-04가 높다(EQ-01 31건 중 2건 6.5%, EQ-03 22건
 반도체 데이터(`week04_process_filtering.csv`)에 쓰기 전에, 누구나 아는 카페 주문 기록으로 **같은 Pandas 연산**
 (`read_csv`, `shape`·`columns`, 열 선택, 조건 검색, 한 번 더 고르기, 정렬)을 먼저 익히는
 **생활 예제용 가상 데이터**다. 읽는 코드도 반도체 데이터와 같은 모양이다:
-`pd.read_csv("../../data/weekly/week04/week04_easy_cafe_orders.csv", encoding="utf-8-sig")`.
+`pd.read_csv("week04_easy_cafe_orders.csv", encoding="utf-8-sig")`.
 
 ### 가상 상황
 카페 두 곳(강남점·홍대점)에 들어온 주문 12건과, 손님이 남긴 한 줄 평가(좋아요/별로예요)다.
