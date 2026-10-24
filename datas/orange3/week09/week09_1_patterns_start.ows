@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="9차시 ① 웨이퍼 맵 패턴을 결정 트리로 분류하기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭하면 웨이퍼 240장의 불량 모양 요약(불량패턴이 목표 열)이 들어 있습니다.
+② Model 묶음의 Tree(결정 트리)를 File에 잇고, Limit the maximal tree depth를 4로 바꾸세요. Visualize 묶음의 Tree Viewer(트리 보기)를 Tree에 이으세요. Tree Viewer 왼쪽 Show details in non-leaves에 체크하세요.
+③ Evaluate 묶음의 Test and Score(평가)를 File에 잇고, Tree도 Test and Score에 이으세요. Cross validation의 Number of folds를 10으로 고르세요.
+④ Confusion Matrix(헷갈림 표)를 Test and Score에 잇고 어떤 패턴끼리 헷갈렸는지 보세요.
+⑤ (더 해 보기) Distributions(분포 막대)를 File에 잇고 불량패턴을 고르세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVbgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMIHdlZWswOV9vcmFuZ2Vfd2Fm
+ZXJfcGF0dGVybnMudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjEAuLi8uLi9kYXRh
+L3dlZWtseS93ZWVrMDkvb3JhbmdlL3dlZWswOV9vcmFuZ2Vfd2FmZXJfcGF0dGVybnMudGFilIwF
+dGl0bGWUjACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRf
+dXJsc5RdlIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNv
+bnRleHRfc2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

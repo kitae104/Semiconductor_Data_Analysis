@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="5차시 ② 지저분한 공정 데이터 정리하기 (완성)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+		<node id="1" name="Feature Statistics" qualified_name="Orange.widgets.data.owfeaturestatistics.OWFeatureStatistics" project_name="Orange3" version="" title="Feature Statistics (정리 전)" position="(300.0, 320.0)" />
+		<node id="2" name="Impute" qualified_name="Orange.widgets.data.owimpute.OWImpute" project_name="Orange3" version="" title="Impute (빈칸 채우기)" position="(300.0, 460.0)" />
+		<node id="3" name="Select Rows" qualified_name="Orange.widgets.data.owselectrows.OWSelectRows" project_name="Orange3" version="" title="Select Rows (행 고르기)" position="(480.0, 460.0)" />
+		<node id="4" name="Data Table" qualified_name="Orange.widgets.data.owtable.OWTable" project_name="Orange3" version="" title="Data Table (정리 결과)" position="(660.0, 460.0)" />
+		<node id="5" name="Feature Statistics" qualified_name="Orange.widgets.data.owfeaturestatistics.OWFeatureStatistics" project_name="Orange3" version="" title="Feature Statistics (정리 후)" position="(660.0, 600.0)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="2" source_node_id="2" sink_node_id="3" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="3" source_node_id="3" sink_node_id="4" source_channel="Matching Data" sink_channel="Data" enabled="true" source_channel_id="matching_data" sink_channel_id="data" />
+		<link id="4" source_node_id="3" sink_node_id="5" source_channel="Matching Data" sink_channel="Data" enabled="true" source_channel_id="matching_data" sink_channel_id="data" />
+	</links>
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: Impute는 숫자 빈칸을 평균으로 채우고, 합격여부가 빈 행은 지웁니다(Remove instances).
+Select Rows 조건: 온도_C ≤ 400, 압력_Pa ≥ 0, 0 ≤ 가스유량_slm &lt; 200.
+Feature Statistics(정리 전)와 (정리 후)의 Min·Max·Mean을 비교하고, 남은 행 수를 파이썬 결과와 비교하세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVaAEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHXdlZWswNV9kaXJ0eV9wcm9j
+ZXNzX2RhdGEudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjD0uLi8uLi9kYXRhL3dl
+ZWtseS93ZWVrMDUvb3JhbmdlL3dlZWswNV9kaXJ0eV9wcm9jZXNzX2RhdGEudGFilIwFdGl0bGWU
+jACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRfdXJsc5Rd
+lIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNvbnRleHRf
+c2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+		<properties node_id="2" format="pickle">gASV5AEAAAAAAAB9lCiMFV9kZWZhdWx0X21ldGhvZF9pbmRleJRLAowKYXV0b2NvbW1pdJSIjBJj
+b250cm9sQXJlYVZpc2libGWUiIwVZGVmYXVsdF9udW1lcmljX3ZhbHVllEcAAAAAAAAAAIwMZGVm
+YXVsdF90aW1llEsAjAtfX3ZlcnNpb25fX5RLAYwQY29udGV4dF9zZXR0aW5nc5RdlIwVb3Jhbmdl
+d2lkZ2V0LnNldHRpbmdzlIwHQ29udGV4dJSTlCmBlH2UKIwGdmFsdWVzlH2UKIwaX3ZhcmlhYmxl
+X2ltcHV0YXRpb25fc3RhdGWUfZSMJU9yYW5nZS5kYXRhLnZhcmlhYmxlLkRpc2NyZXRlVmFyaWFi
+bGWUjAztlanqsqnsl6zrtoCUhpRLBimGlHNK/v///4aUaAZLAXWMCmF0dHJpYnV0ZXOUfZQojAzs
+hKTruYTrsojtmLiUSwGMCeqzteygleuqhZRLAYwI7Jio64+EX0OUSwKMCeyVleugpV9QYZRLAowQ
+6rCA7Iqk7Jyg65+JX3NsbZRLAowQ7LKY66as7Iuc6rCEX3NlY5RLAmgTSwF1jAVtZXRhc5R9lCiM
+DOy4oeygleyLnOqwhJRLA4wM66Gc7Yq467KI7Zi4lEsDdXViYXUu
+</properties>
+		<properties node_id="3" format="pickle">gASV3wEAAAAAAAB9lCiMC2F1dG9fY29tbWl0lIiMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBBwdXJn
+ZV9hdHRyaWJ1dGVzlImMDXB1cmdlX2NsYXNzZXOUiYwQdXBkYXRlX29uX2NoYW5nZZSIjAtfX3Zl
+cnNpb25fX5RLAowQY29udGV4dF9zZXR0aW5nc5RdlIwVb3Jhbmdld2lkZ2V0LnNldHRpbmdzlIwH
+Q29udGV4dJSTlCmBlH2UKIwGdmFsdWVzlH2UKIwKY29uZGl0aW9uc5RdlCgojAjsmKjrj4RfQ5RL
+AksDXZRHQHkAAAAAAABhdJQojAnslZXroKVfUGGUSwJLBV2URwAAAAAAAAAAYXSUKIwQ6rCA7Iqk
+7Jyg65+JX3NsbZRLAksFXZRHAAAAAAAAAABhdJQoaBhLAksCXZRHQGkAAAAAAABhdJRlaAZLAnWM
+CmF0dHJpYnV0ZXOUfZQojAzshKTruYTrsojtmLiUSwGMCeqzteygleuqhZRLAWgSSwJoFUsCaBhL
+AowQ7LKY66as7Iuc6rCEX3NlY5RLAowM7ZWp6rKp7Jes67aAlEsBdYwFbWV0YXOUfZQojAzsuKHs
+oJXsi5zqsISUSwOMDOuhnO2KuOuyiO2YuJRLA3V1YmF1Lg==
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

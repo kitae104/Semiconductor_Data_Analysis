@@ -1,8 +1,7 @@
 # 화면 캡처 체크리스트 (v3)
 
-강의(1~10차시 `index.html`·`worksheet.html`), 수강 전 준비(`docs/setup.html`), 부록(`docs/orange3-guide.html`)에 들어갈
-Orange3·Jupyter 화면 캡처 목록이다. Orange 화면은 이 폴더(`assets/images/orange3/`)에, 설치 안내 화면은
-`assets/images/setup/`에 저장한다. 표의 "파일" 열이 저장할 경로 그대로다.
+강의(1~10차시 `index.html`·`worksheet.html`)와 부록(`docs/orange3-guide.html`)에 들어갈
+Orange3 화면 캡처 목록이다. 화면은 이 폴더(`assets/images/orange3/`)에 저장한다. 표의 "파일" 열이 저장할 경로 그대로다.
 
 > 이 목록은 2026-10-24 기준으로 각 페이지의 `<img data-shot="…">`를 모두 모은 것이다. 8~10차시는 수정이 이어지고 있을 수 있으니,
 > 캡처 직전에 그 페이지를 다시 확인한다. 같은 목록이 `_workspace/09_capture_list.md`에도 있다.
@@ -43,9 +42,8 @@ Orange3·Jupyter 화면 캡처 목록이다. Orange 화면은 이 폴더(`assets
 | 8차시 | 7 | 7 | 0 | 7 |
 | 9차시 | 8 | 8 | 0 | 8 |
 | 10차시 | 6 | 6 | 0 | 6 |
-| 수강 전 준비 (`docs/setup.html`) | 6 | 6 | 0 | 6 |
 | 부록 Orange3 시작하기 (`docs/orange3-guide.html`) | 4 | 4 | 2 | 2 |
-| **합계** | 85 | 82 | 2 | 80 |
+| **합계** | 79 | 76 | 2 | 74 |
 
 ## 1차시
 
@@ -171,17 +169,6 @@ Orange3·Jupyter 화면 캡처 목록이다. Orange 화면은 이 폴더(`assets
 | 4 | `assets/images/orange3/week10_04_newwafers_predictions.png` | `lectures/week10/index.html`:188 | week10_1_newwafers_done.ows의 Predictions (예측) 창 — Show probabilities for를 Classes known to the model로 바꾼 상태. 웨이퍼 10줄과 Tree·kNN·Logistic Regression 세 열이 보이고, N-04와 N-10 줄의 답이 모델마다 다른 것이 보이게 | **없음** |
 | 5 | `assets/images/orange3/week10_05_newlots_test_and_score.png` | `lectures/week10/index.html`:221 | week10_2_newlots_done.ows의 Test and Score (평가) 창 — 왼쪽 Number of folds 10, 오른쪽 표에 Tree·kNN·Logistic Regression 세 줄의 CA(0.783·0.769·0.793)가 보이게 | **없음** |
 | 6 | `assets/images/orange3/week10_06_newlots_confusion_lr.png` | `lectures/week10/index.html`:238 | week10_2_newlots_done.ows의 Confusion Matrix (헷갈림 표) 창 — 왼쪽 목록에서 Logistic Regression (로지스틱 회귀)을 고른 상태. 실제 1 행 595 · 0, 실제 -1 행 155 · 0, 예측 -1 열 합계 0이 보이게 | **없음** |
-
-## 수강 전 준비 (`docs/setup.html`)
-
-| # | 파일 | 페이지(줄) | 캡처할 화면(`data-shot`) | 있음? |
-| --- | --- | --- | --- | --- |
-| 1 | `assets/images/setup/setup_01_python_path.png` | `docs/setup.html`:68 | 파이썬 설치 첫 화면 — 아래쪽 'Add python.exe to PATH' 체크 상자에 체크하고 Install Now를 누르기 직전 | **없음** |
-| 2 | `assets/images/setup/setup_02_orange_first_run.png` | `docs/setup.html`:111 | Orange3 첫 실행 화면 — 시작 안내 창(Welcome)이 떠 있는 상태 또는 왼쪽 위젯 목록과 빈 캔버스 | **없음** |
-| 3 | `assets/images/setup/setup_03_kit_folders.png` | `docs/setup.html`:143 | 파일 탐색기 — 압축을 푼 semiconductor_kit 폴더 안에 data, notebooks, orange3 폴더와 README_학생용.txt가 보이는 화면 | **없음** |
-| 4 | `assets/images/setup/setup_04_jupyter_week01.png` | `docs/setup.html`:169 | Jupyter 화면 — week01_student.ipynb를 열고 첫 셀을 실행해 '파이썬 준비 완료!'가 출력된 모습 | **없음** |
-| 5 | `assets/images/setup/setup_05_ows_open.png` | `docs/setup.html`:185 | Orange — week01_1_town_start.ows를 연 캔버스(File 위젯 1개와 안내 메모)와, File 위젯을 더블클릭해 데이터 30행이 들어온 창 | **없음** |
-| 6 | `assets/images/setup/setup_06_file_not_found.png` | `docs/setup.html`:202 | Orange File 위젯 창 — 파일 이름이 빨간색이고 'File not found' 오류가 보이는 화면, 폴더 아이콘 위치 표시 | **없음** |
 
 ## 부록 Orange3 시작하기 (`docs/orange3-guide.html`)
 

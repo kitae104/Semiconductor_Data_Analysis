@@ -117,7 +117,7 @@
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
-         alt="반도체 8대 공정 흐름도. ① 웨이퍼 제조부터 ⑧ 패키징까지 여덟 칸이 화살표로 이어지고, ②~⑥ 칸은 같은 색으로 묶여 여러 번 되풀이한다는 화살표가 있다">
+         alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
     <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이하고, ⑦ EDS에서 다이마다 전기를 흘려 합격·불합격을 가린다.</p>
     <ul class="pt-list">
       <li>워밍업 <code>week09_orange_wafer_patterns.csv</code> — <b>공정 지도 위치: ⑦ EDS(전기 검사)</b> 결과로 그린 웨이퍼 맵을 웨이퍼마다 숫자 넷으로 요약한 표.</li>
@@ -151,15 +151,11 @@
     </ul>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>결정 트리 스무고개</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>머신러닝을 처음 배우는 사람에게 결정 트리가 스무고개와 어떻게 비슷한지 3문장으로 설명해줘. 트리의 맨 위 질문과 맨 끝 잎이 각각 무엇을 뜻하는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "예/아니요로 답할 수 있는 질문을 차례로 던져 데이터를 나눈다", "맨 위 질문은 데이터를 가장 잘 나누는 질문이고, 잎에서 최종 답(예측)을 정한다"는 내용이 들어 있다.
-      질문 순서를 사람이 정하는 것이 아니라 지난 데이터에서 찾는다는 점도 말하면 더 좋은 답이다.</div>
     </div>
   </section>
 
@@ -173,15 +169,11 @@
     </ul>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>과적합 뜻</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>머신러닝의 과적합(overfitting)을 기출문제 답만 외운 학생에 비유해서 머신러닝을 처음 배우는 사람에게 3문장으로 설명해줘. 학습용과 시험용 데이터를 나누는 이유도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "학습한 데이터에서는 점수가 높지만 처음 보는 데이터에서는 점수가 떨어지는 상태", "그래서 학습에 쓰지 않은 시험용 데이터로 따로 채점한다"는 내용이 들어 있다.
-      결정 트리의 깊이를 제한하는 것도 과적합을 줄이는 방법의 하나다.</div>
     </div>
   </section>
 
@@ -198,15 +190,11 @@
     </ul>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>정확도의 함정 불균형 데이터</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>합격이 80%, 불합격이 20%인 데이터에서 모델 정확도 80%가 왜 좋은 점수가 아닐 수 있는지 데이터 분석을 처음 배우는 사람에게 3문장으로 설명해줘. 정확도 말고 무엇을 함께 봐야 하는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "모두 합격이라고만 찍어도 정확도가 80%다", "그래서 늘 같은 답을 찍었을 때(기준선)와 비교하고, 실제 불합격을 몇 개 잡았는지(헷갈림 표)를 함께 본다"는 내용이 들어 있다.
-      재현율(Recall) 같은 다른 점수를 소개해도 좋지만 오늘은 헷갈림 표의 칸을 직접 세는 것으로 충분하다.</div>
     </div>
   </section>
 
@@ -233,7 +221,7 @@
 
     <h3>워크플로 열기</h3>
     <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>week09_1_patterns_start.ows</code>를 연다.</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 <code>week09_1_patterns_start.ows</code>를 연다.</li>
       <li>캔버스에 File 위젯 하나와 ①~⑤ 안내 메모가 보이면 준비가 끝난 것이다. File을 더블클릭해 240행이 들어왔는지 본다. 막히면 같은 폴더의 <code>week09_1_patterns_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week09_02_patterns_start.png"
@@ -325,15 +313,11 @@
     </div>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>예측과 인과 차이</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>결정 트리가 공장 기록에서 어떤 공정 값 하나로 합격·불합격을 가장 먼저 나눴다면, 그 값이 불합격의 원인이라고 말할 수 있는지 데이터 분석을 처음 배우는 사람에게 3문장으로 설명해줘. 예측을 잘하는 것과 원인을 아는 것이 어떻게 다른지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "트리는 데이터를 잘 나누는 열을 고를 뿐 원인을 증명하지 않는다", "함께 달라진 다른 값을 대신 나타냈을 수도 있다", "원인 후보로 두고 그 값만 바꿔 보는 실험이나 설비 점검으로 확인한다"는 내용이 들어 있다.
-      AI가 "그 값이 원인이므로 그 값을 바꾸면 된다"처럼 결론으로 건너뛰면 그 부분은 걸러 읽는다.</div>
     </div>
     <p>캔버스 메모 ④(Test and Score와 Confusion Matrix)는 PART 3 <b>실습지 문제 4</b>에서 직접 잇는다. 이 공정 기록의 트리가 기준선 79.3%보다 나은지는 거기서 확인한다.</p>
 

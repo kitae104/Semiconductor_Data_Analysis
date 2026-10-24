@@ -6,17 +6,9 @@
 
 ## 1. 과정 운영 전 준비
 
-- **강사 PC**: `requirements.txt` 설치, Jupyter 커널 등록
-  (`python -m ipykernel install --user --name python3`), **Orange 3.35** 설치.
-  과정의 `.ows` 파일과 화면 설명은 Orange 3.35로 만들고 확인했다. 다른 버전이면 위젯 모양·메뉴 이름이 조금 다를 수 있다.
-- **학생 준비 안내**: 첫 수업 전에 [`docs/setup.html`](setup.html)(수강 전 준비)을 안내한다. 파이썬·Jupyter·Orange3 설치,
-  실습 키트 압축 풀기, 노트북과 `.ows` 열기, File 위젯 오류 대처까지 그림과 함께 들어 있다.
-- **자료 배포**: 실습 키트 하나로 배포한다.
-  - 전체: `dist/student_kit.zip` — 학생 노트북, 실습 데이터(`orange/*.tab` 포함), Orange 워크플로, 설치 안내
-  - 차시별: `dist/weekXX_kit.zip`
-  - 키트는 저장소와 같은 폴더 구조다. 노트북은 `../../data/weekly/...`로, `.ows`는 자기 폴더 기준 상대경로로 데이터를 찾으므로
-    **폴더째 압축을 풀고 구조를 바꾸지 않게** 매번 강조한다.
-- **사전 실행 확인**: 매 차시 수업 전 키트를 새로 풀어 다음을 확인한다.
+- **실습 환경**: 파이썬·Jupyter·Orange3와 실습 파일(노트북, 데이터 CSV, Orange 워크플로)은 실습 환경에 미리 준비돼 있다.
+  별도의 설치 안내나 자료 배포는 하지 않는다.
+- **사전 실행 확인**: 매 차시 수업 전 다음을 확인한다.
   - `notebooks/solutions/weekXX_solution.ipynb`를 처음부터 끝까지 실행해 이상이 없는지
   - `orange3/weekXX/`의 `_start.ows` 두 개를 열어 File 위젯에 데이터가 들어오는지
   - 차시 운영안의 "오늘 데이터 핵심 수치"가 화면 숫자와 같은지
@@ -66,16 +58,16 @@
 - Data Table 뒤에는 위젯을 잇지 않는다(행을 고르기 전에는 출력이 빌 수 있다). File에서 부채꼴로 잇는다.
 - Orange는 위젯 설정을 기억해 새 위젯에 다시 적용하기도 한다. 강사 화면 숫자가 운영안과 다르면 위젯 설정(Split by, 조건 값 등)부터
   확인하고, `_done.ows`를 다시 열어 비교한다.
-- 학생이 저장(`Ctrl+S`)한 `.ows`는 데이터 위치가 그 컴퓨터 기준으로 바뀔 수 있다. 다른 PC에서 열리지 않으면 키트의 원본
+- 학생이 저장(`Ctrl+S`)한 `.ows`는 데이터 위치가 그 컴퓨터 기준으로 바뀔 수 있다. 다른 PC에서 열리지 않으면 원본 `_start.ows`를 다시 연다.
   `.ows`를 다시 연다.
 
 ## 4. 찾아보기 상자
 
-강의에는 배경지식이 필요한 곳에 "찾아보기" 상자가 차시당 3~6개 있다(검색어 · ChatGPT에 물어볼 질문 · 접힌 확인 포인트).
+강의에는 배경지식이 필요한 곳에 "찾아보기" 상자가 차시당 3~6개 있다(검색어 · ChatGPT에 물어볼 질문).
 
 - **선택 활동이며 평가하지 않는다.** 퀴즈·실습지에도 나오지 않는다.
 - 빨리 끝낸 학생, 쉬는 시간 전후, 복습용으로 안내한다. 수업 흐름을 멈추고 전원이 함께 하지 않아도 된다.
-- 찾아본 내용과 강의 내용이 다르면 접힌 "확인 포인트"를 기준으로 이야기한다. 검색 결과·AI 답이 늘 맞는 것은 아니라는 점을 함께 말한다.
+- 찾아본 내용과 강의 내용이 다르면 강의 본문을 기준으로 이야기한다. 검색 결과·AI 답이 늘 맞는 것은 아니라는 점, 개인정보·실제 회사 데이터는 질문에 넣지 않는다는 점을 수업에서 한 번 말해 준다.
 - 8~10차시 찾아보기·ChatGPT 질문은 "원인"이 아니라 "원인 후보" 표현을 쓴다.
 
 ## 5. ChatGPT 체험과 대안(9·10차시 중심)
@@ -89,7 +81,7 @@
 
 ## 6. 캡처 자리(빈 이미지 칸)
 
-- 강의·실습지·설치 안내의 Orange·Jupyter 화면 그림 중 일부는 아직 실제 캡처가 없고 **자리만** 있다. 그런 `<img>`에는
+- 강의·실습지의 Orange·Jupyter 화면 그림 중 일부는 아직 실제 캡처가 없고 **자리만** 있다. 그런 `<img>`에는
   `data-shot` 속성으로 찍을 화면 설명이 붙어 있고, 브라우저에서는 그 설명이 빈자리에 보인다.
 - 수업에 쓰기 전에 [`assets/images/orange3/README.md`](../assets/images/orange3/README.md)의 차시별 캡처 체크리스트를 보고 채운다.
   체크리스트에는 파일 경로, 들어갈 페이지, 찍을 화면 설명, 현재 파일이 있는지가 표로 정리되어 있다.
@@ -108,13 +100,13 @@
 
 | 문제 | 원인 | 해결 |
 | --- | --- | --- |
-| `FileNotFoundError` | 키트 폴더 구조가 바뀜, zip 안에서 바로 엶 | 키트를 폴더째 다시 풀고 `notebooks/student/`에서 노트북을 연다. `pd.read_csv("../../data/weekly/...")` 상대경로를 고치지 않는다 |
+| `FileNotFoundError` | 파일 이름 오타, CSV가 노트북과 다른 폴더에 있음 | `pd.read_csv("파일이름.csv")`의 이름을 강의 코드와 한 글자씩 비교하고, CSV가 노트북과 같은 폴더에 있는지 확인한다 |
 | `KeyError: '열이름'` | 열 이름 오타 | `df.columns`로 정확한 이름 먼저 확인(열 이름은 `온도_C`처럼 한국어 + 영문 단위) |
 | 한글 깨짐 | 인코딩 문제 | 모든 CSV는 `utf-8-sig`로 저장되어 있음. `pd.read_csv(..., encoding="utf-8-sig")` 확인 |
 | Jupyter 커널 연결 끊김 | 커널 종료/재시작 | Kernel → Restart Kernel and Run All Cells…로 위에서부터 다시 실행 |
-| Orange File 위젯에 빨간 글씨 | `.ows`를 키트 밖으로 옮김, 폴더 구조 변경 | 키트를 다시 풀고 `_start.ows`를 다시 연다. 안 되면 File 폴더 아이콘으로 `data/weekly/weekXX/orange/*.tab`을 직접 고른다 |
+| Orange File 위젯에 빨간 글씨 | `.ows`를 원래 폴더 밖으로 옮김, 폴더 구조 변경 | 원래 폴더의 `_start.ows`를 다시 연다. 안 되면 File 폴더 아이콘으로 `orange` 폴더의 `.tab`을 직접 고른다 |
 | Orange 화면 숫자가 운영안과 다름 | 저장된 위젯 설정이 적용됨, CSV를 직접 엶 | 위젯 설정 확인, `.tab`으로 열었는지 확인, `_done.ows`와 비교 |
-| 9·10차시 Tree/Test and Score 오류 | 합격여부가 target·categorical이 아님 | 키트의 `.tab`과 `_start.ows`를 다시 연다(처음부터 target으로 정해져 있다) |
+| 9·10차시 Tree/Test and Score 오류 | 합격여부가 target·categorical이 아님 | `_start.ows`를 다시 연다(처음부터 target으로 정해져 있다) |
 
 ## 9. 평가 운영
 
@@ -132,6 +124,6 @@
 - 데이터를 다시 생성할 때는 `python scripts/generate_weekly_data.py`(시드 고정, `.tab` 파생본 포함), 그림은
   `python scripts/generate_figures.py`, Orange 워크플로는 `python scripts/build_orange_workflows.py`를 실행한다.
 - 노트북은 `scripts/notebook_builders/weekXX.py`로만 다시 만든다(노트북 JSON을 손으로 고치지 않는다). 수정 뒤에는
-  `python scripts/validate_notebooks.py`, `python scripts/validate_orange_workflows.py`, `python scripts/build_student_kit.py --check`로 검증한다.
+  `python scripts/validate_notebooks.py`, `python scripts/validate_orange_workflows.py`로 검증한다.
 - 새로운 기수를 운영하면서 발견한 오개념·오류 패턴은 각 차시 `instructor-guide.md`의
   "예상 오개념" 항목에 누적해서 업데이트할 것을 권장한다.

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="9차시 ② 공정 기록으로 합격·불합격 예측하기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 공정 기록(750행, 목표 열 합격여부)이 들어왔는지 확인하세요.
+② Distributions(분포 막대)를 File에 잇고 합격여부를 고르세요(Split by는 None). 합격이 전체의 몇 %인가요? 이것이 기준선입니다.
+③ Tree(결정 트리, 깊이 4) → Tree Viewer를 이으세요. Tree Viewer 왼쪽 Show details in non-leaves에 체크하세요.
+④ Test and Score(평가, Number of folds 10)를 File과 Tree에 잇고, Confusion Matrix를 Test and Score에 이으세요. Confusion Matrix의 Show가 Number of instances인지 보세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVYgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMGndlZWswOV9wYXNzX2ZhaWxf
+dHJhaW4udGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjDouLi8uLi9kYXRhL3dlZWts
+eS93ZWVrMDkvb3JhbmdlL3dlZWswOV9wYXNzX2ZhaWxfdHJhaW4udGFilIwFdGl0bGWUjACUjAVz
+aGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRfdXJsc5RdlIwDdXJs
+lGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNvbnRleHRfc2V0dGlu
+Z3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

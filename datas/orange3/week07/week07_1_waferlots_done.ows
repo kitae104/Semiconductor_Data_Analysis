@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="7차시 ① 식각 설비 3대의 웨이퍼 12장 — 수율과 불량 위치 (완성)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+		<node id="1" name="Pivot Table" qualified_name="Orange.widgets.data.owpivot.OWPivot" project_name="Orange3" version="" title="Pivot Table (피벗 표)" position="(300.0, 320.0)" />
+		<node id="2" name="Select Rows" qualified_name="Orange.widgets.data.owselectrows.OWSelectRows" project_name="Orange3" version="" title="Select Rows (식각-3만)" position="(300.0, 460.0)" />
+		<node id="3" name="Scatter Plot" qualified_name="Orange.widgets.visualize.owscatterplot.OWScatterPlot" project_name="Orange3" version="" title="Scatter Plot (웨이퍼 맵)" position="(480.0, 460.0)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="2" source_node_id="2" sink_node_id="3" source_channel="Matching Data" sink_channel="Data" enabled="true" source_channel_id="matching_data" sink_channel_id="data" />
+	</links>
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: File → Pivot Table(Rows 설비번호, Columns 합격여부, Count), File → Select Rows(설비번호 is 식각-3) → Scatter Plot(다이_X·다이_Y, 색 합격여부).
+Pivot Table이 세는 것은 다이 수입니다(웨이퍼 수가 아님). 수율이 가장 낮은 설비의 웨이퍼를 그림으로 열어 불량 위치를 보세요 — 원인 후보를 좁히는 단서입니다.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVZgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHHdlZWswN19vcmFuZ2Vfd2Fm
+ZXJfbG90cy50YWKUjAZwcmVmaXiUjAdiYXNlZGlylIwHcmVscGF0aJSMPC4uLy4uL2RhdGEvd2Vl
+a2x5L3dlZWswNy9vcmFuZ2Uvd2VlazA3X29yYW5nZV93YWZlcl9sb3RzLnRhYpSMBXRpdGxllIwA
+lIwFc2hlZXSUaA+MC2ZpbGVfZm9ybWF0lE51YmGMBnNvdXJjZZRLAIwLcmVjZW50X3VybHOUXZSM
+A3VybJRoD4wLc2hlZXRfbmFtZXOUfZSMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBBjb250ZXh0X3Nl
+dHRpbmdzlF2UjAtfX3ZlcnNpb25fX5RLAXUu
+</properties>
+		<properties node_id="1" format="pickle">gASVfQEAAAAAAAB9lCiMC2F1dG9fY29tbWl0lIiMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBFzZWxf
+YWdnX2Z1bmN0aW9uc5SPlChLAJCMCXNlbGVjdGlvbpSPlIwLX192ZXJzaW9uX1+USwKMEGNvbnRl
+eHRfc2V0dGluZ3OUXZSMFW9yYW5nZXdpZGdldC5zZXR0aW5nc5SMB0NvbnRleHSUk5QpgZR9lCiM
+BnZhbHVlc5R9lCiMC2NvbF9mZWF0dXJllIwM7ZWp6rKp7Jes67aAlEtlhpSMC3Jvd19mZWF0dXJl
+lIwM7ISk67mE67KI7Zi4lEtlhpSMC3ZhbF9mZWF0dXJllIwL7Juo7J207Y28SUSUS2WGlGgHSwJ1
+jAphdHRyaWJ1dGVzlH2UKGgYSwFoFUsBjAjri6TsnbRfWJRLAowI64uk7J20X1mUSwKMD+ykkeyL
+rOqxsOumrF9tbZRLAowM67aI65+J7Yyo7YS0lEsBaBJLAXWMBW1ldGFzlH2UdWJhdS4=
+</properties>
+		<properties node_id="2" format="pickle">gASVeQEAAAAAAAB9lCiMC2F1dG9fY29tbWl0lIiMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBBwdXJn
+ZV9hdHRyaWJ1dGVzlImMDXB1cmdlX2NsYXNzZXOUiYwQdXBkYXRlX29uX2NoYW5nZZSIjAtfX3Zl
+cnNpb25fX5RLAowQY29udGV4dF9zZXR0aW5nc5RdlIwVb3Jhbmdld2lkZ2V0LnNldHRpbmdzlIwH
+Q29udGV4dJSTlCmBlH2UKIwGdmFsdWVzlH2UKIwKY29uZGl0aW9uc5RdlCiMDOyEpOu5hOuyiO2Y
+uJRLAUsAXZSMCOyLneqwgS0zlGF0lGFoBksCdYwKYXR0cmlidXRlc5R9lCiMC+ybqOydtO2NvElE
+lEsBaBJLAYwI64uk7J20X1iUSwKMCOuLpOydtF9ZlEsCjA/spJHsi6zqsbDrpqxfbW2USwKMDOu2
+iOufie2MqO2EtJRLAYwM7ZWp6rKp7Jes67aAlEsBdYwFbWV0YXOUfZR1YmF1Lg==
+</properties>
+		<properties node_id="3" format="pickle">gASVkQIAAAAAAAB9lCiMC2F1dG9fY29tbWl0lIiMC2F1dG9fc2FtcGxllIiMEmNvbnRyb2xBcmVh
+VmlzaWJsZZSIjAlzZWxlY3Rpb26UTowRdG9vbHRpcF9zaG93c19hbGyUiIwPdmlzdWFsX3NldHRp
+bmdzlH2UjAVncmFwaJR9lCiMC2FscGhhX3ZhbHVllEuAjA1jbGFzc19kZW5zaXR5lImMEWppdHRl
+cl9jb250aW51b3VzlImMC2ppdHRlcl9zaXpllEsAjBNsYWJlbF9vbmx5X3NlbGVjdGVklImMFm9y
+dGhvbm9ybWFsX3JlZ3Jlc3Npb26UiYwLcG9pbnRfd2lkdGiUSwqMCXNob3dfZ3JpZJSJjAtzaG93
+X2xlZ2VuZJSIjA1zaG93X3JlZ19saW5llIl1jAtfX3ZlcnNpb25fX5RLBYwQY29udGV4dF9zZXR0
+aW5nc5RdlIwVb3Jhbmdld2lkZ2V0LnNldHRpbmdzlIwHQ29udGV4dJSTlCmBlH2UKIwGdmFsdWVz
+lH2UKIwKYXR0cl9jb2xvcpSMDO2VqeqyqeyXrOu2gJRLZYaUjAphdHRyX2xhYmVslE5K/v///4aU
+jAphdHRyX3NoYXBllE5K/v///4aUjAlhdHRyX3NpemWUTkr+////hpSMBmF0dHJfeJSMCOuLpOyd
+tF9YlEtmhpSMBmF0dHJfeZSMCOuLpOydtF9ZlEtmhpRoCH2UaBRLBXWMCmF0dHJpYnV0ZXOUfZQo
+jAvsm6jsnbTtjbxJRJRLAYwM7ISk67mE67KI7Zi4lEsBaChLAmgrSwKMD+ykkeyLrOqxsOumrF9t
+bZRLAowM67aI65+J7Yyo7YS0lEsBaB9LAXWMBW1ldGFzlH2UdWJhdS4=
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

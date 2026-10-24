@@ -26,8 +26,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## 준비물
 
-- Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
-- 학생 키트: `dist/week08_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 폴더 구조를 바꾸지 않게 한다.
+- Jupyter 환경, 프로젝터, Orange3(처음이면 `docs/orange3-guide.html`)
 - 시연: `week08_solution.ipynb`(출력 저장됨) / 학생: `week08_student.ipynb`
 - Orange: `week08_1_chamber_start.ows`·`_done.ows`, `week08_2_anomaly_start.ows`·`_done.ows`
 - 데이터: `week08_easy_weather_sales.csv`(PART 1 생활 예제), `week08_orange_chamber_sensor.csv`(PART 2 워밍업), `week08_anomaly_root_cause.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
@@ -79,7 +78,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `week08_1_chamber_start.ows`를 연다. File 위젯을 더블클릭해 200행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] `week08_1_chamber_start.ows`를 연다. File 위젯을 더블클릭해 200행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 데이터 파일을 찾지 못한 것이다 — `.ows`를 원래 폴더에서 다시 연다.
 - [ ] **Unsupervised** 묶음(Data 아님)에서 Correlations를 끌어 와 File에 잇는다. 맨 위 칸 Pearson correlation, 그 아래 칸 (All combinations) 확인. 1위 +0.781, 2위 -0.516, 3위 +0.500(측정시간 쌍 — "이 기록(약 17일)에는 세정이 한 번뿐이라 누적사용시간이 두 구간 모두 시각과 함께 올랐고, 리셋 때문에 1이 아니라 +0.5 정도로 잡혔다. 세정이 여러 번 있는 긴 기록이면 0에 가까워진다"고 한 줄 설명). 학생은 강의의 "읽을 것 보기"를 직접 읽은 뒤 연다.
 - [ ] Visualize 묶음 Scatter Plot을 **File에** 잇고 Axis x RF파워_W, Axis y 식각률_nm_min. 오른쪽 위로 올라가는 띠. 워밍업에서는 Find Informative Projections 버튼이 꺼져 있다(툴팁 "Color variable is not selected") — 결과 열이 없어서다.
 - [ ] 강의의 "워밍업 정리 보기"는 학생이 1·2위를 읽은 뒤 연다.
@@ -133,7 +132,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 - `NameError: name 'vac_out_fail' is not defined`: 문제 3 첫 셀이 실패한 채 둘째 셀을 실행했다. 첫 셀부터 고친다.
 - `0 0` 다음 `ZeroDivisionError: division by zero`: 문제 3에서 `|` 대신 `&`를 썼다(4.5보다 작으면서 5.5보다 큰 값은 없다).
 - 오류 없이 이상한 숫자: 문제 3 둘째 셀 기준선이 `26.7` → 문제 1 셀을 실행하지 않았다. 문제 1 기준선이 100%를 넘음 → 나누는 표를 `shop`으로 썼다. 문제 1 `88.9` → 합격(1)을 셌다. 문제 2 습도–두께 `0.29` → `shop["습도_pct"]`로 썼다(두 열 모두 `df`에서). 문제 3 `78 58` → 합격(1)을 셌다. 문제 3 불합격률 `4.4` → `df`로 나눴다(`vac_out`으로 나눈다).
-- Orange File에 파일 이름이 빨갛게 보임: 키트 폴더 구조가 바뀌었거나 `.ows`를 다른 곳으로 옮겼다. 키트를 다시 풀고 그 안에서 연다.
+- Orange File에 파일 이름이 빨갛게 보임: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 - Orange Correlations 값이 강의와 다름: 맨 위 칸이 Spearman correlation으로 바뀌었다. Pearson correlation으로 되돌린다.
 
 ## 빨리 끝낸 학생용 과제

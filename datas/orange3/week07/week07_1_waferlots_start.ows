@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="7차시 ① 식각 설비 3대의 웨이퍼 12장 — 수율과 불량 위치 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭하면 식각 설비 3대가 처리한 웨이퍼 12장의 다이 검사 기록(3,804행)이 들어 있습니다.
+② Transform 묶음에서 Pivot Table(피벗 표)을 끌어 와 File과 잇고, Rows = 설비번호, Columns = 합격여부로 고르세요(값은 Count).
+③ Select Rows(행 고르기)를 File에 잇고, 이미 있는 첫 줄의 열을 설비번호로, 값을 ②의 표에서 불합격(-1) 칸이 가장 큰 설비로 바꾸세요(줄을 새로 추가하지 않습니다).
+④ Select Rows에 Scatter Plot(산점도)을 잇고 x = 다이_X, y = 다이_Y, Color = 합격여부로 웨이퍼 맵을 그리세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVZgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHHdlZWswN19vcmFuZ2Vfd2Fm
+ZXJfbG90cy50YWKUjAZwcmVmaXiUjAdiYXNlZGlylIwHcmVscGF0aJSMPC4uLy4uL2RhdGEvd2Vl
+a2x5L3dlZWswNy9vcmFuZ2Uvd2VlazA3X29yYW5nZV93YWZlcl9sb3RzLnRhYpSMBXRpdGxllIwA
+lIwFc2hlZXSUaA+MC2ZpbGVfZm9ybWF0lE51YmGMBnNvdXJjZZRLAIwLcmVjZW50X3VybHOUXZSM
+A3VybJRoD4wLc2hlZXRfbmFtZXOUfZSMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBBjb250ZXh0X3Nl
+dHRpbmdzlF2UjAtfX3ZlcnNpb25fX5RLAXUu
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

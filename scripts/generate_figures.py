@@ -90,50 +90,61 @@ def draw_wafer(ax, x, y, fail, highlight=None, title=None, rings=False, pass_col
 # 1차시
 # ---------------------------------------------------------------------------
 def fig_week01_process_flow():
-    """8대 공정 가로 흐름도. "여러 번" 되풀이하는 단계(②~⑥)를 같은 색으로 묶는다(원천: A-4)."""
+    """8대 공정 흐름도. 글자가 작아 보이지 않도록 4칸씩 두 줄로 놓고 글자를 키웠다.
+    "여러 번" 되풀이하는 단계(②~⑥)는 같은 색 + "여러 번 되풀이" 표시로 묶는다(원천: A-4)."""
     df = read("week04", "week04_orange_process_flow.csv")
-    fig, ax = plt.subplots(figsize=(16, 4.6))
-    w, gap = 1.7, 0.35
+    per_row, w, h, gap, row_gap = 4, 2.3, 3.0, 0.45, 0.9
+    y_bottom = 1.9
+    y_rows = [y_bottom + h + row_gap, y_bottom]
+    fig, ax = plt.subplots(figsize=(10.5, 9.0))
+    pos = []
     for i, row in df.iterrows():
-        x0 = i * (w + gap)
+        r, c = divmod(i, per_row)
+        x0, y0 = c * (w + gap), y_rows[r]
+        pos.append((x0, y0))
         repeat = row["반복여부"] == "여러 번"
         face, edge = (BLUE_BG, BLUE) if repeat else ("white", MUTED)
-        ax.add_patch(FancyBboxPatch((x0, 0), w, 2.2, boxstyle="round,pad=0.02,rounding_size=0.08",
-                                    facecolor=face, edgecolor=edge, lw=1.6))
-        ax.text(x0 + w / 2, 1.88, f"{row['공정순서']}", ha="center", va="center", fontsize=11,
-                color="white", bbox=dict(boxstyle="circle,pad=0.25", fc=BLUE if repeat else MUTED, ec="none"))
-        ax.text(x0 + w / 2, 1.38, row["공정명"].replace("(", "\n("), ha="center", va="center",
-                fontsize=12.5, fontweight="bold", color=INK)
-        ax.text(x0 + w / 2, 0.55, textwrap.fill(row["생활비유"], 9), ha="center", va="center",
-                fontsize=9.5, color=MUTED, linespacing=1.3)
-        if i < len(df) - 1:
-            ax.annotate("", xy=(x0 + w + gap - 0.03, 1.1), xytext=(x0 + w + 0.03, 1.1),
-                        arrowprops=dict(arrowstyle="-|>", color=MUTED, lw=1.4))
+        ax.add_patch(FancyBboxPatch((x0, y0), w, h, boxstyle="round,pad=0.02,rounding_size=0.12",
+                                    facecolor=face, edgecolor=edge, lw=2.2))
+        ax.text(x0 + w / 2, y0 + h - 0.22, row["구분"], ha="center", va="center", fontsize=12.5, color=MUTED)
+        ax.text(x0 + w / 2, y0 + h - 0.72, f"{row['공정순서']}", ha="center", va="center", fontsize=15,
+                fontweight="bold", color="white",
+                bbox=dict(boxstyle="circle,pad=0.3", fc=BLUE if repeat else MUTED, ec="none"))
+        name = row["공정명"].replace("(", "\n(")
+        two = "\n" in name        # 이름이 두 줄이면 글자를 조금 줄여 설명과 겹치지 않게 한다
+        ax.text(x0 + w / 2, y0 + h - (1.42 if two else 1.35), name, ha="center", va="center",
+                fontsize=16.5 if two else 19, fontweight="bold", color=INK, linespacing=1.05)
+        ax.text(x0 + w / 2, y0 + (1.0 if two else 1.2), textwrap.fill(row["생활비유"], 11), ha="center", va="top",
+                fontsize=14, color=INK, linespacing=1.35)
+        if repeat:
+            ax.text(x0 + w / 2, y0 + 0.22, "여러 번 되풀이", ha="center", va="center", fontsize=12.5,
+                    fontweight="bold", color=BLUE)
+    arrow = dict(arrowstyle="-|>", color=MUTED, lw=2.2, mutation_scale=22)
+    for i in range(len(df) - 1):
+        (xa, ya), (xb, yb) = pos[i], pos[i + 1]
+        if i % per_row != per_row - 1:      # 같은 줄: 오른쪽 화살표
+            ax.annotate("", xy=(xb - 0.03, ya + h / 2), xytext=(xa + w + 0.03, ya + h / 2), arrowprops=arrow)
+        else:                                # 줄 바꿈: 아래로 내려와 왼쪽으로 꺾어 다음 줄 첫 칸으로
+            xs, xe = xa + w / 2, xb + w / 2
+            ymid = ya - row_gap / 2
+            ax.plot([xs, xs, xe], [ya - 0.03, ymid, ymid], color=MUTED, lw=2.2, solid_capstyle="round")
+            ax.annotate("", xy=(xe, yb + h + 0.03), xytext=(xe, ymid), arrowprops=arrow)
     circled = "①②③④⑤⑥⑦⑧"
-    rep = df.index[df["반복여부"] == "여러 번"]
-    xa, xb = rep.min() * (w + gap), rep.max() * (w + gap) + w
-    ax.annotate("", xy=(xa + 0.3, -0.12), xytext=(xb - 0.3, -0.12),
-                arrowprops=dict(arrowstyle="-|>", color=BLUE, lw=1.8, connectionstyle="arc3,rad=-0.12"))
-    first, last = circled[df.loc[rep.min(), "공정순서"] - 1], circled[df.loc[rep.max(), "공정순서"] - 1]
-    ax.text((xa + xb) / 2, -1.05, f"{first} ~ {last} 단계는 층을 쌓을 때마다 여러 번 되풀이한다", ha="center",
-            fontsize=11, color=BLUE)
     front = df.index[df["구분"] == "전공정"]
     back = df.index[df["구분"] == "후공정"]
-    for idx, label in ((front, "전공정 {}~{}: 웨이퍼를 만들고 그 위에 회로 만들기"),
-                       (back, "후공정 {}~{}: 검사하고 포장하기")):
-        a, b = idx.min() * (w + gap), idx.max() * (w + gap) + w
-        ax.plot([a, b], [2.55, 2.55], color=INK, lw=1.4)
-        for x in (a, b):   # 양 끝 눈금으로 묶는 범위를 분명히 한다
-            ax.plot([x, x], [2.42, 2.55], color=INK, lw=1.4)
-        text = label.format(circled[df.loc[idx.min(), "공정순서"] - 1], circled[df.loc[idx.max(), "공정순서"] - 1])
-        ax.text((a + b) / 2, 2.72, text, ha="center", va="bottom", fontsize=11, color=INK)
-    ax.text(len(df) * (w + gap) - gap, 3.15, "전공정·후공정 분류는 자료마다 조금 다를 수 있음", ha="right",
-            va="bottom", fontsize=9, color=MUTED)
-    ax.set_xlim(-0.2, len(df) * (w + gap))
-    ax.set_ylim(-1.3, 3.5)
+    rep = df.index[df["반복여부"] == "여러 번"]
+    lines = [
+        (f"{circled[df.loc[rep.min(), '공정순서'] - 1]} ~ {circled[df.loc[rep.max(), '공정순서'] - 1]} 단계(색이 있는 칸)는 층을 쌓을 때마다 여러 번 되풀이한다", BLUE),
+        (f"전공정 {circled[df.loc[front.min(), '공정순서'] - 1]}~{circled[df.loc[front.max(), '공정순서'] - 1]}: 웨이퍼를 만들고 그 위에 회로 만들기", INK),
+        (f"후공정 {circled[df.loc[back.min(), '공정순서'] - 1]}~{circled[df.loc[back.max(), '공정순서'] - 1]}: 검사하고 포장하기 (전공정·후공정 분류는 자료마다 조금 다를 수 있음)", INK),
+    ]
+    for k, (text, color) in enumerate(lines):
+        ax.text(0, 1.2 - k * 0.5, text, ha="left", va="center", fontsize=13, color=color)
+    ax.set_xlim(-0.2, per_row * (w + gap) - gap + 0.2)
+    ax.set_ylim(-0.1, y_rows[0] + h + 0.15)
     ax.axis("off")
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.88, bottom=0.06)
-    fig.suptitle("반도체 8대 공정 한눈에 보기 (생활 비유)", fontsize=15, color=INK, y=0.98)
+    fig.subplots_adjust(left=0.01, right=0.99, top=0.93, bottom=0.04)
+    fig.suptitle("반도체 8대 공정 한눈에 보기 (생활 비유)", fontsize=20, fontweight="bold", color=INK, y=0.985)
     note(fig, "공정 이름과 비유는 이해를 돕기 위한 단순화 · 교육용 자료")
     return save(fig, "week01_process_flow.png")
 

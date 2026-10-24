@@ -27,8 +27,7 @@
 
 ## 준비물
 
-- Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
-- 학생 키트: `dist/week09_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 폴더 구조를 바꾸지 않게 한다.
+- Jupyter 환경, 프로젝터, Orange3(처음이면 `docs/orange3-guide.html`)
 - 시연: `week09_solution.ipynb`(출력 저장됨) / 학생: `week09_student.ipynb`
 - Orange: `week09_1_patterns_start.ows`·`_done.ows`, `week09_2_passfail_start.ows`·`_done.ows`
 - 데이터: `week09_orange_wafer_patterns.csv`(PART 1 워밍업), `week09_pass_fail_train.csv`(반도체, PART 1·2·3). Orange는 각 파일의 `orange/*.tab`을 연다.
@@ -81,7 +80,7 @@
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `week09_1_patterns_start.ows`를 연다. File 위젯을 더블클릭해 240행, 목표 열 `불량패턴`이 들어왔는지 확인한다. 파일 이름이 빨갛게 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] `week09_1_patterns_start.ows`를 연다. File 위젯을 더블클릭해 240행, 목표 열 `불량패턴`이 들어왔는지 확인한다. 파일 이름이 빨갛게 보이면 데이터 파일을 찾지 못한 것이다 — `.ows`를 원래 폴더에서 다시 연다.
 - [ ] **Model** 묶음 Tree → File. Tree 창의 **Limit the maximal tree depth to** 100 → **4**(체크 상자는 켜진 채). 그다음 **Visualize** 묶음 Tree Viewer → **Tree**(File 아님).
 - [ ] Tree Viewer는 처음에 끝 상자(잎)에만 숫자가 보인다. 왼쪽 Display 칸의 **Show details in non-leaves**에 체크하게 한다(공정 기록의 `-1 · 56.0%, 42/75`도 중간 상자라 체크해야 보인다).
 - [ ] Tree Viewer 상자 읽는 법을 한 번 짚는다: 굵은 글자 = 그 갈래에서 가장 많은 답, `75.0%, 30/40` 같은 숫자 = 40장 중 30장, 상자 맨 아래 열 이름 = 다음 질문, 선 옆 `≤ 숫자`/`> 숫자` = 답. 예시는 뿌리 상자가 아닌 것으로 든다(뿌리 질문은 실습지 문제 3 답). 그림이 크면 왼쪽 Zoom. 정보 줄의 nodes = 상자 전체 수, leaves = 끝 상자 수.
@@ -145,7 +144,7 @@
 - `ValueError: could not convert string to float: 'EQ-02'`: Feature에 글자 열(`설비번호`)을 넣었다.
 - 오류 없이 이상한 숫자: 정확도 100% → Feature에 `합격여부`가 들어갔다. 79.3% → `dropna()`를 건너뛰었다(`print(df.shape)`가 `(735, 9)`인지 확인). 문제 2가 80.3% → `X1`에 6개 열이 들어갔거나 `model`·`X_test`가 남았다. 문제 2가 82.7% → 학습용으로 채점했다.
 - ChatGPT 코드 숫자가 다름: `stratify=y` 빠짐 77.6%, `max_depth=4` 빠짐 74.8%, `dropna()` 빠짐 79.3%. 조건을 하나씩 비교한다.
-- Orange File에 파일 이름이 빨갛게 보임: 키트 폴더 구조가 바뀌었거나 `.ows`를 다른 곳으로 옮겼다. 키트를 다시 풀고 그 안에서 연다.
+- Orange File에 파일 이름이 빨갛게 보임: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 - Orange CA가 강의와 조금 다름: Number of folds가 5, 또는 Tree 깊이가 4가 아니다(웨이퍼 0.938, 공정 기록 깊이 100이면 0.739). 0.96·0.68쯤이면 AUC 칸을 읽었다.
 
 ## 빨리 끝낸 학생용 과제

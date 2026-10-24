@@ -186,24 +186,20 @@ PART 머리 섹션은 `section.block > h2` 구조를 지켜 자동 목차에 잡
 
 ## 찾아보기 상자
 
-v3(2026-10-23) 신규. 기존 `callout concept` + `tag`만 쓴다(새 클래스 없음). 확인 포인트는 정답 토글과 같은 규칙 —
-`reveal-btn` **바로 다음 형제**가 `answer-box`여야 열린다. 버튼 글자는 "~ 보기"로 끝낸다.
+v3(2026-10-23) 신규, 2026-10-24 간소화. 기존 `callout concept` + `tag`만 쓴다(새 클래스 없음). 반복 고지 문구와 접힌 확인 포인트는 두지 않는다.
 
 ```html
 <div class="callout concept">
   <b class="tag">찾아보기</b>
-  <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
   <p><b>검색어</b> <code>웨이퍼 왜 둥근가</code></p>
   <div class="code-block">
     <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
     <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게 웨이퍼가 왜 둥근지 3문장으로 쉽게 설명해줘.</code></pre>
   </div>
-  <button class="reveal-btn">확인 포인트 보기</button>
-  <div class="answer-box">좋은 답이라면 "실리콘 덩어리(잉곳)를 둥글게 키운 뒤 얇게 자른다"는 내용이 들어 있다.</div>
 </div>
 ```
 
-- 한 상자에 질문이 여러 개면 검색어·복사 블록 묶음을 반복하고, 확인 포인트 토글은 상자 끝에 하나만 둔다.
+- 한 상자에 질문이 여러 개면 검색어·복사 블록 묶음을 반복한다.
 - 검사 스크립트가 차시당 상자 수(3~6)를 센다 — 태그 글자는 정확히 `찾아보기`로 쓴다.
 
 ---

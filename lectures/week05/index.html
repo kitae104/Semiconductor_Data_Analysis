@@ -132,14 +132,11 @@ max    1720.000000  70.300000  98.000000
     </ul>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>평균 중앙값 차이</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람에게 평균과 중앙값의 차이를 반 학생 키 예시로 3문장 안에 설명해줘. 키를 잘못 적은 값이 하나 섞였을 때 둘 중 어느 쪽이 더 크게 흔들리는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "평균은 모든 값을 더해 개수로 나누므로 튀는 값 하나에 크게 끌려가고, 중앙값은 크기순 한가운데 값이라 덜 흔들린다"는 내용이 들어 있다.</div>
     </div>
   </section>
 
@@ -170,14 +167,11 @@ dtype: int64
     <p>빈칸이 있는 3행이 지워져 15행 → 12행이 됐다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>pandas NaN 뜻</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>pandas에서 NaN이 무엇인지 프로그래밍을 처음 배우는 사람에게 쉬운 말로 설명해줘. 숫자 0과 무엇이 다른지도 예를 들어 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "NaN은 값이 없다(빈칸)는 표시이고, 0은 잰 값이 0이라는 뜻이라 서로 다르다", "평균을 낼 때 NaN은 빼고 계산한다"는 내용이 들어 있다.</div>
     </div>
   </section>
 
@@ -232,15 +226,11 @@ print("정리 후 평균 키:", after_height)</code></pre>
     <p>15행이 10행이 되고, 평균 키가 276.6 → 163.8로 바뀌었다. 튀는 값 하나가 평균을 이만큼 흔들었다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>센서 측정값 튀는 이유</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>공장 센서 기록에 갑자기 튀는 값이 찍히는 흔한 이유를 데이터 분석을 처음 배우는 사람에게 3가지로 설명해줘. 튀는 값이 있으면 곧 불량이라는 뜻인지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 센서 고장·통신 오류·입력 실수(소수점·단위)처럼 <b>기록이 잘못된 경우</b>와 실제 설비 상태가 바뀐 경우를 함께 말하고,
-      "튀는 값이 곧 불량이라고 단정하지 않고 다른 열과 함께 확인한다"는 내용이 들어 있다.</div>
     </div>
   </section>
 
@@ -365,7 +355,7 @@ print(hot)</code></pre>
       <table>
         <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
         <tbody>
-          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>키트의 데이터가 이미 연결돼 있다. 더블클릭해 행 수를 확인한다</td></tr>
+          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>데이터가 이미 연결돼 있다. 더블클릭해 행 수를 확인한다</td></tr>
           <tr><td><code>Feature Statistics</code></td><td>Data</td><td>열 통계</td><td>열마다 Mean(평균)·Median(중앙값)·Min.·Max.·Missing(빈칸 수)을 본다(2차시에 써 봤다)</td></tr>
           <tr><td><code>Impute</code></td><td>Transform</td><td>빈칸 채우기</td><td><b>오늘 새 위젯.</b> 빈칸을 그 열의 평균으로 채운다(Average/Most frequent)</td></tr>
           <tr><td><code>Select Rows</code></td><td>Transform</td><td>행 고르기</td><td>조건에 맞는 행만 남긴다(3차시에 써 봤다). 튀는 값을 거른다</td></tr>
@@ -404,15 +394,11 @@ print(hot)</code></pre>
     <p>그래프의 99,999는 실제 먼지 수가 아니다. <b>이 기록에서는 센서가 측정에 실패하면 99,999를 남기도록 정해 두었다</b>(오류 코드). 이 값을 그대로 두고 빈칸을 채우면 무슨 일이 생기는지 Orange로 본다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>반도체 클린룸 왜 필요</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>반도체 공장에 클린룸이 왜 필요한지 반도체를 처음 배우는 사람에게 3문장으로 설명해줘. 공기 속 먼지 입자를 어떻게 관리하는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "회로가 아주 가늘어 눈에 안 보이는 먼지 하나도 회로를 망칠 수 있어, 공기를 걸러 입자 수를 낮게 유지하고 계속 잰다"는 내용이 들어 있다.
-      몇 개까지 괜찮은지는 클린룸 등급 규격마다 다르다. 오늘 쓰는 10,000 같은 선은 교육용 예시다.</div>
     </div>
 
     <div class="step"><div class="num">1</div><div class="content"><b>정리 전 훑어보기</b> — 왼쪽 Data 묶음에서 <code>Feature Statistics</code>를 끌어 와 File과 잇고 더블클릭한다.

@@ -145,14 +145,11 @@ cafe.head()</code></pre>
     <p>맨 왼쪽 0~4는 Pandas가 붙인 <b>행 번호</b>다. 0부터 센다(2차시 리스트 인덱스와 같다).</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>CSV 파일이란</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>CSV 파일이 무엇인지 프로그래밍을 처음 배우는 사람에게 3문장으로 설명해줘. 엑셀 파일과 무엇이 다른지, 메모장으로 열면 어떻게 보이는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "한 줄이 한 행이고, 칸 사이를 쉼표로 나눈 글자 파일이라 메모장으로도 열린다", "엑셀 파일과 달리 글꼴·색·수식 같은 꾸밈 없이 값만 담는다"는 내용이 들어 있다.</div>
     </div>
   </section>
 
@@ -244,14 +241,11 @@ Name: 종류, dtype: bool
     </div>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>pandas 조건 검색</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>pandas에서 df[df["종류"] == "커피"]처럼 조건으로 행을 고르는 방법을 프로그래밍을 처음 배우는 사람에게 체로 거르는 일에 비유해서 3문장으로 설명해줘. 안쪽 df["종류"] == "커피"가 무엇을 만드는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "안쪽 비교가 행마다 True/False 목록을 만들고, 바깥 대괄호가 True인 행만 통과시킨다(체에 걸러 남기는 것)"는 내용이 들어 있다. <code>=</code>(저장)가 아니라 <code>==</code>(같은가?)를 쓴다는 점도 들어 있으면 좋다.</div>
     </div>
   </section>
 
@@ -354,14 +348,11 @@ print(len(fail) / len(df) * 100)</code></pre>
     불합격률 = 불합격 건수 ÷ 전체 건수 × 100. 오늘의 미션인 EQ-02는 PART 3 실습지 문제 2에서 같은 모양으로 직접 구하고, 이 13.0%와 비교한다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>불량률 계산 분모</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>공장 기록에서 설비 하나의 불량률을 구할 때 나누는 수(분모)를 무엇으로 해야 하는지 데이터 분석을 처음 배우는 사람에게 예를 들어 설명해줘. 불량 건수만 비교하면 왜 잘못 판단할 수 있는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "그 설비의 불량 건수를 <b>그 설비의 전체 기록 수</b>로 나눈다(전체 기록 수가 아니다)", "기록이 많은 설비는 불량 건수도 많아 보이므로, 건수가 아니라 비율로 비교한다"는 내용이 들어 있다. 오늘 기록에서는 행마다 붙은 합격/불합격으로 세므로 "불합격률"이라고 부른다. 나누는 방법은 같다.</div>
     </div>
   </section>
 
@@ -380,7 +371,6 @@ print(len(fail) / len(df) * 100)</code></pre>
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 열 고르기와 행 고르기</h2>
     <p>PART 1에서 코드로 한 "열 고르기"와 "조건 검색"을 Orange에서는 창에서 고른다. 오늘 새 위젯은 열을 고르는 <code>Select Columns</code> 하나다.</p>
-    <p>실습 환경에 준비된 파일을 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">
@@ -422,7 +412,7 @@ print(len(fail) / len(df) * 100)</code></pre>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
-         alt="반도체 8대 공정 흐름도. ① 웨이퍼 제조부터 ⑧ 패키징까지 여덟 칸이 화살표로 이어지고, ②~⑥ 칸은 같은 색으로 묶여 여러 번 되풀이한다는 화살표가 있다">
+         alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
     <p class="img-caption">공정 지도 — 반도체 8대 공정. ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다(교육용 단순화). 오늘 Orange로 여는 공정 흐름표가 이 그림을 그린 원천 데이터다.</p>
     <ul class="pt-list">
       <li>워밍업 <code>week04_orange_process_flow.csv</code> — <b>공정 지도 위치: 공정 지도 전체(①~⑧)를 표로 만든 것.</b></li>
@@ -443,7 +433,7 @@ print(len(fail) / len(df) * 100)</code></pre>
         </tbody>
       </table>
     </div>
-    <div class="step"><div class="num">1</div><div class="content">Orange 3.35를 켜고 맨 위 메뉴 File &gt; Open으로 <code>week04_1_flow_start.ows</code>를 연다. File 위젯을 더블클릭해 8행이 들어왔는지 확인하고 창을 닫는다. 막히면 같은 폴더의 <code>week04_1_flow_done.ows</code>(완성본)를 연다.</div></div>
+    <div class="step"><div class="num">1</div><div class="content">Orange를 켜고 맨 위 메뉴 File &gt; Open으로 <code>week04_1_flow_start.ows</code>를 연다. File 위젯을 더블클릭해 8행이 들어왔는지 확인하고 창을 닫는다. 막히면 같은 폴더의 <code>week04_1_flow_done.ows</code>(완성본)를 연다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week04_02_flow_start_canvas.png"
          alt="week04_1_flow_start.ows를 연 Orange3 캔버스. File 위젯 하나와 안내 메모가 있다"
          data-shot="week04_1_flow_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 위쪽 ①~④ 안내 메모가 보이게">
@@ -466,14 +456,11 @@ print(len(fail) / len(df) * 100)</code></pre>
     <p>오늘 공정 기록의 <code>공정명</code> 중 산화·포토·식각·증착은 이 흐름표의 ②~⑤에 해당한다. <b>세정</b>은 흐름표에 행이 없다 — 따로 번호가 붙은 단계가 아니라 단계 사이마다 웨이퍼를 씻는 일이기 때문이다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>반도체 8대 공정 반복</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>반도체 8대 공정 중 산화·포토·식각·증착·금속 배선을 칩 하나 만들 때 여러 번 되풀이하는 이유를 반도체를 처음 배우는 사람에게 피자를 층층이 쌓는 일에 비유해서 3문장으로 설명해줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "회로를 한 번에 만들지 않고 여러 층으로 쌓기 때문에, 층마다 막을 만들고(산화·증착) 그림을 찍고(포토) 깎고(식각) 잇는(금속 배선) 일을 되풀이한다"는 내용이 들어 있다. 몇 번 되풀이하는지는 칩 종류마다 다르다.</div>
     </div>
 
     <h3>반도체 — 공정 기록에서 설비 하나 고르기</h3>

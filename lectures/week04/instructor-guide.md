@@ -28,8 +28,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## 준비물
 
-- Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
-- 학생 키트: `dist/week04_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 `semiconductor_kit` 폴더 구조를 바꾸지 않게 한다.
+- Jupyter 환경, 프로젝터, Orange3(처음이면 `docs/orange3-guide.html`)
 - 시연: `week04_solution.ipynb`(출력 저장됨) / 학생: `week04_student.ipynb`
 - Orange: `week04_1_flow_start.ows`·`_done.ows`, `week04_2_filtering_start.ows`·`_done.ows`
 - 데이터: `week04_easy_cafe_orders.csv`(PART 1 생활 예제), `week04_orange_process_flow.csv`(PART 2 워밍업), `week04_process_filtering.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
@@ -84,7 +83,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `week04_1_flow_start.ows`를 연다. File 위젯을 더블클릭해 8행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] `week04_1_flow_start.ows`를 연다. File 위젯을 더블클릭해 8행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 데이터 파일을 찾지 못한 것이다 — `.ows`를 원래 폴더에서 다시 연다.
 - [ ] Select Columns는 **Transform** 묶음에 있다. File에 잇고 더블클릭 → 왼쪽 Ignored / 오른쪽 Features·Target·Metas 상자를 보여 준다. 열을 눌러 고르고 가운데 `<` 버튼(또는 끌어다 놓기)으로 Ignored에 보낸다. 되돌리기는 Reset.
 - [ ] 워밍업: Features의 구분·측정단위, Metas의 주요설비·대표측정값을 Ignored로 → Select Rows(Select Columns에 잇는다) `반복여부 is 여러 번` → Data Table, `공정순서` 열 머리글 클릭 → 5행.
 - [ ] `week04_2_filtering_start.ows`(100행) → Select Columns: Features의 공정명·압력_Pa·가스유량_slm, Metas의 측정시간·로트번호를 Ignored로. **합격여부는 Target에 둔다**고 말로 경고한다.
@@ -135,7 +134,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 - `NameError: name 'small' is not defined` / `NameError: name 'eq02_fail' is not defined`: 문제 1·2의 앞 셀(빈칸 셀)이 실패해서 다음 셀에서 연쇄로 난다. 앞 셀부터 고친다.
 - `NameError: name 'df' is not defined`: 7단계 셀을 실행하지 않고 8단계로 왔다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.
 - 오류 없이 낮은 온도 5건(맨 위 287.0): 문제 3에서 `ascending=True`로 썼다. 문제 3은 빈칸 없이 직접 쓰는 문제라, 6단계 `cafe.sort_values("가격_KRW", ascending=False).head(5)`를 보고 표 이름·열 이름만 바꾸게 한다.
-- Orange File에 파일 이름이 빨갛게 보임: 키트 폴더 구조가 바뀌었거나 `.ows`를 다른 곳으로 옮겼다. 키트를 다시 풀고 그 안에서 연다.
+- Orange File에 파일 이름이 빨갛게 보임: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 
 ## 빨리 끝낸 학생용 과제
 

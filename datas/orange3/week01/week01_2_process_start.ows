@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="1차시 ② 반도체 공정 데이터 둘러보기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 반도체 공정 데이터(40행)가 들어왔는지 확인하세요.
+② Data Table(표 보기)을 File에 이어 행과 열을 살펴보세요.
+③ Distributions(분포 막대)를 File에 잇고 열 목록에서 합격여부를 고르세요. (1 = 합격, -1 = 불합격)</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVgAEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMKXdlZWswMV9zZW1pY29uZHVj
+dG9yX3Byb2Nlc3Nfb3ZlcnZpZXcudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjEku
+Li8uLi9kYXRhL3dlZWtseS93ZWVrMDEvb3JhbmdlL3dlZWswMV9zZW1pY29uZHVjdG9yX3Byb2Nl
+c3Nfb3ZlcnZpZXcudGFilIwFdGl0bGWUjACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwG
+c291cmNllEsAjAtyZWNlbnRfdXJsc5RdlIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJv
+bEFyZWFWaXNpYmxllIiMEGNvbnRleHRfc2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

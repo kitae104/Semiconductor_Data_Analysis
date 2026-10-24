@@ -21,7 +21,7 @@
 ## 준비물
 
 - 프로젝터, 시연용 `week02_solution.ipynb`(출력 저장됨). 학생은 `week02_student.ipynb`.
-- Orange 3.35, 실습 키트 `dist/week02_kit.zip`(전체: `dist/student_kit.zip`). 수업 전에 키트를 풀어 Jupyter(`python -m notebook`)와 `_start.ows` 두 개가 열리는지 미리 확인한다.
+- 수업 전에 노트북과 `_start.ows` 두 개가 열리는지 미리 확인한다.
 - 생성 그림은 없다(Orange 화면만 쓴다).
 - 찾아보기용 인터넷 연결(선택).
 
@@ -45,7 +45,7 @@
   - 6단계 `4`, `305.6`, `298.8` / `EQ-02 평균 온도는 301.7도입니다.` / `302.5`
   - 7단계 문제 1 `303.8`, `304.0` / `7` · 문제 2 `308.5`, `292.2` / `EQ-03 평균 온도는 302.6도입니다.` · 문제 3 `{'설비번호': 'EQ-04', '최고': 317.9, '최저': 294.2, '평균': 305.8}` / `305.8`
   - 8단계 `범위 밖 온도: [292.2, 308.5, 307.5]`, `범위 밖 개수: 3개`
-- Orange(키트 워크플로를 격리된 설정으로 화면 없이 실행해 확인한 값):
+- Orange(워크플로를 격리된 설정으로 화면 없이 실행해 확인한 값):
   - 워밍업 `week02_orange_subway_ridership`: 24행. Feature Statistics `승차인원_count` Mean **2876.58** · Median 2632 · Min 314 · Max **9872** · Missing 0. `하차인원_count` Mean 2618.08 · Max 4188.
     Data Table `승차인원_count` 큰 값부터: 1위 **중앙역 · 1호선 · 출근 · 9872**, 2위 강변역 · 출근 4000, 3위 시장역 · 낮 3969.
   - 반도체 `week02_python_basics_1`: 20행. Feature Statistics `온도_C` Mean **303.8** · Median 303.6 · Min 292.2 · Max **317.9** · Missing 0. 글자 열(공정명·설비번호·합격여부)도 행으로 나오고 Mean 칸이 비어 있다.
@@ -69,8 +69,8 @@
 
 ## Orange 시연 체크리스트
 
-1. 키트 압축을 푼 `semiconductor_kit` 폴더에서 Orange 메뉴 File > Open → `week02_1_subway_start.ows`.
-2. File 위젯 더블클릭 → `week02_orange_subway_ridership.tab`과 열 목록이 보이는지 확인. 빨간 글씨면 폴더 구조가 바뀐 것이다(키트를 다시 풀게 한다).
+1. Orange 메뉴 File > Open → `week02_1_subway_start.ows`.
+2. File 위젯 더블클릭 → `week02_orange_subway_ridership.tab`과 열 목록이 보이는지 확인. 빨간 글씨면 데이터 파일을 찾지 못한 것이다(`.ows`를 원래 폴더에서 다시 연다).
 3. 왼쪽 Data 묶음에서 Feature Statistics를 끌어 와 File과 잇기. `승차인원_count` 행의 Mean 2876.58과 Max 9872를 짚는다. Mode 칸(314)을 최고·최저로 착각하지 않게 "Max. 칸"을 손으로 가리킨다. Distribution(작은 그림)·Median·Dispersion은 오늘 읽지 않는다고 말한다. 글자 열(노선·시간대)의 Mean 칸이 빈 것은 정상이다. `역이름`(meta)이 목록에 없는 것도 한 줄 설명한다.
 4. File에서 한 갈래 더 → Data Table. `승차인원_count` 열 머리를 **두 번** 눌러 큰 값부터 정렬(한 번 = 작은 값부터). 맨 위 중앙역·출근 9872를 학생에게 먼저 묻고 확인한다.
 5. `week02_2_temps_start.ows`를 열고 File → Feature Statistics. `온도_C` Mean 303.8과 Max 317.9를 읽고 "평균만 보면 14도 넘게 높은 기록이 안 보인다 — 지하철과 같은 일"로 잇는다. 캔버스 메모 ②와 같은 지시다.
@@ -122,7 +122,7 @@
 - `TypeError: 'list' object is not callable`: 인덱스에 소괄호를 썼다(`eq03_temps(0)` → `eq03_temps[0]`).
 - `NameError: name '____' is not defined`: 빈칸을 안 채우고 실행했다. `____`는 빈칸 표시일 뿐이고 밑줄 개수와 상관없이 필요한 만큼 쓴다.
 - append 결과가 5개: 2단계 append 셀을 두 번 실행했다. 위 셀 `cart = [...]`부터 다시 실행한다.
-- Orange File 위젯에 빨간 글씨: 키트 폴더 구조가 바뀌었거나 `.ows`를 키트 밖으로 옮겼다. 키트를 다시 풀고 `_start.ows`를 다시 연다.
+- Orange File 위젯에 빨간 글씨: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 
 ## 빨리 끝낸 학생용 과제
 

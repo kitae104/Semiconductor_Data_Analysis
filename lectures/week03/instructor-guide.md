@@ -21,7 +21,7 @@
 ## 준비물
 
 - 프로젝터, 시연용 `week03_solution.ipynb`(출력 저장됨). 학생은 `week03_student.ipynb`.
-- Orange 3.35, 실습 키트 `dist/week03_kit.zip`(전체: `dist/student_kit.zip`). 수업 전에 키트를 풀어 Jupyter(`python -m notebook`)와 `_start.ows` 두 개가 열리는지 미리 확인한다.
+- 수업 전에 노트북과 `_start.ows` 두 개가 열리는지 미리 확인한다.
 - 강의 그림: `assets/images/generated/week03_pm10_grade_bands.png`(PM10 등급 구간).
 - 찾아보기용 인터넷 연결(선택).
 
@@ -42,7 +42,7 @@
   - 6단계 `8` / 범위 밖 4줄(`LOT-0141 314.1` · `LOT-0034 318.4` · `LOT-0197 291.0` 합격여부 1, `LOT-0085 307.0` 합격여부 -1) / `EQ-04 기록 8건 중 범위 밖은 4건입니다.`
   - 7단계 문제 1 `범위 밖입니다.` · 문제 2 `EQ-03 온도 11개 중 범위 안은 7개입니다.` · 문제 3 `범위 안`, `범위 밖` / `30` / `연습용 기준 밖 기록: 12건` / `그중 실제 검사에서 불합격(-1)인 기록: 3건`
   - 8단계 `높음 8건, 낮음 4건`(8 + 4 = 문제 3의 12)
-- Orange(키트 워크플로를 화면 없이 실행해 확인한 값):
+- Orange(워크플로를 화면 없이 실행해 확인한 값):
   - 워밍업 `week03_orange_air_quality`(30행): Select Rows `PM10_ug_m3 is greater than 80` → **8행**(4/3 161 매우나쁨 · 4/4 113 · 4/9 132 · 4/14 89 · 4/16 104 · 4/19 168 매우나쁨 · 4/21 132 · 4/29 140, 나머지는 나쁨) → 나쁨 6 · 매우나쁨 2.
     조건 `습도_pct is greater than 70` 추가 → **3행**(4/4 습도 88 · 4/14 75 · 4/16 85). Distributions(등급, File에서): 나쁨 6 · 매우나쁨 2 · 보통 15 · 좋음 7(가나다순 막대).
   - 반도체 `week03_python_basics_2`: (강의 PART 2) Select Rows `설비번호 is EQ-04` → **8행**, `온도_C is outside 295, 305` 추가 → **4행**(LOT-0141 314.1 · LOT-0034 318.4 · LOT-0197 291.0 · LOT-0085 307.0, 합격여부 1 · 1 · 1 · -1).
@@ -67,8 +67,8 @@
 
 ## Orange 시연 체크리스트
 
-1. 키트 압축을 푼 `semiconductor_kit` 폴더에서 Orange 메뉴 File > Open → `week03_1_air_start.ows`.
-2. File 위젯 더블클릭 → 파일 이름 `week03_orange_air_quality.tab`과 열 목록이 보이는지 확인. 빨간 글씨면 폴더 구조가 바뀐 것이다(키트를 다시 풀게 한다).
+1. Orange 메뉴 File > Open → `week03_1_air_start.ows`.
+2. File 위젯 더블클릭 → 파일 이름 `week03_orange_air_quality.tab`과 열 목록이 보이는지 확인. 빨간 글씨면 데이터 파일을 찾지 못한 것이다(`.ows`를 원래 폴더에서 다시 연다).
 3. 왼쪽 **Transform** 묶음에서 Select Rows를 끌어 와 File과 잇는다(Data 묶음이 아니다). 더블클릭하면 **조건 한 줄이 이미 있다**(`PM10_ug_m3 equals …`). 이 줄을 `PM10_ug_m3` · `is greater than` · `80`으로 바꾼다. Add Condition은 아직 누르지 않는다.
 4. Select Rows에 Data Table을 잇고 Info 칸의 행 수 8을 읽는다. 등급 열이 나쁨·매우나쁨뿐인 것을 보여 주고 "등급은 PM10 값으로 정한 판정이라 딱 맞는다 — 반도체에서는 어떨까?"로 넘긴다.
 5. Select Rows로 돌아가 이번에는 Add Condition → 두 번째 줄 `습도_pct` · `is greater than` · `70`. Data Table이 3행으로 바뀐다. "조건이 여러 줄이면 모두 만족하는 행만 남는다." 필요 없는 줄은 오른쪽 `×`로 지운다는 것도 보여 준다.
@@ -127,7 +127,7 @@
 - 따옴표 빠짐(`== 범위 밖`): `SyntaxError`가 난다(글자 사이 빈칸 때문). 따옴표로 감싼다.
 - 결과가 `None`이나 0건: 함수에서 `return`을 빼먹었다(오류 없음).
 - 문제 2 결과가 0개·1개이거나 너무 큼: 세는 변수를 `for` 안에 두었거나 `pass_count`가 섞였다(오류 없음).
-- Orange File 위젯에 빨간 글씨: 키트 폴더 구조가 바뀌었거나 `.ows`를 키트 밖으로 옮겼다. 키트를 다시 풀고 `_start.ows`를 다시 연다.
+- Orange File 위젯에 빨간 글씨: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 - 커널 끊김: 커널 재시작 후 맨 위부터 다시 실행.
 
 ## 빨리 끝낸 학생용 과제

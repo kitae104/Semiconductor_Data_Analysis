@@ -90,14 +90,11 @@
     </ul>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>kNN 이웃 투표</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람에게 kNN(k-최근접 이웃) 분류가 처음 보는 데이터의 답을 어떻게 정하는지 '이웃에게 물어보기' 비유로 3문장 안에 설명해줘. 이웃 수 k를 작게 하거나 크게 하면 무엇이 달라지는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "처음 보는 데이터와 숫자가 가장 가까운 학습 데이터 k개를 찾아, 그들의 답 중 많은 쪽으로 정한다"는 내용과, "k가 작으면 가까운 몇 개에 크게 흔들리고, 크면 더 넓게 본다"는 내용이 들어 있다. Orange kNN의 기본 k는 5다.</div>
     </div>
 
     <h3>위젯 이름표</h3>
@@ -145,7 +142,7 @@
     <p class="img-caption">새로 들어온 웨이퍼 10장(빨간 칸 = 불합격 다이, 불량 다이 수만 표시). 세 모델은 어떤 모양이라고 답할까? 모델끼리 답이 갈리는 웨이퍼를 찾아보자(교육용 가상 데이터).</p>
 
     <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>week10_1_newwafers_start.ows</code>를 연다.</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 <code>week10_1_newwafers_start.ows</code>를 연다.</li>
       <li>캔버스에 File 위젯 두 개와 ①~⑤ 안내 메모가 보이면 준비가 끝난 것이다. 막히면 같은 폴더의 <code>week10_1_newwafers_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week10_02_newwafers_start.png"
@@ -175,14 +172,11 @@
     <div class="callout success"><b class="tag">워밍업에서 본 것</b> 모델끼리 의견이 갈리는 웨이퍼가 사람이 다시 봐야 할 웨이퍼다. 예측은 판단을 돕는 도구이지, 사람의 확인을 대신하지 않는다.</div>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>예측 확률의 뜻</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>분류 모델이 어떤 웨이퍼를 '중심형일 확률 0.6'이라고 답했을 때 이 숫자가 무슨 뜻인지 데이터 분석을 처음 배우는 사람에게 3문장으로 설명해줘. 이 숫자가 실제로 맞을 확률을 보장하는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "모델이 그 답을 얼마나 믿는지 나타낸 값이고, 보통 확률이 가장 큰 답을 예측으로 고른다", "실제로 맞을 확률을 보장하지는 않는다"는 내용이 들어 있다.</div>
     </div>
 
     <h3>반도체 — 공정 기록 모델 셋을 기준선과 함께 읽기</h3>
@@ -225,15 +219,11 @@
     정확도 한 숫자로 모델을 고르면 이런 모델을 "가장 좋다"고 고를 수 있다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>혼동행렬 읽는 법</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>공장 검사 결과를 예측하는 모델에서, 불합격 기록(로트)을 합격으로 잘못 예측하는 것과 합격 기록(로트)을 불합격으로 잘못 예측하는 것은 각각 어떤 문제가 생길 수 있는지 혼동행렬(confusion matrix)을 처음 배우는 사람에게 3문장으로 설명해줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "불합격을 놓치면 먼저 살펴볼 로트 목록에서 빠지고, 예측만 믿고 검사를 건너뛰면 불량이 다음 단계까지 갈 수 있다", "합격을 불합격으로 잘못 거르면 괜히 다시 살펴보는 수고가 든다"는 두 가지가 들어 있고,
-      어느 쪽이 더 큰 문제인지는 공정과 상황에 따라 다르다고 말한다. 그래서 정확도와 함께 놓친 불합격 칸을 따로 본다.</div>
     </div>
     <div class="step"><div class="num">3</div><div class="content"><b>새 로트 예측하기</b> — Predictions를 아래 File에 잇고 Tree를 Predictions에 잇는다. 9개 중 불합격(-1)으로 예측된 로트가 있을까? PART 2에서 파이썬으로 같은 9개를 예측한 뒤, <b>실습지 문제 4</b>에서 직접 확인하고 비교한다.</div></div>
   </section>

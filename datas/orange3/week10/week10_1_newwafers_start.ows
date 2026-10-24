@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="10차시 ① 모델 세 가지 비교하고 새 웨이퍼 10장 예측하기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (학습: 웨이퍼 240장)" position="(120.0, 320.0)" />
+		<node id="1" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (새 웨이퍼 10장)" position="(120.0, 880.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① 위 File은 9차시 웨이퍼 240장(학습용), 아래 File은 정답이 없는 새 웨이퍼 10장입니다. 둘 다 이미 들어 있습니다.
+② Model 묶음에서 Tree(깊이 4)·kNN·Logistic Regression을 끌어 와 각각 위 File에 이으세요.
+③ Test and Score(평가, Number of folds 10)를 위 File에 잇고, 세 모델을 모두 Test and Score에 이으세요. CA를 비교하세요.
+④ Predictions(예측)를 아래 File에 잇고, 세 모델도 Predictions에 이으세요. 모델끼리 답이 갈리는 웨이퍼를 찾으세요.
+⑤ 새 데이터에는 정답 열이 없어 처음에는 확률이 안 보입니다. Predictions 표 위의 Show probabilities for를 Classes known to the model로 바꾸세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVbgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMIHdlZWswOV9vcmFuZ2Vfd2Fm
+ZXJfcGF0dGVybnMudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjEAuLi8uLi9kYXRh
+L3dlZWtseS93ZWVrMDkvb3JhbmdlL3dlZWswOV9vcmFuZ2Vfd2FmZXJfcGF0dGVybnMudGFilIwF
+dGl0bGWUjACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRf
+dXJsc5RdlIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNv
+bnRleHRfc2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+		<properties node_id="1" format="pickle">gASVZgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHHdlZWsxMF9vcmFuZ2VfbmV3
+X3dhZmVycy50YWKUjAZwcmVmaXiUjAdiYXNlZGlylIwHcmVscGF0aJSMPC4uLy4uL2RhdGEvd2Vl
+a2x5L3dlZWsxMC9vcmFuZ2Uvd2VlazEwX29yYW5nZV9uZXdfd2FmZXJzLnRhYpSMBXRpdGxllIwA
+lIwFc2hlZXSUaA+MC2ZpbGVfZm9ybWF0lE51YmGMBnNvdXJjZZRLAIwLcmVjZW50X3VybHOUXZSM
+A3VybJRoD4wLc2hlZXRfbmFtZXOUfZSMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBBjb250ZXh0X3Nl
+dHRpbmdzlF2UjAtfX3ZlcnNpb25fX5RLAXUu
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

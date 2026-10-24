@@ -109,23 +109,5 @@ nb.add(
          "print(____(eq03_rate))"),
 )
 
-# --- AI로 한 걸음 더 ----------------------------------------------------------------
-nb.add(
-    step(8, "AI로 한 걸음 더"),
-    md("ChatGPT에 이렇게 물어봤습니다.\n\n"
-       "> 합격 32건, 불합격 8건일 때 합격률을 계산해서 90% 이상이면 \"정상\", 아니면 \"점검 필요\"라고 "
-       "출력하는 짧은 파이썬 코드를 만들어 줘.\n\n"
-       "아래는 받은 코드의 예시입니다. `if`/`else`는 3차시에 배웁니다. 지금은 실행해서 결과만 확인하세요. 90%는 연습용 기준입니다."),
-    code("pass_count = 32\n"
-         "fail_count = 8\n"
-         "total = pass_count + fail_count\n"
-         "pass_rate = pass_count / total * 100\n"
-         "\n"
-         "if pass_rate >= 90:\n"
-         '    print(f"합격률 {pass_rate}% → 정상")\n'
-         "else:\n"
-         '    print(f"합격률 {pass_rate}% → 점검 필요")'),
-)
-
 if __name__ == "__main__":
     nb.cli()

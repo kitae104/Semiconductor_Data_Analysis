@@ -136,15 +136,11 @@ print(quiz["정답"].mean() * 100)</code></pre>
     <p>24문항 중 18문항을 맞혀 정답률 75.0%다. <code>정답여부</code>(1/-1)를 그대로 평균 내면 1과 -1이 서로 지워져 0.5가 나온다 — 정답률이 아니다. 그래서 True/False 열을 먼저 만든다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>반도체 수율 뜻</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게 반도체 공장에서 말하는 '수율(yield)'이 무엇인지 피자 가게에서 구운 피자 조각에 비유해서 3문장으로 설명해줘. 수율이 왜 공장에서 중요한 숫자인지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "웨이퍼 위에 만든 다이(칩이 될 작은 네모) 중 검사를 통과한 것의 비율"이라는 뜻과, "수율이 낮으면 같은 재료와 공정으로 팔 수 있는 칩이 줄어 비용이 커진다"는 내용이 들어 있다.
-      수율을 다이 단위로 셀지 웨이퍼 단위로 셀지는 회사·상황마다 다르다. 오늘 공장 기록은 웨이퍼 1장 = 검사 1건으로 단순화했다.</div>
     </div>
   </section>
 
@@ -219,15 +215,11 @@ plt.show()</code></pre>
     <p>막대 세 개가 계산 실수(3) · 문제 잘못 읽음(2) · 개념 부족(1) 순으로 선다. <code>value_counts()</code>가 이미 많은 순으로 세어 주므로 막대도 그 순서다. 오답 6개 중 절반이 계산 실수라, 계산 실수부터 줄이면 효과가 크다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>파레토 차트</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람에게 파레토 차트가 무엇인지 쪽지시험 오답 유형 예시로 3문장 안에 설명해줘. 공장에서 불량 유형을 많은 순으로 줄 세우는 이유도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "종류별 개수를 많은 순으로 막대로 세우고, 누적 비율 선을 함께 그리기도 한다", "많은 몇 가지부터 고치면 전체를 가장 크게 줄일 수 있다"는 내용이 들어 있다.
-      "상위 20%가 80%를 차지한다"는 말은 경험적 표현일 뿐 늘 정확히 맞는 규칙은 아니다. 오늘은 누적 선 없이 막대만 그린다.</div>
     </div>
   </section>
 
@@ -280,15 +272,11 @@ Name: 불합격, dtype: float64</pre>
     B조가 일한 시간에 어느 설비·어떤 로트가 몰렸는지에 따라서도 이 숫자는 달라진다(실제로 B조는 EQ-04 기록을 36장 맡았다). 지금 말할 수 있는 것은 "B조 시간대는 <b>원인 후보</b>로 더 살펴볼 곳"까지다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>비교만으로 원인 단정 못하는 이유</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>공장에서 설비별 불합격률을 비교했더니 한 설비가 가장 높았어. 이것만으로 그 설비가 불량의 원인이라고 단정할 수 없는 이유를 데이터 분석을 처음 배우는 사람에게 피자 가게 오븐 예시로 3가지 설명해줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "그 설비에 문제가 많은 재료(로트)나 어려운 작업이 몰렸을 수 있다", "건수가 적으면 우연히 높게 나올 수 있다", "다른 조건(시간대·작업자)이 함께 달랐을 수 있다"처럼
-      비교 결과를 바꿀 수 있는 다른 이유를 말한다. 그래서 비교로 찾은 곳은 "원인 후보"로 부르고, 설비 점검 기록·다른 시기 기록 같은 추가 확인을 거친다.</div>
     </div>
 
     <h3>확인 2 — 불합격 웨이퍼가 1장 이상 섞인 로트는 몇 개일까</h3>
@@ -320,7 +308,6 @@ print((lot_fail &gt; 20).sum())</code></pre>
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 피벗 표로 세고 웨이퍼 맵으로 열어 보기</h2>
     <p>PART 1에서는 <code>groupby</code>로 묶어서 비율을 계산했다. Orange에서는 <b>Pivot Table</b>(피벗 표)로 설비 × 합격여부 칸마다 개수를 한 번에 세고, 숫자로 찾은 설비를 웨이퍼 맵으로 열어 본다. 오늘 새 위젯은 <code>Pivot Table</code> 하나다.</p>
-    <p>실습 환경에 준비된 파일을 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">
@@ -362,7 +349,7 @@ print((lot_fail &gt; 20).sum())</code></pre>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
-         alt="반도체 8대 공정 흐름도. ① 웨이퍼 제조부터 ⑧ 패키징까지 여덟 칸이 화살표로 이어지고, ②~⑥ 칸은 같은 색으로 묶여 여러 번 되풀이한다는 화살표가 있다">
+         alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
     <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
     <ul class="pt-list">
       <li>워밍업 <code>week07_orange_wafer_lots.csv</code> — <b>공정 지도 위치: ④ 식각</b> 설비 3대를 거친 웨이퍼의 <b>⑦ EDS(전기 검사)</b> 결과. ④ 식각은 그림대로 필요 없는 부분을 깎아 내는 단계다.</li>
@@ -387,20 +374,16 @@ print((lot_fail &gt; 20).sum())</code></pre>
     </div>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>웨이퍼 불량 패턴 종류</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게 웨이퍼 맵에서 자주 보이는 불량 패턴(가운데형, 가장자리형, 긁힌 자국 모양 등)을 3가지로 설명해줘. 패턴 모양이 불량 이유를 찾는 데 어떻게 도움이 되는지도 단정하지 말고 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "불량이 가운데·가장자리·한 줄(긁힌 자국)처럼 서로 다른 모양으로 모이고, 그 모양이 어느 공정·설비를 먼저 살펴볼지 정하는 <b>단서</b>가 된다"는 내용이 들어 있다.
-      모양은 단서일 뿐 이유를 확정하지 않는다. AI가 "가장자리형 = 반드시 ○○ 고장"처럼 하나로 단정하면 그 부분은 걸러 읽는다.</div>
     </div>
 
     <h3>워크플로 열기</h3>
     <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>week07_1_waferlots_start.ows</code>를 연다.</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 <code>week07_1_waferlots_start.ows</code>를 연다.</li>
       <li>캔버스에 File 위젯 하나와 ①~④ 안내 메모가 보이면 준비가 끝난 것이다. File을 더블클릭해 3,804행이 들어왔는지 본다. 막히면 같은 폴더의 <code>week07_1_waferlots_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week07_02_waferlots_start.png"

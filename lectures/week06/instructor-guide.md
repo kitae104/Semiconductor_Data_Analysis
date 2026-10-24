@@ -24,8 +24,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## 준비물
 
-- Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
-- 학생 키트: `dist/week06_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 폴더 구조를 바꾸지 않게 한다.
+- Jupyter 환경, 프로젝터, Orange3(처음이면 `docs/orange3-guide.html`)
 - 시연: `week06_solution.ipynb`(그래프 출력 저장됨) / 학생: `week06_student.ipynb`
 - Orange: `week06_1_wafermap_start.ows`·`_done.ows`, `week06_2_process_start.ows`·`_done.ows`
 - 데이터: `week06_easy_icecream_daily.csv`(PART 1 생활 예제), `week06_orange_wafer_map.csv`(PART 2 워밍업), `week06_process_visualization.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
@@ -81,7 +80,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `week06_1_wafermap_start.ows`를 연다. File을 더블클릭해 317행이 들어왔는지 확인한다. 파일 이름이 빨갛게 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] `week06_1_wafermap_start.ows`를 연다. File을 더블클릭해 317행이 들어왔는지 확인한다. 파일 이름이 빨갛게 보이면 데이터 파일을 찾지 못한 것이다 — `.ows`를 원래 폴더에서 다시 연다.
 - [ ] File → Scatter Plot(Visualize 묶음): Axis x 다이_X, Axis y 다이_Y, Color 합격여부가 처음부터 잡힌다. 창이 납작하면 원이 타원으로 보이니 창을 정사각형에 가깝게 키운다. 하늘색(1) 사이 빨간 점(-1)이 가장자리 고리에 몰린 것을 보여 준다.
 - [ ] File → Box Plot: 처음에는 Variable이 **다이_X**로 잡혀 있다 → `중심거리_mm`를 클릭. Subgroups 합격여부 확인. 불합격 상자 119.2~132.8(중앙값 126.8)이 오른쪽.
 - [ ] (더 해 보기) File → Distributions: 처음 Variable 다이_X → `중심거리_mm`. Split by 합격여부 그대로.
@@ -130,7 +129,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 - `AttributeError: module 'matplotlib.pyplot' has no attribute 'Bar'`: 함수 이름을 대문자로 썼다. `plt.bar`처럼 소문자다.
 - `____`를 채우지 않고 실행(실제 메시지): 문제 1 `AttributeError: 'Series' object has no attribute '____'`, 그리기 함수 자리 `AttributeError: module 'matplotlib.pyplot' has no attribute '____'`, 열 이름 자리 `NameError: name '____' is not defined`. 빈칸을 채운다.
 - `NameError: name 'df' is not defined`: 5단계 셀을 실행하지 않고 6단계로 왔다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.
-- Orange File에 파일 이름이 빨갛게 보임: 키트 폴더 구조가 바뀌었거나 `.ows`를 다른 곳으로 옮겼다. 키트를 다시 풀고 그 안에서 연다.
+- Orange File에 파일 이름이 빨갛게 보임: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 
 ## 빨리 끝낸 학생용 과제
 

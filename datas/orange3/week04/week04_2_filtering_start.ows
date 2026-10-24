@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="4차시 ② 공정 기록 100건에서 설비 한 대의 불합격 고르기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 공정 기록(100행)이 들어왔는지 확인하세요.
+② Select Columns(열 고르기)를 File에 잇고 설비번호·온도_C만 Features에, 합격여부는 Target에 남기세요.
+③ Select Columns에 Select Rows(행 고르기)를 잇고 Add Condition으로 설비번호 is EQ-01을 만드세요. Select Rows에 Data Table(표 보기)을 이어 왼쪽 Info 칸에서 행 수를 읽으세요.
+④ Select Rows로 돌아가 Add Condition으로 합격여부 is -1을 더하고, Data Table의 행 수를 다시 읽으세요. 온도_C 열 머리글을 눌러 큰 값부터 놓으세요.
+⑤ 실습지 문제 4에서는 같은 순서로 EQ-02를 골라 봅니다.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVZgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHHdlZWswNF9wcm9jZXNzX2Zp
+bHRlcmluZy50YWKUjAZwcmVmaXiUjAdiYXNlZGlylIwHcmVscGF0aJSMPC4uLy4uL2RhdGEvd2Vl
+a2x5L3dlZWswNC9vcmFuZ2Uvd2VlazA0X3Byb2Nlc3NfZmlsdGVyaW5nLnRhYpSMBXRpdGxllIwA
+lIwFc2hlZXSUaA+MC2ZpbGVfZm9ybWF0lE51YmGMBnNvdXJjZZRLAIwLcmVjZW50X3VybHOUXZSM
+A3VybJRoD4wLc2hlZXRfbmFtZXOUfZSMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBBjb250ZXh0X3Nl
+dHRpbmdzlF2UjAtfX3ZlcnNpb25fX5RLAXUu
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

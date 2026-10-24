@@ -24,8 +24,7 @@
 
 ## 준비물
 
-- Jupyter 환경, 프로젝터, Orange3 3.35(`docs/orange3-guide.html`)
-- 학생 키트: `dist/week10_kit.zip`(또는 전체 `dist/student_kit.zip`). 10차시 키트는 9차시 데이터 폴더도 함께 담고 있다. 압축을 푼 폴더 구조를 바꾸지 않게 한다.
+- Jupyter 환경, 프로젝터, Orange3(`docs/orange3-guide.html`)
 - 시연: `week10_solution.ipynb`(출력 저장됨) / 학생: `week10_student.ipynb`
 - Orange: `week10_1_newwafers_start.ows`·`_done.ows`, `week10_2_newlots_start.ows`·`_done.ows`
 - 데이터(모두 교육용 가상 데이터): `week09_orange_wafer_patterns.csv`(워밍업 학습용), `week10_orange_new_wafers.csv`(워밍업 새 데이터),
@@ -91,7 +90,7 @@
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `week10_1_newwafers_start.ows`를 연다. File 두 개(위: 학습 웨이퍼 240장, 아래: 새 웨이퍼 10장)가 데이터를 읽었는지 더블클릭해 행 수를 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다(10차시 키트는 9차시 데이터 폴더도 쓴다).
+- [ ] `week10_1_newwafers_start.ows`를 연다. File 두 개(위: 학습 웨이퍼 240장, 아래: 새 웨이퍼 10장)가 데이터를 읽었는지 더블클릭해 행 수를 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다(10차시 키트는 9차시 데이터 폴더도 쓴다).
 - [ ] Model 묶음: Tree(**Limit the maximal tree depth to** 4)·kNN·Logistic Regression → 위 File.
 - [ ] Evaluate 묶음: Test and Score ← 위 File + 세 모델. **Number of folds 10**으로 바꾼다(기본 5). CA 0.942 · 0.900 · 0.971(기준선 50% — 정상 120/240과 함께 말한다).
 - [ ] Predictions ← **아래 File** + 세 모델. Predictions 표 바로 위 줄의 Show probabilities for → **Classes known to the model**(새 데이터에 정답 열이 없어 기본값은 (None)이고 확률이 안 보인다. 다른 두 항목은 회색으로 꺼져 있다. `_start.ows` 메모 ⑤(워밍업)·④(반도체)와 같은 안내). N-04·N-10 줄에서 답이 갈린다.
@@ -146,7 +145,7 @@
 - `NameError: name 'test_pred' is not defined`: 문제 1 셀을 실행하지 않고 문제 2를 실행했다.
 - `KeyError: '예측'`(2단계 f-string 셀, 4단계 숫자 대조 셀): 2단계 빈칸 셀을 채우지 않아 `예측` 열이 아직 없다. 4단계 셀은 두 줄을 찍고 멈춰 "반쯤 된 것"처럼 보인다. 2단계 빈칸 셀부터 채워 실행한다.
 - 문제 1에서 오류 없이 114: `X_test` 대신 `X`(735행 전체)를 넣었다(Confusion Matrix의 114와 우연히 같다). 오류 없이 131: `-1` 대신 `1`을 넣어 합격을 셌다.
-- Orange File에 파일 이름이 빨갛게 보임: 키트 폴더 구조가 바뀌었거나 `.ows`를 다른 곳으로 옮겼다. 키트를 다시 풀고 그 안에서 연다.
+- Orange File에 파일 이름이 빨갛게 보임: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 
 ## 빨리 끝낸 학생용 과제
 

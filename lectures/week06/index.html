@@ -178,15 +178,11 @@ Name: count, dtype: int64</pre>
     <div class="answer-box"><code>ice["요일"]</code>. 월~일 막대 7개가 모두 높이 3이다 — 3주 기록이라 요일마다 3일씩 있다. 막대 높이가 같으면 "무리마다 개수가 같다"고 읽는다.</div>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>막대그래프 히스토그램 차이</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람에게 막대그래프와 히스토그램의 차이를 아이스크림 가게 기록(날씨별 날 수, 하루 판매량) 예시로 3문장 안에 설명해줘. 둘 다 막대처럼 생겼는데 무엇이 다른지 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "막대그래프는 이름이 붙은 무리(맑음·흐림·비)마다 개수를 비교하고, 히스토그램은 숫자 하나(판매량)를 구간으로 나눠 구간마다 몇 개인지 본다",
-      "히스토그램은 구간이 이어져 있어 막대 사이에 틈이 없다"는 내용이 들어 있다.</div>
     </div>
   </section>
 
@@ -280,15 +276,11 @@ plt.show()</code></pre>
     가운데에서 먼 양 끝의 기록은 "평소보다 얇거나 두꺼운 막"이라 눈여겨볼 대상이다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>반도체 박막 두께 중요한 이유</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게, 웨이퍼 위에 쌓는 얇은 막(박막)의 두께를 왜 계속 재고 관리하는지 3문장으로 설명해줘. 두께가 너무 얇거나 두꺼우면 어떤 일이 생길 수 있는지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "막은 회로를 이루거나 서로 떨어뜨리는 층이라, 두께가 정해진 범위를 벗어나면 다음 공정이 어긋나거나 칩이 제대로 동작하지 않을 수 있다",
-      "그래서 웨이퍼마다(또는 일부를 골라) 두께를 재서 범위 안에 있는지 확인한다"는 내용이 들어 있다. 실제 두께 범위는 막의 종류와 제품마다 다르다. 오늘 데이터의 값은 교육용이다.</div>
     </div>
 
     <h3>확인 3 — 온도와 압력은 함께 움직일까 (산점도)</h3>
@@ -319,7 +311,6 @@ plt.show()</code></pre>
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 웨이퍼 맵과 상자 그림</h2>
     <p>PART 1에서는 코드로 그래프를 그렸다. Orange에서는 위젯을 이어 같은 그래프를 그리고, 파이썬으로 그리지 않은 두 가지 — <b>웨이퍼 맵</b>과 <b>상자 그림</b> — 을 본다. 오늘 새 위젯은 <code>Scatter Plot</code>과 <code>Box Plot</code> 두 개다.</p>
-    <p>실습 환경에 준비된 파일을 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">
@@ -358,21 +349,17 @@ plt.show()</code></pre>
     </div>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>상자그림 읽는 법</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>통계를 처음 배우는 사람에게 상자 그림(box plot) 읽는 법을 반 학생 시험 점수 예시로 설명해줘. 상자의 양 끝, 가운데 선, 상자의 길이가 각각 무엇을 뜻하는지 한 줄씩 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "상자 양 끝은 값을 줄 세웠을 때 4분의 1 지점과 4분의 3 지점이고, 그 사이에 가운데 절반이 들어 있다", "상자 안의 선은 중앙값이다",
-      "상자가 길수록 값이 넓게 퍼져 있다"는 내용이 들어 있다. 상자 밖 선(수염)이나 따로 찍힌 점을 그리는 방식은 프로그램마다 조금씩 다르다.</div>
     </div>
     <div class="callout warn"><b class="tag">주의</b> 오늘 위젯은 모두 File에서 갈래로 잇는다. Data Table 뒤에는 위젯을 잇지 않는다(Data Table이 내보내는 것은 화면에서 고른 행뿐이다).</div>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
-         alt="반도체 8대 공정 흐름도. ① 웨이퍼 제조부터 ⑧ 패키징까지 여덟 칸이 화살표로 이어지고, ②~⑥ 칸은 같은 색으로 묶여 여러 번 되풀이한다는 화살표가 있다">
+         alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
     <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
     <ul class="pt-list">
       <li>워밍업 <code>week06_orange_wafer_map.csv</code> — <b>공정 지도 위치: ⑦ EDS(전기 검사)</b>. 회로를 다 만든 웨이퍼를 자르기 전에 다이(칩이 될 작은 네모)를 하나씩 전기로 검사한 결과다.</li>
@@ -397,20 +384,16 @@ plt.show()</code></pre>
     <p>표에는 숫자 <code>다이_X</code>, <code>다이_Y</code>만 있다. 이 두 열을 산점도의 x·y로 놓으면 어떤 그림이 될까? Orange에서 직접 그려 보자.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>웨이퍼 맵 이란</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게 '웨이퍼 맵(wafer map)'이 무엇인지 3문장으로 설명해줘. 불량 다이가 웨이퍼 가장자리에 몰려 있으면 어떤 단서가 되는지도 단정하지 말고 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "웨이퍼 위 다이(칩이 될 네모)마다 검사 결과를 위치대로 그린 지도다", "불량이 어디에 몰렸는지(가장자리·가운데·한쪽 줄 등) 모양을 보면 어느 공정·설비를 먼저 살펴볼지 단서가 된다"는 내용이 들어 있다.
-      모양만 보고 이유를 하나로 정할 수는 없다. 7차시에 웨이퍼 여러 장의 맵을 비교한다.</div>
     </div>
 
     <h3>워크플로 열기</h3>
     <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>week06_1_wafermap_start.ows</code>를 연다.</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 <code>week06_1_wafermap_start.ows</code>를 연다.</li>
       <li>캔버스에 File 위젯 하나와 ①~④ 안내 메모가 보이면 준비가 끝난 것이다. File을 더블클릭해 317행이 들어왔는지 본다. 막히면 같은 폴더의 <code>week06_1_wafermap_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week06_02_wafermap_start.png"

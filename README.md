@@ -3,7 +3,7 @@
 프로그래밍 경험이 거의 없는 일반인을 위한, 반도체 공정과 데이터 분석을 함께 배우는 10차시 교육 과정입니다.
 모든 실습 데이터는 교육용으로 생성한 **가상 데이터**이며, 실제 기업의 생산 데이터가 아닙니다.
 
-전체 목차는 [`index.html`](index.html), 수강 전 설치 안내는 [`docs/setup.html`](docs/setup.html)에서 확인할 수 있습니다.
+전체 목차는 [`index.html`](index.html)에서 확인할 수 있습니다.
 
 ## 1. 교육 대상
 
@@ -76,21 +76,18 @@ semiconductor-data-analysis-course/
 │  └─ solutions/              # 정답본(완성본, 강사 시연용)
 ├─ orange3/week01~week10/     # Orange 워크플로(_start.ows / _done.ows)
 ├─ lectures/week01~week10/    # HTML 강의자료, 실습지, 퀴즈, 운영안
-├─ dist/                      # 학생용 실습 키트(student_kit.zip, 차시별 weekXX_kit.zip)
 ├─ scripts/                   # 데이터·그림·워크플로·노트북 생성과 검증 스크립트
 ├─ reports/                   # 원본 데이터 분석, 검증 리포트
-└─ docs/                      # 커리큘럼, 설치 안내, Orange3 안내, 용어집, 운영 가이드
+└─ docs/                      # 커리큘럼, Orange3 안내, 용어집, 운영 가이드
 ```
 
-## 5. 설치 방법
+## 5. 개발 환경(과정 제작·검증용)
 
-학생용 단계별 안내(그림 포함)는 [`docs/setup.html`](docs/setup.html)에 있습니다. 아래는 요약입니다.
-
-### Python과 Jupyter
+수강생 실습 환경에는 프로그램과 실습 파일이 이미 준비돼 있습니다. 아래는 이 저장소의 데이터·노트북을 다시 만들고 검증할 때만 필요합니다.
 
 ```bash
 python -m venv .venv
-# Windows: .venv\Scripts\activate
+# Windows: .venv\Scriptsctivate
 # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 
@@ -98,36 +95,13 @@ pip install -r requirements.txt
 python -m ipykernel install --user --name python3 --display-name "Python 3"
 ```
 
-### Orange3 (1~10차시)
-
-Orange3는 클릭만으로 데이터를 분석하는 별도 데스크톱 프로그램이며, v3에서는 1차시부터 매 차시 본 활동으로 씁니다.
-[orangedatamining.com/download](https://orangedatamining.com/download/)에서 설치 파일을 받아 기본 설정으로 설치합니다.
-이 과정의 `.ows` 파일과 화면 설명은 **Orange 3.35**로 만들고 확인했습니다. 더 새 버전에서도 대부분 열리지만
-위젯 모양이나 메뉴 이름이 조금 다를 수 있습니다.
-
-캔버스 화면 구성, 위젯을 놓고 연결하는 법, 차시별로 쓰는 위젯과 그 위젯이 들어 있는 묶음은
+Orange3의 캔버스 화면 구성, 위젯을 놓고 연결하는 법, 차시별로 쓰는 위젯과 그 위젯이 들어 있는 묶음은
 [`docs/orange3-guide.html`](docs/orange3-guide.html)에 정리했습니다.
 
-## 6. 실습 키트와 파일 여는 법
+## 6. 파일 여는 법
 
-### 실습 키트 받기
-
-[`dist/student_kit.zip`](dist/student_kit.zip)에 학생 노트북·실습 데이터(`.tab` 포함)·Orange 워크플로·설치 안내가
-저장소와 같은 폴더 구조로 들어 있습니다. 차시 하나만 필요하면 `dist/weekXX_kit.zip`을 씁니다.
-
-- 압축을 풀면 `semiconductor_kit` 폴더 하나가 생깁니다.
-- **폴더 구조를 바꾸지 않습니다.** 노트북은 `../../data/weekly/...`로, `.ows`는 자기 폴더 기준 상대경로로 데이터를 찾습니다.
-- zip 안에서 바로 열지 말고 **압축을 푼 뒤** 엽니다.
-
-### Jupyter Notebook 열기
-
-키트 폴더(또는 저장소 최상위)에서 명령 프롬프트를 열고 실행합니다.
-
-```bash
-python -m notebook
-```
-
-브라우저에서 `notebooks/student/week01_student.ipynb`를 열고 첫 셀을 실행합니다.
+노트북은 CSV 파일 이름만 쓰므로 CSV가 노트북과 같은 곳에 있어야 합니다. 저장소의 `notebooks/` 폴더에서 바로 열면 CSV가 없어
+오류가 나며, 검증 스크립트는 CSV를 임시 폴더에 모아 그곳에서 실행합니다.
 
 ### Orange 워크플로(.ows) 열기
 
@@ -135,8 +109,8 @@ python -m notebook
   `_start.ows`(데이터가 연결된 File 위젯 하나 + 한국어 안내 메모)와 `_done.ows`(완성본)입니다.
   수업은 `_start.ows`에서 시작하고, 막히면 `_done.ows`를 열어 따라잡습니다.
 - `.ows` 파일을 더블클릭합니다. 열리지 않으면 Orange를 먼저 실행하고 **File → Open**에서 고릅니다.
-- File 위젯에 "파일을 찾을 수 없다"는 오류가 나면 키트를 폴더째 압축 풀었는지 확인하고, 그래도 안 되면 File 위젯의
-  폴더 아이콘으로 `data/weekly/weekXX/orange/`의 `.tab` 파일을 직접 고릅니다.
+- File 위젯에 "파일을 찾을 수 없다"는 오류가 나면 `.ows`를 원래 폴더에서 다시 열고, 그래도 안 되면 File 위젯의
+  폴더 아이콘으로 `orange` 폴더의 `.tab` 파일을 직접 고릅니다.
 
 ### `data/weekly/weekXX/orange/*.tab`
 
@@ -156,11 +130,10 @@ Orange 내장 데이터(zoo·iris·titanic 등)는 쓰지 않고, 워밍업도 �
 | `scripts/generate_weekly_data.py` | 차시별 실습 데이터(CSV)와 Orange용 `.tab` 재생성(`data/weekly/*`, `utf-8-sig`) |
 | `scripts/validate_datasets.py` | 데이터 검증 |
 | `scripts/generate_figures.py` | 강의용 이해 그림(공정 흐름도·웨이퍼 맵 등)을 데이터에서 생성(`assets/images/generated/`) |
-| `scripts/build_orange_workflows.py` | 차시별 `_start.ows`·`_done.ows` 생성(Orange 3.35 파이썬으로 실행) |
+| `scripts/build_orange_workflows.py` | 차시별 `_start.ows`·`_done.ows` 생성(Orange 파이썬으로 실행) |
 | `scripts/validate_orange_workflows.py` | `.ows` 파싱·상대경로·데이터 로드·화면 없이 위젯 실행 검증 |
 | `scripts/notebook_builders/weekXX.py` | 학생용·정답 노트북 2종을 한 정의에서 생성(노트북 JSON은 손으로 고치지 않음) |
 | `scripts/validate_notebooks.py` | 노트북 실행 검증 |
-| `scripts/build_student_kit.py` | 학생용 실습 키트 zip 생성(`--check`: 압축을 풀어 경로가 맞는지 확인) |
 | `scripts/build_data_dictionary_html.py` | 데이터 설명서 `.md` → 강의 디자인 `.html` 변환 |
 
 ```bash
@@ -171,7 +144,6 @@ python scripts/build_orange_workflows.py      # Orange 파이썬으로 스스로
 python scripts/validate_orange_workflows.py
 python scripts/notebook_builders/week01.py    # 차시마다
 python scripts/validate_notebooks.py
-python scripts/build_student_kit.py --check
 ```
 
 ## 8. HTML 강의 자료 실행 방법

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="4차시 ① 반도체 8대 공정 흐름표에서 되풀이되는 단계 고르기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭하면 반도체 8대 공정 흐름표(8행)가 이미 들어 있습니다.
+② 왼쪽 Transform 묶음에서 Select Columns(열 고르기)를 끌어 와 File과 잇고, 공정순서·공정명·반복여부만 Features에 남기세요(하는일·생활비유는 Metas).
+③ Select Columns에 Select Rows(행 고르기)를 잇고 조건을 반복여부 is 여러 번으로 만드세요.
+④ Select Rows에 Data Table(표 보기)을 잇고 공정순서 열 이름을 눌러 순서대로 보세요. 몇 단계가 남았나요?</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVagEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHndlZWswNF9vcmFuZ2VfcHJv
+Y2Vzc19mbG93LnRhYpSMBnByZWZpeJSMB2Jhc2VkaXKUjAdyZWxwYXRolIw+Li4vLi4vZGF0YS93
+ZWVrbHkvd2VlazA0L29yYW5nZS93ZWVrMDRfb3JhbmdlX3Byb2Nlc3NfZmxvdy50YWKUjAV0aXRs
+ZZSMAJSMBXNoZWV0lGgPjAtmaWxlX2Zvcm1hdJROdWJhjAZzb3VyY2WUSwCMC3JlY2VudF91cmxz
+lF2UjAN1cmyUaA+MC3NoZWV0X25hbWVzlH2UjBJjb250cm9sQXJlYVZpc2libGWUiIwQY29udGV4
+dF9zZXR0aW5nc5RdlIwLX192ZXJzaW9uX1+USwF1Lg==
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

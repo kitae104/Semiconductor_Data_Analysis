@@ -23,8 +23,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## 준비물
 
-- Jupyter 환경, 프로젝터, Orange3 3.35(처음이면 `docs/orange3-guide.html`)
-- 학생 키트: `dist/week07_kit.zip`(또는 전체 `dist/student_kit.zip`). 압축을 푼 폴더 구조를 바꾸지 않게 한다.
+- Jupyter 환경, 프로젝터, Orange3(처음이면 `docs/orange3-guide.html`)
 - 시연: `week07_solution.ipynb`(출력 저장됨) / 학생: `week07_student.ipynb`
 - Orange: `week07_1_waferlots_start.ows`·`_done.ows`, `week07_2_yield_start.ows`·`_done.ows`
 - 데이터: `week07_easy_quiz_results.csv`(PART 1 생활 예제), `week07_orange_wafer_lots.csv`(PART 2 워밍업), `week07_equipment_yield.csv`(반도체). Orange는 각 파일의 `orange/*.tab`을 연다.
@@ -74,7 +73,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## Orange 시연 체크리스트
 
-- [ ] 키트를 압축 푼 폴더 그대로에서 `week07_1_waferlots_start.ows`를 연다. File을 더블클릭해 3,804행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 키트 폴더 구조가 바뀐 것이다 — 키트를 다시 풀게 한다.
+- [ ] `week07_1_waferlots_start.ows`를 연다. File을 더블클릭해 3,804행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 데이터 파일을 찾지 못한 것이다 — `.ows`를 원래 폴더에서 다시 연다.
 - [ ] File → Pivot Table(Transform 묶음): 처음에는 Rows `합격여부`, Columns `None`(대각선 표)이 뜬다 — Rows `설비번호`, Columns `합격여부`로 바꾼다. Aggregations Count(기본 체크). 식각-3 -1 칸 214.0. "다이를 센다"를 말로 짚는다. 강의의 "세어 본 결과 보기"는 학생이 계산한 뒤 연다.
 - [ ] File → Select Rows(Transform): 첫 줄에 `합격여부 is 1`이 이미 들어 있다. **줄을 추가하지 말고** 첫 줄을 `설비번호` is `식각-3`으로 바꾼다 → 1,268행. 1,054행이면 첫 줄이 남아 합격 다이만 골라진 것(빨간 점 0개).
 - [ ] Select Rows → Scatter Plot(Visualize): 처음에는 x `웨이퍼ID`, y `설비번호`(세로줄 점) — Axis x `다이_X`, Axis y `다이_Y`로 바꾸고 Color `합격여부` 확인. 창을 정사각형에 가깝게 키운다. 가장자리 고리를 학생이 말로 먼저 설명하게 한 뒤 "보이는 것 확인 보기"를 연다.
@@ -128,7 +127,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 - 연쇄 오류: 앞 셀이 실패하면 `NameError: name 'eq_rate' is not defined`(문제 2 둘째 셀·6단계 AI 셀), `NameError: name 'defect_counts' is not defined`(문제 3 막대 셀). 앞 셀부터 고친다.
 - `KeyError: '불량 유형'`(띄어쓰기)·`KeyError: '오답유형'`(3단계 열 이름을 그대로 베낌): 열 이름은 `불량유형`이다.
 - 문제 3 막대에서 한글이 네모로 깨짐: 3단계 첫 그래프 셀(`plt.rcParams[…]` 두 줄)을 실행하지 않았다. 불량 유형 이름이 겹치면 `plt.xticks(rotation=45)`를 넣는다.
-- Orange File에 파일 이름이 빨갛게 보임: 키트 폴더 구조가 바뀌었거나 `.ows`를 다른 곳으로 옮겼다. 키트를 다시 풀고 그 안에서 연다.
+- Orange File에 파일 이름이 빨갛게 보임: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 
 ## 빨리 끝낸 학생용 과제
 

@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
       },
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0, rootMargin: "0px 0px -40px 0px" }  // 아주 긴 섹션(PART 2 등)도 보이기 시작하면 나타나게 한다
     );
     revealTargets.forEach(function (el, i) {
       el.classList.add("reveal-init");

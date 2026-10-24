@@ -41,14 +41,13 @@
     <h2>이 부록으로 할 수 있는 것</h2>
     <ul class="goal-list">
       <li>Orange3가 무엇이고 이 과정에서 왜 쓰는지 한 문장으로 설명할 수 있다.</li>
-      <li>실습 키트의 Orange 파일(<code>.ows</code>)을 열고, <code>_start</code>와 <code>_done</code>의 차이를 안다.</li>
+      <li>Orange 파일(<code>.ows</code>)을 열고, <code>_start</code>와 <code>_done</code>의 차이를 안다.</li>
       <li>위젯을 캔버스에 놓고 서로 연결해 워크플로를 만들 수 있다.</li>
       <li>File 위젯이 데이터 파일을 못 찾을 때 스스로 해결할 수 있다.</li>
       <li>1~10차시에서 쓰는 위젯이 위젯 목록의 어느 묶음에 있고, 각각 무엇을 보여 주는지 찾아볼 수 있다.</li>
     </ul>
     <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>언제 보면 좋은가</b>: 1차시 PART 2(Orange3)를
-    시작하기 전에 한 번 훑어보고, 이후 차시에서 새 위젯이 나올 때마다 그 위젯 설명만 다시 찾아보면 된다.
-    설치는 <a href="setup.html">수강 전 준비</a>의 STEP 03에 있다.</p>
+    시작하기 전에 한 번 훑어보고, 이후 차시에서 새 위젯이 나올 때마다 그 위젯 설명만 다시 찾아보면 된다.</p>
   </section>
 
   <section class="block">
@@ -82,8 +81,7 @@
     <div class="callout warn">
       <b class="tag">체크포인트 — Orange3는 따로 실행하는 프로그램이다</b>
       Orange3는 Jupyter Notebook 안에서 쓰는 파이썬 패키지가 아니라, 시작 메뉴에서 따로 실행하는
-      <b>별도의 데스크톱 프로그램</b>이다. 이 과정의 Orange 파일과 화면 설명은 <b>Orange 3.35</b>로 만들고 확인했다.
-      더 새 버전에서도 대부분 그대로 열리지만, 위젯 모양이나 메뉴 이름이 조금 다를 수 있다.
+      <b>별도의 데스크톱 프로그램</b>이다.
     </div>
   </section>
 
@@ -110,8 +108,7 @@
 
   <section class="block">
     <h2>실습 파일(.ows) 열기</h2>
-    <p>Orange에서 만든 워크플로는 <code>.ows</code> 파일로 저장된다. 실습 키트의 <code>orange3/weekXX/</code> 폴더에는
-    차시마다 이 파일이 4개 있다.</p>
+    <p>Orange에서 만든 워크플로는 <code>.ows</code> 파일로 저장된다. 차시마다 이 파일이 4개 있다.</p>
     <div class="tablewrap">
       <table class="data-preview">
         <tr><th>파일 이름 예(1차시)</th><th>무엇인가</th><th>언제 여는가</th></tr>
@@ -123,7 +120,7 @@
     </div>
     <div class="step">
       <div class="num">1</div>
-      <div class="content"><b>더블클릭으로 열기</b> — 압축을 푼 키트 폴더에서 <code>week01_1_town_start.ows</code>를
+      <div class="content"><b>더블클릭으로 열기</b> — <code>week01_1_town_start.ows</code>를
       더블클릭한다. Orange가 열리며 캔버스에 File 위젯 하나와 안내 메모가 보인다.</div>
     </div>
     <div class="step">
@@ -138,7 +135,7 @@
     </div>
     <div class="callout concept">
       <b class="tag">알아두기 — Orange는 CSV가 아니라 .tab을 연다</b>
-      Orange 파일이 여는 데이터는 <code>data/weekly/weekXX/orange/</code> 폴더의 <code>.tab</code> 파일이다. 같은 차시 CSV와
+      Orange 파일이 여는 데이터는 <code>orange</code> 폴더의 <code>.tab</code> 파일이다. 같은 차시 CSV와
       값은 같고, 열마다 Orange가 쓸 종류(숫자·범주·결과 열·참고용 meta)가 미리 정해져 있다. 예를 들어 <code>합격여부</code>는
       결과 열(target)로 정해져 있어 Orange가 합격·불합격 막대를 바로 그리고, 9·10차시 모델도 따로 설정하지 않고 바로 만든다.
     </div>
@@ -147,34 +144,28 @@
   <section class="block">
     <h2>File 위젯이 파일을 못 찾을 때</h2>
     <p>File 위젯 창에 빨간 글씨(<code>File not found</code> 등)가 보이거나 파일 이름이 빨간색이면, Orange가 데이터 파일을
-    찾지 못한 것이다. <code>.ows</code>는 <b>자기가 있는 폴더를 기준으로</b> <code>../../data/weekly/weekXX/orange/</code>를 찾아가므로,
-    폴더 구조가 바뀌면 길을 잃는다. 아래 순서로 확인한다.</p>
+    찾지 못한 것이다. <code>.ows</code>는 <b>자기가 있는 폴더를 기준으로</b> 데이터를 찾아가므로, 파일을 다른 곳으로 옮기면
+    길을 잃는다. 아래 순서로 확인한다.</p>
     <div class="step">
       <div class="num">1</div>
-      <div class="content"><b>압축을 풀었는가?</b> — zip 안에서 바로 열면 임시 폴더에서 열려 데이터를 찾지 못한다. 키트를
-      <b>폴더째 압축 풀기</b>(마우스 오른쪽 클릭 → 모두 압축 풀기)한 뒤, 풀린 폴더의 <code>.ows</code>를 다시 연다.</div>
+      <div class="content"><b>원래 자리의 파일을 열었는가?</b> — <code>.ows</code>를 바탕화면 등 다른 곳으로 옮기거나 복사했다면,
+      원래 폴더에 있는 <code>.ows</code>를 다시 연다.</div>
     </div>
     <div class="step">
       <div class="num">2</div>
-      <div class="content"><b>폴더 구조가 그대로인가?</b> — <code>semiconductor_kit</code> 안에 <code>orange3</code>와 <code>data</code>가
-      나란히 있어야 한다. <code>.ows</code> 파일만 바탕화면 등 다른 곳으로 옮겼다면 원래 자리로 돌려놓는다.</div>
-    </div>
-    <div class="step">
-      <div class="num">3</div>
       <div class="content"><b>그래도 안 되면 .tab을 직접 고른다</b> — File 위젯 창의 폴더 아이콘을 눌러
-      <code>data/weekly/weekXX/orange/</code> 폴더의 <code>.tab</code> 파일을 고른다. 같은 이름의 CSV가 아니라
+      <code>orange</code> 폴더의 <code>.tab</code> 파일을 고른다. 같은 이름의 CSV가 아니라
       <b>orange 폴더 안의 .tab</b>을 고른다. 고르면 뒤에 연결된 위젯에 바로 데이터가 흐른다.</div>
     </div>
     <div class="step">
-      <div class="num">4</div>
-      <div class="content"><b>처음부터 다시</b> — 키트 zip을 새로 내려받아 다른 곳에 압축을 풀고 다시 연다.</div>
+      <div class="num">3</div>
+      <div class="content"><b>그래도 안 되면</b> — 강사에게 알린다.</div>
     </div>
     <div class="callout warn">
       <b class="tag">저장할 때 주의</b>
       실습한 워크플로를 <code>Ctrl+S</code>(Mac은 <code>Cmd+S</code>)로 저장하면 Orange가 데이터 위치를 내 컴퓨터 기준으로
-      바꿔 저장할 수 있다. 그 컴퓨터에서는 계속 열리지만, 폴더를 옮기면 다시 이 오류가 난다. 막히면 키트의
-      <code>_start.ows</code>나 <code>_done.ows</code>를 다시 열면 된다. 자세한 그림은
-      <a href="setup.html">수강 전 준비</a>의 같은 제목 절에 있다.
+      바꿔 저장할 수 있다. 그 컴퓨터에서는 계속 열리지만, 폴더를 옮기면 다시 이 오류가 난다. 막히면
+      <code>_start.ows</code>나 <code>_done.ows</code>를 다시 열면 된다.
     </div>
   </section>
 
@@ -316,8 +307,8 @@
   </section>
 
   <section class="block">
-    <h2>위젯은 어느 묶음에 있나 (Orange 3.35)</h2>
-    <p>위젯 목록은 묶음별로 접혀 있다. 아래 표에서 묶음 이름을 찾아 펼친 뒤 위젯을 끌어다 놓는다. 위젯 이름은 Orange 3.35
+    <h2>위젯은 어느 묶음에 있나</h2>
+    <p>위젯 목록은 묶음별로 접혀 있다. 아래 표에서 묶음 이름을 찾아 펼친 뒤 위젯을 끌어다 놓는다. 위젯 이름은 Orange
     화면에 나오는 영어 이름 그대로다.</p>
     <div class="tablewrap">
       <table class="data-preview">
@@ -465,7 +456,7 @@
     <div class="callout danger">
       <b class="tag">Tree/Test and Score에서 오류가 나요</b>
       File 위젯 창에서 합격여부의 Role이 <b>target</b>, Type이 <b>categorical</b>인지 확인한다. 과정의 <code>.tab</code>은
-      처음부터 그렇게 정해져 있으므로, 바뀌어 있다면 누군가 직접 고친 것이다. 키트의 <code>_start.ows</code>를 다시 열면 된다.
+      처음부터 그렇게 정해져 있으므로, 바뀌어 있다면 누군가 직접 고친 것이다. <code>_start.ows</code>를 다시 열면 된다.
       Type이 numeric이면 Orange3는 합격/불합격 분류가 아니라 숫자 맞히기(회귀)로 처리한다.
     </div>
     <div class="callout danger">
@@ -479,7 +470,7 @@
     <h2>다음 단계</h2>
     <div class="callout concept">
       이제 <a href="../lectures/week01/index.html">1차시</a>의 PART 2(Orange3)로 돌아가 실습을 시작하면 된다.
-      설치가 아직이라면 <a href="setup.html">수강 전 준비</a>부터 본다. 이 부록은 언제든 다시 돌아와 필요한 위젯 설명만 찾아봐도 된다.
+      이 부록은 언제든 다시 돌아와 필요한 위젯 설명만 찾아봐도 된다.
     </div>
   </section>
 

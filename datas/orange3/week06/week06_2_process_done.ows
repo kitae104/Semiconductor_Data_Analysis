@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="6차시 ② 공정 기록 180건을 그래프로 보기 (완성)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+		<node id="1" name="Distributions" qualified_name="Orange.widgets.visualize.owdistributions.OWDistributions" project_name="Orange3" version="" title="Distributions (분포 막대)" position="(300.0, 320.0)" />
+		<node id="2" name="Scatter Plot" qualified_name="Orange.widgets.visualize.owscatterplot.OWScatterPlot" project_name="Orange3" version="" title="Scatter Plot (산점도)" position="(300.0, 460.0)" />
+		<node id="3" name="Box Plot" qualified_name="Orange.widgets.visualize.owboxplot.OWBoxPlot" project_name="Orange3" version="" title="Box Plot (상자 그림)" position="(300.0, 600.0)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="2" source_node_id="0" sink_node_id="3" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+	</links>
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: File → Distributions(온도_C), File → Scatter Plot(온도_C·두께_nm, 색 합격여부), File → Box Plot(온도_C, Subgroups 설비번호).
+파이썬으로 그린 히스토그램·산점도와 모양을 비교하고, 파이썬으로 그리지 않은 상자 그림에서 설비마다 퍼짐이 어떻게 다른지 보세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVbgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMIHdlZWswNl9wcm9jZXNzX3Zp
+c3VhbGl6YXRpb24udGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjEAuLi8uLi9kYXRh
+L3dlZWtseS93ZWVrMDYvb3JhbmdlL3dlZWswNl9wcm9jZXNzX3Zpc3VhbGl6YXRpb24udGFilIwF
+dGl0bGWUjACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRf
+dXJsc5RdlIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNv
+bnRleHRfc2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+		<properties node_id="1" format="pickle">gASVDwIAAAAAAAB9lCiMCmF1dG9fYXBwbHmUiIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGN1bXVs
+YXRpdmVfZGlzdHKUiYwTZml0dGVkX2Rpc3RyaWJ1dGlvbpRLAIwJaGlkZV9iYXJzlImMDWtkZV9z
+bW9vdGhpbmeUSwqMCnNob3dfcHJvYnOUiYwMc29ydF9ieV9mcmVxlImMD3N0YWNrZWRfY29sdW1u
+c5SJjAtfX3ZlcnNpb25fX5RLAYwQY29udGV4dF9zZXR0aW5nc5RdlIwVb3Jhbmdld2lkZ2V0LnNl
+dHRpbmdzlIwHQ29udGV4dJSTlCmBlH2UKIwGdmFsdWVzlH2UKIwEY3ZhcpROSv7///+GlIwObnVt
+YmVyX29mX2JpbnOUSwJK/v///4aUjAlzZWxlY3Rpb26Uj5RK/v///4aUjAN2YXKUjAjsmKjrj4Rf
+Q5RLZoaUaApLAXWMCmF0dHJpYnV0ZXOUfZQojAzshKTruYTrsojtmLiUSwGMCeqzteygleuqhZRL
+AWgcSwKMCeyVleugpV9QYZRLAowJ65GQ6ruYX25tlEsCjAvsp4Trj5lfbW1fc5RLAowQ7LKY66as
+7Iuc6rCEX3NlY5RLAowM7ZWp6rKp7Jes67aAlEsBdYwFbWV0YXOUfZQojAzsuKHsoJXsi5zqsISU
+SwSMDOuhnO2KuOuyiO2YuJRLA3V1YmF1Lg==
+</properties>
+		<properties node_id="2" format="pickle">gASVwgIAAAAAAAB9lCiMC2F1dG9fY29tbWl0lIiMC2F1dG9fc2FtcGxllIiMEmNvbnRyb2xBcmVh
+VmlzaWJsZZSIjAlzZWxlY3Rpb26UTowRdG9vbHRpcF9zaG93c19hbGyUiIwPdmlzdWFsX3NldHRp
+bmdzlH2UjAVncmFwaJR9lCiMC2FscGhhX3ZhbHVllEuAjA1jbGFzc19kZW5zaXR5lImMEWppdHRl
+cl9jb250aW51b3VzlImMC2ppdHRlcl9zaXpllEsAjBNsYWJlbF9vbmx5X3NlbGVjdGVklImMFm9y
+dGhvbm9ybWFsX3JlZ3Jlc3Npb26UiYwLcG9pbnRfd2lkdGiUSwqMCXNob3dfZ3JpZJSJjAtzaG93
+X2xlZ2VuZJSIjA1zaG93X3JlZ19saW5llIl1jAtfX3ZlcnNpb25fX5RLBYwQY29udGV4dF9zZXR0
+aW5nc5RdlIwVb3Jhbmdld2lkZ2V0LnNldHRpbmdzlIwHQ29udGV4dJSTlCmBlH2UKIwGdmFsdWVz
+lH2UKIwKYXR0cl9jb2xvcpSMDO2VqeqyqeyXrOu2gJRLZYaUjAphdHRyX2xhYmVslE5K/v///4aU
+jAphdHRyX3NoYXBllE5K/v///4aUjAlhdHRyX3NpemWUTkr+////hpSMBmF0dHJfeJSMCOyYqOuP
+hF9DlEtmhpSMBmF0dHJfeZSMCeuRkOq7mF9ubZRLZoaUaAh9lGgUSwV1jAphdHRyaWJ1dGVzlH2U
+KIwM7ISk67mE67KI7Zi4lEsBjAnqs7XsoJXrqoWUSwFoKEsCjAnslZXroKVfUGGUSwJoK0sCjAvs
+p4Trj5lfbW1fc5RLAowQ7LKY66as7Iuc6rCEX3NlY5RLAmgfSwF1jAVtZXRhc5R9lCiMDOy4oeyg
+leyLnOqwhJRLBIwM66Gc7Yq467KI7Zi4lEsDdXViYXUu
+</properties>
+		<properties node_id="3" format="pickle">gASVGgIAAAAAAAB9lCiMB2NvbXBhcmWUSwKMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBNvcmRlcl9i
+eV9pbXBvcnRhbmNllImMHG9yZGVyX2dyb3VwaW5nX2J5X2ltcG9ydGFuY2WUiYwQc2hvd19hbm5v
+dGF0aW9uc5SIjAtzaG93X2xhYmVsc5SIjA1zaWdfdGhyZXNob2xklEc/qZmZmZmZmowKc29ydF9m
+cmVxc5SJjAhzdGF0dGVzdJRLAIwJc3RyZXRjaGVklIiMC19fdmVyc2lvbl9flEsBjBBjb250ZXh0
+X3NldHRpbmdzlF2UjBVvcmFuZ2V3aWRnZXQuc2V0dGluZ3OUjAdDb250ZXh0lJOUKYGUfZQojAZ2
+YWx1ZXOUfZQojAlhdHRyaWJ1dGWUjAjsmKjrj4RfQ5RLZoaUjAlncm91cF92YXKUjAzshKTruYTr
+sojtmLiUS2WGlIwJc2VsZWN0aW9ulClK/v///4aUaAtLAXWMCmF0dHJpYnV0ZXOUfZQoaBlLAYwJ
+6rO17KCV66qFlEsBaBZLAowJ7JWV66ClX1BhlEsCjAnrkZDqu5hfbm2USwKMC+ynhOuPmV9tbV9z
+lEsCjBDsspjrpqzsi5zqsIRfc2VjlEsCjAztlanqsqnsl6zrtoCUSwF1jAVtZXRhc5R9lCiMDOy4
+oeygleyLnOqwhJRLBIwM66Gc7Yq467KI7Zi4lEsDdXViYXUu
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

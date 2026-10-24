@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="8차시 ② 공정 센서 기록에서 상관 순위 보기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 공정 센서 기록(450행)이 들어왔는지 확인하세요.
+② (실습지 문제 4) Unsupervised 묶음의 Correlations(상관 순위)를 File에 잇고 1위 쌍과 값을 읽으세요. 이어서 목록 위 Filter 칸에 진공도를 입력해, 진공도가 들어간 쌍 중 크기가 가장 큰 값을 읽으세요. 합격여부는 숫자 열이 아니라 목록에 없습니다.
+③ (강사 화면) Scatter Plot(산점도)을 File에 잇고 x = 온도_C, y = 두께_nm, Color = 합격여부로 고르세요.
+④ (강사 화면) Scatter Plot의 Find Informative Projections 버튼을 누르고 Start를 눌러, 합격·불합격 색이 잘 갈리는 두 열 짝을 보세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVaAEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHXdlZWswOF9hbm9tYWx5X3Jv
+b3RfY2F1c2UudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjD0uLi8uLi9kYXRhL3dl
+ZWtseS93ZWVrMDgvb3JhbmdlL3dlZWswOF9hbm9tYWx5X3Jvb3RfY2F1c2UudGFilIwFdGl0bGWU
+jACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRfdXJsc5Rd
+lIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNvbnRleHRf
+c2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

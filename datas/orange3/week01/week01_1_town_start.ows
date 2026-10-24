@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="1차시 ① 우리 동네 인구로 Orange 캔버스 첫 만남 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭하면 우리 동네 인구 데이터(30개 동)가 이미 들어 있습니다.
+② 왼쪽 Data 묶음에서 Data Table(표 보기)을 끌어 와 File의 오른쪽 끝과 선으로 이으세요. 행과 열이 몇 개인지 세어 보세요.
+③ Visualize 묶음에서 Distributions(분포 막대)를 끌어 와 File과 잇고, 왼쪽 열 목록에서 주요연령대를 고르세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVcAEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMIXdlZWswMV9vcmFuZ2VfdG93
+bl9wb3B1bGF0aW9uLnRhYpSMBnByZWZpeJSMB2Jhc2VkaXKUjAdyZWxwYXRolIxBLi4vLi4vZGF0
+YS93ZWVrbHkvd2VlazAxL29yYW5nZS93ZWVrMDFfb3JhbmdlX3Rvd25fcG9wdWxhdGlvbi50YWKU
+jAV0aXRsZZSMAJSMBXNoZWV0lGgPjAtmaWxlX2Zvcm1hdJROdWJhjAZzb3VyY2WUSwCMC3JlY2Vu
+dF91cmxzlF2UjAN1cmyUaA+MC3NoZWV0X25hbWVzlH2UjBJjb250cm9sQXJlYVZpc2libGWUiIwQ
+Y29udGV4dF9zZXR0aW5nc5RdlIwLX192ZXJzaW9uX1+USwF1Lg==
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

@@ -192,15 +192,11 @@ print(round(r_choco, 2))</code></pre>
     <p style="color:var(--muted);font-size:.9rem;">경계(0.3, 0.7)는 이 과정의 연습용 기준이다. 분야마다 다르게 쓴다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>상관계수 읽는 법</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람에게 상관계수(-1~1)를 읽는 법을 생활 예시로 3문장 안에 설명해줘. 부호(+, -)와 크기가 각각 무엇을 뜻하는지, 상관계수 -0.9가 '나쁜 관계'라는 뜻인지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "부호는 방향(+ 함께 오름, - 반대로 움직임), 크기는 한 줄로 함께 움직이는 정도", "-0.9는 나쁜 관계가 아니라 반대 방향으로 강하게 함께 움직이는 관계"라는 내용이 들어 있다.
-      강함·약함을 가르는 경계값은 분야마다 다르다고 말하면 더 좋은 답이다.</div>
     </div>
   </section>
 
@@ -311,14 +307,11 @@ print(out_rate)</code></pre>
     </ul>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>상관관계 인과관계 차이</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>아이스크림 판매량과 물놀이 사고가 함께 늘어나는 예로, 상관관계와 인과관계의 차이를 데이터 분석을 처음 배우는 사람에게 3문장으로 설명해줘. '제3의 요인'이 무엇인지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "두 값 모두 더운 날씨(제3의 요인)를 따라 늘어날 뿐", "함께 움직인다고 해서 한쪽이 다른 쪽을 일으킨다고 단정할 수 없다"는 내용이 들어 있다.</div>
     </div>
   </section>
 
@@ -394,7 +387,6 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 상관 순위로 모든 쌍을 한 번에 보기</h2>
     <p>PART 1에서는 <code>corr()</code>로 한 쌍씩 계산했다. Orange의 <b>Correlations</b>(상관 순위)는 숫자 열의 <b>모든 쌍</b>을 한 번에 계산해 크기순으로 줄 세운다. 오늘 새 위젯은 <code>Correlations</code> 하나다.</p>
-    <p>실습 환경에 준비된 파일을 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">
@@ -434,7 +426,7 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
-         alt="반도체 8대 공정 흐름도. ① 웨이퍼 제조부터 ⑧ 패키징까지 여덟 칸이 화살표로 이어지고, ②~⑥ 칸은 같은 색으로 묶여 여러 번 되풀이한다는 화살표가 있다">
+         alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
     <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
     <ul class="pt-list">
       <li>워밍업 <code>week08_orange_chamber_sensor.csv</code> — <b>공정 지도 위치: ④ 식각</b> 챔버 안 센서 기록. ④ 식각은 필요 없는 부분을 깎아 내는 단계다(조각칼로 파내기).</li>
@@ -463,7 +455,7 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
 
     <h3>워크플로 열기</h3>
     <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>week08_1_chamber_start.ows</code>를 연다.</li>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 <code>week08_1_chamber_start.ows</code>를 연다.</li>
       <li>캔버스에 File 위젯 하나와 ①~③ 안내 메모가 보이면 준비가 끝난 것이다. File을 더블클릭해 200행이 들어왔는지 본다. 막히면 같은 폴더의 <code>week08_1_chamber_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week08_02_chamber_start.png"
@@ -542,27 +534,19 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
     <p style="color:var(--muted);font-size:.9rem;">진공도 4.5~5.5 mTorr도 이 과정의 <b>연습용 기준</b>이다. 실제 공정은 공정·제품마다 기준이 따로 있고, 범위 밖이라고 곧 불합격이라는 뜻도 아니다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>반도체 공정 진공 이유</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게 식각·증착 같은 반도체 공정에서 설비 안을 진공에 가깝게 만드는 이유를 쉬운 말로 3문장 안에 설명해줘. 진공도를 mTorr로 잴 때 숫자가 작을수록 무슨 뜻인지도 알려줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "남은 공기·불순물이 반응을 방해하거나 웨이퍼를 오염시키지 않게 하고, 넣어 준 가스가 정해진 조건대로 반응하게 하려고 공기를 뺀다", "mTorr 숫자가 작을수록 남은 기체가 적다(진공에 가깝다)"는 내용이 들어 있다.
-      알맞은 진공도는 공정마다 다르다. 오늘 쓰는 4.5~5.5 mTorr는 연습용 기준이다.</div>
     </div>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
-      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
       <p><b>검색어</b> <code>원인 후보 확인하는 방법</code></p>
       <div class="code-block">
         <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
         <pre style="white-space:pre-wrap;"><code>공장 데이터에서 '진공도가 정해 둔 범위를 벗어난 기록에 불합격이 많다'는 것을 찾았어. 이것만으로 진공도가 불합격의 원인이라고 단정할 수 없는 이유와, 원인 후보를 더 확인하려면 무엇을 해 볼 수 있는지 데이터 분석을 처음 배우는 사람에게 3가지로 설명해줘.</code></pre>
       </div>
-      <button class="reveal-btn">확인 포인트 보기</button>
-      <div class="answer-box">좋은 답이라면 "같은 때 함께 달라진 다른 값(설비·공정·시기)이 있었을 수 있다", "진공도만 바꿔 보는 실험이나 설비 점검·정비 기록처럼 데이터 밖의 근거로 확인한다", "현장 엔지니어와 함께 확인한다"는 내용이 들어 있다.
-      AI가 "진공도가 원인이다"처럼 단정하면 그 부분은 걸러 읽는다.</div>
     </div>
   </section>
 

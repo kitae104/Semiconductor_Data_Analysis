@@ -1,6 +1,6 @@
 ---
 name: orange-workflow-authoring
-description: 차시별 Orange3 워크플로(orange3/weekXX/*.ows)와 Orange용 데이터(data/weekly/weekXX/orange/*.tab), 학생용 키트(dist/*.zip)를 만들거나 고칠 때 반드시 사용한다. 새 차시의 _start/_done 워크플로를 추가하거나, 위젯 체인·설정(Distributions 변수, Select Rows 조건, Impute 방법)을 바꾸거나, File 위젯 경로가 다른 PC에서 깨지거나, Orange에서 합격여부가 숫자로 보이거나 열 이름에 BOM이 붙거나, validate_orange_workflows.py / build_student_kit.py --check 실패를 고칠 때 사용할 것. Orange 3.35.0 기준. notebook-engineer 에이전트의 스킬.
+description: 차시별 Orange3 워크플로(orange3/weekXX/*.ows)와 Orange용 데이터(data/weekly/weekXX/orange/*.tab)를 만들거나 고칠 때 반드시 사용한다. 새 차시의 _start/_done 워크플로를 추가하거나, 위젯 체인·설정(Distributions 변수, Select Rows 조건, Impute 방법)을 바꾸거나, File 위젯 경로가 다른 PC에서 깨지거나, Orange에서 합격여부가 숫자로 보이거나 열 이름에 BOM이 붙거나, validate_orange_workflows.py 실패를 고칠 때 사용할 것. Orange 3.35.0 기준. notebook-engineer 에이전트의 스킬.
 ---
 
 # Orange3 워크플로 작성
@@ -17,7 +17,6 @@ Orange 화면에서 저장하면 File 경로가 그 PC의 절대경로로 바뀌
 | 워크플로 | `orange3/weekXX/weekXX_<N>_<주제>_start.ows`, `_done.ows` | `build_orange_workflows.py` |
 | Orange용 데이터 | `data/weekly/weekXX/orange/<CSV와 같은 이름>.tab` | `generate_weekly_data.py`(CSV마다 자동) |
 | Orange 워밍업 CSV | `data/weekly/weekXX/weekXX_orange_<주제>.csv` | `generate_weekly_data.py`의 `save_orange_warmup()` |
-| 학생용 키트 | `dist/student_kit.zip`, `dist/weekXX_kit.zip` | `build_student_kit.py` |
 | 공통 도우미 | `scripts/_orange_env.py`(Orange 파이썬 찾기·재실행, 위젯 레지스트리) | — |
 
 차시당 워크플로 2개(①워밍업 데이터, ②반도체 데이터) × start/done = `.ows` 4개가 기본이다.
@@ -126,9 +125,8 @@ Orange와 같은 형식(Context 포함)으로 저장한다. 그래서 열 이름
   찾으므로 동작한다(실측).
 - `abspath`에 절대경로를 넣지 않는다. 파일 이름만 두면 경로를 못 찾았을 때 File 목록에 그 이름이 빨간색으로 보인다.
 - 학생이 Orange에서 워크플로를 **다시 저장하면** 키트 밖 데이터는 절대경로로 바뀐다(Orange 동작). 그 PC에서는
-  계속 열리지만 폴더를 옮기면 깨진다. 강의·운영안에는 "막히면 `_done.ows`를 다시 열기 / 키트 다시 받기"로 안내한다.
-- 노트북의 `../../data/...`와 `.ows`의 relpath 모두 **키트 폴더 구조가 그대로일 때만** 동작한다.
-  그래서 학생에게는 낱개 파일이 아니라 `build_student_kit.py`가 만든 zip을 준다.
+  계속 열리지만 폴더를 옮기면 깨진다. 강의·운영안에는 "막히면 `_done.ows`를 다시 열기"로 안내한다.
+- `.ows`의 relpath는 **`orange3/`와 `data/` 폴더 구조가 그대로일 때만** 동작한다(2026-10-25부터 학생용 키트 zip은 두지 않는다. 노트북은 CSV 파일 이름만 쓴다).
 
 ## start / done 규약
 
@@ -152,7 +150,6 @@ python scripts/generate_weekly_data.py && git diff --stat data/weekly/   # 기�
 python scripts/validate_datasets.py                                      # .tab 존재·BOM 없음·행 수·열·값이 CSV와 같음
 python scripts/build_orange_workflows.py [--week N]
 python scripts/validate_orange_workflows.py [--week N]                   # 파싱·위젯 목록·경로·데이터·위젯 기동·start/done 짝
-python scripts/build_student_kit.py --check                              # zip을 풀어 노트북·.ows 경로 해석
 ```
 
 `validate_orange_workflows.py`는 워크플로를 화면 없이 통째로 띄워 신호를 흘려 보내고, **연결선마다 흐른 행 수**를
