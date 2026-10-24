@@ -84,20 +84,6 @@
   </section>
 
   <section class="block">
-    <h2>오늘 수업 구성</h2>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
-        <tbody>
-          <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>카페 주문 예제로 변수·<code>type()</code>·<code>print()</code>·f-string을 배우고, 공장 기록 40건으로 확인한다</td></tr>
-          <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>우리 동네 인구 표로 위젯 세 개를 익히고, 같은 위젯으로 공장 기록표의 합격·불합격 막대를 본다</td></tr>
-          <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개 + Orange 1문제 + 해석 문장 1개</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>10차시 동안 반도체 공장의 숫자를 다룬다. 숫자가 어디서 왜 생겼는지 알아야 표가 의미 있게 보인다.</li>
@@ -216,11 +202,9 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 변수와 출력</h2>
-    <h3>실습 파일 받기와 노트북 열기</h3>
-    <div class="step"><div class="num">1</div><div class="content">1차시 키트 <a href="../../dist/week01_kit.zip">week01_kit.zip</a>을 내려받아 압축을 푼다(전체 차시 키트: <a href="../../dist/student_kit.zip">student_kit.zip</a>). 압축을 푼 <code>semiconductor_kit</code> 폴더 구조는 그대로 둔다. 노트북과 Orange 파일이 폴더 위치를 기준으로 데이터를 찾는다.</div></div>
-    <div class="step"><div class="num">2</div><div class="content">Jupyter를 켠다. 방법은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 05 "노트북 열어 보기"에 있다(<code>semiconductor_kit</code> 폴더에서 명령 프롬프트를 열고 <code>python -m notebook</code> 실행).</div></div>
-    <div class="step"><div class="num">3</div><div class="content">브라우저에 뜬 Jupyter에서 <code>notebooks</code> → <code>student</code> → <code>week01_student.ipynb</code>를 연다. 맨 위 "막혔을 때" 셀을 먼저 읽는다.</div></div>
+    <h3>노트북 쓰는 법 — 셀과 주석</h3>
     <ul class="pt-list">
+      <li>노트북 맨 위의 "막혔을 때" 셀에 힌트가 모여 있다. 막히면 먼저 읽는다.</li>
       <li>코드를 쓰는 칸이 <b>셀</b>이다. 셀을 클릭하고 <b>Shift + Enter</b>를 누르면 결과가 바로 아래 나온다.</li>
       <li>코드 셀에서 <code>#</code> 뒤에 쓴 글은 <b>주석</b>이다. 파이썬이 실행하지 않으므로 메모를 남길 때 쓴다. 노트북의 <code># TODO: …</code> 줄이 주석이다.</li>
       <li>개념은 <b>카페 주문</b>(연습용 값)으로 배우고, 공장 기록은 "반도체 데이터로 확인하기"에서 다룬다.</li>
@@ -441,7 +425,7 @@ print(f"불합격률은 {fail_rate}%입니다.")</code></pre>
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 표를 눈으로 보기</h2>
     <p>Orange3는 코드 대신 <b>위젯</b>(기능 상자)을 선으로 이어 데이터를 보는 프로그램이다. 오늘은 공장 기록표의 합격·불합격을 막대로 직접 세어 미션의 답을 확인한다.</p>
-    <p>PART 1에서 받은 키트를 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
+    <p>실습 환경에 준비된 파일을 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">

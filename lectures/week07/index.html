@@ -55,20 +55,6 @@
   </section>
 
   <section class="block">
-    <h2>오늘 수업 구성</h2>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
-        <tbody>
-          <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>쪽지시험 기록으로 정답률을 구하고 반별로 묶어 비교한 뒤, 같은 코드로 웨이퍼 300장 기록을 본다</td></tr>
-          <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>식각 설비 3대의 웨이퍼 12장으로 Pivot Table(피벗 표)과 웨이퍼 맵을 익히고, 같은 위젯으로 공장 기록을 본다</td></tr>
-          <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개(오늘의 미션) + Orange 1문제 + 해석 문장 1개</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <p>전체 합격률 하나만 보면 "어디서" 불량이 많이 나는지 숨는다. 오늘 쪽지시험 기록도 전체 정답률은 <b>75.0%</b>지만, 반별로 나누면 87.5%인 반과 62.5%인 반이 있다.</p>
     <div class="callout concept">
@@ -94,10 +80,6 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 비율 구하고 묶어서 비교하기</h2>
-    <h3>실습 파일 받기와 노트북 열기</h3>
-    <div class="step"><div class="num">1</div><div class="content">7차시 키트 <a href="../../dist/week07_kit.zip">week07_kit.zip</a>을 내려받아 압축을 푼다(전체 차시 키트: <a href="../../dist/student_kit.zip">student_kit.zip</a>). 압축을 푼 <code>semiconductor_kit</code> 폴더 구조는 그대로 둔다. 노트북과 Orange 파일이 폴더 위치를 기준으로 데이터를 찾는다.</div></div>
-    <div class="step"><div class="num">2</div><div class="content">Jupyter를 켠다. 방법은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 05 "노트북 열어 보기"에 있다(<code>semiconductor_kit</code> 폴더에서 명령 프롬프트를 열고 <code>python -m notebook</code> 실행).</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><code>notebooks</code> → <code>student</code> → <code>week07_student.ipynb</code>를 연다. 맨 위 "막혔을 때" 셀을 먼저 읽는다.</div></div>
     <p>개념은 <b>쪽지시험 기록</b>(<code>week07_easy_quiz_results.csv</code>, 24행 6열, 생활 예제용 가상 데이터)으로 익힌다. 세 반에서 두 명씩, 6명이 4문항씩 풀었다. 한 행 = 학생 1명이 푼 문항 1개다.</p>
     <div class="tablewrap">
       <table>
@@ -338,7 +320,7 @@ print((lot_fail &gt; 20).sum())</code></pre>
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 피벗 표로 세고 웨이퍼 맵으로 열어 보기</h2>
     <p>PART 1에서는 <code>groupby</code>로 묶어서 비율을 계산했다. Orange에서는 <b>Pivot Table</b>(피벗 표)로 설비 × 합격여부 칸마다 개수를 한 번에 세고, 숫자로 찾은 설비를 웨이퍼 맵으로 열어 본다. 오늘 새 위젯은 <code>Pivot Table</code> 하나다.</p>
-    <p>PART 1에서 받은 키트를 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
+    <p>실습 환경에 준비된 파일을 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">

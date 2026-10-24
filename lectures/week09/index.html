@@ -55,21 +55,6 @@
   </section>
 
   <section class="block">
-    <h2>오늘 수업 구성</h2>
-    <p>오늘과 10차시는 순서가 다르다. <b>Orange3를 먼저</b> 하고, 파이썬은 같은 모델을 몇 줄로 다시 만드는 데만 쓴다.</p>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
-        <tbody>
-          <tr><td><a href="#part1">PART 1 · Orange3</a></td><td>웨이퍼 맵 불량 모양을 결정 트리로 맞혀 보고, 같은 위젯으로 공정 기록의 합격/불합격을 맞혀 본다</td></tr>
-          <tr><td><a href="#part2">PART 2 · 파이썬 + ChatGPT</a></td><td>같은 모델을 파이썬 몇 줄로 만들고, ChatGPT가 준 코드를 실행해 숫자가 맞는지 확인한다</td></tr>
-          <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 2개 + Orange 2문제(웨이퍼 패턴·공정 기록) + 해석 문장 1개</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <p>웨이퍼는 ②~⑥ 공정을 여러 번 거친 뒤에야 ⑦ 전기 검사(EDS)를 받는다. 검사 전에 "이 로트는 불합격이 나올 것 같다"를 미리 알 수 있다면 먼저 살펴볼 로트를 고를 수 있다.</p>
     <p>3차시에는 사람이 <code>if</code>로 규칙을 직접 썼다. 오늘은 컴퓨터가 지난 기록에서 규칙을 찾게 한다. 이것이 <b>머신러닝</b>이다.
@@ -97,9 +82,6 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> Orange3 — 결정 트리로 맞혀 보기</h2>
-    <h3>실습 파일 받기와 Orange 열기</h3>
-    <div class="step"><div class="num">1</div><div class="content">9차시 키트 <a href="../../dist/week09_kit.zip">week09_kit.zip</a>을 내려받아 압축을 푼다(전체 차시 키트: <a href="../../dist/student_kit.zip">student_kit.zip</a>). 압축을 푼 <code>semiconductor_kit</code> 폴더 구조는 그대로 둔다. 노트북과 Orange 파일이 폴더 위치를 기준으로 데이터를 찾는다.</div></div>
-    <div class="step"><div class="num">2</div><div class="content">Orange3를 켠다. 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준). Jupyter는 PART 2에서 켠다.</div></div>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">
@@ -361,9 +343,6 @@
 
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> 파이썬 + ChatGPT — 같은 모델을 몇 줄로</h2>
-    <h3>Jupyter 켜고 노트북 열기</h3>
-    <div class="step"><div class="num">1</div><div class="content">Jupyter를 켠다. 방법은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 05 "노트북 열어 보기"에 있다(<code>semiconductor_kit</code> 폴더에서 명령 프롬프트를 열고 <code>python -m notebook</code> 실행).</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><code>notebooks</code> → <code>student</code> → <code>week09_student.ipynb</code>를 연다. 맨 위 "막혔을 때" 셀을 먼저 읽는다.</div></div>
     <p>PART 1에서 Orange 위젯으로 한 일을 파이썬 몇 줄로 다시 한다. 짝을 지어 보면 이렇다.</p>
     <div class="tablewrap">
       <table>

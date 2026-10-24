@@ -11,7 +11,7 @@
 9·10차시는 PART 1 Orange3 → PART 2 파이썬 + ChatGPT → PART 3 실습지 순서다. 노트북은 단계 번호로 지시한다.
 
 1. 오늘의 질문·오늘의 미션(입사 열째 날, 마지막 날) → 지난 시간 복습 2문항(80.3% vs 78.9%, Confusion Matrix 114칸)
-2. PART 1 시작: 키트 받기, 위젯 이름표(새 위젯 kNN·Logistic Regression·Predictions), 공정 지도 위치 네 줄
+2. PART 1 시작: 위젯 이름표(새 위젯 kNN·Logistic Regression·Predictions), 공정 지도 위치 네 줄
 3. 워밍업 `week10_1_newwafers_start.ows`(학생이 직접): 세 모델 → Test and Score(10겹) CA 읽기 → Predictions에서 답이 갈린 웨이퍼 찾기 → "읽은 숫자 확인 보기"는 학생이 찾은 뒤 연다
 4. 반도체 `week10_2_newlots_start.ows`는 **강사 시연** 1~2(Test and Score CA + 기준선 79.3%, Confusion Matrix에서 Logistic Regression 불합격 예측 0) — 3(Predictions)은 실습지 문제 4로 남긴다
 5. **여기서 쉬기**

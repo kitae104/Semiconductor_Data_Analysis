@@ -255,6 +255,12 @@ section.block > h3{color:var(--ink); font-size:1.18rem; margin-top:1.3rem;}
 
 /* ---------- 표 (데이터 미리보기 등) ---------- */
 .tablewrap{overflow-x:auto; margin:1rem 0; border:1px solid var(--ink); border-radius:var(--radius);}
+/* 클래스 없는 표도 같은 모양: 어두운 머리글, 왼쪽 정렬, 한글은 어절 단위로만 줄바꿈 */
+.tablewrap table{width:100%; border-collapse:collapse; font-size:.92rem; min-width:480px; word-break:keep-all;}
+.tablewrap th,.tablewrap td{border:1px solid var(--line); padding:.5rem .7rem; text-align:left; vertical-align:top;}
+.tablewrap th{background:var(--ink); color:#fff; font-family:var(--font-mono); font-weight:500;}
+.tablewrap td code{overflow-wrap:normal;}
+.tablewrap td:first-child code{white-space:nowrap;}
 table.data-preview{width:100%; border-collapse:collapse; font-size:.85rem; min-width:520px;}
 table.data-preview th,table.data-preview td{border:1px solid var(--line); padding:.45rem .6rem; text-align:center; white-space:nowrap;}
 table.data-preview th{background:var(--ink); color:#fff; font-family:var(--font-mono); font-weight:500; position:sticky; top:0;}

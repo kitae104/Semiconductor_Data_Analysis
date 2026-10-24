@@ -78,20 +78,6 @@
   </section>
 
   <section class="block">
-    <h2>오늘 수업 구성</h2>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
-        <tbody>
-          <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>시험 점수·체온 예제로 <code>if</code>/<code>else</code>·<code>for</code>·함수를 배우고, 설비 EQ-04의 기록으로 확인한다</td></tr>
-          <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>우리 동네 대기환경 표에서 Select Rows로 미세먼지가 많은 날을 고르고, 같은 위젯으로 설비 기록을 고른다</td></tr>
-          <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개 + Orange 1문제 + 해석 1문제</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <ul class="pt-list">
       <li>기록이 30건이면 눈으로도 볼 수 있지만, 공장 기록은 금세 수천 건이 된다. "범위 밖인가?"를 한 건씩 사람이 보는 일은 컴퓨터에 맡긴다.</li>
@@ -115,10 +101,6 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 조건문·반복문·함수</h2>
-    <h3>실습 파일 받기와 노트북 열기</h3>
-    <div class="step"><div class="num">1</div><div class="content">3차시 키트 <a href="../../dist/week03_kit.zip">week03_kit.zip</a>을 내려받아 압축을 푼다(전체 차시 키트: <a href="../../dist/student_kit.zip">student_kit.zip</a>). 압축을 푼 <code>semiconductor_kit</code> 폴더 구조는 그대로 둔다. 노트북과 Orange 파일이 폴더 위치를 기준으로 데이터를 찾는다.</div></div>
-    <div class="step"><div class="num">2</div><div class="content">Jupyter를 켠다. 방법은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 05 "노트북 열어 보기"에 있다(<code>semiconductor_kit</code> 폴더에서 명령 프롬프트를 열고 <code>python -m notebook</code> 실행).</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><code>notebooks</code> → <code>student</code> → <code>week03_student.ipynb</code>를 연다. 맨 위 "막혔을 때" 셀을 먼저 읽는다.</div></div>
     <ul class="pt-list">
       <li>개념은 <b>시험 점수·체온</b>(지어낸 값)으로 배우고, 공장 기록은 "반도체 데이터로 확인하기"에서 다룬다.</li>
       <li>셀은 위에서 아래로 차례대로 <b>Shift + Enter</b>로 실행한다. 오늘 코드는 앞 셀에서 만든 변수를 이어서 쓴다.</li>
@@ -447,7 +429,7 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 조건으로 행 고르기</h2>
     <p>파이썬에서는 <code>for</code>와 <code>if</code>로 한 건씩 판정했다. Orange의 Select Rows는 조건을 창에 적으면 맞는 행만 골라 준다.</p>
-    <p>PART 1에서 받은 키트를 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
+    <p>실습 환경에 준비된 파일을 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">

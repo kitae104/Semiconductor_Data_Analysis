@@ -55,20 +55,6 @@
   </section>
 
   <section class="block">
-    <h2>오늘 수업 구성</h2>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
-        <tbody>
-          <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>아이스크림 가게 기록으로 막대·히스토그램·산점도를 같은 4줄 틀로 그리고, 같은 틀로 공정 기록을 그려 본다</td></tr>
-          <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>웨이퍼 한 장의 검사 기록으로 웨이퍼 맵을 그리고, 같은 위젯으로 공정 기록의 분포·관계·퍼짐을 본다</td></tr>
-          <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개(오늘의 미션 그래프 3장) + Orange 1문제 + 해석 문장 1개</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <p>숫자 표는 한 줄씩 읽어야 하지만, 그래프는 전체 모양을 한 번에 보여 준다. 오늘 Orange에서 여는 웨이퍼 검사 기록은 317줄이다.
     표를 위에서부터 읽어서는 불합격 다이가 웨이퍼의 <b>어디에</b> 몰렸는지 알 수 없다. 점으로 찍으면 한눈에 보인다.</p>
@@ -94,10 +80,6 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 막대·히스토그램·산점도</h2>
-    <h3>실습 파일 받기와 노트북 열기</h3>
-    <div class="step"><div class="num">1</div><div class="content">6차시 키트 <a href="../../dist/week06_kit.zip">week06_kit.zip</a>을 내려받아 압축을 푼다(전체 차시 키트: <a href="../../dist/student_kit.zip">student_kit.zip</a>). 압축을 푼 <code>semiconductor_kit</code> 폴더 구조는 그대로 둔다. 노트북과 Orange 파일이 폴더 위치를 기준으로 데이터를 찾는다.</div></div>
-    <div class="step"><div class="num">2</div><div class="content">Jupyter를 켠다. 방법은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 05 "노트북 열어 보기"에 있다(<code>semiconductor_kit</code> 폴더에서 명령 프롬프트를 열고 <code>python -m notebook</code> 실행).</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><code>notebooks</code> → <code>student</code> → <code>week06_student.ipynb</code>를 연다. 맨 위 "막혔을 때" 셀을 먼저 읽는다.</div></div>
     <p>개념은 <b>아이스크림 가게 기록</b>(<code>week06_easy_icecream_daily.csv</code>, 21행 5열, 생활 예제용 가상 데이터)으로 익힌다. 한 행 = 하루치 기록이다.</p>
     <div class="tablewrap">
       <table>
@@ -337,7 +319,7 @@ plt.show()</code></pre>
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 웨이퍼 맵과 상자 그림</h2>
     <p>PART 1에서는 코드로 그래프를 그렸다. Orange에서는 위젯을 이어 같은 그래프를 그리고, 파이썬으로 그리지 않은 두 가지 — <b>웨이퍼 맵</b>과 <b>상자 그림</b> — 을 본다. 오늘 새 위젯은 <code>Scatter Plot</code>과 <code>Box Plot</code> 두 개다.</p>
-    <p>PART 1에서 받은 키트를 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
+    <p>실습 환경에 준비된 파일을 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">

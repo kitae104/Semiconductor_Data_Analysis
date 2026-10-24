@@ -66,20 +66,6 @@
   </section>
 
   <section class="block">
-    <h2>오늘 수업 구성</h2>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
-        <tbody>
-          <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>아이스크림 가게 기록으로 상관계수와 범위 밖 비교를 익히고, 같은 코드로 공정 센서 기록을 본다</td></tr>
-          <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>식각 챔버 센서 기록으로 Correlations(상관 순위)를 익히고, 같은 위젯으로 공정 센서 기록을 본다</td></tr>
-          <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개(오늘의 미션) + Orange 1문제 + 해석 문장 1개</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
     <p>불합격이 나오면 "그때 무엇이 달랐나"를 찾아야 한다. 공정 기록에는 숫자 열이 여러 개라, 어느 값부터 볼지 정해 주는 도구가 필요하다.</p>
     <p>오늘은 두 가지 도구를 쓴다. 두 값이 <b>함께 움직이는 정도</b>를 재는 상관계수, 그리고 <b>범위 밖일 때만</b> 문제가 되는 값을 찾는 범위 비교다.</p>
@@ -106,10 +92,6 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 함께 움직이는 값과 범위 밖 값 찾기</h2>
-    <h3>실습 파일 받기와 노트북 열기</h3>
-    <div class="step"><div class="num">1</div><div class="content">8차시 키트 <a href="../../dist/week08_kit.zip">week08_kit.zip</a>을 내려받아 압축을 푼다(전체 차시 키트: <a href="../../dist/student_kit.zip">student_kit.zip</a>). 압축을 푼 <code>semiconductor_kit</code> 폴더 구조는 그대로 둔다. 노트북과 Orange 파일이 폴더 위치를 기준으로 데이터를 찾는다.</div></div>
-    <div class="step"><div class="num">2</div><div class="content">Jupyter를 켠다. 방법은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 05 "노트북 열어 보기"에 있다(<code>semiconductor_kit</code> 폴더에서 명령 프롬프트를 열고 <code>python -m notebook</code> 실행).</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><code>notebooks</code> → <code>student</code> → <code>week08_student.ipynb</code>를 연다. 맨 위 "막혔을 때" 셀을 먼저 읽는다.</div></div>
     <p>개념은 <b>아이스크림 가게 기록</b>(<code>week08_easy_weather_sales.csv</code>, 30행 7열, 생활 예제용 가상 데이터)으로 익힌다. 한 행 = 하루다.</p>
     <div class="tablewrap">
       <table>
@@ -412,7 +394,7 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 상관 순위로 모든 쌍을 한 번에 보기</h2>
     <p>PART 1에서는 <code>corr()</code>로 한 쌍씩 계산했다. Orange의 <b>Correlations</b>(상관 순위)는 숫자 열의 <b>모든 쌍</b>을 한 번에 계산해 크기순으로 줄 세운다. 오늘 새 위젯은 <code>Correlations</code> 하나다.</p>
-    <p>PART 1에서 받은 키트를 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
+    <p>실습 환경에 준비된 파일을 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
 
     <h3>Orange 말 사전</h3>
     <div class="tablewrap">

@@ -8,7 +8,7 @@
 
 - [페이지 골격](#페이지-골격)
 - [히어로](#히어로)
-- [오늘 수업 구성과 PART 섹션](#오늘-수업-구성과-part-섹션)
+- [PART 섹션](#part-섹션)
 - [콜아웃](#콜아웃)
 - [찾아보기 상자](#찾아보기-상자)
 - [코드 블록](#코드-블록)
@@ -124,32 +124,17 @@
 
 ---
 
-## 오늘 수업 구성과 PART 섹션
+## PART 섹션
 
-v3(2026-10-23) 강의는 PART 세 개다. "오늘 수업 구성" 표는 학습 목표 다음에 두고, **시간 열을 두지 않는다**.
-
-```html
-<section class="block">
-  <h2>오늘 수업 구성</h2>
-  <div class="tablewrap">
-    <table>
-      <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
-      <tbody>
-        <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>생활 예제로 변수와 출력을 배우고, 반도체 기록으로 확인한다</td></tr>
-        <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>동물 데이터로 위젯을 익히고, 같은 위젯으로 공정 기록을 본다</td></tr>
-        <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개 + Orange 1문제 + 해석 문장 1개</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-```
+v3(2026-10-23) 강의는 PART 세 개다. **"오늘 수업 구성" 표와 "실습 파일 받기·노트북 열기" 단계는 두지 않는다**(2026-10-24,
+실습 환경에 파일·노트북이 미리 배치돼 있다). 시간 열도 두지 않는다.
 
 PART 머리 섹션은 `section.block > h2` 구조를 지켜 자동 목차에 잡히게 한다.
 
 ```html
 <section class="block" id="part1">
   <h2><span class="step-badge">PART 1</span> 파이썬 — 변수와 출력</h2>
-  <p>노트북 <code>week01_student.ipynb</code>를 열고 맨 위 "막혔을 때" 셀을 먼저 읽는다.</p>
+  <p>개념은 생활 예제로 배우고, 공장 기록은 "반도체 데이터로 확인하기"에서 다룬다.</p>
 </section>
 <!-- 이어서 개념 섹션들, 반도체 데이터로 확인하기, 실습 따라 하기 -->
 <section class="block" id="part2">

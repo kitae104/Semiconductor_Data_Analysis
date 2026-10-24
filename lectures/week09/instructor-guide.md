@@ -12,12 +12,12 @@
 9·10차시는 **PART 1 Orange3 → PART 2 파이썬 + ChatGPT → PART 3 실습지** 순서다. 노트북은 단계 번호, Orange는 캔버스 메모 번호로 지시한다.
 
 1. 오늘의 질문·오늘의 미션(입사 아홉째 날) → 지난 시간 복습 2문항(진공도 = 원인 후보, Correlations에 합격여부가 없는 이유 → 오늘은 그 열이 맞힐 목표)
-2. PART 1 시작: 키트 받기, Orange 켜기(설치 안내 STEP 06), Orange 말 사전, 위젯 이름표(새 위젯 4개: Tree = Model, Tree Viewer = Visualize, Test and Score·Confusion Matrix = Evaluate), 공정 지도 위치 두 줄
+2. PART 1 시작: Orange 말 사전, 위젯 이름표(새 위젯 4개: Tree = Model, Tree Viewer = Visualize, Test and Score·Confusion Matrix = Evaluate), 공정 지도 위치 두 줄
 3. 개념 네 절: 머신러닝(Feature/Label, 피자 가게 표) → 결정 트리(스무고개) → 학습용·시험용(연습문제·모의고사, 10겹 교차검증) → 정확도와 기준선(헷갈림 표 읽는 법)
 4. 워밍업 `week09_1_patterns_start.ows`(학생이 직접): 메모 ② Tree(깊이 4) → Tree Viewer, "가장자리형 100%" 상자 예상하고 찾기 → 메모 ③ Test and Score(10겹) → 메모 ④ Confusion Matrix, "정상으로 헷갈린 패턴" 예상하고 확인. 메모 ⑤ Distributions는 더 해 보기
 5. **여기서 쉬기**
 6. 반도체 `week09_2_passfail_start.ows`(학생이 직접): 메모 ① 750행 → 메모 ② Distributions(합격여부, Split by None) 기준선 어림 → 확인(595/750 ≈ 79.3%) → 메모 ③ Tree → Tree Viewer(Show details in non-leaves 체크), 뿌리 595/750 = 기준선 연결 → 첫 질문 `온도_C`, 한 줄 더 내려가 양쪽 끝(≤ 293.8 56.0%, > 306.0 46.2%) → "원인 후보" 문장. 메모 ④는 실습지 문제 4로 미룬다
-7. PART 2 시작: Jupyter 켜기(설치 안내 STEP 05), Orange ↔ 파이썬 짝 표
+7. PART 2 시작: Orange ↔ 파이썬 짝 표
 8. 노트북 1단계: 읽기 `(750, 9)` → 빈칸 수 → 학생 빈칸 `dropna` → `(735, 9)`
 9. 노트북 2단계: 학생 빈칸 `"합격여부"` → `(735, 6) (735,)` → `588 147` → 학생 빈칸 `fit`·`y_test` → 예상 후 결과 열기 `정확도: 80.3%`(기준선 78.9%, 147개 중 2개 차이. 그래도 불합격 31개 중 9개를 잡는다 — 기준선은 0개)
 10. 노트북 3단계 ChatGPT 체험: 프롬프트 복사 → 빈 셀에 붙여 실행(못 쓰면 응답 예시 셀) → 2단계 숫자와 맞춰 보기(`0.8027…` × 100 = 80.3%) → 직접 바꿔 보기(`stratify=y` 지우기 → `0.7755…`) → 조건이 빠지면 달라지는 숫자 표

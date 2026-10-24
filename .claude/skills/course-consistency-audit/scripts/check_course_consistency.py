@@ -476,7 +476,6 @@ def check_v3(scope: str, week: int) -> None:
     for part in ("part1", "part2", "part3"):
         n = len(re.findall(rf'id="{part}"', index))
         check(scope, f'{rel_index} id="{part}" 정확히 1개', n == 1, f"{n}개")
-        warn_if(scope, f'{rel_index} "오늘 수업 구성"에서 #{part}로 링크', f'href="#{part}"' in index)
 
     worksheet = os.path.join(folder, "worksheet.html")
     if os.path.exists(worksheet):
