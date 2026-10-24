@@ -146,6 +146,9 @@ def kit_files(weeks, with_solutions):
                     tab = f"{os.path.dirname(ref)}/orange/{os.path.basename(stem)}.tab"
                     if os.path.exists(os.path.join(BASE, tab)):
                         extra.append(tab)
+                elif ext == ".tab" and os.path.basename(os.path.dirname(ref)) == "orange":
+                    # .ows가 다른 차시 .tab을 열면 강의가 가리키는 같은 이름의 CSV도 함께 넣는다
+                    extra.append(f"{os.path.dirname(os.path.dirname(ref))}/{os.path.basename(stem)}.csv")
         files += [e for e in extra if os.path.exists(os.path.join(BASE, e))]
     for page in KIT_PAGES:
         if page in files:

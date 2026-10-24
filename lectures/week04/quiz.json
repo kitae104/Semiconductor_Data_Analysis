@@ -3,125 +3,88 @@
   "title": "Pandas 가장 기본적인 부분",
   "questions": [
     {
+      "type": "result_prediction",
+      "question": "카페 주문 기록 cafe를 read_csv로 읽고 print(cafe.shape)를 실행했다. 주문은 12건이고 열은 주문번호·매장·메뉴·종류·가격_KRW·수량_count·평가 7개다. 출력은?",
+      "answer": "(12, 7)",
+      "explanation": "shape는 (행 수, 열 수)다. 주문 12건 = 12행, 칸 7개 = 7열. shape 뒤에는 괄호 ()를 붙이지 않는다."
+    },
+    {
       "type": "multiple_choice",
-      "question": "CSV 파일을 읽어 DataFrame(표)으로 만드는 Pandas 명령은?",
+      "question": "공정 기록 df에서 설비번호·온도_C·합격여부 세 열만 고르는 올바른 코드는?",
       "options": [
-        "pd.open_csv()",
-        "pd.load_csv()",
-        "pd.read_csv()",
-        "print(csv)"
+        "df[\"설비번호\", \"온도_C\", \"합격여부\"]",
+        "df[[\"설비번호\", \"온도_C\", \"합격여부\"]]",
+        "df(\"설비번호\", \"온도_C\", \"합격여부\")",
+        "df.columns(\"설비번호\", \"온도_C\", \"합격여부\")"
       ],
-      "answer": 2,
-      "explanation": "pd.read_csv(\"경로\", encoding=\"utf-8-sig\")로 읽는다."
+      "answer": 1,
+      "explanation": "여러 열은 열 이름 리스트를 대괄호 안에 넣어 두 겹으로 고른다. 결과는 (100, 3) 표다. 대괄호 한 겹이면 KeyError: ('설비번호', '온도_C', '합격여부')가 난다."
     },
     {
-      "type": "term_matching",
-      "question": "용어와 설명을 연결하시오.",
-      "pairs": [
-        {
-          "term": "DataFrame",
-          "definition": "Pandas가 CSV를 읽어 만든 행·열 구조의 표"
-        },
-        {
-          "term": "Series",
-          "definition": "표에서 열 하나를 꺼낸 것"
-        },
-        {
-          "term": "조건 검색",
-          "definition": "행마다 True/False를 붙여 True인 행만 남기는 것"
-        },
-        {
-          "term": "정렬",
-          "definition": "한 열의 값 크기 순서로 행을 다시 늘어놓는 것"
-        }
-      ]
+      "type": "fill_blank",
+      "question": "카페 표에서 메뉴·가격_KRW 두 열만 고르는 코드: cafe[____]",
+      "answer": "[\"메뉴\", \"가격_KRW\"]",
+      "explanation": "안쪽 대괄호는 고를 열 이름을 담은 리스트다. 그래서 전체는 cafe[[\"메뉴\", \"가격_KRW\"]]처럼 두 겹이 된다."
     },
     {
       "type": "multiple_choice",
-      "question": "카페 주문 표에서 cafe.shape를 실행했더니 (12, 7)이 나왔다. 이것의 뜻은?",
+      "question": "공정 기록 df에서 설비번호가 EQ-02인 행만 고른 표를 만드는 코드는?",
       "options": [
-        "주문(행) 12건, 항목(열) 7개",
-        "열 12개, 행 7개",
-        "좋아요 12건, 별로예요 7건",
-        "앞 12행 중 7행만 보여준다"
+        "df[df[\"설비번호\"] == \"EQ-02\"]",
+        "df[\"설비번호\"] == \"EQ-02\"",
+        "df[df[\"설비번호\"] = \"EQ-02\"]",
+        "df[df[\"설비번호\"] == EQ-02]"
       ],
       "answer": 0,
-      "explanation": "shape는 (행 개수, 열 개수)다."
+      "explanation": "안쪽 비교가 행마다 True/False를 만들고, 바깥 df[ ]가 True인 행만 남긴다. 두 번째 보기는 True/False 목록만 만든다. 세 번째는 같은가?(==) 대신 저장(=)을 써서 SyntaxError, 네 번째는 글자 값에 따옴표가 없어 SyntaxError가 난다."
+    },
+    {
+      "type": "result_prediction",
+      "question": "카페 표에서 pricey = cafe[cafe[\"가격_KRW\"] > 5000]은 5행이었다. 이어서 pricey_bad = pricey[pricey[\"평가\"] == -1]을 만들고 print(len(pricey_bad))를 실행하면?",
+      "answer": "3",
+      "explanation": "5000원 넘는 주문 5건(치즈케이크·바닐라라테·카페모카·초코케이크·유자차) 중 평가가 -1(별로예요)인 것은 치즈케이크·바닐라라테·초코케이크 3건이다. 골라낸 표에서 한 번 더 고르면 두 조건을 모두 만족하는 행만 남는다."
+    },
+    {
+      "type": "true_false",
+      "question": "df.sort_values(\"온도_C\")는 따로 지정하지 않으면 온도가 높은 기록부터(내림차순) 줄 세운다.",
+      "answer": false,
+      "explanation": "기본은 작은 값부터(오름차순)다. 높은 온도부터 보려면 df.sort_values(\"온도_C\", ascending=False)처럼 ascending=False를 쓴다."
     },
     {
       "type": "multiple_choice",
-      "question": "카페 표에서 메뉴와 가격_원 두 열을 함께 꺼내는 올바른 코드는?",
-      "options": [
-        "cafe[\"메뉴\", \"가격_원\"]",
-        "cafe[[\"메뉴\", \"가격_원\"]]",
-        "cafe(\"메뉴\", \"가격_원\")",
-        "cafe.column(\"메뉴\", \"가격_원\")"
-      ],
+      "question": "파이썬 df[[\"설비번호\", \"온도_C\", \"합격여부\"]]처럼 표에서 볼 열만 남기는 Orange 위젯은?",
+      "options": ["Select Rows", "Select Columns", "Data Table", "Distributions"],
       "answer": 1,
-      "explanation": "여러 열은 열 이름 리스트를 넣어 대괄호가 두 겹이다. 한 겹이면 KeyError가 난다."
-    },
-    {
-      "type": "fill_blank",
-      "question": "커피 주문만 고를 때 cafe[cafe[\"종류\"] ____ \"커피\"]의 빈칸에 들어갈 비교 기호는?",
-      "answer": "=="
-    },
-    {
-      "type": "result_prediction",
-      "question": "카페 표 0~4번 행의 종류가 커피, 커피, 차, 디저트, 커피일 때 cafe[\"종류\"] == \"커피\"의 앞 5개 결과는?",
-      "answer": "True, True, False, False, True",
-      "explanation": "커피인 0·1·4번 행에 True가 붙고, cafe[ ]로 감싸면 그 행만 남는다."
-    },
-    {
-      "type": "true_false",
-      "question": "coffee = cafe[cafe[\"종류\"] == \"커피\"]를 실행하면 원래 표 cafe도 커피 5행만 남도록 바뀐다.",
-      "answer": false,
-      "explanation": "결과는 새 표다. coffee에 5행이 담기고 cafe는 12행 그대로다."
-    },
-    {
-      "type": "true_false",
-      "question": "cafe.sort_values(\"가격_원\")는 기본적으로 비싼 주문부터(내림차순) 보여준다.",
-      "answer": false,
-      "explanation": "기본은 작은 값부터다. 큰 값부터는 ascending=False."
-    },
-    {
-      "type": "fill_blank",
-      "question": "0번 주문의 가격을 행 이름과 열 이름으로 꺼내는 코드는 cafe.____[0, \"가격_원\"]이다.",
-      "answer": "loc"
-    },
-    {
-      "type": "result_prediction",
-      "question": "디저트 주문 4건 중 평가가 -1(별로예요)인 주문이 2건이었다. len(dessert_bad) / len(dessert) * 100의 결과를 소수 첫째 자리까지 쓰면?",
-      "answer": "50.0",
-      "explanation": "2 ÷ 4 × 100 = 50.0. f-string에서 %를 붙여 50.0%로 출력한다."
+      "explanation": "Select Columns(열 고르기)는 뺄 열을 Ignored로 옮기고 남길 열만 다음 위젯으로 보낸다. Select Rows는 행을 고르고, Data Table은 표를 보여 주기만 한다."
     },
     {
       "type": "multiple_choice",
-      "question": "카페 예제의 pricey_bad = pricey[pricey[\"평가\"] == -1]와 같은 모양으로, 305도 초과 기록 hot 안에서 불합격만 고르는 코드는?",
+      "question": "반도체 8대 공정 흐름표에서 Select Rows로 반복여부 is 여러 번을 골랐더니 5행이 남았다. 남은 단계와 그 이유로 알맞은 것은?",
       "options": [
-        "hot[hot[\"합격여부\"] == 0]",
-        "hot[hot[\"합격여부\"] == -1]",
-        "hot[\"합격여부\"] = -1",
-        "hot(hot[\"합격여부\"] == -1)"
+        "① 웨이퍼 제조~⑤ 증착/이온주입 — 앞쪽 단계라서",
+        "② 산화~⑥ 금속 배선 — 회로를 여러 층으로 쌓아 층마다 되풀이하기 때문에",
+        "④ 식각~⑧ 패키징 — 뒤쪽 단계라서",
+        "② 산화~⑥ 금속 배선 — 불량이 많아 다시 하기 때문에"
       ],
       "answer": 1,
-      "explanation": "pricey 자리에 hot, \"평가\" 자리에 \"합격여부\"를 쓴다. 불합격은 0이 아니라 -1이다."
+      "explanation": "칩은 회로를 여러 층으로 쌓는다. 그래서 산화·포토·식각·증착/이온주입·금속 배선(②~⑥)을 층마다 되풀이하고, 같은 공정의 기록이 수없이 쌓인다. 되풀이하는 주된 이유는 불량이 아니라 층을 쌓기 때문이다."
     },
     {
-      "type": "result_prediction",
-      "question": "반도체 데이터에서 EQ-04 기록 22건 중 불합격이 5건이다. EQ-04의 불합격률(%)을 소수 첫째 자리까지 구하면?",
-      "answer": "22.7%",
-      "explanation": "5 ÷ 22 × 100 = 22.72… → 22.7%. 건수는 EQ-02(25건 중 5건, 20.0%)와 같지만 비율은 더 높다."
-    },
-    {
-      "type": "true_false",
-      "question": "반도체 데이터에서 305도 초과 기록이 13건, 불합격 기록도 13건이므로 고온 기록은 모두 불합격이다.",
-      "answer": false,
-      "explanation": "hot 안에서 불합격만 다시 고르면 3건뿐이다. 숫자가 같아도 같은 기록이 아니다."
+      "type": "multiple_choice",
+      "question": "공정 기록 df에서 print(df[\"온도_c\"])를 실행했다(마지막 글자가 소문자 c). 어떻게 될까?",
+      "options": [
+        "온도 열이 그대로 출력된다",
+        "KeyError: '온도_c'가 난다",
+        "FileNotFoundError가 난다",
+        "빈 표가 출력된다"
+      ],
+      "answer": 1,
+      "explanation": "열 이름은 글자 하나, 대소문자까지 같아야 한다. 이 표의 열 이름은 온도_C(대문자 C)다. print(df.columns)로 확인해 그대로 옮겨 쓴다."
     },
     {
       "type": "short_answer",
-      "question": "전체 불합격률(13.0%)만 볼 때와 설비별로 따로 떼어 볼 때 무엇이 달라졌는지, 숫자를 넣어 설명해보시오.",
-      "sample_answer": "전체로는 100건 중 13건(13.0%)이 불합격이라 평범해 보였지만, 설비별로 떼어 보니 EQ-04(22.7%)와 EQ-02(20.0%)가 EQ-03(4.5%)·EQ-01(6.5%)보다 훨씬 높았다. 다만 기록이 적어 원인이라고 단정할 수는 없고, 원인 후보로 더 살펴볼 만하다."
+      "question": "오늘의 미션: EQ-02는 기록 25건 중 불합격 5건이었고, 전체 기록 100건의 불합격률은 13.0%였다. 이 결과를 팀장에게 보고할 한두 문장을 쓰고, 이 숫자만으로 무엇까지 말할 수 있는지도 밝히시오.",
+      "sample_answer": "EQ-02는 기록 25건 중 5건이 불합격이라 불합격률 20.0%(5 ÷ 25 × 100)로, 전체 기록의 13.0%보다 높다. 다만 25건 중 5건이라 한 건만 달라도 비율이 4%p씩 바뀌므로, 이 숫자만으로 EQ-02 설비에 문제가 있다고 말할 수는 없다. 다른 설비도 같은 방법으로 세어 비교한 뒤, EQ-02 기록의 공정·온도를 더 살펴볼 만하다."
     }
   ]
 }

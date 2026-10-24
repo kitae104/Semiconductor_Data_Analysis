@@ -39,6 +39,7 @@ ORANGE, ORANGE_BG = "#b25e09", "#fbf3e8"
 RED, RED_BG = "#b42318", "#fdf0ef"
 GRAY_BG = "#f3f4f6"
 PASS_COLOR, FAIL_COLOR = "#bfdcc9", RED
+ORANGE_PASS = "#46befa"  # Orange 3.35 합격여부(1) 기본 색 RGB(70,190,250) — Orange 화면과 같은 색이 필요한 그림용
 NOTE = "교육용 가상 데이터"
 
 plt.rcParams["font.family"] = "Malgun Gothic"
@@ -66,15 +67,14 @@ def note(fig, text=NOTE):
     fig.text(0.995, 0.01, text, ha="right", va="bottom", fontsize=9, color=MUTED)
 
 
-def draw_wafer(ax, x, y, fail, highlight=None, title=None, rings=False):
-    """다이 격자를 정사각형으로 그린다. 불합격 = 빨강, 합격 = 옅은 초록."""
+def draw_wafer(ax, x, y, fail, highlight=None, title=None, rings=False, pass_color=PASS_COLOR):
+    """다이 격자를 정사각형으로 그린다. 불합격 = 빨강, 합격 = 옅은 초록(pass_color로 바꿀 수 있음)."""
     ax.add_patch(Circle((0, 0), 10.9, facecolor=GRAY_BG, edgecolor=MUTED, lw=1.2))
     boxes = [Rectangle((xi - 0.45, yi - 0.45), 0.9, 0.9) for xi, yi in zip(x, y)]
-    colors = np.where(fail, FAIL_COLOR, PASS_COLOR)
+    colors = np.where(fail, FAIL_COLOR, pass_color)
     ax.add_collection(PatchCollection(boxes, facecolor=colors, edgecolor="white", lw=0.3))
-    if rings:
-        ax.add_patch(Circle((0, 0), 3.5, fill=False, edgecolor=BLUE, lw=1.5, ls="--"))
-        ax.add_patch(Circle((0, 0), 8.5, fill=False, edgecolor=ORANGE, lw=1.5, ls="--"))
+    if rings:  # 가장자리 고리: 중심에서 8칸(112mm)보다 먼 다이를 나누는 선
+        ax.add_patch(Circle((0, 0), 8.0, fill=False, edgecolor=INK, lw=1.5, ls="--"))
     if highlight is not None:
         hx, hy = highlight
         ax.add_patch(Rectangle((hx - 0.5, hy - 0.5), 1.0, 1.0, fill=False, edgecolor=INK, lw=2))
@@ -181,7 +181,9 @@ def fig_week03_pm10_grade_bands():
     bands = [(0, 30, "좋음", BLUE_BG), (30, 80, "보통", GREEN_BG), (80, 150, "나쁨", ORANGE_BG), (150, 210, "매우나쁨", RED_BG)]
     for lo, hi, label, color in bands:
         ax.axhspan(lo, hi, color=color, zorder=0)
-        ax.text(len(df) - 0.2, (lo + min(hi, 205)) / 2, label, ha="right", va="center", fontsize=10, color=MUTED)
+        # 등급 이름은 축 오른쪽 바깥에 둔다(안쪽에 두면 마지막 날 막대에 가려진다)
+        ax.text(1.008, (lo + min(hi, 205)) / 2, label, transform=ax.get_yaxis_transform(),
+                ha="left", va="center", fontsize=10, color=MUTED)
     colors = [RED if v > 150 else ORANGE if v > 80 else MUTED for v in df["PM10_ug_m3"]]
     ax.bar(range(len(df)), df["PM10_ug_m3"], color=colors, zorder=2, width=0.7)
     ax.set_xticks(range(len(df)))
@@ -225,10 +227,10 @@ def fig_week05_cleanroom_particles():
 
 
 def fig_week06_wafer_map_reading():
-    """웨이퍼 맵 읽는 법: 합격/불합격 색, 중심·가장자리 고리, X·Y 축(원천: A-6)."""
+    """웨이퍼 맵 읽는 법: 합격/불합격 색(Orange와 같은 하늘색/빨강), 가장자리 고리, X·Y 축(원천: A-6)."""
     df = read("week06", "week06_orange_wafer_map.csv")
     fig, ax = plt.subplots(figsize=(7.5, 7.5))
-    draw_wafer(ax, df["다이_X"], df["다이_Y"], df["합격여부"] == -1, rings=True)
+    draw_wafer(ax, df["다이_X"], df["다이_Y"], df["합격여부"] == -1, rings=True, pass_color=ORANGE_PASS)
     ax.axis("on")
     ax.set_xticks(range(-10, 11, 5))
     ax.set_yticks(range(-10, 11, 5))
@@ -236,12 +238,57 @@ def fig_week06_wafer_map_reading():
     ax.set_ylabel("다이_Y")
     for s in ax.spines.values():
         s.set_visible(False)
-    ax.text(0, -12.6, "빨강 = 불합격 다이, 옅은 초록 = 합격 다이", ha="center", fontsize=10.5, color=INK)
-    ax.text(3.0, 2.6, "중심\n(42mm 이내)", fontsize=9, color=BLUE)
-    ax.text(6.4, 7.6, "가장자리\n(112mm 바깥)", fontsize=9, color=ORANGE)
-    ax.set_title("웨이퍼 맵 읽는 법 — W-0601", fontsize=13, color=INK)
+    ax.legend(handles=[Rectangle((0, 0), 1, 1, color=ORANGE_PASS, label="합격 다이(1)"),
+                       Rectangle((0, 0), 1, 1, color=FAIL_COLOR, label="불합격 다이(-1)")],
+              loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2, frameon=False, fontsize=10.5)
+    ax.annotate("가장자리 고리\n(112mm 바깥)", xy=(-5.66, 5.66), xytext=(-11.4, 11.4), fontsize=9.5, color=INK,
+                ha="left", va="top", arrowprops={"arrowstyle": "-", "color": INK, "lw": 1})
+    ax.set_title("웨이퍼 맵 읽는 법 — W-0601", fontsize=13, color=INK, pad=28)
     note(fig)
     return save(fig, "week06_wafer_map_reading.png")
+
+
+# 강의에 싣는 노트북 실행 결과 그림: 정답 노트북에 저장된 출력(image/png)을 그대로 꺼낸다.
+# 셀은 코드 첫머리로 찾는다(셀이 늘거나 순서가 바뀌어도 같은 그림). 노트북 빌더를 먼저 돌린다.
+NOTEBOOK_CHARTS = {
+    "week06": [
+        ('plt.bar(counts.index, counts)', "week06_nb_easy_bar_weather.png"),
+        ('plt.hist(ice["판매량_count"], bins=5)', "week06_nb_easy_hist_sales.png"),
+        ('plt.scatter(ice["최고기온_C"], ice["판매량_count"])', "week06_nb_easy_scatter_temp_sales.png"),
+        ('process_counts = df["공정명"].value_counts()', "week06_nb_bar_process.png"),
+        ('plt.hist(df["두께_nm"], bins=10)', "week06_nb_hist_thickness.png"),
+        ('plt.scatter(df["온도_C"], df["압력_Pa"])', "week06_nb_scatter_temp_pressure.png"),
+        ('plt.bar(eq_counts.index, eq_counts)', "week06_nb_bar_equipment.png"),
+        ('plt.hist(df["온도_C"], bins=10)', "week06_nb_hist_temperature.png"),
+        ('plt.scatter(df["온도_C"], df["두께_nm"])', "week06_nb_scatter_temp_thickness.png"),
+        ('fail = df[df["합격여부"] == -1]', "week06_nb_ai_scatter_fail.png"),
+    ],
+}
+
+
+def export_notebook_charts(week):
+    import base64
+    import json
+
+    path = os.path.join(BASE, "notebooks", "solutions", f"{week}_solution.ipynb")
+    with open(path, encoding="utf-8") as f:
+        cells = [c for c in json.load(f)["cells"] if c["cell_type"] == "code"]
+    for head, name in NOTEBOOK_CHARTS[week]:
+        found = [c for c in cells if "".join(c["source"]).startswith(head)]
+        if len(found) != 1:
+            raise SystemExit(f"[그림] {week} 셀 '{head}'이(가) {len(found)}개 — 1개여야 한다")
+        pngs = [o["data"]["image/png"] for o in found[0].get("outputs", []) if "image/png" in o.get("data", {})]
+        if len(pngs) != 1:
+            raise SystemExit(f"[그림] {week} 셀 '{head}'의 그림 출력이 {len(pngs)}개 — 빌더로 정답 노트북을 다시 실행한다")
+        out = os.path.join(OUT, name)
+        with open(out, "wb") as f:
+            f.write(base64.b64decode("".join(pngs[0]) if isinstance(pngs[0], list) else pngs[0]))
+        print(f"[그림] {os.path.relpath(out, BASE)}")
+
+
+def fig_week06_notebook_charts():
+    """6차시 강의의 노트북 실행 결과 그림 10장(정답 노트북 출력에서)."""
+    export_notebook_charts("week06")
 
 
 def fig_week07_wafer_maps_by_equipment():
@@ -276,6 +323,35 @@ def fig_week08_correlation_signs():
     return save(fig, "week08_correlation_signs.png")
 
 
+def fig_week08_vacuum_u_shape():
+    """진공도 구간별 불합격률 막대 3개(4.5 미만 / 연습용 기준 안 / 5.5 초과) + 기준선(원천: week08_anomaly_root_cause)."""
+    df = read("week08", "week08_anomaly_root_cause.csv")
+    v, fail = df["진공도_mTorr"], df["합격여부"] == -1
+    groups = [("4.5 미만", v < 4.5), ("4.5~5.5\n(연습용 기준 안)", (v >= 4.5) & (v <= 5.5)), ("5.5 초과", v > 5.5)]
+    base = fail.mean() * 100
+    fig, ax = plt.subplots(figsize=(8, 4.8))
+    for i, (label, m) in enumerate(groups):
+        rate = fail[m].mean() * 100
+        ax.bar(i, rate, color=MUTED if i == 1 else RED, width=0.6, zorder=2)
+        label_txt = f"{rate:.1f}%\n({int(fail[m].sum())}/{int(m.sum())}건)"
+        if i == 1:  # 가운데 막대는 기준선보다 낮아 글자를 막대 안에 둔다(점선과 겹치지 않게)
+            ax.text(i, rate / 2, label_txt, ha="center", va="center", fontsize=11, color="white", zorder=4)
+        else:
+            ax.text(i, rate + 0.8, label_txt, ha="center", va="bottom", fontsize=11, color=INK)
+    ax.axhline(base, color=BLUE, linestyle="--", linewidth=1.2, zorder=3)
+    ax.text(0.5, base + 0.6, f"기준선 {base:.1f}%", ha="center", va="bottom", fontsize=10, color=BLUE)
+    ax.set_xticks(range(len(groups)))
+    ax.set_xticklabels([g[0] for g in groups])
+    ax.set_xlabel("진공도_mTorr 구간")
+    ax.set_ylabel("불합격률 (%)")
+    ax.set_ylim(0, 36)
+    ax.grid(axis="y", color=GRID, zorder=0)
+    ax.set_title("진공도는 낮은 쪽과 높은 쪽 모두에서 불합격률이 높다", fontsize=13, color=INK)
+    note(fig, "공정 센서 기록 450건 · 연습용 기준(실제 공정 규격 아님) · 교육용 가상 데이터")
+    fig.tight_layout(rect=(0, 0.04, 1, 1))
+    return save(fig, "week08_vacuum_u_shape.png")
+
+
 # ---------------------------------------------------------------------------
 # 9·10차시 — 합성 함수로 같은 웨이퍼 맵을 다시 만든다
 # ---------------------------------------------------------------------------
@@ -307,8 +383,9 @@ def fig_week10_new_wafer_maps():
 
 FIGURES = [
     fig_week01_process_flow, fig_week01_wafer_to_chip, fig_week03_pm10_grade_bands,
-    fig_week05_cleanroom_particles, fig_week06_wafer_map_reading, fig_week07_wafer_maps_by_equipment,
-    fig_week08_correlation_signs, fig_week09_wafer_pattern_examples, fig_week10_new_wafer_maps,
+    fig_week05_cleanroom_particles, fig_week06_wafer_map_reading, fig_week06_notebook_charts,
+    fig_week07_wafer_maps_by_equipment,
+    fig_week08_correlation_signs, fig_week08_vacuum_u_shape, fig_week09_wafer_pattern_examples, fig_week10_new_wafer_maps,
 ]
 
 

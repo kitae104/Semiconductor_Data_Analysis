@@ -19,114 +19,140 @@
   <div class="hero">
     <span class="badge purple">8차시 실습지</span>
     <h1>공정 이상과 원인 후보 찾기 — 실습지</h1>
+    <p class="lede">모든 문제는 공정 센서 기록 <code>week08_anomaly_root_cause.csv</code>(450행 12열, 교육용 가상 데이터)로 푼다.
+    공정 지도 위치: ②~⑤ + 세정 설비의 센서 기록과 합격 여부(공정 중간 검사 + ⑦ EDS 결과를 모은 교육용 설정). <code>합격여부</code>는 <b>1 = 합격, -1 = 불합격</b>이다.
+    설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록이다.
+    문제 1~3은 학생용 노트북 7단계와 같다 — 노트북 6단계 셀을 먼저 실행해 <code>df</code>를 만들어 둔다.</p>
+    <p class="lede"><b>오늘의 미션</b> — 불합격과 관련 있어 보이는 공정 값을 찾아 '원인 후보' 보고서 한 줄을 쓰자.</p>
   </div>
 
   <section class="block">
-    <h2>시작하기 전에</h2>
-    <ul class="pt-list">
-      <li>모든 문항은 반도체 데이터 <code>week08_anomaly_root_cause.csv</code>(교육용 가상 데이터, 450건)로 푼다. 노트북 7~9단계에서 실행한다.</li>
-      <li><code>합격여부</code>는 <b>1 = 합격, -1 = 불합격</b>이다. 코드 모양은 강의의 쉬운 예제(아이스크림 가게)와 같다.</li>
-    </ul>
-  </section>
-
-  <section class="block">
-    <h2>개념 확인 — 용어 연결</h2>
-    <table class="timetable">
-      <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 상관계수</td><td rowspan="4">A. 두 값을 함께 움직이게 만드는 숨은 다른 원인(예: 아이스크림 판매량과 물놀이 사고를 함께 늘린 더운 날씨)<br>B. 함께 움직이는 정도를 -1~1 사이 점수로 나타낸 값<br>C. 불합격과 함께 움직여 "먼저 확인해 볼 곳"으로 떠오른 공정 값<br>D. 한 공정 값의 변화가 실제로 다른 값의 변화를 일으키는 관계</td></tr>
-      <tr><td>② 인과관계</td></tr>
-      <tr><td>③ 제3의 요인</td></tr>
-      <tr><td>④ 원인 후보</td></tr>
-    </table>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① B  ② D  ③ A  ④ C</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 1 — 데이터 읽고 불합격 기준선 구하기 (노트북 7단계)</h2>
-    <p>반도체 데이터를 <code>df</code>로 읽고 불합격(-1) 건수와 전체 불합격률을 구하자. 힌트: 강의 "데이터 읽고 기준선 구하기"의 가게 코드와 같은 모양.</p>
+    <h2>문제 1 — 불합격 기준선 구하기 (노트북 7단계 문제 1)</h2>
+    <p>전체 450건 중 불합격 기록의 비율(기준선)을 구하자. 힌트: 강의 "기준선" 절의 <code>bad_all</code>·<code>base_rate</code>와 같은 모양이다. 표 이름과 열 이름만 바뀐다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.____("../../data/weekly/week08/week08_anomaly_root_cause.csv", encoding="utf-8-sig")
-fail_all = df[df["합격여부"] == ____]</code></pre>
+      <div class="code-label"><span>Python — 노트북 7단계 문제 1</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 불합격을 뜻하는 숫자와, 나누는 표 이름을 채우세요.
+fail_all = df[df["합격여부"] == ____]
+base_rate = round(len(fail_all) / len(____) * 100, 1)
+print(base_rate)</code></pre>
     </div>
+    <p>기준선은 몇 %인가?</p>
+    <div class="callout warn"><b class="tag">주의</b> 나누는 수는 공정 기록 전체 <code>df</code>의 행 수다. 가게 기록 <code>shop</code>과 헷갈리면 오류 없이 100%가 넘는 숫자가 나온다. <code>88.9</code>가 나오면 불합격(-1) 대신 합격(1)을 센 것이다.</div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>read_csv</code>, <code>-1</code>.</div>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box"><b class="tag">체크포인트</b> (450, 12), 불합격 50건, 전체 불합격률 11.1%(기준선).</div>
+    <div class="answer-box"><code>-1</code>, <code>df</code> → <code>11.1</code>. 450건 중 불합격 50건, 기준선 <b>11.1%</b>다. 문제 3에서 이 숫자와 비교한다.</div>
   </section>
 
   <section class="block">
-    <h2>문제 2 — 온도와 두께의 산점도·상관계수 (노트북 7단계)</h2>
-    <p>온도-두께 산점도를 그리고 상관계수를 구하자. 힌트: 강의 기온-아이스크림 코드와 같은 모양.</p>
+    <h2>문제 2 — 온도-두께와 습도-두께 상관계수 비교하기 (노트북 7단계 문제 2)</h2>
+    <p>두께와 함께 움직이는 값이 있는지 보자. 습도는 관계없게 만든 비교용 열이다. 힌트: 강의 "산점도와 상관계수"의 <code>shop["최고기온_C"].corr(shop["아이스크림판매량_count"])</code>와 같은 모양이다.
+    <b>두 번째 셀은 빈칸이 없다.</b> 첫 셀과 같은 모양으로 <code>습도_pct</code>와 <code>두께_nm</code>의 상관계수를 직접 쓴다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>plt.scatter(df["____"], df["두께_nm"], alpha=0.5)
-r_temp = df["온도_섭씨"].____(df["두께_nm"])</code></pre>
+      <div class="code-label"><span>Python — 노트북 7단계 문제 2</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 상관계수를 구하는 함수 이름을 채우세요.
+r_temp = df["온도_C"].____(df["두께_nm"])
+print(round(r_temp, 2))
+
+# TODO: 위 셀과 같은 모양으로, 습도_pct와 두께_nm의 상관계수를 r_humid에 담고 소수 둘째 자리로 출력하세요.</code></pre>
     </div>
+    <div class="callout warn"><b class="tag">주의</b> 두 열 모두 <code>df</code>에서 꺼낸다. 힌트의 <code>shop</code>이 남아 <code>shop["습도_pct"].corr(df["두께_nm"])</code>로 쓰면 오류 없이 <code>0.29</code>가 나온다. 가게 기록과 공장 기록을 행 번호끼리 짝지어 계산한 엉뚱한 값이다.</div>
+    <p>① 두 상관계수는 각각 얼마인가? ② 두께와 함께 움직이는 쪽은 어느 열인가? 그 열은 <b>무엇의</b> 원인 후보인가 — 두께인가, 불합격인가?</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>온도_섭씨</code>, <code>corr</code>.</div>
-    <p>산점도 모양(같이 오른다 / 반대로 / 관계없다)과 학습용 기준의 세기(강함 / 중간 / 약함)를 적어 보자.</p>
-    <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box"><b class="tag">체크포인트</b> 오른쪽 위로 올라가는 띠, 상관계수 0.71(강함). Orange3의 +0.710과 같다.</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 3 — 비교용 열(습도)과 두께 (노트북 7단계)</h2>
-    <p>습도-두께 산점도와 상관계수를 구해 문제 2와 나란히 놓자. 힌트: 강의 습도-아이스크림 코드와 같은 모양.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>r_humid = df["____"].corr(df["두께_nm"])</code></pre>
+    <div class="answer-box"><code>corr</code>, 그리고 두 번째 셀에 직접 쓴 코드:
+      <pre style="margin:.3rem 0;white-space:pre-wrap;">r_humid = df["습도_pct"].corr(df["두께_nm"])
+print(round(r_humid, 2))</pre>
+      출력: <code>0.71</code>, <code>-0.01</code>.
+      ① 온도–두께 <b>0.71</b>(강함), 습도–두께 <b>-0.01</b>(거의 관계없음). ② 온도다. 온도는 <b>두께</b>의 원인 후보다.
+      불합격에 대해서는 강의 확인 2에서 온도가 연습용 기준 밖일 때 불합격률이 9.8%로, 문제 1의 기준선 11.1%보다 높지 않았다(범위 안 11.5%보다도 낮다). 그래서 불합격의 원인 후보로 올리지 않는다.
     </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box"><code>습도_pct</code></div>
-    <p>온도는 "무엇의" 원인 후보라고 말할 수 있나?</p>
     <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box"><b class="tag">체크포인트</b> 습도-두께 -0.01(구름). 0.71이 특별히 크므로 온도는 <b>두께</b>의 원인 후보다. 불합격의 후보라는 뜻은 아니다.</div>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b> <code>KeyError: '습도'</code>처럼 나오면 열 이름을 줄여 쓴 것이다. 정확한 이름은 <code>습도_pct</code>다.
+      열 이름은 따옴표 안에 쓴다. 따옴표 없이 <code>df[습도_pct]</code>로 쓰면 <code>NameError: name '습도_pct' is not defined</code>가 난다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>문제 4 — 진공도 범위 밖/안 불합격률 (노트북 8단계)</h2>
-    <p>진공도(정상 범위 4.5~5.5 mTorr)-합격여부 상관계수와 범위 밖/안 불합격률을 구하자. 힌트: 강의 냉동고 코드와 같은 모양.</p>
+    <h2>문제 3 — 진공도가 범위 밖일 때 불합격률 (노트북 7단계 문제 3)</h2>
+    <p>진공도 연습용 기준은 4.5~5.5 mTorr다(실제 공정 규격이 아니다). 4.5보다 작<b>거나</b> 5.5보다 크면 범위 밖이다. 범위 밖 기록의 불합격률을 구해 문제 1의 기준선과 비교하자.
+    <code>|</code>는 한국어 키보드에서 엔터 위 <code>₩</code> 키를 Shift와 함께 누른다.
+    힌트: 강의 "범위 밖 값 찾기"의 <code>freezer_out</code>, "반도체 데이터로 확인하기"의 <code>temp_out</code>과 같은 모양이다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>r_vac = df["진공도_mTorr"].corr(df["____"])
+      <div class="code-label"><span>Python — 노트북 7단계 문제 3</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: "또는"을 뜻하는 기호와 불합격을 뜻하는 숫자를 채우세요.
 vac_out = df[(df["진공도_mTorr"] &lt; 4.5) ____ (df["진공도_mTorr"] &gt; 5.5)]
-fail_in = len(vac_in[vac_in["합격여부"] == -1]) / len(____) * 100</code></pre>
+vac_out_fail = vac_out[vac_out["합격여부"] == ____]
+print(len(vac_out), len(vac_out_fail))
+
+# TODO: 범위 밖 불합격률 = 범위 밖 불합격 수 ÷ 범위 밖 기록 수 × 100. 나누는 표 이름을 채우세요.
+vac_rate = round(len(vac_out_fail) / len(____) * 100, 1)
+print(vac_rate, base_rate)</code></pre>
     </div>
+    <p>둘째 셀은 숫자 두 개(범위 밖 불합격률, 기준선)만 출력한다. 높은지 낮은지는 숫자를 보고 내가 판단한다.</p>
+    <p>① 범위 밖 기록은 몇 건이고, 그중 불합격은 몇 건인가? ② 범위 밖 불합격률은 기준선보다 높은가, 낮은가? 기준선의 약 몇 배인가?(소수 첫째 자리까지)</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>합격여부</code>, <code>|</code>, <code>vac_in</code>.</div>
-    <p>상관계수만 봤다면 어떤 오해를 했을까? 범위 밖은 범위 안의 약 몇 배인가?</p>
+    <div class="answer-box"><code>|</code>, <code>-1</code>, <code>vac_out</code>
+      <pre style="margin:.3rem 0;white-space:pre-wrap;">78 20
+25.6 11.1</pre>
+      ① 범위 밖 <b>78건</b> 중 불합격 <b>20건</b>. ② 범위 밖 불합격률 25.6%는 기준선 11.1%보다 높다. 25.6 ÷ 11.1 ≈ <b>2.3배</b>.
+      <img class="chart-img" src="../../assets/images/generated/week08_vacuum_u_shape.png"
+           alt="진공도 구간별 불합격률 막대 세 개. 4.5 미만 23.1%, 연습용 기준 안 8.1%, 5.5 초과 28.2%이고 기준선 11.1% 점선이 있다">
+      <p class="img-caption">범위 밖을 낮은 쪽과 높은 쪽으로 나눠 보면 4.5 미만 39건 중 9건(23.1%), 5.5 초과 39건 중 11건(28.2%), 기준 안 372건 중 30건(8.1%)이다. 양쪽 끝이 모두 높다. 교육용 가상 데이터로 그린 그림, 연습용 기준.</p>
+    </div>
     <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box"><b class="tag">체크포인트</b> 상관계수 -0.02만 보면 "관계없다"고 오해한다. 범위 밖 78건 중 20건(25.6%),
-      안 372건 중 30건(8.1%)으로 약 3배이고 기준선 11.1%보다 높다. 양쪽 끝이 다 높은 U자라 상관계수가 놓쳤다.</div>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b> <code>TypeError: Cannot perform 'ror_' …</code>가 나오면 두 조건 중 하나의 괄호 <code>( )</code>가 빠진 것이다.
+      <code>|</code> 자리에 <code>or</code>를 쓰면 <code>ValueError</code>가 난다. <code>&amp;</code>를 쓰면 <code>0 0</code>이 나오고 둘째 셀에서 <code>ZeroDivisionError</code>가 난다.
+      첫 셀이 실패한 채 둘째 셀을 실행하면 <code>NameError: name 'vac_out_fail' is not defined</code>가 난다 — 첫 셀부터 고친다.
+      오류 없이 틀리는 경우: <code>78 58</code>이면 합격(1)을 센 것이다. 불합격률이 <code>4.4</code>면 <code>df</code>로 나눈 것이다(범위 밖 표 <code>vac_out</code>으로 나눈다). 기준선이 <code>26.7</code>로 나오면 문제 1 셀을 실행하지 않아 1단계 가게 기록의 <code>base_rate</code>가 남아 있다 — 문제 1 셀부터 다시 실행한다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>문제 5 — 온도도 같은 방법으로 (노트북 8단계)</h2>
-    <p>온도(정상 범위 295~305℃)의 범위 밖/안 불합격률을 구해 진공도와 비교하자. 힌트: 강의 습도 50~70% 코드와 같은 모양.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>temp_out = df[(df["온도_섭씨"] &lt; ____) | (df["온도_섭씨"] &gt; ____)]
-temp_fail_out = len(temp_out[temp_out["합격여부"] ____ -1]) / len(temp_out) * 100</code></pre>
+    <h2>문제 4 — Orange Correlations로 1위 쌍 찾고 파이썬과 비교하기</h2>
+    <p>Orange3에서 키트의 <code>orange3/week08/week08_2_anomaly_start.ows</code>를 연다. File에 450행이 들어 있는지 확인한다.</p>
+    <ol>
+      <li>왼쪽 <b>Unsupervised</b> 묶음에서 <code>Correlations</code>를 끌어 와 <b>File과</b> 잇고 더블클릭한다.</li>
+      <li>맨 위 칸이 <b>Pearson correlation</b>, 그 아래 칸이 <b>(All combinations)</b>인지 확인한다.</li>
+      <li>목록 맨 위 쌍의 두 열 이름과 값을 읽는다.</li>
+      <li>목록 바로 위 <b>Filter ...</b> 칸에 <code>진공도</code>를 입력해, 진공도가 들어간 쌍 중 크기(부호를 뗀 값)가 가장 큰 값을 읽는다.</li>
+    </ol>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>읽을 것</th><th>내 답</th></tr></thead>
+        <tbody>
+          <tr><td>1위 쌍(두 열 이름)과 값</td><td>(                    ) / (          )</td></tr>
+          <tr><td>문제 2의 파이썬 값과 같은가?</td><td>(          )</td></tr>
+          <tr><td>진공도가 들어간 쌍 중 가장 큰 값</td><td>(          )</td></tr>
+        </tbody>
+      </table>
     </div>
+    <p>문제 3에서 진공도는 범위 밖 불합격률이 기준선보다 높았다. 그런데 Correlations 목록에서는 진공도가 어디쯤 보이는지, 왜 그런지 한 줄로 적자.</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">순서대로 <code>295</code>, <code>305</code>, <code>==</code>.</div>
-    <p>진공도와 온도 중 불합격의 원인 후보로 더 살펴볼 만한 것은? 온도를 함께 놓아서 무엇을 더 자신 있게 말할 수 있나?</p>
+    <div class="answer-box">1위 <b>+0.710 두께_nm–온도_C</b> → 문제 2의 <code>0.71</code>과 같다(Orange는 소수 셋째 자리까지 보여 준다). 2위는 +0.093 두께_nm–압력_Pa로, 1위만 뚜렷하게 크다.
+      진공도 쌍 중 가장 큰 값은 <b>-0.067</b>(습도_pct–진공도_mTorr)로 0.1도 안 된다.
+      이유(예): "① Correlations 목록에는 합격여부가 없어 진공도–불합격 관계는 애초에 나오지 않는다. 진공도가 들어간 쌍은 다른 센서와의 관계라 모두 0에 가깝다.
+      ② 파이썬으로 합격여부를 숫자로 넣어 계산해도 진공도–합격여부는 약 -0.02다. 문제 3 정답의 막대 그림처럼 범위 밖 양쪽(4.5 미만, 5.5 초과)에서 불합격이 늘어 한 방향 띠가 아니기 때문이다."
+      <img class="chart-img" src="../../assets/images/orange3/week08_07_anomaly_correlations.png"
+           alt="공정 센서 기록의 Correlations 창. 1위 쌍만 크게 튀어나와 있다"
+           data-shot="week08_2_anomaly_done.ows의 Correlations (상관 순위) 창 전체 — 맨 위 Pearson correlation과 (All combinations), 목록 위쪽 다섯 줄이 보이게">
+    </div>
     <button class="reveal-btn">체크포인트 보기</button>
-    <div class="callout warn answer-box"><b class="tag">체크포인트</b> 온도는 범위 밖 9.8%(92건 중 9건), 안 11.5%(358건 중 41건)로 차이가 작다.
-      진공도다. 범위를 벗어나면 무조건 불합격이 많은 것이 아니므로 진공도의 25.6%가 특별히 높다고 말할 수 있다.</div>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b> 목록은 모두 28쌍이다. <code>측정시간</code>이 들어간 쌍이 보이는 것은 정상이다(시간 열을 숫자로 바꿔 계산한다). 합격여부·설비번호·공정명은 목록에 없다.
+      값이 다르게 보이면 맨 위 칸이 Spearman correlation으로 바뀌지 않았는지 확인한다. 막히면 같은 폴더의 <code>week08_2_anomaly_done.ows</code>를 연다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>문제 6 — 원인 후보 문장 쓰기 (노트북 9단계)</h2>
-    <p>문제 4·5 결과로 빈칸을 채우자. 힌트: 강의의 냉동고 예시 문장과 같은 모양.</p>
+    <h2>문제 5 — 해석 문장 쓰기</h2>
+    <p>오늘의 질문 "여러 공정 값 중 불합격과 관련 있어 보이는 것을 어떻게 찾고, 그것을 '원인'이라고 불러도 될까?"에 문제 1·3의 숫자로 답하자.</p>
     <div class="callout practice">
-      "____가 정상 범위를 벗어나면 불합격률이 ____%에서 ____%로 높아졌다. 같은 방법으로 본 온도는 ____%와 ____%로 큰 차이가 없었다.
-      따라서 ____는 불합격의 원인 후보로 더 살펴볼 만하다. 다만 원인이라고 단정하려면 추가 확인이 필요하다."
+      <b class="tag">문장 틀</b> "진공도가 연습용 기준 밖일 때 불합격률이 ______%로 기준선 ______%보다 (높아서 / 높지 않아서), 진공도는 불합격의 원인 후보(다 / 가 아니다). 원인이라고 말하려면 ______________이 필요하다."
     </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">진공도 / 8.1 / 25.6 / 9.8 / 11.5 / 진공도</div>
+    <p>이어서 판단해 보자: <b>이 숫자만으로 "진공도 때문에 불합격이 났다"고 보고해도 될까?</b> 한 줄로 이유를 적는다.</p>
+    <button class="reveal-btn">예시 답안 보기</button>
+    <div class="answer-box">"진공도가 연습용 기준 밖일 때 불합격률이 25.6%로 기준선 11.1%보다 높아서(약 2.3배), 진공도는 불합격의 원인 후보다. 원인이라고 말하려면 진공도만 바꿔 보는 실험이나 설비 점검 기록 같은 다른 근거가 필요하다."
+      <br>판단(예): "아직 안 된다. 범위 밖 78건 중 58건은 합격이었고, 같은 때 다른 조건도 함께 달랐을 수 있다. 데이터로는 '함께 나타났다'까지만 말할 수 있다."</div>
   </section>
 
   <div class="nav-buttons">

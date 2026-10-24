@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="3차시 ② 설비 기록 30건을 온도 규칙으로 고르기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File을 더블클릭해 설비 기록(30행)이 들어왔는지 확인하세요.
+② Transform 묶음의 Select Rows를 File에 잇고 더블클릭하세요. 이미 있는 조건 한 줄을 설비번호 is EQ-04로 바꾸세요.
+③ Select Rows에 Data Table을 이어 몇 행인지 세어 보세요.
+④ Add Condition으로 온도_C is outside 295, 305를 더하세요(왼쪽 칸 295, 오른쪽 칸 305).</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVYgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMGndlZWswM19weXRob25fYmFz
+aWNzXzIudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjDouLi8uLi9kYXRhL3dlZWts
+eS93ZWVrMDMvb3JhbmdlL3dlZWswM19weXRob25fYmFzaWNzXzIudGFilIwFdGl0bGWUjACUjAVz
+aGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRfdXJsc5RdlIwDdXJs
+lGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNvbnRleHRfc2V0dGlu
+Z3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

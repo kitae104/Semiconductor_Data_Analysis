@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="10차시 ② 새 로트 9개의 합격·불합격 예측하기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (학습: 공정 기록 750행)" position="(120.0, 320.0)" />
+		<node id="1" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (새 로트 9개)" position="(120.0, 880.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① 위 File은 9차시 공정 기록(학습용), 아래 File은 검사 전인 새 로트 9개입니다. 둘 다 이미 들어 있습니다.
+② (강사 시연) Tree(깊이 4)·kNN·Logistic Regression을 위 File에 잇고, Test and Score(10겹)에 세 모델을 모두 이으세요. Confusion Matrix도 이으세요.
+③ Predictions(예측)를 아래 File에 잇고 Tree를 Predictions에 이으세요. 9개 중 불합격(-1)으로 예측된 로트가 있나요?
+④ 새 데이터에는 정답 열이 없어 처음에는 확률이 안 보입니다. Predictions 표 위의 Show probabilities for를 Classes known to the model로 바꾸세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVYgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMGndlZWswOV9wYXNzX2ZhaWxf
+dHJhaW4udGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjDouLi8uLi9kYXRhL3dlZWts
+eS93ZWVrMDkvb3JhbmdlL3dlZWswOV9wYXNzX2ZhaWxfdHJhaW4udGFilIwFdGl0bGWUjACUjAVz
+aGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRfdXJsc5RdlIwDdXJs
+lGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNvbnRleHRfc2V0dGlu
+Z3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+		<properties node_id="1" format="pickle">gASVagEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHndlZWswOV9uZXdfbG90c190
+b19wcmVkaWN0LnRhYpSMBnByZWZpeJSMB2Jhc2VkaXKUjAdyZWxwYXRolIw+Li4vLi4vZGF0YS93
+ZWVrbHkvd2VlazA5L29yYW5nZS93ZWVrMDlfbmV3X2xvdHNfdG9fcHJlZGljdC50YWKUjAV0aXRs
+ZZSMAJSMBXNoZWV0lGgPjAtmaWxlX2Zvcm1hdJROdWJhjAZzb3VyY2WUSwCMC3JlY2VudF91cmxz
+lF2UjAN1cmyUaA+MC3NoZWV0X25hbWVzlH2UjBJjb250cm9sQXJlYVZpc2libGWUiIwQY29udGV4
+dF9zZXR0aW5nc5RdlIwLX192ZXJzaW9uX1+USwF1Lg==
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

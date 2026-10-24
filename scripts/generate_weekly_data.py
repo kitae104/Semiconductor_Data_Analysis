@@ -27,6 +27,23 @@ DEFECT_TYPES = ["두께 불량", "파티클", "패턴 불량", "식각 과다", 
 RENAMED_COLUMNS = {
     "week01_semiconductor_process_overview": {"온도_섭씨": "온도_C"},
     "week02_python_basics_1": {"온도_섭씨": "온도_C"},
+    "week03_python_basics_2": {"온도_섭씨": "온도_C"},
+    "week04_process_filtering": {"온도_섭씨": "온도_C"},
+    "week04_easy_cafe_orders": {"가격_원": "가격_KRW", "수량_개": "수량_count"},
+    "week06_process_visualization": {"온도_섭씨": "온도_C"},
+    "week06_easy_icecream_daily": {"최고기온_섭씨": "최고기온_C", "판매량_개": "판매량_count"},
+    "week07_equipment_yield": {"온도_섭씨": "온도_C"},
+    "week07_easy_quiz_results": {"풀이시간_초": "풀이시간_sec"},
+    "week08_anomaly_root_cause": {"온도_섭씨": "온도_C", "냉각수온도_섭씨": "냉각수온도_C"},
+    "week08_easy_weather_sales": {"최고기온_섭씨": "최고기온_C", "아이스크림_판매량_개": "아이스크림판매량_count",
+                                  "핫초코_판매량_잔": "핫초코판매량_cup", "냉동고온도_섭씨": "냉동고온도_C"},
+    # 9·10차시는 같은 파일을 함께 쓰므로 한 묶음으로 바꾼다
+    "week09_pass_fail_train": {"온도_섭씨": "온도_C"},
+    "week09_new_lots_to_predict": {"온도_섭씨": "온도_C"},
+    "week10_mini_project_dataset": {"온도_섭씨": "온도_C", "냉각수온도_섭씨": "냉각수온도_C"},
+    "week09_easy_outdoor_class": {"최고기온_섭씨": "최고기온_C"},
+    "week10_easy_outdoor_class_train": {"최고기온_섭씨": "최고기온_C"},
+    "week10_easy_outdoor_class_new_days": {"최고기온_섭씨": "최고기온_C"},
     "week05_dirty_process_data": {"온도_섭씨": "온도_C"},
     "week05_easy_class_records": {"수학_점수": "수학점수_pt"},
 }
@@ -116,6 +133,7 @@ def gen_week03():
         "온도_섭씨": np.round(temp, 1),
     })
     df["합격여부"] = rng.choice([1, -1], size=n, p=[0.82, 0.18])
+    df = df.rename(columns=RENAMED_COLUMNS["week03_python_basics_2"])  # 값·난수 흐름은 그대로
     save_csv(df, "week03", "week03_python_basics_2.csv")
     return df
 
@@ -145,6 +163,7 @@ def gen_week04():
         "가스유량_slm": np.round(gas, 2),
         "합격여부": passfail,
     })
+    df = df.rename(columns=RENAMED_COLUMNS["week04_process_filtering"])  # 값·난수 흐름은 그대로
     save_csv(df, "week04", "week04_process_filtering.csv")
     return df
 
@@ -247,6 +266,7 @@ def gen_week06():
         "처리시간_sec": np.round(proc_time, 1),
         "합격여부": passfail,
     })
+    df = df.rename(columns=RENAMED_COLUMNS["week06_process_visualization"])  # 값·난수 흐름은 그대로
     save_csv(df, "week06", "week06_process_visualization.csv")
     return df
 
@@ -309,6 +329,7 @@ def gen_week07():
                 "합격여부": passfail,
             })
     df = pd.DataFrame(rows)
+    df = df.rename(columns=RENAMED_COLUMNS["week07_equipment_yield"])  # 값·난수 흐름은 그대로
     save_csv(df, "week07", "week07_equipment_yield.csv")
     return df
 
@@ -362,6 +383,7 @@ def gen_week08():
         "습도_pct": np.round(humidity, 1),
         "합격여부": passfail,
     })
+    df = df.rename(columns=RENAMED_COLUMNS["week08_anomaly_root_cause"])  # 값·난수 흐름은 그대로
     save_csv(df, "week08", "week08_anomaly_root_cause.csv")
     return df
 
@@ -416,7 +438,7 @@ def gen_week09():
     for i, col in zip(na_targets, na_cols):
         df.loc[i, col] = np.nan
 
-    save_csv(df, "week09", "week09_pass_fail_train.csv")
+    save_csv(df.rename(columns=RENAMED_COLUMNS["week09_pass_fail_train"]), "week09", "week09_pass_fail_train.csv")  # 열 이름만 바꾼다(값·난수 흐름 그대로)
 
     # 예측 실습용 새 로트(정답 라벨 없음)
     n_new = 9
@@ -431,7 +453,7 @@ def gen_week09():
         "진공도_mTorr": np.round(vacuum_n, 2),
         "습도_pct": np.round(humidity_n, 1),
     })
-    save_csv(new_df, "week09", "week09_new_lots_to_predict.csv")
+    save_csv(new_df.rename(columns=RENAMED_COLUMNS["week09_new_lots_to_predict"]), "week09", "week09_new_lots_to_predict.csv")  # 열 이름만 바꾼다(값·난수 흐름 그대로)
     return df, new_df
 
 
@@ -495,7 +517,7 @@ def gen_week10():
         "불량유형": defect,
         "합격여부": passfail,
     })
-    save_csv(df, "week10", "week10_mini_project_dataset.csv")
+    save_csv(df.rename(columns=RENAMED_COLUMNS["week10_mini_project_dataset"]), "week10", "week10_mini_project_dataset.csv")  # 열 이름만 바꾼다(값·난수 흐름 그대로)
     return df
 
 
@@ -512,7 +534,7 @@ def gen_week10():
 def gen_easy_week04():
     """카페 주문 12건 — read_csv·열 선택·조건 검색·정렬·loc·그룹 비율 연습용(손으로 고정한 값)."""
     rows = [
-        # 주문번호, 매장, 메뉴, 종류, 가격_원, 수량_개, 평가(1=좋아요, -1=별로예요)
+        # 주문번호, 매장, 메뉴, 종류, 가격_원, 수량_개, 평가(1=좋아요, -1=별로예요) — 저장 직전 가격_KRW, 수량_count로 바꾼다
         ("C-001", "강남점", "아메리카노", "커피", 4500, 2, 1),
         ("C-002", "홍대점", "카페라테", "커피", 5000, 1, 1),
         ("C-003", "강남점", "녹차", "차", 4800, 1, -1),
@@ -527,6 +549,7 @@ def gen_easy_week04():
         ("C-012", "홍대점", "쿠키", "디저트", 2000, 2, 1),
     ]
     df = pd.DataFrame(rows, columns=["주문번호", "매장", "메뉴", "종류", "가격_원", "수량_개", "평가"])
+    df = df.rename(columns=RENAMED_COLUMNS["week04_easy_cafe_orders"])
     save_csv(df, "week04", "week04_easy_cafe_orders.csv")
     return df
 
@@ -578,6 +601,7 @@ def gen_easy_week06():
         "최고기온_섭씨": np.round(temp, 1),
         "판매량_개": np.round(sales).astype(int),
     })
+    df = df.rename(columns=RENAMED_COLUMNS["week06_easy_icecream_daily"])
     save_csv(df, "week06", "week06_easy_icecream_daily.csv")
     return df
 
@@ -586,7 +610,7 @@ def gen_easy_week07():
     """반별 쪽지시험 문항 기록 24행 — groupby 개수·합·평균, 학생별 정답률, 오답유형 파레토 연습용.
 
     반도체 7차시와 같은 모양: 반 = 설비번호, 학생 = 로트(문항 4개 = 웨이퍼 4장),
-    정답여부(1/-1) = 합격여부, 오답유형(정답이면 빈 값) = 불량유형, 풀이시간_초 = 온도_섭씨.
+    정답여부(1/-1) = 합격여부, 오답유형(정답이면 빈 값) = 불량유형, 풀이시간_초(저장 시 풀이시간_sec) = 온도_섭씨(저장 시 온도_C).
     """
     rows = [
         # 반, 이름, 문제번호, 풀이시간_초, 오답유형, 정답여부(1=정답, -1=오답)
@@ -616,6 +640,7 @@ def gen_easy_week07():
         ("C반", "시우", 4, 88, "문제 잘못 읽음", -1),
     ]
     df = pd.DataFrame(rows, columns=["반", "이름", "문제번호", "풀이시간_초", "오답유형", "정답여부"])
+    df = df.rename(columns=RENAMED_COLUMNS["week07_easy_quiz_results"])
     save_csv(df, "week07", "week07_easy_quiz_results.csv")
     return df
 
@@ -665,6 +690,7 @@ def gen_easy_week08():
         "냉동고온도_섭씨": np.round(freezer, 1),
         "손님평가": review,
     })
+    df = df.rename(columns=RENAMED_COLUMNS["week08_easy_weather_sales"])  # 값·난수 흐름은 그대로
     save_csv(df, "week08", "week08_easy_weather_sales.csv")
     return df
 
@@ -713,14 +739,14 @@ def _easy_outdoor_class_df():
 
 def gen_easy_week09():
     df = _easy_outdoor_class_df()
-    save_csv(df, "week09", "week09_easy_outdoor_class.csv")
+    save_csv(df.rename(columns=RENAMED_COLUMNS["week09_easy_outdoor_class"]), "week09", "week09_easy_outdoor_class.csv")  # 열 이름만 바꾼다(값·난수 흐름 그대로)
     return df
 
 
 def gen_easy_week10():
     """10차시: 9차시와 같은 학습 데이터(10차시 폴더에 따로 저장) + 정답 없는 예보 7일(손으로 고정한 값)."""
     train = _easy_outdoor_class_df()
-    save_csv(train, "week10", "week10_easy_outdoor_class_train.csv")
+    save_csv(train.rename(columns=RENAMED_COLUMNS["week10_easy_outdoor_class_train"]), "week10", "week10_easy_outdoor_class_train.csv")  # 열 이름만 바꾼다(값·난수 흐름 그대로)
 
     rows = [
         # 날짜, 최고기온_섭씨, 습도_pct, 풍속_m_s, 강수량_mm
@@ -733,7 +759,7 @@ def gen_easy_week10():
         ("2024-08-05", 25.0, 50.0, 2.5, 0.0),    # 맑음
     ]
     new_days = pd.DataFrame(rows, columns=["날짜"] + EASY_OUTDOOR_FEATURES)
-    save_csv(new_days, "week10", "week10_easy_outdoor_class_new_days.csv")
+    save_csv(new_days.rename(columns=RENAMED_COLUMNS["week10_easy_outdoor_class_new_days"]), "week10", "week10_easy_outdoor_class_new_days.csv")  # 열 이름만 바꾼다(값·난수 흐름 그대로)
     return train, new_days
 
 

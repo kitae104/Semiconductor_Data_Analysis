@@ -3,7 +3,7 @@
 프로그래밍 경험이 거의 없는 일반인을 위한, 반도체 공정과 데이터 분석을 함께 배우는 10차시 교육 과정입니다.
 모든 실습 데이터는 교육용으로 생성한 **가상 데이터**이며, 실제 기업의 생산 데이터가 아닙니다.
 
-전체 목차는 [`index.html`](index.html)에서 확인할 수 있습니다.
+전체 목차는 [`index.html`](index.html), 수강 전 설치 안내는 [`docs/setup.html`](docs/setup.html)에서 확인할 수 있습니다.
 
 ## 1. 교육 대상
 
@@ -22,30 +22,40 @@
 - 그래프로 공정 상태를 확인하고 설비별·공정별 차이를 비교한다.
 - 수율과 불량률을 계산하고, 공정 이상의 원인 후보를 데이터로 탐색한다.
 - 간단한 머신러닝으로 합격/불합격을 예측하는 모델을 직접 만들고, 새 데이터를 예측해본다.
-- Orange3로 같은 분석을 코드 없이 다시 확인하며 개념을 다진다.
+- Orange3에서 위젯을 이어 같은 데이터를 코드 없이 살펴보고, 파이썬 결과와 비교한다.
 - 분석 결과를 비전공자도 이해할 수 있는 문장으로 설명한다.
 
-## 3. 10차시 전체 목차 (v2)
+## 3. 10차시 전체 목차 (v3)
 
-> 최초 설계(v1) 대비 앞부분에 파이썬 기초 2차시를 추가하고, 마지막 예측 실습은 `fab.csv` 대신
-> `반도체_공정_샘플.csv` 계열 데이터로 단순화했다. 변경 배경과 v1→v2 매핑은
-> [`docs/restructure-plan.md`](docs/restructure-plan.md)를 참고하세요.
+### 수업 구조
 
-| 차시 | 제목 | 핵심 주제 |
+매 차시는 세 부분으로 진행합니다. 강의 HTML에는 PART마다 앵커(`#part1`·`#part2`·`#part3`)가 있습니다.
+
+| | 1~8차시 | 9·10차시 (순서 예외) |
 | --- | --- | --- |
-| 1 | 반도체 공정과 데이터 처음 만나기 | 반도체/웨이퍼 개념, 파이썬·데이터 분석의 필요성, 변수·입출력·f-string |
-| 2 | 파이썬 기초 Ⅰ | 변수·자료형·리스트·딕셔너리 |
-| 3 | 파이썬 기초 Ⅱ | 조건문·반복문·함수 |
-| 4 | Pandas로 공정 데이터 읽고 선택하기 | read_csv, 열 선택, 조건 검색, 정렬 |
-| 5 | 결측값과 이상한 데이터 정리하기 | 결측값·중복값·이상값 정제 + Orange3로 훑어보기 |
-| 6 | 그래프로 공정 상태 이해하기 | 선/막대/히스토그램/산점도/박스플롯 + Orange3 시각화 |
-| 7 | 설비·공정 비교와 수율·불량 분석 | groupby 집계, 수율/불량률, 파레토 |
-| 8 | 공정 이상과 원인 후보 찾기 | 이상탐지, 상관관계 + Orange3 Correlations |
-| 9 | 머신러닝으로 합격/불합격 예측하기 | 반도체_공정_샘플.csv 기반 분류 모델, 예측 체험 + Orange3 |
-| 10 | 모델 평가와 새 데이터 예측 | 새 로트 `predict()`, 모델 신뢰도 점검 + Orange3 Predictions |
+| PART 1 | **파이썬** — 생활 예제로 개념 → 반도체 데이터로 확인하기 | **Orange3** — 모델을 먼저 눈으로 본다 |
+| PART 2 | **Orange3** — 워밍업 데이터 → 반도체 데이터 → 파이썬 결과와 비교 | **파이썬 최소 + ChatGPT 체험** — 같은 결과를 코드 몇 줄로 확인하고, AI가 준 코드·문장을 실제 숫자로 검증 |
+| PART 3 | **실습지** — 파이썬 3문제 + Orange 1문제 + 해석 문장 1 | **실습지** — 파이썬 2문제 + Orange 2문제 + 해석 문장 1 |
 
-자세한 설계 근거는 [`docs/curriculum.md`](docs/curriculum.md), v1→v2 재구성 계획은
-[`docs/restructure-plan.md`](docs/restructure-plan.md), 데이터 생성 규칙(현재 v1 기준, 개정 예정)은
+9·10차시는 모델을 먼저 Orange3 화면으로 본 뒤 코드로 확인하도록 PART 1과 PART 2의 순서를 바꿨습니다.
+
+### 차시별 내용
+
+| 차시 | 제목 | 파이썬 | Orange3(워밍업 → 반도체) |
+| --- | --- | --- | --- |
+| 1 | 반도체 공정과 데이터 처음 만나기 + 변수·출력 | `=`, `print`, f-string, `type` | 우리 동네 인구 → 공정 기록 (File, Data Table, Distributions) |
+| 2 | 리스트와 딕셔너리 | 리스트·인덱스, `len`/`append`, `max`/`min`/`sum`, 딕셔너리 | 지하철 역별 승하차 → 설비 온도 (Feature Statistics) |
+| 3 | 리스트·딕셔너리로 배우는 조건문·반복문·함수 | `if`/`else`, `for`로 세기, `def` 하나 | 우리 동네 대기환경 → 기록 30건 (Select Rows) |
+| 4 | Pandas 가장 기본적인 부분 | `read_csv`, 열 선택, 조건 검색, `sort_values` | 반도체 8대 공정 흐름표 → 공정 기록 100건 (Select Columns) |
+| 5 | 데이터 훑어보기와 정리(EDA) | `describe`, `isna().sum()`, `dropna`, `drop_duplicates` | 클린룸 환경 모니터링 → 지저분한 공정 기록 (Impute) |
+| 6 | 그래프로 공정 상태 이해하기 | 그래프 틀, 막대, 히스토그램, 산점도 | 웨이퍼 맵 한 장 → 공정 기록 180건 (Scatter Plot, Box Plot) |
+| 7 | 설비·공정 비교와 수율·불량 분석 | 비교로 새 열, `groupby().mean()` | 식각 설비 3대의 웨이퍼 12장 → 설비·수율 (Pivot Table) |
+| 8 | 공정 이상과 원인 후보 찾기 | `corr`, 상관계수 읽기, 범위 밖 조건 | 식각 챔버 센서 기록 → 이상·원인 후보 (Correlations) |
+| 9 | 머신러닝 예측 모델 만들기 | Feature/Label, `train_test_split`, `fit`, `accuracy_score` | 웨이퍼 맵 패턴 분류 → 합격/불합격 학습 데이터 (Tree, Tree Viewer, Test and Score, Confusion Matrix) |
+| 10 | 모델 평가와 새 데이터 예측 | `predict` | 웨이퍼 패턴 + 새 웨이퍼 10장 → 새 로트 9개 (kNN, Logistic Regression, Predictions) |
+
+자세한 설계 근거는 [`docs/curriculum.md`](docs/curriculum.md), v1 → v2 → v3 변경 배경은
+[`docs/restructure-plan.md`](docs/restructure-plan.md), 데이터 생성 규칙은
 [`docs/data-design.md`](docs/data-design.md), 전체 용어는 [`docs/glossary.md`](docs/glossary.md)를 참고하세요.
 
 ## 4. 폴더 구조
@@ -54,22 +64,29 @@
 semiconductor-data-analysis-course/
 ├─ index.html                 # 전체 과정 목차
 ├─ README.md, CLAUDE.md, requirements.txt
-├─ assets/                    # 공통 CSS/JS/이미지
+├─ assets/                    # 공통 CSS/JS/이미지(Orange 화면 캡처는 assets/images/orange3/)
 ├─ data/
 │  ├─ raw/                    # 원본 CSV(읽기 전용, 수정 금지)
 │  ├─ processed/
-│  ├─ weekly/week01~week10/   # 차시별 실습 데이터
+│  ├─ weekly/week01~week10/   # 차시별 실습 데이터(CSV)
+│  │  └─ orange/              # 같은 데이터를 Orange용으로 바꾼 .tab 파일
 │  └─ data_dictionary/        # 차시별 데이터 설명서
 ├─ notebooks/
 │  ├─ student/                # 학생용(TODO 포함)
-│  └─ solutions/               # 정답본(완성본)
+│  └─ solutions/              # 정답본(완성본, 강사 시연용)
+├─ orange3/week01~week10/     # Orange 워크플로(_start.ows / _done.ows)
 ├─ lectures/week01~week10/    # HTML 강의자료, 실습지, 퀴즈, 운영안
-├─ scripts/                   # 데이터 생성·검증 스크립트
+├─ dist/                      # 학생용 실습 키트(student_kit.zip, 차시별 weekXX_kit.zip)
+├─ scripts/                   # 데이터·그림·워크플로·노트북 생성과 검증 스크립트
 ├─ reports/                   # 원본 데이터 분석, 검증 리포트
-└─ docs/                      # 커리큘럼, 데이터 설계, 용어집, 운영 가이드
+└─ docs/                      # 커리큘럼, 설치 안내, Orange3 안내, 용어집, 운영 가이드
 ```
 
-## 5. Python 환경 설치 방법
+## 5. 설치 방법
+
+학생용 단계별 안내(그림 포함)는 [`docs/setup.html`](docs/setup.html)에 있습니다. 아래는 요약입니다.
+
+### Python과 Jupyter
 
 ```bash
 python -m venv .venv
@@ -81,35 +98,80 @@ pip install -r requirements.txt
 python -m ipykernel install --user --name python3 --display-name "Python 3"
 ```
 
-### Orange3 (5~10차시용)
+### Orange3 (1~10차시)
 
-Orange3는 클릭만으로 데이터를 분석하는 별도 데스크톱 프로그램으로, 이 과정은 **실습 PC에 Orange3가
-미리 설치된 환경**을 전제로 합니다(설치가 필요하면 [orangedatamining.com](https://orangedatamining.com/download/)
-참고). 실행 방법, 캔버스 화면 구성, 위젯을 놓고 연결하는 법, 5~10차시에서 실제로 쓰는 위젯
-(File, Data Table, Feature Statistics, Scatter Plot, Box Plot, Distributions,
-Correlations, Tree, Test and Score, Predictions) 사용법은
-[`docs/orange3-guide.html`](docs/orange3-guide.html)에 한 곳에 정리했습니다. 차시별로 어떤 위젯을
-"먼저" 쓰는지는 [`docs/curriculum.md`](docs/curriculum.md)의 5~10차시 설명을 참고하세요.
+Orange3는 클릭만으로 데이터를 분석하는 별도 데스크톱 프로그램이며, v3에서는 1차시부터 매 차시 본 활동으로 씁니다.
+[orangedatamining.com/download](https://orangedatamining.com/download/)에서 설치 파일을 받아 기본 설정으로 설치합니다.
+이 과정의 `.ows` 파일과 화면 설명은 **Orange 3.35**로 만들고 확인했습니다. 더 새 버전에서도 대부분 열리지만
+위젯 모양이나 메뉴 이름이 조금 다를 수 있습니다.
 
-## 6. Jupyter Notebook 사용 방법
+캔버스 화면 구성, 위젯을 놓고 연결하는 법, 차시별로 쓰는 위젯과 그 위젯이 들어 있는 묶음은
+[`docs/orange3-guide.html`](docs/orange3-guide.html)에 정리했습니다.
+
+## 6. 실습 키트와 파일 여는 법
+
+### 실습 키트 받기
+
+[`dist/student_kit.zip`](dist/student_kit.zip)에 학생 노트북·실습 데이터(`.tab` 포함)·Orange 워크플로·설치 안내가
+저장소와 같은 폴더 구조로 들어 있습니다. 차시 하나만 필요하면 `dist/weekXX_kit.zip`을 씁니다.
+
+- 압축을 풀면 `semiconductor_kit` 폴더 하나가 생깁니다.
+- **폴더 구조를 바꾸지 않습니다.** 노트북은 `../../data/weekly/...`로, `.ows`는 자기 폴더 기준 상대경로로 데이터를 찾습니다.
+- zip 안에서 바로 열지 말고 **압축을 푼 뒤** 엽니다.
+
+### Jupyter Notebook 열기
+
+키트 폴더(또는 저장소 최상위)에서 명령 프롬프트를 열고 실행합니다.
 
 ```bash
-jupyter notebook notebooks/student/week01_student.ipynb
+python -m notebook
 ```
 
-로컬 실행 시에는 노트북 안의 상대경로(`../../data/weekly/...`)가 그대로 작동합니다
-(저장소 구조를 그대로 유지한 채 실행해야 합니다).
+브라우저에서 `notebooks/student/week01_student.ipynb`를 열고 첫 셀을 실행합니다.
 
-## 7. 실습 데이터 생성 방법
+### Orange 워크플로(.ows) 열기
 
-모든 차시 데이터는 시드가 고정된 스크립트로 재현 가능하게 생성됩니다. 원본 CSV(`data/raw/`)는
+- `orange3/weekXX/`에는 차시마다 워크플로 4개가 있습니다. ① 워밍업 데이터, ② 반도체 데이터 각각
+  `_start.ows`(데이터가 연결된 File 위젯 하나 + 한국어 안내 메모)와 `_done.ows`(완성본)입니다.
+  수업은 `_start.ows`에서 시작하고, 막히면 `_done.ows`를 열어 따라잡습니다.
+- `.ows` 파일을 더블클릭합니다. 열리지 않으면 Orange를 먼저 실행하고 **File → Open**에서 고릅니다.
+- File 위젯에 "파일을 찾을 수 없다"는 오류가 나면 키트를 폴더째 압축 풀었는지 확인하고, 그래도 안 되면 File 위젯의
+  폴더 아이콘으로 `data/weekly/weekXX/orange/`의 `.tab` 파일을 직접 고릅니다.
+
+### `data/weekly/weekXX/orange/*.tab`
+
+Orange가 여는 데이터입니다. 같은 차시 CSV에서 생성 스크립트가 만든 파생 파일로 값은 CSV와 같고, 열마다 Orange가 쓸 종류
+(숫자·범주·결과 열·참고용 meta)가 정해져 있습니다. 예를 들어 `합격여부`는 숫자가 아니라 범주(결과 열)로 읽혀 Orange가
+합격·불합격 막대를 바로 그립니다. 직접 고치지 말고 CSV 생성 로직을 고친 뒤 다시 생성합니다.
+Orange 내장 데이터(zoo·iris·titanic 등)는 쓰지 않고, 워밍업도 직접 만든 가상 데이터(`weekXX_orange_<주제>.csv`)만 씁니다.
+
+## 7. 스크립트
+
+모든 차시 데이터와 그림은 시드가 고정된 스크립트로 재현 가능하게 생성됩니다. 원본 CSV(`data/raw/`)는
 절대 덮어쓰지 않습니다.
 
+| 스크립트 | 하는 일 |
+| --- | --- |
+| `scripts/inspect_raw_data.py` | 원본 데이터 프로파일링(읽기 전용) |
+| `scripts/generate_weekly_data.py` | 차시별 실습 데이터(CSV)와 Orange용 `.tab` 재생성(`data/weekly/*`, `utf-8-sig`) |
+| `scripts/validate_datasets.py` | 데이터 검증 |
+| `scripts/generate_figures.py` | 강의용 이해 그림(공정 흐름도·웨이퍼 맵 등)을 데이터에서 생성(`assets/images/generated/`) |
+| `scripts/build_orange_workflows.py` | 차시별 `_start.ows`·`_done.ows` 생성(Orange 3.35 파이썬으로 실행) |
+| `scripts/validate_orange_workflows.py` | `.ows` 파싱·상대경로·데이터 로드·화면 없이 위젯 실행 검증 |
+| `scripts/notebook_builders/weekXX.py` | 학생용·정답 노트북 2종을 한 정의에서 생성(노트북 JSON은 손으로 고치지 않음) |
+| `scripts/validate_notebooks.py` | 노트북 실행 검증 |
+| `scripts/build_student_kit.py` | 학생용 실습 키트 zip 생성(`--check`: 압축을 풀어 경로가 맞는지 확인) |
+| `scripts/build_data_dictionary_html.py` | 데이터 설명서 `.md` → 강의 디자인 `.html` 변환 |
+
 ```bash
-python scripts/inspect_raw_data.py       # 원본 데이터 프로파일링(읽기 전용)
-python scripts/generate_weekly_data.py   # 차시별 실습 데이터 재생성(data/weekly/*)
-python scripts/validate_datasets.py      # 데이터 검증
-python scripts/validate_notebooks.py     # 노트북 실행 검증
+python scripts/generate_weekly_data.py
+python scripts/validate_datasets.py
+python scripts/generate_figures.py
+python scripts/build_orange_workflows.py      # Orange 파이썬으로 스스로 다시 실행된다
+python scripts/validate_orange_workflows.py
+python scripts/notebook_builders/week01.py    # 차시마다
+python scripts/validate_notebooks.py
+python scripts/build_student_kit.py --check
 ```
 
 ## 8. HTML 강의 자료 실행 방법
@@ -126,22 +188,26 @@ start index.html
 
 | 구분 | 위치 | 특징 |
 | --- | --- | --- |
-| 학생용 | `notebooks/student/` | 핵심 코드 일부가 `# TODO`로 비어 있어 직접 채워야 함 |
-| 정답 | `notebooks/solutions/` | 학생용의 모든 TODO가 채워진 완성본(실행 결과 저장). 강사 시연에도 사용 |
-| 강의 운영안 | `lectures/weekXX/instructor-guide.md` | 수업 흐름, 발문, 예상 오개념, 난이도별 과제 |
+| 학생용 | `notebooks/student/` | 맨 위 "막혔을 때" 안내, 반도체 실습 문제가 `____` 빈칸으로 비어 있어 직접 채워야 함 |
+| 정답 | `notebooks/solutions/` | 학생용의 모든 빈칸이 채워진 완성본(실행 결과 저장). 강사 시연에도 사용 |
+| Orange 워크플로 | `orange3/weekXX/` | `_start.ows`로 시작, `_done.ows`는 완성본(따라잡기·정답) |
+| 강의 운영안 | `lectures/weekXX/instructor-guide.md` | 수업 흐름(순서와 "여기서 쉬기"), 발문, 예상 오개념 |
+| 공통 운영 가이드 | [`docs/instructor-operation-guide.md`](docs/instructor-operation-guide.md) | 전 차시 공통 v3 운영 방법 |
 
 ## 10. 데이터 출처 및 교육용 가공 안내
 
 - 원본 참고 자료: `반도체_공정_샘플.csv`(200행), `fab.csv`(1,567행 × 590센서, SECOM 유형의
   고차원 센서 데이터)를 `data/raw/`에 원본 그대로 보존했습니다.
 - 1~10차시 핵심 데이터는 모두 `반도체_공정_샘플.csv`의 열 구조·값 범위를 참고해 **완전히 새로
-  생성한 가상 데이터**입니다. 특히 9차시 머신러닝 예측 실습도 `반도체_공정_샘플.csv` 계열 데이터를
-  사용합니다(v1에서 사용하던 `fab.csv` 파생 데이터는 v2에서 핵심 경로에서 제외 — 배경은
+  생성한 가상 데이터**입니다. 9차시 머신러닝 예측 실습도 `반도체_공정_샘플.csv` 계열 데이터를
+  사용합니다(`fab.csv` 파생 데이터는 핵심 경로에서 제외 — 배경은
   [`docs/restructure-plan.md`](docs/restructure-plan.md) 참고).
+- Orange 워밍업 데이터(`weekXX_orange_<주제>.csv`)도 시드를 고정해 직접 만든 가상 데이터입니다.
+  열 이름은 한국어 이름 + 영문/SI 단위(`온도_C`, `PM10_ug_m3`, `승차인원_count` 등)로 씁니다.
 - `fab.csv`는 원할 경우 강사가 9차시 이후 선택 심화 부록으로만 다룰 수 있으며, 이 경우에도 센서
   이름에는 실제 의미가 확인되지 않았다는 점을 반드시 명시해야 합니다(`CLAUDE.md` 참고).
-- 반도체_공정_샘플.csv의 합격/불합격 부호(1=합격/-1=불합격)와 fab.csv의 부호(-1=정상/1=이상)가
-  서로 다르다는 점은 1차시와 용어집에서 설명합니다.
+- 실습 데이터의 `합격여부`는 전 차시 1=합격/-1=불합격입니다. `fab.csv`의 부호(-1=정상/1=이상)와
+  서로 다르다는 점은 용어집에서 설명합니다.
 
 ## 11. 주의사항
 

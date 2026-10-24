@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="8차시 ① 식각 챔버 센서 기록 — 함께 움직이는 값 줄 세우기 (완성)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+		<node id="1" name="Correlations" qualified_name="Orange.widgets.data.owcorrelations.OWCorrelations" project_name="Orange3" version="" title="Correlations (상관 순위)" position="(300.0, 320.0)" />
+		<node id="2" name="Scatter Plot" qualified_name="Orange.widgets.visualize.owscatterplot.OWScatterPlot" project_name="Orange3" version="" title="Scatter Plot (산점도)" position="(300.0, 460.0)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+	</links>
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: File → Correlations(Pearson), File → Scatter Plot(RF파워_W · 식각률_nm_min).
+부호가 -이면 한쪽이 오를 때 다른 쪽은 내려갑니다. 이 관계는 교육용 가상 관계이며, 함께 움직인다고 원인인 것은 아닙니다(원인 후보).</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVbgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMIHdlZWswOF9vcmFuZ2VfY2hh
+bWJlcl9zZW5zb3IudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjEAuLi8uLi9kYXRh
+L3dlZWtseS93ZWVrMDgvb3JhbmdlL3dlZWswOF9vcmFuZ2VfY2hhbWJlcl9zZW5zb3IudGFilIwF
+dGl0bGWUjACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRf
+dXJsc5RdlIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNv
+bnRleHRfc2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+		<properties node_id="2" format="pickle">gASVsgIAAAAAAAB9lCiMC2F1dG9fY29tbWl0lIiMC2F1dG9fc2FtcGxllIiMEmNvbnRyb2xBcmVh
+VmlzaWJsZZSIjAlzZWxlY3Rpb26UTowRdG9vbHRpcF9zaG93c19hbGyUiIwPdmlzdWFsX3NldHRp
+bmdzlH2UjAVncmFwaJR9lCiMC2FscGhhX3ZhbHVllEuAjA1jbGFzc19kZW5zaXR5lImMEWppdHRl
+cl9jb250aW51b3VzlImMC2ppdHRlcl9zaXpllEsAjBNsYWJlbF9vbmx5X3NlbGVjdGVklImMFm9y
+dGhvbm9ybWFsX3JlZ3Jlc3Npb26UiYwLcG9pbnRfd2lkdGiUSwqMCXNob3dfZ3JpZJSJjAtzaG93
+X2xlZ2VuZJSIjA1zaG93X3JlZ19saW5llIl1jAtfX3ZlcnNpb25fX5RLBYwQY29udGV4dF9zZXR0
+aW5nc5RdlIwVb3Jhbmdld2lkZ2V0LnNldHRpbmdzlIwHQ29udGV4dJSTlCmBlH2UKIwGdmFsdWVz
+lH2UKIwKYXR0cl9jb2xvcpROSv7///+GlIwKYXR0cl9sYWJlbJROSv7///+GlIwKYXR0cl9zaGFw
+ZZROSv7///+GlIwJYXR0cl9zaXpllE5K/v///4aUjAZhdHRyX3iUjApSRu2MjOybjF9XlEtmhpSM
+BmF0dHJfeZSMEOyLneqwgeuloF9ubV9taW6US2aGlGgIfZRoFEsFdYwKYXR0cmlidXRlc5R9lCho
+J0sCjBLssZTrsoTslZXroKVfbVRvcnKUSwKMEeqwgOyKpOycoOufiV9zY2NtlEsCjBXriITsoIHs
+gqzsmqnsi5zqsIRfaHKUSwKMDuyxlOuyhOyYqOuPhF9DlEsCaCpLAnWMBW1ldGFzlH2UjAzsuKHs
+oJXsi5zqsISUSwRzdWJhdS4=
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

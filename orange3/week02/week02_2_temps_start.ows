@@ -5,9 +5,9 @@
 	</nodes>
 	<links />
 	<annotations>
-		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 설비 온도 기록(20행)이 들어왔는지 확인하세요.
-② Feature Statistics(열 통계)를 File에 이어 온도_C의 Min·Max·Mean을 읽으세요.
-③ Data Table(표 보기)을 File에 잇고 설비번호 열 이름을 눌러 정렬하세요. EQ-03 행만 모아 보고 그중 가장 높은 온도를 찾으세요.</text>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 week02_python_basics_1.tab이 들어왔는지 확인하세요.
+② File에 Feature Statistics(열 통계)를 잇고 온도_C 행의 Mean과 Max.를 읽으세요.
+③ File에 Data Table(표 보기)을 잇고 설비번호 열 머리를 한 번 눌러 정렬하세요. 같은 설비의 행이 한데 모입니다. EQ-02 행을 찾으세요.</text>
 	</annotations>
 	<thumbnail />
 	<node_properties>

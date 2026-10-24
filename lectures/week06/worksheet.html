@@ -19,166 +19,134 @@
   <div class="hero">
     <span class="badge purple">6차시 실습지</span>
     <h1>그래프로 공정 상태 이해하기 — 실습지</h1>
+    <p class="lede">모든 문제는 공정 기록 <code>week06_process_visualization.csv</code>(180행 10열, 교육용 가상 데이터)로 푼다.
+    공정 지도 위치: ②~⑤ + 세정 설비 기록. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 문제 1~3은 오늘의 미션 그래프 3장이고, 학생용 노트북 6단계의 <code>____</code>와 같다 — 노트북 1단계와 5단계 셀을 먼저 실행해 <code>plt</code>와 <code>df</code>를 만들어 둔다.</p>
   </div>
 
   <section class="block">
-    <h2>실습지 사용법</h2>
-    <ul class="pt-list">
-      <li>모든 문항은 반도체 공정 기록 <code>week06_process_visualization.csv</code>(<code>df</code>, 180행, 설비 4대, 교육용 가상 데이터)로 푼다.</li>
-      <li>문제 1~8은 노트북 8~11단계의 같은 번호 칸에서 실행한다. 힌트의 "N단계"는 같은 모양의 쉬운 예제 단계다.</li>
-    </ul>
-  </section>
+    <h2>문제 1 — 설비별 기록 건수 막대그래프 (노트북 6단계 문제 1)</h2>
+    <p>설비마다 기록이 몇 건인지 세고 막대로 그리자. 힌트: 강의 "반도체 데이터로 확인하기" 확인 1의 공정명 막대와 같은 모양이다. 세는 열만 <code>설비번호</code>로 바뀐다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 노트북 6단계 문제 1</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 값마다 개수를 세는 함수 이름을 채우세요.
+eq_counts = df["설비번호"].____()
+print(eq_counts)
 
-  <section class="block">
-    <h2>개념 확인 1. 질문과 그래프 연결</h2>
-    <table class="timetable">
-      <tr><th>질문</th><th>그래프 후보</th></tr>
-      <tr><td>① 시간이 지나며 온도가 어떻게 변했나?</td><td rowspan="5">A. 히스토그램<br>B. 박스플롯<br>C. 산점도<br>D. 막대그래프<br>E. 선 그래프</td></tr>
-      <tr><td>② 설비마다 기록이 몇 건인가?</td></tr>
-      <tr><td>③ 온도 값이 주로 어디에 몰려 있나?</td></tr>
-      <tr><td>④ 온도가 높으면 두께도 두꺼운가?</td></tr>
-      <tr><td>⑤ 어느 설비의 온도가 가장 들쭉날쭉한가?</td></tr>
-    </table>
+# TODO: 막대그래프를 그리는 함수 이름을 채우세요.
+plt.____(eq_counts.index, eq_counts)
+plt.xlabel("설비번호")
+plt.ylabel("기록 건수")
+plt.show()</code></pre>
+    </div>
+    <p>기록이 가장 많은 설비와 가장 적은 설비는? 각각 몇 건인가?</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① E  ② D  ③ A  ④ C  ⑤ B</div>
+    <div class="answer-box"><code>value_counts</code>, <code>bar</code>
+      <pre style="margin:.3rem 0;white-space:pre-wrap;">설비번호
+EQ-04    50
+EQ-01    47
+EQ-03    46
+EQ-02    37
+Name: count, dtype: int64</pre>
+      <img class="chart-img" src="../../assets/images/generated/week06_nb_bar_equipment.png" alt="설비별 기록 건수 막대그래프. EQ-04 50, EQ-01 47, EQ-03 46, EQ-02 37">
+      막대는 많은 순(EQ-04, EQ-01, EQ-03, EQ-02)으로 놓인다. 가장 많은 설비는 <b>EQ-04(50건)</b>, 가장 적은 설비는 <b>EQ-02(37건)</b>다. 설비마다 기록 수가 다르다는 점은 7차시에 비율로 비교할 때 다시 쓴다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>개념 확인 2. 그래프 "하나"가 뜻하는 것</h2>
-    <table class="timetable">
-      <tr><th>표시</th><th>뜻 후보</th></tr>
-      <tr><td>① 온도-두께 산점도의 점 하나</td><td rowspan="4">A. 온도 구간 하나에 들어간 기록 수<br>B. 공정 기록(행) 하나<br>C. 설비 하나의 온도 전체를 요약한 것<br>D. 설비 하나의 기록 건수</td></tr>
-      <tr><td>② 설비별 막대그래프의 막대 하나</td></tr>
-      <tr><td>③ 온도 히스토그램의 막대 하나</td></tr>
-      <tr><td>④ 설비별 박스플롯의 상자 하나</td></tr>
-    </table>
+    <h2>문제 2 — 온도가 몰린 구간(히스토그램) (노트북 6단계 문제 2)</h2>
+    <p>공정 기록 180건의 온도가 어느 구간에 몰려 있는지 그리자. 힌트: 강의 확인 2의 두께 히스토그램과 같은 모양이다(<code>bins=10</code>). 그릴 열만 <code>"온도_C"</code>로 바뀐다. 열 이름은 따옴표 안에 쓴다 — 따옴표를 빠뜨리면 <code>NameError: name '온도_C' is not defined</code>가 난다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 노트북 6단계 문제 2</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 히스토그램 함수 이름과 그릴 열 이름을 채우세요.
+plt.____(df[____], bins=10)
+plt.xlabel("온도_C")
+plt.ylabel("기록 건수")
+plt.show()</code></pre>
+    </div>
+    <p>가장 높은 막대는 대략 몇 도 근처인가? 그림 모양을 한 줄로 적자.</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① B  ② D  ③ A  ④ C. 막대그래프 가로축은 이름(설비), 히스토그램 가로축은 숫자 구간(온도)이다.</div>
+    <div class="answer-box"><code>hist</code>, <code>"온도_C"</code>
+      <img class="chart-img" src="../../assets/images/generated/week06_nb_hist_temperature.png" alt="온도 히스토그램. 292~315도를 열 구간으로 나눴고 가운데 301~303도 근처 막대가 가장 높다">
+      온도는 약 292~315℃ 사이에 있고, 가장 높은 막대는 <b>약 300~305℃ 근처</b>다. 가운데가 높고 양쪽으로 갈수록 낮아지는 산 모양이다.
+      (참고: <code>plt.hist</code>가 나눈 구간으로는 301.3~303.5℃ 구간이 47건으로 가장 많다. 그림 눈금으로는 "약 300~305℃"까지 읽으면 된다.)
+    </div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b> 그림이 강의의 두께 히스토그램과 <b>똑같아</b> 보이고 x축 눈금이 94~108 근처라면, 힌트 예시를 그대로 옮겨 <code>"두께_nm"</code>을 그린 것이다. 오류가 나지 않아 놓치기 쉽다. 온도 히스토그램이면 눈금이 약 292~315다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>개념 확인 3. 박스플롯 부분 이름 맞히기</h2>
-    <table class="timetable">
-      <tr><th>부분</th><th>뜻 후보</th></tr>
-      <tr><td>① 상자 안 가로선</td><td rowspan="4">A. 다른 값들과 멀리 떨어진 값<br>B. 가운데 절반(50%)의 기록이 들어 있는 범위<br>C. 줄 세웠을 때 한가운데 값(중앙값)<br>D. 동그라미를 뺀 가장 큰 값·가장 작은 값까지 뻗은 선</td></tr>
-      <tr><td>② 상자</td></tr>
-      <tr><td>③ 수염</td></tr>
-      <tr><td>④ 동그라미 점</td></tr>
-    </table>
+    <h2>문제 3 — 온도와 두께의 관계(산점도) (노트북 6단계 문제 3)</h2>
+    <p>온도가 높은 기록일수록 막 두께도 달라지는지 그리자. 힌트: 강의 확인 3의 온도-압력 산점도와 같은 모양이다. x = <code>온도_C</code>는 그대로, y축 열만 <code>두께_nm</code>로 바뀐다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 노트북 6단계 문제 3</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 산점도 함수 이름과 y축에 놓을 열 이름을 채우세요.
+plt.____(df["온도_C"], df[____])
+plt.xlabel("온도_C")
+plt.ylabel("두께_nm")
+plt.show()</code></pre>
+    </div>
+    <p>점들은 어느 쪽으로 기울었나? 강의 확인 3의 온도-압력 산점도와 무엇이 다른가?</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① C  ② B  ③ D  ④ A. 동그라미 점은 "잘못된 값"이 아니라 "멀리 떨어진 값" 표시다.</div>
+    <div class="answer-box"><code>scatter</code>, <code>"두께_nm"</code>
+      <img class="chart-img" src="../../assets/images/generated/week06_nb_scatter_temp_thickness.png" alt="온도와 두께 산점도. 점 180개가 왼쪽 아래에서 오른쪽 위로 올라가는 띠 모양이다">
+      점들이 <b>오른쪽 위로 올라가는 띠</b> 모양이다 → 온도가 높은 기록일수록 두께도 두꺼운 경향이 보인다. 온도-압력 산점도는 한쪽으로 기울지 않은 구름이었다.
+      함께 움직인다는 것까지가 그림이 보여 주는 것이다. 왜 그런지는 그림만으로 정하지 않는다(8차시).
+    </div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b> 점이 옆으로 누운 모양이면 x와 y 열을 바꿔 넣은 것이다(x = <code>온도_C</code>, y = <code>두께_nm</code>).
+      그래프 위에 <code>Text(0, 0.5, '두께_nm')</code> 줄이 보이면 <code>plt.show()</code>를 빠뜨린 것이다. Orange PART 2의 온도-두께 Scatter Plot 화면과 같은 모양인지도 비교한다.
+    </div>
   </section>
 
   <section class="block">
-    <h2>문제 1. 측정시간을 날짜로 바꾸기 (노트북 8단계)</h2>
+    <h2>문제 4 — Orange 상자 그림으로 설비별 온도 퍼짐 비교하기</h2>
+    <p>Orange3에서 키트의 <code>orange3/week06/week06_2_process_start.ows</code>를 연다. 강의 PART 2 "반도체 — 공정 기록을 Orange로 그리기"의 3단계다.</p>
+    <ol>
+      <li>왼쪽 Visualize 묶음에서 <code>Box Plot</code>을 끌어 와 <b>File과</b> 잇고 더블클릭한다.</li>
+      <li>왼쪽 위 <b>Variable</b> 목록에서 <code>온도_C</code>를 클릭한다(처음에는 <code>측정시간</code>으로 잡혀 있다).</li>
+      <li>그 아래 <b>Subgroups</b> 목록에서 <code>설비번호</code>를 클릭한다(처음에는 <code>합격여부</code>로 잡혀 있다). 상자 네 개(EQ-01~EQ-04)가 나오면 된다.</li>
+      <li>상자마다 위 숫자(평균 ± 표준편차)와 아래 숫자 세 개(상자 왼쪽 끝 · 중앙값 · 상자 오른쪽 끝)를 읽는다.</li>
+    </ol>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>읽을 것</th><th>내 답</th></tr></thead>
+        <tbody>
+          <tr><td>네 설비의 평균 온도(상자 위 숫자)는 몇 도에서 몇 도 사이인가</td><td>(          ) ~ (          )</td></tr>
+          <tr><td>상자가 가장 긴 설비</td><td>(          )</td></tr>
+          <tr><td>그 설비 상자의 왼쪽 끝 ~ 오른쪽 끝</td><td>(          ) ~ (          )</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>문제 1의 파이썬 막대그래프에서 이 설비는 기록 수가 몇 번째였나? 막대그래프와 상자 그림이 각각 무엇을 보여 주는지 한 줄로 비교하자.</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">평균 온도 약 <b>302 ~ 304℃</b>(화면 302.241~303.735, 비슷하다) / 상자가 가장 긴 설비 <b>EQ-02</b> / 상자 <b>300.6 ~ 307.3℃</b>(길이 약 6.7). 다른 세 설비의 상자 길이는 약 3~4다.
+      비교(예): "EQ-02는 막대그래프에서 기록 수가 가장 적었고(37건), 상자 그림에서는 온도가 가장 넓게 퍼져 있었다. 막대는 개수를, 상자 그림은 값의 퍼짐을 보여 준다."
+      <img class="chart-img" src="../../assets/images/orange3/week06_08_process_box.png"
+           alt="Box Plot 창. 온도_C를 설비번호로 나눈 상자 네 개 중 EQ-02 상자가 가장 길다"
+           data-shot="week06_2_process_done.ows의 Box Plot (상자 그림) 창 — Variable 온도_C, Subgroups 설비번호. 상자 네 개와 위아래 숫자가 보이고, EQ-02 상자(300.6 · 303.4 · 307.3, 위 EQ-02: 303.735 ± 5.30)가 가장 긴 모습이 보이게">
+    </div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b> 상자가 두 개(1, -1)만 보이면 Subgroups를 <code>설비번호</code>로 바꾸지 않은 것이다. 상자가 다섯 개면 Subgroups에서 <code>공정명</code>을 고른 것이다. 상자 아래 숫자가 온도(300 안팎)가 아니면 Variable을 <code>온도_C</code>로 바꾸지 않은 것이다. 상자 대신 색 띠가 보이면 Variable에서 글자 열을 고른 것이다 — <code>온도_C</code>를 다시 클릭한다.
+      위젯은 Data Table이 아니라 File에 잇는다. 막히면 같은 폴더의 <code>week06_2_process_done.ows</code>를 연다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 5 — 해석 문장 쓰기</h2>
+    <p>오늘의 질문 "숫자 표로는 안 보이던 공정의 모습을, 그래프 몇 장으로 볼 수 있을까?"에 문제 4의 숫자로 답하자.</p>
     <div class="callout practice">
-      <b class="tag">할 일</b>
-      빈칸을 채워 <code>측정시간</code>을 날짜·시각으로 바꾸자. 힌트: 1단계 <code>ice["날짜"]</code>와 같은 모양.
-      <pre style="margin:.4rem 0 0;white-space:pre-wrap;">df["측정시간"] = pd.____(df["측정시간"])</pre>
+      <b class="tag">문장 틀</b> "설비 네 대의 평균 온도는 약 ______~______℃로 비슷하지만, ______ 설비는 온도 상자가 가장 길어(______~______℃) 더 들쭉날쭉하다. 평균만 봤다면 놓쳤을 차이다."
+      <br>모든 빈칸을 문제 4에서 읽은 숫자로 채운다.
     </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box"><code>to_datetime</code>. 결과 <code>dtype: datetime64[us]</code>, 값은 <code>2024-03-01 05:00:00</code>처럼 시각까지 붙는다.</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 2. 시간에 따른 온도 (노트북 9단계)</h2>
-    <div class="callout practice">
-      <b class="tag">할 일</b>
-      <code>plt.____(df["측정시간"], df["온도_섭씨"])</code>로 선 그래프를 그리고, 평균 302.8℃ 하나로는 안 보이는 "전체 흐름"을 적자. 힌트: 2단계와 같은 모양.
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <img class="chart-img" src="../../assets/images/week06/nb_line_temperature.png"
-           alt="시간에 따른 온도 선 그래프. 흔들리면서 전체적으로 조금씩 올라간다." style="max-width:520px;">
-      <code>plot</code>. 온도가 서서히 오른다(드리프트): 3월 평균 301.4℃ → 4월 304.8℃.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 3. 설비별 기록 건수 (노트북 9단계)</h2>
-    <div class="callout practice">
-      <b class="tag">할 일</b>
-      빈칸을 채워 막대그래프를 그리고, 기록이 가장 많은 설비와 가장 적은 설비를 적자. 힌트: 3단계와 같은 모양.
-      <pre style="margin:.4rem 0 0;white-space:pre-wrap;">counts = df["설비번호"].____()
-plt.____(counts.index, counts)</pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <img class="chart-img" src="../../assets/images/week06/nb_bar_records.png"
-           alt="설비별 기록 건수 막대그래프. EQ-04가 가장 높고 EQ-02가 가장 낮다." style="max-width:460px;">
-      <code>value_counts</code>, <code>bar</code>. EQ-04 50 / EQ-01 47 / EQ-03 46 / EQ-02 37. 건수가 적다고 문제 설비는 아니다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 4. 온도가 몰린 구간 (노트북 9단계)</h2>
-    <div class="callout practice">
-      <b class="tag">할 일</b>
-      <code>plt.____(df["온도_섭씨"], bins=10)</code>로 히스토그램을 그리고, 온도가 주로 몰린 곳을 적자. 힌트: 4단계와 같은 모양(180건이라 10칸).
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <img class="chart-img" src="../../assets/images/week06/nb_hist_temperature.png"
-           alt="온도 히스토그램. 301~304도 근처 막대가 가장 높고, 양쪽 끝으로 갈수록 낮아진다." style="max-width:460px;">
-      <code>hist</code>. 가장 높은 막대는 약 301.3~303.5℃(47건), 가운데 세 막대에 180건 중 124건이 몰려 있다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 5. 온도와 두께 (노트북 10단계)</h2>
-    <div class="callout practice">
-      <b class="tag">할 일</b>
-      <code>plt.____(df["온도_섭씨"], df["두께_nm"])</code>로 산점도를 그리자. 점 모양은? 동료가 "온도가 두께의 원인이네!"라고 하면 어떻게 답할까? 힌트: 5단계와 같은 모양.
-    </div>
+    <p><b>판단해 보기</b> — 이 상자 그림만으로 "EQ-02 설비 때문에 불량이 생긴다"고 말할 수 있을까? 한 줄로 이유를 적자.</p>
     <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">
-      <code>scatter</code>. 오른쪽 위로 기운다(300℃ 미만 34건 평균 두께 98.6nm, 305℃ 이상 43건 104.4nm).
-      "함께 움직이는 건 맞지만 원인이라고 할 수는 없어. 지금은 온도를 두께의 원인 후보까지만 말할 수 있어."
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 6. 온도와 압력 (노트북 10단계)</h2>
-    <div class="callout practice">
-      <b class="tag">할 일</b>
-      문제 5에서 세로축만 바꿔 그리고 두께 산점도와 비교하자. 힌트: 두 빈칸에 같은 열 이름.
-      <pre style="margin:.4rem 0 0;white-space:pre-wrap;">plt.scatter(df["온도_섭씨"], df["____"])
-plt.ylabel("____")</pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box"><code>압력_Pa</code>. 둥글게 흩어진다(평균 압력 1011.6과 1011.8). 같은 온도 열도 짝에 따라 보이는 것이 다르다.</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 7. 설비별 온도 박스플롯 (노트북 11단계)</h2>
-    <div class="callout practice">
-      <b class="tag">할 일</b>
-      빈칸을 채워 그리고 답하자. 힌트: 6단계 <code>ice.boxplot(column="판매량_개", by="날씨")</code>와 같은 모양.
-      <pre style="margin:.4rem 0 0;white-space:pre-wrap;">df.____(column="온도_섭씨", by="____")</pre>
-      <ol>
-        <li>상자가 가장 긴 설비는? 네 설비의 가운데 선은 비슷한가?</li>
-        <li>EQ-03의 동그라미 점은 지워야 할 잘못된 값인가?</li>
-      </ol>
-    </div>
-    <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">
-      <img class="chart-img" src="../../assets/images/week06/nb_box_temperature.png"
-           alt="설비별 온도 박스플롯. EQ-02의 상자가 다른 설비보다 위아래로 길다." style="max-width:460px;">
-      <code>boxplot</code>, <code>설비번호</code>.
-      1) EQ-02(300.6~307.3℃, 상자 길이 6.7℃ / 다른 설비 3.1~4.1℃). 가운데 선은 302.0~303.4℃로 비슷하다. 2) 아니다. 멀리 떨어진 값 표시일 뿐이다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 8. 설비별 온도 숫자 요약과 한 문장 (노트북 11단계)</h2>
-    <div class="callout practice">
-      <b class="tag">할 일</b>
-      <code>print(df.groupby("설비번호")["온도_섭씨"].describe().round(1))</code>을 그대로 실행하고(<code>groupby</code>는 7차시에 배운다) 결과로 문장을 완성하자.
-      <br>"네 설비의 평균 온도는 ____~____℃로 비슷하지만, 설비 ____의 표준편차가 ____로 가장 커서 온도가 가장 들쭉날쭉하다."
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">302.2, 303.7, EQ-02, 5.4. 학습용 정상 범위(295~305℃) 밖 기록도 EQ-02는 37건 중 14건(약 38%)으로
-    다른 설비(46~50건 중 9~10건, 약 18~21%)보다 많다.</div>
+    <div class="answer-box">"설비 네 대의 평균 온도는 약 302~304℃로 비슷하지만, EQ-02 설비는 온도 상자가 가장 길어(300.6~307.3℃) 더 들쭉날쭉하다. 평균만 봤다면 놓쳤을 차이다."
+      (화면 숫자를 반올림해 302~304℃라고 써도 된다.)
+      <br>판단 예시: "말할 수 없다. 상자 그림은 온도가 얼마나 퍼졌는지만 보여 준다. 설비마다 불합격이 얼마나 되는지는 아직 세어 보지 않았고(7차시), EQ-02 기록은 37건으로 가장 적다."</div>
   </section>
 
   <div class="nav-buttons">

@@ -59,14 +59,14 @@ def validate_easy():
     print("\n=== 생활 예제(easy) 데이터 ===")
 
     e4 = validate_week("week04", "week04_easy_cafe_orders.csv",
-                       ["주문번호", "매장", "메뉴", "종류", "가격_원", "수량_개", "평가"])
+                       ["주문번호", "매장", "메뉴", "종류", "가격_KRW", "수량_count", "평가"])
     if e4 is not None:
         check("easy04 크기 12행 x 7열", e4.shape == (12, 7), str(e4.shape))
         check("easy04 평가 값 범위(1/-1)", set(e4["평가"].unique()) <= {1, -1})
         check("easy04 조건 검색 건수(커피 5, 가격>5000 5, 별로예요 4, 가격>5000&별로예요 3)",
-              (e4["종류"] == "커피").sum() == 5 and (e4["가격_원"] > 5000).sum() == 5
+              (e4["종류"] == "커피").sum() == 5 and (e4["가격_KRW"] > 5000).sum() == 5
               and (e4["평가"] == -1).sum() == 4
-              and ((e4["가격_원"] > 5000) & (e4["평가"] == -1)).sum() == 3)
+              and ((e4["가격_KRW"] > 5000) & (e4["평가"] == -1)).sum() == 3)
         bad_rate = e4.groupby("종류")["평가"].apply(lambda s: (s == -1).mean())
         check("easy04 별로예요 비율 1위는 디저트(의도된 패턴)", bad_rate.idxmax() == "디저트", str(bad_rate.to_dict()))
 
@@ -88,7 +88,7 @@ def validate_easy():
         check("easy05 강의 순서로 정리하면 12행", len(cleaned) == 12, str(len(cleaned)))
 
     e6 = validate_week("week06", "week06_easy_icecream_daily.csv",
-                       ["날짜", "요일", "날씨", "최고기온_섭씨", "판매량_개"])
+                       ["날짜", "요일", "날씨", "최고기온_C", "판매량_count"])
     if e6 is not None:
         check("easy06 21행", len(e6) == 21, str(len(e6)))
         try:
@@ -96,13 +96,13 @@ def validate_easy():
             check("easy06 날짜가 YYYY-MM-DD로 변환되고 하루 간격", (d.diff().dropna() == pd.Timedelta(days=1)).all())
         except Exception as e:  # noqa: BLE001
             check("easy06 날짜가 YYYY-MM-DD로 변환되고 하루 간격", False, str(e))
-        r = e6["최고기온_섭씨"].corr(e6["판매량_개"])
+        r = e6["최고기온_C"].corr(e6["판매량_count"])
         check("easy06 기온-판매량 강한 양의 관계(r>0.8)", r > 0.8, f"r={r:.2f}")
-        med = e6.groupby("날씨")["판매량_개"].median()
+        med = e6.groupby("날씨")["판매량_count"].median()
         check("easy06 비 오는 날 판매량 중앙값이 가장 낮음(박스플롯 패턴)", med.idxmin() == "비", str(med.to_dict()))
 
     e7 = validate_week("week07", "week07_easy_quiz_results.csv",
-                       ["반", "이름", "문제번호", "풀이시간_초", "오답유형", "정답여부"])
+                       ["반", "이름", "문제번호", "풀이시간_sec", "오답유형", "정답여부"])
     if e7 is not None:
         check("easy07 24행(3반 x 2명 x 4문항)", len(e7) == 24, str(len(e7)))
         check("easy07 정답여부 값 범위(1/-1)", set(e7["정답여부"].unique()) <= {1, -1})
@@ -119,18 +119,18 @@ def validate_easy():
         check("easy07 오답유형 파레토 1위 계산 실수(3건)", wc.index[0] == "계산 실수" and wc.iloc[0] == 3, str(wc.to_dict()))
 
     e8 = validate_week("week08", "week08_easy_weather_sales.csv",
-                       ["날짜", "최고기온_섭씨", "습도_pct", "아이스크림_판매량_개", "핫초코_판매량_잔", "냉동고온도_섭씨", "손님평가"])
+                       ["날짜", "최고기온_C", "습도_pct", "아이스크림판매량_count", "핫초코판매량_cup", "냉동고온도_C", "손님평가"])
     if e8 is not None:
         check("easy08 30행", len(e8) == 30, str(len(e8)))
         check("easy08 손님평가 값 범위(1/-1)", set(e8["손님평가"].unique()) <= {1, -1})
-        r_ice = e8["최고기온_섭씨"].corr(e8["아이스크림_판매량_개"])
-        r_choco = e8["최고기온_섭씨"].corr(e8["핫초코_판매량_잔"])
-        r_hum = e8["습도_pct"].corr(e8["아이스크림_판매량_개"])
-        r_fz = e8["냉동고온도_섭씨"].corr(e8["손님평가"])
+        r_ice = e8["최고기온_C"].corr(e8["아이스크림판매량_count"])
+        r_choco = e8["최고기온_C"].corr(e8["핫초코판매량_cup"])
+        r_hum = e8["습도_pct"].corr(e8["아이스크림판매량_count"])
+        r_fz = e8["냉동고온도_C"].corr(e8["손님평가"])
         check("easy08 기온-아이스크림 강한 양의 관계(r>0.8)", r_ice > 0.8, f"r={r_ice:.2f}")
         check("easy08 기온-핫초코 강한 음의 관계(r<-0.8)", r_choco < -0.8, f"r={r_choco:.2f}")
         check("easy08 습도-아이스크림 관계 없음(|r|<0.1)", abs(r_hum) < 0.1, f"r={r_hum:.2f}")
-        fz = e8["냉동고온도_섭씨"]
+        fz = e8["냉동고온도_C"]
         out = e8[(fz < -20) | (fz > -16)]
         inn = e8[(fz >= -20) & (fz <= -16)]
         out_rate = (out["손님평가"] == -1).mean()
@@ -141,7 +141,7 @@ def validate_easy():
         check("easy08 냉동고-손님평가 상관계수는 0에 가까움(|r|<0.2, 상관계수가 놓치는 경우)",
               abs(r_fz) < 0.2, f"r={r_fz:.2f}")
 
-    feature_cols = ["최고기온_섭씨", "습도_pct", "풍속_m_s", "강수량_mm"]
+    feature_cols = ["최고기온_C", "습도_pct", "풍속_m_s", "강수량_mm"]
     e9 = validate_week("week09", "week09_easy_outdoor_class.csv", ["날짜"] + feature_cols + ["진행여부"])
     if e9 is not None:
         check("easy09 120행", len(e9) == 120, str(len(e9)))
@@ -302,11 +302,30 @@ def main():
         check("week02 EQ-03 7건, 최고 308.5 · 최저 292.2(강의·실습지 수치)",
               len(eq03) == 7 and eq03.max() == 308.5 and eq03.min() == 292.2, str(eq03.tolist()))
 
-    validate_week("week03", "week03_python_basics_2.csv",
-                  ["로트번호", "공정명", "설비번호", "온도_섭씨", "합격여부"])
+    w3 = validate_week("week03", "week03_python_basics_2.csv",
+                       ["로트번호", "공정명", "설비번호", "온도_C", "합격여부"])
+    if w3 is not None:
+        out = ~w3["온도_C"].between(295, 305)
+        fail = w3["합격여부"] == -1
+        check("week03 30행, 범위(295~305) 밖 12건, 그중 불합격 3건, 범위 안 불합격 0건",
+              len(w3) == 30 and out.sum() == 12 and (out & fail).sum() == 3 and (~out & fail).sum() == 0,
+              f"밖 {out.sum()}, 밖·불합격 {(out & fail).sum()}, 안·불합격 {(~out & fail).sum()}")
+        eq04 = w3[w3["설비번호"] == "EQ-04"]
+        eq03 = w3[w3["설비번호"] == "EQ-03"]
+        check("week03 EQ-04 8건 중 범위 밖 4건(불합격 1) · EQ-03 11건 중 범위 안 7건(강의·실습 수치)",
+              len(eq04) == 8 and (~eq04["온도_C"].between(295, 305)).sum() == 4
+              and ((~eq04["온도_C"].between(295, 305)) & (eq04["합격여부"] == -1)).sum() == 1
+              and len(eq03) == 11 and eq03["온도_C"].between(295, 305).sum() == 7)
 
-    validate_week("week04", "week04_process_filtering.csv",
-                  ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "가스유량_slm", "합격여부"])
+    w4 = validate_week("week04", "week04_process_filtering.csv",
+                       ["측정시간", "로트번호", "설비번호", "공정명", "온도_C", "압력_Pa", "가스유량_slm", "합격여부"])
+    if w4 is not None:
+        check("week04 합격여부 값 범위", set(w4["합격여부"].unique()) <= {1, -1})
+        eq02 = w4[w4["설비번호"] == "EQ-02"]
+        eq01 = w4[w4["설비번호"] == "EQ-01"]
+        check("week04 (100, 8), 불합격 13건(13.0%), EQ-02 25건 중 불합격 5건, EQ-01 31건 중 불합격 2건(강의·실습 수치)",
+              w4.shape == (100, 8) and (w4["합격여부"] == -1).sum() == 13 and len(eq02) == 25
+              and (eq02["합격여부"] == -1).sum() == 5 and len(eq01) == 31 and (eq01["합격여부"] == -1).sum() == 2)
 
     w5 = validate_week("week05", "week05_dirty_process_data.csv",
                         ["측정시간", "로트번호", "설비번호", "공정명", "온도_C", "압력_Pa", "가스유량_slm", "처리시간_sec", "합격여부"])
@@ -316,33 +335,60 @@ def main():
         check("week05 음수 압력 존재(의도된 이상값)", (w5["압력_Pa"] < 0).sum() > 0)
 
     w6 = validate_week("week06", "week06_process_visualization.csv",
-                        ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "두께_nm", "진동_mm_s", "처리시간_sec", "합격여부"])
+                        ["측정시간", "로트번호", "설비번호", "공정명", "온도_C", "압력_Pa", "두께_nm", "진동_mm_s", "처리시간_sec", "합격여부"])
+    if w6 is not None:
+        vc = w6["설비번호"].value_counts().to_dict()
+        sd = w6.groupby("설비번호")["온도_C"].std()
+        check("week06 180행, 설비별 EQ-04 50 · EQ-01 47 · EQ-03 46 · EQ-02 37, 온도 표준편차 최대 EQ-02(강의·실습 수치)",
+              len(w6) == 180 and vc == {"EQ-04": 50, "EQ-01": 47, "EQ-03": 46, "EQ-02": 37} and sd.idxmax() == "EQ-02",
+              f"{vc} / {sd.round(2).to_dict()}")
+        check("week06 온도-두께 강한 양의 관계(r>0.7), 온도-압력 관계 약함(|r|<0.2)",
+              w6["온도_C"].corr(w6["두께_nm"]) > 0.7 and abs(w6["온도_C"].corr(w6["압력_Pa"])) < 0.2)
 
     w7 = validate_week("week07", "week07_equipment_yield.csv",
-                        ["로트번호", "웨이퍼번호", "설비번호", "공정명", "작업조", "온도_섭씨", "압력_Pa", "진공도_mTorr", "처리시간_sec", "불량유형", "합격여부"])
+                        ["로트번호", "웨이퍼번호", "설비번호", "공정명", "작업조", "온도_C", "압력_Pa", "진공도_mTorr", "처리시간_sec", "불량유형", "합격여부"])
     if w7 is not None:
         rate = w7.groupby("설비번호")["합격여부"].apply(lambda s: (s == -1).mean())
         check("week07 EQ-04 불량률이 가장 높음(의도된 패턴)", rate.idxmax() == "EQ-04", str(rate.to_dict()))
         yield_by_lot = w7.groupby("로트번호")["합격여부"].apply(lambda s: (s == 1).mean())
         check("week07 저수율(80% 미만) 로트 존재(의도된 패턴)", (yield_by_lot < 0.8).sum() >= 5, str((yield_by_lot < 0.8).sum()))
+        ok = w7["합격여부"] == 1
+        eq = (ok.groupby(w7["설비번호"]).mean() * 100).round(1).to_dict()
+        top = w7[w7["합격여부"] == -1]["불량유형"].value_counts()
+        check("week07 300행, 전체 합격률 88.0%, 설비별 EQ-01 98.1 · EQ-02 86.5 · EQ-03 91.1 · EQ-04 75.0, 80% 미만 로트 21, 불량 1위 두께 불량 11(강의·실습 수치)",
+              len(w7) == 300 and round(ok.mean() * 100, 1) == 88.0
+              and eq == {"EQ-01": 98.1, "EQ-02": 86.5, "EQ-03": 91.1, "EQ-04": 75.0}
+              and (yield_by_lot < 0.8).sum() == 21 and top.index[0] == "두께 불량" and top.iloc[0] == 11, f"{eq}")
 
     w8 = validate_week("week08", "week08_anomaly_root_cause.csv",
-                        ["측정시간", "로트번호", "설비번호", "공정명", "온도_섭씨", "압력_Pa", "진공도_mTorr", "두께_nm", "진동_mm_s", "냉각수온도_섭씨", "습도_pct", "합격여부"])
+                        ["측정시간", "로트번호", "설비번호", "공정명", "온도_C", "압력_Pa", "진공도_mTorr", "두께_nm", "진동_mm_s", "냉각수온도_C", "습도_pct", "합격여부"])
+    if w8 is not None:
+        fail = w8["합격여부"] == -1
+        vac = w8["진공도_mTorr"]
+        vac_out = (vac < 4.5) | (vac > 5.5)
+        tmp_out = (w8["온도_C"] < 295) | (w8["온도_C"] > 305)
+        check("week08 450행, 기준선 11.1%, 온도-두께 r 0.71 · 습도-두께 r -0.01, 진공도 범위 밖 78건 25.6% · 안 8.1%(강의·실습 수치)",
+              len(w8) == 450 and round(fail.mean() * 100, 1) == 11.1
+              and round(w8["온도_C"].corr(w8["두께_nm"]), 2) == 0.71 and round(w8["습도_pct"].corr(w8["두께_nm"]), 2) == -0.01
+              and vac_out.sum() == 78 and round(fail[vac_out].mean() * 100, 1) == 25.6 and round(fail[~vac_out].mean() * 100, 1) == 8.1)
+        check("week08 반도체 확인 수치: 압력-두께 r 0.09, 온도 범위 밖 92건 불합격률 9.8% · 안 11.5%",
+              round(w8["압력_Pa"].corr(w8["두께_nm"]), 2) == 0.09 and tmp_out.sum() == 92
+              and round(fail[tmp_out].mean() * 100, 1) == 9.8 and round(fail[~tmp_out].mean() * 100, 1) == 11.5)
 
     w9train = validate_week("week09", "week09_pass_fail_train.csv",
-                             ["공정명", "설비번호", "온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct", "합격여부"])
+                             ["공정명", "설비번호", "온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct", "합격여부"])
     if w9train is not None:
         check("week09_train 합격여부 값 범위(1/-1)", set(w9train["합격여부"].unique()) <= {1, -1})
         check("week09_train 결측값 존재(정제 복습용, 의도된 패턴)", w9train.isna().sum().sum() > 0)
 
     w9new = validate_week("week09", "week09_new_lots_to_predict.csv",
-                           ["공정명", "설비번호", "온도_섭씨", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"])
+                           ["공정명", "설비번호", "온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"])
     if w9new is not None:
         check("week09_new 정답 레이블(합격여부) 미포함", "합격여부" not in w9new.columns)
 
     w10 = validate_week("week10", "week10_mini_project_dataset.csv",
-                         ["측정시간", "로트번호", "웨이퍼번호", "설비번호", "공정명", "작업조", "온도_섭씨", "압력_Pa",
-                          "진공도_mTorr", "두께_nm", "진동_mm_s", "처리시간_sec", "냉각수온도_섭씨", "습도_pct", "불량유형", "합격여부"])
+                         ["측정시간", "로트번호", "웨이퍼번호", "설비번호", "공정명", "작업조", "온도_C", "압력_Pa",
+                          "진공도_mTorr", "두께_nm", "진동_mm_s", "처리시간_sec", "냉각수온도_C", "습도_pct", "불량유형", "합격여부"])
     if w10 is not None:
         check("week10 합격여부 값 범위(1/-1)", set(w10["합격여부"].unique()) <= {1, -1})
 

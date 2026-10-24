@@ -19,142 +19,145 @@
   <div class="hero">
     <span class="badge purple">7차시 실습지</span>
     <h1>설비·공정 비교와 수율·불량 분석 — 실습지</h1>
+    <p class="lede">모든 문제는 공장 기록 <code>week07_equipment_yield.csv</code>(웨이퍼 300장, 300행 11열, 교육용 가상 데이터)로 푼다.
+    공정 지도 위치: ②~⑤ + 세정 설비 기록과 ⑦ 뒤 최종 합격 여부. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 문제 1~3은 학생용 노트북 5단계와 같다 — 노트북 4단계 셀을 먼저 실행해 <code>df</code>를 만들어 둔다.
+    <code>합격여부</code>는 1 = 합격, -1 = 불합격이다. 이 기록은 웨이퍼를 세므로 비율을 <b>합격률</b>(수율 대신 쓰는 값)이라 부른다. 문제 1~3을 풀면 오늘의 미션(합격률이 가장 낮은 설비, 가장 많은 불량 유형)의 답이 나온다.</p>
   </div>
 
   <section class="block">
-    <h2>시작하기 전에</h2>
-    <ul class="pt-list">
-      <li>모든 문제는 반도체 데이터 <code>week07_equipment_yield.csv</code>(300행, 로트 75개 × 웨이퍼 4장)로 푼다. 교육용 <b>가상 데이터</b>다
-        (실제 로트는 보통 25장 안팎, 이 데이터는 연습용 4장).</li>
-      <li><code>합격여부</code>는 <b>1 = 합격, -1 = 불합격</b>이다. 학생용 노트북 5~7단계에 같은 문제가 있다.</li>
-      <li>코드는 강의의 쉬운 예제(쪽지시험)와 같은 모양이다. 표·열 이름만 바꾼다: <code>quiz</code> → <code>df</code>, 반 → 설비번호, 이름 → 로트번호, 정답 → 합격.</li>
-    </ul>
+    <h2>문제 1 — 합격 열 만들고 전체 합격률 구하기 (노트북 5단계 문제 1)</h2>
+    <p><code>합격여부</code>가 1인 행은 True, 아니면 False인 <code>합격</code> 열을 만들고, 전체 합격률(%)을 구하자. 힌트: 강의 "비교해서 새 열 만들기"의 <code>quiz["정답"] = quiz["정답여부"] == 1</code>과 같은 모양이다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 노트북 5단계 문제 1</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 합격을 뜻하는 숫자와, 평균을 내는 함수 이름을 채우세요.
+df["합격"] = df["합격여부"] == ____
+print(df["합격"].____() * 100)</code></pre>
+    </div>
+    <div class="callout warn"><b class="tag">주의</b> <code>==</code>(같은가?)를 <code>=</code>로 쓰면 오류 없이 <code>합격여부</code> 열이 모두 1로 덮어써진다. 결과가 100.0이면 <code>==</code>로 고친 뒤 노트북 4단계부터 다시 실행한다. 결과가 <b>12.0</b>이면 4단계를 따라 <code>-1</code>(불합격)을 쓴 것이다 — 합격은 <code>1</code>.</div>
+    <p>전체 웨이퍼 중 몇 %가 합격했나?</p>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box"><code>1</code>, <code>mean</code>
+      <pre style="margin:.3rem 0;white-space:pre-wrap;">88.0</pre>
+      웨이퍼 300장 중 <b>88.0%</b>가 합격했다. <code>df["합격여부"].mean()</code>처럼 1/-1을 그대로 평균 내면 0.76이 나온다 — 합격률이 아니다.</div>
   </section>
 
   <section class="block">
-    <h2>개념 확인 — 용어 연결</h2>
-    <table class="timetable">
-      <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 수율</td><td rowspan="4">A. 검사한 웨이퍼 중 불량의 비율<br>B. 불량 유형을 많은 순서로 세운 막대에 누적 비율 선을 겹친 그림<br>C. 검사한 웨이퍼 중 정상(합격)의 비율<br>D. 설비번호가 같은 줄끼리 모아 설비마다 계산하게 해 주는 기능</td></tr>
-      <tr><td>② 불량률</td></tr>
-      <tr><td>③ groupby</td></tr>
-      <tr><td>④ 파레토 차트</td></tr>
-    </table>
+    <h2>문제 2 — 설비별 합격률 비교하기 (노트북 5단계 문제 2)</h2>
+    <p>설비별로 묶어 합격률을 구하고, 작은 값부터 줄 세우자. 힌트: 강의 "groupby — 반별로 묶어서 비교하기"의 <code>quiz.groupby("반")["정답"].mean() * 100</code>과 같은 모양이다. 묶는 열은 <code>설비번호</code>, 평균 낼 열은 문제 1의 <code>합격</code>이다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 노트북 5단계 문제 2</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 묶을 열 이름과 평균 낼 열 이름을 채우세요.
+eq_rate = df.groupby(____)[____].mean() * 100
+print(eq_rate.round(1))
+
+# TODO: 작은 값부터 줄 세우는 함수 이름을 채우세요.
+print(eq_rate.round(1).____())</code></pre>
+    </div>
+    <div class="callout warn"><b class="tag">주의</b> 열 이름은 따옴표로 감싼다. 평균 낼 열은 문제 1에서 새로 만든 <code>합격</code>이다 — <code>합격여부</code>를 넣으면 오류 없이 엉뚱한 값(EQ-04가 50.0)이 나온다. 문제 1을 건너뛰면 <code>KeyError: 'Column not found: 합격'</code>, 첫 셀이 실패한 채 둘째 셀을 실행하면 <code>NameError: name 'eq_rate' is not defined</code>가 난다.</div>
+    <p>합격률이 가장 낮은 설비는 어디이고, 몇 %인가? 문제 1의 전체 합격률과 몇 %p 차이 나나?</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① C  ② A  ③ D  ④ B</div>
+    <div class="answer-box"><code>"설비번호"</code>, <code>"합격"</code>, <code>sort_values</code>
+      <pre style="margin:.3rem 0;white-space:pre-wrap;">설비번호
+EQ-01    98.1
+EQ-02    86.5
+EQ-03    91.1
+EQ-04    75.0
+Name: 합격, dtype: float64
+설비번호
+EQ-04    75.0
+EQ-02    86.5
+EQ-03    91.1
+EQ-01    98.1
+Name: 합격, dtype: float64</pre>
+      합격률이 가장 낮은 설비는 <b>EQ-04(75.0%)</b>다. 전체 88.0%보다 13.0%p 낮고, 가장 높은 EQ-01(98.1%)과는 23.1%p 차이 난다. 전체 숫자 하나로는 이 차이가 안 보인다. 다만 EQ-02(52장)·EQ-03(56장)은 EQ-01(104장)의 절반쯤이라 몇 장에 따라 합격률이 흔들리기 쉽다.</div>
   </section>
 
   <section class="block">
-    <h2>문제 1 — 데이터 읽고 전체 합격률</h2>
-    <p>CSV를 <code>df</code>로 읽고, <code>합격</code> 열을 만들어 합격 장수와 전체 합격률(%)을 구하라. (노트북 5단계)</p>
-    <p class="img-caption">힌트: 강의 파이썬 ①의 <code>quiz["정답"] = quiz["정답여부"] == 1</code>과 같은 모양.</p>
+    <h2>문제 3 — 불량 유형 줄 세우고 막대 그리기 (노트북 5단계 문제 3)</h2>
+    <p>불합격(-1) 웨이퍼만 골라 <code>불량유형</code>을 많은 순으로 세자. 힌트: 강의 "오답 유형 줄 세우기"의 <code>wrong_counts</code>와 같은 모양이다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 노트북 5단계 문제 3</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 불합격을 뜻하는 숫자와, 셀 열 이름을 채우세요.
+defect_counts = df[df["합격여부"] == ____][____].value_counts()
+print(defect_counts)</code></pre>
+    </div>
+    <div class="callout warn"><b class="tag">주의</b> <code>1</code>을 쓰면 오류 없이 빈 결과 <code>Series([], Name: count, dtype: int64)</code>가 나온다 — 불합격은 <code>-1</code>. (<code>value_counts()</code>는 빈칸을 세지 않아 조건 없이도 같은 표가 나오지만, "불합격 웨이퍼 중에서"라는 뜻을 코드에 드러내려고 고른다.)</div>
+    <p><b>이어서 직접 쓰기(전이 문제, 빈칸 없음)</b> — 바로 아래 빈 셀에, 강의 "오답 유형 줄 세우기"의 막대 코드(4줄 틀)를 보고 <code>defect_counts</code>로 막대그래프를 직접 쓴다.
+    x축 이름은 <code>"불량유형"</code>, y축 이름은 <code>"불량 건수"</code>로 한다. 불량 유형 이름이 길어 서로 겹치면 <code>plt.bar(…)</code> 다음 줄에 <code>plt.xticks(rotation=45)</code>(이름을 45도 기울이기)를 넣는다. 첫 셀이 실패한 채 실행하면 <code>NameError: name 'defect_counts' is not defined</code>가 난다.</p>
+    <p>가장 많은 불량 유형은 무엇이고 몇 건인가? 불량은 모두 몇 건인가?</p>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <pre style="margin:.3rem 0;white-space:pre-wrap;">df = pd.read_csv("../../data/weekly/week07/week07_equipment_yield.csv", encoding="utf-8-sig")
-df["합격"] = df["합격여부"] == 1
-print(df["합격"].sum(), "장 합격")       → 264 장 합격
-print(df["합격"].mean() * 100)          → 88.0</pre>
-      300장 중 264장 합격, 전체 합격률 88.0%(불합격 36장, 12.0%).
+    <div class="answer-box"><code>-1</code>, <code>"불량유형"</code>
+      <pre style="margin:.3rem 0;white-space:pre-wrap;">불량유형
+두께 불량        11
+패턴 불량         6
+파티클           5
+오염            5
+정렬 불량         4
+식각 부족         4
+전기적 특성 불량     1
+Name: count, dtype: int64</pre>
+      가장 많은 불량 유형은 <b>두께 불량(11건)</b>이다. 모두 더하면 36건 = 불합격 웨이퍼 수와 같다. 직접 쓴 막대 코드의 예:
+      <pre style="margin:.3rem 0;white-space:pre-wrap;">plt.bar(defect_counts.index, defect_counts)
+plt.xticks(rotation=45)   # 이름이 길어 겹치지 않게 45도 기울이기
+plt.xlabel("불량유형")
+plt.ylabel("불량 건수")
+plt.show()</pre>
+      불량 유형은 검사에서 발견된 불량의 종류다. 같은 행의 <code>공정명</code> 작업에서 생겼다는 뜻은 아니다.</div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b> 막대가 7개이고 왼쪽부터 두께 불량이 가장 높아야 한다. 막대가 나오지 않으면 노트북 3단계 첫 그래프 셀(<code>import matplotlib.pyplot as plt</code>)을 실행했는지 확인한다.
+      한글이 네모로 깨지면 그 셀의 <code>plt.rcParams[…]</code> 두 줄을 실행하지 않은 것이다.
     </div>
   </section>
 
   <section class="block">
-    <h2>문제 2 — 설비별 처리 장수와 합격 장수, 불량률</h2>
-    <p><code>count()</code>와 <code>sum()</code>으로 설비별 처리 장수와 합격 장수를 구하고, 표의 불량률(%)을 손으로 계산하라. (노트북 5단계)</p>
-    <p class="img-caption">힌트: 강의 파이썬 ②의 <code>quiz.groupby("반")["정답"]</code> → <code>df.groupby("설비번호")["합격"]</code>.</p>
-    <table class="timetable">
-      <tr><th>설비</th><th>처리 장수</th><th>합격 장수</th><th>불합격 장수</th><th>불량률(%)</th></tr>
-      <tr><td>EQ-01</td><td>(  )</td><td>(  )</td><td>(  )</td><td>(  )</td></tr>
-      <tr><td>EQ-02</td><td>(  )</td><td>(  )</td><td>(  )</td><td>(  )</td></tr>
-      <tr><td>EQ-03</td><td>(  )</td><td>(  )</td><td>(  )</td><td>(  )</td></tr>
-      <tr><td>EQ-04</td><td>(  )</td><td>(  )</td><td>(  )</td><td>(  )</td></tr>
-    </table>
+    <h2>문제 4 — Orange Pivot Table로 설비별 불합격 수 세기</h2>
+    <p>Orange3에서 키트의 <code>orange3/week07/week07_2_yield_start.ows</code>를 연다. 강의 PART 2 워밍업에서 한 Pivot Table을 이번에는 공장 기록에 쓴다.</p>
+    <ol>
+      <li>File을 더블클릭해 300행이 들어왔는지 확인한다.</li>
+      <li>Transform 묶음의 <code>Pivot Table</code>을 File에 잇고 더블클릭한다. 처음에는 Rows가 <code>합격여부</code>, Columns가 <code>None</code>이라 엉뚱한 표가 뜬다. <b>Rows</b> = <code>설비번호</code>, <b>Columns</b> = <code>합격여부</code>로 바꾸고, Aggregations에서 <b>Count</b>에 체크돼 있는지 확인한다.</li>
+      <li>설비마다 <code>-1</code>(불합격) 칸과 <b>Total</b> 칸의 숫자를 읽는다.</li>
+      <li>이어서 <b>Rows만</b> <code>불량유형</code>으로 바꾸고, 두께 불량 줄의 숫자를 읽어 문제 3과 비교한다.</li>
+    </ol>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>설비</th><th>1(합격) 칸</th><th>-1(불합격) 칸</th><th>Total 칸</th></tr></thead>
+        <tbody>
+          <tr><td>EQ-01</td><td>(          )</td><td>(          )</td><td>(          )</td></tr>
+          <tr><td>EQ-02</td><td>(          )</td><td>(          )</td><td>(          )</td></tr>
+          <tr><td>EQ-03</td><td>(          )</td><td>(          )</td><td>(          )</td></tr>
+          <tr><td>EQ-04</td><td>(          )</td><td>(          )</td><td>(          )</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>① 불합격 칸이 가장 큰 설비는? ② 그 설비의 합격 칸 ÷ Total 칸 × 100을 계산해 문제 2의 합격률과 비교하자. 같은가, 다른가? ③ Rows를 불량유형으로 바꿨을 때 두께 불량은 몇 건인가? 문제 3과 같은가?</p>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">
-      <code>df.groupby("설비번호")["합격"].count()</code> / <code>.sum()</code><br>
-      EQ-01 104·102·2 → 1.9% / EQ-02 52·45·7 → 13.5% / EQ-03 56·51·5 → 8.9% / EQ-04 88·66·22 → 25.0%.
-      처리 장수가 달라서 장수가 아니라 비율로 비교한다.
+      EQ-01 102 / 2 / 104 · EQ-02 45 / 7 / 52 · EQ-03 51 / 5 / 56 · <b>EQ-04 66 / 22 / 88</b>(합격 / 불합격 / Total, 웨이퍼 장수). 화면에는 <code>102.0</code>처럼 소수점이 붙어 보인다.
+      ① 불합격 칸이 가장 큰 설비는 <b>EQ-04(22)</b>. ② 66 ÷ 88 × 100 = <b>75.0%</b> — 문제 2의 <code>groupby</code> 결과와 같다. 같은 표에서 세었기 때문이다. ③ 두께 불량 <b>11</b> — 문제 3의 <code>value_counts()</code>와 같다. 화면의 두께 불량 줄은 <code>0.0</code> / <code>11.0</code> / <code>11.0</code>(1 / -1 / Total)이다. 줄은 가나다순(식각 부족 4 · 오염 5 · 전기적 특성 불량 1 · 정렬 불량 4 · 파티클 5 · 패턴 불량 6)이고, 합격 웨이퍼는 불량유형이 빈칸이라 표에서 빠져 Total 줄이 <code>0.0</code> / <code>36.0</code> / <code>36.0</code>이다(300이 아니다).
+      <img class="chart-img" src="../../assets/images/orange3/week07_07_yield_pivot.png"
+           alt="공장 기록의 Pivot Table 창. 설비 4대를 줄로, 합격여부 1과 -1을 칸으로 놓고 웨이퍼 수를 센 표"
+           data-shot="week07_2_yield_done.ows의 Pivot Table (피벗 표) 창 전체 — 왼쪽 Rows 설비번호, Columns 합격여부, Aggregations Count 체크와 오른쪽 표(EQ-01 102.0 / 2.0 / 104.0, EQ-02 45.0 / 7.0 / 52.0, EQ-03 51.0 / 5.0 / 56.0, EQ-04 66.0 / 22.0 / 88.0, Total 264.0 / 36.0 / 300.0)가 함께 보이게">
+    </div>
+    <button class="reveal-btn">체크포인트 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">체크포인트</b> Total 줄이 264 / 36 / 300이면 맞게 센 것이다(합격 264 ÷ 300 = 88.0% = 문제 1). Total이 300이 아니면 File에 다른 파일이 들어 있다 — 키트 폴더에서 <code>_start.ows</code>를 다시 연다.
+      줄·칸이 바뀌어 보이면 Rows와 Columns를 서로 바꿔 고른 것이다(숫자는 같다). 막히면 같은 폴더의 <code>week07_2_yield_done.ows</code>를 연다.
     </div>
   </section>
 
   <section class="block">
-    <h2>문제 3 — 설비별 합격률</h2>
-    <p>설비별 합격률(%)을 <code>pass_rate</code>에 저장하고 소수 첫째 자리까지 출력하라. EQ-02에서 불합격이 1장 더 나오면 합격률은? (노트북 5단계)</p>
-    <p class="img-caption">힌트: 강의 파이썬 ②의 <code>class_rate = quiz.groupby("반")["정답"].mean() * 100</code>과 같은 모양.</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <code>pass_rate = df.groupby("설비번호")["합격"].mean() * 100</code>, <code>print(pass_rate.round(1))</code><br>
-      EQ-01 98.1 / EQ-02 86.5 / EQ-03 91.1 / EQ-04 75.0. EQ-02가 1장 더 불합격이면 44 ÷ 52 × 100 ≈ 84.6%(약 1.9%p 하락) — 장수가 적을수록 1장의 무게가 크다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 4 — 설비별 평균 온도</h2>
-    <p>설비별 평균 온도를 소수 첫째 자리까지 구하라. 합격률처럼 크게 다른가? (노트북 5단계)</p>
-    <p class="img-caption">힌트: 강의 파이썬 ②의 <code>"풀이시간_초"</code> 자리에 <code>"온도_섭씨"</code>.</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <code>print(df.groupby("설비번호")["온도_섭씨"].mean().round(1))</code><br>
-      EQ-01 300.2 / EQ-02 300.1 / EQ-03 299.3 / EQ-04 301.7. 합격률은 크게 달랐지만 평균 온도는 비슷하다 — 열 하나만 보면 EQ-04를 못 찾는다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 5 — 로트별 수율과 80% 미만 로트 수</h2>
-    <p>로트별 수율(%)을 <code>lot_yield</code>에 저장해 앞 5개를 보고, 수율 80% 미만 로트 수를 세어라. (노트북 6단계)</p>
-    <p class="img-caption">힌트: 강의 파이썬 ③의 <code>stu_rate</code> 두 줄과 같은 모양(<code>"이름"</code> → <code>"로트번호"</code>).</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <code>lot_yield = df.groupby("로트번호")["합격"].mean() * 100</code>, <code>print(lot_yield.head())</code>,
-      <code>print((lot_yield &lt; 80).sum(), "개 로트가 수율 80% 미만")</code><br>
-      앞 5개는 모두 100.0이지만 75개 중 <b>21개</b>가 80% 미만이다. 로트당 4장이라 수율은 0·25·50·75·100% 중 하나다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 6 — 수율이 가장 낮은 로트 열어 보기</h2>
-    <p>수율이 가장 낮은 로트를 찾고, 그 로트를 <code>설비번호</code>·<code>공정명</code>·<code>작업조</code>·<code>불량유형</code>과 함께 보라. (노트북 6단계)</p>
-    <p class="img-caption">힌트: 강의 파이썬 ③의 "최저 정답률 학생"과 같은 모양(<code>stu_rate</code> → <code>lot_yield</code>).</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <code>print(lot_yield.sort_values().head(1))</code>, <code>print(df[df["로트번호"] == "LOT-0008"][["설비번호", "공정명", "작업조", "불량유형"]])</code><br>
-      LOT-0008(0%) — 4장 모두 EQ-04 · 증착 · B조, 불량유형은 정렬 불량·두께 불량·패턴 불량·파티클. 설비·작업·근무조가 함께 있어 무엇 탓인지 가릴 수 없다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 7 — EQ-04의 로트만 보기</h2>
-    <p>EQ-04 기록만 골라 로트별 수율을 구하고 <code>value_counts()</code>로 세어라. EQ-04 로트는 모두 몇 개이고, 100%와 80% 미만은 각각 몇 개인가? (노트북 6단계)</p>
-    <p class="img-caption">힌트: 강의 파이썬 ③의 "B반 학생별 정답률"과 같은 모양(<code>"B반"</code> → <code>"EQ-04"</code>).</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <code>eq04 = df[df["설비번호"] == "EQ-04"]</code> 후 로트별 수율의 <code>value_counts()</code>: 100.0 11 / 75.0 4 / 50.0 4 / 25.0 2 / 0.0 1.<br>
-      모두 22개, 100%는 11개, 80% 미만은 4 + 4 + 2 + 1 = 11개. EQ-04는 늘 나쁜 게 아니라 일부 로트에서 크게 나빴다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 8 — 불량 유형 줄 세우기(파레토)</h2>
-    <p>불합격(-1) 웨이퍼의 불량 유형별 건수를 <code>defect_counts</code>에 저장해 출력하고, 많은 순 막대그래프를 그려라. 상위 3가지는 전체 불량의 몇 %인가? (노트북 7단계)</p>
-    <p class="img-caption">힌트: 강의 파이썬 ④의 <code>wrong_counts</code> 코드와 같은 모양(<code>정답여부</code> → <code>합격여부</code>, <code>오답유형</code> → <code>불량유형</code>).</p>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">
-      <code>defect_counts = df[df["합격여부"] == -1]["불량유형"].value_counts()</code>, <code>plt.bar(defect_counts.index, defect_counts)</code><br>
-      두께 불량 11 / 패턴 불량 6 / 파티클 5 / 오염 5 / 정렬 불량 4 / 식각 부족 4 / 전기적 특성 불량 1(36건).
-      상위 3가지 (11 + 6 + 5) ÷ 36 × 100 ≈ 61.1%. 파레토는 줄일 순서만 알려줄 뿐, 두께 불량이 왜 생겼는지는 알려주지 않는다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>문제 9 — 결과를 "원인 후보"로 정리하기</h2>
-    <p>동료가 "EQ-04 합격률이 제일 낮으니까 EQ-04가 불량의 원인이네!"라고 했다. 문제 3·5·6·7 결과를 근거로 한두 문장으로 답하라. (노트북 7단계)</p>
+    <h2>문제 5 — 해석 문장 쓰기</h2>
+    <p>오늘의 질문 "설비마다 차이가 있어 보이는데, 숫자로 계산해도 정말 그럴까?"에 문제 2의 숫자로 답하자.</p>
     <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "____________________________________________________________"
+      <b class="tag">문장 틀</b> "전체 합격률은 ______%인데, ______는 합격률 ______%로 가장 낮아 원인 후보다. 원인이라 말하려면 ______을(를) 더 확인해야 한다."
+      <br>앞의 세 빈칸은 문제 1·2의 출력으로 채운다. 마지막 빈칸에는 데이터로 더 확인할 것 한 가지를 쓴다.
     </div>
+    <p><b>판단해 보기</b> — 이 숫자만으로 "EQ-04 때문에 불량이 났다"고 말할 수 있을까? 예/아니오와 이유를 한 줄로 쓰자.</p>
     <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">예시 답안: "EQ-04는 합격률 75.0%로 가장 낮고 80% 미만 로트 21개 중 11개가 나와 원인 후보로 먼저 살펴볼 만해.
-    하지만 로트 22개 중 11개는 100%이고 가장 나쁜 LOT-0008엔 증착·B조도 있었으니 원인이라고 단정할 수는 없어."</div>
+    <div class="answer-box">"전체 합격률은 88.0%인데, EQ-04는 합격률 75.0%로 가장 낮아 원인 후보다. 원인이라 말하려면 EQ-04가 맡은 공정·로트, 다른 시기의 기록, 설비 점검 기록을 더 확인해야 한다."
+      <br>판단: <b>아니오</b>. 합격률 비교는 "어디를 먼저 살펴볼지"까지만 알려 준다. EQ-04에 어려운 공정이나 문제가 있는 로트가 몰렸을 수도 있다. 이 기록에서는 로트 하나의 웨이퍼 4장이 모두 같은 설비·같은 공정을 거쳐서, 설비 차이와 로트·공정 차이를 숫자로 떼어 볼 수 없다.
+      (참고: 온도 상자가 가장 긴 설비는 EQ-02였다 — 합격률이 가장 낮은 설비와 다르다. 원인 후보를 한 가지로 좁히기 전에 여러 열을 함께 본다.)</div>
   </section>
 
   <div class="nav-buttons">

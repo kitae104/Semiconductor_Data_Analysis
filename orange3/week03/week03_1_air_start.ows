@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="3차시 ① 우리 동네 대기환경에서 조건으로 날 고르기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭하면 4월 한 달(30일)의 대기환경 기록이 이미 들어 있습니다.
+② 왼쪽 Transform 묶음에서 Select Rows(행 고르기)를 끌어 와 File과 잇고, 이미 있는 조건 한 줄을 PM10_ug_m3 is greater than 80으로 바꾸세요.
+③ Select Rows에 Data Table(표 보기)을 이어 고른 날이 며칠인지, 그날들의 등급이 무엇인지 보세요.
+④ Visualize 묶음의 Distributions(분포 막대)를 File에 잇고 등급을 고르세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVaAEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHXdlZWswM19vcmFuZ2VfYWly
+X3F1YWxpdHkudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjD0uLi8uLi9kYXRhL3dl
+ZWtseS93ZWVrMDMvb3JhbmdlL3dlZWswM19vcmFuZ2VfYWlyX3F1YWxpdHkudGFilIwFdGl0bGWU
+jACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRfdXJsc5Rd
+lIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNvbnRleHRf
+c2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

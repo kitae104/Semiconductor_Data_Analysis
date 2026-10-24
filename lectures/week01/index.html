@@ -194,7 +194,7 @@
     </div>
 
     <h3>기록은 표(행과 열)로 쌓인다</h3>
-    <p>오늘 받은 공장 기록표 <code>week01_semiconductor_process_overview.csv</code>의 앞 3행이다. 교육용 가상 데이터이고, 공정 지도 ②~⑤와 세정에서 남긴 설비 기록이다.</p>
+    <p>오늘 받은 공장 기록표 <code>week01_semiconductor_process_overview.csv</code>의 앞 3행이다. 교육용 가상 데이터이고, 공정 지도 ②~⑤와 세정에서 남긴 설비 기록이다. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).</p>
     <div class="tablewrap">
       <table class="data-preview">
         <tr><th>측정시간</th><th>로트번호</th><th>웨이퍼번호</th><th>공정명</th><th>설비번호</th><th>온도_C</th><th>압력_Pa</th><th>합격여부</th></tr>
@@ -461,11 +461,11 @@ print(f"불합격률은 {fail_rate}%입니다.")</code></pre>
     <p>Orange 화면은 영어다. 오늘 쓰는 위젯 세 개의 이름을 먼저 익힌다.</p>
     <div class="tablewrap">
       <table>
-        <thead><tr><th>위젯(화면 이름)</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
+        <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
         <tbody>
-          <tr><td><code>File</code></td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
-          <tr><td><code>Data Table</code></td><td>표 보기</td><td>표를 펼쳐 보고, 행(instances)과 열(features)이 몇 개인지 센다</td></tr>
-          <tr><td><code>Distributions</code></td><td>분포 막대</td><td>한 열의 값마다 몇 개인지 막대로 본다. <code>Split by</code>로 막대를 다른 열의 색으로 나눈다</td></tr>
+          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
+          <tr><td><code>Data Table</code></td><td>Data</td><td>표 보기</td><td>표를 펼쳐 보고, 행(instances)과 열(features)이 몇 개인지 센다</td></tr>
+          <tr><td><code>Distributions</code></td><td>Visualize</td><td>분포 막대</td><td>한 열의 값마다 몇 개인지 막대로 본다. <code>Split by</code>로 막대를 다른 열의 색으로 나눈다</td></tr>
         </tbody>
       </table>
     </div>

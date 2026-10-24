@@ -265,7 +265,7 @@ print("정리 후 평균 키:", after_height)</code></pre>
     <h2>반도체 데이터로 확인하기</h2>
     <p>공장 기록 <code>week05_dirty_process_data.csv</code>(113행 9열, 교육용 가상 데이터)에도 빈칸·중복·튀는 값을 일부러 섞었다.
     한 행 = 공정 작업 1건이다. 위 코드에서 표 이름만 <code>students</code> → <code>df</code>로 바뀐다.</p>
-    <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 — 이 단계 설비들의 센서 기록이다(1차시 공정 지도 그림은 PART 2에서 다시 본다).</p>
+    <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 — 이 단계 설비들의 센서 기록이다(1차시 공정 지도 그림은 PART 2에서 다시 본다). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
@@ -278,7 +278,7 @@ print("정리 후 평균 키:", after_height)</code></pre>
         </tbody>
       </table>
     </div>
-    <p style="color:var(--muted);font-size:.9rem;">값과 정상 범위(온도 295~305, 압력 995~1025, 가스유량 47~53)는 학습용이라 실제 공정 조건으로 해석하지 않는다.</p>
+    <p style="color:var(--muted);font-size:.9rem;">값과 연습용 기준(온도 295~305, 압력 995~1025, 가스유량 47~53)은 학습용이라 실제 공정 조건으로 해석하지 않는다.</p>
 
     <h3>확인 1 — 숫자 요약으로 이상한 열 찾기</h3>
     <div class="code-block">

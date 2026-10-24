@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="9차시 ① 웨이퍼 맵 패턴을 결정 트리로 분류하기 (완성)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+		<node id="1" name="Tree" qualified_name="Orange.widgets.model.owtree.OWTreeLearner" project_name="Orange3" version="" title="Tree (결정 트리)" position="(300.0, 320.0)" />
+		<node id="2" name="Tree Viewer" qualified_name="Orange.widgets.visualize.owtreeviewer.OWTreeGraph" project_name="Orange3" version="" title="Tree Viewer (트리 보기)" position="(480.0, 320.0)" />
+		<node id="3" name="Test and Score" qualified_name="Orange.widgets.evaluate.owtestandscore.OWTestAndScore" project_name="Orange3" version="" title="Test and Score (평가)" position="(480.0, 460.0)" />
+		<node id="4" name="Confusion Matrix" qualified_name="Orange.widgets.evaluate.owconfusionmatrix.OWConfusionMatrix" project_name="Orange3" version="" title="Confusion Matrix (헷갈림 표)" position="(660.0, 460.0)" />
+		<node id="5" name="Distributions" qualified_name="Orange.widgets.visualize.owdistributions.OWDistributions" project_name="Orange3" version="" title="Distributions (분포 막대)" position="(300.0, 600.0)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="1" source_node_id="1" sink_node_id="2" source_channel="Model" sink_channel="Tree" enabled="true" source_channel_id="model" sink_channel_id="tree" />
+		<link id="2" source_node_id="0" sink_node_id="3" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="train_data" />
+		<link id="3" source_node_id="1" sink_node_id="3" source_channel="Learner" sink_channel="Learner" enabled="true" source_channel_id="learner" sink_channel_id="learner" />
+		<link id="4" source_node_id="3" sink_node_id="4" source_channel="Evaluation Results" sink_channel="Evaluation Results" enabled="true" source_channel_id="evaluations_results" sink_channel_id="evaluation_results" />
+		<link id="5" source_node_id="0" sink_node_id="5" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+	</links>
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: File → Tree(깊이 4) → Tree Viewer, File → Test and Score(10겹, ← Tree) → Confusion Matrix, File → Distributions(불량패턴).
+Tree Viewer의 첫 갈림길과 Test and Score의 CA(정확도)를 읽으세요. 맞혔다고 원인을 아는 것은 아닙니다 — 갈림길의 열은 모델이 패턴을 나누는 데 쓴 단서일 뿐, 불량 모양의 원인이 아닙니다.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVbgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMIHdlZWswOV9vcmFuZ2Vfd2Fm
+ZXJfcGF0dGVybnMudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjEAuLi8uLi9kYXRh
+L3dlZWtseS93ZWVrMDkvb3JhbmdlL3dlZWswOV9vcmFuZ2Vfd2FmZXJfcGF0dGVybnMudGFilIwF
+dGl0bGWUjACUjAVzaGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRf
+dXJsc5RdlIwDdXJslGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNv
+bnRleHRfc2V0dGluZ3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+		<properties node_id="1" format="literal">{'auto_apply': True, 'binary_trees': True, 'controlAreaVisible': True, 'learner_name': '', 'limit_depth': True, 'limit_majority': True, 'limit_min_internal': True, 'limit_min_leaf': True, 'max_depth': 4, 'min_internal': 5, 'min_leaf': 2, 'sufficient_majority': 95, '__version__': 1}</properties>
+		<properties node_id="2" format="literal">{'controlAreaVisible': True, 'line_width_method': 2, 'max_node_width': 150, 'max_tree_depth': 0, 'regression_colors': 0, 'show_intermediate': True, 'zoom': 5, '__version__': 1, 'context_settings': []}</properties>
+		<properties node_id="3" format="pickle">gASVggMAAAAAAAB9lCiMFGNvbXBhcmlzb25fY3JpdGVyaW9ulEsAjBJjb250cm9sQXJlYVZpc2li
+bGWUiIwNY3Zfc3RyYXRpZmllZJSIjAduX2ZvbGRzlEsDjAluX3JlcGVhdHOUSwOMCnJlc2FtcGxp
+bmeUSwCMBHJvcGWURz+5mZmZmZmajAtzYW1wbGVfc2l6ZZRLCYwSc2h1ZmZsZV9zdHJhdGlmaWVk
+lIiMCHVzZV9yb3BllImMC3Njb3JlX3RhYmxllH2UjBBzaG93X3Njb3JlX2hpbnRzlH2UKIwGTW9k
+ZWxflIiMBlRyYWluX5SJjAVUZXN0X5SJjAJDQZSIjBdQcmVjaXNpb25SZWNhbGxGU3VwcG9ydJSI
+jAtUYXJnZXRTY29yZZSIjAlQcmVjaXNpb26UiIwGUmVjYWxslIiMAkYxlIiMA0FVQ5SIjAdMb2dM
+b3NzlImMC1NwZWNpZmljaXR5lImMF01hdHRoZXdzQ29yckNvZWZmaWNpZW50lIiMA01TRZSIjARS
+TVNFlIiMA01BRZSIjAJSMpSIjAZDVlJNU0WUiYwPQ2x1c3RlcmluZ1Njb3JllIiMClNpbGhvdWV0
+dGWUiIwXQWRqdXN0ZWRNdXR1YWxJbmZvU2NvcmWUiHVzjAtfX3ZlcnNpb25fX5RLBIwQY29udGV4
+dF9zZXR0aW5nc5RdlIwVb3Jhbmdld2lkZ2V0LnNldHRpbmdzlIwHQ29udGV4dJSTlCmBlH2UKIwG
+dmFsdWVzlH2UKIwPY2xhc3Nfc2VsZWN0aW9ulIwhKE5vbmUsIHNob3cgYXZlcmFnZSBvdmVyIGNs
+YXNzZXMplEr/////hpSMDGZvbGRfZmVhdHVyZZROSv7///+GlIwVZm9sZF9mZWF0dXJlX3NlbGVj
+dGVklIlK/v///4aUaAt9lGgkSwR1jAphdHRyaWJ1dGVzlCiMFeu2iOufieuLpOydtOyImF9jb3Vu
+dJRLAoaUjBbspJHsi6zrtojrn4nruYTsnKhfcGN0lEsChpSMHOqwgOyepeyekOumrOu2iOufieu5
+hOycqF9wY3SUSwKGlIwW7KeB7ISg67aI65+J67mE7JyoX3BjdJRLAoaUdJSMBW1ldGFzlIwL7Juo
+7J207Y28SUSUSwOGlIWUjApjbGFzc192YXJzlIwM67aI65+J7Yyo7YS0lEsBhpSFlHViYXUu
+</properties>
+		<properties node_id="5" format="pickle">gASVAAIAAAAAAAB9lCiMCmF1dG9fYXBwbHmUiIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGN1bXVs
+YXRpdmVfZGlzdHKUiYwTZml0dGVkX2Rpc3RyaWJ1dGlvbpRLAIwJaGlkZV9iYXJzlImMDWtkZV9z
+bW9vdGhpbmeUSwqMCnNob3dfcHJvYnOUiYwMc29ydF9ieV9mcmVxlImMD3N0YWNrZWRfY29sdW1u
+c5SJjAtfX3ZlcnNpb25fX5RLAYwQY29udGV4dF9zZXR0aW5nc5RdlIwVb3Jhbmdld2lkZ2V0LnNl
+dHRpbmdzlIwHQ29udGV4dJSTlCmBlH2UKIwGdmFsdWVzlH2UKIwEY3ZhcpROSv7///+GlIwObnVt
+YmVyX29mX2JpbnOUSwVK/v///4aUjAlzZWxlY3Rpb26Uj5RK/v///4aUjAN2YXKUjAzrtojrn4nt
+jKjthLSUS2WGlGgKSwF1jAphdHRyaWJ1dGVzlH2UKIwV67aI65+J64uk7J207IiYX2NvdW50lEsC
+jBbspJHsi6zrtojrn4nruYTsnKhfcGN0lEsCjBzqsIDsnqXsnpDrpqzrtojrn4nruYTsnKhfcGN0
+lEsCjBbsp4HshKDrtojrn4nruYTsnKhfcGN0lEsCaBxLAXWMBW1ldGFzlH2UjAvsm6jsnbTtjbxJ
+RJRLA3N1YmF1Lg==
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

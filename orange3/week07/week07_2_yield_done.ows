@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="7차시 ② 설비별 합격·불합격 비교하기 (완성)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+		<node id="1" name="Pivot Table" qualified_name="Orange.widgets.data.owpivot.OWPivot" project_name="Orange3" version="" title="Pivot Table (피벗 표)" position="(300.0, 320.0)" />
+		<node id="2" name="Box Plot" qualified_name="Orange.widgets.visualize.owboxplot.OWBoxPlot" project_name="Orange3" version="" title="Box Plot (상자 그림)" position="(300.0, 460.0)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
+	</links>
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: File → Pivot Table(Rows 설비번호, Columns 합격여부, Count), File → Box Plot(온도_C, Subgroups 설비번호).
+파이썬 groupby로 계산한 설비별 합격률과 Pivot Table 칸의 비율을 비교하세요. 합격률이 낮은 설비는 원인 후보이지, 원인으로 확정된 것은 아닙니다.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVYgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMGndlZWswN19lcXVpcG1lbnRf
+eWllbGQudGFilIwGcHJlZml4lIwHYmFzZWRpcpSMB3JlbHBhdGiUjDouLi8uLi9kYXRhL3dlZWts
+eS93ZWVrMDcvb3JhbmdlL3dlZWswN19lcXVpcG1lbnRfeWllbGQudGFilIwFdGl0bGWUjACUjAVz
+aGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRfdXJsc5RdlIwDdXJs
+lGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNvbnRleHRfc2V0dGlu
+Z3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+		<properties node_id="1" format="pickle">gASVxgEAAAAAAAB9lCiMC2F1dG9fY29tbWl0lIiMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBFzZWxf
+YWdnX2Z1bmN0aW9uc5SPlChLAJCMCXNlbGVjdGlvbpSPlIwLX192ZXJzaW9uX1+USwKMEGNvbnRl
+eHRfc2V0dGluZ3OUXZSMFW9yYW5nZXdpZGdldC5zZXR0aW5nc5SMB0NvbnRleHSUk5QpgZR9lCiM
+BnZhbHVlc5R9lCiMC2NvbF9mZWF0dXJllIwM7ZWp6rKp7Jes67aAlEtlhpSMC3Jvd19mZWF0dXJl
+lIwM7ISk67mE67KI7Zi4lEtlhpSMC3ZhbF9mZWF0dXJllGgVS2WGlGgHSwJ1jAphdHRyaWJ1dGVz
+lH2UKGgVSwGMCeqzteygleuqhZRLAYwJ7J6R7JeF7KGwlEsBjAjsmKjrj4RfQ5RLAowJ7JWV66Cl
+X1BhlEsCjA/sp4Tqs7Xrj4RfbVRvcnKUSwKMEOyymOumrOyLnOqwhF9zZWOUSwJoEksBdYwFbWV0
+YXOUfZQojAzroZztirjrsojtmLiUSwOMD+ybqOydtO2NvOuyiO2YuJRLAowM67aI65+J7Jyg7ZiV
+lEsBdXViYXUu
+</properties>
+		<properties node_id="2" format="pickle">gASVMgIAAAAAAAB9lCiMB2NvbXBhcmWUSwKMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBNvcmRlcl9i
+eV9pbXBvcnRhbmNllImMHG9yZGVyX2dyb3VwaW5nX2J5X2ltcG9ydGFuY2WUiYwQc2hvd19hbm5v
+dGF0aW9uc5SIjAtzaG93X2xhYmVsc5SIjA1zaWdfdGhyZXNob2xklEc/qZmZmZmZmowKc29ydF9m
+cmVxc5SJjAhzdGF0dGVzdJRLAIwJc3RyZXRjaGVklIiMC19fdmVyc2lvbl9flEsBjBBjb250ZXh0
+X3NldHRpbmdzlF2UjBVvcmFuZ2V3aWRnZXQuc2V0dGluZ3OUjAdDb250ZXh0lJOUKYGUfZQojAZ2
+YWx1ZXOUfZQojAlhdHRyaWJ1dGWUjAjsmKjrj4RfQ5RLZoaUjAlncm91cF92YXKUjAzshKTruYTr
+sojtmLiUS2WGlIwJc2VsZWN0aW9ulClK/v///4aUaAtLAXWMCmF0dHJpYnV0ZXOUfZQoaBlLAYwJ
+6rO17KCV66qFlEsBjAnsnpHsl4XsobCUSwFoFksCjAnslZXroKVfUGGUSwKMD+ynhOqzteuPhF9t
+VG9ycpRLAowQ7LKY66as7Iuc6rCEX3NlY5RLAowM7ZWp6rKp7Jes67aAlEsBdYwFbWV0YXOUfZQo
+jAzroZztirjrsojtmLiUSwOMD+ybqOydtO2NvOuyiO2YuJRLAowM67aI65+J7Jyg7ZiVlEsBdXVi
+YXUu
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

@@ -19,236 +19,154 @@
   <div class="hero">
     <span class="badge purple">3차시 실습지</span>
     <h1>리스트·딕셔너리로 배우는 조건문·반복문·함수 — 실습지</h1>
+    <p class="lede">설비 기록 30건(교육용 가상 데이터)의 온도가 <b>연습용 기준 295~305도</b> 안인지 판정한다. 우리 코드는 "범위 안"/"범위 밖"만 판정한다. 이것은 연습용 기준으로 본 판정이고, 실제 검사 결과(<code>합격여부</code>: 1 = 합격, -1 = 불합격)와는 다를 수 있다. 기준 밖 기록은 몇 건이고, 그중 실제 불합격은 몇 건일까?</p>
   </div>
 
   <section class="block">
-    <h2>왜 이걸 배워야 할까?</h2>
-    <ul class="pt-list">
-      <li>모든 문제는 공정 온도·가상 공장 기록(반도체 데이터)으로 푼다. 힌트의 "○단계"는 같은 모양의 쉬운 예제가 있는 노트북 단계다.</li>
-      <li>295~305℃는 이 과정의 <b>학습용 기준</b>이고, 공정 데이터는 교육용 <b>가상 데이터</b>다.</li>
-    </ul>
-  </section>
-
-  <section class="block">
-    <h2>용어 연결</h2>
-    <table class="timetable">
-      <tr><th>용어</th><th>설명 후보</th></tr>
-      <tr><td>① 비교 연산자</td><td rowspan="5">A. 온도 리스트의 값을 처음부터 하나씩 꺼내 같은 판정을 반복하는 문장<br>B. 온도가 범위 안일 때만 정해 둔 코드를 실행하게 하는 문장<br>C. 온도 판정 규칙에 이름을 붙여 저장해 둔 레시피<br>D. 함수가 만든 판정 결과를 부른 쪽에 돌려주는 키워드<br>E. <code>temperature &gt; 305</code>처럼 두 값을 비교해 True/False로 답하는 기호</td></tr>
-      <tr><td>② 조건문(if)</td></tr>
-      <tr><td>③ 반복문(for)</td></tr>
-      <tr><td>④ 함수(def)</td></tr>
-      <tr><td>⑤ return</td></tr>
-    </table>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① E  ② B  ③ A  ④ C  ⑤ D</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 1 — 공정 온도에 질문하기 (노트북 8단계)</h2>
-    <p>할 일: 온도 312.6, 설비 EQ-03에 네 가지 질문을 던지고, 305보다 크면 경고를 출력한다.<br>
-    힌트: 1단계(시험 점수)와 같은 모양. <code>score</code> → <code>temperature</code>, <code>subject</code> → <code>equipment</code>, 80 → 305.</p>
+    <h2>문제 1. 온도 하나 판정하기 (노트북 7단계 문제 1)</h2>
+    <p>온도가 295 이상 305 이하이면 <code>범위 안입니다.</code>, 아니면 <code>범위 밖입니다.</code>를 출력하도록 빈칸을 채우자. 실행하기 전에 293.8이 어느 쪽일지 먼저 예측해 본다.</p>
+    <p>힌트: 강의 "if/else — 둘 중 하나 고르기"의 <code>36.0 &lt;= body_temp &lt;= 37.5</code>와 같은 모양이다.</p>
     <div class="code-block">
       <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>temperature = 312.6
-equipment = "EQ-03"
+      <pre><code>temperature = 293.8
 
-print(temperature &gt; 305)
-print(temperature &lt;= 305)
-print(equipment ____ "EQ-03")
-print(equipment != "EQ-03")
-
-if temperature ____ 305:
-    print("온도가 범위보다 높습니다!")
-print("판정 끝")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸: <code>==</code>, <code>&gt;</code>. 출력: <code>True</code>, <code>False</code>, <code>True</code>, <code>False</code>,
-    <code>온도가 범위보다 높습니다!</code>, <code>판정 끝</code>.</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 2 — 공정 온도를 범위로 판정하기 (노트북 8단계)</h2>
-    <p>할 일: 301.0을 범위 안/밖으로, 293.8을 높음·정상·낮음으로 판정한다.<br>
-    힌트: 2단계(체온)와 같은 모양. 36.0 → 295, 37.5 → 305.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>temperature = 301.0
-
-if 295 &lt;= temperature &lt;= 305:
-    print("정상 범위입니다.")
-____:
-    print("범위 밖입니다.")
-
-temperature = 293.8
-
-if temperature &gt; 305:
-    print("높음")
-____ temperature &gt;= 295:
-    print("정상")
+# TODO: 범위의 아래 끝과 위 끝 숫자를 채우세요.
+if ____ &lt;= temperature &lt;= ____:
+    print("범위 안입니다.")
 else:
-    print("낮음")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸: <code>else</code>, <code>elif</code>. 출력: <code>정상 범위입니다.</code>, <code>낮음</code>(293.8은 범위 아래쪽).</div>
-  </section>
-
-  <section class="block">
-    <h2>오류 찾기 — 콜론과 들여쓰기 (노트북 8단계 아래 빈 셀에 붙여 넣어 실행)</h2>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 오류 있는 코드</span><button class="copy-btn">복사</button></div>
-      <pre><code>temperature = 301.0
-if 295 &lt;= temperature &lt;= 305:
-print("정상 범위입니다.")
-else
     print("범위 밖입니다.")</code></pre>
     </div>
     <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">① <code>if</code> 다음 줄에 스페이스 4칸(없으면 <code>IndentationError: expected an indented block after 'if' statement on line 2</code>).
-    ② <code>else</code> → <code>else:</code>(없으면 <code>SyntaxError: expected ':'</code>).</div>
+    <div class="answer-box">빈칸은 순서대로 <code>295</code>, <code>305</code>. 출력: <code>범위 밖입니다.</code> — 293.8은 295보다 작다.</div>
   </section>
 
   <section class="block">
-    <h2>문제 3 — 정상 범위인 온도 세기 (노트북 9단계)</h2>
-    <p>할 일: 온도 5개를 출력하고, 295~305 안인 값의 개수를 센다.<br>
-    힌트: 3단계(80점 이상 세기)와 같은 모양. 조건 <code>score &gt;= 80</code> 대신 <code>295 &lt;= temp &lt;= 305</code>.</p>
+    <h2>문제 2. EQ-03 온도 중 범위 안인 값 직접 세기 (노트북 7단계 문제 2)</h2>
+    <p>설비 EQ-03의 온도 11개 가운데 295~305도 안인 값이 몇 개인지 센다. 이번에는 빈칸이 없다. 노트북 셀에 온도 리스트만 있고, 세는 코드는 그 아래에 직접 쓴다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>temperatures = [295.4, 298.1, 312.6, 301.0, 296.8]
+      <div class="code-label"><span>Python — 노트북에 주어진 셀</span><button class="copy-btn">복사</button></div>
+      <pre><code>eq03_temps = [304.4, 304.3, 293.8, 296.7, 308.0, 298.8, 299.5, 297.8, 306.3, 301.1, 312.4]
 
-for temp ____ temperatures:
-    print(temp)
+# TODO: 여기에 직접 써 보세요 — in_count를 0으로 시작 → for → if → 1 늘리기 → print</code></pre>
+    </div>
+    <ol class="pt-list">
+      <li>세는 변수 <code>in_count</code>를 <code>for</code> 바깥에서 0으로 시작한다.</li>
+      <li><code>for temp in eq03_temps:</code>로 하나씩 꺼낸다.</li>
+      <li>꺼낸 값이 295 이상 305 이하이면 <code>in_count</code>를 1 늘린다.</li>
+      <li>다 센 뒤 <code>EQ-03 온도 11개 중 범위 안은 ○개입니다.</code>를 f-string으로 출력한다.</li>
+    </ol>
+    <p>힌트: 강의 "for — 하나씩 꺼내 개수 세기"의 <code>pass_count</code> 코드와 같은 모양이다. 이름만 바꾼다.</p>
+    <div class="callout warn">
+      <b class="tag">주의</b>
+      3단계 코드를 베끼다 <code>pass_count</code>가 섞이면 3단계에서 센 값이 더해져 오류 없이 엉뚱한 숫자가 나온다. 새 이름 <code>in_count</code>로 통일한다.
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">eq03_temps = [304.4, 304.3, 293.8, 296.7, 308.0, 298.8, 299.5, 297.8, 306.3, 301.1, 312.4]
 
-normal_count = 0
+in_count = 0
 
-for temp in temperatures:
-    ____ 295 &lt;= temp &lt;= 305:
-        normal_count = normal_count ____ 1
+for temp in eq03_temps:
+    if 295 &lt;= temp &lt;= 305:
+        in_count = in_count + 1
 
-print(f"정상 범위인 값은 {normal_count}개입니다.")</code></pre>
+print(f"EQ-03 온도 {len(eq03_temps)}개 중 범위 안은 {in_count}개입니다.")</pre>
+      출력: <code>EQ-03 온도 11개 중 범위 안은 7개입니다.</code><br>
+      범위 밖 4개는 293.8 · 308.0 · 306.3 · 312.4다.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>문제 3. check_range로 기록 30건 판정하기 (노트북 7단계 문제 3)</h2>
+    <p>온도가 295~305이면 <code>"범위 안"</code>, 아니면 <code>"범위 밖"</code>을 돌려주는 함수 <code>check_range</code>를 만들고, 기록 30건을 판정해 보자.</p>
+    <p>힌트: 강의 "함수 — 판정 규칙에 이름 붙이기"의 <code>judge_score</code>, "함수와 for 함께 쓰기"의 <code>fail_count</code>와 같은 모양이다. 기록에서 온도를 꺼내는 모양 <code>record["온도_C"]</code>는 강의 "반도체 데이터로 확인하기" 확인 2에 있다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 3-1 판정 함수</span><button class="copy-btn">복사</button></div>
+      <pre><code># TODO: 결과를 돌려주는 낱말을 채우세요.
+def check_range(temp):
+    if 295 &lt;= temp &lt;= 305:
+        ____ "범위 안"
+    else:
+        ____ "범위 밖"
+
+print(check_range(301.0))
+print(check_range(312.6))</code></pre>
+    </div>
+    <p>다음 노트북 셀에는 기록 30건이 딕셔너리의 리스트 <code>records</code>로 이미 적혀 있다. 그 셀은 고치지 않고 실행만 한다(<code>30</code>이 출력된다).</p>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 3-2 연습용 기준 밖 기록 세기</span><button class="copy-btn">복사</button></div>
+      <pre><code>out_total = 0
+
+# TODO: 함수에 넣을 온도 값(딕셔너리에서 꺼내기)과 비교할 글자를 채우세요.
+for record in records:
+    if check_range(____) == ____:
+        out_total = out_total + 1
+
+print(f"연습용 기준 밖 기록: {out_total}건")</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span>Python — 3-3 그중 실제 불합격 세기</span><button class="copy-btn">복사</button></div>
+      <pre><code>real_fail = 0
+
+# TODO: 실제 불합격을 뜻하는 숫자를 채우세요.
+for record in records:
+    if check_range(record["온도_C"]) == "범위 밖":
+        if record["합격여부"] == ____:
+            real_fail = real_fail + 1
+
+print(f"그중 실제 검사에서 불합격(-1)인 기록: {real_fail}건")</code></pre>
+    </div>
+    <div class="callout warn">
+      <b class="tag">주의</b>
+      <ul class="pt-list">
+        <li>함수에 넣을 것은 지금 꺼낸 기록의 온도 <code>record["온도_C"]</code>다. <code>temp</code>를 넣으면 문제 2의 마지막 값이 남아 있어 오류 없이 엉뚱한 숫자가 나온다. <code>record</code>를 통째로 넣으면 <code>TypeError</code>가 난다.</li>
+        <li><code>"범위 밖"</code>의 따옴표를 빼먹으면 <code>SyntaxError</code>가 난다. 비교는 <code>==</code>(등호 두 개)다.</li>
+        <li>3-1 함수 셀을 먼저 채우고 실행하지 않으면 3-2에서 <code>NameError: name 'check_range' is not defined</code>가 난다.</li>
+      </ul>
+    </div>
+    <button class="reveal-btn">정답 보기</button>
+    <div class="answer-box">3-1 빈칸은 <code>return</code>, <code>return</code>. 출력: <code>범위 안</code>, <code>범위 밖</code>.<br>
+    3-2 빈칸은 <code>record["온도_C"]</code>, <code>"범위 밖"</code>. 출력: <code>연습용 기준 밖 기록: 12건</code><br>
+    3-3 빈칸은 <code>-1</code>. 출력: <code>그중 실제 검사에서 불합격(-1)인 기록: 3건</code><br>
+    3-3은 <code>if</code> 안에 <code>if</code>가 하나 더 들어 있다. 바깥 조건(연습용 기준 밖)과 안쪽 조건(실제 불합격)을 둘 다 만족해야 센다.</div>
+  </section>
+
+  <section class="block">
+    <h2>문제 4. Orange로 기준 밖 기록과 실제 불합격 고르기</h2>
+    <p>Orange 3.35에서 <code>orange3/week03/week03_2_records_start.ows</code>를 새로 연다. 강의 PART 2에서 <code>설비번호 is EQ-04</code> 조건을 걸었던 화면은 저장하지 않고 닫는다. 이번에는 기록 30건 전체에서 고른다.</p>
+    <ol class="pt-list">
+      <li>File에 <code>Select Rows</code>(Transform 묶음)를 잇고 더블클릭한다.</li>
+      <li>이미 있는 조건 한 줄을 <code>온도_C</code> · <code>is outside</code> · 왼쪽 칸 <code>295</code>, 오른쪽 칸 <code>305</code>로 바꾼다.</li>
+      <li>Select Rows에 <code>Data Table</code>을 잇고, 왼쪽 Info 칸에서 행 수를 읽는다.</li>
+      <li>Select Rows 창으로 돌아가 Add Condition으로 두 번째 줄을 만들고 <code>합격여부</code> · <code>is</code> · <code>-1</code>로 정한다. Data Table의 행 수를 다시 읽는다.</li>
+    </ol>
+    <div class="callout practice">
+      <b class="tag">적어 보기</b>
+      온도 조건만: ____행 · 합격여부 조건까지: ____행<br>
+      문제 3의 3-2, 3-3 결과와 비교하면 (같다 / 다르다).<br>
+      마지막에 남은 기록의 로트번호: ________________
     </div>
     <button class="reveal-btn">체크포인트 보기</button>
     <div class="callout warn answer-box">
       <b class="tag">체크포인트</b>
-      빈칸: <code>in</code>, <code>if</code>, <code>+</code>. 결과 <code>정상 범위인 값은 4개입니다.</code>(312.6만 범위 밖).
-      <code>normal_count = 0</code>이 반복문 안에 있으면 틀린 숫자가 나온다.
+      온도 조건만 걸면 <b>12행</b>, 합격여부 조건까지 걸면 <b>3행</b>이다. 문제 3의 12건·3건과 <b>같다</b>.<br>
+      남은 3행: LOT-0186(EQ-03, 293.8) · LOT-0195(EQ-02, 293.8) · LOT-0085(EQ-04, 307.0).<br>
+      30행이 그대로라면 <code>is outside</code>의 두 칸 순서가 바뀌었거나(왼쪽이 305) 한 칸이 비어 있다. 18행이면 <code>is between</code>을 고른 것이다(범위 안 18 + 범위 밖 12 = 30). 8행이나 4행이면 높은 쪽(<code>is greater than 305</code>)이나 낮은 쪽(<code>is below 295</code>)만 고른 것이다.
     </div>
   </section>
 
   <section class="block">
-    <h2>문제 4 — 온도 5개의 합계와 평균 (노트북 9단계)</h2>
-    <p>할 일: 문제 3의 온도 5개 합계와 평균을 소수 첫째 자리까지 출력한다.<br>
-    힌트: 4단계(용돈 합계)와 같은 모양. <code>money</code> → <code>temp</code>.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>total = 0
-
-for temp in temperatures:
-    total ____ temp
-
-average = total / len(temperatures)
-print(f"합계 {total:.1f}, 평균 {average:.1f}")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸: <code>+=</code>. 결과 <code>합계 1503.9, 평균 300.8</code>. 평균은 범위 안이어도 312.6이 섞여 있다.</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 5 — 온도가 높은 설비 골라내기 (노트북 9단계)</h2>
-    <p>할 일: 노트북 9단계의 <code>equipment_list</code>(설비 3대: EQ-01 301.2, EQ-02 308.7, EQ-03 297.5)에서 온도가 305도를 넘는 설비 번호만 담는다.<br>
-    힌트: 5단계(80점 넘은 학생)와 같은 모양. <code>"점수"</code> → <code>"온도_섭씨"</code>, <code>"이름"</code> → <code>"설비번호"</code>.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>hot_equipment = []
-
-for eq in equipment_list:
-    if eq["온도_섭씨"] ____ 305:
-        hot_equipment.____(eq["설비번호"])
-
-print(f"온도가 305도를 넘는 설비: {hot_equipment}")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸: <code>&gt;</code>, <code>append</code>. 결과 <code>온도가 305도를 넘는 설비: ['EQ-02']</code>(308.7도).</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 6 — 평균 함수와 judge_pass 만들기 (노트북 10단계)</h2>
-    <p>할 일: 평균 함수에 온도 5개를 넣고, 온도 판정 함수 <code>judge_pass</code>로 온도 5개를 판정한다.<br>
-    힌트: 6단계(<code>calculate_average</code>, <code>judge_score</code>)와 같은 모양. 빈칸은 6단계 평균 함수 이름, <code>return</code>, 판정 함수 이름이다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(____(temperatures))
-
-def judge_pass(temp):
-    if 295 &lt;= temp &lt;= 305:
-        ____ "합격"
-    else:
-        ____ "불합격"
-
-print(judge_pass(301.0))
-print(judge_pass(312.6))
-
-for temp in temperatures:
-    result = ____(temp)
-    print(f"{temp}도 → {result}")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸: <code>calculate_average</code>, <code>return</code>, <code>return</code>, <code>judge_pass</code>.
-    결과 <code>300.78</code>(문제 4는 <code>:.1f</code>로 반올림해 300.8로 보였다), <code>합격</code>, <code>불합격</code>, 온도 5개 중 312.6만 "불합격". 이 판정은 실제 검사 결과(<code>합격여부</code>)와 다르다.</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 7 — 기록 30건을 온도 규칙으로 걸러내기 (노트북 11단계)</h2>
-    <p>할 일: 노트북의 <code>records</code>(30건, <code>합격여부</code> 1 = 합격, -1 = 불합격)에서 <code>judge_pass</code>로 "불합격" 판정된 기록 수를 센다.<br>
-    힌트: 7단계(학생 명단 불합격 세기)와 같은 모양. <code>judge_score(student["점수"])</code> → <code>judge_pass(record["온도_섭씨"])</code>.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>rule_fail = 0
-
-for record in records:
-    if ____(record["온도_섭씨"]) == "불합격":
-        rule_fail ____ 1
-
-print(f"온도 규칙으로 걸러낸 기록: {rule_fail}건")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸: <code>judge_pass</code>, <code>+=</code>. 결과 <code>온도 규칙으로 걸러낸 기록: 12건</code>.</div>
-  </section>
-
-  <section class="block">
-    <h2>문제 8 — 실제 불합격 세기 (노트북 11단계)</h2>
-    <p>할 일: <code>합격여부</code>가 불합격(-1)인 기록 수를 센다.<br>
-    힌트: 7단계와 같은 개수 세기 모양. 조건만 <code>record["합격여부"] == ____</code>.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python</span><button class="copy-btn">복사</button></div>
-      <pre><code>real_fail = 0
-
-for record in records:
-    if record["합격여부"] == ____:
-        real_fail += 1
-
-print(f"실제 검사에서 불합격(-1)한 기록: {real_fail}건")</code></pre>
-    </div>
-    <button class="reveal-btn">정답 보기</button>
-    <div class="answer-box">빈칸: <code>-1</code>. 결과 <code>실제 검사에서 불합격(-1)한 기록: 3건</code>.</div>
-  </section>
-
-  <section class="block">
-    <h2>결과 해석과 문장 쓰기</h2>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>온도 규칙의 판정</th><th>기록 수</th><th>실제 합격(1)</th><th>실제 불합격(-1)</th></tr>
-        <tr><td>범위 안 → "합격"</td><td>18건</td><td>18건</td><td>0건</td></tr>
-        <tr><td>범위 밖 → "불합격"</td><td>12건</td><td>9건</td><td>3건</td></tr>
-      </table>
-    </div>
+    <h2>문제 5. 이 숫자로 말할 수 있을까?</h2>
+    <p>팀장이 문제 3·4 결과를 보고 이렇게 말했다.</p>
     <div class="callout practice">
-      <b class="tag">문장 작성</b>
-      "판정 함수로 기록 30건을 판정하니 ____건이 범위 밖으로 걸러졌다. 그러나 실제 검사 불합격은 ____건이고,
-      범위 밖 기록 중 ____건은 합격했다. 따라서 온도 규칙 하나로는 합격·불합격을 ____."
+      <b class="tag">팀장의 말</b>
+      "온도가 연습용 기준 밖인 기록은 전부 불량이니까, 그 로트들은 모두 버리자."
     </div>
+    <p>오늘 숫자로 볼 때 이 말에 동의할 수 있을까? (예 / 아니오)를 고르고, 이유를 숫자를 넣어 한두 문장으로 쓰자.</p>
+    <p>힌트: 기준 밖 기록 중 실제 검사(<code>합격여부</code>)에서 불합격인 것은 몇 건이었나? 나머지는?</p>
     <button class="reveal-btn">예시 답안 보기</button>
-    <div class="answer-box">"판정 함수로 기록 30건을 판정하니 12건이 범위 밖으로 걸러졌다. 그러나 실제 검사 불합격은 3건이고,
-    범위 밖 기록 중 9건은 합격했다. 따라서 온도 규칙 하나로는 합격·불합격을 다 설명할 수 없다."</div>
+    <div class="answer-box">아니오. "기준 밖 기록 12건 중 실제 불합격은 3건이고 9건은 합격이었습니다. 기준 밖은 불량이 아니라 살펴볼 후보이므로, 모두 버리기 전에 실제 검사 결과와 다른 정보를 함께 확인해야 합니다."<br>
+    연습용 기준으로 본 판정과 실제 검사 결과는 다르다. 기준은 확인할 후보를 골라 주는 거름망이다.</div>
   </section>
 
   <div class="nav-buttons">

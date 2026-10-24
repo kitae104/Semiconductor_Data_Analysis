@@ -7,16 +7,6 @@
 <link rel="icon" href="../../assets/images/site/chip-favicon.png" type="image/png">
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
-<style>
-  .gb-svg{display:block;margin:1.2rem auto;width:760px;max-width:100%;height:auto;}
-  .gb-svg .gtitle{fill:var(--ink);font-weight:700;}
-  .gb-svg .gtext{fill:var(--ink);font-family:'Courier New',monospace;}
-  .gb-svg .gsub{fill:var(--muted);}
-  .gb-svg .ga{fill:var(--blue-bg);stroke:var(--blue);stroke-width:1.5;}
-  .gb-svg .gb{fill:var(--purple-bg);stroke:var(--purple);stroke-width:1.5;}
-  .gb-svg .gc{fill:var(--green-bg);stroke:var(--green);stroke-width:1.5;}
-  .gb-svg .garrow{stroke:var(--muted);stroke-width:2.5;}
-</style>
 </head>
 <body>
 <header class="site-header">
@@ -46,393 +36,182 @@
     <span class="badge blue">7차시</span>
     <h1>설비·공정 비교와 수율·불량 분석</h1>
     <p class="today-question">오늘의 질문: <b>"설비마다 차이가 있어 보이는데, 숫자로 계산해도 정말 그럴까?"</b></p>
+    <p class="lede"><b>오늘의 미션</b> — 입사 일곱째 날, 웨이퍼 300장의 검사 기록을 받았다. 어느 설비의 합격률(이 기록에서 수율 대신 쓰는 값)이 가장 낮은지, 가장 많은 불량 유형은 무엇인지 보고하자.
+    (신입 데이터 담당자의 10일 이야기와 공장·설비·데이터는 모두 교육용 가상이다.)</p>
+    <img class="chart-img" src="../../assets/images/orange3/week07_01_mission_etch3_wafermap.png"
+         alt="오늘 끝에 Orange3로 보게 될 웨이퍼 맵. 식각 설비 한 대의 웨이퍼만 골라 다이 위치대로 점을 찍었다"
+         data-shot="week07_1_waferlots_done.ows의 Scatter Plot 창(오른쪽 그림만, 창 제목·왼쪽 설정 칸은 잘라 낸다) — 설비 한 대의 웨이퍼 4장, Axis x 다이_X, Axis y 다이_Y, Color 합격여부. 둥근 웨이퍼 모양 점들이 보이게(창을 정사각형에 가깝게 맞춰 원이 납작해 보이지 않게)">
   </div>
 
   <section class="block">
     <h2>학습 목표</h2>
     <ul class="goal-list">
-      <li>수율과 불량률이 "무엇 중에 무엇의 비율"인지 설명하고 계산할 수 있다.</li>
-      <li>데이터를 설비별로 "묶어서" 비교해야 하는 이유를 실제 수치로 설명할 수 있다.</li>
-      <li><code>groupby</code>로 설비별·로트별 개수, 합격률, 평균을 계산할 수 있다.</li>
-      <li>불량 유형을 많은 순으로 줄 세우고, 눈에 띄는 설비를 "원인"이 아니라 "원인 후보"로 말할 수 있다.</li>
+      <li>수율·불량률이 "무엇 중에 무엇의 비율"인지 설명하고, True/False 열의 평균으로 비율을 구할 수 있다.</li>
+      <li><code>groupby</code>로 설비별 합격률을 계산해 비교할 수 있다.</li>
+      <li>불량 유형을 많은 순으로 세고 막대로 그릴 수 있다.</li>
+      <li>Orange3 Pivot Table로 설비별 합격·불합격 수를 세고, 눈에 띄는 설비를 "원인"이 아니라 "원인 후보"로 말할 수 있다.</li>
     </ul>
-    <ul class="pt-list">
-      <li><b>선수 지식</b> — 1차시: 여러 열 함께 보기·원인 후보 / 4차시: 조건 검색 / 5차시: True를 1로 세기(<code>sum()</code>) / 6차시: 막대그래프</li>
-    </ul>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 6차시 — 막대그래프(<code>value_counts()</code> + <code>plt.bar</code>), Orange Scatter Plot·Box Plot, 웨이퍼 맵 / 4차시 — 조건 검색, <code>sort_values</code> / 3차시 — True/False, Orange Select Rows</p>
+  </section>
+
+  <section class="block">
+    <h2>오늘 수업 구성</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>쪽지시험 기록으로 정답률을 구하고 반별로 묶어 비교한 뒤, 같은 코드로 웨이퍼 300장 기록을 본다</td></tr>
+          <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>식각 설비 3대의 웨이퍼 12장으로 Pivot Table(피벗 표)과 웨이퍼 맵을 익히고, 같은 위젯으로 공장 기록을 본다</td></tr>
+          <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개(오늘의 미션) + Orange 1문제 + 해석 문장 1개</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
-    <ul class="pt-list">
-      <li>공장의 단골 질문은 "어느 설비를 먼저 점검하지?"다. 답하려면 기록을 설비별로 <b>묶어서</b> 비교해야 한다.</li>
-      <li>전체로 보면 괜찮아도 나눠 보면 한 곳만 나쁠 수 있다. 이 "나눠 보기"를 <code>groupby</code> 한 줄로 한다.</li>
-    </ul>
+    <p>전체 합격률 하나만 보면 "어디서" 불량이 많이 나는지 숨는다. 오늘 쪽지시험 기록도 전체 정답률은 <b>75.0%</b>지만, 반별로 나누면 87.5%인 반과 62.5%인 반이 있다.</p>
+    <div class="callout concept">
+      <b class="tag">비유 — 피자 가게의 오븐 세 대</b>
+      가게 전체로 탄 피자가 몇 판인지만 세면 어느 오븐이 문제인지 모른다. 오븐마다 나눠 세어 보면 탄 판이 한 오븐에 몰렸는지 보인다.
+      그래도 그 오븐이 곧 이유라고 단정하지는 않는다 — 그 오븐에 유난히 두꺼운 도우가 몰렸을 수도 있다. 그래서 "먼저 살펴볼 곳", 즉 <b>원인 후보</b>라고 부른다.
+    </div>
   </section>
 
   <section class="block">
     <h2>지난 시간 복습</h2>
-    <ul class="pt-list">
-      <li><b>1차시</b>: 여러 열을 함께 보면 질문이 생기고, 눈에 띄는 것은 범인이 아니라 <b>용의자(원인 후보)</b>다.</li>
-      <li><b>6차시</b>: 그림은 인상을 준다. 오늘은 그 인상을 숫자로 바꾼다.</li>
-    </ul>
+    <div class="quiz-item">
+      <div class="q">Q1. Orange Scatter Plot에서 x를 <code>다이_X</code>, y를 <code>다이_Y</code>, 색을 <code>합격여부</code>로 놓으면 무엇이 보였을까?</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">둥근 웨이퍼 모양의 웨이퍼 맵이 보이고, 불합격 다이가 어디에 몰렸는지(6차시 웨이퍼는 가장자리) 알 수 있었다. 오늘은 웨이퍼 여러 장을 설비별로 나눠 본다.</div>
+    </div>
+    <div class="quiz-item">
+      <div class="q">Q2. Orange Box Plot에서 한 설비의 상자가 다른 설비보다 길다면 무슨 뜻일까?</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">그 설비의 값이 더 넓게 퍼져 있다(들쭉날쭉하다)는 뜻이다. 상자의 위치는 값의 크기, 길이는 퍼짐이다. 오늘 PART 2에서 한 번 더 쓴다.</div>
+    </div>
   </section>
 
-  <section class="block">
-    <h2>오늘 데이터 다시 보기 — 열마다 공장에서 뜻하는 것</h2>
-    <p><code>week07_equipment_yield.csv</code>(300행 11열): 웨이퍼 4장씩 담은 로트 75개의 검사 기록이다. 교육용 <b>가상 데이터</b>다.</p>
+  <section class="block" id="part1">
+    <h2><span class="step-badge">PART 1</span> 파이썬 — 비율 구하고 묶어서 비교하기</h2>
+    <h3>실습 파일 받기와 노트북 열기</h3>
+    <div class="step"><div class="num">1</div><div class="content">7차시 키트 <a href="../../dist/week07_kit.zip">week07_kit.zip</a>을 내려받아 압축을 푼다(전체 차시 키트: <a href="../../dist/student_kit.zip">student_kit.zip</a>). 압축을 푼 <code>semiconductor_kit</code> 폴더 구조는 그대로 둔다. 노트북과 Orange 파일이 폴더 위치를 기준으로 데이터를 찾는다.</div></div>
+    <div class="step"><div class="num">2</div><div class="content">Jupyter를 켠다. 방법은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 05 "노트북 열어 보기"에 있다(<code>semiconductor_kit</code> 폴더에서 명령 프롬프트를 열고 <code>python -m notebook</code> 실행).</div></div>
+    <div class="step"><div class="num">3</div><div class="content"><code>notebooks</code> → <code>student</code> → <code>week07_student.ipynb</code>를 연다. 맨 위 "막혔을 때" 셀을 먼저 읽는다.</div></div>
+    <p>개념은 <b>쪽지시험 기록</b>(<code>week07_easy_quiz_results.csv</code>, 24행 6열, 생활 예제용 가상 데이터)으로 익힌다. 세 반에서 두 명씩, 6명이 4문항씩 풀었다. 한 행 = 학생 1명이 푼 문항 1개다.</p>
     <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>열 이름</th><th>공장에서 뜻하는 것</th><th>생활 속 비유</th></tr>
-        <tr><td><code>로트번호</code></td><td>함께 옮기고 관리한 웨이퍼 묶음의 번호. 실제 공장의 로트는 보통 25장 안팎이고, 이 데이터는 연습용으로 한 묶음에 4장이다</td><td>택배 상자 송장 번호</td></tr>
-        <tr><td><code>웨이퍼번호</code></td><td>로트 안에서 몇 번째 웨이퍼인지(1~4)</td><td>상자 안 물건 순번</td></tr>
-        <tr><td><code>설비번호</code></td><td>작업한 기계(EQ-01~EQ-04)</td><td>같은 메뉴를 만드는 가게 지점</td></tr>
-        <tr><td><code>공정명</code></td><td>어떤 작업이었는지(산화·포토·식각·증착·세정)</td><td>요리의 썰기·굽기·씻기</td></tr>
-        <tr><td><code>작업조</code></td><td>그 시간에 근무한 교대 근무팀(A·B·C조)</td><td>오전·오후·야간 근무팀</td></tr>
-        <tr><td><code>온도_섭씨</code> · <code>압력_Pa</code> · <code>진공도_mTorr</code></td><td>설비 안 센서가 잰 값(진공도는 낮을수록 공기를 더 많이 뺀 상태). 가상 값이라 크기는 해석하지 않고 기록끼리 비교만 한다</td><td>체온계·혈압계 숫자</td></tr>
-        <tr><td><code>처리시간_sec</code></td><td>작업에 걸린 시간(초)</td><td>조리 시간</td></tr>
-        <tr><td><code>불량유형</code></td><td>불합격일 때 어떤 종류의 불량인지. 합격이면 빈칸(<code>NaN</code>)</td><td>반품 사유</td></tr>
-        <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td><td>상품 / 불량품 판정</td></tr>
-      </table>
-    </div>
-
-    <div class="callout concept">
-      <b class="tag">단위 읽는 법</b>
-      7차시에 새로 나오는 단위는 하나다. <code>압력_Pa</code>와 다른 단위이므로 숫자를 서로 비교하지 않는다.
-      <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
-        <tr><td><code>mTorr (진공도_mTorr)</code></td><td>밀리토르</td><td>아주 낮은 압력의 단위. 값이 작을수록 챔버 안 공기를 더 많이 뺀 상태(진공에 가깝다)</td></tr>
-      </table>
-      </div>
-    </div>
-    <p><b>불량 유형</b>: 두께 불량(막 두께가 기준을 벗어남) · 패턴 불량(회로 무늬가 틀어짐) · 파티클(작은 이물 알갱이) · 오염(있으면 안 되는 물질) ·
-    정렬 불량(위아래 층 무늬가 어긋남) · 식각 부족(덜 깎임) · 전기적 특성 불량(전기 검사 기준 벗어남).</p>
-    <p class="img-caption">불량유형은 검사에서 발견된 불량의 종류다. 같은 줄의 <code>공정명</code> 작업 때문에 생겼다는 뜻은 아니다.</p>
-
-    <h3>먼저 연습할 생활 데이터 — 반별 쪽지시험</h3>
-    <p>코드는 쪽지시험 기록(<code>week07_easy_quiz_results.csv</code>, 6명 × 4문항 = 24줄, 수업용 <b>가상 데이터</b>)으로 먼저 따라 한다.
-    학생 1명 = 4줄이라 로트 1개 = 웨이퍼 4장과 모양이 같다. 열 이름만 바꾸면 같은 코드가 통한다.</p>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>쪽지시험 열</th><th>뜻</th><th>반도체 데이터의 짝</th></tr>
-        <tr><td><code>반</code></td><td>A반·B반·C반</td><td><code>설비번호</code></td></tr>
-        <tr><td><code>이름</code></td><td>학생 이름(반마다 2명)</td><td><code>로트번호</code></td></tr>
-        <tr><td><code>문제번호</code></td><td>몇 번 문항인지(1~4)</td><td><code>웨이퍼번호</code></td></tr>
-        <tr><td><code>풀이시간_초</code></td><td>그 문항을 푸는 데 걸린 시간(초)</td><td><code>온도_섭씨</code> 같은 숫자 열</td></tr>
-        <tr><td><code>오답유형</code></td><td>틀린 이유(계산 실수·문제 잘못 읽음·개념 부족). 맞았으면 빈칸(<code>NaN</code>)</td><td><code>불량유형</code></td></tr>
-        <tr><td><code>정답여부</code></td><td><b>1 = 정답, -1 = 오답</b></td><td><code>합격여부</code>(1 = 합격, -1 = 불합격)</td></tr>
+      <table>
+        <thead><tr><th>열</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td><code>반</code>, <code>이름</code>, <code>문제번호</code></td><td>어느 반의 누가 몇 번 문항(1~4)을 풀었나</td></tr>
+          <tr><td><code>풀이시간_sec</code></td><td>그 문항을 푸는 데 걸린 초. <code>_sec</code> = second(초)</td></tr>
+          <tr><td><code>오답유형</code></td><td>틀렸을 때 왜 틀렸는지(계산 실수·문제 잘못 읽음·개념 부족). 맞았으면 빈칸</td></tr>
+          <tr><td><code>정답여부</code></td><td>채점 결과. <b>1 = 정답, -1 = 오답</b>(공장 기록의 <code>합격여부</code>와 같은 표기)</td></tr>
+        </tbody>
       </table>
     </div>
   </section>
 
   <section class="block">
-    <h2>수율과 불량률 — 사과 100개 중 상품 92개</h2>
-    <ul class="pt-list">
-      <li>사과 100개 중 상품 92개, 흠집 8개 → <b>수율</b> 92 ÷ 100 × 100 = 92%, <b>불량률</b> 8 ÷ 100 × 100 = 8%.
-        "무엇 중에 무엇"인지(분모)를 빼면 뜻이 사라진다.</li>
-      <li>반도체 데이터도 같다. 검사한 웨이퍼 중 합격 비율이 수율이다. 판정이 합격/불합격 두 가지뿐이라 수율 + 불량률 = 100%다.</li>
-      <li>이 과정은 웨이퍼 1장 = 검사 1건으로 단순화했다(실제 공장은 칩 단위로 세는 경우가 많다).
-        계산은 모두 "합격 장수 ÷ 검사 장수 × 100"으로 같고, 설비별로 묶으면 <b>합격률</b>, 로트별로 묶으면 <b>로트 수율</b>이라 부른다.</li>
-    </ul>
-  </section>
-
-  <section class="block">
-    <h2>왜 묶어서 비교할까 — 전체 평균 속에 숨은 차이</h2>
-    <div class="callout concept">
-      <b class="tag">비유 — 반별 쪽지시험 정답률</b>
-      전체 정답률은 75.0%지만 반별로는 A반 87.5%, B반 62.5%, C반 75.0%다. 선생님은 B반부터 본다. 공장에서 설비가 이 "반"이다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>왜 여러 열을 같이 볼까 — 열 하나만 보면 놓치는 것</h2>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>함께 본 열</th><th>보이는 것</th><th>이 열만 봤다면</th></tr>
-        <tr><td><code>정답여부</code> 하나만</td><td>24문항 중 18문항 정답(75.0%)</td><td>"괜찮다"로 끝난다</td></tr>
-        <tr><td>+ <code>반</code></td><td>B반만 62.5%로 가장 낮다</td><td>어느 반부터 볼지 모른다</td></tr>
-        <tr><td>+ <code>풀이시간_초</code></td><td>반별 평균 61.2~76.9초, B반이 가장 길다</td><td>B반이 오래 걸린다는 것을 모른다</td></tr>
-        <tr><td>+ <code>이름</code></td><td>B반 두 학생 중 예린만 25%다(서준은 100%)</td><td>"B반은 모두 못 했다"고 오해한다</td></tr>
-        <tr><td>+ <code>오답유형</code></td><td>오답 6개 중 계산 실수가 3개로 가장 많다</td><td>무엇부터 고칠지 모른다</td></tr>
-      </table>
-    </div>
-    <div class="callout concept">
-      <b class="tag">비유 — 1차시의 병원 진료</b>
-      의사는 체온 하나로 진단하지 않는다. 열을 더할수록 질문이 좁혀진다: "어디가 나쁘지?" → "B반" → "B반의 누구?" 반도체에서는 설비 → 로트로 똑같이 좁힌다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>비교할 때 조심할 점</h2>
-    <ul class="pt-list">
-      <li><b>개수가 아니라 비율로</b>: 문항이 8개인 반과 100개인 반의 정답 "개수"를 그대로 비교하지 않는다. 정답률로 비교한다.</li>
-      <li><b>건수가 적으면 비율이 흔들린다</b>(리뷰 2개짜리 별점 5.0처럼): 4문항인 학생은 1문항만 더 틀려도 100% → 75%로 25%p
-        (퍼센트포인트: 숫자가 100에서 75로 25 줄었다는 뜻), 8문항인 A반은 87.5% → 75.0%로 12.5%p 떨어진다. 비율 옆에 몇 개 중의 비율인지 함께 적는다.</li>
-      <li><b>눈에 띈다고 "원인"이라 단정하지 않는다</b>: 눈에 띄는 것은 범인이 아니라 용의자, 즉 <b>원인 후보</b>다.</li>
-    </ul>
-  </section>
-
-  <section class="block">
-    <h2>groupby — 같은 이름표끼리 모아서 바구니마다 계산</h2>
-    <ul class="pt-list">
-      <li>같은 값(이름표)을 가진 줄끼리 한 바구니에 모은 뒤, 바구니마다 <code>count()</code>(개수)·<code>sum()</code>(합계)·<code>mean()</code>(평균)을 계산한다.</li>
-      <li>계산을 붙이지 않으면 숫자가 나오지 않는다.</li>
-    </ul>
-    <svg class="gb-svg" viewBox="0 0 760 260" role="img"
-         aria-label="groupby 개념도: 반 이름표가 붙은 쪽지시험 기록을 A, B, C 세 바구니에 모은 뒤 바구니마다 정답 비율을 계산한다">
-      <text x="90" y="20" text-anchor="middle" class="gtitle" font-size="14">① 원래 표(24줄 중 6줄)</text>
-      <rect class="ga" x="20" y="34" width="140" height="28" rx="6"/><text x="90" y="53" text-anchor="middle" class="gtext" font-size="13">A반 · True</text>
-      <rect class="ga" x="20" y="68" width="140" height="28" rx="6"/><text x="90" y="87" text-anchor="middle" class="gtext" font-size="13">A반 · False</text>
-      <rect class="gb" x="20" y="102" width="140" height="28" rx="6"/><text x="90" y="121" text-anchor="middle" class="gtext" font-size="13">B반 · True</text>
-      <rect class="gb" x="20" y="136" width="140" height="28" rx="6"/><text x="90" y="155" text-anchor="middle" class="gtext" font-size="13">B반 · False</text>
-      <rect class="gc" x="20" y="170" width="140" height="28" rx="6"/><text x="90" y="189" text-anchor="middle" class="gtext" font-size="13">C반 · True</text>
-      <rect class="gc" x="20" y="204" width="140" height="28" rx="6"/><text x="90" y="223" text-anchor="middle" class="gtext" font-size="13">C반 · False</text>
-
-      <line class="garrow" x1="175" y1="133" x2="225" y2="133"/>
-      <polygon points="225,125 242,133 225,141" fill="var(--muted)"/>
-
-      <text x="360" y="20" text-anchor="middle" class="gtitle" font-size="14">② 같은 이름표끼리 모으기</text>
-      <rect class="ga" x="255" y="34" width="210" height="58" rx="10"/>
-      <text x="360" y="58" text-anchor="middle" class="gtext" font-size="13">A반 바구니(8줄)</text>
-      <text x="360" y="79" text-anchor="middle" class="gsub" font-size="12">True 7 · False 1</text>
-      <rect class="gb" x="255" y="104" width="210" height="58" rx="10"/>
-      <text x="360" y="128" text-anchor="middle" class="gtext" font-size="13">B반 바구니(8줄)</text>
-      <text x="360" y="149" text-anchor="middle" class="gsub" font-size="12">True 5 · False 3</text>
-      <rect class="gc" x="255" y="174" width="210" height="58" rx="10"/>
-      <text x="360" y="198" text-anchor="middle" class="gtext" font-size="13">C반 바구니(8줄)</text>
-      <text x="360" y="219" text-anchor="middle" class="gsub" font-size="12">True 6 · False 2</text>
-
-      <line class="garrow" x1="480" y1="133" x2="530" y2="133"/>
-      <polygon points="530,125 547,133 530,141" fill="var(--muted)"/>
-
-      <text x="650" y="20" text-anchor="middle" class="gtitle" font-size="14">③ 바구니마다 평균 × 100</text>
-      <rect class="ga" x="560" y="34" width="180" height="58" rx="10"/>
-      <text x="650" y="68" text-anchor="middle" class="gtext" font-size="14">A반 → 87.5</text>
-      <rect class="gb" x="560" y="104" width="180" height="58" rx="10"/>
-      <text x="650" y="138" text-anchor="middle" class="gtext" font-size="14">B반 → 62.5</text>
-      <rect class="gc" x="560" y="174" width="180" height="58" rx="10"/>
-      <text x="650" y="208" text-anchor="middle" class="gtext" font-size="14">C반 → 75.0</text>
-    </svg>
-    <p class="img-caption"><code>quiz.groupby("반")["정답"].mean() * 100</code>이 하는 일. True는 1, False는 0이라 A반은 7 ÷ 8 × 100 = 87.5%다.
-    반도체에서는 이름표 자리에 "설비번호", "로트번호"를 넣는다.</p>
-    <div class="callout concept">
-      <b class="tag">코드 읽는 순서</b>
-      <code>quiz.groupby("반")["정답"].mean()</code> = "표 <code>quiz</code>를 → 반끼리 모아서 → <code>정답</code> 열의 → 평균".
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>파레토 차트 — 많은 것부터 줄 세우기</h2>
-    <ul class="pt-list">
-      <li>불량 유형을 많은 순서로 세운 막대에 누적 비율 선을 겹친 그림이 <b>파레토 차트</b>다. 맨 앞 몇 개가 큰 몫을 차지한다.</li>
-      <li><b>누적 비율</b>은 맨 앞부터 차례로 더해 간 비율이다. 오늘 불량 36건: 두께 불량 11 ÷ 36 = 30.6% → 패턴 불량 6을 더해 17 ÷ 36 = 47.2%
-        → 파티클 5를 더해 22 ÷ 36 = 약 <b>61.1%</b>(파티클과 오염은 5건으로 같아 어느 쪽을 넣어도 22건이다). 손댈 순서는 맨 앞(두께 불량)부터다.</li>
-    </ul>
-    <div class="callout concept">
-      <b class="tag">비유 — 방 청소</b>
-      옷 더미·책 더미 같은 큰 것부터 치우면 방이 금방 넓어진다.
-    </div>
-    <img class="chart-img" src="../../assets/images/week07/pareto_defects.png" alt="불량유형 파레토 차트. 막대는 유형별 불량 건수(두께 불량이 가장 많음), 빨간 선은 누적 비율.">
-    <p class="img-caption">오늘 데이터의 불량 유형 파레토 차트(누적선은 강사가 미리 그린 것). 막대 부분은 실습지 문제 8에서 직접 그린다.
-    가장 많이 나온 불량은 줄일 순서를 알려줄 뿐, 원인을 알려주지는 않는다.</p>
-  </section>
-
-  <section class="block">
-    <h2>Orange3로 먼저 훑어보기</h2>
-    <div class="callout practice">
-      <b class="tag">위젯</b> Box Plot · Distributions
-      <ul class="pt-list">
-        <li><b>Box Plot</b>으로 설비별 온도 분포를, <b>Distributions</b>(Variable <code>설비번호</code>, Split by <code>합격여부</code>)로 설비별 합격/불합격 개수를 본다.</li>
-        <li><code>합격여부</code>는 File 위젯에서 Type을 <b>categorical</b>로 바꿔야 Split by 목록에 나타난다. 사용법: <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a></li>
-      </ul>
-    </div>
-    <div class="oflow-wrap">
-      <svg class="oflow-svg" viewBox="0 0 760 190" role="img"
-           aria-label="File 위젯에서 Box Plot과 Distributions 두 위젯으로 갈라지는 Orange3 워크플로 다이어그램">
-        <rect class="obox" x="10" y="61" width="180" height="68" rx="14"/>
-        <text x="100" y="89" text-anchor="middle" class="olabel" font-size="15">File</text>
-        <text x="100" y="111" text-anchor="middle" class="osub" font-size="11">week07_...csv</text>
-
-        <path class="oarrow" d="M190,95 H230 V43 H272" fill="none"/>
-        <polygon class="oarrowhead" points="272,35 289,43 272,51"/>
-        <rect class="obox" x="280" y="15" width="270" height="56" rx="12"/>
-        <text x="415" y="38" text-anchor="middle" class="olabel" font-size="14">Box Plot</text>
-        <text x="415" y="58" text-anchor="middle" class="osub" font-size="10">설비별 온도 분포</text>
-
-        <path class="oarrow" d="M190,95 H230 V147 H272" fill="none"/>
-        <polygon class="oarrowhead" points="272,139 289,147 272,155"/>
-        <rect class="obox accent" x="280" y="119" width="270" height="56" rx="12"/>
-        <text x="415" y="142" text-anchor="middle" class="olabel" font-size="14">Distributions</text>
-        <text x="415" y="162" text-anchor="middle" class="osub" font-size="10">설비별 합격/불합격 개수</text>
-      </svg>
-    </div>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week07_01_canvas.png" loading="lazy"
-           alt="그림 7-1. File → Box Plot · Distributions 캔버스" data-shot="File 위젯에서 Box Plot과 Distributions로 갈라진 캔버스">
-      <figcaption class="img-caption">그림 7-1. File → Box Plot · Distributions 캔버스</figcaption>
-    </figure>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week07_02_box_plot.png" loading="lazy"
-           alt="그림 7-2. 설비번호별 온도 Box Plot" data-shot="Box Plot 창 — 변수 온도_섭씨, Subgroups 설비번호로 설정한 화면">
-      <figcaption class="img-caption">그림 7-2. 설비번호별 온도 Box Plot</figcaption>
-    </figure>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week07_03_distributions.png" loading="lazy"
-           alt="그림 7-3. 설비번호별 합격/불합격 개수(Distributions)" data-shot="Distributions 창 — Variable 설비번호, Split by 합격여부로 설정한 화면">
-      <figcaption class="img-caption">그림 7-3. 설비번호별 합격/불합격 개수(Distributions)</figcaption>
-    </figure>
-    <p>그림으로 받은 인상은 "짐작"이다. 아래에서 <code>groupby</code>로 숫자를 계산해 확인한다.</p>
-  </section>
-
-  <section class="block">
-    <h2>파이썬 ① — 데이터 읽고 정답 열 만들기</h2>
-    <p>파이썬 개념은 쪽지시험 데이터(쉬운 예제)로 익힌다. 반도체 데이터는 뒤의 "반도체 데이터로 확인하기"와 실습지에서 다룬다.</p>
+    <h2>수율과 정답률 — 무엇 중에 무엇의 비율일까</h2>
+    <p><b>수율</b>은 만든 것 중 합격한 것의 비율이다. 피자 조각 100개를 만들어 92개를 팔 수 있으면 수율 92%, 나머지 8%가 <b>불량률</b>이다.
+    쪽지시험이라면 "푼 문항 중 맞힌 문항의 비율", 곧 정답률이 같은 계산이다. 비율을 말할 때는 늘 "무엇 중에"(분모)를 먼저 정한다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 쪽지시험 데이터 읽기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 쪽지시험 기록 읽기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
 quiz = pd.read_csv("../../data/weekly/week07/week07_easy_quiz_results.csv", encoding="utf-8-sig")
 print(quiz.shape)
-print(quiz.head(8))</code></pre>
+
+quiz.head()</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(24, 6)
-    반  이름  문제번호  풀이시간_초   오답유형  정답여부
-0  A반  지민     1      45    NaN     1
-1  A반  지민     2      60    NaN     1
-2  A반  지민     3      52    NaN     1
-3  A반  지민     4      70    NaN     1
-4  A반  하은     1      50    NaN     1
-5  A반  하은     2      65    NaN     1
-6  A반  하은     3      90  계산 실수    -1
-7  A반  하은     4      58    NaN     1</pre>
+    반  이름  문제번호  풀이시간_sec 오답유형  정답여부
+0  A반  지민     1        45  NaN     1
+1  A반  지민     2        60  NaN     1
+2  A반  지민     3        52  NaN     1
+3  A반  지민     4        70  NaN     1
+4  A반  하은     1        50  NaN     1</pre>
     </div>
-    <p>오른쪽 <code>quiz["정답여부"] == 1</code>은 줄마다 1이면 True, 아니면 False를 만든다(4차시 조건 검색의 대괄호 안쪽과 같다).
-    왼쪽 <code>quiz["정답"] =</code>은 그 결과를 <code>정답</code>이라는 새 열로 저장한다. <code>=</code>는 저장, <code>==</code>는 비교다.
-    True는 1, False는 0이라 <code>sum()</code>은 맞힌 수, <code>mean()</code>은 정답 비율이다.</p>
+    <p><code>오답유형</code> 칸의 <code>NaN</code>은 빈칸이다(5차시). 맞힌 문항이라 오답 유형이 없다.</p>
+
+    <h3>비교해서 새 열 만들기</h3>
+    <p><code>quiz["정답여부"] == 1</code>은 행마다 "1과 같은가?"를 물어 True/False를 만든다(3차시 비교). 그 결과를 새 열 <code>정답</code>에 저장한다.
+    True는 1, False는 0으로 계산되므로 <code>sum()</code>은 맞힌 문항 수, <code>mean() * 100</code>은 정답률(%)이 된다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 정답 열과 전체 정답률</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 정답 열 만들고 정답률 구하기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>quiz["정답"] = quiz["정답여부"] == 1
-print(quiz["정답"].sum(), "문항 정답")
+print(quiz["정답"].sum())
 print(quiz["정답"].mean() * 100)</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">18 문항 정답
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">18
 75.0</pre>
     </div>
-    <div class="callout warn">
-      <b class="tag">주의 — 1과 -1</b>
-      <code>정답여부</code>·<code>합격여부</code>는 <b>1 = 정답(합격), -1 = 오답(불합격)</b>이다. 바로 평균 내면 비율이 아니므로 True/False 열을 먼저 만든다.
+    <p>24문항 중 18문항을 맞혀 정답률 75.0%다. <code>정답여부</code>(1/-1)를 그대로 평균 내면 1과 -1이 서로 지워져 0.5가 나온다 — 정답률이 아니다. 그래서 True/False 열을 먼저 만든다.</p>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>반도체 수율 뜻</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게 반도체 공장에서 말하는 '수율(yield)'이 무엇인지 피자 가게에서 구운 피자 조각에 비유해서 3문장으로 설명해줘. 수율이 왜 공장에서 중요한 숫자인지도 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "웨이퍼 위에 만든 다이(칩이 될 작은 네모) 중 검사를 통과한 것의 비율"이라는 뜻과, "수율이 낮으면 같은 재료와 공정으로 팔 수 있는 칩이 줄어 비용이 커진다"는 내용이 들어 있다.
+      수율을 다이 단위로 셀지 웨이퍼 단위로 셀지는 회사·상황마다 다르다. 오늘 공장 기록은 웨이퍼 1장 = 검사 1건으로 단순화했다.</div>
     </div>
   </section>
 
   <section class="block">
-    <h2>파이썬 ② — groupby로 반별 비교하기</h2>
+    <h2>groupby — 반별로 묶어서 비교하기</h2>
+    <p><code>groupby("반")</code>은 같은 반끼리 행을 묶고, 뒤의 <code>["정답"].mean()</code>은 묶음마다 <code>정답</code> 열의 평균을 낸다. 피자 가게에서 판을 오븐별로 모아 오븐마다 탄 비율을 따로 세는 것과 같다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>반</th><th>푼 문항</th><th>맞힌 문항</th><th>정답률</th></tr></thead>
+        <tbody>
+          <tr><td>A반</td><td>8</td><td>7</td><td>7 ÷ 8 × 100 = 87.5</td></tr>
+          <tr><td>B반</td><td>8</td><td>5</td><td>5 ÷ 8 × 100 = 62.5</td></tr>
+          <tr><td>C반</td><td>8</td><td>6</td><td>6 ÷ 8 × 100 = 75.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="img-caption">groupby가 반마다 하는 계산(쪽지시험 기록의 실제 값). 아래 코드 한 줄이 이 표를 만든다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 반별로 묶어 세기</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(quiz.groupby("반")["정답"].count())
-print(quiz.groupby("반")["정답"].sum())
-class_rate = quiz.groupby("반")["정답"].mean() * 100
-print(class_rate.round(1))</code></pre>
+      <div class="code-label"><span>Python — 반별 정답률 구하고 줄 세우기 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>class_rate = quiz.groupby("반")["정답"].mean() * 100
+print(class_rate.round(1))
+
+print(class_rate.sort_values())</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">반
-A반    8
-B반    8
-C반    8
-Name: 정답, dtype: int64
-반
-A반    7
-B반    5
-C반    6
-Name: 정답, dtype: int64
-반
 A반    87.5
 B반    62.5
 C반    75.0
+Name: 정답, dtype: float64
+반
+B반    62.5
+C반    75.0
+A반    87.5
 Name: 정답, dtype: float64</pre>
     </div>
-    <p>맨 위 <code>반</code>은 이름표 열, <code>Name: 정답</code>은 계산한 열이다. <code>.round(1)</code>은 소수 첫째 자리까지 반올림한다.
-    다른 열도 대괄호 안 이름만 바꾸면 같은 방법으로 묶는다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 반별 평균 풀이시간</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(quiz.groupby("반")["풀이시간_초"].mean().round(1))</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">반
-A반    61.2
-B반    76.9
-C반    67.8
-Name: 풀이시간_초, dtype: float64</pre>
-    </div>
+    <ul class="pt-list">
+      <li>맨 위 <code>반</code>은 묶은 열 이름, 맨 아래 <code>Name: 정답</code>은 평균 낸 열 이름이다. <code>dtype: float64</code>는 "소수가 있는 숫자"라는 뜻이라 보지 않아도 된다.</li>
+      <li><code>.round(1)</code>은 소수 첫째 자리까지 반올림한다. <code>sort_values()</code>(4차시)는 작은 값부터 줄 세운다 — 가장 낮은 반이 맨 위에 온다.</li>
+      <li>전체 75.0%였지만 B반은 62.5%다. 다만 한 반에 두 명뿐이라, 학생 한 명에 따라 반 정답률이 크게 흔들린다. 건수가 적은 묶음의 비율은 조심해서 읽는다.</li>
+    </ul>
   </section>
 
   <section class="block">
-    <h2>파이썬 ③ — 학생별로 묶기(로트별 수율과 같은 계산)</h2>
-    <p>이름표를 "이름"으로 바꾼다. 한 학생이 4문항이라 정답률은 0·25·50·75·100% 중 하나다(로트 수율도 같다).</p>
+    <h2>오답 유형 줄 세우기 — 무엇부터 고칠까</h2>
+    <p>틀린 문항(-1)만 고른 뒤(4차시 조건 검색) <code>오답유형</code>을 센다. 많은 순으로 세워 막대로 그리면 "무엇부터 고칠지"가 보인다. 막대는 6차시의 4줄 틀 그대로다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 학생별 정답률</span><button class="copy-btn">복사</button></div>
-      <pre><code>stu_rate = quiz.groupby("이름")["정답"].mean() * 100
-print(stu_rate)
-print((stu_rate &lt; 80).sum(), "명이 정답률 80% 미만")</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">이름
-도윤     75.0
-서준    100.0
-시우     75.0
-예린     25.0
-지민    100.0
-하은     75.0
-Name: 정답, dtype: float64
-4 명이 정답률 80% 미만</pre>
-    </div>
-    <p><code>stu_rate &lt; 80</code>은 학생마다 True/False를 만들고, <code>.sum()</code>이 True(=1)만 센다(5차시 <code>isna().sum()</code>과 같은 원리). 괄호가 있어야 비교를 먼저 한다.</p>
-    <p><code>stu_rate</code>는 숫자 한 줄(Series)이라 열 이름 없이 <code>sort_values()</code>만 쓴다. 기본은 작은 값부터라 <code>head(1)</code>이 가장 낮은 학생이다. 그 학생의 기록을 여러 열과 함께 본다.</p>
-    <p>둘째 줄 끝의 <code>[["반", "문제번호", ...]]</code>처럼 대괄호를 두 겹 쓰면 <b>여러 열을 골라</b> 표로 본다. 안쪽 대괄호가 열 이름 목록이다(열 하나는 <code>["반"]</code>, 여러 개는 <code>[["반", "문제번호"]]</code>).</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 최저 정답률 학생</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(stu_rate.sort_values().head(1))
-print(quiz[quiz["이름"] == "예린"][["반", "문제번호", "풀이시간_초", "오답유형"]])</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">이름
-예린    25.0
-Name: 정답, dtype: float64
-     반  문제번호  풀이시간_초      오답유형
-12  B반     1      85  문제 잘못 읽음
-13  B반     2     110     계산 실수
-14  B반     3      95       NaN
-15  B반     4     120     개념 부족</pre>
-    </div>
-    <p>B반만 골라(4차시 조건 검색) 같은 계산을 하고, <code>value_counts()</code>로 정답률마다 몇 명인지 센다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — B반 학생별 정답률</span><button class="copy-btn">복사</button></div>
-      <pre><code>b_class = quiz[quiz["반"] == "B반"]
-b_stu_rate = b_class.groupby("이름")["정답"].mean() * 100
-print(b_stu_rate.value_counts())</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">정답
-100.0    1
-25.0     1
-Name: count, dtype: int64</pre>
-    </div>
-    <p>왼쪽은 정답률 값, 오른쪽은 그 정답률인 학생 수다(맨 위 <code>정답</code>은 원래 열 이름). B반 62.5%는 두 학생이 고르게 낮은 게 아니라 한 학생(예린 25%)이 크게 낮았던 것이다.</p>
-  </section>
-
-  <section class="block">
-    <h2>파이썬 ④ — 오답 유형 줄 세우기(파레토)</h2>
-    <p>오답(-1)만 골라 <code>오답유형</code>을 센다. <code>value_counts()</code>(6차시)는 많은 순서로 줄을 세운다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 오답 유형별 개수</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 오답 유형 세기 (노트북 3단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>wrong_counts = quiz[quiz["정답여부"] == -1]["오답유형"].value_counts()
 print(wrong_counts)</code></pre>
     </div>
@@ -445,126 +224,280 @@ print(wrong_counts)</code></pre>
 Name: count, dtype: int64</pre>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>Python — 많은 순 막대그래프</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 오답 유형 막대그래프 (노트북 3단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import matplotlib.pyplot as plt
 plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams["axes.unicode_minus"] = False
 
 plt.bar(wrong_counts.index, wrong_counts)
-plt.xticks(rotation=45)
 plt.xlabel("오답유형")
 plt.ylabel("오답 수")
 plt.show()</code></pre>
     </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      계산 실수(3) → 문제 잘못 읽음(2) → 개념 부족(1) 순으로 낮아지는 막대 3개.
+    <p>막대 세 개가 계산 실수(3) · 문제 잘못 읽음(2) · 개념 부족(1) 순으로 선다. <code>value_counts()</code>가 이미 많은 순으로 세어 주므로 막대도 그 순서다. 오답 6개 중 절반이 계산 실수라, 계산 실수부터 줄이면 효과가 크다.</p>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>파레토 차트</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람에게 파레토 차트가 무엇인지 쪽지시험 오답 유형 예시로 3문장 안에 설명해줘. 공장에서 불량 유형을 많은 순으로 줄 세우는 이유도 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "종류별 개수를 많은 순으로 막대로 세우고, 누적 비율 선을 함께 그리기도 한다", "많은 몇 가지부터 고치면 전체를 가장 크게 줄일 수 있다"는 내용이 들어 있다.
+      "상위 20%가 80%를 차지한다"는 말은 경험적 표현일 뿐 늘 정확히 맞는 규칙은 아니다. 오늘은 누적 선 없이 막대만 그린다.</div>
     </div>
-    <p><code>wrong_counts.index</code>는 막대 아래 이름표, <code>wrong_counts</code>는 막대 높이다. <code>plt.xticks(rotation=45)</code>는 이름표를 45도 기울인다.</p>
   </section>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>같은 코드에서 표·열 이름만 바꿔(<code>quiz</code> → <code>df</code>, 반 → 설비번호, 이름 → 로트번호, 정답 → 합격) 오늘의 질문에 답한다.</p>
+    <p>공장 기록 <code>week07_equipment_yield.csv</code>(300행 11열, 교육용 가상 데이터)는 로트 75개 × 웨이퍼 4장 = 웨이퍼 300장의 기록이다(실제 로트는 보통 25장 안팎, 이 기록은 연습용으로 4장). 한 행 = 웨이퍼 1장이다.
+    위 코드에서 표 이름이 <code>quiz</code> → <code>df</code>로, 열 이름만 바뀐다.</p>
+    <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 설비의 기록과, ⑦ EDS(전기 검사)까지 마친 뒤의 최종 합격 여부다(1차시 공정 지도 그림은 PART 2에서 다시 본다).</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
+        <tbody>
+          <tr><td><code>로트번호</code>, <code>웨이퍼번호</code></td><td>웨이퍼 묶음 번호와 묶음 안에서 몇 번째 웨이퍼인지(1~4)</td></tr>
+          <tr><td><code>설비번호</code>, <code>공정명</code></td><td>어느 기계(EQ-01~EQ-04)에서 어떤 작업(산화·포토·식각·증착·세정)을 했나. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록)</td></tr>
+          <tr><td><code>작업조</code></td><td>그 시간에 일한 교대 근무팀(A·B·C조)</td></tr>
+          <tr><td><code>온도_C</code>, <code>압력_Pa</code>, <code>진공도_mTorr</code>, <code>처리시간_sec</code></td><td>설비 안 온도(섭씨 도), 압력(파스칼), 진공도(공기를 얼마나 뺐나, 낮을수록 진공에 가깝다), 작업에 걸린 초. 압력 값의 절대 크기는 해석하지 않는다(교육용 가상 값, 데이터 설명서 참고)</td></tr>
+          <tr><td><code>불량유형</code></td><td>불합격일 때 기록된 불량의 종류(두께 불량·파티클 등). 공정 중간의 두께 측정·표면 검사와 마지막 전기 검사(⑦ EDS)에서 찾은 것을 한 열에 모아 둔 교육용 설정이다. 합격이면 빈칸. 같은 행의 <code>공정명</code> 작업에서 생겼다는 뜻은 아니다</td></tr>
+          <tr><td><code>합격여부</code></td><td>그 웨이퍼의 최종 판정(공정 중간 검사와 전기 검사 결과를 모은 교육용 설정), 행마다. <b>1 = 합격, -1 = 불합격</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--muted);font-size:.9rem;">실제 공장은 웨이퍼 위 다이 단위로 수율을 세는 경우가 많다. 이 기록은 웨이퍼 1장 = 검사 1건으로 단순화해, 웨이퍼를 센 비율(설비별·로트별 모두)을 <b>합격률</b>이라 부르고 수율 대신 쓴다. 다이를 센 비율(PART 2 워밍업)만 수율이라 부른다.</p>
+    <div class="callout warn"><b class="tag">이 기록의 단순화</b> 실제 웨이퍼는 여러 공정을 모두(여러 번) 거친다. 이 기록은 로트마다 설비 하나·공정 하나만 적어 둔 교육용 단순화다. 그래서 공정 차이와 설비 차이(그리고 로트 차이)를 숫자로 떼어 볼 수 없다 — 무엇을 찾든 "원인 후보"까지만 말한다.</div>
 
-    <h3>확인 1 — 설비마다 합격률이 정말 다를까?</h3>
+    <h3>확인 1 — 작업조별 불합격률은 다를까</h3>
+    <p>쪽지시험의 <code>정답</code> 열과 같은 모양으로, 이번에는 <code>== -1</code>(<code>합격여부</code>에서 -1 = 불합격)로 <code>불합격</code> 열을 만들어 작업조별로 묶는다. True/False 열의 평균이니 불합격률(%)이 나온다.</p>
+    <div class="callout practice"><b class="tag">해보기</b> 노트북 4단계에는 <code>groupby(____)</code> 빈칸이 하나 있다. 2단계에서 <code>"반"</code>이 있던 자리에 작업조 열 이름을 넣는다. 아래 결과와 같게 나오면 맞다.</div>
     <div class="code-block">
-      <div class="code-label"><span>Python — 반도체 데이터 읽고 합격 열 만들기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 공장 기록 읽고 작업조별 불합격률 구하기 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>df = pd.read_csv("../../data/weekly/week07/week07_equipment_yield.csv", encoding="utf-8-sig")
 print(df.shape)
 
-df["합격"] = df["합격여부"] == 1
-print(df["합격"].sum(), "장 합격")
-print(df["합격"].mean() * 100)</code></pre>
+df["불합격"] = df["합격여부"] == -1
+# TODO: 작업조별로 묶도록 열 이름을 채우세요(2단계 "반"이 있던 자리).
+shift_fail = df.groupby(____)["불합격"].mean() * 100
+print(shift_fail.round(1))</code></pre>
     </div>
+    <button class="reveal-btn">빈칸 정답 보기</button>
+    <div class="answer-box"><code>"작업조"</code> — 열 이름이라 따옴표로 감싼다. 따옴표 없이 쓰면 <code>NameError: name '작업조' is not defined</code>가 난다.</div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(300, 11)
-264 장 합격
-88.0</pre>
+작업조
+A조     9.8
+B조    15.5
+C조     9.7
+Name: 불합격, dtype: float64</pre>
     </div>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 설비별 합격률</span><button class="copy-btn">복사</button></div>
-      <pre><code>pass_rate = df.groupby("설비번호")["합격"].mean() * 100
-print(pass_rate.round(1))</code></pre>
+    <p><b>공장 말로 읽기</b> — B조가 일한 웨이퍼의 불합격률이 15.5%로, A조·C조(약 10%)보다 높다. 그렇다고 "B조 때문"이라고 단정할 수는 없다.
+    B조가 일한 시간에 어느 설비·어떤 로트가 몰렸는지에 따라서도 이 숫자는 달라진다(실제로 B조는 EQ-04 기록을 36장 맡았다). 지금 말할 수 있는 것은 "B조 시간대는 <b>원인 후보</b>로 더 살펴볼 곳"까지다.</p>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>비교만으로 원인 단정 못하는 이유</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>공장에서 설비별 불합격률을 비교했더니 한 설비가 가장 높았어. 이것만으로 그 설비가 불량의 원인이라고 단정할 수 없는 이유를 데이터 분석을 처음 배우는 사람에게 피자 가게 오븐 예시로 3가지 설명해줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "그 설비에 문제가 많은 재료(로트)나 어려운 작업이 몰렸을 수 있다", "건수가 적으면 우연히 높게 나올 수 있다", "다른 조건(시간대·작업자)이 함께 달랐을 수 있다"처럼
+      비교 결과를 바꿀 수 있는 다른 이유를 말한다. 그래서 비교로 찾은 곳은 "원인 후보"로 부르고, 설비 점검 기록·다른 시기 기록 같은 추가 확인을 거친다.</div>
     </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">설비번호
-EQ-01    98.1
-EQ-02    86.5
-EQ-03    91.1
-EQ-04    75.0
-Name: 합격, dtype: float64</pre>
-    </div>
-    <p><b>공장 말로 읽기</b>: 전체 88.0% 안에 98.1%짜리와 75.0%짜리 설비가 섞여 있다. EQ-04(88장 중 66장)부터 살펴본다.
-    장수도 함께 본다: EQ-02(52장)는 1장만 더 불합격해도 86.5% → 84.6%(약 1.9%p), EQ-01(104장)은 98.1% → 97.1%(약 1.0%p) 떨어진다.
-    평균 온도는 설비마다 299.3~301.7℃로 비슷해(실습지 문제 4) 온도 평균만으로는 EQ-04를 찾지 못한다.</p>
 
-    <h3>확인 2 — 수율이 가장 낮은 로트는 어느 설비에서 나왔을까?</h3>
+    <h3>확인 2 — 불합격 웨이퍼가 1장 이상 섞인 로트는 몇 개일까</h3>
+    <p>같은 계산을 <code>로트번호</code>로 묶으면 로트마다 불합격 비율이 나온다. 한 로트는 웨이퍼 4장이라 1장만 불합격이어도 25%다. 그래서 "20%를 넘는다" = "불합격이 1장 이상"이다. 그런 로트를 센다(4차시 조건 + True를 1로 세는 <code>sum()</code>).</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 로트별 수율과 최저 수율 로트</span><button class="copy-btn">복사</button></div>
-      <pre><code>lot_yield = df.groupby("로트번호")["합격"].mean() * 100
-print(lot_yield.head())
-print((lot_yield &lt; 80).sum(), "개 로트가 수율 80% 미만")
-print(lot_yield.sort_values().head(1))
-print(df[df["로트번호"] == "LOT-0008"][["설비번호", "공정명", "작업조", "불량유형"]])</code></pre>
+      <div class="code-label"><span>Python — 불합격 비율이 20%를 넘는 로트 세기 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>lot_fail = df.groupby("로트번호")["불합격"].mean() * 100
+print((lot_fail &gt; 20).sum())</code></pre>
     </div>
     <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">로트번호
-LOT-0001    100.0
-LOT-0002    100.0
-LOT-0003    100.0
-LOT-0004    100.0
-LOT-0005    100.0
-Name: 합격, dtype: float64
-21 개 로트가 수율 80% 미만
-로트번호
-LOT-0008    0.0
-Name: 합격, dtype: float64
-     설비번호 공정명 작업조   불량유형
-28  EQ-04  증착  B조  정렬 불량
-29  EQ-04  증착  B조  두께 불량
-30  EQ-04  증착  B조  패턴 불량
-31  EQ-04  증착  B조    파티클</pre>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">21</pre>
     </div>
-    <p><b>공장 말로 읽기</b>: 75개 중 21개 로트가 80% 미만(연습용 기준)이고, 최저 LOT-0008(0%)도 EQ-04다.
-    하지만 이 로트는 <b>증착</b> 작업이고 <b>B조</b>가 맡았다. 로트 하나로는 무엇 탓인지 가릴 수 없다.</p>
-
-    <h3>확인 3 — EQ-04는 늘 나쁠까?</h3>
-    <div class="code-block">
-      <div class="code-label"><span>Python — EQ-04의 로트만 보기</span><button class="copy-btn">복사</button></div>
-      <pre><code>eq04 = df[df["설비번호"] == "EQ-04"]
-eq04_lot_yield = eq04.groupby("로트번호")["합격"].mean() * 100
-print(eq04_lot_yield.value_counts())</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">합격
-100.0    11
-75.0      4
-50.0      4
-25.0      2
-0.0       1
-Name: count, dtype: int64</pre>
-    </div>
-    <p><b>공장 말로 읽기</b>: EQ-04 로트 22개 중 <b>11개는 100%</b>, 80% 미만은 4 + 4 + 2 + 1 = <b>11개</b>다. 쪽지시험 B반처럼 일부에서만 크게 나빴다.</p>
-    <div class="callout warn">
-      <b class="tag">그래서 "EQ-04가 원인이다"라고 말해도 될까?</b>
-      아직 안 된다. "EQ-04는 합격률이 가장 낮고 수율 80% 미만 로트도 가장 많아 <b>원인 후보</b>로 먼저 살펴볼 만하다"까지다. 후보를 좁히는 법은 8차시에 배운다.
-    </div>
+    <p><b>공장 말로 읽기</b> — 로트 75개 중 <b>21개</b>에 불합격 웨이퍼가 섞여 있다(로트 안 합격률 80% 미만).
+    설비별 합격률과 가장 많은 불량 유형 — 오늘의 미션 — 은 PART 3 실습지 문제 1~3에서 직접 구한다.</p>
   </section>
 
   <section class="block">
-    <h2>실습: 묶어서 비교하기 따라 하기</h2>
-    <p><code>week07_student.ipynb</code>를 위에서 아래로 실행하고 <code>____</code>를 채운다. 반도체 문제는 <a href="worksheet.html">실습지</a> 문제 1~9와 같다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>Orange3로 먼저 훑어보기</b> — 설비별 차이를 짐작한다. (노트북 대응 없음)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>쉬운 예제</b> — 쪽지시험으로 정답 열·groupby·학생별 묶기·파레토를 따라 한다. (노트북 1~4단계)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>반도체: 읽기와 설비별 비교</b> — 실습지 문제 1~4. (노트북 5단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>반도체: 로트별 수율</b> — 실습지 문제 5~7. (노트북 6단계)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>반도체: 불량 유형과 결과 정리</b> — 실습지 문제 8~9, "원인 후보"를 넣은 한 문장. (노트북 7단계)</div></div>
-    <div class="step"><div class="num">6</div><div class="content"><b>AI 활용</b> — 질문하기, AI 코드 실행하기. (노트북 8~9단계)</div></div>
+    <h2>실습 따라 하기</h2>
+    <p>학생용 노트북을 위에서 아래로 실행한다. 1~3단계는 코드가 완성돼 있고, 4단계에 빈칸이 하나 있다.</p>
+    <div class="step"><div class="num">1</div><div class="content"><b>정답 열 만들기</b> — 쪽지시험 기록을 읽고 <code>== 1</code>로 <code>정답</code> 열을 만들어 정답 수 18, 정답률 75.0을 확인한다. (노트북 1단계)</div></div>
+    <div class="step"><div class="num">2</div><div class="content"><b>반별로 묶기</b> — <code>groupby("반")</code>으로 반별 정답률을 구하고 <code>sort_values()</code>로 줄 세운다. (노트북 2단계)</div></div>
+    <div class="step"><div class="num">3</div><div class="content"><b>오답 유형 줄 세우기</b> — 오답 행만 골라 <code>value_counts()</code>로 세고 막대로 그린다. (노트북 3단계)</div></div>
+    <div class="step"><div class="num">4</div><div class="content"><b>공장 기록으로 확인</b> — <code>groupby(____)</code> 빈칸 하나를 채워 작업조별 불합격률을 구하고, 불합격이 섞인 로트 수를 본다. (노트북 4단계)</div></div>
+    <div class="step"><div class="num">5</div><div class="content"><b>반도체 데이터 실습</b> — 5단계의 문제 1~3(오늘의 미션)은 PART 3에서 실습지를 보며 푼다. (노트북 5단계)</div></div>
+    <div class="callout warn"><b class="tag">체크포인트</b> 숫자가 위 결과와 다르면 셀을 건너뛰었거나 순서가 꼬인 것이다. "막혔을 때" 셀대로 Kernel → Restart Kernel and Run All Cells…로 위에서부터 다시 실행한다.</div>
+  </section>
+
+  <section class="block" id="part2">
+    <h2><span class="step-badge">PART 2</span> Orange3 — 피벗 표로 세고 웨이퍼 맵으로 열어 보기</h2>
+    <p>PART 1에서는 <code>groupby</code>로 묶어서 비율을 계산했다. Orange에서는 <b>Pivot Table</b>(피벗 표)로 설비 × 합격여부 칸마다 개수를 한 번에 세고, 숫자로 찾은 설비를 웨이퍼 맵으로 열어 본다. 오늘 새 위젯은 <code>Pivot Table</code> 하나다.</p>
+    <p>PART 1에서 받은 키트를 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
+
+    <h3>Orange 말 사전</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>말</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td>캔버스</td><td>위젯을 놓고 선으로 잇는 가운데 하얀 작업판</td></tr>
+          <tr><td>위젯</td><td>한 가지 일을 하는 기능 상자. 더블클릭하면 자기 창이 열린다</td></tr>
+          <tr><td>워크플로(<code>.ows</code>)</td><td>캔버스에 놓은 위젯과 연결을 통째로 저장한 파일</td></tr>
+          <tr><td><code>.tab</code></td><td>Orange가 읽는 표 파일. CSV와 내용은 같고, 열마다 종류·역할이 적혀 있다</td></tr>
+          <tr><td>툴팁</td><td>마우스를 올리고 잠시 기다리면 뜨는 작은 설명 상자</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>위젯 이름표</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
+        <tbody>
+          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
+          <tr><td><code>Pivot Table</code></td><td>Transform</td><td>피벗 표</td><td><b>오늘 새 위젯.</b> 행(Rows)과 열(Columns)에 놓은 두 열의 값 조합마다 개수를 세어 표로 보여 준다. 파이썬 <code>groupby</code>로 묶어 세는 일과 같다</td></tr>
+          <tr><td><code>Select Rows</code></td><td>Transform</td><td>행 고르기</td><td>조건에 맞는 행만 남긴다(3차시에 써 봤다). 설비 한 대의 웨이퍼만 고른다</td></tr>
+          <tr><td><code>Scatter Plot</code></td><td>Visualize</td><td>산점도</td><td>다이_X·다이_Y로 점을 찍어 웨이퍼 맵을 그린다(6차시에 써 봤다)</td></tr>
+          <tr><td><code>Box Plot</code></td><td>Visualize</td><td>상자 그림</td><td>설비마다 온도가 얼마나 퍼졌는지 본다(6차시에 써 봤다)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout concept">
+      <b class="tag">Pivot Table 창 읽는 법</b>
+      <ul class="pt-list">
+        <li>창 왼쪽에서 <b>Rows</b>(표의 줄로 놓을 열)와 <b>Columns</b>(표의 칸으로 놓을 열)를 고른다. 아래 <b>Aggregations</b>(계산 방법)의 <b>Count</b>(개수)는 처음부터 체크돼 있다.</li>
+        <li>처음 이으면 Rows가 <code>합격여부</code>, Columns가 <code>None</code>으로 잡혀 합격여부끼리 센 엉뚱한 표(대각선에만 숫자)가 먼저 뜬다. 고장이 아니다 — Rows·Columns 두 칸을 바꾸면 된다.</li>
+        <li>오른쪽 표의 칸 하나 = "그 줄 값이면서 그 칸 값인 행의 개수"다. 맨 끝 <b>Total</b> 줄·칸은 합계다.</li>
+        <li>개수인데도 <code>1207.0</code>처럼 소수점이 붙어 보인다. 1207과 같은 뜻이다. <b>Values</b> 칸은 Count만 쓸 때는 무엇이 들어 있어도 결과가 같다.</li>
+      </ul>
+    </div>
+    <div class="callout warn"><b class="tag">주의</b> 오늘 위젯은 File이나 Select Rows에서 잇는다. Data Table 뒤에는 위젯을 잇지 않는다(Data Table이 내보내는 것은 화면에서 고른 행뿐이다).</div>
+
+    <h3>오늘 데이터는 공정 지도의 어디일까</h3>
+    <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
+         alt="반도체 8대 공정 흐름도. ① 웨이퍼 제조부터 ⑧ 패키징까지 여덟 칸이 화살표로 이어지고, ②~⑥ 칸은 같은 색으로 묶여 여러 번 되풀이한다는 화살표가 있다">
+    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
+    <ul class="pt-list">
+      <li>워밍업 <code>week07_orange_wafer_lots.csv</code> — <b>공정 지도 위치: ④ 식각</b> 설비 3대를 거친 웨이퍼의 <b>⑦ EDS(전기 검사)</b> 결과. ④ 식각은 그림대로 필요 없는 부분을 깎아 내는 단계다.</li>
+      <li>반도체 <code>week07_equipment_yield.csv</code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비 기록과 <b>⑦</b> 뒤 최종 합격 여부(PART 1에서 본 그 기록).</li>
+    </ul>
+
+    <h3>워밍업 — 식각 설비 3대의 웨이퍼 12장</h3>
+    <p><code>week07_orange_wafer_lots.csv</code>(3,804행 7열, 교육용 가상 데이터)는 식각 설비 3대가 4장씩 처리한 웨이퍼 12장을 ⑦ EDS에서 검사한 결과다.
+    이 연습용 웨이퍼는 다이가 317개라(교육용 가상 격자 — 실제 다이 수는 칩 크기에 따라 다르다) 12 × 317 = 3,804행이고, <b>한 행 = 다이 1개</b>다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>열</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td><code>웨이퍼ID</code></td><td>웨이퍼 번호(W-01~W-12)</td></tr>
+          <tr><td><code>설비번호</code></td><td>그 웨이퍼를 식각한 설비(식각-1·식각-2·식각-3, 각 4장). 공장 기록의 EQ-01~EQ-04와는 다른 설비다 — 헷갈리지 않게 이름을 다르게 지었다</td></tr>
+          <tr><td><code>다이_X</code>, <code>다이_Y</code></td><td>다이의 가로·세로 칸 번호(-10~10, 웨이퍼 가운데가 0)</td></tr>
+          <tr><td><code>중심거리_mm</code></td><td>웨이퍼 가운데에서 그 다이까지 거리. <code>_mm</code> = 밀리미터</td></tr>
+          <tr><td><code>불량패턴</code></td><td>그 웨이퍼의 불량 모양(없음·가장자리형·스크래치형). 오늘은 보지 않고, 9차시에 다시 만난다</td></tr>
+          <tr><td><code>합격여부</code></td><td>다이 전기 검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>웨이퍼 불량 패턴 종류</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게 웨이퍼 맵에서 자주 보이는 불량 패턴(가운데형, 가장자리형, 긁힌 자국 모양 등)을 3가지로 설명해줘. 패턴 모양이 불량 이유를 찾는 데 어떻게 도움이 되는지도 단정하지 말고 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "불량이 가운데·가장자리·한 줄(긁힌 자국)처럼 서로 다른 모양으로 모이고, 그 모양이 어느 공정·설비를 먼저 살펴볼지 정하는 <b>단서</b>가 된다"는 내용이 들어 있다.
+      모양은 단서일 뿐 이유를 확정하지 않는다. AI가 "가장자리형 = 반드시 ○○ 고장"처럼 하나로 단정하면 그 부분은 걸러 읽는다.</div>
+    </div>
+
+    <h3>워크플로 열기</h3>
+    <ol>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>orange3/week07/week07_1_waferlots_start.ows</code>를 연다.</li>
+      <li>캔버스에 File 위젯 하나와 ①~④ 안내 메모가 보이면 준비가 끝난 것이다. File을 더블클릭해 3,804행이 들어왔는지 본다. 막히면 같은 폴더의 <code>week07_1_waferlots_done.ows</code>(완성본)를 연다.</li>
+    </ol>
+    <img class="chart-img" src="../../assets/images/orange3/week07_02_waferlots_start.png"
+         alt="week07_1_waferlots_start.ows를 연 Orange3 캔버스"
+         data-shot="week07_1_waferlots_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 ①~④ 안내 메모가 보이게">
+
+    <div class="step"><div class="num">1</div><div class="content"><b>설비별로 세기 — 피벗 표</b> — 왼쪽 Transform 묶음에서 <code>Pivot Table</code>을 끌어 와 File과 잇고 더블클릭한다.
+    <b>Rows</b>를 <code>합격여부</code>에서 <code>설비번호</code>로, <b>Columns</b>를 <code>None</code>에서 <code>합격여부</code>로 바꾸고, Aggregations에서 <b>Count</b>에 체크돼 있는지 확인한다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week07_03_waferlots_pivot.png"
+         alt="Pivot Table 창. 설비 3대를 줄로, 합격여부 1과 -1을 칸으로 놓고 다이 수를 센 표"
+         data-shot="week07_1_waferlots_done.ows의 Pivot Table (피벗 표) 창 전체 — 왼쪽 Rows 설비번호, Columns 합격여부, Aggregations Count 체크와 오른쪽 표(설비 3줄 + Total 줄, 1 / -1 / Total 칸)가 함께 보이게">
+    <p>불합격(-1) 칸이 가장 큰 설비는 어디일까? 그 설비의 수율(합격 다이 ÷ 전체 다이 × 100)도 계산해 본 뒤 열어 보자.</p>
+    <button class="reveal-btn">세어 본 결과 보기</button>
+    <div class="callout success answer-box">
+      <b class="tag">숫자로 찾은 설비</b> 식각-3의 불합격 칸이 <b>214</b>로 가장 크다. 수율은 식각-1 1207 ÷ 1268 = <b>95.2%</b>, 식각-2 <b>94.8%</b>, 식각-3 1054 ÷ 1268 = <b>83.1%</b>다.
+      피벗 표가 센 것은 <b>다이 수</b>다(웨이퍼 12장이 아니라 다이 3,804개). 설비마다 웨이퍼 4장 × 317개 = 1,268개다.
+    </div>
+    <div class="step"><div class="num">2</div><div class="content"><b>그 설비만 고르기</b> — Transform 묶음의 <code>Select Rows</code>를 <b>File에</b> 잇고 더블클릭한다. 첫 줄에 <code>합격여부 is 1</code>이 이미 들어 있다.
+    <b>줄을 새로 추가하지 말고</b> 그 첫 줄의 열을 <code>설비번호</code>로, 값을 1단계에서 찾은 설비로 바꾼다.
+    창 아래 상태 표시줄에서 내보내는 행이 1,268행인지 본다. <b>1,054행</b>이면 첫 줄(<code>합격여부 is 1</code>)이 남아 합격 다이만 골라진 것이다 — 첫 줄을 지우거나 바꾼다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week07_04_etch3_select_rows.png"
+         alt="Select Rows 창에서 설비번호 is 식각-3 조건 한 줄"
+         data-shot="week07_1_waferlots_done.ows의 Select Rows (식각-3만) 창 — 조건 한 줄(설비번호 is 식각-3)과 창 아래 상태 표시줄의 행 수(3804 → 1268)가 보이게">
+    <div class="step"><div class="num">3</div><div class="content"><b>웨이퍼 맵으로 열어 보기</b> — Visualize 묶음의 <code>Scatter Plot</code>을 <b>Select Rows에</b> 잇고 더블클릭한다.
+    처음에는 Axis x가 <code>웨이퍼ID</code>, Axis y가 <code>설비번호</code>로 잡혀 점이 세로줄로 찍힌다. <b>Axis x</b>를 <code>다이_X</code>, <b>Axis y</b>를 <code>다이_Y</code>로 바꾸고, <b>Color</b>가 <code>합격여부</code>인지 확인한다. 창이 납작하면 모서리를 끌어 정사각형에 가깝게 키운다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week07_05_etch3_scatter.png"
+         alt="식각-3 웨이퍼만 고른 Scatter Plot 창. 빨간 점이 가장자리 고리에 몰려 있다"
+         data-shot="week07_1_waferlots_done.ows의 Scatter Plot (웨이퍼 맵) 창 전체 — 왼쪽 설정 칸의 Axis x 다이_X, Axis y 다이_Y, Color 합격여부와 오른쪽 그림(둥근 웨이퍼, 가장자리 고리의 빨간 점)이 함께 보이게">
+    <p>빨간 점(-1, 불합격)은 웨이퍼의 어디에 있나? 말로 해 본 뒤 열어 보자.</p>
+    <button class="reveal-btn">보이는 것 확인 보기</button>
+    <div class="callout success answer-box">
+      <b class="tag">숫자 다음에 위치</b> 식각-3의 불합격 다이가 <b>가장자리 고리</b>에 몰려 있다. 불합격 214개 중 <b>194개</b>가 가운데에서 112mm보다 먼 가장자리다.
+      웨이퍼 4장의 다이가 같은 자리(같은 X·Y)에 겹쳐 찍혀서 고리가 더 진하게 보인다.
+    </div>
+    <p>웨이퍼 12장을 한 장씩 따로 그리면 아래와 같다. 식각-3 네 장이 모두 같은 모양인지 확인해 보자.</p>
+    <img class="chart-img" src="../../assets/images/generated/week07_wafer_maps_by_equipment.png"
+         alt="식각 설비 3대(줄)가 처리한 웨이퍼 12장(칸)의 웨이퍼 맵. 칸마다 수율이 적혀 있고, 식각-3 줄의 네 장은 빨간 불합격 칸이 가장자리 고리에 몰려 있다">
+    <p class="img-caption">식각 설비 3대가 처리한 웨이퍼 12장의 맵과 수율(빨강 = 불합격 다이(-1), 옅은 초록 = 합격 다이(1) — Orange 화면의 하늘색 합격 점과 색이 다르다). 식각-3의 웨이퍼는 네 장 모두 불량이 가장자리 고리에 몰린다 — 원인 후보를 좁히는 단서다(교육용 가상 데이터).
+    식각-2의 W-06처럼 한 줄로 이어진 불량(긁힌 자국 모양)도 있다.</p>
+    <div class="callout concept">
+      <b class="tag">숫자로 찾고, 그림으로 단서를 하나 더</b>
+      Pivot Table로 "수율이 낮은 설비"를 찾고, 그 설비의 웨이퍼를 맵으로 열어 "불량이 가장자리에 몰렸다"는 단서를 하나 더 얻었다.
+      그래서 식각-3의 가장자리 처리 조건이 <b>원인 후보</b>다. 이유로 확정하려면 그 설비의 점검·조건 기록 같은 추가 확인이 필요하다. 이 웨이퍼 4장이 식각 뒤에 거친 다른 공정·설비도 함께 살펴봐야 하고, 근거가 웨이퍼 4장뿐이라는 점도 기억한다.
+    </div>
+
+    <h3>반도체 — 공장 기록을 Orange로 보기</h3>
+    <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 이 절은 강사가 화면으로 보여 준다(캔버스 메모 ③). 학생은 따라 누르지 않고 순서만 눈으로 확인한다. 메모 ②의 Pivot Table은 PART 3 실습지 문제 4에서 직접 한다.</div>
+    <p><b>File → Open</b>으로 <code>orange3/week07/week07_2_yield_start.ows</code>를 연다. PART 1의 공장 기록(300행)이 File에 들어 있다.</p>
+    <div class="step"><div class="num">1</div><div class="content"><b>설비마다 온도의 퍼짐 — 상자 그림</b>(캔버스 메모 ③) — File에 <code>Box Plot</code>을 잇는다. 처음에는 Variable이 <code>웨이퍼번호</code>, Subgroups가 <code>합격여부</code>로 잡혀 있다. Variable 목록에서 <code>온도_C</code>, Subgroups 목록에서 <code>설비번호</code>를 클릭한다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week07_06_yield_boxplot.png"
+         alt="공장 기록의 Box Plot 창. 온도_C를 설비번호로 나눈 상자 네 개"
+         data-shot="week07_2_yield_done.ows의 Box Plot (상자 그림) 창 — Variable 온도_C, Subgroups 설비번호. 상자 네 개(EQ-01 298.40~301.65, EQ-02 295.85~304.70, EQ-03 296.55~301.30, EQ-04 298.80~304.60)와 상자 아래 숫자가 보이게">
+    <p><b>읽을 것</b> — 온도 상자가 가장 긴 설비는 <b>EQ-02</b>다(295.85~304.70, 길이 8.85). 나머지는 길이 3.25~5.80이다.
+    실습지에서 합격률이 가장 낮은 설비를 찾은 뒤, 그 설비가 온도 상자가 가장 긴 설비와 같은지 비교해 보자. 같든 다르든, 온도 상자 하나로 합격률 차이의 이유를 말할 수는 없다. 원인 후보를 한 가지로 좁히기 전에 여러 열을 함께 본다.</p>
+
+    <h3>파이썬 결과와 비교</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>질문</th><th>파이썬(PART 1·실습지)</th><th>Orange(오늘 PART 2·실습지)</th></tr></thead>
+        <tbody>
+          <tr><td>설비별로 합격·불합격은 얼마나?</td><td><code>groupby("설비번호")["합격"].mean() * 100</code> → 비율</td><td>Pivot Table → 칸마다 개수(비율은 직접 나눈다)</td></tr>
+          <tr><td>설비 한 대만 보려면?</td><td><code>df[df["설비번호"] == …]</code></td><td>Select Rows</td></tr>
+          <tr><td>불량 유형은 무엇이 많나?</td><td><code>value_counts()</code> + <code>plt.bar</code></td><td>Pivot Table의 Rows를 <code>불량유형</code>으로 바꾸면 유형별 개수를 센다(실습지 문제 4에서 파이썬 결과와 맞춰 본다). 막대까지 그리는 것은 파이썬으로 한다</td></tr>
+          <tr><td>불량이 웨이퍼의 어디에?</td><td>오늘은 그리지 않는다</td><td>Scatter Plot(웨이퍼 맵)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><b>한 문장으로</b> — <code>groupby</code>는 묶음마다 비율을 바로 계산하고, Pivot Table은 묶음마다 개수를 표로 보여 준다. 같은 표에서 나온 숫자라, Pivot Table 칸으로 나눠 구한 비율은 <code>groupby</code> 결과와 같아야 한다(실습지 문제 4에서 확인).</p>
+  </section>
+
+  <section class="block" id="part3">
+    <h2><span class="step-badge">PART 3</span> 실습지</h2>
+    <p><a href="worksheet.html">7차시 실습지</a>를 열고 순서대로 푼다. 문제 1~3이 오늘의 미션이다.</p>
+    <ol>
+      <li><b>문제 1~3 (파이썬)</b> — 노트북 5단계의 <code>____</code>를 채운다. 합격 열과 전체 합격률, 설비별 합격률, 불량 유형 순위와 막대를 구한다.</li>
+      <li><b>문제 4 (Orange)</b> — <code>week07_2_yield_start.ows</code>에서 Pivot Table을 이어 설비별 불합격 수를 읽고 문제 2의 합격률과 비교한다. Rows를 불량유형으로 바꿔 문제 3과도 맞춰 본다.</li>
+      <li><b>문제 5 (해석 문장)</b> — 합격률이 가장 낮은 설비를 "원인 후보"로 보고하는 문장을 쓴다.</li>
+    </ol>
+    <p>다 풀면 실습지의 "정답 보기"로 확인하고, 문제 5의 문장을 옆 사람에게 읽어 준다.</p>
   </section>
 
   <section class="block">
@@ -572,27 +505,39 @@ Name: count, dtype: int64</pre>
     <div class="term-grid">
       <div class="term-card">
         <h4>수율</h4><div class="en">Yield</div>
-        <dl><dt>한 줄 설명</dt><dd>만든(검사한) 것 중 정상 제품의 비율.</dd><dt>데이터에서의 예</dt><dd>LOT-0001은 4장 중 4장 합격 → 로트 수율 100%. LOT-0008은 0%.</dd></dl>
+        <dl>
+          <dt>한 줄 설명</dt><dd>만든 것 중 합격한 것의 비율. 반도체에서는 보통 웨이퍼 위 다이(칩이 될 작은 네모) 중 검사를 통과한 비율이다.</dd>
+          <dt>쉬운 비유</dt><dd>피자 조각 100개 중 팔 수 있는 조각이 92개면 수율 92%.</dd>
+          <dt>데이터에서의 예</dt><dd>식각-1 웨이퍼 4장: 다이 1,268개 중 1,207개 합격 → 95.2%</dd>
+          <dt>자주 하는 오해</dt><dd>분모를 신경 쓰지 않는다. "무엇 중에"가 다이인지 웨이퍼인지에 따라 같은 기록에서도 숫자가 달라진다.</dd>
+        </dl>
       </div>
       <div class="term-card">
-        <h4>불량률</h4><div class="en">Defect Rate</div>
-        <dl><dt>한 줄 설명</dt><dd>검사한 것 중 불량의 비율.</dd><dt>데이터에서의 예</dt><dd>300장 중 불합격 36장 → 12.0%.</dd></dl>
+        <h4>묶어서 계산하기</h4><div class="en">groupby</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>같은 값(반·설비)끼리 행을 묶고, 묶음마다 평균·개수 같은 계산을 따로 하는 것.</dd>
+          <dt>쉬운 비유</dt><dd>피자 판을 오븐별로 모아 오븐마다 탄 비율을 세는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>quiz.groupby("반")["정답"].mean() * 100</code> → A반 87.5 · B반 62.5 · C반 75.0</dd>
+          <dt>자주 하는 오해</dt><dd><code>groupby("반")</code> 뒤에 계산할 열 <code>["정답"]</code>을 빼도 된다고 생각한다. 빼면 글자 열까지 평균을 내려다 <code>TypeError</code>가 난다.</dd>
+        </dl>
       </div>
       <div class="term-card">
-        <h4>groupby</h4><div class="en">Group By</div>
-        <dl><dt>한 줄 설명</dt><dd>같은 값(이름표)을 가진 줄끼리 모아, 모음마다 계산하게 해 주는 기능.</dd><dt>데이터에서의 예</dt><dd><code>df.groupby("설비번호")["합격"].mean()</code></dd></dl>
-      </div>
-      <div class="term-card">
-        <h4>합격률 vs 로트 수율</h4><div class="en">Pass Rate vs Lot Yield</div>
-        <dl><dt>한 줄 설명</dt><dd>계산은 같고 묶는 기준만 다르다. 설비별로 묶으면 합격률, 로트별로 묶으면 로트 수율.</dd><dt>데이터에서의 예</dt><dd>EQ-04 합격률은 75.0%지만, EQ-04 로트 22개 중 11개는 수율 100%다.</dd></dl>
-      </div>
-      <div class="term-card">
-        <h4>파레토 차트</h4><div class="en">Pareto Chart</div>
-        <dl><dt>한 줄 설명</dt><dd>많은 순서로 세운 막대그래프에 누적 비율 선을 겹친 그림.</dd><dt>데이터에서의 예</dt><dd>불량 유형 7가지 중 상위 3가지가 불량 36건의 약 61.1%.</dd></dl>
+        <h4>피벗 표</h4><div class="en">Pivot Table</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>두 열의 값 조합마다 개수(또는 합계·평균)를 세어 줄 × 칸 표로 보여 주는 Orange 위젯.</dd>
+          <dt>쉬운 비유</dt><dd>오븐 번호를 줄로, "잘 구움/탐"을 칸으로 그린 집계표에 바를 정(正) 자를 그어 세는 것.</dd>
+          <dt>데이터에서의 예</dt><dd>식각-3 줄 · -1 칸 = 214(불합격 다이 수)</dd>
+          <dt>자주 하는 오해</dt><dd>웨이퍼 장수를 센다고 생각한다. 표의 한 행을 하나로 세므로, 워밍업 데이터에서는 다이 수다.</dd>
+        </dl>
       </div>
       <div class="term-card">
         <h4>원인 후보</h4><div class="en">Candidate Cause</div>
-        <dl><dt>한 줄 설명</dt><dd>"이것 때문일 수도 있다"고 보여 더 확인해 볼 대상(범인이 아니라 용의자).</dd><dt>데이터에서의 예</dt><dd>EQ-04: 합격률 75.0%로 가장 낮고, 수율 80% 미만 로트 21개 중 11개.</dd></dl>
+        <dl>
+          <dt>한 줄 설명</dt><dd>비교에서 눈에 띄어 먼저 살펴볼 곳. 이유로 확정된 것은 아니다.</dd>
+          <dt>쉬운 비유</dt><dd>탄 피자가 많이 나온 오븐 — 먼저 점검하지만, 도우나 굽는 사람이 이유일 수도 있다.</dd>
+          <dt>데이터에서의 예</dt><dd>식각-3: 수율 83.1%, 불합격 다이가 가장자리 고리에 몰림 → 가장자리 처리 조건이 원인 후보</dd>
+          <dt>자주 하는 오해</dt><dd>합격률이 가장 낮으면 곧 이유라고 생각한다. 다른 조건이 함께 달랐을 수 있어 추가 확인이 필요하다.</dd>
+        </dl>
       </div>
     </div>
   </section>
@@ -600,129 +545,147 @@ Name: count, dtype: int64</pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>data/weekly/week07/week07_equipment_yield.csv</code> — 300행(로트 75개 × 웨이퍼 4장) 11열, 교육용 가상 데이터</li>
-      <li><code>data/weekly/week07/week07_easy_quiz_results.csv</code> — 쉬운 예제용 쪽지시험 24행 6열, 생활 예제용 가상 데이터</li>
-      <li>열마다 자세한 뜻: <a href="../../data/data_dictionary/week07_dictionary.html">데이터 설명서</a></li>
+      <li><code>data/weekly/week07/week07_easy_quiz_results.csv</code> — 24행 6열, 생활 예제용 가상 데이터(PART 1 개념). 정답 18 · 오답 6.</li>
+      <li><code>data/weekly/week07/week07_orange_wafer_lots.csv</code> — 3,804행 7열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+        식각 설비 3대 × 웨이퍼 4장 × 다이 317개. <b>공정 지도 위치: ④ 식각 설비 3대를 거친 웨이퍼의 ⑦ EDS(전기 검사) 결과.</b></li>
+      <li><code>data/weekly/week07/week07_equipment_yield.csv</code> — 300행 11열, 교육용 가상 데이터(PART 1·2·3). 로트 75개 × 웨이퍼 4장. 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.
+        <b>공정 지도 위치: ②~⑤ + 세정 설비 기록과 ⑦ 뒤 최종 합격 여부.</b></li>
+      <li>열 설명: <a href="../../data/data_dictionary/week07_dictionary.html">데이터 설명서</a></li>
     </ul>
   </section>
 
   <section class="block">
     <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>이렇게 쓰면</th><th>나오는 오류</th><th>고치는 법</th></tr>
-        <tr><td><code>df.groupby("설비번호", "온도_섭씨")</code></td><td><code>ValueError: level name 온도_섭씨 is not the name of the index</code></td><td>계산할 열은 대괄호로 따로: <code>df.groupby("설비번호")["온도_섭씨"].mean()</code></td></tr>
-        <tr><td><code>df.groupby("설비번호")["온도"].mean()</code></td><td><code>KeyError: 'Column not found: 온도'</code></td><td>정확한 열 이름(<code>온도_섭씨</code>). <code>print(df.columns)</code>로 확인</td></tr>
-        <tr><td><code>df.groupby("설비번호").mean()</code></td><td><code>TypeError: dtype 'str' does not support operation 'mean'</code></td><td><code>["온도_섭씨"]</code>처럼 숫자 열을 고른다</td></tr>
-        <tr><td><code>df[df["설비번호"] == EQ-04]</code></td><td><code>SyntaxError: leading zeros in decimal integer literals are not permitted</code></td><td>글자는 따옴표로: <code>"EQ-04"</code></td></tr>
-      </table>
+    <div class="callout danger">
+      <b class="tag">오류 1 — groupby 뒤 대괄호 빠뜨림</b> <code>df.groupby("설비번호").mean()</code>처럼 평균 낼 열을 고르지 않으면 <code>TypeError: dtype 'str' does not support operation 'mean'</code>가 난다.
+      글자 열(로트번호·공정명 등)까지 평균을 내려 한 것이다. <code>groupby("설비번호")["합격"].mean()</code>처럼 묶은 뒤 열 하나를 대괄호로 고른다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 2 — == 대신 = (오류 없이 틀림)</b> <code>df["합격"] = df["합격여부"] = 1</code>처럼 비교 기호 <code>==</code>를 <code>=</code>로 쓰면 <b>오류가 나지 않는다</b>.
+      "합격여부 열에 1을 넣고, 합격 열에도 1을 넣어라"라는 뜻이 되어 <code>합격여부</code> 열이 모두 1로 덮어써진다. 전체 합격률이 100.0으로 나오면 이것을 의심한다.
+      <code>==</code>로 고친 뒤 노트북 4단계(<code>read_csv</code>)부터 다시 실행해야 원래 기록이 돌아온다.
+    </div>
+    <div class="callout danger">
+      <b class="tag">오류 3 — 1/-1을 그대로 평균 냄 (오류 없이 틀림)</b> <code>df["합격여부"].mean()</code>은 오류 없이 <code>0.76</code>을 낸다. 1과 -1이 서로 지워진 값이라 합격률이 아니다.
+      <code>== 1</code>로 True/False 열을 만든 뒤 그 열의 평균을 낸다.
     </div>
     <div class="callout warn">
-      <b class="tag">오류는 안 나지만 틀린 결과</b>
-      <ul class="pt-list">
-        <li>계산을 안 붙이면(<code>print(df.groupby("설비번호")["합격"])</code>) <code>&lt;pandas.api.typing.SeriesGroupBy object at 0x...&gt;</code>만 나온다. <code>.mean()</code> 등을 붙인다.</li>
-        <li><code>df.groupby("설비번호")["합격여부"].mean()</code>은 EQ-04가 0.5다(1과 -1의 평균). <code>합격</code> 열을 먼저 만든다.</li>
-      </ul>
+      <b class="tag">빈칸을 그대로 두고 실행하면</b> 노트북의 <code>____</code>를 채우지 않으면 <code>NameError: name '____' is not defined</code>(숫자·열 이름 자리)나
+      <code>AttributeError: 'Series' object has no attribute '____'</code>(함수 이름 자리, <code>Series</code> = 표의 열 하나)가 난다. 빈칸을 아직 안 채웠다는 뜻이다.
+      열 이름은 따옴표로 감싼다 — <code>groupby(설비번호)</code>는 <code>NameError: name '설비번호' is not defined</code>가 난다.
+      앞 셀이 실패한 채 다음 셀을 실행하면 <code>NameError: name 'eq_rate' is not defined</code>나 <code>NameError: name 'defect_counts' is not defined</code>가 난다. 그 변수를 만드는 앞 셀부터 고친다.
     </div>
   </section>
 
   <section class="block">
     <h2>결과 정리 &amp; 퀴즈</h2>
-    <p>더 많은 문제는 <a href="worksheet.html">실습지</a>에 있다.</p>
+    <ul class="pt-list">
+      <li>비율 = True/False 열의 평균 × 100. <code>== 1</code>로 열을 먼저 만들고 평균을 낸다(쪽지시험 정답률 75.0%).</li>
+      <li><code>groupby</code>로 묶으면 전체 숫자에 숨은 차이가 보인다: 반별 정답률 87.5 · 62.5 · 75.0, 작업조별 불합격률 9.8 · 15.5 · 9.7.</li>
+      <li>불량·오답 유형은 <code>value_counts()</code>로 많은 순으로 세우고 막대로 그린다. 많은 것부터 살펴본다.</li>
+      <li>Orange 워밍업: Pivot Table로 식각-3의 수율 83.1%(나머지 95.2 · 94.8%)를 찾고, 웨이퍼 맵으로 불합격 다이 214개 중 194개가 가장자리 고리에 몰린 것을 봤다.</li>
+      <li>눈에 띄는 설비·작업조는 "원인 후보"다. 이유로 확정하려면 다른 조건을 함께 확인해야 한다.</li>
+    </ul>
+    <div class="callout success">
+      <b class="tag">오늘의 반도체 이해 포인트</b>
+      <ul class="pt-list">
+        <li>수율은 만든 다이(칩이 될 작은 네모) 중 합격한 비율이다. 설비별로 묶어 비교하면 수율이 낮은 곳이 보인다(식각-3 83.1%). 그곳이 먼저 살펴볼 원인 후보다.</li>
+        <li>불량 위치 패턴(가장자리·가운데·긁힌 자국 모양)은 원인 후보를 좁히는 단서다. 단서일 뿐 원인 확정이 아니다.</li>
+      </ul>
+    </div>
+    <p>복습 문제 전체는 <code>quiz.json</code>(수업 후 자율 복습)에 있다. 아래는 그중 일부다.</p>
 
     <div class="quiz-item">
-      <div class="q">Q1. (계산) 사과 200개를 땄는데 상품이 180개였다. 수율은?</div>
+      <div class="q">Q1. (객관식) <code>quiz["정답"] = quiz["정답여부"] == 1</code>로 만든 열에서 <code>quiz["정답"].mean() * 100</code>은 무엇일까?</div>
+      <ul class="options">
+        <li>A. 맞힌 문항 수</li>
+        <li>B. 정답률(%)</li>
+        <li>C. 정답여부 열의 평균(0.5)</li>
+        <li>D. 오답 문항 수</li>
+      </ul>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 180 ÷ 200 × 100 = 90%.</div>
+      <div class="answer-box">정답: B. True는 1, False는 0이라 평균이 곧 맞힌 비율이다. 24문항 중 18문항 → 75.0%.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q2. (빈칸) <code>quiz.groupby("반")["정답"].mean() * 100</code>을 반도체 데이터에 적용하면 <code>df.groupby(____)["합격"].mean() * 100</code>이다. 빈칸은?</div>
+      <div class="q">Q2. (객관식) Orange Pivot Table에서 Rows = <code>설비번호</code>, Columns = <code>합격여부</code>, Count로 놓았다. 워밍업 데이터에서 식각-3 줄의 -1 칸 214는 무엇의 개수일까?</div>
+      <ul class="options">
+        <li>A. 식각-3이 처리한 웨이퍼 장수</li>
+        <li>B. 식각-3 웨이퍼의 불합격 다이 수</li>
+        <li>C. 식각-3의 합격 다이 수</li>
+        <li>D. 전체 불합격 다이 수</li>
+      </ul>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: <code>"설비번호"</code>. 코드 모양은 그대로이고 열 이름만 바뀐다.</div>
+      <div class="answer-box">정답: B. 표의 한 행이 다이 1개라, 피벗 표는 다이를 센다. 식각-3 웨이퍼 4장의 다이 1,268개 중 214개가 불합격이다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q3. (참/거짓) EQ-04의 합격률이 가장 낮으므로 EQ-04에서 만든 로트는 모두 수율이 낮다.</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 거짓. EQ-04의 로트 22개 중 11개는 수율 100%다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q4. (서술) 오늘 결과를 "원인 후보"라는 말을 넣어 한 문장으로 정리해 보자.</div>
+      <div class="q">Q3. (서술) 식각-3 웨이퍼의 불량이 가장자리 고리에 몰려 있었다. 이것을 보고 "식각-3의 가장자리 처리 조건이 원인 후보다"라고 말하는 이유를 한 문장으로 써 보자.</div>
       <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">예시 답안: "EQ-04는 합격률이 75.0%로 가장 낮고 수율 80% 미만 로트 21개 중 11개가 나왔지만, 나머지 로트 11개는 수율 100%였으므로
-      원인이라고 단정하기보다 원인 후보로 더 살펴볼 설비다."</div>
+      <div class="answer-box">"수율이 가장 낮고 불량 위치가 한 모양으로 몰려 먼저 살펴볼 단서는 되지만, 데이터만으로는 다른 이유(식각 뒤 거친 다른 공정 등)를 지울 수 없고 웨이퍼도 4장뿐이라, 점검 기록 같은 추가 확인이 필요하기 때문이다."</div>
     </div>
   </section>
 
   <section class="block">
     <h2>AI로 한 걸음 더 — 질문하고 코드 받아보기</h2>
-    <div class="callout practice">
-      <b class="tag">질문해보기 — 하나 이상 골라서 (노트북 8단계)</b>
-      <ul class="pt-list">
-        <li>"pandas의 groupby를 택배 분류 센터에 비유해서 3줄로 설명해주세요."</li>
-        <li>"수율과 불량률은 어떻게 계산하나요? 사과 따기 예시로 알려주세요."</li>
-        <li>"파레토 차트는 왜 많은 것부터 줄을 세우나요?"</li>
-      </ul>
+    <p>ChatGPT에 아래처럼 물어 받은 코드의 예시다. <code>for</code>와 <code>if</code>는 3차시에 배운 반복문·조건문이다. 노트북 6단계에서 실행해 실습지 문제 2의 결과와 같은 설비가 표시되는지 확인한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>pandas Series eq_rate(설비별 합격률 %)가 있어. 합격률이 90% 미만인 설비는 "원인 후보 — 더 살펴보기", 아니면 "연습용 기준 이상"이라고 한 줄씩 출력하는 짧은 코드를 만들어 줘. 90%는 연습용 기준이야.</code></pre>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>AI에게 물어보기 — 복사해서 AI 챗봇에 붙여넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>파이썬 pandas의 groupby를 프로그래밍을 처음 배우는 사람에게 택배 분류 센터 비유로 3줄 안에 설명해줘. groupby만 쓰고 .mean()을 안 붙이면 왜 숫자가 안 나오는지도 같은 비유로 알려줘.</code></pre>
-    </div>
-    <p style="margin:-.4rem .2rem 1rem;color:var(--muted);font-size:.88rem;">확인: 답에 "① 모으기 → ② 모음마다 계산하기" 두 단계가 다 있는가?</p>
-
-    <div class="callout practice">
-      <b class="tag">코드 받아보기 (노트북 9단계)</b>
-      "pass_rate라는 pandas Series에 설비별 합격률(%)이 들어 있어. 90% 미만인 설비는 '점검 필요', 아니면 '정상'이라고 한 줄씩 출력하는 코드를 만들어줘."
-      (90%는 연습용 기준이다.)
-    </div>
-    <div class="code-block">
-      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
-      <pre><code>for eq, rate in pass_rate.items():
+      <div class="code-label"><span>Python — AI가 만들어 준 코드 예시 (노트북 6단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>for eq, rate in eq_rate.items():
     if rate &lt; 90:
-        print(f"{eq} 합격률 {rate:.1f}% → 점검 필요")
+        print(f"{eq} 합격률 {round(rate, 1)}% → 원인 후보 — 더 살펴보기")
     else:
-        print(f"{eq} 합격률 {rate:.1f}% → 정상")</code></pre>
+        print(f"{eq} 합격률 {round(rate, 1)}% → 연습용 기준 이상")</code></pre>
     </div>
-    <div class="callout success">
+    <p><code>eq_rate</code>는 실습지 문제 2에서 만드는 변수라, 문제 2를 먼저 풀어야 실행된다(안 풀었으면 <code>NameError: name 'eq_rate' is not defined</code>). <code>.items()</code>는 설비 이름과 값을 한 쌍씩 꺼내는 함수다(처음 보는 함수라 구경만 한다).</p>
+    <button class="reveal-btn">실행 결과 보기</button>
+    <div class="callout success answer-box">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">EQ-01 합격률 98.1% → 정상
-EQ-02 합격률 86.5% → 점검 필요
-EQ-03 합격률 91.1% → 정상
-EQ-04 합격률 75.0% → 점검 필요</pre>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">EQ-01 합격률 98.1% → 연습용 기준 이상
+EQ-02 합격률 86.5% → 원인 후보 — 더 살펴보기
+EQ-03 합격률 91.1% → 연습용 기준 이상
+EQ-04 합격률 75.0% → 원인 후보 — 더 살펴보기</pre>
     </div>
     <div class="callout warn">
-      <b class="tag">AI 코드를 다룰 때</b>
-      <ul class="pt-list">
-        <li><code>.items()</code>는 "설비 이름과 합격률을 한 쌍씩 꺼낸다" 정도로 읽는다(<code>for</code>·<code>if</code>는 3차시).</li>
-        <li>AI 코드가 <code>pass_rate = ...</code>로 값을 바꿨다면 노트북 5단계 문제 3 셀을 다시 실행한다.</li>
-      </ul>
+      <b class="tag">AI 코드를 다룰 때</b> 직접 실행해 숫자를 확인하고, 변수 이름이 내 노트북과 같은지 맞춘다. 90% 같은 기준은 연습용이다. EQ-02(52장)·EQ-03(56장)은 EQ-01(104장)의 절반쯤이라, 쪽지시험의 작은 반처럼 몇 장에 따라 합격률이 흔들리기 쉽다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.
     </div>
   </section>
 
   <section class="block">
     <h2>과제(다음 차시까지)</h2>
-    <p>노트북 한 개에 작성하고, 결과가 출력된 상태로 제출한다.</p>
-    <ul class="pt-list">
-      <li><b>과제 1 — 공정별 비교</b>: <code>df.groupby("공정명")["합격"].mean() * 100</code>과 <code>count()</code>로 합격률이 가장 낮은 공정과 그 장수를 적는다.</li>
-      <li><b>과제 2 — 작업조별 비교</b>: <code>shift_rate = df.groupby("작업조")["합격"].mean() * 100</code> 후 <code>print(shift_rate.round(1))</code>로 A·B·C조 합격률을 보고, 가장 낮은 조를 한 문장으로 적는다.</li>
-      <li><b>과제 3 — 내 말로 설명하기</b>: "왜 묶어서 비교하나", "왜 비율 옆에 장수를 보나"를 오늘 숫자를 넣어 각각 두세 문장으로 적는다.</li>
-    </ul>
+    <div class="callout practice">
+      <b class="tag">과제 1 — 공정별 합격률 구하기</b>
+      실습지 문제 2와 같은 모양으로 <code>공정명</code>별 합격률을 구해 <code>sort_values()</code>로 줄 세운다. 가장 낮은 공정의 불합격 기록이 어느 설비에 몰려 있는지도 4차시 조건 검색과 <code>value_counts()</code>로 세어 보고, "공정 차이와 설비 차이를 떼어 볼 수 있는가"를 한 문장으로 적는다. 노트북 맨 아래 빈 셀을 쓴다.
+    </div>
+    <div class="callout practice">
+      <b class="tag">과제 2 — 내 말로 설명하기(코드 없음)</b>
+      "피벗 표로 숫자를 찾은 뒤 웨이퍼 맵으로 열어 보면 무엇을 더 알 수 있는가"를 오늘 본 식각-3 웨이퍼를 예로 들어 두세 문장으로 적는다.
+    </div>
   </section>
 
   <section class="block">
     <h2>핵심 질문 → 데이터 연결</h2>
     <ul class="pt-list">
-      <li><b>질문</b>: Orange3의 인상과 <code>groupby</code> 수치가 같은가? 불량률이 가장 높은 설비와 수율이 가장 낮은 로트는 같은 설비인가?</li>
-      <li><b>답</b>: EQ-04가 합격률 75.0%(불량률 25.0%)로 가장 낮고, 최저 수율 로트 LOT-0008(0%)도 EQ-04다.
-        하지만 EQ-04 로트 절반은 100%이고 LOT-0008에는 증착·B조도 함께 있어, EQ-04는 "원인 후보"까지다.</li>
+      <li><b>질문</b>: 설비마다 차이가 있어 보이는데, 숫자로 계산해도 정말 그럴까?</li>
+      <li><b>워밍업(Orange)</b>: 식각 설비 3대의 수율은 95.2 · 94.8 · 83.1%로 10%p 넘게 차이 났고, 식각-3의 불량은 가장자리 고리에 몰려 있었다.</li>
+      <li><b>오늘의 미션(파이썬)</b>: 실습지 문제 1~3에서 직접 구한다.
+        <button class="reveal-btn">실습지 결과 보기</button>
+        <div class="answer-box">전체 합격률은 88.0%지만, 설비별로 묶으면 EQ-01 98.1% · EQ-03 91.1% · EQ-02 86.5% · EQ-04 75.0%로 23%p 넘게 차이 난다.
+        가장 많은 불량 유형은 두께 불량(11건)이다. EQ-04는 합격률이 가장 낮아 원인 후보다(EQ-04의 로트·공정 차이와는 이 기록으로 떼어 볼 수 없다).</div></li>
+      <li><b>Orange로 확인</b>: 실습지 문제 4에서 Pivot Table 칸으로 같은 비율을 다시 구한다.
+        <button class="reveal-btn">실습지 결과 보기</button>
+        <div class="answer-box">EQ-04 줄은 합격 66 · 불합격 22 · Total 88이다. 66 ÷ 88 × 100 = 75.0%로 <code>groupby</code> 결과와 같다.</div></li>
     </ul>
   </section>
 
   <section class="block">
     <h2>다음 차시 예고</h2>
-    <p>8차시에는 온도와 두께처럼 <b>숫자 두 열이 함께 움직이는지</b> 재는 법을 배워, 여러 용의자 중 "원인 후보"를 좁혀 본다.</p>
+    <p>8차시에는 "어느 설비"에서 한 걸음 더 들어가 "어떤 값이 불합격과 <b>함께 움직이나</b>"를 본다. 산점도와 상관계수로 관계를 재고, Orange에서는 Correlations로 모든 열 쌍을 한 번에 줄 세운다.</p>
+    <p><b>다음 날 미션</b> — 불합격과 관련 있어 보이는 공정 값을 찾아 '원인 후보' 보고서 한 줄을 쓰자.</p>
   </section>
 
   <div class="nav-buttons">

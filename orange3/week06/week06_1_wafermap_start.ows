@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="6차시 ① 웨이퍼 맵 한 장 — 표의 X·Y를 점으로 찍기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭하면 웨이퍼 한 장의 다이 317개 검사 기록이 이미 들어 있습니다.
+② Visualize 묶음에서 Scatter Plot(산점도)을 끌어 와 File과 잇고, Axis x = 다이_X, Axis y = 다이_Y, Color = 합격여부로 고르세요.
+③ Box Plot(상자 그림)을 File에 잇고 변수 중심거리_mm, Subgroups 합격여부를 고르세요.
+④ (더 해 보기) Distributions(분포 막대)를 File에 잇고 중심거리_mm를 고르세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVZAEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMG3dlZWswNl9vcmFuZ2Vfd2Fm
+ZXJfbWFwLnRhYpSMBnByZWZpeJSMB2Jhc2VkaXKUjAdyZWxwYXRolIw7Li4vLi4vZGF0YS93ZWVr
+bHkvd2VlazA2L29yYW5nZS93ZWVrMDZfb3JhbmdlX3dhZmVyX21hcC50YWKUjAV0aXRsZZSMAJSM
+BXNoZWV0lGgPjAtmaWxlX2Zvcm1hdJROdWJhjAZzb3VyY2WUSwCMC3JlY2VudF91cmxzlF2UjAN1
+cmyUaA+MC3NoZWV0X25hbWVzlH2UjBJjb250cm9sQXJlYVZpc2libGWUiIwQY29udGV4dF9zZXR0
+aW5nc5RdlIwLX192ZXJzaW9uX1+USwF1Lg==
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

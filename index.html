@@ -342,7 +342,9 @@
                     프로그래밍 경험이 거의 없는 일반인을 위한, 반도체 공정과
                     데이터 분석을 함께 배우는 과정입니다. 웨이퍼가 무엇인지부터
                     시작해, 파이썬 기초 → 데이터 정리 → 그래프 → 원인 탐색 →
-                    예측 모델까지 한 걸음씩 따라가 봅니다.
+                    예측 모델까지 한 걸음씩 따라가 봅니다. 매 차시는
+                    <b>PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지</b>
+                    순서로 진행합니다(9·10차시는 Orange3를 먼저 합니다).
                 </p>
                 <div class="hero-stats">
                     <span class="stat"><b>10</b>차시</span>
@@ -356,11 +358,15 @@
                     <a class="btn-primary" href="lectures/week01/index.html"
                         >1차시부터 시작하기</a
                     >
-                    <a class="btn-secondary" href="#preview"
-                        >데이터 분석 화면 미리보기</a
+                    <a class="btn-secondary" href="docs/setup.html"
+                        >수강 전 준비(설치 안내)</a
+                    >
+                    <a class="btn-secondary" href="dist/student_kit.zip" download
+                        >실습 파일 한 번에 받기</a
                     >
                 </div>
                 <div class="links-row">
+                    <a href="#preview">데이터 분석 화면 미리보기</a>
                     <a href="docs/glossary.html" target="_blank" rel="noopener"
                         >전체 용어집</a
                     >
@@ -536,8 +542,8 @@
                         <span class="jnum">2</span>
                         <h4>데이터 다루기</h4>
                         <p>
-                            Pandas로 표를 읽고, Orange3로 먼저 훑어본 뒤 정제와
-                            그래프를 코드로 재현한다. (4~6차시)
+                            Pandas로 표를 읽고 정리해 그래프를 그린 뒤, 같은
+                            데이터를 Orange3 화면으로 넓혀 본다. (4~6차시)
                         </p>
                         <code class="jcode">df.dropna().describe()</code>
                     </div>
@@ -907,7 +913,7 @@
                     </div>
 
                     <div class="anim-card">
-                        <span class="anim-tag">5~10차시 · Orange3</span>
+                        <span class="anim-tag">1~10차시 · Orange3</span>
                         <div class="oflow-wrap">
                             <svg
                                 class="oflow-svg"
@@ -1033,16 +1039,17 @@
                     <div class="anim-card">
                         <span class="anim-tag">6차시 · 실제 그래프</span>
                         <img
-                            src="assets/images/week06/nb_box_temperature.png"
-                            alt="설비별 온도 박스플롯. EQ-02의 상자와 수염이 다른 설비보다 넓게 퍼져 있다."
+                            src="assets/images/generated/week06_wafer_map_reading.png"
+                            alt="웨이퍼 맵 읽는 법. 둥근 웨이퍼 위 네모 칸 317개 중 빨간 불합격 칸이 바깥 점선 고리 밖에 몰려 있다."
                             loading="lazy"
-                            width="565"
-                            height="462"
+                            width="900"
+                            height="900"
                         />
                         <p class="anim-caption">
-                            6차시 실습에서 그대로 그리는
-                            <b>설비별 온도 박스플롯</b> — 실제 실습
-                            산출물이다(합성 예시 데이터 기반).
+                            6차시는 <b>파이썬</b>으로 막대·히스토그램·산점도를 같은
+                            틀로 그리고, <b>Orange3</b> Scatter Plot으로 웨이퍼 맵을
+                            찍어 가장자리 불량을 본 뒤 Box Plot으로 퍼짐을 비교한다
+                            (교육용 가상 데이터).
                         </p>
                         <a class="anim-link" href="lectures/week06/index.html"
                             >6차시 강의 자료 보기 →</a
@@ -1052,15 +1059,16 @@
                     <div class="anim-card">
                         <span class="anim-tag">7차시 · 실제 그래프</span>
                         <img
-                            src="assets/images/week07/pareto_defects.png"
-                            alt="불량유형 파레토 차트. 두께 불량이 가장 많고, 누적 비율 막대와 선이 함께 표시되어 있다."
+                            src="assets/images/generated/week07_wafer_maps_by_equipment.png"
+                            alt="식각 설비 3대(줄)가 처리한 웨이퍼 12장(칸)의 웨이퍼 맵. 칸마다 수율이 적혀 있고, 식각-3 줄의 네 장은 빨간 불합격 칸이 가장자리 고리에 몰려 있다."
                             loading="lazy"
-                            width="768"
-                            height="497"
+                            width="1440"
+                            height="1152"
                         />
                         <p class="anim-caption">
-                            7차시에서 그리는 <b>불량유형 파레토 차트</b> —
-                            어떤 불량부터 손봐야 할지 한눈에 보여준다.
+                            7차시는 <b>파이썬</b> groupby로 설비별 합격률을 비교하고,
+                            <b>Orange3</b> Pivot Table로 같은 비율을 확인한 뒤 식각 설비
+                            웨이퍼 맵에서 원인 후보의 단서를 하나 더 찾는다(교육용 가상 데이터).
                         </p>
                         <a class="anim-link" href="lectures/week07/index.html"
                             >7차시 강의 자료 보기 →</a
@@ -1097,8 +1105,8 @@
                         데이터를 예측해볼 수 있다.
                     </li>
                     <li>
-                        Orange3로 같은 분석을 코드 없이 다시 확인하며 개념을
-                        다질 수 있다.
+                        Orange3에서 위젯을 이어 같은 데이터를 코드 없이 살펴보고,
+                        파이썬 결과와 비교할 수 있다.
                     </li>
                 </ul>
             </section>
@@ -1119,25 +1127,27 @@
                         <div class="num">● 1차시</div>
                         <h3>반도체 공정과 데이터 처음 만나기 + 변수·출력</h3>
                         <p>
-                            반도체·웨이퍼·칩·FAB 개념, 왜 파이썬과 데이터
-                            분석을 배워야 하는지, 파이썬 변수·입력·출력과
-                            f-string.
+                            <b>파이썬</b> 변수·print·f-string으로 합격·불합격
+                            건수를 문장으로 출력 · <b>Orange3</b> File·Data
+                            Table·Distributions로 합격·불합격 막대 보기.
                         </p>
                     </a>
                     <a class="week-card" href="lectures/week02/index.html">
                         <div class="num">● 2차시</div>
                         <h3>리스트와 딕셔너리</h3>
                         <p>
-                            리스트로 여러 값 담고 인덱싱하기, 딕셔너리로 이름표
-                            붙이기, 두 가지를 충분히 연습.
+                            <b>파이썬</b> 리스트·딕셔너리로 설비 온도 7개의
+                            최고·최저·평균 구하기 · <b>Orange3</b> Feature
+                            Statistics로 같은 값을 표 전체에서 확인.
                         </p>
                     </a>
                     <a class="week-card" href="lectures/week03/index.html">
                         <div class="num">● 3차시</div>
                         <h3>리스트·딕셔너리로 배우는 조건문·반복문·함수</h3>
                         <p>
-                            if로 판정하기, for로 리스트/딕셔너리 순회하기,
-                            함수로 재사용 가능한 코드 만들기.
+                            <b>파이썬</b> if·for·함수로 연습용 기준 밖 기록을
+                            자동으로 세기 · <b>Orange3</b> Select Rows로 같은
+                            조건을 골라 건수 비교.
                         </p>
                     </a>
 
@@ -1149,25 +1159,27 @@
                         <div class="num">● 4차시</div>
                         <h3>Pandas 가장 기본적인 부분</h3>
                         <p>
-                            read_csv, 열 선택, 조건 검색, 정렬로 원하는 데이터
-                            찾기(가장 기본만).
+                            <b>파이썬</b> read_csv·열 선택·조건 검색·정렬로
+                            설비별 불합격 찾기 · <b>Orange3</b> 8대 공정 흐름표와
+                            Select Columns·Select Rows.
                         </p>
                     </a>
                     <a class="week-card" href="lectures/week05/index.html">
                         <div class="num">5차시</div>
                         <h3>데이터 훑어보기와 정리(EDA)</h3>
                         <p>
-                            Orange3로 먼저 결측값·이상값을 훑어본 뒤, Pandas로
-                            직접 찾아 정제하기.
+                            <b>파이썬</b> describe·빈칸·중복·튀는 값 정리로 평균
+                            전후 비교 · <b>Orange3</b> 클린룸 기록과 Impute로
+                            "채우기"를 보고 지우기와 비교.
                         </p>
                     </a>
                     <a class="week-card" href="lectures/week06/index.html">
                         <div class="num">6차시</div>
                         <h3>그래프로 공정 상태 이해하기</h3>
                         <p>
-                            Orange3로 먼저 그래프를 그려본 뒤,
-                            선·막대·히스토그램·산점도·박스플롯을 코드로
-                            재현하기.
+                            <b>파이썬</b> 같은 틀로 막대·히스토그램·산점도
+                            그리기 · <b>Orange3</b> 웨이퍼 맵 Scatter Plot과 설비별
+                            Box Plot으로 퍼짐 비교.
                         </p>
                     </a>
 
@@ -1179,16 +1191,18 @@
                         <div class="num">7차시</div>
                         <h3>설비·공정 비교와 수율·불량 분석</h3>
                         <p>
-                            Orange3로 먼저 설비별 차이를 훑어본 뒤, groupby로
-                            수율·불량률·파레토를 직접 계산하기.
+                            <b>파이썬</b> groupby로 설비별 합격률, 불량 유형 줄
+                            세우기 · <b>Orange3</b> 식각 설비 웨이퍼 맵과 Pivot
+                            Table로 같은 비율 확인.
                         </p>
                     </a>
                     <a class="week-card" href="lectures/week08/index.html">
                         <div class="num">8차시</div>
                         <h3>공정 이상과 원인 후보 찾기</h3>
                         <p>
-                            Orange3 Correlations로 먼저 관계를 훑어본 뒤,
-                            상관관계를 직접 계산해 원인 후보 찾기.
+                            <b>파이썬</b> corr로 상관계수 읽기, 범위 밖 값 골라
+                            원인 후보 말하기 · <b>Orange3</b> 챔버 센서
+                            Correlations로 모든 쌍을 한 번에 줄 세우기.
                         </p>
                     </a>
 
@@ -1198,16 +1212,18 @@
                         <div class="num">9차시</div>
                         <h3>머신러닝 예측 모델 만들기</h3>
                         <p>
-                            Orange3로 먼저 예측 정확도를 훑어본 뒤,
-                            scikit-learn으로 분류 모델을 직접 학습시키기.
+                            <b>Orange3</b> Tree·Test and Score·Confusion Matrix로
+                            모델을 먼저 보기 · <b>파이썬</b> 몇 줄로 같은 모델을
+                            학습해 '무조건 합격' 기준선과 비교.
                         </p>
                     </a>
                     <a class="week-card" href="lectures/week10/index.html">
                         <div class="num">10차시</div>
                         <h3>모델 평가와 새 데이터 예측</h3>
                         <p>
-                            학습한 모델로 새 로트를 predict()하고, Orange3
-                            Predictions로 재확인하며 전체 과정 정리.
+                            <b>Orange3</b> 모델 세 가지 비교와 Predictions로 새
+                            로트 예측 · <b>파이썬</b> predict()로 확인하고
+                            ChatGPT 보고서의 틀린 곳 찾기.
                         </p>
                     </a>
                 </div>

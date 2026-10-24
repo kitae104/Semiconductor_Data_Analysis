@@ -11,7 +11,7 @@
 	</links>
 	<annotations>
 		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: File → Feature Statistics(열 통계), File → Data Table(표 보기, 설비번호 순).
-표 전체의 Max와 EQ-03 행들 중 최고 온도를 비교하세요. 어느 범위를 담았는지에 따라 답이 다릅니다.</text>
+EQ-02 행 4개의 온도를 노트북 6단계의 eq02_temps와 견주어 보세요. 같은 표라도 어느 범위를 담았는지에 따라 평균이 다릅니다.</text>
 	</annotations>
 	<thumbnail />
 	<node_properties>

@@ -1,4 +1,4 @@
-공정명	설비번호	온도_섭씨	압력_Pa	가스유량_slm	두께_nm	진공도_mTorr	습도_pct	합격여부
+공정명	설비번호	온도_C	압력_Pa	가스유량_slm	두께_nm	진공도_mTorr	습도_pct	합격여부
 d	d	c	c	c	c	c	c	1 -1
 meta	meta							class
 식각	EQ-03	300.0	997.3	53.67	100.51	5.5	49.8	1

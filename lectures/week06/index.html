@@ -7,22 +7,6 @@
 <link rel="icon" href="../../assets/images/site/chip-favicon.png" type="image/png">
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
-<style>
-  .bx-svg,.sc-svg{display:block;margin:1.2rem auto;max-width:100%;height:auto;}
-  .bx-svg{width:600px;}
-  .sc-svg{width:680px;}
-  .bx-svg .bx{fill:var(--blue-bg);stroke:var(--blue);stroke-width:2;}
-  .bx-svg .ln{stroke:var(--blue);stroke-width:2;}
-  .bx-svg .md{stroke:var(--ink);stroke-width:3;}
-  .bx-svg .lead{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;}
-  .bx-svg .dot-o{fill:none;stroke:var(--blue);stroke-width:2;}
-  .bx-svg .lb{fill:var(--ink);font-size:13px;font-weight:700;}
-  .bx-svg .lb-s{fill:var(--muted);font-size:11px;}
-  .sc-svg .ax{stroke:var(--muted);stroke-width:1.5;}
-  .sc-svg .pt{fill:var(--blue);}
-  .sc-svg .cap{fill:var(--ink);font-size:13px;font-weight:700;}
-  .sc-svg .cap-s{fill:var(--muted);font-size:11px;}
-</style>
 </head>
 <body>
 <header class="site-header">
@@ -51,228 +35,138 @@
   <div class="hero">
     <span class="badge blue">6차시</span>
     <h1>그래프로 공정 상태 이해하기</h1>
-    <p class="today-question">오늘의 질문: <b>"그림으로 미리 본 패턴을, 코드로 그대로 재현할 수 있을까?"</b></p>
+    <p class="today-question">오늘의 질문: <b>"숫자 표로는 안 보이던 공정의 모습을, 그래프 몇 장으로 볼 수 있을까?"</b></p>
+    <p class="lede"><b>오늘의 미션</b> — 입사 여섯째 날, 내일 회의에서 쓸 그래프 3장을 만들자: 설비별 건수, 온도 분포, 온도와 두께의 관계.
+    (신입 데이터 담당자의 10일 이야기와 공장·데이터는 모두 교육용 가상이다.)</p>
+    <img class="chart-img" src="../../assets/images/orange3/week06_01_mission_wafer_map.png"
+         alt="오늘 Orange3로 그리게 될 웨이퍼 맵의 밑그림. 표의 숫자 두 열을 점으로 찍었더니 둥근 웨이퍼 모양이 나타났다. 불량이 어디에 있는지는 PART 2에서 직접 찾는다"
+         data-shot="week06_1_wafermap_done.ows의 Scatter Plot (산점도) 창 — Axis x 다이_X, Axis y 다이_Y, Color는 (Same color)로 바꿔 모든 점을 한 색으로. 점 317개가 둥근 웨이퍼 모양으로 보이고 합격·불합격 색은 보이지 않게(창을 정사각형에 가깝게 맞춰 원이 납작해 보이지 않게)">
   </div>
 
   <section class="block">
     <h2>학습 목표</h2>
     <ul class="goal-list">
-      <li>선·막대·히스토그램·산점도·박스플롯이 각각 <b>어떤 질문</b>에 답하는 그래프인지 고를 수 있다.</li>
-      <li>아이스크림 가게 기록(쉬운 예제)으로 그려 본 그래프 코드를, 표 이름과 열 이름만 바꿔 반도체 데이터에 적용할 수 있다.</li>
-      <li>그래프를 읽고, 평균 하나로는 놓치는 것(퍼짐, 시간에 따른 변화)을 한 문장으로 말할 수 있다.</li>
-      <li>Orange3로 먼저 본 그림을 Matplotlib 코드로 다시 그려, 같은 결론이 나오는지 확인할 수 있다.</li>
+      <li>막대그래프·히스토그램·산점도가 각각 어떤 질문에 답하는 그래프인지 고를 수 있다.</li>
+      <li>"그리기 → x축 이름 → y축 이름 → <code>plt.show()</code>"의 4줄 틀로 세 그래프를 그릴 수 있다.</li>
+      <li>Orange3 Scatter Plot으로 웨이퍼 맵을 그리고, Box Plot으로 무리마다 값의 퍼짐을 비교할 수 있다.</li>
+      <li>평균만 보면 놓치는 것(불량이 몰린 위치, 값의 퍼짐)을 그래프를 근거로 말할 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 4차시(열 선택·조건 검색), 5차시(<code>describe()</code>)</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 5차시 — 정리와 <code>describe()</code> / 4차시 — <code>read_csv</code>, 열 고르기, 조건 검색 / 1차시 — Orange Distributions</p>
+  </section>
+
+  <section class="block">
+    <h2>오늘 수업 구성</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>PART</th><th>하는 일</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#part1">PART 1 · 파이썬</a></td><td>아이스크림 가게 기록으로 막대·히스토그램·산점도를 같은 4줄 틀로 그리고, 같은 틀로 공정 기록을 그려 본다</td></tr>
+          <tr><td><a href="#part2">PART 2 · Orange3</a></td><td>웨이퍼 한 장의 검사 기록으로 웨이퍼 맵을 그리고, 같은 위젯으로 공정 기록의 분포·관계·퍼짐을 본다</td></tr>
+          <tr><td><a href="#part3">PART 3 · 실습지</a></td><td>노트북 문제 3개(오늘의 미션 그래프 3장) + Orange 1문제 + 해석 문장 1개</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>설비</th><th>기록 수</th><th>평균 온도</th></tr>
-        <tr><td>EQ-01</td><td>47건</td><td>302.8℃</td></tr>
-        <tr><td>EQ-02</td><td>37건</td><td>303.7℃</td></tr>
-        <tr><td>EQ-03</td><td>46건</td><td>302.2℃</td></tr>
-        <tr><td>EQ-04</td><td>50건</td><td>302.7℃</td></tr>
-      </table>
+    <p>숫자 표는 한 줄씩 읽어야 하지만, 그래프는 전체 모양을 한 번에 보여 준다. 오늘 Orange에서 여는 웨이퍼 검사 기록은 317줄이다.
+    표를 위에서부터 읽어서는 불합격 다이가 웨이퍼의 <b>어디에</b> 몰렸는지 알 수 없다. 점으로 찍으면 한눈에 보인다.</p>
+    <div class="callout concept">
+      <b class="tag">비유 — 피자 한 판</b>
+      피자 한 판(웨이퍼)에서 탄 조각(불합격 다이)이 몇 개인지만 세면 "어디가" 탔는지는 모른다. 판 위에 표시해 보면 가장자리만 탔는지, 가운데가 탔는지가 보이고, 어디를 먼저 살펴볼지 단서가 된다.
     </div>
-    <ul class="pt-list">
-      <li>평균만 보면 네 설비가 302~304℃로 거의 같다. 그런데 박스플롯으로 그리면 EQ-02만 293.7~314.7℃로 길게 퍼져 있고,
-        학습용 정상 범위(295~305℃) 밖 기록도 <b>37건 중 14건(약 38%)</b>이다(다른 설비 약 18~21%).</li>
-      <li>평균이 같은 출근길 두 개도 매일 28~32분인 길과 15~50분인 길은 다르다. 숫자 요약은 "얼마인가", 그래프는 "<b>어떤 모양인가</b>"를 알려준다.</li>
-    </ul>
-    <img class="chart-img" src="../../assets/images/week06/nb_box_temperature.png"
-         alt="설비별 온도 박스플롯. EQ-02의 상자와 위아래 선이 다른 설비보다 길게 늘어나 있다." style="max-width:560px;">
-    <p class="img-caption">같은 데이터를 박스플롯으로 그린 결과(노트북 11단계).</p>
   </section>
 
   <section class="block">
     <h2>지난 시간 복습</h2>
-    <ul class="pt-list">
-      <li>4차시 <code>df["열 이름"]</code>, <code>df[조건]</code> / 5차시 <code>describe()</code>로 숫자 요약.</li>
-      <li>오늘은 그것을 <b>그림으로</b> 본다. 그래프 대부분은 열 두 개를 함께 놓고 그린다(1차시 "여러 열 함께 보기").</li>
-    </ul>
-
-    <h3>오늘 쓰는 표 두 개</h3>
-    <p><b>① 쉬운 예제 <code>ice</code></b> — 아이스크림 가게 3주 기록(<code>week06_easy_icecream_daily.csv</code>, 21행).
-    생활 예제용 <b>가상 데이터</b>다.</p>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>열 이름</th><th>뜻</th></tr>
-        <tr><td><code>날짜</code></td><td>기록한 날(2024-06-03 ~ 06-23)</td></tr>
-        <tr><td><code>요일</code></td><td>월~일</td></tr>
-        <tr><td><code>날씨</code></td><td>맑음·흐림·비</td></tr>
-        <tr><td><code>최고기온_섭씨</code></td><td>그날 최고기온</td></tr>
-        <tr><td><code>판매량_개</code></td><td>그날 판 아이스크림 개수</td></tr>
-      </table>
+    <div class="quiz-item">
+      <div class="q">Q1. <code>students.dropna()</code>만 실행하고 <code>print(students.shape)</code>를 하면 행 수가 줄어 있을까?</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">줄지 않는다(<code>(15, 5)</code> 그대로). <code>students = students.dropna()</code>처럼 다시 저장해야 한다. 오늘도 <code>counts = …</code>처럼 결과를 변수에 담아 두고 그래프에 쓴다.</div>
     </div>
-    <p><b>② 반도체 데이터 <code>df</code></b> — 공정 기록(<code>week06_process_visualization.csv</code>, 180행). 교육용 <b>가상 데이터</b>다.</p>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>열 이름</th><th>공장에서 뜻하는 것</th></tr>
-        <tr><td><code>측정시간</code></td><td>기록이 남은 날짜와 시각(2024-03-01 ~ 2024-04-27)</td></tr>
-        <tr><td><code>로트번호</code></td><td>함께 이동하는 웨이퍼 묶음(상자)의 번호</td></tr>
-        <tr><td><code>설비번호</code></td><td>작업을 한 기계(EQ-01 ~ EQ-04, 4대)</td></tr>
-        <tr><td><code>공정명</code></td><td>어떤 작업이었는지(산화·포토·식각·증착·세정)</td></tr>
-        <tr><td><code>온도_섭씨</code></td><td>설비 안 작업 공간(챔버)의 온도</td></tr>
-        <tr><td><code>압력_Pa</code></td><td>챔버 압력. 가상 값이라 크기를 해석하지 않고 기록끼리 비교만 한다</td></tr>
-        <tr><td><code>두께_nm</code></td><td>작업 뒤 웨이퍼 위 막의 두께. nm는 10억분의 1m</td></tr>
-        <tr><td><code>진동_mm_s</code></td><td>설비가 흔들리는 세기</td></tr>
-        <tr><td><code>처리시간_sec</code></td><td>작업 한 번에 걸린 시간(초)</td></tr>
-        <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
-      </table>
+    <div class="quiz-item">
+      <div class="q">Q2. Orange Feature Statistics에서 <code>온도_C</code>의 Missing 칸에 3이 보였다. 무슨 뜻일까?</div>
+      <button class="reveal-btn">정답 보기</button>
+      <div class="answer-box">온도 칸 3개가 비어 있다는 뜻이다. 5차시에는 숫자 요약으로 기록을 훑었고, 오늘은 같은 기록을 그래프로 본다.</div>
     </div>
+  </section>
 
-    <div class="callout concept">
-      <b class="tag">단위 읽는 법</b>
-      그래프의 축 이름에도 나오는 단위다.
-      <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
-        <tr><td><code>nm (두께_nm)</code></td><td>나노미터</td><td>길이. 1nm는 10억분의 1m. 머리카락 굵기의 수만 분의 1 정도</td></tr>
-        <tr><td><code>mm/s (진동_mm_s)</code></td><td>밀리미터 퍼 세컨드 (1초에 몇 mm)</td><td>움직이는 빠르기. 값이 클수록 설비가 더 크게 흔들린다</td></tr>
+  <section class="block" id="part1">
+    <h2><span class="step-badge">PART 1</span> 파이썬 — 막대·히스토그램·산점도</h2>
+    <h3>실습 파일 받기와 노트북 열기</h3>
+    <div class="step"><div class="num">1</div><div class="content">6차시 키트 <a href="../../dist/week06_kit.zip">week06_kit.zip</a>을 내려받아 압축을 푼다(전체 차시 키트: <a href="../../dist/student_kit.zip">student_kit.zip</a>). 압축을 푼 <code>semiconductor_kit</code> 폴더 구조는 그대로 둔다. 노트북과 Orange 파일이 폴더 위치를 기준으로 데이터를 찾는다.</div></div>
+    <div class="step"><div class="num">2</div><div class="content">Jupyter를 켠다. 방법은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 05 "노트북 열어 보기"에 있다(<code>semiconductor_kit</code> 폴더에서 명령 프롬프트를 열고 <code>python -m notebook</code> 실행).</div></div>
+    <div class="step"><div class="num">3</div><div class="content"><code>notebooks</code> → <code>student</code> → <code>week06_student.ipynb</code>를 연다. 맨 위 "막혔을 때" 셀을 먼저 읽는다.</div></div>
+    <p>개념은 <b>아이스크림 가게 기록</b>(<code>week06_easy_icecream_daily.csv</code>, 21행 5열, 생활 예제용 가상 데이터)으로 익힌다. 한 행 = 하루치 기록이다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>열</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td><code>날짜</code>, <code>요일</code></td><td>기록한 날과 요일(3주, 21일)</td></tr>
+          <tr><td><code>날씨</code></td><td>맑음·흐림·비</td></tr>
+          <tr><td><code>최고기온_C</code></td><td>그날 가장 더웠을 때의 기온. <code>_C</code> = 섭씨 도(℃)</td></tr>
+          <tr><td><code>판매량_count</code></td><td>그날 판 아이스크림 개수. <code>_count</code> = 센 수(개)</td></tr>
+        </tbody>
       </table>
-      </div>
     </div>
   </section>
 
   <section class="block">
-    <h2>그래프 읽기 첫걸음 — 어떤 질문에 어떤 그래프?</h2>
-    <p>읽는 순서는 늘 같다: <b>축 이름 → 점·막대·상자 하나가 무엇인지 → 전체 모양</b>. 그래프는 질문에 맞춰 고른다.</p>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>알고 싶은 것(질문)</th><th>그래프</th><th>하나가 뜻하는 것</th><th>쉬운 예제 → 반도체 적용</th></tr>
-        <tr><td>시간이 지나며 어떻게 변했나?</td><td><b>선 그래프</b></td><td>선 위 꺾이는 점 하나 = 그 시각의 기록 하나</td><td>날짜별 판매량 → 시간에 따른 온도</td></tr>
-        <tr><td>그룹마다 몇 건인가?</td><td><b>막대그래프</b></td><td>막대 하나 = 그룹(날씨, 설비) 하나의 건수</td><td>날씨별 날 수 → 설비별 기록 건수</td></tr>
-        <tr><td>값이 주로 어디에 몰려 있나?</td><td><b>히스토그램</b></td><td>막대 하나 = 숫자 구간 하나에 들어간 기록 수</td><td>판매량 분포 → 온도 분포</td></tr>
-        <tr><td>두 값이 함께 움직이나?</td><td><b>산점도</b></td><td>점 하나 = 기록(행) 하나</td><td>기온과 판매량 → 온도와 두께</td></tr>
-        <tr><td>그룹마다 얼마나 들쭉날쭉한가?</td><td><b>박스플롯</b></td><td>상자 하나 = 그룹 하나의 값 전체를 요약</td><td>날씨별 판매량 → 설비별 온도</td></tr>
-      </table>
-    </div>
-    <div class="callout warn">
-      <b class="tag">흔한 실수 — "일단 막대그래프"</b>
-      그리기 전에 "무엇이 궁금한가?"를 한 문장으로 말하고, 위 표에서 가장 가까운 줄을 고르자.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>① Orange3로 먼저 훑어보기</h2>
-    <div class="callout practice">
-      <b class="tag">해보기 — 코드 없이 그림부터</b>
-      File 위젯으로 <code>week06_process_visualization.csv</code>를 열고 세 위젯을 연결해 답을 적어 두자(뒤의 "반도체 데이터로 확인하기"와 실습지 문제 4·5·7에서 맞춰 본다).
-      (위젯 사용법: <a href="../../docs/orange3-guide.html">부록: Orange3 시작하기</a>)
-      <ul class="pt-list">
-        <li><b>Scatter Plot</b> — x축 <code>온도_섭씨</code>, y축 <code>두께_nm</code>. 점들이 어느 방향으로 기울어 있나?</li>
-        <li><b>Box Plot</b> — 변수 <code>온도_섭씨</code>, Subgroups <code>설비번호</code>. 어느 설비의 상자가 가장 긴가?</li>
-        <li><b>Distributions</b> — <code>온도_섭씨</code>. 막대가 가장 높은 곳은 몇 도 근처인가?</li>
-      </ul>
-    </div>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week06_01_canvas.png" loading="lazy"
-           alt="그림 6-1. File 하나에 세 시각화 위젯을 연결한 캔버스" data-shot="File 위젯 하나에서 Scatter Plot·Box Plot·Distributions 세 위젯으로 갈라진 캔버스">
-      <figcaption class="img-caption">그림 6-1. File 하나에 세 시각화 위젯을 연결한 캔버스</figcaption>
-    </figure>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week06_02_scatter_plot.png" loading="lazy"
-           alt="그림 6-2. Scatter Plot으로 그린 온도-두께 산점도" data-shot="Scatter Plot 창 — X축 온도_섭씨, Y축 두께_nm으로 설정한 산점도">
-      <figcaption class="img-caption">그림 6-2. Scatter Plot으로 그린 온도-두께 산점도</figcaption>
-    </figure>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week06_03_box_plot.png" loading="lazy"
-           alt="그림 6-3. Box Plot으로 그린 설비별 온도 분포" data-shot="Box Plot 창 — 변수 온도_섭씨, Subgroups 설비번호로 설정한 화면">
-      <figcaption class="img-caption">그림 6-3. Box Plot으로 그린 설비별 온도 분포</figcaption>
-    </figure>
-    <figure style="margin:1rem 0;">
-      <img class="chart-img" src="../../assets/images/orange3/week06_04_distributions.png" loading="lazy"
-           alt="그림 6-4. Distributions로 본 온도 값의 분포 모양" data-shot="Distributions 창 — 온도_섭씨 히스토그램">
-      <figcaption class="img-caption">그림 6-4. Distributions로 본 온도 값의 분포 모양</figcaption>
-    </figure>
-  </section>
-
-  <section class="block">
-    <span class="step-badge">STEP 01</span>
-    <h2>② 파이썬으로 그리기 — 준비</h2>
-    <ul class="pt-list">
-      <li><b>Matplotlib</b>은 그래프를 그리는 도구로, <code>plt</code>라고 줄여 부른다. <code>plt.rcParams</code> 두 줄은 한글 글꼴 설정이다(Mac은 <code>"AppleGothic"</code>).</li>
-      <li>그래프 개념은 아이스크림 가게 기록(<code>ice</code>)으로 익히고, 반도체 데이터는 뒤의 "반도체 데이터로 확인하기"와 실습지에서 다룬다.</li>
-    </ul>
+    <h2>그래프 4줄 틀 — 준비하기</h2>
+    <p>그래프는 <b>matplotlib</b>(맷플롯립, 파이썬의 그림 그리는 도구)로 그린다. pandas를 <code>pd</code>라고 줄여 부르듯, 그림 도구는 <code>plt</code>라고 줄여 부른다.
+    첫 셀의 <code>plt.rcParams[…]</code> 두 줄은 그래프의 한글과 마이너스 기호가 깨지지 않게 하는 설정이다(Windows 기준). 노트북을 열 때마다 한 번 실행한다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 도구 준비와 쉬운 예제 읽기</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 도구 불러오고 가게 기록 읽기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 
-plt.rcParams["font.family"] = "Malgun Gothic"   # 한글 글꼴(Windows)
-plt.rcParams["axes.unicode_minus"] = False      # 음수 부호 깨짐 방지
+plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams["axes.unicode_minus"] = False
 
 ice = pd.read_csv("../../data/weekly/week06/week06_easy_icecream_daily.csv", encoding="utf-8-sig")
 ice.head()</code></pre>
     </div>
     <div class="callout success">
-      <b class="tag">실행 결과(앞 5행)</b>
-      <div class="tablewrap" style="margin-top:.4rem;">
-        <table class="data-preview">
-          <tr><th></th><th>날짜</th><th>요일</th><th>날씨</th><th>최고기온_섭씨</th><th>판매량_개</th></tr>
-          <tr><td>0</td><td>2024-06-03</td><td>월</td><td>맑음</td><td>23.4</td><td>71</td></tr>
-          <tr><td>1</td><td>2024-06-04</td><td>화</td><td>흐림</td><td>26.4</td><td>102</td></tr>
-          <tr><td>2</td><td>2024-06-05</td><td>수</td><td>맑음</td><td>21.3</td><td>50</td></tr>
-          <tr><td>3</td><td>2024-06-06</td><td>목</td><td>맑음</td><td>25.1</td><td>88</td></tr>
-          <tr><td>4</td><td>2024-06-07</td><td>금</td><td>흐림</td><td>25.3</td><td>95</td></tr>
-        </table>
-      </div>
-    </div>
-
-    <h3>글자를 날짜로 바꾸기 — pd.to_datetime()</h3>
-    <p><code>2024-06-03</code>은 지금 글자일 뿐이다. <code>pd.to_datetime()</code>으로 날짜로 바꿔야 선 그래프 가로축이 날짜 간격대로 그려진다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 글자를 날짜로</span><button class="copy-btn">복사</button></div>
-      <pre><code>ice["날짜"] = pd.to_datetime(ice["날짜"])
-ice["날짜"].head(3)</code></pre>
-    </div>
-    <div class="callout success">
       <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">0   2024-06-03
-1   2024-06-04
-2   2024-06-05
-Name: 날짜, dtype: datetime64[us]</pre>
-      <code>datetime64</code>가 "날짜로 알아본다"는 표시다. 뒤의 <code>[us]</code>는 저장 단위라 신경 쓰지 않아도 된다(버전에 따라 <code>[ns]</code>).
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">           날짜 요일  날씨  최고기온_C  판매량_count
+0  2024-06-03  월  맑음    23.4         71
+1  2024-06-04  화  흐림    26.4        102
+2  2024-06-05  수  맑음    21.3         50
+3  2024-06-06  목  맑음    25.1         88
+4  2024-06-07  금  흐림    25.3         95</pre>
     </div>
-
-    <h3>그래프 코드의 공통 틀</h3>
+    <p>오늘 그리는 그래프는 모두 같은 <b>4줄 틀</b>이다. 바뀌는 것은 첫 줄의 그리기 함수와 열 이름뿐이다.</p>
     <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>줄</th><th>하는 일</th></tr>
-        <tr><td><code>plt.그리기명령(가로축 값, 세로축 값)</code></td><td>그래프를 그린다(plot·bar·hist·scatter). 그래프마다 이 줄만 바뀐다. <code>hist</code>는 값 하나만 넣는다(세로축은 개수가 자동)</td></tr>
-        <tr><td><code>plt.xlabel("…")</code> / <code>plt.ylabel("…")</code></td><td>가로축 / 세로축 이름</td></tr>
-        <tr><td><code>plt.show()</code></td><td>그림을 화면에 보여주고 마무리. <code>plt.show()</code> 전에 다음 그래프를 이어 쓰면 그림이 겹치므로 <b>그래프 하나는 셀 하나에서</b> 그린다</td></tr>
+      <table>
+        <thead><tr><th>줄</th><th>하는 일</th><th>예</th></tr></thead>
+        <tbody>
+          <tr><td>① 그리기</td><td>어떤 그래프를, 어떤 값으로 그릴지</td><td><code>plt.bar(…)</code>, <code>plt.hist(…)</code>, <code>plt.scatter(…)</code></td></tr>
+          <tr><td>② x축 이름</td><td>가로축에 이름표 달기</td><td><code>plt.xlabel("날씨")</code></td></tr>
+          <tr><td>③ y축 이름</td><td>세로축에 이름표 달기</td><td><code>plt.ylabel("날 수")</code></td></tr>
+          <tr><td>④ 보여 주기</td><td>다 그린 그림을 화면에 내보내기</td><td><code>plt.show()</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>그래프를 고르는 기준은 <b>질문</b>이다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>이런 질문이면</th><th>이 그래프</th><th>그리기 함수</th></tr></thead>
+        <tbody>
+          <tr><td>무리(날씨·설비)마다 몇 개인가?</td><td>막대그래프</td><td><code>plt.bar</code></td></tr>
+          <tr><td>숫자 하나가 어느 구간에 몰려 있나?</td><td>히스토그램</td><td><code>plt.hist</code></td></tr>
+          <tr><td>숫자 두 개가 함께 움직이나?</td><td>산점도</td><td><code>plt.scatter</code></td></tr>
+        </tbody>
       </table>
     </div>
   </section>
 
   <section class="block">
-    <h2>그래프 1. 선 그래프 — 시간이 지나며 어떻게 변했나</h2>
-    <p><b>읽는 법</b>: 가로축 = 시간, 세로축 = 잰 값, 꺾이는 점 하나 = 기록 하나. 흔들림 전체가 <b>조금씩 위(아래)로 가는지</b>를 본다.</p>
+    <h2>막대그래프 — 무리마다 몇 개인가</h2>
+    <p>막대를 그리려면 먼저 개수를 세야 한다. <code>value_counts()</code>는 한 열에서 값마다 몇 번 나왔는지 세어 많은 순으로 보여 준다.
+    센 결과를 <code>counts</code>에 담고, <code>plt.bar(이름들, 개수들)</code>로 그린다. <code>counts.index</code>는 센 결과의 이름표 칸(맑음·흐림·비), <code>counts</code>는 개수다. 막대는 많은 순으로 놓인다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 선 그래프</span><button class="copy-btn">복사</button></div>
-      <pre><code>plt.plot(ice["날짜"], ice["판매량_개"])
-plt.xticks(rotation=45)   # 날짜 글자를 45도 기울여 겹치지 않게
-plt.xlabel("날짜")
-plt.ylabel("판매량_개")
-plt.show()</code></pre>
-    </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_easy_line_sales.png"
-         alt="날짜별 아이스크림 판매량 선 그래프. 위아래로 흔들리지만 6월 초보다 6월 말에 전체적으로 더 높다." style="max-width:560px;">
-    <p class="img-caption">노트북 2단계 실행 결과.</p>
-    <ul class="pt-list">
-      <li>들쭉날쭉하면서도 올라간다. 첫 주 평균 <b>85.7개</b> → 셋째 주 <b>115.0개</b>(강사 계산).</li>
-      <li>뚝 떨어진 6월 13일·20일·22일은 <code>날씨</code> 열을 함께 보면 비 온 날이다. 다른 열을 함께 보면 이유의 실마리가 보인다.</li>
-    </ul>
-  </section>
-
-  <section class="block">
-    <h2>그래프 2. 막대그래프 — 그룹마다 몇 건인가</h2>
-    <p><b>읽는 법</b>: 가로축 = 그룹 이름(순서 없음), 세로축 = 건수, 막대 하나 = 그룹 하나. 막대 높이를 그대로 비교한다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 막대그래프</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 날씨별 날 수 세고 막대로 그리기 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>counts = ice["날씨"].value_counts()
 print(counts)
 
@@ -282,319 +176,375 @@ plt.ylabel("날 수")
 plt.show()</code></pre>
     </div>
     <div class="callout success">
-      <b class="tag">실행 결과(print 부분)</b>
+      <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">날씨
 맑음    12
 흐림     6
 비      3
 Name: count, dtype: int64</pre>
     </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_easy_bar_weather.png"
-         alt="날씨별 날 수 막대그래프. 맑음 12일, 흐림 6일, 비 3일." style="max-width:480px;">
-    <p class="img-caption">노트북 3단계 실행 결과.</p>
+    <img class="chart-img" src="../../assets/images/generated/week06_nb_easy_bar_weather.png" alt="날씨별 날 수 막대그래프. 맑음 12, 흐림 6, 비 3 순으로 막대가 낮아진다">
+    <p class="img-caption">노트북 2단계 실행 결과 — 날씨별 날 수(생활 예제용 가상 데이터)</p>
     <ul class="pt-list">
-      <li><code>value_counts()</code>는 값마다 몇 건인지 세어 <b>많은 순서</b>로 늘어놓는다.</li>
-      <li><code>plt.bar(이름들, 숫자들)</code> — <code>counts.index</code>는 막대 이름표, <code>counts</code>는 막대 높이다.</li>
+      <li>출력 첫 줄 <code>날씨</code>는 센 열의 이름, 마지막 줄 <code>Name: count, dtype: int64</code>는 "개수를 센 정수 열"이라는 표시다.</li>
+      <li>3주 중 맑은 날이 12일로 가장 많고, 비 온 날은 3일이다. 숫자 세 개를 막대 높이로 바꾸니 차이가 바로 보인다.</li>
     </ul>
+    <div class="callout practice">
+      <b class="tag">직접 해 보기 (노트북 2단계)</b> 요일마다 며칠씩 기록됐는지 막대로 그려 보자. 노트북의 <code>day_counts = ice[____].value_counts()</code> 빈칸에 세는 열 이름을 따옴표와 함께 넣는다. 나머지 세 줄은 위 코드와 같은 4줄 틀이다.
+    </div>
+    <button class="reveal-btn">결과 확인 보기</button>
+    <div class="answer-box"><code>ice["요일"]</code>. 월~일 막대 7개가 모두 높이 3이다 — 3주 기록이라 요일마다 3일씩 있다. 막대 높이가 같으면 "무리마다 개수가 같다"고 읽는다.</div>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>막대그래프 히스토그램 차이</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람에게 막대그래프와 히스토그램의 차이를 아이스크림 가게 기록(날씨별 날 수, 하루 판매량) 예시로 3문장 안에 설명해줘. 둘 다 막대처럼 생겼는데 무엇이 다른지 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "막대그래프는 이름이 붙은 무리(맑음·흐림·비)마다 개수를 비교하고, 히스토그램은 숫자 하나(판매량)를 구간으로 나눠 구간마다 몇 개인지 본다",
+      "히스토그램은 구간이 이어져 있어 막대 사이에 틈이 없다"는 내용이 들어 있다.</div>
+    </div>
   </section>
 
   <section class="block">
-    <h2>그래프 3. 히스토그램 — 값이 주로 어디에 몰려 있나</h2>
-    <p><b>읽는 법</b>: 가로축 = 이어진 <b>숫자 구간</b>, 세로축 = 그 구간의 기록 수. <code>bins=5</code>는 최솟값~최댓값을 같은 폭 5칸으로 나누라는 뜻이다.
-    반 친구 키를 5cm 칸으로 나눠 칸마다 몇 명인지 센 것과 같다.</p>
+    <h2>히스토그램 — 값이 어디에 몰렸나</h2>
+    <p>히스토그램은 숫자 열 하나를 몇 개의 구간으로 나눠, 구간마다 몇 개가 있는지 막대로 보여 준다. <code>bins</code>는 구간 수다. 이번에는 개수를 따로 세지 않는다 — <code>plt.hist</code>가 구간을 나누고 세는 일까지 한다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 히스토그램</span><button class="copy-btn">복사</button></div>
-      <pre><code>plt.hist(ice["판매량_개"], bins=5)
-plt.xlabel("판매량_개")
+      <div class="code-label"><span>Python — 하루 판매량 히스토그램 (노트북 3단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>plt.hist(ice["판매량_count"], bins=5)
+plt.xlabel("판매량_count")
 plt.ylabel("날 수")
 plt.show()</code></pre>
     </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_easy_hist_sales.png"
-         alt="하루 판매량 히스토그램. 다섯 막대 중 가운데(약 86~107개) 막대가 6일로 가장 높다." style="max-width:520px;">
-    <p class="img-caption">노트북 4단계 실행 결과. 46~147개를 한 칸 약 20개로 나눴다.</p>
-    <ul class="pt-list">
-      <li>가장 높은 막대는 약 86~107개 칸(<b>6일</b>), 나머지는 3~4일씩이다. 하루에 보통 100개 안팎이 팔렸다.</li>
-      <li>막대그래프 가로축은 <b>이름</b>(순서 바꿔도 됨), 히스토그램 가로축은 <b>숫자 구간</b>(순서 고정)이다.</li>
-    </ul>
+    <img class="chart-img" src="../../assets/images/generated/week06_nb_easy_hist_sales.png" alt="하루 판매량 히스토그램. 46~147개 범위를 다섯 구간으로 나눈 막대 다섯 개 중 가운데 막대가 가장 높다">
+    <p class="img-caption">노트북 3단계 실행 결과 — 하루 판매량 히스토그램, 구간 5개(생활 예제용 가상 데이터)</p>
+    <p>판매량 46~147개를 다섯 구간으로 나눴다. 가운데 구간(약 86~107개)이 6일로 가장 높다. 평균 하나만으로는 "얼마나 고르게 팔렸나"를 알 수 없지만, 히스토그램은 값이 몰린 곳과 퍼진 정도를 보여 준다.</p>
+    <div class="callout practice">
+      <b class="tag">직접 해 보기 (노트북 3단계)</b> 노트북의 <code>plt.hist(ice["판매량_count"], bins=____)</code> 빈칸에 10을 넣어 구간을 열 개로 나눠 다시 그려 보자. 구간을 잘게 나누면 그림이 어떻게 달라질까?
+    </div>
+    <button class="reveal-btn">결과 확인 보기</button>
+    <div class="answer-box">막대가 10개로 늘고 하나하나가 낮아진다(가장 높은 막대도 5일). 구간이 잘면 자세하지만 들쭉날쭉해 보이고, 구간이 크면 큰 모양이 잘 보인다. 21일처럼 기록이 적으면 <code>bins=5</code>가 모양을 읽기 쉽다.</div>
   </section>
 
   <section class="block">
-    <h2>그래프 4. 산점도 — 두 값이 함께 움직이나</h2>
-    <p><b>읽는 법</b>: 점 하나 = 기록(행) 하나. 같은 행의 두 값을 가로·세로 위치로 찍고, 점들이 어느 방향으로 기울었는지 본다.</p>
-    <p class="illustration-note">예시 일러스트레이션 · 실제 데이터 아님</p>
-    <svg class="sc-svg" viewBox="0 0 680 230" role="img"
-         aria-label="산점도 모양 세 가지 예시: 오른쪽 위로 기운 점들은 함께 커지고, 오른쪽 아래로 기운 점들은 하나가 커지면 다른 하나는 작아지고, 둥글게 흩어진 점들은 함께 움직이지 않는다">
-      <line class="ax" x1="20" y1="160" x2="210" y2="160"/><line class="ax" x1="20" y1="160" x2="20" y2="15"/>
-      <circle class="pt" cx="35" cy="148" r="4"/><circle class="pt" cx="50" cy="140" r="4"/><circle class="pt" cx="62" cy="128" r="4"/>
-      <circle class="pt" cx="78" cy="120" r="4"/><circle class="pt" cx="90" cy="104" r="4"/><circle class="pt" cx="105" cy="110" r="4"/>
-      <circle class="pt" cx="118" cy="88" r="4"/><circle class="pt" cx="132" cy="80" r="4"/><circle class="pt" cx="148" cy="70" r="4"/>
-      <circle class="pt" cx="160" cy="56" r="4"/><circle class="pt" cx="176" cy="48" r="4"/><circle class="pt" cx="192" cy="30" r="4"/>
-      <text x="115" y="185" text-anchor="middle" class="cap">오른쪽 위로 기움</text>
-      <text x="115" y="203" text-anchor="middle" class="cap-s">하나가 커지면 다른 하나도 커진다</text>
-
-      <line class="ax" x1="245" y1="160" x2="435" y2="160"/><line class="ax" x1="245" y1="160" x2="245" y2="15"/>
-      <circle class="pt" cx="260" cy="30" r="4"/><circle class="pt" cx="275" cy="42" r="4"/><circle class="pt" cx="288" cy="50" r="4"/>
-      <circle class="pt" cx="302" cy="66" r="4"/><circle class="pt" cx="316" cy="72" r="4"/><circle class="pt" cx="330" cy="90" r="4"/>
-      <circle class="pt" cx="344" cy="96" r="4"/><circle class="pt" cx="356" cy="110" r="4"/><circle class="pt" cx="372" cy="118" r="4"/>
-      <circle class="pt" cx="386" cy="134" r="4"/><circle class="pt" cx="402" cy="138" r="4"/><circle class="pt" cx="418" cy="150" r="4"/>
-      <text x="340" y="185" text-anchor="middle" class="cap">오른쪽 아래로 기움</text>
-      <text x="340" y="203" text-anchor="middle" class="cap-s">하나가 커지면 다른 하나는 작아진다</text>
-
-      <line class="ax" x1="470" y1="160" x2="660" y2="160"/><line class="ax" x1="470" y1="160" x2="470" y2="15"/>
-      <circle class="pt" cx="500" cy="60" r="4"/><circle class="pt" cx="520" cy="120" r="4"/><circle class="pt" cx="535" cy="40" r="4"/>
-      <circle class="pt" cx="550" cy="95" r="4"/><circle class="pt" cx="562" cy="138" r="4"/><circle class="pt" cx="575" cy="70" r="4"/>
-      <circle class="pt" cx="590" cy="110" r="4"/><circle class="pt" cx="604" cy="45" r="4"/><circle class="pt" cx="615" cy="130" r="4"/>
-      <circle class="pt" cx="628" cy="85" r="4"/><circle class="pt" cx="640" cy="55" r="4"/><circle class="pt" cx="510" cy="88" r="4"/>
-      <text x="565" y="185" text-anchor="middle" class="cap">둥글게 흩어짐</text>
-      <text x="565" y="203" text-anchor="middle" class="cap-s">함께 움직이지 않는다</text>
-    </svg>
-    <p class="img-caption">산점도에서 볼 세 가지 모양(예시 그림).</p>
+    <h2>산점도 — 두 값이 함께 움직이나</h2>
+    <p>산점도는 숫자 열 두 개를 x(가로)와 y(세로)로 놓고, 행마다 점 하나를 찍는다. 21일이면 점 21개다. <code>plt.scatter(x에 놓을 열, y에 놓을 열)</code> 순서다.</p>
     <div class="code-block">
-      <div class="code-label"><span>Python — 산점도</span><button class="copy-btn">복사</button></div>
-      <pre><code>plt.scatter(ice["최고기온_섭씨"], ice["판매량_개"])
-plt.xlabel("최고기온_섭씨")
-plt.ylabel("판매량_개")
+      <div class="code-label"><span>Python — 기온과 판매량 산점도 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>plt.scatter(ice["최고기온_C"], ice["판매량_count"])
+plt.xlabel("최고기온_C")
+plt.ylabel("판매량_count")
 plt.show()</code></pre>
     </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_easy_scatter_temp_sales.png"
-         alt="기온과 판매량 산점도. 점 21개가 왼쪽 아래에서 오른쪽 위로 기울어 있다." style="max-width:520px;">
-    <p class="img-caption">노트북 5단계 실행 결과. 점 하나 = 하루.</p>
-    <ul class="pt-list">
-      <li><b>오른쪽 위로</b> 기운다. 더운 날일수록 많이 팔렸다(25℃ 미만 3일 평균 55.7개, 28℃ 이상 5일 136.4개, 강사 계산).</li>
-      <li>"얼마나 강하게" 함께 움직이는지를 숫자로 재는 법은 8차시에 배운다.</li>
-    </ul>
-    <div class="callout warn">
-      <b class="tag">함께 움직여도 원인이라는 뜻은 아니다</b>
-      아이스크림 판매와 물놀이 사고는 함께 늘지만, 둘 다 "더운 날씨" 때문이다. 산점도는 "함께 움직인다"까지만 보여준다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>그래프 5. 박스플롯 — 그룹마다 얼마나 들쭉날쭉한가</h2>
-    <p>한 그룹의 값을 <b>작은 것부터 한 줄로 세운 뒤</b> 네 토막으로 나눠 상자로 요약한 그림이다.</p>
-    <p class="illustration-note">예시 일러스트레이션 · 실제 데이터 아님</p>
-    <svg class="bx-svg" viewBox="0 0 600 300" role="img"
-         aria-label="박스플롯 각 부분의 뜻: 동그라미 점은 멀리 떨어진 값, 수염 끝은 동그라미를 뺀 가장 큰 값과 가장 작은 값, 상자 위 끝은 75퍼센트 지점, 가운데 선은 중앙값, 상자 아래 끝은 25퍼센트 지점">
-      <circle class="dot-o" cx="170" cy="20" r="6"/>
-      <line class="ln" x1="170" y1="45" x2="170" y2="95"/>
-      <line class="ln" x1="145" y1="45" x2="195" y2="45"/>
-      <rect class="bx" x="130" y="95" width="80" height="95"/>
-      <line class="md" x1="130" y1="138" x2="210" y2="138"/>
-      <line class="ln" x1="170" y1="190" x2="170" y2="255"/>
-      <line class="ln" x1="145" y1="255" x2="195" y2="255"/>
-
-      <line class="lead" x1="180" y1="20" x2="270" y2="20"/>
-      <text x="278" y="18" class="lb">동그라미 점</text>
-      <text x="278" y="32" class="lb-s">다른 값들과 멀리 떨어진 값(따로 찍음)</text>
-      <line class="lead" x1="200" y1="45" x2="270" y2="58"/>
-      <text x="278" y="58" class="lb">위 수염 끝</text>
-      <text x="278" y="72" class="lb-s">동그라미를 뺀 가장 큰 값</text>
-      <line class="lead" x1="214" y1="95" x2="270" y2="100"/>
-      <text x="278" y="100" class="lb">상자 위 끝 (75%)</text>
-      <text x="278" y="114" class="lb-s">작은 쪽에서 3/4 지점</text>
-      <line class="lead" x1="214" y1="138" x2="270" y2="142"/>
-      <text x="278" y="142" class="lb">가운데 선 (중앙값, 50%)</text>
-      <text x="278" y="156" class="lb-s">줄 세웠을 때 딱 한가운데 값</text>
-      <line class="lead" x1="214" y1="190" x2="270" y2="188"/>
-      <text x="278" y="188" class="lb">상자 아래 끝 (25%)</text>
-      <text x="278" y="202" class="lb-s">작은 쪽에서 1/4 지점</text>
-      <line class="lead" x1="200" y1="255" x2="270" y2="250"/>
-      <text x="278" y="250" class="lb">아래 수염 끝</text>
-      <text x="278" y="264" class="lb-s">동그라미를 뺀 가장 작은 값</text>
-
-      <line class="lead" x1="120" y1="95" x2="120" y2="190"/>
-      <text x="112" y="138" text-anchor="end" class="lb">상자</text>
-      <text x="112" y="153" text-anchor="end" class="lb-s">가운데 절반의 기록</text>
-    </svg>
-    <p class="img-caption">박스플롯 한 개의 각 부분(예시 그림). <b>상자가 길수록 들쭉날쭉하다.</b>
-    상자 끝에서 상자 길이의 1.5배보다 멀리 떨어진 값은 동그라미 점으로 따로 찍는다(잘못된 값이라는 뜻은 아니다).</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 박스플롯</span><button class="copy-btn">복사</button></div>
-      <pre><code>ice.boxplot(column="판매량_개", by="날씨")
-plt.show()</code></pre>
-    </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_easy_box_weather.png"
-         alt="날씨별 판매량 박스플롯. 맑음·비·흐림 세 상자 중 비 오는 날 상자가 가장 아래에 있다." style="max-width:520px;">
-    <p class="img-caption">노트북 6단계 실행 결과. "Boxplot grouped by 날씨"는 자동으로 붙는 제목이다.</p>
-    <ul class="pt-list">
-      <li><code>표.boxplot(column="값을 볼 열", by="그룹을 나눌 열")</code> — 그룹별로 나누는 일까지 한 줄로 한다.</li>
-      <li><b>비 오는 날 상자가 가장 아래</b>, <b>맑은 날 상자가 가장 길다</b>(선선한 날과 더운 날이 섞임).</li>
-    </ul>
-  </section>
-
-  <section class="block">
-    <h2>숫자로 다시 확인하기</h2>
-    <p>5차시 <code>describe()</code>를 그룹별로 실행한다. <code>groupby</code>는 7차시에 배우므로 오늘은 코드를 그대로 실행하고 <b>결과만 읽는다</b>(반도체 데이터에서도 같다). <code>round(1)</code>은 소수 첫째 자리까지 반올림한다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 구경만(7차시 예고)</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(ice.groupby("날씨")["판매량_개"].describe().round(1))</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과(노트북 7단계)</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">    count   mean   std   min   25%   50%    75%    max
-날씨
-맑음   12.0  101.5  28.7  50.0  84.5  99.0  126.2  141.0
-비     3.0   62.3  17.0  46.0  53.5  61.0   70.5   80.0
-흐림    6.0  109.3  21.5  93.0  95.2  99.0  117.8  147.0</pre>
-    </div>
-    <div class="tablewrap">
-      <table class="timetable">
-        <tr><th>열</th><th>뜻</th><th>박스플롯에서는</th></tr>
-        <tr><td><code>mean</code></td><td>평균</td><td>안 나온다</td></tr>
-        <tr><td><code>std</code></td><td>표준편차(퍼짐의 크기)</td><td>상자·수염이 길수록 크다</td></tr>
-        <tr><td><code>min</code> / <code>max</code></td><td>가장 작은 값 / 가장 큰 값</td><td>수염 끝이나 동그라미 점</td></tr>
-        <tr><td><code>25%</code> / <code>50%</code> / <code>75%</code></td><td>줄 세웠을 때 1/4 / 한가운데 / 3/4 지점</td><td>상자 아래 끝 / 가운데 선 / 상자 위 끝</td></tr>
-      </table>
-    </div>
-    <div class="callout warn">
-      <b class="tag">"흐리면 더 팔린다"?</b>
-      흐린 날 평균(109.3개)이 맑은 날(101.5개)보다 높다. 그런데 맑은 날 12일 중 5일은 최고기온 25.4℃ 이하로 선선해 50~88개만 팔렸고, 흐린 날 6일은 모두 25℃가 넘었다(강사 계산).
-      맑은 날 평균이 낮은 것은 이 선선한 날들 때문이다. 날씨 열 하나만 보지 말고 기온도 함께 봐야 한다.
-    </div>
+    <img class="chart-img" src="../../assets/images/generated/week06_nb_easy_scatter_temp_sales.png" alt="최고기온과 판매량 산점도. 점 21개가 왼쪽 아래에서 오른쪽 위로 올라간다">
+    <p class="img-caption">노트북 4단계 실행 결과 — 최고기온과 판매량(생활 예제용 가상 데이터)</p>
+    <p>점들이 왼쪽 아래에서 오른쪽 위로 올라간다 → 더운 날일수록 많이 팔린 경향이다. 점이 한쪽으로 기울지 않고 흩어져 있으면 "함께 움직이는 모습이 안 보인다"고 읽는다.
+    함께 움직인다고 해서 한쪽이 다른 쪽을 일으켰다고 바로 말하지는 않는다(8차시에서 자세히 다룬다).</p>
   </section>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>같은 그래프를 반도체 공정 기록(<code>df</code>)에 그려 오늘의 핵심 세 가지만 확인한다. 코드는 쉬운 예제와 같은 모양이고, 표 이름과 열 이름만 바뀐다.
-    나머지 그래프는 실습지에서 직접 그린다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 반도체 데이터 읽기</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.read_csv("../../data/weekly/week06/week06_process_visualization.csv", encoding="utf-8-sig")
-df.head()</code></pre>
+    <p>공정 기록 <code>week06_process_visualization.csv</code>(180행 10열, 교육용 가상 데이터)를 같은 4줄 틀로 그린다. 한 행 = 공정 작업 1건의 기록이다.
+    위 코드에서 표 이름이 <code>ice</code> → <code>df</code>로, 열 이름만 바뀐다.</p>
+    <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 — 이 단계 설비들의 기록이다. <code>두께_nm</code>은 작업 뒤 잰 웨이퍼 위 막의 두께라는 설정이다(공정명과 상관없이 모든 기록에 같은 열로 남긴 교육용 가상 값. 막은 주로 ② 산화·⑤ 증착으로 생긴다). 공정 지도 그림은 PART 2에서 다시 본다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
+        <tbody>
+          <tr><td><code>측정시간</code>, <code>로트번호</code>, <code>설비번호</code>, <code>공정명</code></td><td>언제, 어느 웨이퍼 묶음을, 어느 기계(EQ-01~EQ-04)에서, 어떤 작업(산화·포토·식각·증착·세정)으로. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록)</td></tr>
+          <tr><td><code>온도_C</code></td><td>설비 안 작업 공간(챔버)의 온도. <code>_C</code> = 섭씨 도(℃)</td></tr>
+          <tr><td><code>압력_Pa</code></td><td>챔버 압력(파스칼). 교육용 값이라 절대값은 해석하지 않는다</td></tr>
+          <tr><td><code>두께_nm</code></td><td>작업 뒤 잰 웨이퍼 위 막의 두께. <code>nm</code>(나노미터)는 10억분의 1m</td></tr>
+          <tr><td><code>진동_mm_s</code>, <code>처리시간_sec</code></td><td>설비가 흔들리는 세기(1초에 몇 mm), 작업에 걸린 초. 오늘은 그리지 않는다</td></tr>
+          <tr><td><code>합격여부</code></td><td>검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
+        </tbody>
+      </table>
     </div>
-    <p>결과는 180행 표의 앞 5행이다(열은 위 "오늘 쓰는 표 두 개" 표와 같다). 이어서 측정시간을 날짜로 바꾼다.</p>
+    <p style="color:var(--muted);font-size:.9rem;">값과 범위는 학습용이라 실제 공정 조건으로 해석하지 않는다.</p>
+
+    <h3>확인 1 — 공정마다 기록은 몇 건일까 (막대)</h3>
     <div class="code-block">
-      <div class="code-label"><span>Python — 측정시간을 날짜로</span><button class="copy-btn">복사</button></div>
-      <pre><code>df["측정시간"] = pd.to_datetime(df["측정시간"])
-df["측정시간"].head(3)</code></pre>
+      <div class="code-label"><span>Python — 공정 기록 읽고 공정명별 건수 막대 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>df = pd.read_csv("../../data/weekly/week06/week06_process_visualization.csv", encoding="utf-8-sig")
+print(df.shape)
+
+process_counts = df["공정명"].value_counts()
+plt.bar(process_counts.index, process_counts)
+plt.xlabel("공정명")
+plt.ylabel("기록 건수")
+plt.show()</code></pre>
     </div>
     <div class="callout success">
-      <b class="tag">실행 결과(<code>df["측정시간"].head(3)</code>, 노트북 8단계)</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">0   2024-03-01 05:00:00
-1   2024-03-01 17:00:00
-2   2024-03-01 19:00:00
-Name: 측정시간, dtype: datetime64[us]</pre>
+      <b class="tag">실행 결과</b>
+      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(180, 10)</pre>
     </div>
+    <img class="chart-img" src="../../assets/images/generated/week06_nb_bar_process.png" alt="공정명별 기록 건수 막대그래프. 증착 39, 포토 39, 세정 37, 식각 34, 산화 31">
+    <p class="img-caption">노트북 5단계 실행 결과 — 공정명별 기록 건수(교육용 가상 데이터)</p>
+    <p><b>공장 말로 읽기</b> — 다섯 공정의 기록이 31~39건으로 비슷하게 섞여 있다(증착 39 · 포토 39 · 세정 37 · 식각 34 · 산화 31). 가게 기록의 "날씨별 날 수"와 같은 모양이다.</p>
 
-    <h3>확인 1 — 평균 하나로는 안 보이는 시간 변화</h3>
-    <p>질문: 두 달 동안 온도는 같은 수준이었나?</p>
+    <h3>확인 2 — 막 두께는 어디에 몰렸을까 (히스토그램)</h3>
     <div class="code-block">
-      <div class="code-label"><span>Python — 시간에 따른 온도</span><button class="copy-btn">복사</button></div>
-      <pre><code>plt.plot(df["측정시간"], df["온도_섭씨"])
-plt.xticks(rotation=45)   # 날짜 글자를 45도 기울여 겹치지 않게
-plt.xlabel("측정시간")
-plt.ylabel("온도_섭씨")
+      <div class="code-label"><span>Python — 두께 히스토그램 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>plt.hist(df["두께_nm"], bins=10)
+plt.xlabel("두께_nm")
+plt.ylabel("기록 건수")
 plt.show()</code></pre>
     </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_line_temperature.png"
-         alt="시간에 따른 온도 선 그래프. 위아래로 흔들리지만 3월보다 4월에 전체적으로 더 높은 곳에서 흔들린다." style="max-width:600px;">
-    <p class="img-caption">노트북 9단계(실습지 문제 2) 실행 결과.</p>
-    <p><b>공장 말로 읽기</b>: 온도가 서서히 올라 <b>3월 104건 평균 301.4℃ → 4월 76건 평균 304.8℃</b>다. 이렇게 값이 시간에 따라 한쪽으로
-    밀려가는 것을 <b>드리프트</b>라고 한다(오늘 데이터의 드리프트는 연습용으로 넣은 것). 전체 평균 302.8℃ 하나로는 보이지 않는다.</p>
-
-    <h3>확인 2 — 온도와 함께 움직이는 열은?</h3>
-    <p>질문: 온도가 높은 기록은 두께도 두꺼울까? 압력은?</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 온도-두께 산점도</span><button class="copy-btn">복사</button></div>
-      <pre><code>plt.scatter(df["온도_섭씨"], df["두께_nm"])
-plt.xlabel("온도_섭씨")
-plt.ylabel("두께_nm")
-plt.show()</code></pre>
+    <img class="chart-img" src="../../assets/images/generated/week06_nb_hist_thickness.png" alt="두께 히스토그램. 약 94~108nm를 열 구간으로 나눴고 101~103nm 근처 막대가 가장 높으며 양쪽으로 갈수록 낮아진다">
+    <p class="img-caption">노트북 5단계 실행 결과 — 막 두께 히스토그램, 구간 10개(교육용 가상 데이터)</p>
+    <p><b>공장 말로 읽기</b> — 두께는 약 94~108nm 사이에 있고, 가장 높은 막대는 약 101~103nm 근처다. 가운데가 높고 양쪽으로 갈수록 낮아지는 산 모양이다.
+    가운데에서 먼 양 끝의 기록은 "평소보다 얇거나 두꺼운 막"이라 눈여겨볼 대상이다.</p>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>반도체 박막 두께 중요한 이유</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게, 웨이퍼 위에 쌓는 얇은 막(박막)의 두께를 왜 계속 재고 관리하는지 3문장으로 설명해줘. 두께가 너무 얇거나 두꺼우면 어떤 일이 생길 수 있는지도 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "막은 회로를 이루거나 서로 떨어뜨리는 층이라, 두께가 정해진 범위를 벗어나면 다음 공정이 어긋나거나 칩이 제대로 동작하지 않을 수 있다",
+      "그래서 웨이퍼마다(또는 일부를 골라) 두께를 재서 범위 안에 있는지 확인한다"는 내용이 들어 있다. 실제 두께 범위는 막의 종류와 제품마다 다르다. 오늘 데이터의 값은 교육용이다.</div>
     </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_scatter_temp_thickness.png"
-         alt="온도와 두께 산점도. 점들이 왼쪽 아래에서 오른쪽 위로 띠를 이루며 기울어 있다." style="max-width:460px;">
+
+    <h3>확인 3 — 온도와 압력은 함께 움직일까 (산점도)</h3>
     <div class="code-block">
-      <div class="code-label"><span>Python — 온도-압력 산점도</span><button class="copy-btn">복사</button></div>
-      <pre><code>plt.scatter(df["온도_섭씨"], df["압력_Pa"])
-plt.xlabel("온도_섭씨")
+      <div class="code-label"><span>Python — 온도와 압력 산점도 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>plt.scatter(df["온도_C"], df["압력_Pa"])
+plt.xlabel("온도_C")
 plt.ylabel("압력_Pa")
 plt.show()</code></pre>
     </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_scatter_temp_pressure.png"
-         alt="온도와 압력 산점도. 점들이 기울기 없이 둥글게 흩어져 있다." style="max-width:460px;">
-    <p class="img-caption">노트북 10단계(실습지 문제 5·6) 실행 결과. 위: 온도-두께, 아래: 온도-압력.</p>
-    <p><b>공장 말로 읽기</b>: 온도-두께는 오른쪽 위로 기운다(300℃ 미만 34건 평균 두께 98.6nm, 305℃ 이상 43건 104.4nm).
-    온도-압력은 둥글게 흩어진다(평균 압력 1011.6과 1011.8). 같은 온도 열도 짝에 따라 다르므로 여러 열을 함께 본다.
-    온도는 두께의 <b>원인 후보</b>까지만 말할 수 있다.</p>
-
-    <h3>확인 3 — 어느 설비의 온도가 가장 들쭉날쭉한가?</h3>
-    <p>질문: 평균 온도가 302~304℃로 비슷한 네 설비는 정말 상태가 같을까?</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 설비별 온도 박스플롯과 숫자 요약</span><button class="copy-btn">복사</button></div>
-      <pre><code>df.boxplot(column="온도_섭씨", by="설비번호")
-plt.show()
-
-print(df.groupby("설비번호")["온도_섭씨"].describe().round(1))</code></pre>
-    </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_box_temperature.png"
-         alt="설비별 온도 박스플롯. EQ-02의 상자가 다른 설비보다 위아래로 길다. EQ-03과 EQ-04에는 동그라미 점이 있다." style="max-width:520px;">
-    <div class="callout success">
-      <b class="tag">실행 결과(print 부분, 노트북 11단계 · 실습지 문제 7·8)</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">       count   mean  std    min    25%    50%    75%    max
-설비번호
-EQ-01   47.0  302.8  3.2  295.9  301.0  302.9  304.4  308.4
-EQ-02   37.0  303.7  5.4  293.7  300.6  303.4  307.3  314.7
-EQ-03   46.0  302.2  3.1  292.3  300.7  302.0  303.8  309.9
-EQ-04   50.0  302.7  3.0  295.6  300.4  303.2  304.5  311.8</pre>
-    </div>
-    <p><b>공장 말로 읽기</b>: 평균은 302.2~303.7℃로 비슷하지만 <b>EQ-02는 상자 길이 6.7℃(300.6~307.3℃), 표준편차 5.4</b>로 가장 들쭉날쭉하다
-    (다른 설비 상자 길이 3.1~4.1℃, std 3.0~3.2). Orange3와 같은 결론이다. EQ-02를 먼저 더 살펴볼 만하지만, 이유는 그림만으로 단정하지 않는다.</p>
+    <img class="chart-img" src="../../assets/images/generated/week06_nb_scatter_temp_pressure.png" alt="온도와 압력 산점도. 점 180개가 한쪽으로 기울지 않고 넓은 구름처럼 흩어져 있다">
+    <p class="img-caption">노트북 5단계 실행 결과 — 온도와 압력(교육용 가상 데이터)</p>
+    <p><b>공장 말로 읽기</b> — 점 180개가 한쪽으로 기울지 않은 구름처럼 흩어져 있다. 이 기록에서는 온도가 높은 작업이라고 압력도 높거나 낮은 모습이 안 보인다.
+    가게 기록의 "오른쪽 위로 올라가는 점들"과 비교해 보자. 온도와 <b>두께</b>는 어떤 모양일지 PART 3 실습지 문제 3에서 직접 그린다.</p>
   </section>
 
   <section class="block">
-    <span class="step-badge">STEP 02</span>
-    <h2>실습: 그래프 다섯 가지 따라 그리기</h2>
-    <p><code>week06_student.ipynb</code>를 위에서 아래로 실행한다. 1~7단계는 쉬운 예제(실행만), 8~11단계는 <a href="worksheet.html">실습지</a> 문제 1~8(<code>____</code> 채우기)이다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>Orange3로 먼저 훑어보기</b> — 세 위젯으로 그림을 보고 답을 적어 둔다. (Orange3 화면)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>쉬운 예제 따라 하기</b> — 아이스크림 가게 기록으로 그래프 다섯 가지와 숫자 요약. (노트북 1~7단계)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>반도체 데이터 준비·시간·그룹·분포</b> — 실습지 문제 1~4. (노트북 8~9단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>두 열 함께 보기</b> — 실습지 문제 5·6. (노트북 10단계)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>설비별 퍼짐</b> — 실습지 문제 7·8, 한 문장 쓰기. (노트북 11단계)</div></div>
-    <div class="step"><div class="num">6</div><div class="content"><b>AI 활용</b> — 질문하고, AI 코드를 실행해 본다. (노트북 12~13단계)</div></div>
+    <h2>실습 따라 하기</h2>
+    <p>학생용 노트북을 위에서 아래로 실행한다. 2·3단계의 "직접 해 보기" 빈칸 두 개만 직접 채우고, 나머지 1~5단계는 코드가 완성돼 있다.</p>
+    <div class="step"><div class="num">1</div><div class="content"><b>준비하기</b> — 그림 도구와 한글 설정 줄을 실행하고 가게 기록을 읽는다. (노트북 1단계)</div></div>
+    <div class="step"><div class="num">2</div><div class="content"><b>막대그래프</b> — <code>value_counts()</code>로 날씨별 날 수를 세고 <code>plt.bar</code>로 그린 뒤, 직접 해 보기에서 요일 막대를 그린다. (노트북 2단계)</div></div>
+    <div class="step"><div class="num">3</div><div class="content"><b>히스토그램과 산점도</b> — 판매량 구간(직접 해 보기에서 <code>bins</code>를 10으로 바꿔 본다), 기온과 판매량의 관계를 같은 4줄 틀로 그린다. (노트북 3~4단계)</div></div>
+    <div class="step"><div class="num">4</div><div class="content"><b>공정 기록 그려 보기</b> — 같은 틀로 공정명별 건수, 두께 분포, 온도-압력 관계를 그린다. (노트북 5단계)</div></div>
+    <div class="step"><div class="num">5</div><div class="content"><b>반도체 데이터 실습</b> — 6단계의 문제 1~3(오늘의 미션 그래프 3장)은 PART 3에서 실습지를 보며 푼다. (노트북 6단계)</div></div>
+    <div class="callout warn"><b class="tag">체크포인트</b> 그래프 위에 <code>Text(0, 0.5, '…')</code> 같은 글자 줄이 보이면 <code>plt.show()</code>를 빠뜨린 것이다. 글자가 네모(□)로 보이면 1단계 첫 셀을 실행하지 않은 것이다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.</div>
+  </section>
+
+  <section class="block" id="part2">
+    <h2><span class="step-badge">PART 2</span> Orange3 — 웨이퍼 맵과 상자 그림</h2>
+    <p>PART 1에서는 코드로 그래프를 그렸다. Orange에서는 위젯을 이어 같은 그래프를 그리고, 파이썬으로 그리지 않은 두 가지 — <b>웨이퍼 맵</b>과 <b>상자 그림</b> — 을 본다. 오늘 새 위젯은 <code>Scatter Plot</code>과 <code>Box Plot</code> 두 개다.</p>
+    <p>PART 1에서 받은 키트를 그대로 쓴다. Orange 설치와 첫 실행은 <a href="../../docs/setup.html">설치 안내</a>의 STEP 06에 있다(Orange 3.35 기준).</p>
+
+    <h3>Orange 말 사전</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>말</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td>캔버스</td><td>위젯을 놓고 선으로 잇는 가운데 하얀 작업판</td></tr>
+          <tr><td>위젯</td><td>한 가지 일을 하는 기능 상자. 더블클릭하면 자기 창이 열린다</td></tr>
+          <tr><td>워크플로(<code>.ows</code>)</td><td>캔버스에 놓은 위젯과 연결을 통째로 저장한 파일</td></tr>
+          <tr><td><code>.tab</code></td><td>Orange가 읽는 표 파일. CSV와 내용은 같고, 열마다 종류·역할이 적혀 있다</td></tr>
+          <tr><td>툴팁</td><td>마우스를 올리고 잠시 기다리면 뜨는 작은 설명 상자</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>위젯 이름표</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
+        <tbody>
+          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
+          <tr><td><code>Scatter Plot</code></td><td>Visualize</td><td>산점도</td><td><b>오늘 새 위젯.</b> 두 숫자 열을 x·y로 놓고 점을 찍는다. 점 색을 다른 열로 칠할 수 있다. 파이썬 <code>plt.scatter</code>와 같은 일</td></tr>
+          <tr><td><code>Box Plot</code></td><td>Visualize</td><td>상자 그림</td><td><b>오늘 새 위젯.</b> 숫자 열 하나가 무리마다 어디에, 얼마나 넓게 퍼져 있는지 상자로 보여 준다</td></tr>
+          <tr><td><code>Distributions</code></td><td>Visualize</td><td>분포 막대</td><td>숫자 열이면 히스토그램처럼 구간별 개수를 보여 준다(1차시에 써 봤다)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout concept">
+      <b class="tag">Box Plot 창 읽는 법</b>
+      <ul class="pt-list">
+        <li>창 왼쪽 위 <b>Variable</b> 목록 = 볼 숫자 열, 그 아래 <b>Subgroups</b> 목록 = 나눌 기준 열. 둘 다 이름을 한 번 클릭해 고른다.</li>
+        <li>가로로 누운 <b>상자</b> 하나가 무리 하나다. 상자에는 값을 작은 순으로 줄 세웠을 때 <b>가운데 절반</b>이 들어 있다. 상자가 길수록 값이 넓게 퍼진 것이다.</li>
+        <li>상자 아래 숫자 세 개 = 상자 왼쪽 끝 · 중앙값(한가운데 값) · 상자 오른쪽 끝. 상자 위 숫자는 평균 ± 표준편차(퍼짐을 나타내는 값)다. 소수 자리 수는 숫자마다 다르게 보일 수 있다.</li>
+        <li>상자 안 노란 선 = 중앙값, 파란 세로선 = 평균이다. 창 맨 위의 <code>ANOVA</code>·<code>Student's t</code> 줄, 상자를 가로지르는 회색 세로선, 양옆으로 뻗은 점선은 오늘 읽지 않는다.</li>
+      </ul>
+    </div>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>상자그림 읽는 법</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>통계를 처음 배우는 사람에게 상자 그림(box plot) 읽는 법을 반 학생 시험 점수 예시로 설명해줘. 상자의 양 끝, 가운데 선, 상자의 길이가 각각 무엇을 뜻하는지 한 줄씩 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "상자 양 끝은 값을 줄 세웠을 때 4분의 1 지점과 4분의 3 지점이고, 그 사이에 가운데 절반이 들어 있다", "상자 안의 선은 중앙값이다",
+      "상자가 길수록 값이 넓게 퍼져 있다"는 내용이 들어 있다. 상자 밖 선(수염)이나 따로 찍힌 점을 그리는 방식은 프로그램마다 조금씩 다르다.</div>
+    </div>
+    <div class="callout warn"><b class="tag">주의</b> 오늘 위젯은 모두 File에서 갈래로 잇는다. Data Table 뒤에는 위젯을 잇지 않는다(Data Table이 내보내는 것은 화면에서 고른 행뿐이다).</div>
+
+    <h3>오늘 데이터는 공정 지도의 어디일까</h3>
+    <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
+         alt="반도체 8대 공정 흐름도. ① 웨이퍼 제조부터 ⑧ 패키징까지 여덟 칸이 화살표로 이어지고, ②~⑥ 칸은 같은 색으로 묶여 여러 번 되풀이한다는 화살표가 있다">
+    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
+    <ul class="pt-list">
+      <li>워밍업 <code>week06_orange_wafer_map.csv</code> — <b>공정 지도 위치: ⑦ EDS(전기 검사)</b>. 회로를 다 만든 웨이퍼를 자르기 전에 다이(칩이 될 작은 네모)를 하나씩 전기로 검사한 결과다.</li>
+      <li>반도체 <code>week06_process_visualization.csv</code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비 기록(PART 1에서 그린 그 기록). <code>두께_nm</code>은 작업 뒤 잰 웨이퍼 위 막의 두께라는 설정이다.</li>
+    </ul>
+
+    <h3>워밍업 — 웨이퍼 맵 한 장</h3>
+    <p>1차시 그림에서 웨이퍼 한 장 위에 다이 317개가 바둑판처럼 놓인 모습을 봤다(교육용 가상 격자다. 실제 다이 수는 칩 크기에 따라 다르다). ⑦ EDS 단계에서는 다이 하나하나에 전기를 흘려 합격·불합격을 가린다.
+    그 결과를 다이 위치대로 점을 찍어 색칠한 지도가 <b>웨이퍼 맵</b>이다.</p>
+    <p><code>week06_orange_wafer_map.csv</code>(317행 5열, 교육용 가상 데이터)는 웨이퍼 W-0601 한 장의 다이 317개 검사 결과다. 한 행 = 다이 1개다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>열</th><th>뜻</th></tr></thead>
+        <tbody>
+          <tr><td><code>웨이퍼ID</code></td><td>웨이퍼 번호(전부 W-0601). Orange에서는 표에만 보이는 참고용 열</td></tr>
+          <tr><td><code>다이_X</code>, <code>다이_Y</code></td><td>다이의 가로·세로 칸 번호(-10~10, 웨이퍼 가운데가 0). 한 칸 = 14mm로 가정했다</td></tr>
+          <tr><td><code>중심거리_mm</code></td><td>웨이퍼 가운데에서 그 다이까지 거리. <code>_mm</code> = 밀리미터(칸 거리 × 14, 0~140). 이 웨이퍼는 지름 300mm(반지름 150mm)라는 설정이다</td></tr>
+          <tr><td><code>합격여부</code></td><td>다이 전기 검사 결과. <b>1 = 합격, -1 = 불합격</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>표에는 숫자 <code>다이_X</code>, <code>다이_Y</code>만 있다. 이 두 열을 산점도의 x·y로 놓으면 어떤 그림이 될까? Orange에서 직접 그려 보자.</p>
+    <div class="callout concept">
+      <b class="tag">찾아보기</b>
+      <p>AI 답은 틀릴 수 있으니 확인 포인트와 비교하세요. 개인정보·실제 회사 데이터는 넣지 마세요.</p>
+      <p><b>검색어</b> <code>웨이퍼 맵 이란</code></p>
+      <div class="code-block">
+        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+        <pre style="white-space:pre-wrap;"><code>반도체를 처음 배우는 사람에게 '웨이퍼 맵(wafer map)'이 무엇인지 3문장으로 설명해줘. 불량 다이가 웨이퍼 가장자리에 몰려 있으면 어떤 단서가 되는지도 단정하지 말고 알려줘.</code></pre>
+      </div>
+      <button class="reveal-btn">확인 포인트 보기</button>
+      <div class="answer-box">좋은 답이라면 "웨이퍼 위 다이(칩이 될 네모)마다 검사 결과를 위치대로 그린 지도다", "불량이 어디에 몰렸는지(가장자리·가운데·한쪽 줄 등) 모양을 보면 어느 공정·설비를 먼저 살펴볼지 단서가 된다"는 내용이 들어 있다.
+      모양만 보고 이유를 하나로 정할 수는 없다. 7차시에 웨이퍼 여러 장의 맵을 비교한다.</div>
+    </div>
+
+    <h3>워크플로 열기</h3>
+    <ol>
+      <li>Orange3에서 <b>File → Open</b>을 누르고 키트의 <code>orange3/week06/week06_1_wafermap_start.ows</code>를 연다.</li>
+      <li>캔버스에 File 위젯 하나와 ①~④ 안내 메모가 보이면 준비가 끝난 것이다. File을 더블클릭해 317행이 들어왔는지 본다. 막히면 같은 폴더의 <code>week06_1_wafermap_done.ows</code>(완성본)를 연다.</li>
+    </ol>
+    <img class="chart-img" src="../../assets/images/orange3/week06_02_wafermap_start.png"
+         alt="week06_1_wafermap_start.ows를 연 Orange3 캔버스"
+         data-shot="week06_1_wafermap_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 ①~④ 안내 메모가 보이게">
+
+    <div class="step"><div class="num">1</div><div class="content"><b>웨이퍼 맵 그리기</b> — 왼쪽 Visualize 묶음에서 <code>Scatter Plot</code>을 끌어 와 File과 잇고 더블클릭한다.
+    왼쪽 <b>Axis x</b>가 <code>다이_X</code>, <b>Axis y</b>가 <code>다이_Y</code>, <b>Color</b>가 <code>합격여부</code>인지 확인한다(이 표에서는 처음부터 이렇게 잡힌다). 창이 납작하면 창 모서리를 끌어 정사각형에 가깝게 키운다.</div></div>
+    <p>무엇이 보이나? 점 317개의 모양, 그리고 빨간 점(-1, 불합격)이 어디에 있는지 말로 해 본 뒤 열어 보자.</p>
+    <button class="reveal-btn">보이는 것 확인 보기</button>
+    <div class="callout success answer-box">
+      <b class="tag">표가 지도가 됐다</b> 숫자 두 열을 점으로 찍었을 뿐인데 <b>둥근 웨이퍼</b>가 나타난다. 하늘색 점(1, 합격) 사이에서 빨간 점(-1, 불합격)이 <b>가장자리 고리</b>에 몰려 있다.
+      이 웨이퍼의 불합격 다이 64개 중 60개가 가운데에서 112mm보다 먼 가장자리에 있다. 표 317줄로는 안 보이던 "불량의 위치"가 그림 한 장으로 보인다.
+      <img class="chart-img" src="../../assets/images/orange3/week06_03_wafer_scatter.png"
+           alt="Scatter Plot 창. 둥근 웨이퍼 모양의 점들 중 빨간 점이 가장자리에 몰려 있다"
+           data-shot="week06_1_wafermap_done.ows의 Scatter Plot (산점도) 창 전체 — 왼쪽 설정 칸의 Axis x 다이_X, Axis y 다이_Y, Color 합격여부와 오른쪽 그림(둥근 웨이퍼, 가장자리 빨간 점)이 함께 보이게">
+      <img class="chart-img" src="../../assets/images/generated/week06_wafer_map_reading.png"
+           alt="웨이퍼 맵 읽는 법. 둥근 웨이퍼 위 네모 칸 317개 중 빨간 불합격 칸이 바깥 점선 고리 밖에 몰려 있다">
+      <p class="img-caption">웨이퍼 맵 읽는 법 — 네모 하나 = 다이 하나, 빨강 = 불합격, 하늘색 = 합격(Orange 화면과 같은 색). 점선 고리는 가장자리(112mm 바깥)를 나눈 선이다(교육용 가상 데이터).</p>
+    </div>
+    <div class="step"><div class="num">2</div><div class="content"><b>가운데에서 얼마나 먼가 — 상자 그림</b> — Visualize 묶음의 <code>Box Plot</code>을 File에 잇고 더블클릭한다.
+    처음에는 Variable이 <code>다이_X</code>로 잡혀 있다. Variable 목록에서 <code>중심거리_mm</code>를 클릭하고, Subgroups가 <code>합격여부</code>인지 확인한다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week06_04_wafer_box.png"
+         alt="Box Plot 창. 중심거리_mm를 합격여부로 나눈 상자 두 개 중 불합격 상자가 오른쪽에 있다"
+         data-shot="week06_1_wafermap_done.ows의 Box Plot (상자 그림) 창 — Variable 중심거리_mm, Subgroups 합격여부. 상자 두 개(1, -1)와 상자 아래 숫자(1: 62.6 · 88.5 · 112.0 / -1: 119.2 · 126.8 · 132.8)가 보이게">
+    <p><b>읽을 것</b> — 합격(1) 상자는 62.6~112.0mm, 중앙값 88.5mm다. 불합격(-1) 상자는 119.2~132.8mm, 중앙값 126.8mm로 <b>오른쪽(가운데에서 먼 쪽)</b>에 있다.
+    산점도에서 눈으로 본 "가장자리에 몰렸다"를 숫자로 확인한 것이다.</p>
+    <div class="step"><div class="num">3</div><div class="content"><b>(더 해 보기) 분포 막대</b> — <code>Distributions</code>를 File에 잇고 Variable 목록에서 <code>중심거리_mm</code>를 클릭한다. Split by는 <code>합격여부</code> 그대로 둔다.
+    불합격 색 막대가 오른쪽(먼 거리) 구간에 몰려 있는지 본다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week06_05_wafer_distributions.png"
+         alt="Distributions 창. 중심거리_mm 막대에서 불합격 색이 오른쪽 구간에 몰려 있다"
+         data-shot="week06_1_wafermap_done.ows의 Distributions (분포 막대) 창 — Variable 중심거리_mm, Split by 합격여부. 오른쪽(먼 거리) 막대에 빨간 불합격 부분이 커지는 모습이 보이게">
+
+    <h3>반도체 — 공정 기록을 Orange로 그리기</h3>
+    <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 1~2단계는 강사가 화면으로 보여 준다. 학생은 따라 누르지 않고 순서만 눈으로 확인한다. 3단계(상자 그림)는 PART 3 실습지 문제 4에서 직접 한다.</div>
+    <p><b>File → Open</b>으로 <code>orange3/week06/week06_2_process_start.ows</code>를 연다. PART 1의 공정 기록(180행)이 File에 들어 있다.</p>
+    <div class="step"><div class="num">1</div><div class="content"><b>온도 분포</b> — File에 <code>Distributions</code>를 잇는다. Variable 목록에서 <code>온도_C</code>를 클릭하고, 왼쪽 아래 <b>Split by</b>를 <code>None</code>으로 바꾼다(처음에는 <code>합격여부</code>로 잡혀 막대 색이 나뉜다).
+    파이썬 <code>plt.hist</code>와 같은 질문 — "온도가 어디에 몰렸나" — 에 답하는 그림이다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week06_06_process_distributions.png"
+         alt="공정 기록의 Distributions 창. 온도_C 막대가 가운데가 높은 산 모양이다"
+         data-shot="week06_2_process_done.ows의 Distributions (분포 막대) 창 — Variable 온도_C, Split by None. 온도 막대 전체 모양이 보이게">
+    <div class="step"><div class="num">2</div><div class="content"><b>온도와 두께</b> — File에 <code>Scatter Plot</code>을 잇는다. 이 표에서는 처음에 Axis x가 <code>설비번호</code>, Axis y가 <code>공정명</code>으로 잡혀 바둑판 모양 점이 나온다. 당황하지 말고
+    <b>Axis x</b>를 <code>온도_C</code>, <b>Axis y</b>를 <code>두께_nm</code>로 바꾼다. Color는 <code>합격여부</code> 그대로 둔다. 강사는 축 설정까지만 보여 주고 창을 닫는다 — 점 모양은 실습지 문제 3에서 파이썬으로 먼저 그려 본다.</div></div>
+    <button class="reveal-btn">실습지 문제 3을 푼 뒤 비교 화면 보기</button>
+    <div class="answer-box">파이썬 <code>plt.scatter</code>로 그린 문제 3 그림과 같은 모양이다. Orange는 Color 칸 하나로 합격·불합격 색까지 함께 칠한다.
+      <img class="chart-img" src="../../assets/images/orange3/week06_07_process_scatter.png"
+           alt="공정 기록의 Scatter Plot 창. x 온도_C, y 두께_nm, 점 색은 합격여부"
+           data-shot="week06_2_process_done.ows의 Scatter Plot (산점도) 창 전체 — 왼쪽 Axis x 온도_C, Axis y 두께_nm, Color 합격여부와 오른쪽 점 180개가 보이게">
+    </div>
+    <div class="step"><div class="num">3</div><div class="content"><b>설비마다 온도의 퍼짐 — 상자 그림</b> — File에 <code>Box Plot</code>을 잇고 Variable을 <code>온도_C</code>, Subgroups를 <code>설비번호</code>로 바꾼다(처음에는 <code>측정시간</code>·<code>합격여부</code>로 잡혀 있다).
+    상자 네 개 중 어느 설비 상자가 가장 긴지 읽는 것이 실습지 문제 4다.</div></div>
+
+    <h3>파이썬 결과와 비교</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>질문</th><th>파이썬(PART 1·실습지)</th><th>Orange(오늘 PART 2)</th></tr></thead>
+        <tbody>
+          <tr><td>무리마다 몇 개?</td><td><code>value_counts()</code> + <code>plt.bar</code></td><td>Distributions(글자 열)</td></tr>
+          <tr><td>어디에 몰렸나?</td><td><code>plt.hist</code></td><td>Distributions(숫자 열, Split by None)</td></tr>
+          <tr><td>함께 움직이나?</td><td><code>plt.scatter</code></td><td>Scatter Plot(점 색까지 한 번에)</td></tr>
+          <tr><td>무리마다 얼마나 퍼졌나?</td><td>오늘은 그리지 않는다</td><td>Box Plot</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><b>한 문장으로</b> — 파이썬 <code>plt.scatter</code>와 Orange Scatter Plot은 같은 표에서 같은 모양의 그림을 그린다. 파이썬으로 그리지 않은 상자 그림으로는 설비마다 온도가 얼마나 들쭉날쭉한지 비교할 수 있다.</p>
+  </section>
+
+  <section class="block" id="part3">
+    <h2><span class="step-badge">PART 3</span> 실습지</h2>
+    <p><a href="worksheet.html">6차시 실습지</a>를 열고 순서대로 푼다. 문제 1~3이 오늘의 미션 그래프 3장이다.</p>
+    <ol>
+      <li><b>문제 1~3 (파이썬)</b> — 노트북 6단계의 <code>____</code>를 채운다. 설비별 기록 건수 막대, 온도 히스토그램, 온도-두께 산점도를 그린다.</li>
+      <li><b>문제 4 (Orange)</b> — <code>week06_2_process_start.ows</code>에서 Box Plot을 이어, 온도 상자가 가장 긴 설비를 찾는다.</li>
+      <li><b>문제 5 (해석 문장)</b> — 문제 4에서 본 것을 한 문장으로 보고한다.</li>
+    </ol>
+    <p>다 풀면 실습지의 "정답 보기"로 확인하고, 문제 5의 문장을 옆 사람에게 읽어 준다.</p>
   </section>
 
   <section class="block">
     <h2>핵심 용어 카드</h2>
     <div class="term-grid">
       <div class="term-card">
-        <h4>선 그래프</h4><div class="en">Line Chart</div>
-        <dl><dt>한 줄 설명</dt><dd>시간 순서대로 값을 이어 변화를 보여주는 그래프.</dd>
-          <dt>데이터에서의 예</dt><dd><code>plt.plot(df["측정시간"], df["온도_섭씨"])</code></dd></dl>
-      </div>
-      <div class="term-card">
-        <h4>막대그래프</h4><div class="en">Bar Chart</div>
-        <dl><dt>한 줄 설명</dt><dd>그룹(이름)마다 건수를 막대 높이로 비교하는 그래프.</dd>
-          <dt>데이터에서의 예</dt><dd><code>plt.bar(counts.index, counts)</code></dd></dl>
-      </div>
-      <div class="term-card">
         <h4>히스토그램</h4><div class="en">Histogram</div>
-        <dl><dt>한 줄 설명</dt><dd>숫자 범위를 같은 폭의 칸(bin)으로 나눠 칸마다 몇 개인지 보여주는 그래프.</dd>
-          <dt>데이터에서의 예</dt><dd><code>plt.hist(df["온도_섭씨"], bins=10)</code></dd></dl>
+        <dl>
+          <dt>한 줄 설명</dt><dd>숫자 열 하나를 구간으로 나눠, 구간마다 몇 개인지 막대로 보여 주는 그래프.</dd>
+          <dt>쉬운 비유</dt><dd>시험 점수를 60점대·70점대·80점대 칸으로 나눠 칸마다 학생 수를 세는 것.</dd>
+          <dt>데이터에서의 예</dt><dd><code>plt.hist(df["두께_nm"], bins=10)</code> → 약 101~103nm 근처에 가장 많다</dd>
+          <dt>자주 하는 오해</dt><dd>막대그래프와 같다고 생각한다. 막대그래프는 이름 붙은 무리를, 히스토그램은 숫자 구간을 센다.</dd>
+        </dl>
       </div>
       <div class="term-card">
         <h4>산점도</h4><div class="en">Scatter Plot</div>
-        <dl><dt>한 줄 설명</dt><dd>같은 행의 두 숫자를 점 하나로 찍어 함께 움직이는지 보는 그래프.</dd>
-          <dt>데이터에서의 예</dt><dd><code>plt.scatter(df["온도_섭씨"], df["두께_nm"])</code></dd></dl>
+        <dl>
+          <dt>한 줄 설명</dt><dd>숫자 두 개를 x·y로 놓고 행마다 점 하나를 찍는 그래프.</dd>
+          <dt>쉬운 비유</dt><dd>반 학생들의 키와 몸무게를 모눈종이에 한 사람당 점 하나로 찍는 것.</dd>
+          <dt>데이터에서의 예</dt><dd>기온-판매량 점 21개가 오른쪽 위로 올라간다. 다이_X·다이_Y로 찍으면 웨이퍼 맵이 된다</dd>
+          <dt>자주 하는 오해</dt><dd>점이 함께 움직이면 한쪽이 다른 쪽을 일으켰다고 생각한다. 함께 움직인다는 것까지만 보인다.</dd>
+        </dl>
       </div>
       <div class="term-card">
-        <h4>박스플롯</h4><div class="en">Box Plot</div>
-        <dl><dt>한 줄 설명</dt><dd>그룹마다 값을 상자·가운데 선·수염·점으로 요약한 그래프.</dd>
-          <dt>데이터에서의 예</dt><dd><code>df.boxplot(column="온도_섭씨", by="설비번호")</code></dd></dl>
+        <h4>상자 그림</h4><div class="en">Box Plot</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>값을 줄 세웠을 때 가운데 절반을 상자로 그려, 무리마다 값이 어디에 얼마나 퍼졌는지 비교하는 그림.</dd>
+          <dt>쉬운 비유</dt><dd>반마다 키를 줄 세우고 가운데 절반 학생들이 서 있는 구간만 띠로 칠한 것.</dd>
+          <dt>데이터에서의 예</dt><dd>웨이퍼 맵 중심거리: 합격 상자 62.6~112.0mm, 불합격 상자 119.2~132.8mm</dd>
+          <dt>자주 하는 오해</dt><dd>상자가 길면 값이 크다고 생각한다. 상자의 <b>위치</b>는 값의 크기, 상자의 <b>길이</b>는 퍼짐이다.</dd>
+        </dl>
       </div>
       <div class="term-card">
-        <h4>중앙값</h4><div class="en">Median</div>
-        <dl><dt>한 줄 설명</dt><dd>줄 세웠을 때 한가운데 값. 박스플롯의 가운데 선.</dd>
-          <dt>데이터에서의 예</dt><dd>EQ-02 온도 중앙값 303.4℃(<code>50%</code>)</dd></dl>
-      </div>
-      <div class="term-card">
-        <h4>퍼짐(변동)</h4><div class="en">Spread</div>
-        <dl><dt>한 줄 설명</dt><dd>값이 얼마나 들쭉날쭉한지. 숫자로는 표준편차(<code>std</code>).</dd>
-          <dt>데이터에서의 예</dt><dd>EQ-02 온도 std 5.4, 다른 설비 3.0~3.2</dd></dl>
-      </div>
-      <div class="term-card">
-        <h4>드리프트</h4><div class="en">Drift</div>
-        <dl><dt>한 줄 설명</dt><dd>시간이 지나며 값이 한쪽으로 서서히 밀려가는 현상.</dd>
-          <dt>데이터에서의 예</dt><dd>3월 평균 301.4℃ → 4월 평균 304.8℃</dd></dl>
+        <h4>웨이퍼 맵</h4><div class="en">Wafer Map</div>
+        <dl>
+          <dt>한 줄 설명</dt><dd>웨이퍼 위 다이마다 전기 검사(⑦ EDS) 결과를 위치대로 색칠한 지도.</dd>
+          <dt>쉬운 비유</dt><dd>피자 한 판에서 탄 조각만 빨갛게 표시한 그림.</dd>
+          <dt>데이터에서의 예</dt><dd>W-0601: 불합격 다이 64개 중 60개가 가장자리(112mm 바깥)</dd>
+          <dt>자주 하는 오해</dt><dd>불량 개수만 중요하다고 생각한다. 불량이 <b>어디에</b> 몰렸는지가 어디를 살펴볼지 단서가 된다.</dd>
+        </dl>
       </div>
     </div>
   </section>
@@ -602,161 +552,142 @@ EQ-04   50.0  302.7  3.0  295.6  300.4  303.2  304.5  311.8</pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li>쉬운 예제: <code>data/weekly/week06/week06_easy_icecream_daily.csv</code> (21행 5열). 생활 예제용 가상 데이터다.</li>
-      <li>반도체: <code>data/weekly/week06/week06_process_visualization.csv</code> (180행 10열, 설비 4대). 교육용 <b>가상 데이터</b>로,
-        드리프트·EQ-02 퍼짐·온도-두께 경향을 연습용으로 일부러 넣었다. 온도·압력 값의 크기는 해석하지 않는다.</li>
-      <li>자세한 설명: <a href="../../data/data_dictionary/week06_dictionary.html">데이터 설명서</a></li>
+      <li><code>data/weekly/week06/week06_easy_icecream_daily.csv</code> — 21행 5열, 생활 예제용 가상 데이터(PART 1 개념). 날씨별 날 수 맑음 12 · 흐림 6 · 비 3.</li>
+      <li><code>data/weekly/week06/week06_orange_wafer_map.csv</code> — 317행 5열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+        다이 317개 중 불합격 64개. <b>공정 지도 위치: ⑦ EDS(전기 검사) 결과.</b></li>
+      <li><code>data/weekly/week06/week06_process_visualization.csv</code> — 180행 10열, 교육용 가상 데이터(PART 1·2·3). 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+        <b>공정 지도 위치: ②~⑤ + 세정 설비 기록</b>(<code>두께_nm</code>은 작업 뒤 잰 웨이퍼 위 막의 두께라는 설정).</li>
+      <li>열 설명: <a href="../../data/data_dictionary/week06_dictionary.html">데이터 설명서</a></li>
     </ul>
   </section>
 
   <section class="block">
     <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
     <div class="callout danger">
-      <b class="tag">오류 1 — 그래프의 한글이 네모(□)로 나올 때</b>
-      <code>UserWarning: Glyph 50728 (\N{HANGUL SYLLABLE ON}) missing from font(s) DejaVu Sans.</code> — 글꼴 설정 두 줄을 실행하지 않았다.
-      노트북 1단계 첫 셀을 다시 실행한다(Mac은 <code>"AppleGothic"</code>).
+      <b class="tag">오류 1 — 한글이 네모(□)로 깨짐</b> 1단계 첫 셀의 <code>plt.rcParams[…]</code> 두 줄을 실행하지 않으면 축 이름의 한글이 네모로 보이고,
+      <code>Glyph 44032 (\N{HANGUL SYLLABLE GA}) missing from font(s) DejaVu Sans.</code> 같은 경고가 뜬다. 첫 셀을 실행한 뒤 그래프 셀을 다시 실행한다.
     </div>
     <div class="callout danger">
-      <b class="tag">오류 2 — 열 이름을 틀렸을 때</b>
-      <ul class="pt-list">
-        <li><code>KeyError: 'Column not found: 온도'</code>, <code>KeyError: '설비'</code> — 열 이름을 줄여 썼다(<code>온도_섭씨</code>, <code>설비번호</code>).</li>
-        <li><code>KeyError: '날짜'</code> — 실습지 문제에서 쉬운 예제를 바꿔 쓰며 표 이름만 <code>df</code>로 바꾸고 열 이름(<code>날짜</code> → <code>측정시간</code>)은 그대로 뒀다.</li>
-      </ul>
+      <b class="tag">오류 2 — 개수를 세지 않고 막대 그리기</b> <code>plt.bar(df["설비번호"])</code>처럼 열을 바로 넣으면 <code>TypeError: bar() missing 1 required positional argument: 'height'</code>가 난다.
+      막대에는 이름과 높이(개수) 두 가지가 필요하다. <code>value_counts()</code>로 먼저 세고 <code>plt.bar(이름들, 개수들)</code>로 그린다.
     </div>
     <div class="callout danger">
-      <b class="tag">오류 3 — 가로·세로 값 중 하나를 빼먹었을 때</b>
-      <code>TypeError: scatter() missing 1 required positional argument: 'y'</code>,
-      <code>TypeError: bar() missing 1 required positional argument: 'height'</code> —
-      <code>plt.scatter(df["온도_섭씨"], df["두께_nm"])</code>, <code>plt.bar(counts.index, counts)</code>처럼 두 개를 넣는다.
+      <b class="tag">오류 3 — plt.show() 빠뜨림</b> 오류는 나지 않지만 그래프 위에 <code>Text(0, 0.5, '기록 건수')</code> 같은 글자 줄이 함께 나온다. 마지막 줄 <code>plt.ylabel(…)</code>의 결과가 찍힌 것이다. 4줄 틀의 마지막 <code>plt.show()</code>를 붙인다.
     </div>
     <div class="callout warn">
-      <b class="tag">오류는 안 나지만 결과가 이상할 때</b>
-      <ul class="pt-list">
-        <li><code>pd.to_datetime()</code>을 건너뛰면 가로축 날짜 글자가 겹친다. 한 셀에 그래프 두 개를 쓰면 그림이 겹친다.</li>
-        <li>축 이름 줄을 안 바꾸면 온도 그래프에 "판매량_개" 같은 축 이름이 붙는다.</li>
-      </ul>
+      <b class="tag">빈칸을 그대로 두고 실행하면</b> 노트북의 <code>____</code>를 채우지 않으면 <code>AttributeError: module 'matplotlib.pyplot' has no attribute '____'</code>(그리기 함수 이름 자리)나
+      <code>AttributeError: 'Series' object has no attribute '____'</code>(<code>Series</code> = 표의 열 하나), <code>NameError: name '____' is not defined</code>(열 이름 자리)가 난다. 빈칸을 아직 안 채웠다는 뜻이다. 열 이름은 따옴표 안에 쓴다 — <code>df[온도_C]</code>처럼 따옴표를 빠뜨리면 <code>NameError: name '온도_C' is not defined</code>가 난다.
+      x와 y 열을 바꿔 넣으면 오류 없이 축 이름과 내용이 어긋난 그림이 나온다 — <code>plt.scatter(x, y)</code> 순서와 <code>xlabel</code>·<code>ylabel</code>을 함께 확인한다.
     </div>
   </section>
 
   <section class="block">
     <h2>결과 정리 &amp; 퀴즈</h2>
-    <p>더 많은 문제는 <a href="worksheet.html">실습지</a>에 있다.</p>
+    <ul class="pt-list">
+      <li>질문이 그래프를 고른다: 무리마다 몇 개 → 막대, 어디에 몰렸나 → 히스토그램, 함께 움직이나 → 산점도, 무리마다 얼마나 퍼졌나 → 상자 그림(Orange).</li>
+      <li>그래프는 "그리기 → x축 이름 → y축 이름 → <code>plt.show()</code>" 4줄 틀이다. 막대만 그 앞에 <code>value_counts()</code> 한 줄이 붙는다.</li>
+      <li>공정 기록: 다섯 공정 기록이 31~39건으로 비슷하고, 두께는 약 101~103nm 근처에 가장 많으며, 온도와 압력은 함께 움직이는 모습이 안 보였다.</li>
+      <li>웨이퍼 맵: 다이_X·다이_Y를 점으로 찍으니 둥근 웨이퍼가 나타났고, 불합격 다이 64개 중 60개가 가장자리에 몰려 있었다.</li>
+    </ul>
+    <div class="callout success">
+      <b class="tag">오늘의 반도체 이해 포인트</b>
+      <ul class="pt-list">
+        <li>웨이퍼 맵은 다이마다 전기 검사(⑦ EDS) 결과를 위치대로 찍은 지도다. 불량이 어디에 몰렸는지(오늘은 가장자리)가 어디를 먼저 살펴볼지 단서가 된다.</li>
+        <li>평균이 비슷해도 설비마다 값의 퍼짐은 다를 수 있다. 그래서 평균과 함께 상자 그림으로 퍼짐을 본다. 퍼짐이 불량과 이어지는지는 7·8차시에 숫자로 확인한다.</li>
+      </ul>
+    </div>
+    <p>복습 문제 전체는 <code>quiz.json</code>(수업 후 자율 복습)에 있다. 아래는 그중 일부다.</p>
 
     <div class="quiz-item">
-      <div class="q">Q1. (그래프 선택) "시간이 지나며 온도가 어떻게 변했나?"에 답하기에 가장 알맞은 그래프는?</div>
-      <ul class="options"><li>A. 히스토그램</li><li>B. 막대그래프</li><li>C. 선 그래프</li><li>D. 박스플롯</li></ul>
+      <div class="q">Q1. (그래프 고르기) "공정 기록의 온도가 주로 어느 구간에 몰려 있나?"에 답하기에 가장 알맞은 그래프는?</div>
+      <ul class="options">
+        <li>A. 막대그래프</li>
+        <li>B. 히스토그램</li>
+        <li>C. 산점도</li>
+      </ul>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: C.</div>
+      <div class="answer-box">정답: B. 숫자 열 하나를 구간으로 나눠 구간마다 몇 건인지 세는 그래프가 히스토그램이다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q2. (객관식) 박스플롯에서 상자 안의 가로선은 무엇인가?</div>
-      <ul class="options"><li>A. 평균</li><li>B. 가장 큰 값</li><li>C. 중앙값(줄 세웠을 때 한가운데 값)</li><li>D. 정상 범위의 위 끝</li></ul>
+      <div class="q">Q2. (객관식) Orange Scatter Plot에서 x를 <code>다이_X</code>, y를 <code>다이_Y</code>, 색을 <code>합격여부</code>로 놓았다. 무엇을 알 수 있을까?</div>
+      <ul class="options">
+        <li>A. 다이가 몇 개인지만 알 수 있다</li>
+        <li>B. 불합격 다이가 웨이퍼의 어디에 몰려 있는지 알 수 있다</li>
+        <li>C. 다이마다 온도가 몇 도였는지 알 수 있다</li>
+        <li>D. 불합격의 이유를 확정할 수 있다</li>
+      </ul>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: C. 평균은 박스플롯에 나오지 않는다.</div>
+      <div class="answer-box">정답: B. 위치(X·Y)대로 점을 찍고 검사 결과로 색칠하면 웨이퍼 맵이 된다. 오늘 웨이퍼는 불합격이 가장자리 고리에 몰렸다. 위치는 단서일 뿐 이유를 확정하지는 않는다.</div>
     </div>
 
     <div class="quiz-item">
-      <div class="q">Q3. (참/거짓) 설비 4대의 평균 온도가 302~304℃로 비슷하므로, 네 설비의 온도 상태는 비슷하다고 결론 내릴 수 있다.</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 거짓. EQ-02는 상자 길이가 6.7℃(다른 설비 3.1~4.1℃)로 훨씬 들쭉날쭉하다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q4. (참/거짓) 온도-두께 산점도에서 점들이 오른쪽 위로 기울어 있으므로, 온도가 두께의 원인이다.</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: 거짓. "함께 움직인다"까지만 보여준다. 지금은 원인 후보까지만 말할 수 있다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q5. (객관식) 쉬운 예제 코드 <code>ice.boxplot(column="판매량_개", by="날씨")</code>를 반도체 데이터의 설비별 온도 박스플롯으로 바꾼 것은?</div>
-      <ul class="options"><li>A. <code>df.boxplot(column="판매량_개", by="설비번호")</code></li><li>B. <code>df.boxplot(column="온도_섭씨", by="날씨")</code></li><li>C. <code>df.boxplot(column="온도_섭씨", by="설비번호")</code></li><li>D. <code>ice.boxplot(column="온도_섭씨", by="설비번호")</code></li></ul>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: C. 표 이름과 열 이름을 <b>모두</b> 바꿔야 한다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q6. (객관식) 아이스크림 가게 기록에서 흐린 날 평균 판매량(109.3개)이 맑은 날(101.5개)보다 높았다. 가장 알맞은 해석은?</div>
-      <ul class="options"><li>A. 흐리면 아이스크림이 더 팔린다.</li><li>B. 맑은 날에는 선선한 날(25.4℃ 이하) 5일이 섞여 있었다. 날씨 이름만 보지 말고 기온도 함께 봐야 한다.</li><li>C. 맑은 날 기록이 잘못되었으니 지워야 한다.</li><li>D. 평균이 높으니 흐린 날의 판매량 퍼짐도 가장 크다.</li></ul>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. 판매량은 기온과 함께 움직였다. 퍼짐(<code>std</code>)은 맑은 날이 28.7로 가장 크다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q7. (서술) 오늘 그린 그래프를 바탕으로 반도체 데이터의 특징을 두 문장으로 설명해보자.</div>
+      <div class="q">Q3. (서술) 설비 네 대의 평균 온도가 비슷한데도 상자 그림을 함께 봐야 하는 이유를 한 문장으로 써 보자.</div>
       <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">예시 답안: "네 설비의 평균 온도는 302~304℃로 비슷하지만, 박스플롯을 보면 EQ-02의 온도가
-      300.6~307.3℃로 가장 넓게 퍼져 있다. 또 시간이 지나며 온도가 서서히 올라 3월 평균 301.4℃에서 4월 평균 304.8℃가 되었다."</div>
+      <div class="answer-box">"평균이 비슷해도 어떤 설비는 온도가 넓게 퍼져 들쭉날쭉할 수 있는데, 평균 하나로는 그 차이가 안 보이고 상자의 길이로는 보이기 때문이다."</div>
     </div>
   </section>
 
   <section class="block">
     <h2>AI로 한 걸음 더 — 질문하고 코드 받아보기</h2>
-    <div class="callout practice">
-      <b class="tag">질문해보기 — 하나 이상 골라서 (노트북 12단계)</b>
-      <ul class="pt-list">
-        <li>"박스플롯의 상자, 가운데 선, 수염, 동그라미 점이 각각 무엇을 뜻하는지 반 친구들 키에 비유해서 설명해줘."</li>
-        <li>"히스토그램과 막대그래프는 어떻게 다른가요? x축의 차이를 중심으로 설명해줘."</li>
-        <li>"두 값이 함께 움직이는데 원인은 아닌 생활 속 예를 3개만 알려줘."</li>
-      </ul>
-      AI의 설명이 이 강의의 "읽는 법"과 같은 뜻인지 맞춰 보자.
-    </div>
-    <div class="callout practice">
-      <b class="tag">코드 받아보기 (노트북 13단계)</b>
-      "판다스 표 df로 그린 설비별 온도 박스플롯(<code>df.boxplot(column="온도_섭씨", by="설비번호")</code>)에,
-      정상 범위 295도와 305도를 빨간 점선 가로줄로 표시하는 코드를 만들어줘." (295~305℃는 학습용 정상 범위)
+    <p>ChatGPT에 아래처럼 물어 받은 코드의 예시다. 4차시 조건 검색으로 불합격 행만 고른 뒤, 같은 산점도 위에 빨간 점으로 한 번 더 찍는다. 노트북 7단계에서 실행한다.</p>
+    <div class="code-block">
+      <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>pandas 표 df에 "온도_C", "두께_nm", "합격여부"(1 = 합격, -1 = 불합격) 열이 있어. 온도-두께 산점도를 그리는데 불합격 점만 빨간색으로 겹쳐 그리는 짧은 matplotlib 코드를 만들어 줘.</code></pre>
     </div>
     <div class="code-block">
-      <div class="code-label"><span>Python — AI가 만들어줄 수 있는 코드 예시</span><button class="copy-btn">복사</button></div>
-      <pre><code>df.boxplot(column="온도_섭씨", by="설비번호")
-plt.axhline(295, color="red", linestyle="--")   # 정상 범위 아래 끝
-plt.axhline(305, color="red", linestyle="--")   # 정상 범위 위 끝
+      <div class="code-label"><span>Python — AI가 만들어 준 코드 예시 (노트북 7단계)</span><button class="copy-btn">복사</button></div>
+      <pre><code>fail = df[df["합격여부"] == -1]
+
+plt.scatter(df["온도_C"], df["두께_nm"], label="전체")
+plt.scatter(fail["온도_C"], fail["두께_nm"], color="red", label="불합격")
+plt.xlabel("온도_C")
+plt.ylabel("두께_nm")
+plt.legend()
 plt.show()</code></pre>
     </div>
-    <img class="chart-img" src="../../assets/images/week06/nb_ai_box_range.png"
-         alt="설비별 온도 박스플롯에 295도와 305도 빨간 점선이 그어져 있다. EQ-02의 상자만 305도 점선 위로 넘어간다." style="max-width:560px;">
-    <p class="img-caption">노트북 13단계 실행 결과. EQ-02의 상자 위 끝(307.3℃)만 305℃ 점선을 넘어간다.</p>
+    <img class="chart-img" src="../../assets/images/generated/week06_nb_ai_scatter_fail.png" alt="온도-두께 산점도 위에 불합격 기록 21건을 빨간 점으로 겹쳐 그린 그림">
+    <p class="img-caption">노트북 7단계 실행 결과 — 전체 180건 위에 불합격 21건을 빨간 점으로 겹침(교육용 가상 데이터)</p>
+    <ul class="pt-list">
+      <li><code>color="red"</code>는 점 색, <code>label</code>과 <code>plt.legend()</code>는 그림 구석의 이름표(범례)다. 처음 보는 옵션이라 구경만 한다.</li>
+      <li>Orange Scatter Plot은 Color 칸 하나로 같은 일을 한다. 빨간 점이 한곳에 몰렸는지, 여기저기 흩어졌는지 직접 보고 말해 보자.</li>
+    </ul>
     <div class="callout warn">
-      <b class="tag">AI 코드를 다룰 때</b>
-      <ul class="pt-list">
-        <li>직접 실행해서 기대한 그림인지 확인한다. <code>plt.axhline</code>(가로줄 긋기)은 구경만 한다.</li>
-        <li>노트북 8단계에서 <code>df</code>를 먼저 만들어 둬야 실행된다.</li>
-      </ul>
+      <b class="tag">AI 코드를 다룰 때</b> 직접 실행해 그림을 확인하고, 열 이름과 경로가 내 표와 같은지 맞춘다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.
     </div>
   </section>
 
   <section class="block">
     <h2>과제(다음 차시까지)</h2>
-    <p>노트북 하나에 그래프와 해석 한 문장씩을 적어 제출한다.</p>
     <div class="callout practice">
-      <b class="tag">과제 1 — 처리시간 히스토그램</b>
-      <code>처리시간_sec</code> 히스토그램을 그리고, 주로 몇 초 근처에 몰려 있는지 적는다.
+      <b class="tag">과제 1 — 진동 히스토그램 그리기</b>
+      실습지 문제 2와 같은 모양으로 <code>진동_mm_s</code> 열의 히스토그램(<code>bins=10</code>)을 그리고, 값이 가장 많이 몰린 구간을 한 문장으로 적는다. x축 이름도 <code>"진동_mm_s"</code>로 바꾼다.
     </div>
     <div class="callout practice">
-      <b class="tag">과제 2 — 공정별 기록 건수 막대그래프</b>
-      <code>공정명</code>별 건수를 <code>value_counts()</code>로 세어 막대그래프로 그리고, 가장 많은·적은 공정을 적는다.
-    </div>
-    <div class="callout practice">
-      <b class="tag">과제 3 — 두께와 진동 산점도</b>
-      가로축 <code>두께_nm</code>, 세로축 <code>진동_mm_s</code> 산점도가 세 가지 모양 중 어디에 가까운지 적는다.
+      <b class="tag">과제 2 — 내 말로 설명하기(코드 없음)</b>
+      "웨이퍼 맵을 보면 불합격 개수만 셀 때보다 무엇을 더 알 수 있는가"를 오늘 본 W-0601 웨이퍼를 예로 들어 두세 문장으로 적는다.
     </div>
   </section>
 
   <section class="block">
     <h2>핵심 질문 → 데이터 연결</h2>
     <ul class="pt-list">
-      <li><b>질문</b>: 어느 설비의 온도 변동이 가장 큰가? Orange3와 Matplotlib에서 같은 결론이 나오는가?</li>
-      <li><b>답</b>: EQ-02다. 두 도구 모두 EQ-02 상자가 가장 길고, 숫자 요약도 상자 길이 6.7℃, 표준편차 5.4로 가장 크다.
-        평균(302~304℃)만 봤다면 놓쳤을 차이다.</li>
+      <li><b>질문</b>: 숫자 표로는 안 보이던 공정의 모습을, 그래프 몇 장으로 볼 수 있을까?</li>
+      <li><b>웨이퍼 맵(Orange)</b>: 다이 317줄짜리 표를 점으로 찍으니 불합격 다이가 가장자리에 몰린 모습이 보였다(64개 중 60개).</li>
+      <li><b>오늘의 미션 그래프 3장(파이썬)</b>: 실습지 문제 1~3에서 직접 그린다.
+        <button class="reveal-btn">실습지를 푼 뒤 결과 보기</button>
+        <div class="answer-box">설비별 기록은 EQ-04 50 · EQ-01 47 · EQ-03 46 · EQ-02 37건이다. 온도는 약 300~305℃ 근처에 가장 많이 몰려 있다.
+        온도-두께 산점도는 오른쪽 위로 올라가 온도가 높은 기록일수록 두께도 두꺼운 경향이 보인다.</div></li>
+      <li><b>퍼짐(Orange Box Plot)</b>: 실습지 문제 4에서 설비별 온도 상자를 비교한다.
+        <button class="reveal-btn">실습지를 푼 뒤 결과 보기</button>
+        <div class="answer-box">설비 네 대의 평균 온도는 302.2~303.7℃로 비슷하지만, EQ-02의 상자가 300.6~307.3℃(길이 6.7)로 가장 길다. 다른 설비는 길이 3.05~4.00이다. 평균만 보면 놓치는 차이다.</div></li>
     </ul>
   </section>
 
   <section class="block">
     <h2>다음 차시 예고</h2>
-    <div class="callout concept">
-      <b class="tag">7차시 예고</b>
-      <code>groupby</code>로 설비별 평균·합격률을 <b>직접 계산</b>한다. 기록 수가 다른 설비(EQ-04 50건, EQ-02 37건)끼리는 건수가 아니라 <b>비율</b>로 비교한다.
-    </div>
+    <p>7차시에는 오늘 그래프로 본 "설비마다 다르다", "웨이퍼마다 불량 위치가 다르다"를 <b>숫자로 묶어 비교</b>한다. 설비별 수율(검사한 것 중 합격한 것의 비율)을 계산하고, Orange에서는 웨이퍼 12장의 맵을 설비별로 나란히 본다.</p>
+    <p><b>다음 날 미션</b> — 어느 설비의 수율이 가장 낮은지, 가장 많은 불량 유형은 무엇인지 보고하자.</p>
   </section>
 
   <div class="nav-buttons">

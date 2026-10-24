@@ -52,17 +52,19 @@
 
   <section class="block">
     <h2>목적</h2>
-<p><code>groupby</code>를 이용한 설비별·작업조별 비교와, 로트 단위 수율·불량유형 파레토 분석을 하나의 데이터셋에서 함께 연습하는 실습용 데이터다(v1의 "설비 비교"와 "수율·불량 분석" 두 데이터를 병합·압축했다).</p>
+<p><code>groupby</code>를 이용한 설비별·작업조별 비교와, 로트 단위 합격률·불량유형 파레토 분석을 하나의 데이터셋에서 함께 연습하는 실습용 데이터다(v1의 "설비 비교"와 "수율·불량 분석" 두 데이터를 병합·압축했다).</p>
   </section>
 
   <section class="block">
     <h2>가상 상황</h2>
+<div class="callout concept"><b class="tag">공정 지도 위치</b>공정 지도 <b>②~⑤(산화·포토·식각·증착/이온주입) + 세정</b>의 설비 기록과 <b>⑦ EDS(전기 검사)</b> 뒤 최종 합격 여부다.</div>
 <p>75개 로트, 로트마다 웨이퍼 4장씩 검사한 결과로 4대의 설비(EQ-01~EQ-04)와 3개 작업조 (A/B/C조)가 함께 기록된 300건의 웨이퍼 단위 검사 기록이다.</p>
   </section>
 
   <section class="block">
     <h2>행 하나의 의미</h2>
 <p>한 행 = 특정 로트의 특정 웨이퍼 1장에 대한 공정 측정값과 검사 결과.</p>
+<div class="callout concept"><b class="tag">이 기록의 단순화</b>실제 웨이퍼는 ②~⑥ 공정을 모두(여러 번) 거치지만, 이 기록은 로트마다 설비 하나·공정 하나만 적어 둔 교육용 단순화다(실측: 로트마다 설비·공정·작업조가 하나씩). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 그래서 공정 차이와 설비 차이(그리고 로트 차이)를 숫자로 떼어 볼 수 없다.</div>
   </section>
 
   <section class="block">
@@ -81,12 +83,12 @@
 <tr><td>설비번호</td><td>작업한 기계(EQ-01~EQ-04)</td><td>문자열</td><td>-</td><td>EQ-04</td><td>없음</td></tr>
 <tr><td>공정명</td><td>어떤 작업이었는지(산화·포토·식각·증착·세정)</td><td>문자열</td><td>-</td><td>포토</td><td>없음</td></tr>
 <tr><td>작업조</td><td>그 시간에 근무한 교대 근무팀(A·B·C조)</td><td>문자열</td><td>-</td><td>B조</td><td>없음</td></tr>
-<tr><td>온도_섭씨</td><td>챔버(설비 안 작업 공간) 온도</td><td>실수</td><td>℃</td><td>300.2</td><td>없음</td></tr>
+<tr><td>온도_C</td><td>챔버(설비 안 작업 공간) 온도</td><td>실수</td><td>℃</td><td>300.2</td><td>없음</td></tr>
 <tr><td>압력_Pa</td><td>챔버 압력</td><td>실수</td><td>Pa</td><td>1010.3</td><td>없음</td></tr>
 <tr><td>진공도_mTorr</td><td>챔버에서 공기를 얼마나 빼냈는지 나타내는 값. 값이 낮을수록 공기를 더 많이 뺀 상태(진공에 가까움)다(mTorr는 아주 낮은 압력 단위)</td><td>실수</td><td>mTorr</td><td>5.02</td><td>없음</td></tr>
 <tr><td>처리시간_sec</td><td>작업에 걸린 시간(초)</td><td>실수</td><td>sec</td><td>118.9</td><td>없음</td></tr>
-<tr><td>불량유형</td><td>불합격일 때 어떤 종류의 불량인지(합격이면 빈 값 <code>NaN</code>)</td><td>문자열</td><td>-</td><td>두께 불량</td><td>있음(합격일 때)</td></tr>
-<tr><td>합격여부</td><td>검사 결과</td><td>정수</td><td>-</td><td>1(합격) / -1(불합격)</td><td>없음</td></tr>
+<tr><td>불량유형</td><td>불합격일 때 기록된 불량의 종류(합격이면 빈 값 <code>NaN</code>). 공정 중간의 두께 측정·표면 검사와 마지막 전기 검사(⑦ EDS)에서 찾은 것을 한 열에 모아 둔 교육용 설정</td><td>문자열</td><td>-</td><td>두께 불량</td><td>있음(합격일 때)</td></tr>
+<tr><td>합격여부</td><td>그 웨이퍼의 최종 판정, 행마다(공정 중간 검사와 전기 검사 결과를 모은 교육용 설정)</td><td>정수</td><td>-</td><td>1(합격) / -1(불합격)</td><td>없음</td></tr>
 </tbody></table></div>
   </section>
 
@@ -106,12 +108,12 @@
 <tr><td>식각 과다</td><td>필요한 것보다 더 깎였다(이번 데이터에는 나오지 않음)</td></tr>
 <tr><td>전기적 특성 불량</td><td>전기를 흘려 검사했더니 기준을 벗어났다</td></tr>
 </tbody></table></div>
-<p>불량 유형은 검사에서 발견된 불량의 종류일 뿐이다. 그 행의 <code>공정명</code>(예: 증착)에서 그 불량이 생겼다는 뜻은 아니다.</p>
+<p>불량 유형 7종 중 6종(두께·패턴·파티클·오염·정렬·식각 부족)은 공정 중간의 두께 측정·표면 검사에서 찾는 물리적 불량이고, 전기적 특성 불량만 전기 검사(⑦ EDS)에서 찾는다. 이 열은 둘을 한 열에 모아 둔 교육용 설정이다. 불량 유형은 검사에서 발견된 불량의 종류일 뿐이다. 그 행의 <code>공정명</code>(예: 증착)에서 그 불량이 생겼다는 뜻은 아니다.</p>
   </section>
 
   <section class="block">
     <h2>수업에서 새로 만드는 열</h2>
-<ul class="pt-list"><li><code>합격</code> — 수업 코드 <code>df[&quot;합격&quot;] = df[&quot;합격여부&quot;] == 1</code>로 만드는 True/False 열이다(CSV에는 없다). <code>합격여부</code>가 1/-1이라 바로 평균을 내면 합격률이 되지 않으므로, True(1)/False(0) 열을 만들어 <code>sum()</code>은 합격 장수, <code>mean()</code>은 합격 비율로 쓴다.</li><li>이 과정에서는 웨이퍼 1장 = 검사 1건으로 단순화했다. 웨이퍼를 설비별로 센 비율은 "합격률", 로트별로 센 비율은 "로트 수율"이라고 부른다(실제 공장의 수율은 웨이퍼 안의 칩 단위로 세는 경우가 많다).</li></ul>
+<ul class="pt-list"><li><code>불합격</code> — "반도체 데이터로 확인하기"(노트북 4단계) 코드 <code>df[&quot;불합격&quot;] = df[&quot;합격여부&quot;] == -1</code>로 만드는 True/False 열. 작업조별 불합격률과 로트별 불합격 비율에 쓴다.</li><li><code>합격</code> — 수업 코드 <code>df[&quot;합격&quot;] = df[&quot;합격여부&quot;] == 1</code>로 만드는 True/False 열이다(CSV에는 없다). <code>합격여부</code>가 1/-1이라 바로 평균을 내면 합격률이 되지 않으므로, True(1)/False(0) 열을 만들어 <code>sum()</code>은 합격 장수, <code>mean()</code>은 합격 비율로 쓴다.</li><li>이 과정에서는 웨이퍼 1장 = 검사 1건으로 단순화했다. 웨이퍼를 설비별·로트별로 센 비율은 모두 "합격률"이라 부르고 수율 대신 쓴다(실제 공장의 수율은 웨이퍼 안의 다이 단위로 세는 경우가 많다 — 다이를 센 PART 2 워밍업만 수율이라 부른다).</li></ul>
   </section>
 
   <section class="block">
@@ -128,8 +130,8 @@
   </section>
 
   <section class="block">
-    <h2>정상 범위 (교육용 예시)</h2>
-<p>온도 295~305℃, 압력 995~1025 Pa, 진공도 4.5~5.5 mTorr.</p>
+    <h2>연습용 기준 (교육용 예시, 실제 공정 규격 아님)</h2>
+<p>온도 295~305℃, 진공도 4.5~5.5 mTorr. 압력은 절대값을 해석하지 않으므로 기준을 두지 않는다(아래 절).</p>
   </section>
 
   <section class="block">
@@ -156,23 +158,28 @@
 
   <section class="block">
     <h2>의도적으로 포함된 패턴</h2>
-<ul class="pt-list"><li>생성기가 <b>강제하는 것은 5개 로트뿐</b>이다(<code>scripts/generate_weekly_data.py:249</code>, 시드 107로 고정). 이 5개는 EQ-04에 배정하고 웨이퍼 4장 중 2장을 강제 불합격시켜 수율 80% 미만을 보장한다. 나머지 로트의 불합격은 설비별 <code>fail_prob</code>(EQ-01 0.05 / EQ-02 0.10 / EQ-03 0.08 / EQ-04 0.20)에서 나오는 난수 결과다.</li><li><b>실제 생성 결과</b>(시드 고정이므로 항상 동일): 저수율(80% 미만) 로트는 21개이고 EQ-04 11개, EQ-03 5개, EQ-02 4개, EQ-01 1개로 나뉜다. EQ-04는 전체 22개 로트 중 11개만 저조하고 나머지 11개는 100%다 — 설비 전체가 아니라 일부 로트가 문제였다는 것을 발견하는 장치다.</li><li>로트당 웨이퍼가 4장이므로 로트 수율은 0·25·50·75·100% 다섯 값만 가질 수 있다. 그래서 <b>동점 로트가 많다</b> — 수율 50%인 로트만 6개다. "수율 하위 N개"처럼 순위로 문제를 내면 동점 처리 방식(정렬 알고리즘)에 따라 답이 달라지므로, 이 데이터에서는 <b>"로트 수율 80% 미만" 같은 임계값 기준</b>으로 묻는다(강의 코드: <code>(lot_yield &lt; 80).sum()</code>). 최저 수율 로트는 0%인 LOT-0008 하나뿐이라 <code>sort_values().head(1)</code>로 찾아도 답이 하나로 정해진다.</li><li>불량유형 후보는 8종(두께 불량, 파티클, 패턴 불량, 식각 과다, 식각 부족, 오염, 정렬 불량, 전기적 특성 불량)이며, 이번 데이터에는 식각 과다를 제외한 7종이 실제로 나타난다. 그중 EQ-04에서는 두께 불량·파티클·패턴 불량이 더 자주 나오도록 편향 배치했다. 실제 상위 3개 불량유형(두께 불량 11건, 패턴 불량 6건, 파티클 5건)이 전체 불량(36건)의 약 61.1%를 차지한다.</li></ul>
+<ul class="pt-list"><li>생성기가 <b>강제하는 것은 5개 로트뿐</b>이다(<code>scripts/generate_weekly_data.py:249</code>, 시드 107로 고정). 이 5개는 EQ-04에 배정하고 웨이퍼 4장 중 2장을 강제 불합격시켜 로트 합격률 80% 미만을 보장한다. 나머지 로트의 불합격은 설비별 <code>fail_prob</code>(EQ-01 0.05 / EQ-02 0.10 / EQ-03 0.08 / EQ-04 0.20)에서 나오는 난수 결과다.</li><li><b>실제 생성 결과</b>(시드 고정이므로 항상 동일): 로트 합격률 80% 미만 로트는 21개이고 EQ-04 11개, EQ-03 5개, EQ-02 4개, EQ-01 1개로 나뉜다. EQ-04는 전체 22개 로트 중 11개만 합격률이 낮고 나머지 11개는 100%다 — 설비 전체가 아니라 일부 로트가 문제였다는 것을 발견하는 장치다.</li><li>로트당 웨이퍼가 4장이므로 로트 합격률은 0·25·50·75·100% 다섯 값만 가질 수 있다. 그래서 <b>동점 로트가 많다</b> — 합격률 50%인 로트만 6개다. "합격률 하위 N개"처럼 순위로 문제를 내면 동점 처리 방식(정렬 알고리즘)에 따라 답이 달라지므로, 이 데이터에서는 <b>임계값 기준</b>으로 묻는다(강의 코드: <code>(lot_fail &gt; 20).sum()</code> — 불합격 비율 20% 초과 = 합격률 80% 미만).</li><li>불량유형 후보는 8종(두께 불량, 파티클, 패턴 불량, 식각 과다, 식각 부족, 오염, 정렬 불량, 전기적 특성 불량)이며, 이번 데이터에는 식각 과다를 제외한 7종이 실제로 나타난다. 그중 EQ-04에서는 두께 불량·파티클·패턴 불량이 더 자주 나오도록 편향 배치했다. 실제 상위 3개 불량유형(두께 불량 11건, 패턴 불량 6건, 파티클 5건)이 전체 불량(36건)의 약 61.1%를 차지한다.</li></ul>
+  </section>
+
+  <section class="block">
+    <h2>7차시 수업에서 쓰는 값(노트북·Orange 실제 출력)</h2>
+<ul class="pt-list"><li>"반도체 데이터로 확인하기"(노트북 4단계): <code>(300, 11)</code> / 작업조별 불합격률 A조 9.8 · B조 15.5 · C조 9.7 / 로트별 불합격 비율이 20%를 넘는 로트 <b>21개</b>(= 로트 합격률 80% 미만, 웨이퍼 4장 중 1장 이상 불합격).</li><li>반도체 데이터 실습(노트북 5단계 = 실습지 문제 1~3): 전체 합격률 <b>88.0</b> / 설비별 합격률 EQ-01 98.1 · EQ-02 86.5 · EQ-03 91.1 · <b>EQ-04 75.0</b> / 불량 유형 1위 <b>두께 불량 11건</b>(패턴 불량 6 · 파티클 5 · 오염 5 · 정렬 불량 4 · 식각 부족 4 · 전기적 특성 불량 1).</li><li><code>합격여부</code>(1/-1)를 그대로 평균 내면 0.76이 나온다(합격률이 아니다 — 1과 -1이 서로 지워진 값).</li><li>Orange Pivot Table(<code>_2_yield_done.ows</code>, Rows 설비번호 · Columns 합격여부 · Count) 실측: EQ-01 102 / 2 · EQ-02 45 / 7 · EQ-03 51 / 5 · <b>EQ-04 66 / 22</b> · Total 264 / 36(합격 / 불합격, 웨이퍼 장수). EQ-04 66 ÷ 88 = 75.0%. 같은 창에서 Rows만 <code>불량유형</code>으로 바꾸면(실습지 문제 4 ③, <code>불량유형</code>은 meta인데도 Rows 목록에 나온다): 두께 불량 0 / 11 / 11 · 식각 부족 0 / 4 / 4 · 오염 0 / 5 / 5 · 전기적 특성 불량 0 / 1 / 1 · 정렬 불량 0 / 4 / 4 · 파티클 0 / 5 / 5 · 패턴 불량 0 / 6 / 6 · Total 0 / 36 / 36(1 / -1 / Total, 가나다순). 합격 웨이퍼는 불량유형이 빈칸이라 표에서 빠진다(Total 36).</li></ul>
   </section>
 
   <section class="block">
     <h2>이번 차시 분석 질문</h2>
-<ul class="pt-list"><li>전체 합격률(88.0%)과 설비별 합격률(EQ-01 98.1% ~ EQ-04 75.0%)은 어떻게 다른가? 설비별 처리 장수는 몇 장인가?</li><li>설비별 평균 온도는 합격률만큼 차이가 나는가?</li><li>로트별 수율(로트 안 웨이퍼 4장 중 합격 비율)이 80% 미만인 로트는 몇 개이고, EQ-04의 로트는 어떻게 나뉘는가?</li><li>수율이 가장 낮은 로트는 어느 설비·공정·작업조에서 나왔는가?</li><li>가장 자주 발생한 불량 유형은 무엇인가?(많은 순으로 줄 세우기, 파레토)</li></ul>
+<ul class="pt-list"><li>전체 합격률(88.0%)과 설비별 합격률(EQ-01 98.1% ~ EQ-04 75.0%)은 어떻게 다른가?</li><li>가장 자주 발생한 불량 유형은 무엇인가?(많은 순으로 줄 세우기, 파레토)</li><li>합격률이 가장 낮은 설비는 원인일까, 원인 후보일까? 원인이라 말하려면 무엇을 더 확인해야 하는가?</li></ul>
   </section>
 
   <section class="block">
     <h2>실제 현업 데이터와 다른 점</h2>
-<p>완전한 가상 데이터다. 설비별 특성과 저수율 로트의 연결은 "그룹 비교"와 "공통점 찾기" 학습을 위해 의도적으로 설계했다.</p>
+<p>완전한 가상 데이터다. 설비별 특성과 합격률이 낮은 로트의 연결은 "그룹 비교"와 "공통점 찾기" 학습을 위해 의도적으로 설계했다.</p>
   </section>
 
   <section class="block">
     <h2>생활 예제 데이터 — week07_easy_quiz_results.csv</h2>
 <h3>목적</h3>
-<p>반도체 데이터(<code>week07_equipment_yield.csv</code>)로 설비별 합격률과 로트 수율을 구하기 전에, 반별 쪽지시험 기록으로 <b>같은 모양의 <code>groupby</code> 계산</b>(개수·합·평균, 그룹별 비율, 낮은 그룹 열어 보기, 파레토 <code>value_counts</code>)을 먼저 익히는 <b>생활 예제용 가상 데이터</b>다. 강의·노트북은 파이썬 개념을 이 데이터(쉬운 예제)로 설명하고, 반도체 데이터는 강의 "반도체 데이터로 확인하기"와 실습지·노트북 뒷부분(5~7단계)에서 같은 모양의 코드로 다룬다. 강의의 groupby 개념도(반별로 모아 정답 비율 계산)도 이 데이터의 실제 값이다. 수업 코드에서는 반도체 표 <code>df</code>와 섞이지 않도록 이 표의 이름을 <code>quiz</code>로 쓴다.</p>
+<p>반도체 데이터(<code>week07_equipment_yield.csv</code>)로 설비별 합격률과 로트별 합격률을 구하기 전에, 반별 쪽지시험 기록으로 <b>같은 모양의 <code>groupby</code> 계산</b>(개수·합·평균, 그룹별 비율, 낮은 그룹 열어 보기, 파레토 <code>value_counts</code>)을 먼저 익히는 <b>생활 예제용 가상 데이터</b>다. 강의·노트북은 파이썬 개념을 이 데이터(쉬운 예제)로 설명하고, 반도체 데이터는 강의 "반도체 데이터로 확인하기"와 실습지·노트북 뒷부분(4~5단계)에서 같은 모양의 코드로 다룬다. 강의의 groupby 개념도(반별로 모아 정답 비율 계산)도 이 데이터의 실제 값이다. 수업 코드에서는 반도체 표 <code>df</code>와 섞이지 않도록 이 표의 이름을 <code>quiz</code>로 쓴다.</p>
 <h3>가상 상황</h3>
 <p>세 반(A반·B반·C반)에서 두 명씩, 모두 6명이 4문항짜리 쪽지시험을 봤다. 문항마다 맞았는지, 틀렸다면 왜 틀렸는지를 적었다.</p>
 <h3>행 하나의 의미</h3>
@@ -190,29 +197,60 @@
 <tr><td>반</td><td>학생의 반(반도체 데이터의 설비번호 자리)</td><td>문자열</td><td>-</td><td>B반</td><td>없음</td></tr>
 <tr><td>이름</td><td>학생 이름(반도체 데이터의 로트번호 자리)</td><td>문자열</td><td>-</td><td>예린</td><td>없음</td></tr>
 <tr><td>문제번호</td><td>몇 번 문항인지(1~4, 반도체 데이터의 웨이퍼번호 자리)</td><td>정수</td><td>-</td><td>2</td><td>없음</td></tr>
-<tr><td>풀이시간_초</td><td>그 문항을 푸는 데 걸린 시간</td><td>정수</td><td>초</td><td>110</td><td>없음</td></tr>
+<tr><td>풀이시간_sec</td><td>그 문항을 푸는 데 걸린 시간</td><td>정수</td><td>초(sec)</td><td>110</td><td>없음</td></tr>
 <tr><td>오답유형</td><td>틀렸을 때 왜 틀렸는지(계산 실수·문제 잘못 읽음·개념 부족). 맞았으면 빈 값 <code>NaN</code>(반도체 데이터의 불량유형 자리)</td><td>문자열</td><td>-</td><td>계산 실수</td><td>있음(정답일 때)</td></tr>
 <tr><td>정답여부</td><td>채점 결과. <b>1 = 정답, -1 = 오답</b>(반도체 데이터의 합격여부와 같은 1/-1 표기)</td><td>정수</td><td>-</td><td>-1</td><td>없음</td></tr>
 </tbody></table></div>
 <h3>수업에서 새로 만드는 열</h3>
 <ul class="pt-list"><li><code>정답</code> — <code>quiz[&quot;정답&quot;] = quiz[&quot;정답여부&quot;] == 1</code>로 만드는 True/False 열(CSV에는 없다). 반도체 수업의 <code>df[&quot;합격&quot;] = df[&quot;합격여부&quot;] == 1</code>과 같은 모양이다. <code>sum()</code>은 맞힌 문항 수, <code>mean() * 100</code>은 정답률(%)이 된다.</li></ul>
 <h3>의도적으로 포함된 패턴(실제 값)</h3>
-<ul class="pt-list"><li>크기 24행 x 6열(3반 x 2명 x 4문항). 전체 24문항 중 18문항 정답, 전체 정답률 75.0%.</li><li><b>반별 정답률</b>(<code>groupby(&quot;반&quot;)[&quot;정답&quot;]</code>): 문항 수(count) 각 8 / 정답 수(sum) A반 7, B반 5, C반 6 / 정답률 A반 87.5%, B반 62.5%, C반 75.0%.</li><li>반별 평균 풀이시간(<code>groupby(&quot;반&quot;)[&quot;풀이시간_초&quot;].mean()</code>): A반 61.2초, B반 76.9초, C반 67.8초.</li><li><b>학생별 정답률</b>(로트 수율과 같은 계산): 지민 100.0, 서준 100.0, 하은 75.0, 도윤 75.0, 시우 75.0, 예린 25.0. 80% 미만 4명, 최저는 예린 25.0% 하나뿐이다. 학생 한 명이 4문항이라 정답률은 0·25·50·75·100% 다섯 값만 나온다 (반도체 로트 수율과 같다).</li><li><b>B반을 따로 떼어 보면</b>: 서준 100.0%, 예린 25.0%. B반 전체가 아니라 한 학생이 낮았다. 반도체 7차시의 "EQ-04 전체가 아니라 일부 로트가 문제였다"와 같은 발견 장치다.</li><li>예린의 문항 기록: 1번 문제 잘못 읽음(85초), 2번 계산 실수(110초), 3번 정답(95초), 4번 개념 부족(120초).</li><li><b>오답유형 파레토</b>(<code>quiz[quiz[&quot;정답여부&quot;] == -1][&quot;오답유형&quot;].value_counts()</code>): 계산 실수 3, 문제 잘못 읽음 2, 개념 부족 1 (비율 50.0%·33.3%·16.7%).</li></ul>
+<ul class="pt-list"><li>크기 24행 x 6열(3반 x 2명 x 4문항). 전체 24문항 중 18문항 정답, 전체 정답률 75.0%.</li><li><b>반별 정답률</b>(<code>groupby(&quot;반&quot;)[&quot;정답&quot;]</code>): 문항 수(count) 각 8 / 정답 수(sum) A반 7, B반 5, C반 6 / 정답률 A반 87.5%, B반 62.5%, C반 75.0%.</li><li>반별 평균 풀이시간(<code>groupby(&quot;반&quot;)[&quot;풀이시간_sec&quot;].mean()</code>, v3 수업에서는 쓰지 않음): A반 61.2초, B반 76.9초, C반 67.8초.</li><li><b>학생별 정답률</b>(로트 합격률과 같은 계산): 지민 100.0, 서준 100.0, 하은 75.0, 도윤 75.0, 시우 75.0, 예린 25.0. 80% 미만 4명, 최저는 예린 25.0% 하나뿐이다. 학생 한 명이 4문항이라 정답률은 0·25·50·75·100% 다섯 값만 나온다 (반도체 로트 합격률과 같다).</li><li><b>B반을 따로 떼어 보면</b>: 서준 100.0%, 예린 25.0%. B반 전체가 아니라 한 학생이 낮았다. 반도체 7차시의 "EQ-04 전체가 아니라 일부 로트가 문제였다"와 같은 발견 장치다.</li><li>예린의 문항 기록: 1번 문제 잘못 읽음(85초), 2번 계산 실수(110초), 3번 정답(95초), 4번 개념 부족(120초).</li><li><b>오답유형 파레토</b>(<code>quiz[quiz[&quot;정답여부&quot;] == -1][&quot;오답유형&quot;].value_counts()</code>): 계산 실수 3, 문제 잘못 읽음 2, 개념 부족 1 (비율 50.0%·33.3%·16.7%).</li></ul>
 <h3>반도체 데이터와 짝이 되는 연산</h3>
 <div class="tablewrap"><table class="timetable">
 <thead><tr>
 <th>생활 예제</th>
 <th>반도체(week07_equipment_yield.csv)</th>
 </tr></thead><tbody>
-<tr><td><code>quiz[&quot;정답&quot;] = quiz[&quot;정답여부&quot;] == 1</code></td><td><code>df[&quot;합격&quot;] = df[&quot;합격여부&quot;] == 1</code></td></tr>
-<tr><td><code>quiz.groupby(&quot;반&quot;)[&quot;정답&quot;].mean() * 100</code> → A 87.5 / B 62.5 / C 75.0</td><td><code>df.groupby(&quot;설비번호&quot;)[&quot;합격&quot;].mean() * 100</code></td></tr>
-<tr><td><code>quiz.groupby(&quot;반&quot;)[&quot;풀이시간_초&quot;].mean()</code></td><td><code>df.groupby(&quot;설비번호&quot;)[&quot;온도_섭씨&quot;].mean()</code></td></tr>
-<tr><td><code>quiz.groupby(&quot;이름&quot;)[&quot;정답&quot;].mean() * 100</code> → 80% 미만 4명</td><td><code>df.groupby(&quot;로트번호&quot;)[&quot;합격&quot;].mean() * 100</code> → 80% 미만 21개</td></tr>
-<tr><td><code>quiz[quiz[&quot;반&quot;] == &quot;B반&quot;].groupby(&quot;이름&quot;)[&quot;정답&quot;].mean() * 100</code></td><td><code>df[df[&quot;설비번호&quot;] == &quot;EQ-04&quot;].groupby(&quot;로트번호&quot;)[&quot;합격&quot;].mean() * 100</code></td></tr>
-<tr><td><code>quiz[quiz[&quot;정답여부&quot;] == -1][&quot;오답유형&quot;].value_counts()</code></td><td><code>df[df[&quot;합격여부&quot;] == -1][&quot;불량유형&quot;].value_counts()</code></td></tr>
+<tr><td><code>quiz[&quot;정답&quot;] = quiz[&quot;정답여부&quot;] == 1</code></td><td><code>df[&quot;불합격&quot;] = df[&quot;합격여부&quot;] == -1</code>(4단계), <code>df[&quot;합격&quot;] = df[&quot;합격여부&quot;] == 1</code>(문제 1)</td></tr>
+<tr><td><code>quiz.groupby(&quot;반&quot;)[&quot;정답&quot;].mean() * 100</code> → A 87.5 / B 62.5 / C 75.0</td><td><code>df.groupby(&quot;작업조&quot;)[&quot;불합격&quot;].mean() * 100</code>(4단계), <code>df.groupby(&quot;설비번호&quot;)[&quot;합격&quot;].mean() * 100</code>(문제 2)</td></tr>
+<tr><td><code>quiz[quiz[&quot;정답여부&quot;] == -1][&quot;오답유형&quot;].value_counts()</code></td><td><code>df[df[&quot;합격여부&quot;] == -1][&quot;불량유형&quot;].value_counts()</code>(문제 3)</td></tr>
 </tbody></table></div>
 <h3>실제 데이터와 다른 점</h3>
 <p>생활 예제용으로 손으로 정한 가상 값이며 실제 학생 성적이 아니다. <code>scripts/generate_weekly_data.py</code>의 <code>gen_easy_week07()</code>가 고정 값으로 만든다. 한 반에 두 명뿐이라 반별 정답률은 학생 한 명에 따라 크게 흔들린다 ("건수가 적은 쪽의 비율은 흔들리기 쉽다"를 보여 줄 때도 쓸 수 있다).</p>
+  </section>
+
+  <section class="block">
+    <h2>Orange 워밍업 데이터 — week07_orange_wafer_lots.csv</h2>
+<h3>목적</h3>
+<p>7차시 PART 2 Orange 워밍업용 데이터다. Pivot Table(피벗 표)로 설비별 합격·불합격 다이 수를 세어 수율이 낮은 설비를 찾고, Select Rows로 그 설비의 웨이퍼만 골라 Scatter Plot으로 웨이퍼 맵을 그려 <b>불량 위치라는 단서</b>를 하나 더 본다. Orange에서는 <code>orange/week07_orange_wafer_lots.tab</code>을 연다.</p>
+<h3>가상 상황</h3>
+<div class="callout concept"><b class="tag">공정 지도 위치</b>공정 지도 <b>④ 식각</b> 설비 3대(식각-1·식각-2·식각-3)를 거친 웨이퍼 12장의 <b>⑦ EDS(전기 검사)</b> 결과다. 설비 이름은 반도체 데이터의 EQ-0N과 헷갈리지 않게 따로 지었다.</div>
+<h3>행 하나의 의미</h3>
+<p>한 행 = 웨이퍼 한 장 위 다이 1개의 검사 결과(12장 × 317다이 = 3,804행). 이 가상 웨이퍼 한 장의 다이 317개는 교육용 가상 격자다 — 실제 다이 수는 칩 크기에 따라 다르다.</p>
+<h3>열 설명</h3>
+<div class="tablewrap"><table class="timetable">
+<thead><tr>
+<th>열 이름</th>
+<th>쉬운 설명</th>
+<th>데이터 형식</th>
+<th>단위</th>
+<th>예시</th>
+<th>결측값 가능 여부</th>
+</tr></thead><tbody>
+<tr><td>웨이퍼ID</td><td>웨이퍼 번호(W-01~W-12). Pivot Table·Select Rows에 쓸 수 있는 범주 열</td><td>문자열(범주)</td><td>-</td><td>W-09</td><td>없음</td></tr>
+<tr><td>설비번호</td><td>그 웨이퍼를 식각한 설비(식각-1·식각-2·식각-3, 각 4장)</td><td>문자열(범주)</td><td>-</td><td>식각-3</td><td>없음</td></tr>
+<tr><td>다이_X</td><td>다이의 가로 칸 번호(-10~10)</td><td>정수</td><td>칸</td><td>4</td><td>없음</td></tr>
+<tr><td>다이_Y</td><td>다이의 세로 칸 번호(-10~10)</td><td>정수</td><td>칸</td><td>-9</td><td>없음</td></tr>
+<tr><td>중심거리_mm</td><td>웨이퍼 중심에서 다이까지 거리(칸 거리 × 14mm)</td><td>실수</td><td>mm</td><td>137.9</td><td>없음</td></tr>
+<tr><td>불량패턴</td><td>그 웨이퍼의 불량 모양(없음·가장자리형·스크래치형). 웨이퍼마다 하나</td><td>문자열(범주)</td><td>-</td><td>가장자리형</td><td>없음</td></tr>
+<tr><td>합격여부</td><td>다이 전기 검사 결과</td><td>정수</td><td>-</td><td>1(합격) / -1(불합격)</td><td>없음</td></tr>
+</tbody></table></div>
+<h3>의도적으로 포함된 패턴(실제 생성 결과)</h3>
+<ul class="pt-list"><li>식각-1 네 장: 불량패턴 "없음"(무작위 불량) — 수율 <b>95.2%</b>.</li><li>식각-2: 세 장 "없음" + W-06 한 장 "스크래치형" — 수율 <b>94.8%</b>.</li><li><b>식각-3 네 장(W-09~W-12): 모두 "가장자리형"</b> — 수율 <b>83.1%</b>(웨이퍼별 83.9 · 83.3 · 82.6 · 82.6%). 최고와 12.1%p 차이.</li><li>Orange 실측(<code>_1_waferlots_done.ows</code>):</li><li>Pivot Table(Rows 설비번호, Columns 합격여부, Count): 식각-1 1207 / 61 · 식각-2 1202 / 66 · <b>식각-3 1054 / 214</b> · Total 3463 / 341(합격 / 불합격, <b>다이 수</b>). Pivot Table이 세는 것은 다이 수다(웨이퍼 수가 아님). 화면 숫자는 <code>1207.0</code>처럼 소수점이 붙어 보인다.</li><li>Select Rows <code>설비번호 is 식각-3</code> → 1,268행 → Scatter Plot(다이_X·다이_Y, 색 합격여부): 불합격 214개 중 <b>194개가 112mm 바깥 가장자리 고리</b>.</li><li>식각-3의 가장자리 처리 조건은 <b>원인 후보</b>다. 데이터만으로 원인을 확정하지 않는다.</li></ul>
+<h3>이번 차시 분석 질문</h3>
+<ul class="pt-list"><li>수율이 가장 낮은 식각 설비는 어디이고, 그 설비 웨이퍼의 불량은 어디에 몰려 있는가?</li></ul>
+<h3>실제 데이터와 다른 점</h3>
+<p>교육용 가상 데이터이며 실제 웨이퍼 검사 결과가 아니다. <code>scripts/generate_weekly_data.py</code>의 <code>gen_orange_week07()</code>(시드 207, 웨이퍼 다이 합성기)가 만든다.</p>
   </section>
 
   <div class="nav-buttons">
