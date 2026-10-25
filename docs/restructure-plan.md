@@ -153,12 +153,12 @@
 ### 후속 진행 — TODO 4: Orange3 공통 안내 자료 신규 작성 (2026-08-01)
 
 - 3~10차시 전체 상세 콘텐츠 완성 이후에도 TODO 4(Orange3 설치·기본 사용법 공통 안내 자료)는
-  계속 미착수 상태로 남아 있었다 — 각 차시는 "File → Data Table → Feature Statistics" 같은 위젯
+  계속 미착수 상태로 남아 있었다 — 각 차시는 "File → Data Table → Column Statistics" 같은 위젯
   이름만 언급할 뿐, 이 과정의 대상인 프로그래밍 완전 초보자에게 Orange3 설치 방법이나 캔버스에서
   위젯을 놓고 연결하는 기본 조작법을 설명하는 곳이 어디에도 없었다.
 - `docs/orange3-guide.html`을 신규 작성해 TODO 4를 완료했다 — 설치(pip/설치파일 두 가지 방법),
   기본 화면 구성(위젯 목록/캔버스/연결선, SVG 다이어그램 포함), 첫 워크플로 만들어보기 실습,
-  5~10차시에서 실제로 쓰는 위젯 11종(File, Data Table, Feature Statistics, Scatter Plot, Box
+  5~10차시에서 실제로 쓰는 위젯 11종(File, Data Table, Column Statistics, Scatter Plot, Box
   Plot, Distributions, Bar Chart, Correlations, Tree, Test and Score, Predictions) 설명, 차시별
   사용 위젯 요약표, 자주 발생하는 문제 해결(연결 실패, 인코딩, Target Variable 누락 등)까지
   다룬다. 다른 강의 자료와 동일하게 `assets/css/common.css` 기존 클래스만 재사용했다.

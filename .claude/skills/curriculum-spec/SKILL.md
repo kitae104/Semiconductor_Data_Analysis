@@ -37,7 +37,7 @@ PART 내부 흐름(순서만):
 | Phase | 차시 | 파이썬(활성 개념) | Orange3 새 위젯 |
 |---|---|---|---|
 | 1 · 첫걸음 | 1 | `=`, `print`, f-string, `type` | File, Data Table, Distributions |
-| | 2 | 리스트·인덱스, `len`/`append`, `max`/`min`/`sum`, 딕셔너리 | Feature Statistics |
+| | 2 | 리스트·인덱스, `len`/`append`, `max`/`min`/`sum`, 딕셔너리 | Column Statistics |
 | | 3 | `if`/`else`, `for` 세기, `def` 하나 | Select Rows |
 | 2 · 데이터 다루기 | 4 | `read_csv`, 열 선택, 조건 검색, `sort_values` | Select Columns |
 | | 5 | `describe`, `isna().sum()`, `dropna`, `drop_duplicates` | Impute |

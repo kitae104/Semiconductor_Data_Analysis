@@ -16,7 +16,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 5. 노트북 3단계: 오답 유형 `value_counts()`(계산 실수 3 · 문제 잘못 읽음 2 · 개념 부족 1) → 막대
 6. **여기서 쉬기**
 7. 노트북 4단계 "반도체 데이터로 확인하기": 학생이 `groupby(____)` 빈칸 하나(`"작업조"`)를 채운다(PART 1 유일한 손 연습 — 2단계 "반" 자리를 바꾸는 전이 연습). 이어서 정답 노트북으로 확인 — (300, 11), 작업조별 불합격률 A조 9.8 · B조 15.5 · C조 9.7, 불합격 비율 20% 초과 로트 21개. "B조 때문"이 아니라 "원인 후보"로 읽는 장면을 말로 짚는다.
-8. PART 2 Orange: Orange 말 사전 → 위젯 이름표(묶음 열 포함) → Pivot Table 창 읽는 법 → 공정 지도 위치 두 줄 → 워밍업 `week07_1_waferlots_start.ows`(학생이 직접: Pivot Table → Select Rows → Scatter Plot) → 반도체 `week07_2_yield_start.ows`는 **강사 시연**(Box Plot만, EQ-02 상자가 가장 김) → 파이썬 결과와 비교 한 문장
+8. PART 2 Orange: 위젯 이름표(묶음 열 포함) → Pivot Table 창 읽는 법 → 공정 지도 위치 두 줄 → 워밍업 `week07_1_waferlots_start.ows`(학생이 직접: Pivot Table → Select Rows → Scatter Plot) → 반도체 `week07_2_yield_start.ows`는 **강사 시연**(Box Plot만, EQ-02 상자가 가장 김) → 파이썬 결과와 비교 한 문장
 9. **여기서 쉬기**(필요하면)
 10. PART 3 실습지: 문제 1~3(노트북 5단계) → 문제 4(Orange Pivot Table) → 문제 5(해석 문장 + 판단) → 정답 확인과 문장 발표
 11. 결과 정리·반도체 이해 포인트 → AI로 한 걸음 더(노트북 6단계) → 과제·8차시 예고

@@ -141,7 +141,7 @@
 ## Orange 워밍업 데이터 — week05_orange_cleanroom_env.csv
 
 ### 목적
-5차시 PART 2 Orange 워밍업용 데이터다. Feature Statistics로 빈칸·튀는 값을 찾고, Impute(빈칸 채우기)로 빈칸을
+5차시 PART 2 Orange 워밍업용 데이터다. Column Statistics로 빈칸·튀는 값을 찾고, Impute(빈칸 채우기)로 빈칸을
 평균으로 채웠을 때 **튀는 값이 남아 있으면 채운 값도 엉터리가 되는** 장면을 직접 본다. Orange에서는
 `orange/week05_orange_cleanroom_env.tab`을 연다.
 

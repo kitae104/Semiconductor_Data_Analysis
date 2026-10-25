@@ -2,7 +2,7 @@
 <scheme version="2.0" title="2차시 ① 지하철 역별 승하차로 최고·최저·평균 읽기 (완성)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
 	<nodes>
 		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
-		<node id="1" name="Feature Statistics" qualified_name="Orange.widgets.data.owfeaturestatistics.OWFeatureStatistics" project_name="Orange3" version="" title="Feature Statistics (열 통계)" position="(300.0, 320.0)" />
+		<node id="1" name="Column Statistics" qualified_name="Orange.widgets.data.owfeaturestatistics.OWFeatureStatistics" project_name="Orange3" version="" title="Column Statistics (열 통계)" position="(300.0, 320.0)" />
 		<node id="2" name="Data Table" qualified_name="Orange.widgets.data.owtable.OWTable" project_name="Orange3" version="" title="Data Table (표 보기)" position="(300.0, 460.0)" />
 	</nodes>
 	<links>
@@ -10,7 +10,7 @@
 		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Data" sink_channel="Data" enabled="true" source_channel_id="data" sink_channel_id="data" />
 	</links>
 	<annotations>
-		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: File → Feature Statistics(열 통계), File → Data Table(표 보기, 승차인원_count 큰 값부터).
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">완성본: File → Column Statistics(열 통계), File → Data Table(표 보기, 승차인원_count 큰 값부터).
 Max가 Mean보다 훨씬 큽니다. 평균만 보면 유난히 붐비는 한 곳이 안 보입니다 — 최고·최저를 같이 보세요.</text>
 	</annotations>
 	<thumbnail />

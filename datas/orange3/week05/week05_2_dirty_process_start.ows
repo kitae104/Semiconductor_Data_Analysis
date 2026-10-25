@@ -6,9 +6,9 @@
 	<links />
 	<annotations>
 		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 공정 데이터(113행)가 들어왔는지 확인하세요.
-② Feature Statistics(열 통계)를 File에 이어 빈칸(Missing)과 Min·Max가 이상한 열을 찾으세요.
+② Column Statistics(열 통계)를 File에 이어 빈칸(Missing)과 Min·Max가 이상한 열을 찾으세요.
 ③ Impute(빈칸 채우기) → Select Rows(행 고르기) → Data Table 순서로 이어 이상값을 걸러 내세요.
-④ Select Rows에 Feature Statistics를 하나 더 이어 정리 전과 비교하세요.</text>
+④ Select Rows에 Column Statistics를 하나 더 이어 정리 전과 비교하세요.</text>
 	</annotations>
 	<thumbnail />
 	<node_properties>

@@ -136,7 +136,7 @@ PART 머리 섹션은 `section.block > h2` 구조를 지켜 자동 목차에 잡
   <h2><span class="step-badge">PART 1</span> 파이썬 — 변수와 출력</h2>
   <p>개념은 생활 예제로 배우고, 공장 기록은 "반도체 데이터로 확인하기"에서 다룬다.</p>
 </section>
-<!-- 이어서 개념 섹션들, 반도체 데이터로 확인하기, 실습 따라 하기 -->
+<!-- 이어서 개념 섹션들, 반도체 데이터로 확인하기 -->
 <section class="block" id="part2">
   <h2><span class="step-badge">PART 2</span> Orange3 — 표를 눈으로 보기</h2>
   …위젯 이름표 표, 워밍업, 반도체, 파이썬 결과와 비교…
@@ -149,7 +149,8 @@ PART 머리 섹션은 `section.block > h2` 구조를 지켜 자동 목차에 잡
 
 9·10차시는 `id="part1"`이 Orange3, `id="part2"`가 파이썬 최소 + ChatGPT 체험이다(id는 위치 기준).
 
-**위젯 이름표** — PART 2(9·10차시는 PART 1) 첫머리의 표. 영어 이름은 Orange 3.35 화면 그대로 쓴다.
+**위젯 이름표** — PART 2(9·10차시는 PART 1) 첫머리의 표. 영어 이름은 Orange 화면 그대로 쓴다(`Column Statistics` 등).
+**누적 규칙(2026-10-25)**: "Orange 말 사전"(캔버스·위젯·워크플로·`.tab`·툴팁)은 1차시에만 싣고, 이후 차시는 새 용어 행만 추가한다(9차시: 목표 열·CA·nodes/leaves). 위젯 이름표 표도 앞 차시에 이미 나온 위젯 행(File·Data Table 등)과 반복 안내("Data Table 뒤에는 위젯을 잇지 않는다")는 빼고, 그날 처음 쓰는 위젯과 새 읽는 법만 남긴다. 새 차시를 쓸 때는 1~앞 차시 강의에서 이미 설명한 것을 먼저 확인한다.
 
 ```html
 <div class="tablewrap">

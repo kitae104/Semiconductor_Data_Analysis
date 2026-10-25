@@ -64,7 +64,7 @@
     },
     {
       "type": "multiple_choice",
-      "question": "Orange Feature Statistics에서 지하철 승차인원_count 행이 Mean 2876.58, Max 9872로 보였다. 이것으로 알 수 있는 것은?",
+      "question": "Orange Column Statistics에서 지하철 승차인원_count 행이 Mean 2876.58, Max 9872로 보였다. 이것으로 알 수 있는 것은?",
       "options": [
         "모든 역·시간대가 2876명쯤으로 비슷하게 붐빈다",
         "평균보다 훨씬 붐비는 곳이 있다 — 평균만 보면 그 한 곳이 안 보인다",

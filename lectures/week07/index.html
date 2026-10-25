@@ -294,45 +294,16 @@ print((lot_fail &gt; 20).sum())</code></pre>
     설비별 합격률과 가장 많은 불량 유형 — 오늘의 미션 — 은 PART 3 실습지 문제 1~3에서 직접 구한다.</p>
   </section>
 
-  <section class="block">
-    <h2>실습 따라 하기</h2>
-    <p>학생용 노트북을 위에서 아래로 실행한다. 1~3단계는 코드가 완성돼 있고, 4단계에 빈칸이 하나 있다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>정답 열 만들기</b> — 쪽지시험 기록을 읽고 <code>== 1</code>로 <code>정답</code> 열을 만들어 정답 수 18, 정답률 75.0을 확인한다. (노트북 1단계)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>반별로 묶기</b> — <code>groupby("반")</code>으로 반별 정답률을 구하고 <code>sort_values()</code>로 줄 세운다. (노트북 2단계)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>오답 유형 줄 세우기</b> — 오답 행만 골라 <code>value_counts()</code>로 세고 막대로 그린다. (노트북 3단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>공장 기록으로 확인</b> — <code>groupby(____)</code> 빈칸 하나를 채워 작업조별 불합격률을 구하고, 불합격이 섞인 로트 수를 본다. (노트북 4단계)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>반도체 데이터 실습</b> — 5단계의 문제 1~3(오늘의 미션)은 PART 3에서 실습지를 보며 푼다. (노트북 5단계)</div></div>
-    <div class="callout warn"><b class="tag">체크포인트</b> 숫자가 위 결과와 다르면 셀을 건너뛰었거나 순서가 꼬인 것이다. "막혔을 때" 셀대로 Kernel → Restart Kernel and Run All Cells…로 위에서부터 다시 실행한다.</div>
-  </section>
-
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 피벗 표로 세고 웨이퍼 맵으로 열어 보기</h2>
     <p>PART 1에서는 <code>groupby</code>로 묶어서 비율을 계산했다. Orange에서는 <b>Pivot Table</b>(피벗 표)로 설비 × 합격여부 칸마다 개수를 한 번에 세고, 숫자로 찾은 설비를 웨이퍼 맵으로 열어 본다. 오늘 새 위젯은 <code>Pivot Table</code> 하나다.</p>
-
-    <h3>Orange 말 사전</h3>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>말</th><th>뜻</th></tr></thead>
-        <tbody>
-          <tr><td>캔버스</td><td>위젯을 놓고 선으로 잇는 가운데 하얀 작업판</td></tr>
-          <tr><td>위젯</td><td>한 가지 일을 하는 기능 상자. 더블클릭하면 자기 창이 열린다</td></tr>
-          <tr><td>워크플로(<code>.ows</code>)</td><td>캔버스에 놓은 위젯과 연결을 통째로 저장한 파일</td></tr>
-          <tr><td><code>.tab</code></td><td>Orange가 읽는 표 파일. CSV와 내용은 같고, 열마다 종류·역할이 적혀 있다</td></tr>
-          <tr><td>툴팁</td><td>마우스를 올리고 잠시 기다리면 뜨는 작은 설명 상자</td></tr>
-        </tbody>
-      </table>
-    </div>
 
     <h3>위젯 이름표</h3>
     <div class="tablewrap">
       <table>
         <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
         <tbody>
-          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
           <tr><td><code>Pivot Table</code></td><td>Transform</td><td>피벗 표</td><td><b>오늘 새 위젯.</b> 행(Rows)과 열(Columns)에 놓은 두 열의 값 조합마다 개수를 세어 표로 보여 준다. 파이썬 <code>groupby</code>로 묶어 세는 일과 같다</td></tr>
-          <tr><td><code>Select Rows</code></td><td>Transform</td><td>행 고르기</td><td>조건에 맞는 행만 남긴다(3차시에 써 봤다). 설비 한 대의 웨이퍼만 고른다</td></tr>
-          <tr><td><code>Scatter Plot</code></td><td>Visualize</td><td>산점도</td><td>다이_X·다이_Y로 점을 찍어 웨이퍼 맵을 그린다(6차시에 써 봤다)</td></tr>
-          <tr><td><code>Box Plot</code></td><td>Visualize</td><td>상자 그림</td><td>설비마다 온도가 얼마나 퍼졌는지 본다(6차시에 써 봤다)</td></tr>
         </tbody>
       </table>
     </div>
@@ -345,7 +316,6 @@ print((lot_fail &gt; 20).sum())</code></pre>
         <li>개수인데도 <code>1207.0</code>처럼 소수점이 붙어 보인다. 1207과 같은 뜻이다. <b>Values</b> 칸은 Count만 쓸 때는 무엇이 들어 있어도 결과가 같다.</li>
       </ul>
     </div>
-    <div class="callout warn"><b class="tag">주의</b> 오늘 위젯은 File이나 Select Rows에서 잇는다. Data Table 뒤에는 위젯을 잇지 않는다(Data Table이 내보내는 것은 화면에서 고른 행뿐이다).</div>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
@@ -650,7 +620,7 @@ EQ-04 합격률 75.0% → 원인 후보 — 더 살펴보기</pre>
   <section class="block">
     <h2>다음 차시 예고</h2>
     <p>8차시에는 "어느 설비"에서 한 걸음 더 들어가 "어떤 값이 불합격과 <b>함께 움직이나</b>"를 본다. 산점도와 상관계수로 관계를 재고, Orange에서는 Correlations로 모든 열 쌍을 한 번에 줄 세운다.</p>
-    <p><b>다음 날 미션</b> — 불합격과 관련 있어 보이는 공정 값을 찾아 '원인 후보' 보고서 한 줄을 쓰자.</p>
+    <p><b>다음 미션</b> — 불합격과 관련 있어 보이는 공정 값을 찾아 '원인 후보' 보고서 한 줄을 쓰자.</p>
   </section>
 
   <div class="nav-buttons">

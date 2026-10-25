@@ -1,6 +1,6 @@
 """2차시 노트북 2종(학생용·정답) 빌더 — v3 롤아웃.
 
-스펙: _workspace/01_architect_spec.md 「2차시」. 파이썬 PART만 담는다(Orange Feature Statistics는 .ows).
+스펙: _workspace/01_architect_spec.md 「2차시」. 파이썬 PART만 담는다(Orange Column Statistics는 .ows).
 활성 개념 4개: 리스트·인덱스 · len()/append() · max()/min()/sum() · 딕셔너리.
 노출 전용: 딕셔너리의 리스트(5단계 구경, 완성 코드), round()(평균을 소수 첫째 자리로 — 5차시와 같은 방식).
 빼는 것: 슬라이싱 실습, 딕셔너리 값 바꾸기·키 추가, 딕셔너리의 리스트 실습 문제.

@@ -44,7 +44,7 @@
 | 차시 | 제목 | 파이썬 | Orange3(워밍업 → 반도체) |
 | --- | --- | --- | --- |
 | 1 | 반도체 공정과 데이터 처음 만나기 + 변수·출력 | `=`, `print`, f-string, `type` | 우리 동네 인구 → 공정 기록 (File, Data Table, Distributions) |
-| 2 | 리스트와 딕셔너리 | 리스트·인덱스, `len`/`append`, `max`/`min`/`sum`, 딕셔너리 | 지하철 역별 승하차 → 설비 온도 (Feature Statistics) |
+| 2 | 리스트와 딕셔너리 | 리스트·인덱스, `len`/`append`, `max`/`min`/`sum`, 딕셔너리 | 지하철 역별 승하차 → 설비 온도 (Column Statistics) |
 | 3 | 리스트·딕셔너리로 배우는 조건문·반복문·함수 | `if`/`else`, `for`로 세기, `def` 하나 | 우리 동네 대기환경 → 기록 30건 (Select Rows) |
 | 4 | Pandas 가장 기본적인 부분 | `read_csv`, 열 선택, 조건 검색, `sort_values` | 반도체 8대 공정 흐름표 → 공정 기록 100건 (Select Columns) |
 | 5 | 데이터 훑어보기와 정리(EDA) | `describe`, `isna().sum()`, `dropna`, `drop_duplicates` | 클린룸 환경 모니터링 → 지저분한 공정 기록 (Impute) |

@@ -52,7 +52,7 @@
     },
     {
       "type": "multiple_choice",
-      "question": "Orange Feature Statistics에서 온도_C 행의 Missing 칸에 3이 보였다. 이것이 뜻하는 것은?",
+      "question": "Orange Column Statistics에서 온도_C 행의 Missing 칸에 3이 보였다. 이것이 뜻하는 것은?",
       "options": ["온도가 3도인 기록이 있다", "온도 칸 3개가 비어 있다", "온도 튀는 값이 3개다", "온도 열이 3번 중복됐다"],
       "answer": 1,
       "explanation": "Missing은 그 열의 빈칸 수다. 파이썬 df.isna().sum()의 온도_C 결과 3과 같다."

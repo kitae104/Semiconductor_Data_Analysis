@@ -401,52 +401,16 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
     </div>
   </section>
 
-  <section class="block">
-    <h2>실습 따라 하기</h2>
-    <p>학생용 노트북을 위에서 아래로 실행하며 <code>____</code>를 채운다. 7단계 문제 번호는 <a href="worksheet.html">실습지</a> 문제 1~3과 같다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>비교와 판정</b> — 점수 비교, <code>if</code>, 체온 <code>if</code>/<code>else</code>. (노트북 1~2단계)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>세기와 함수</b> — <code>for</code>로 80점 이상 세기, <code>judge_score</code> 함수, 함수 + <code>for</code>로 불합격 세기. (노트북 3~5단계)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>반도체 데이터로 확인하기</b> — EQ-04 기록 8건, 연습용 기준 밖 판정. (노트북 6단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>반도체 데이터 실습</b> — 오늘의 미션: 온도 하나 판정, EQ-03 온도 세기(빈칸 없이 직접 쓰기), <code>check_range</code>로 기록 30건 판정. (노트북 7단계, 실습지 문제 1~3)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>AI로 한 걸음 더</b> — 문제 3을 푼 뒤, AI가 만든 코드 예시를 실행해 결과를 맞춰 본다. (노트북 8단계)</div></div>
-    <div class="callout warn">
-      <b class="tag">체크포인트 — 셀은 위에서 아래로</b>
-      <ul class="pt-list">
-        <li>5단계는 3단계의 <code>scores</code>와 4단계의 <code>judge_score</code>를 쓴다. 위 셀을 건너뛰면 <code>NameError</code>가 난다. 문제 3도 함수 셀을 먼저 채우고 실행해야 한다. 안 그러면 아래 셀에서 <code>NameError: name 'check_range' is not defined</code>가 난다 — 철자가 아니라 위 셀부터 확인한다.</li>
-        <li><b>조용한 오답</b>: 비슷한 이름을 섞어 쓰면 오류 없이 틀린 숫자가 나온다. 문제 2에서 3단계의 <code>pass_count</code>를 그대로 베끼거나, 문제 3에서 함수에 <code>temp</code>를 넣으면(문제 2의 마지막 값이 남아 있다) 숫자가 틀어진다. 함수에서 <code>return</code>을 빼먹으면 <code>None</code>이 나오고 개수가 0건이 된다.</li>
-        <li>결과가 이상하면 메뉴 <b>Kernel → Restart Kernel and Run All Cells…</b>로 맨 위부터 다시 실행한다. 아직 채우지 않은 첫 빈칸에서 멈추는 것은 정상이다.</li>
-        <li><code>____</code>는 빈칸 표시일 뿐이다. 밑줄 개수와 상관없이 지우고 필요한 만큼(숫자 하나든 식 전체든) 쓴다. 채우지 않고 실행하면 <code>NameError: name '____' is not defined</code>가 나고, 줄 맨 앞이 빈칸이면 <code>SyntaxError</code>가 난다.</li>
-      </ul>
-    </div>
-  </section>
-
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 조건으로 행 고르기</h2>
     <p>파이썬에서는 <code>for</code>와 <code>if</code>로 한 건씩 판정했다. Orange의 Select Rows는 조건을 창에 적으면 맞는 행만 골라 준다.</p>
-
-    <h3>Orange 말 사전</h3>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>말</th><th>뜻</th></tr></thead>
-        <tbody>
-          <tr><td>캔버스</td><td>위젯을 놓고 선으로 잇는 가운데 하얀 작업판</td></tr>
-          <tr><td>위젯</td><td>한 가지 일을 하는 기능 상자. 더블클릭하면 자기 창이 열린다</td></tr>
-          <tr><td>워크플로(<code>.ows</code>)</td><td>캔버스에 놓은 위젯과 연결을 통째로 저장한 파일</td></tr>
-          <tr><td><code>.tab</code></td><td>Orange가 읽는 표 파일. CSV와 내용은 같고, 열마다 종류·역할이 적혀 있다</td></tr>
-          <tr><td>툴팁</td><td>마우스를 올리고 잠시 기다리면 뜨는 작은 설명 상자</td></tr>
-        </tbody>
-      </table>
-    </div>
 
     <h3>위젯 이름표</h3>
     <div class="tablewrap">
       <table>
         <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
         <tbody>
-          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
           <tr><td><code>Select Rows</code></td><td>Transform</td><td>행 고르기</td><td><b>오늘 새 위젯.</b> 조건에 맞는 행만 골라 다음 위젯으로 보낸다</td></tr>
-          <tr><td><code>Data Table</code></td><td>Data</td><td>표 보기</td><td>Select Rows가 고른 행을 펼쳐 보고, 몇 행인지 센다</td></tr>
-          <tr><td><code>Distributions</code></td><td>Visualize</td><td>분포 막대</td><td>한 열의 값마다 몇 개인지 막대로 본다(1차시에 써 봤다)</td></tr>
         </tbody>
       </table>
     </div>
@@ -458,10 +422,6 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
         <li>숫자 열의 비교 방법: <code>is greater than</code> = 보다 크다(초과, 80 자체는 빠진다) · <code>is at least</code> = 이상 · <code>is below</code> = 보다 작다 · <code>is between</code> = 두 값 사이 · <code>is outside</code> = 두 값 바깥. 값 칸이 둘이면 <b>왼쪽에 작은 값, 오른쪽에 큰 값</b>을 넣는다.</li>
         <li>글자 열(<code>설비번호</code> 등)은 <code>is</code>를 고르고 목록에서 값을 고른다.</li>
       </ul>
-    </div>
-    <div class="callout warn">
-      <b class="tag">Data Table 뒤에는 잇지 않는다</b>
-      Data Table은 보기 전용이다. 다른 위젯은 File이나 Select Rows에서 갈래로 잇는다.
     </div>
 
     <h3>워밍업 — 우리 동네 대기환경</h3>
@@ -729,7 +689,7 @@ print(f"높음 {high}건, 낮음 {low}건")</code></pre>
     <h2>다음 차시 예고</h2>
     <div class="callout concept">
       <b class="tag">4차시 예고</b>
-      <p><b>내일의 미션</b> — 기록 100건짜리 CSV 파일을 받았다. EQ-02에서 불합격이 몇 건인지 찾아 보고하자.</p>
+      <p><b>다음 미션</b> — 기록 100건짜리 CSV 파일을 받았다. EQ-02에서 불합격이 몇 건인지 찾아 보고하자.</p>
       <p>오늘은 <code>for</code>와 <code>if</code> 여러 줄로 조건에 맞는 기록을 골랐다. 다음에는 <b>Pandas</b>로 CSV 파일을 직접 읽고, 같은 일을 한 줄로 한다. Orange에서는 오늘 쓴 Select Rows에 열을 고르는 Select Columns를 더한다.</p>
     </div>
   </section>

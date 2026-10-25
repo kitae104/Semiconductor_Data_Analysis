@@ -88,11 +88,7 @@
       <table>
         <thead><tr><th>말</th><th>뜻</th></tr></thead>
         <tbody>
-          <tr><td>캔버스</td><td>위젯을 놓고 선으로 잇는 가운데 하얀 작업판</td></tr>
-          <tr><td>위젯</td><td>한 가지 일을 하는 기능 상자. 더블클릭하면 자기 창이 열린다</td></tr>
-          <tr><td>워크플로(<code>.ows</code>)</td><td>캔버스에 놓은 위젯과 연결을 통째로 저장한 파일</td></tr>
-          <tr><td><code>.tab</code></td><td>Orange가 읽는 표 파일. CSV와 내용은 같고, 열마다 종류·역할이 적혀 있다. 오늘은 맞힐 열(목표 열)이 미리 정해져 있다</td></tr>
-          <tr><td>툴팁</td><td>마우스를 올리고 잠시 기다리면 뜨는 작은 설명 상자</td></tr>
+          <tr><td>목표 열</td><td>맞혀야 할 열. 오늘 <code>.tab</code> 파일에는 맞힐 열이 미리 정해져 있다</td></tr>
           <tr><td>CA, AUC·F1·Prec·Recall·MCC</td><td>Test and Score 표의 점수 칸들. <b>CA</b>(Classification Accuracy)가 정확도다. 나머지는 다른 채점 방법이라 오늘은 보지 않는다 — 첫 숫자 칸 AUC는 정확도가 아니다</td></tr>
           <tr><td>nodes, leaves</td><td>Tree Viewer 왼쪽 정보 줄의 숫자. nodes = 상자 전체 수, leaves = 끝 상자(잎) 수</td></tr>
         </tbody>
@@ -104,8 +100,6 @@
       <table>
         <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
         <tbody>
-          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
-          <tr><td><code>Distributions</code></td><td>Visualize</td><td>분포 막대</td><td>맞힐 열의 값마다 몇 건인지 막대로 본다(1차시에 써 봤다)</td></tr>
           <tr><td><code>Tree</code></td><td>Model</td><td>결정 트리</td><td><b>오늘 새 위젯.</b> 지난 기록에서 스무고개 같은 질문 순서(규칙)를 찾는다</td></tr>
           <tr><td><code>Tree Viewer</code></td><td>Visualize</td><td>트리 보기</td><td><b>오늘 새 위젯.</b> Tree가 찾은 질문 순서를 나무 그림으로 본다</td></tr>
           <tr><td><code>Test and Score</code></td><td>Evaluate</td><td>평가</td><td><b>오늘 새 위젯.</b> 트리가 처음 보는 기록을 얼마나 맞히는지 채점한다. <b>CA</b> 열이 정확도다</td></tr>
@@ -113,7 +107,7 @@
         </tbody>
       </table>
     </div>
-    <div class="callout warn"><b class="tag">주의</b> 오늘 위젯은 File에서 갈래로 잇는다(Tree Viewer는 Tree에, Confusion Matrix는 Test and Score에). Data Table 뒤에는 위젯을 잇지 않는다(Data Table이 내보내는 것은 화면에서 고른 행뿐이다).</div>
+    <div class="callout warn"><b class="tag">주의</b> Tree Viewer는 Tree에, Confusion Matrix는 Test and Score에 잇는다.</div>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
@@ -492,18 +486,6 @@ print("정확도:", accuracy_score(y_te, clf.predict(X_te)))</code></pre>
     <div class="callout warn"><b class="tag">AI 코드를 다룰 때</b> 숫자가 달라도 오류는 나지 않는다. 그래서 내가 직접 만든 숫자와 맞춰 보는 단계가 꼭 필요하다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.</div>
   </section>
 
-  <section class="block">
-    <h2>실습 따라 하기</h2>
-    <p>오늘 한 일을 순서대로 다시 짚는다. Orange는 캔버스 메모 번호, 파이썬은 노트북 단계 번호다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>웨이퍼 패턴 트리</b> — <code>week09_1_patterns_start.ows</code>: Tree(깊이 4) → Tree Viewer, Test and Score(10겹) → Confusion Matrix. 가장자리형 100% 상자와 정상으로 헷갈린 칸을 찾았다. (캔버스 메모 ②~④)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>공정 기록 트리</b> — <code>week09_2_passfail_start.ows</code>: Distributions로 기준선, Tree Viewer로 첫 질문 <code>온도_C</code>를 읽었다. (캔버스 메모 ②~③)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>읽고 빈칸 정리</b> — <code>dropna()</code>로 750행 → 735행. (노트북 1단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>결정 트리 모델</b> — Feature 6개와 Label, 학습용 588 · 시험용 147, <code>fit</code> → 시험용 정답 <code>y_test</code>로 정확도. (노트북 2단계)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>ChatGPT 체험</b> — 프롬프트로 받은 코드를 실행해 2단계 숫자와 맞춰 보고, <code>stratify=y</code>를 지워 숫자가 바뀌는 것을 본다. (노트북 3단계)</div></div>
-    <div class="step"><div class="num">6</div><div class="content"><b>반도체 데이터 실습</b> — 노트북 4단계 문제 1·2와 Orange 문제는 PART 3에서 실습지를 보며 푼다. (노트북 4단계, 캔버스 메모 ④)</div></div>
-    <div class="callout warn"><b class="tag">체크포인트</b> 숫자가 위 결과와 다르면 셀을 건너뛰었거나 순서가 꼬인 것이다. "막혔을 때" 셀대로 Kernel → Restart Kernel and Run All Cells…로 위에서부터 다시 실행한다. Orange 숫자가 다르면 Test and Score의 Number of folds가 10인지, Tree 깊이가 4인지 본다.</div>
-  </section>
-
   <section class="block" id="part3">
     <h2><span class="step-badge">PART 3</span> 실습지</h2>
     <p><a href="worksheet.html">9차시 실습지</a>를 열고 순서대로 푼다.</p>
@@ -693,7 +675,7 @@ print("정확도:", accuracy_score(y_te, clf.predict(X_te)))</code></pre>
   <section class="block">
     <h2>다음 차시 예고</h2>
     <p>10차시는 마지막 날이다. 모델 세 가지(Tree·kNN·Logistic Regression)를 같은 기준으로 비교하고, 오늘 만든 모델로 아직 검사하지 않은 새 웨이퍼·새 로트를 예측한다. ChatGPT가 쓴 보고 문장에서 틀린 곳도 찾아 고친다.</p>
-    <p><b>다음 날 미션</b> — 마지막 날, 새 로트 9개의 예측 결과와 10일간의 분석을 보고서 한 장으로 정리하자.</p>
+    <p><b>다음 미션</b> — 마지막 날, 새 로트 9개의 예측 결과와 10일간의 분석을 보고서 한 장으로 정리하자.</p>
   </section>
 
   <div class="nav-buttons">

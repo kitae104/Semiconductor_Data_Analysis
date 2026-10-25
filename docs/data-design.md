@@ -76,7 +76,7 @@
 - 의도적 오염(각 5~10건): 빈 값(NaN), 완전 중복 행 3건, 날짜 형식이 다른 `측정시간` 2건, 지나치게 높은
   온도(500℃ 이상) 2건, 음수 압력 2건, 비정상 가스유량(음수 또는 200 이상) 2건, 공정명 철자 오류
   (`중착`, `식각 `(공백), `포토공정`) 3건, 합격여부 누락 2건.
-- 목적: 결측/중복/이상값 탐지와 정제 → Orange3 File/Data Table/Column Statistics(버전에 따라 Feature Statistics) 위젯으로 같은 문제 재확인.
+- 목적: 결측/중복/이상값 탐지와 정제 → Orange3 File/Data Table/Column Statistics 위젯으로 같은 문제 재확인.
 
 ## 6. Week06 — 그래프 + Orange3 시각화 (`week06_process_visualization.csv`, = v1 week05)
 

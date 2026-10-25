@@ -2,10 +2,10 @@
 <scheme version="2.0" title="5차시 ① 클린룸 환경 기록에서 빈칸·튀는 값 다루기 (완성)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
 	<nodes>
 		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
-		<node id="1" name="Feature Statistics" qualified_name="Orange.widgets.data.owfeaturestatistics.OWFeatureStatistics" project_name="Orange3" version="" title="Feature Statistics (정리 전)" position="(300.0, 320.0)" />
+		<node id="1" name="Column Statistics" qualified_name="Orange.widgets.data.owfeaturestatistics.OWFeatureStatistics" project_name="Orange3" version="" title="Column Statistics (정리 전)" position="(300.0, 320.0)" />
 		<node id="2" name="Impute" qualified_name="Orange.widgets.data.owimpute.OWImpute" project_name="Orange3" version="" title="Impute (빈칸 채우기)" position="(300.0, 460.0)" />
 		<node id="3" name="Select Rows" qualified_name="Orange.widgets.data.owselectrows.OWSelectRows" project_name="Orange3" version="" title="Select Rows (행 고르기)" position="(480.0, 460.0)" />
-		<node id="4" name="Feature Statistics" qualified_name="Orange.widgets.data.owfeaturestatistics.OWFeatureStatistics" project_name="Orange3" version="" title="Feature Statistics (정리 후)" position="(660.0, 460.0)" />
+		<node id="4" name="Column Statistics" qualified_name="Orange.widgets.data.owfeaturestatistics.OWFeatureStatistics" project_name="Orange3" version="" title="Column Statistics (정리 후)" position="(660.0, 460.0)" />
 		<node id="5" name="Data Table" qualified_name="Orange.widgets.data.owtable.OWTable" project_name="Orange3" version="" title="Data Table (채운 뒤)" position="(480.0, 600.0)" />
 	</nodes>
 	<links>

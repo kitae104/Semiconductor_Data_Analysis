@@ -6,9 +6,9 @@
 	<links />
 	<annotations>
 		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 클린룸 기록(72행)이 들어왔는지 확인하세요.
-② Feature Statistics(열 통계)를 File에 이어 빈칸 수(Missing)와 파티클의 가장 큰 값(Max)을 찾으세요.
+② Column Statistics(열 통계)를 File에 이어 빈칸 수(Missing)와 파티클의 가장 큰 값(Max)을 찾으세요.
 ③ Impute(빈칸 채우기)를 File에 잇고, Impute에 Data Table을 이어 빈칸이 어떤 값으로 채워졌는지 보세요.
-④ Impute에 Select Rows(파티클 is below 10000, 차압 is at least 0) → Feature Statistics를 이어 정리 전과 비교하세요.</text>
+④ Impute에 Select Rows(파티클 is below 10000, 차압 is at least 0) → Column Statistics를 이어 정리 전과 비교하세요.</text>
 	</annotations>
 	<thumbnail />
 	<node_properties>

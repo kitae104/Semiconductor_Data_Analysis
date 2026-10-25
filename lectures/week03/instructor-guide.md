@@ -13,8 +13,8 @@
 2. PART 1 파이썬: 노트북 "막혔을 때" 읽기 → 1단계 비교 연산자와 `if` → 2단계 `if`/`else`(체온) → 3단계 `for`로 세기(한 바퀴씩 `print` 셀) → 4단계 `judge_score`(괄호 안 이름 `point`) → 5단계 함수 + `for`, 중첩 `if` 한 줄 예고
 3. **여기서 쉬기**
 4. PART 1 반도체 데이터로 확인하기: 데이터 소개(합격여부 = 행마다 실제 검사 결과, 같은 로트가 여러 행, 설비↔공정 짝은 교육용 가상) → 규격과 연습용 기준 → "두 가지 판정을 나눠 보기" → 노트북 6단계(EQ-04 기록 8건, 기준 밖 4건 중 실제 불합격 1건) → "기준 밖은 살펴볼 후보"
-5. PART 1 실습 따라 하기: 노트북 7단계 문제 1~3(온도 하나 판정, EQ-03 온도 직접 세기, `check_range`로 30건 판정), 8단계 AI 코드 예시는 문제 3을 마친 뒤 실행
-6. PART 2 Orange: Orange 말 사전 → 위젯 이름표(Select Rows는 Transform 묶음) → Select Rows 조건 만드는 법(첫 줄은 이미 있다, 두 번째부터 Add Condition, `is outside`는 왼쪽 작은 값) → 워밍업 `week03_1_air_start.ows`(이해용 그림 → PM10 is greater than 80 → 습도 조건 추가 → Distributions 등급) → 반도체 `week03_2_records_start.ows`(설비번호 is EQ-04 → 8행, 온도_C is outside 295, 305 추가 → 4행) → 파이썬 결과와 비교 한 문장
+5. PART 1 노트북 실습: 노트북 7단계 문제 1~3(온도 하나 판정, EQ-03 온도 직접 세기, `check_range`로 30건 판정), 8단계 AI 코드 예시는 문제 3을 마친 뒤 실행
+6. PART 2 Orange: 위젯 이름표(Select Rows는 Transform 묶음) → Select Rows 조건 만드는 법(첫 줄은 이미 있다, 두 번째부터 Add Condition, `is outside`는 왼쪽 작은 값) → 워밍업 `week03_1_air_start.ows`(이해용 그림 → PM10 is greater than 80 → 습도 조건 추가 → Distributions 등급) → 반도체 `week03_2_records_start.ows`(설비번호 is EQ-04 → 8행, 온도_C is outside 295, 305 추가 → 4행) → 파이썬 결과와 비교 한 문장
 7. PART 3 실습지: 혼자 풀기(문제 1~5, 문제 2는 빈칸 없는 전이 문제, 문제 4는 30건 전체에서 12행 → 3행을 고르는 새 관찰, 문제 5는 팀장의 말을 숫자로 판단) → 정답 확인과 문제 5 발표
 8. 결과 정리(반도체 이해 포인트 2개, 미션 결과는 접어 두었다가 실습지 뒤에 연다), 과제, 다음 차시 미션 예고
 

@@ -356,45 +356,16 @@ print(len(fail) / len(df) * 100)</code></pre>
     </div>
   </section>
 
-  <section class="block">
-    <h2>실습 따라 하기</h2>
-    <p>학생용 노트북을 위에서 아래로 실행한다. 1~7단계는 빈칸 두 곳(4단계 비교 기호, 7단계 <code>shape</code>)만 직접 채우고 나머지는 코드가 완성돼 있다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>표 읽기와 생김새</b> — 카페 주문 기록을 읽고 <code>head()</code>·<code>shape</code>·<code>columns</code>로 본다. (노트북 1~2단계)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>열 고르기</b> — 열 하나는 대괄호 한 겹, 여러 열은 두 겹. <code>loc</code>은 구경만. (노트북 3단계)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>조건 검색</b> — 커피 5건, 5000원 넘는 주문 5건(비교 기호 빈칸), 그중 "별로예요" 3건. (노트북 4~5단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>정렬</b> — 가격이 큰 순서로 5건. (노트북 6단계)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>공정 기록 확인</b> — 같은 코드로 <code>df</code>를 읽고(<code>shape</code> 빈칸), EQ-01 불합격과 전체 불합격률을 본다. (노트북 7단계)</div></div>
-    <div class="step"><div class="num">6</div><div class="content"><b>반도체 데이터 실습</b> — 8단계의 문제 1~3은 PART 3에서 실습지를 보며 푼다. (노트북 8단계)</div></div>
-    <div class="callout warn"><b class="tag">체크포인트</b> 숫자가 위 결과와 다르면 셀을 건너뛰었거나 열 이름·설비 이름에 오타가 있는 것이다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.</div>
-  </section>
-
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 열 고르기와 행 고르기</h2>
     <p>PART 1에서 코드로 한 "열 고르기"와 "조건 검색"을 Orange에서는 창에서 고른다. 오늘 새 위젯은 열을 고르는 <code>Select Columns</code> 하나다.</p>
-
-    <h3>Orange 말 사전</h3>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>말</th><th>뜻</th></tr></thead>
-        <tbody>
-          <tr><td>캔버스</td><td>위젯을 놓고 선으로 잇는 가운데 하얀 작업판</td></tr>
-          <tr><td>위젯</td><td>한 가지 일을 하는 기능 상자. 더블클릭하면 자기 창이 열린다</td></tr>
-          <tr><td>워크플로(<code>.ows</code>)</td><td>캔버스에 놓은 위젯과 연결을 통째로 저장한 파일</td></tr>
-          <tr><td><code>.tab</code></td><td>Orange가 읽는 표 파일. CSV와 내용은 같고, 열마다 종류·역할이 적혀 있다</td></tr>
-          <tr><td>툴팁</td><td>마우스를 올리고 잠시 기다리면 뜨는 작은 설명 상자</td></tr>
-        </tbody>
-      </table>
-    </div>
 
     <h3>위젯 이름표</h3>
     <div class="tablewrap">
       <table>
         <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
         <tbody>
-          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
           <tr><td><code>Select Columns</code></td><td>Transform</td><td>열 고르기</td><td><b>오늘 새 위젯.</b> 볼 열만 남기고 나머지는 빼 둔다. 파이썬 <code>df[["열1", "열2"]]</code>와 같은 일</td></tr>
-          <tr><td><code>Select Rows</code></td><td>Transform</td><td>행 고르기</td><td>조건에 맞는 행만 남긴다(3차시에 써 봤다). 파이썬 조건 검색과 같은 일</td></tr>
-          <tr><td><code>Data Table</code></td><td>Data</td><td>표 보기</td><td>남은 행을 펼쳐 보고, 왼쪽 Info 칸에서 행 수를 읽는다</td></tr>
         </tbody>
       </table>
     </div>
@@ -404,10 +375,6 @@ print(len(fail) / len(df) * 100)</code></pre>
         <li>왼쪽 상자 <b>Ignored</b> = 빼 둘 열. 오른쪽 상자 세 개 = 남길 열이다. <b>Features</b>(보통 열), <b>Target</b>(결과 열, 오늘은 <code>합격여부</code>), <b>Metas</b>(참고용 열 — 옆에 붙여 보기만 하는 글자 열).</li>
         <li>처음 열면 모든 열이 원래 자리에 들어 있다. 뺄 열을 눌러 고르고 가운데 화살표 버튼(<b>&lt;</b>)을 누르거나 Ignored로 끌어다 놓는다. 되돌리려면 <b>Reset</b>.</li>
       </ul>
-    </div>
-    <div class="callout warn">
-      <b class="tag">Data Table 뒤에는 잇지 않는다</b>
-      Data Table이 내보내는 것은 화면에서 고른 행뿐이다. 다른 위젯은 File·Select Columns·Select Rows에서 잇는다.
     </div>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
@@ -685,8 +652,8 @@ print(len(fail) / len(df) * 100)</code></pre>
 
   <section class="block">
     <h2>다음 차시 예고</h2>
-    <p>5차시에는 실제 기록에 흔히 섞이는 <b>빈칸·중복·튀는 값</b>을 찾아 정리한다. 2차시에 쓴 Orange Feature Statistics를 "빈칸 찾기"로 다시 쓰고, 빈칸을 채우는 Impute를 새로 쓴다.</p>
-    <p><b>다음 날 미션</b> — 센서 기록에 빈칸·중복·튀는 값이 섞여 있다. 정리해서 믿을 수 있는 평균 온도를 보고하자.</p>
+    <p>5차시에는 실제 기록에 흔히 섞이는 <b>빈칸·중복·튀는 값</b>을 찾아 정리한다. 2차시에 쓴 Orange Column Statistics를 "빈칸 찾기"로 다시 쓰고, 빈칸을 채우는 Impute를 새로 쓴다.</p>
+    <p><b>다음 미션</b> — 센서 기록에 빈칸·중복·튀는 값이 섞여 있다. 정리해서 믿을 수 있는 평균 온도를 보고하자.</p>
   </section>
 
   <div class="nav-buttons">

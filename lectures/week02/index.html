@@ -79,7 +79,7 @@
       <li>여러 값을 리스트에 담고, 인덱스(칸 번호)로 값을 꺼낼 수 있다.</li>
       <li><code>len()</code>으로 개수를 세고 <code>append()</code>로 값을 더할 수 있다.</li>
       <li><code>max()</code>·<code>min()</code>·<code>sum()</code>으로 최고·최저·평균을 구할 수 있다.</li>
-      <li>딕셔너리로 값에 이름표를 붙이고 키로 꺼낼 수 있다. Orange Feature Statistics로 한 열의 평균·최고·최저를 읽을 수 있다.</li>
+      <li>딕셔너리로 값에 이름표를 붙이고 키로 꺼낼 수 있다. Orange Column Statistics로 한 열의 평균·최고·최저를 읽을 수 있다.</li>
     </ul>
   </section>
 
@@ -94,14 +94,14 @@
   <section class="block">
     <h2>지난 시간 복습</h2>
     <div class="quiz-item">
-      <div class="q">Q1. <code>pass_count</code>가 32일 때 <code>print("합격은 {pass_count}건입니다.")</code>를 실행하면 무엇이 나올까?</div>
+      <div class="q">Q1. 1차시 공정 지도를 떠올려 보자. 칩이 만들어지는 "반도체 8대 공정"은 무엇이고, 어떤 순서로 이어질까?</div>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box"><code>합격은 {pass_count}건입니다.</code> — 따옴표 앞에 <code>f</code>가 없어 중괄호가 글자 그대로 나온다. 오늘도 보고 문장은 f-string으로 만든다.</div>
+      <div class="answer-box">① 웨이퍼 제조 → ② 산화 → ③ 포토 → ④ 식각 → ⑤ 증착/이온주입 → ⑥ 금속 배선 → ⑦ EDS(전기 검사) → ⑧ 패키징. 이 중 ② 산화부터 ⑥ 금속 배선까지는 층을 쌓을 때마다 여러 번 되풀이한다.</div>
     </div>
     <div class="quiz-item">
       <div class="q">Q2. Orange Distributions에서 <code>합격여부</code>를 골랐을 때 막대 두 개가 보여 준 것은?</div>
       <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">합격(1)과 불합격(-1)이 각각 몇 건인지(32건과 8건). 오늘은 숫자 열 하나를 평균·최고·최저로 요약하는 Feature Statistics를 쓴다.</div>
+      <div class="answer-box">합격(1)과 불합격(-1)이 각각 몇 건인지(32건과 8건). 오늘은 숫자 열 하나를 평균·최고·최저로 요약하는 Column Statistics를 쓴다.</div>
     </div>
   </section>
 
@@ -136,8 +136,10 @@ print(week_temps[-1])   # 마지막 값(일요일)</code></pre>
 23.5</pre>
     </div>
     <p>노트북에서는 위 코드가 셀 두 개로 나뉘어 있다(리스트 만들기 / 꺼내기). <code>#</code> 뒤의 글은 주석이라 실행되지 않는다.</p>
-    <svg class="list-svg" viewBox="0 0 560 130" role="img"
-         aria-label="week_temps 리스트: 0번 칸(월)부터 6번 칸(일)까지 일곱 개의 기온. 2번 칸(수요일)의 30.5가 강조되어 있다">
+    <svg class="list-svg" viewBox="0 0 560 160" role="img"
+         aria-label="week_temps 리스트: 0번 칸(월)부터 6번 칸(일)까지 일곱 개의 기온. 칸 위에는 뒤에서 세는 번호 -7번부터 -1번까지가 함께 적혀 있다. 2번 칸(수요일)의 30.5가 강조되어 있다">
+      <text x="46" y="16" text-anchor="middle" class="idx" font-size="14">[-7]</text><text x="124" y="16" text-anchor="middle" class="idx" font-size="14">[-6]</text><text x="202" y="16" text-anchor="middle" class="idx" font-size="14">[-5]</text><text x="280" y="16" text-anchor="middle" class="idx" font-size="14">[-4]</text><text x="358" y="16" text-anchor="middle" class="idx" font-size="14">[-3]</text><text x="436" y="16" text-anchor="middle" class="idx" font-size="14">[-2]</text><text x="514" y="16" text-anchor="middle" class="idx" font-size="14">[-1]</text>
+      <g transform="translate(0,28)">
       <rect class="cell" x="11" y="20" width="70" height="60" rx="10"/><rect class="cell" x="89" y="20" width="70" height="60" rx="10"/>
       <rect class="cell hot" x="167" y="20" width="70" height="60" rx="10"/><rect class="cell" x="245" y="20" width="70" height="60" rx="10"/>
       <rect class="cell" x="323" y="20" width="70" height="60" rx="10"/><rect class="cell" x="401" y="20" width="70" height="60" rx="10"/>
@@ -154,8 +156,9 @@ print(week_temps[-1])   # 마지막 값(일요일)</code></pre>
       <text x="202" y="124" text-anchor="middle" class="idx" font-size="11">수</text><text x="280" y="124" text-anchor="middle" class="idx" font-size="11">목</text>
       <text x="358" y="124" text-anchor="middle" class="idx" font-size="11">금</text><text x="436" y="124" text-anchor="middle" class="idx" font-size="11">토</text>
       <text x="514" y="124" text-anchor="middle" class="idx" font-size="11">일</text>
+      </g>
     </svg>
-    <p class="img-caption">첫 칸(월요일)의 번호는 1이 아니라 <b>0</b>이다. 칸이 7개면 번호는 0~6번이다.</p>
+    <p class="img-caption">첫 칸(월요일)의 번호는 1이 아니라 <b>0</b>이다. 칸이 7개면 번호는 0~6번이다. 칸 위의 음수는 뒤에서부터 센 번호로, 마지막 칸이 <b>[-1]</b>이다.</p>
     <div class="callout concept">
       <b class="tag">구경만 — 슬라이싱</b>
       <code>week_temps[0:5]</code>처럼 쓰면 0번 칸부터 4번 칸까지(5번 칸은 빠진다) 여러 칸을 한 번에 꺼낸다. 결과는 <code>[21.5, 23.0, 30.5, 24.0, 22.5]</code>(평일 기온)다. 오늘 실습에는 쓰지 않는다.
@@ -364,59 +367,21 @@ print(first["온도_C"])</code></pre>
     </div>
   </section>
 
-  <section class="block">
-    <h2>실습 따라 하기</h2>
-    <p>학생용 노트북을 위에서 아래로 실행하며 <code>____</code>만 채운다. 7단계 문제 번호는 <a href="worksheet.html">실습지</a> 문제 1~3과 같다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>리스트</b> — 일주일 기온 리스트 만들기, 인덱스로 꺼내기, 장바구니 <code>len()</code>·<code>append()</code>. (노트북 1~2단계)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>요약</b> — 일주일 기온의 <code>max()</code>·<code>min()</code>·<code>sum()</code>과 평균 문장. (노트북 3단계)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>딕셔너리</b> — 학생 정보를 키로 꺼내고, 친구 세 명의 딕셔너리 리스트를 구경한다. (노트북 4~5단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>반도체 데이터로 확인하기</b> — EQ-02 온도 4개 요약, 기록 한 건 딕셔너리. (노트북 6단계)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>반도체 데이터 실습</b> — 오늘의 미션: EQ-03 온도 7개의 첫 값·마지막 값·개수, 최고·최저·평균. 이어서 설비 EQ-04의 온도 8개로 <code>report</code> 딕셔너리를 빈칸 없이 직접 만든다. (노트북 7단계, 실습지 문제 1~3)</div></div>
-    <div class="step"><div class="num">6</div><div class="content"><b>AI로 한 걸음 더</b> — AI가 만든 코드 예시를 실행해 결과만 확인한다. (노트북 8단계)</div></div>
-    <div class="callout warn">
-      <b class="tag">체크포인트 — 셀은 위에서 아래로</b>
-      <ul class="pt-list">
-        <li>3단계는 1단계의 <code>week_temps</code>를 쓴다. 위 셀을 건너뛰면 <code>NameError</code>가 난다. 문제 3의 둘째 셀은 첫째 셀에서 만든 <code>report</code>를 쓴다. 첫째 셀이 실패하면 <code>NameError: name 'report' is not defined</code>가 이어서 난다.</li>
-        <li>빈칸을 채우지 않고 실행하면 <code>NameError: name '____' is not defined</code>가 난다.</li>
-        <li><b>조용한 오답 1</b>: 7단계에서 <code>eq03_temps</code> 대신 6단계의 <code>eq02_temps</code>를 넣으면 오류 없이 EQ-02의 숫자가 나온다. 변수 이름의 숫자(02/03/04)를 확인한다.</li>
-        <li><b>조용한 오답 2</b>: 딕셔너리 값 자리에 변수 이름을 따옴표로 감싸면(<code>"평균": "eq04_avg"</code>) 오류 없이 숫자 대신 글자 <code>'eq04_avg'</code>가 들어간다. 이름표(키)는 따옴표로 감싸고, 변수 이름은 따옴표 없이 쓴다.</li>
-        <li>결과가 이상하면 메뉴 <b>Kernel → Restart Kernel and Run All Cells…</b>로 맨 위부터 다시 실행한다. 아직 채우지 않은 첫 빈칸에서 멈추는 것은 정상이다.</li>
-        <li><code>____</code>는 빈칸 표시일 뿐이다. 밑줄 개수와 상관없이 지우고 필요한 만큼(숫자 하나든 함수 이름이든) 쓴다.</li>
-      </ul>
-    </div>
-  </section>
-
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 한 열을 숫자로 요약하기</h2>
-    <p>파이썬에서는 <code>max()</code>·<code>min()</code>·<code>sum()</code>을 하나씩 썼다. Orange의 Feature Statistics는 표의 모든 숫자 열에 대해 평균·최고·최저를 한 화면에 보여 준다.</p>
-
-    <h3>Orange 말 사전</h3>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>말</th><th>뜻</th></tr></thead>
-        <tbody>
-          <tr><td>캔버스</td><td>위젯을 놓고 선으로 잇는 가운데 하얀 작업판</td></tr>
-          <tr><td>위젯</td><td>한 가지 일을 하는 기능 상자. 더블클릭하면 자기 창이 열린다</td></tr>
-          <tr><td>워크플로(<code>.ows</code>)</td><td>캔버스에 놓은 위젯과 연결을 통째로 저장한 파일</td></tr>
-          <tr><td><code>.tab</code></td><td>Orange가 읽는 표 파일. CSV와 내용은 같고, 열마다 종류·역할이 적혀 있다</td></tr>
-          <tr><td>툴팁</td><td>마우스를 올리고 잠시 기다리면 뜨는 작은 설명 상자</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <p>파이썬에서는 <code>max()</code>·<code>min()</code>·<code>sum()</code>을 하나씩 썼다. Orange의 Column Statistics는 표의 모든 숫자 열에 대해 평균·최고·최저를 한 화면에 보여 준다.</p>
 
     <h3>위젯 이름표</h3>
     <div class="tablewrap">
       <table>
         <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
         <tbody>
-          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
-          <tr><td><code>Feature Statistics</code></td><td>Data</td><td>열 통계</td><td><b>오늘 새 위젯.</b> 열마다 Mean(평균)·Min.(최저)·Max.(최고)·Missing(빈칸 수)을 한 줄로 본다</td></tr>
-          <tr><td><code>Data Table</code></td><td>Data</td><td>표 보기</td><td>표를 펼쳐 본다. 오늘은 <b>열 머리를 눌러 정렬</b>한다(1차시에 써 봤다)</td></tr>
+          <tr><td><code>Column Statistics</code></td><td>Data</td><td>열 통계</td><td><b>오늘 새 위젯.</b> 열마다 Mean(평균)·Min.(최저)·Max.(최고)·Missing(빈칸 수)을 한 줄로 본다</td></tr>
         </tbody>
       </table>
     </div>
     <div class="callout warn">
-      <b class="tag">Feature Statistics 읽는 법</b>
+      <b class="tag">Column Statistics 읽는 법</b>
       <ul class="pt-list">
         <li>한 행 = 열 하나. 오늘 읽는 칸은 <b>Mean</b>(평균), <b>Min.</b>(최저), <b>Max.</b>(최고)다.</li>
         <li><b>Mode</b>는 "가장 흔한 값"이다. 오늘 표는 같은 숫자가 한 번씩만 나와서 Mode 칸에 가장 작은 값이 보인다. 최고·최저는 Mode가 아니라 Max.·Min. 칸에서 읽는다.</li>
@@ -439,13 +404,13 @@ print(first["온도_C"])</code></pre>
     <img class="chart-img" src="../../assets/images/orange3/week02_01_subway_start_canvas.png"
          alt="시작 파일을 연 Orange 화면. 가운데 캔버스에 File 위젯 하나와 ①~③ 안내 메모가 있다"
          data-shot="week02_1_subway_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 ①~③ 안내 메모가 보이게">
-    <div class="step"><div class="num">2</div><div class="content">왼쪽 Data 묶음에서 <code>Feature Statistics</code>를 끌어 와 File과 잇고 더블클릭한다. <code>승차인원_count</code> 행의 Mean과 Max.를 읽는다.</div></div>
+    <div class="step"><div class="num">2</div><div class="content">왼쪽 Data 묶음에서 <code>Column Statistics</code>를 끌어 와 File과 잇고 더블클릭한다. <code>승차인원_count</code> 행의 Mean과 Max.를 읽는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week02_02_subway_feature_statistics.png"
-         alt="지하철 데이터의 Feature Statistics 창. 승차인원_count 행에 Mean 2876.58, Max 9872가 보인다"
-         data-shot="week02_1_subway_done.ows의 Feature Statistics (열 통계) 창 — 승차인원_count 행의 Mean 2876.58, Median 2632, Min. 314, Max. 9872가 한 줄에 보이게(하차인원_count 행도 함께)">
+         alt="지하철 데이터의 Column Statistics 창. 승차인원_count 행에 Mean 2876.58, Max 9872가 보인다"
+         data-shot="week02_1_subway_done.ows의 Column Statistics (열 통계) 창 — 승차인원_count 행의 Mean 2876.58, Median 2632, Min. 314, Max. 9872가 한 줄에 보이게(하차인원_count 행도 함께)">
     <ul class="pt-list">
       <li>승차인원 Mean <b>2876.58</b>명, Max. <b>9872</b>명. 최고가 평균의 3배가 넘는다. Min.은 314명이다.</li>
-      <li><code>역이름</code>은 이름표 역할만 하는 참고 열(meta)이라 Feature Statistics에 나오지 않는다.</li>
+      <li><code>역이름</code>은 이름표 역할만 하는 참고 열(meta)이라 Column Statistics에 나오지 않는다.</li>
     </ul>
     <div class="step"><div class="num">3</div><div class="content">File에 <code>Data Table</code>을 잇고 더블클릭한다. <code>승차인원_count</code> 열 머리를 <b>두 번</b> 눌러 큰 값부터 정렬한다. 맨 위 행은 어느 역·시간대일까?</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week02_03_subway_data_table_sorted.png"
@@ -459,10 +424,10 @@ print(first["온도_C"])</code></pre>
     <h3>반도체 데이터 — 설비 온도 기록표 20건</h3>
     <p>PART 1에서 값을 옮겨 적은 그 표다. 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정에서 남긴 설비 온도 기록이다(교육용 가상 데이터).</p>
     <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>week02_2_temps_start.ows</code>를 연다. File을 더블클릭해 <code>week02_python_basics_1.tab</code>이 들어왔는지 확인한다.</div></div>
-    <div class="step"><div class="num">2</div><div class="content">File에 <code>Feature Statistics</code>를 잇고 <code>온도_C</code> 행의 <b>Mean</b>과 <b>Max.</b>를 읽는다.</div></div>
+    <div class="step"><div class="num">2</div><div class="content">File에 <code>Column Statistics</code>를 잇고 <code>온도_C</code> 행의 <b>Mean</b>과 <b>Max.</b>를 읽는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week02_05_temps_feature_statistics.png"
-         alt="설비 온도 기록의 Feature Statistics 창. 온도_C 행이 보인다"
-         data-shot="week02_2_temps_done.ows의 Feature Statistics (열 통계) 창 — 온도_C 행의 Mean 303.8, Median 303.6, Min. 292.2, Max. 317.9, Missing 0이 한 줄에 보이고, 위아래에 공정명·설비번호(글자 열, Mean 칸 빈칸) 행도 보이게">
+         alt="설비 온도 기록의 Column Statistics 창. 온도_C 행이 보인다"
+         data-shot="week02_2_temps_done.ows의 Column Statistics (열 통계) 창 — 온도_C 행의 Mean 303.8, Median 303.6, Min. 292.2, Max. 317.9, Missing 0이 한 줄에 보이고, 위아래에 공정명·설비번호(글자 열, Mean 칸 빈칸) 행도 보이게">
     <ul class="pt-list">
       <li>표 전체 20행의 온도 Mean은 <b>303.8</b>도, Max.는 <b>317.9</b>도다. 평균만 보면 14도 넘게 높은 기록이 있다는 것이 안 보인다 — 지하철의 중앙역·출근과 같은 일이다.</li>
       <li>평균 303.8도는 실습지 문제 4·5에서 다시 쓴다.</li>
@@ -479,7 +444,7 @@ print(first["온도_C"])</code></pre>
 
     <div class="callout success">
       <b class="tag">파이썬 결과와 비교</b>
-      EQ-02만 담은 파이썬 리스트의 평균은 301.7도인데, Feature Statistics가 보여 준 표 전체 20행의 평균은 303.8도다. 같은 표라도 어느 범위를 담았는지에 따라 답이 다르다. 보고할 때는 "어느 설비의 몇 건인지"를 함께 말한다.
+      EQ-02만 담은 파이썬 리스트의 평균은 301.7도인데, Column Statistics가 보여 준 표 전체 20행의 평균은 303.8도다. 같은 표라도 어느 범위를 담았는지에 따라 답이 다르다. 보고할 때는 "어느 설비의 몇 건인지"를 함께 말한다.
     </div>
     <div class="callout warn">
       <b class="tag">막혔을 때</b>
@@ -584,7 +549,7 @@ print(first["온도_C"])</code></pre>
     </div>
     <ul class="pt-list">
       <li>파이썬: 여러 값을 리스트에 담아 <code>len()</code>·<code>max()</code>·<code>min()</code>·<code>sum()</code>으로 요약하고, 딕셔너리로 이름표를 붙였다. EQ-02 온도 4개는 최고 305.6 · 최저 298.8 · 평균 301.7이었다.</li>
-      <li>Orange: Feature Statistics로 열 전체의 Mean·Min.·Max.를 한 번에 읽었다. 지하철 승차인원은 Max(9872)가 Mean(2876.58)보다 훨씬 커서, 평균만으로는 붐비는 한 곳이 안 보였다.</li>
+      <li>Orange: Column Statistics로 열 전체의 Mean·Min.·Max.를 한 번에 읽었다. 지하철 승차인원은 Max(9872)가 Mean(2876.58)보다 훨씬 커서, 평균만으로는 붐비는 한 곳이 안 보였다.</li>
       <li>미션(EQ-03)의 답은 실습지에서 직접 구한다.</li>
     </ul>
     <p>나머지 문항은 <a href="worksheet.html">실습지</a>와 수업 뒤 퀴즈로 복습한다.</p>
@@ -667,7 +632,7 @@ print(f"범위 밖 개수: {len(out_of_range)}개")</code></pre>
     <h2>다음 차시 예고</h2>
     <div class="callout concept">
       <b class="tag">3차시 예고</b>
-      <p><b>내일의 미션</b> — 기록 30건을 하나씩 보는 대신, 온도 규칙으로 자동 판정해 주는 작은 도우미를 만들자.</p>
+      <p><b>다음 미션</b> — 기록 30건을 하나씩 보는 대신, 온도 규칙으로 자동 판정해 주는 작은 도우미를 만들자.</p>
       <p>오늘은 리스트에 담은 값을 한꺼번에 요약했다. 다음에는 값을 <b>하나씩 꺼내 판단</b>하는 <code>for</code>와 <code>if</code>를 배운다. 오늘 Data Table에서 눈으로 찾던 일은 Orange의 Select Rows(행 고르기)가 조건으로 대신한다.</p>
     </div>
   </section>

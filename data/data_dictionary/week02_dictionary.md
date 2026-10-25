@@ -51,7 +51,7 @@
 - 반도체 데이터 실습(노트북 7단계 = 실습지 문제 1~3, 오늘의 미션): 설비 **EQ-03** 기록 7건의 온도
   `[303.8, 303.4, 292.2, 308.5, 307.5, 298.5, 304.0]` → 첫 값 303.8 · 마지막 값 304.0 · 개수 7 · 최고 308.5 · 최저 292.2 ·
   평균 302.6. 이 셋을 `report` 딕셔너리로 묶는다.
-- 표 전체 20행(Orange Feature Statistics 실측): 온도_C Mean **303.8** · Median 303.6 · Min **292.2** · Max **317.9**, Missing 0.
+- 표 전체 20행(Orange Column Statistics 실측): 온도_C Mean **303.8** · Median 303.6 · Min **292.2** · Max **317.9**, Missing 0.
   EQ-03만 담은 리스트의 최고(308.5)와 표 전체의 최고(317.9)가 다르다 — 어느 범위를 담았는지에 따라 답이 달라진다.
   EQ-03 평균(302.6)은 전체 평균(303.8)보다 낮다.
 - 설비별 기록 수: EQ-01 1 · EQ-02 4 · EQ-03 7 · EQ-04 8. 쉬운 예제의 일주일 기온·장바구니·학생 정보·친구 정보는 지어낸 값이다.
@@ -69,7 +69,7 @@
 ## Orange 워밍업 데이터 — week02_orange_subway_ridership.csv
 
 ### 목적
-2차시 PART 2 Orange 워밍업용 데이터다. Feature Statistics(열 통계)로 평균·최고·최저를 한 번에 읽고, Data Table(표 보기)을
+2차시 PART 2 Orange 워밍업용 데이터다. Column Statistics(열 통계)로 평균·최고·최저를 한 번에 읽고, Data Table(표 보기)을
 정렬해 "평균만 보면 유난히 붐비는 한 곳이 안 보인다"는 것을 확인한다. Orange에서는 `orange/week02_orange_subway_ridership.tab`을 연다.
 
 ### 가상 상황
@@ -95,9 +95,9 @@
 - 승차인원 Mean **2,876.58**(Orange 표시 `2876.58`), Median 2,632. Max가 Mean의 약 3.4배다.
 - 승차인원 내림차순 2~3위는 강변역·출근 4,000, 시장역·낮 3,969로, 1위와 차이가 크다.
 - 퇴근 시간대에는 8개 역 모두 내린 사람이 탄 사람보다 많다.
-- Orange Feature Statistics 실측(`_1_subway_done.ows`): 승차인원_count Mean 2876.58 · Median 2632 · Min 314 · Max 9872 · Missing 0,
+- Orange Column Statistics 실측(`_1_subway_done.ows`): 승차인원_count Mean 2876.58 · Median 2632 · Min 314 · Max 9872 · Missing 0,
   하차인원_count Mean 2618.08 · Max 4188. 모든 값이 한 번씩만 나와서 **Mode(최빈값) 칸에는 가장 작은 값(314)이 보인다** — 오늘은 Mode가 아니라 Max를 읽는다.
-  `역이름`은 meta 열이라 Feature Statistics에는 나오지 않는다.
+  `역이름`은 meta 열이라 Column Statistics에는 나오지 않는다.
 
 ### 이번 차시 분석 질문
 - 승차인원의 평균과 최고는 얼마이고, 가장 붐비는 곳은 어느 역·시간대인가?

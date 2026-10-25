@@ -116,7 +116,7 @@
   <section class="block">
     <h2>2차시 수업에서 옮겨 쓴 값(실제 값)</h2>
 <p>2차시 PART 1은 개념을 생활 예제(코드 속에 지어낸 값)로 설명하고, 반도체 값은 아래만 쓴다. 이 CSV는 코드로 읽지 않고 필요한 값만 리스트·딕셔너리로 옮겨 적는다(파일을 코드로 여는 것은 4차시 Pandas부터).</p>
-<ul class="pt-list"><li>"반도체 데이터로 확인하기"(노트북 6단계): 설비 <b>EQ-02</b> 기록 4건의 온도 <code>[302.5, 299.8, 298.8, 305.6]</code> → 최고 305.6 · 최저 298.8 · 평균 301.7(소수 첫째 자리 반올림). 첫 행을 딕셔너리로 옮긴 <code>{&quot;로트번호&quot;: &quot;LOT-0122&quot;, &quot;설비번호&quot;: &quot;EQ-02&quot;, &quot;온도_C&quot;: 302.5}</code>.</li><li>반도체 데이터 실습(노트북 7단계 = 실습지 문제 1~3, 오늘의 미션): 설비 <b>EQ-03</b> 기록 7건의 온도 <code>[303.8, 303.4, 292.2, 308.5, 307.5, 298.5, 304.0]</code> → 첫 값 303.8 · 마지막 값 304.0 · 개수 7 · 최고 308.5 · 최저 292.2 · 평균 302.6. 이 셋을 <code>report</code> 딕셔너리로 묶는다.</li><li>표 전체 20행(Orange Feature Statistics 실측): 온도_C Mean <b>303.8</b> · Median 303.6 · Min <b>292.2</b> · Max <b>317.9</b>, Missing 0. EQ-03만 담은 리스트의 최고(308.5)와 표 전체의 최고(317.9)가 다르다 — 어느 범위를 담았는지에 따라 답이 달라진다. EQ-03 평균(302.6)은 전체 평균(303.8)보다 낮다.</li><li>설비별 기록 수: EQ-01 1 · EQ-02 4 · EQ-03 7 · EQ-04 8. 쉬운 예제의 일주일 기온·장바구니·학생 정보·친구 정보는 지어낸 값이다.</li></ul>
+<ul class="pt-list"><li>"반도체 데이터로 확인하기"(노트북 6단계): 설비 <b>EQ-02</b> 기록 4건의 온도 <code>[302.5, 299.8, 298.8, 305.6]</code> → 최고 305.6 · 최저 298.8 · 평균 301.7(소수 첫째 자리 반올림). 첫 행을 딕셔너리로 옮긴 <code>{&quot;로트번호&quot;: &quot;LOT-0122&quot;, &quot;설비번호&quot;: &quot;EQ-02&quot;, &quot;온도_C&quot;: 302.5}</code>.</li><li>반도체 데이터 실습(노트북 7단계 = 실습지 문제 1~3, 오늘의 미션): 설비 <b>EQ-03</b> 기록 7건의 온도 <code>[303.8, 303.4, 292.2, 308.5, 307.5, 298.5, 304.0]</code> → 첫 값 303.8 · 마지막 값 304.0 · 개수 7 · 최고 308.5 · 최저 292.2 · 평균 302.6. 이 셋을 <code>report</code> 딕셔너리로 묶는다.</li><li>표 전체 20행(Orange Column Statistics 실측): 온도_C Mean <b>303.8</b> · Median 303.6 · Min <b>292.2</b> · Max <b>317.9</b>, Missing 0. EQ-03만 담은 리스트의 최고(308.5)와 표 전체의 최고(317.9)가 다르다 — 어느 범위를 담았는지에 따라 답이 달라진다. EQ-03 평균(302.6)은 전체 평균(303.8)보다 낮다.</li><li>설비별 기록 수: EQ-01 1 · EQ-02 4 · EQ-03 7 · EQ-04 8. 쉬운 예제의 일주일 기온·장바구니·학생 정보·친구 정보는 지어낸 값이다.</li></ul>
   </section>
 
   <section class="block">
@@ -132,7 +132,7 @@
   <section class="block">
     <h2>Orange 워밍업 데이터 — week02_orange_subway_ridership.csv</h2>
 <h3>목적</h3>
-<p>2차시 PART 2 Orange 워밍업용 데이터다. Feature Statistics(열 통계)로 평균·최고·최저를 한 번에 읽고, Data Table(표 보기)을 정렬해 "평균만 보면 유난히 붐비는 한 곳이 안 보인다"는 것을 확인한다. Orange에서는 <code>orange/week02_orange_subway_ridership.tab</code>을 연다.</p>
+<p>2차시 PART 2 Orange 워밍업용 데이터다. Column Statistics(열 통계)로 평균·최고·최저를 한 번에 읽고, Data Table(표 보기)을 정렬해 "평균만 보면 유난히 붐비는 한 곳이 안 보인다"는 것을 확인한다. Orange에서는 <code>orange/week02_orange_subway_ridership.tab</code>을 연다.</p>
 <h3>가상 상황</h3>
 <p>가상의 도시 지하철 두 노선(1호선·2호선) 8개 역에서 하루 세 시간대(출근·낮·퇴근)에 타고 내린 사람 수를 센 기록이다. 역 이름은 모두 지어낸 것이다. 공장 기록에서도 마찬가지로, 유난히 높은 값 하나는 평균만 봐서는 잘 안 보인다 — 오늘 반도체 표의 <code>온도_C</code>에서 평균(303.8)과 최고(317.9)를 함께 읽어 확인한다.</p>
 <h3>행 하나의 의미</h3>
@@ -154,7 +154,7 @@
 <tr><td>하차인원_count</td><td>그 시간대에 내린 사람 수</td><td>정수</td><td>명</td><td>1381</td><td>없음</td></tr>
 </tbody></table></div>
 <h3>의도적으로 포함된 패턴(실제 생성 결과)</h3>
-<ul class="pt-list"><li>승차인원 <b>Max 9,872 = 중앙역·출근</b>(6,000을 넘는 유일한 행), <b>Min 314 = 강변역·낮</b>.</li><li>승차인원 Mean <b>2,876.58</b>(Orange 표시 <code>2876.58</code>), Median 2,632. Max가 Mean의 약 3.4배다.</li><li>승차인원 내림차순 2~3위는 강변역·출근 4,000, 시장역·낮 3,969로, 1위와 차이가 크다.</li><li>퇴근 시간대에는 8개 역 모두 내린 사람이 탄 사람보다 많다.</li><li>Orange Feature Statistics 실측(<code>_1_subway_done.ows</code>): 승차인원_count Mean 2876.58 · Median 2632 · Min 314 · Max 9872 · Missing 0, 하차인원_count Mean 2618.08 · Max 4188. 모든 값이 한 번씩만 나와서 <b>Mode(최빈값) 칸에는 가장 작은 값(314)이 보인다</b> — 오늘은 Mode가 아니라 Max를 읽는다. <code>역이름</code>은 meta 열이라 Feature Statistics에는 나오지 않는다.</li></ul>
+<ul class="pt-list"><li>승차인원 <b>Max 9,872 = 중앙역·출근</b>(6,000을 넘는 유일한 행), <b>Min 314 = 강변역·낮</b>.</li><li>승차인원 Mean <b>2,876.58</b>(Orange 표시 <code>2876.58</code>), Median 2,632. Max가 Mean의 약 3.4배다.</li><li>승차인원 내림차순 2~3위는 강변역·출근 4,000, 시장역·낮 3,969로, 1위와 차이가 크다.</li><li>퇴근 시간대에는 8개 역 모두 내린 사람이 탄 사람보다 많다.</li><li>Orange Column Statistics 실측(<code>_1_subway_done.ows</code>): 승차인원_count Mean 2876.58 · Median 2632 · Min 314 · Max 9872 · Missing 0, 하차인원_count Mean 2618.08 · Max 4188. 모든 값이 한 번씩만 나와서 <b>Mode(최빈값) 칸에는 가장 작은 값(314)이 보인다</b> — 오늘은 Mode가 아니라 Max를 읽는다. <code>역이름</code>은 meta 열이라 Column Statistics에는 나오지 않는다.</li></ul>
 <h3>이번 차시 분석 질문</h3>
 <ul class="pt-list"><li>승차인원의 평균과 최고는 얼마이고, 가장 붐비는 곳은 어느 역·시간대인가?</li></ul>
 <h3>실제 데이터와 다른 점</h3>

@@ -39,8 +39,8 @@
     <p class="lede"><b>오늘의 미션</b> — 입사 다섯째 날, 센서 기록에 빈칸·중복·튀는 값이 섞여 있다. 정리해서 믿을 수 있는 평균 온도를 보고하자.
     (신입 데이터 담당자의 10일 이야기와 공장·데이터는 모두 교육용 가상이다.)</p>
     <img class="chart-img" src="../../assets/images/orange3/week05_01_mission_before_after.png"
-         alt="오늘 끝에 Orange3로 보게 될 정리 전과 정리 후의 Feature Statistics 두 창"
-         data-shot="week05_2_dirty_process_done.ows에서 Feature Statistics (정리 전) 창과 Feature Statistics (정리 후) 창을 나란히 띄운 화면 — 두 창 모두 온도_C 행의 Mean(정리 전 304.94, 정리 후 300.75)이 보이게">
+         alt="오늘 끝에 Orange3로 보게 될 정리 전과 정리 후의 Column Statistics 두 창"
+         data-shot="week05_2_dirty_process_done.ows에서 Column Statistics (정리 전) 창과 Column Statistics (정리 후) 창을 나란히 띄운 화면 — 두 창 모두 온도_C 행의 Mean(정리 전 304.94, 정리 후 300.75)이 보이게">
   </div>
 
   <section class="block">
@@ -51,7 +51,7 @@
       <li><code>dropna()</code>·<code>drop_duplicates()</code>·범위 조건으로 표를 정리하고, 정리 전후의 행 수와 평균을 비교할 수 있다.</li>
       <li>Orange3 Impute로 빈칸을 채워 보고, 튀는 값이 남은 채로 평균을 채우면 생기는 문제를 말할 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 4차시 — <code>read_csv</code>, 조건 검색 / 3차시 — Orange Select Rows / 2차시 — Orange Feature Statistics</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 4차시 — <code>read_csv</code>, 조건 검색 / 3차시 — Orange Select Rows / 2차시 — Orange Column Statistics</p>
   </section>
 
   <section class="block">
@@ -96,7 +96,7 @@
 
   <section class="block">
     <h2>숫자 요약 보기 — describe()</h2>
-    <p><code>describe()</code>는 숫자 열마다 개수·평균·최솟값·최댓값을 한 번에 보여 준다. 2차시 Orange Feature Statistics의 코드판이다.</p>
+    <p><code>describe()</code>는 숫자 열마다 개수·평균·최솟값·최댓값을 한 번에 보여 준다. 2차시 Orange Column Statistics의 코드판이다.</p>
     <div class="code-block">
       <div class="code-label"><span>Python — 읽고 요약하고, 정리 전 값 기억하기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
@@ -324,18 +324,6 @@ print(hot)</code></pre>
     정리해서 평균 온도가 얼마나 바뀌는지는 PART 3 실습지 문제 2·3에서 직접 구한다.</p>
   </section>
 
-  <section class="block">
-    <h2>실습 따라 하기</h2>
-    <p>학생용 노트북을 위에서 아래로 실행한다. 1~6단계는 코드가 완성돼 있다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>숫자 요약</b> — 반 기록을 읽고 <code>describe()</code>로 빈칸·튀는 값의 흔적을 본다. (노트북 1단계)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>빈칸 세고 지우기</b> — <code>isna().sum()</code> → <code>dropna()</code>, 15행 → 12행. (노트북 2단계)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>중복 행 지우기</b> — <code>duplicated().sum()</code> → <code>drop_duplicates()</code>, 12행 → 11행. (노트북 3단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>튀는 값 찾고 빼기</b> — 키 250 초과를 찾고, 250 이하만 남겨 평균 키를 비교한다. (노트북 4~5단계)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>공장 기록 훑어보기</b> — 같은 코드로 <code>df</code>의 요약·빈칸·중복을 보고, 400도 넘는 온도 기록을 찾는다. (노트북 6단계)</div></div>
-    <div class="step"><div class="num">6</div><div class="content"><b>반도체 데이터 실습</b> — 7단계의 문제 1~3은 PART 3에서 실습지를 보며 푼다. (노트북 7단계)</div></div>
-    <div class="callout warn"><b class="tag">체크포인트</b> 숫자가 위 결과와 다르면 셀을 건너뛰었거나 같은 셀을 두 번 실행한 것이다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.</div>
-  </section>
-
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 빈칸 채우기와 튀는 값</h2>
     <p>PART 1에서는 빈칸 행을 <b>지웠다</b>. Orange에서는 빈칸을 <b>채우는</b> 방법을 본다. 채울 때 무엇을 조심해야 하는지가 오늘의 핵심이다.</p>
@@ -355,16 +343,11 @@ print(hot)</code></pre>
       <table>
         <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
         <tbody>
-          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>데이터가 이미 연결돼 있다. 더블클릭해 행 수를 확인한다</td></tr>
-          <tr><td><code>Feature Statistics</code></td><td>Data</td><td>열 통계</td><td>열마다 Mean(평균)·Median(중앙값)·Min.·Max.·Missing(빈칸 수)을 본다(2차시에 써 봤다)</td></tr>
           <tr><td><code>Impute</code></td><td>Transform</td><td>빈칸 채우기</td><td><b>오늘 새 위젯.</b> 빈칸을 그 열의 평균으로 채운다(Average/Most frequent)</td></tr>
-          <tr><td><code>Select Rows</code></td><td>Transform</td><td>행 고르기</td><td>조건에 맞는 행만 남긴다(3차시에 써 봤다). 튀는 값을 거른다</td></tr>
-          <tr><td><code>Data Table</code></td><td>Data</td><td>표 보기</td><td>채운 뒤·정리 뒤의 표를 눈으로 본다</td></tr>
         </tbody>
       </table>
     </div>
     <p><b>행 수는 어디서 보나</b> — 위젯 창 맨 아래 상태 표시줄에 들어온 행 수와 내보낸 행 수가 숫자로 보인다. Data Table은 왼쪽 Info 칸에도 행 수가 나온다.</p>
-    <div class="callout warn"><b class="tag">주의</b> Data Table 뒤에는 위젯을 잇지 않는다. Data Table이 내보내는 것은 화면에서 고른 행뿐이다. 보기 위젯은 File·Impute·Select Rows에서 갈래로 잇는다.</div>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png" alt="반도체 8대 공정 흐름을 생활 비유로 그린 공정 지도">
@@ -401,11 +384,11 @@ print(hot)</code></pre>
       </div>
     </div>
 
-    <div class="step"><div class="num">1</div><div class="content"><b>정리 전 훑어보기</b> — 왼쪽 Data 묶음에서 <code>Feature Statistics</code>를 끌어 와 File과 잇고 더블클릭한다.
+    <div class="step"><div class="num">1</div><div class="content"><b>정리 전 훑어보기</b> — 왼쪽 Data 묶음에서 <code>Column Statistics</code>를 끌어 와 File과 잇고 더블클릭한다.
     Missing 칸에서 파티클 <b>4</b> · 습도 <b>3</b> · 차압 <b>2</b>, 파티클 Max <b>99999</b>, 차압 Min <b>-5.0</b>을 찾는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week05_03_cleanroom_stats_before.png"
-         alt="클린룸 기록의 Feature Statistics 정리 전 창"
-         data-shot="week05_1_cleanroom_done.ows의 Feature Statistics (정리 전) 창 — 파티클_count_per_m3 행의 Max 99999와 Missing 4, 습도_pct 행 Missing 3, 차압_Pa 행 Min -5.0과 Missing 2가 보이게">
+         alt="클린룸 기록의 Column Statistics 정리 전 창"
+         data-shot="week05_1_cleanroom_done.ows의 Column Statistics (정리 전) 창 — 파티클_count_per_m3 행의 Max 99999와 Missing 4, 습도_pct 행 Missing 3, 차압_Pa 행 Min -5.0과 Missing 2가 보이게">
     <div class="step"><div class="num">2</div><div class="content"><b>빈칸 채우기</b> — 왼쪽 Transform 묶음에서 <code>Impute</code>를 끌어 와 <b>File과</b> 잇고 더블클릭한다. 위쪽 <b>Default Method</b>에서 <b>Average/Most frequent</b>를 고른다
     (숫자 열은 평균, 글자 열은 가장 흔한 값으로 채운다는 뜻).
     Impute에 <code>Data Table</code>을 이어 연다. 채운 칸에는 표시가 없으니, <code>파티클_count_per_m3</code> 열 머리글을 눌러 큰 값부터 정렬하면 99999 바로 아래에 똑같은 값 4개가 모여 보인다. 그 값이 빈칸에 채워진 숫자다.</div></div>
@@ -419,10 +402,10 @@ print(hot)</code></pre>
       <b>튀는 값이 남은 채로 평균을 내 빈칸을 채우면, 채운 값도 엉터리가 된다 — 그래서 채우기 전에 튀는 값부터 확인한다.</b>
     </div>
     <div class="step"><div class="num">3</div><div class="content"><b>튀는 값 거르기</b> — Transform 묶음의 <code>Select Rows</code>를 Impute에 잇는다. 창에서 <b>Add Condition</b>을 누르고 열 → 연산자 → 숫자 순서로 고르는 일을 조건마다 되풀이해 두 줄을 넣는다:
-    <code>파티클_count_per_m3</code> <b>is below</b> 10000, <code>차압_Pa</code> <b>is at least</b> 0. Select Rows에 <code>Feature Statistics</code>를 하나 더 잇는다.</div></div>
+    <code>파티클_count_per_m3</code> <b>is below</b> 10000, <code>차압_Pa</code> <b>is at least</b> 0. Select Rows에 <code>Column Statistics</code>를 하나 더 잇는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week05_05_cleanroom_stats_after.png"
-         alt="Select Rows 뒤 Feature Statistics 정리 후 창"
-         data-shot="week05_1_cleanroom_done.ows의 Feature Statistics (정리 후) 창 — 파티클_count_per_m3 행의 Mean 1180.0과 Max 2543.66이 보이고, 창 아래 상태 표시줄에 들어온 행 수 70이 보이게">
+         alt="Select Rows 뒤 Column Statistics 정리 후 창"
+         data-shot="week05_1_cleanroom_done.ows의 Column Statistics (정리 후) 창 — 파티클_count_per_m3 행의 Mean 1180.0과 Max 2543.66이 보이고, 창 아래 상태 표시줄에 들어온 행 수 70이 보이게">
     <p><b>읽을 것</b> — 72행 중 오류 코드 행과 음수 차압 행이 빠져 <b>70행</b>이 남는다. 그런데 정리 후 파티클 Max가 <b>2543.66</b>, 바로 아까 채운 값이다.
     99,999는 지웠지만, 그 값으로 계산해 채운 숫자는 표에 그대로 남았다. 튀는 값을 먼저 확인하고 채웠다면 채운 값이 이렇게 끌려 올라가지 않았다.</p>
     <p>차압 -5.0은 바깥 공기가 밀려 들어올 수 있는 방향이라, 센서 오류인지 실제 상황인지 따로 확인할 값이다. 오늘은 평균 계산에서만 뺀다.</p>
@@ -430,11 +413,11 @@ print(hot)</code></pre>
     <h3>반도체 — 지저분한 공장 기록 정리하기</h3>
     <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 이 절은 강사가 화면으로 보여 준다. 학생은 따라 누르지 않고 순서와 숫자만 눈으로 확인한다. 직접 해 보는 것은 PART 3 실습지 문제 4에서 한 번 한다.</div>
     <p>같은 위젯으로 PART 1의 공장 기록(113행)을 정리한다. <b>File → Open</b>으로 <code>week05_2_dirty_process_start.ows</code>를 연다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>정리 전 훑어보기</b> — File에 <code>Feature Statistics</code>를 잇는다. <code>온도_C</code>의 Missing <b>3</b>, Max <b>557.73</b>,
+    <div class="step"><div class="num">1</div><div class="content"><b>정리 전 훑어보기</b> — File에 <code>Column Statistics</code>를 잇는다. <code>온도_C</code>의 Missing <b>3</b>, Max <b>557.73</b>,
     <code>압력_Pa</code> Min <b>-42.91</b>, <code>가스유량_slm</code> Min <b>-5</b> · Max <b>250</b>을 찾는다. PART 1의 <code>describe()</code>와 같은 숫자다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week05_06_process_stats_before.png"
-         alt="공장 기록의 Feature Statistics 정리 전 창"
-         data-shot="week05_2_dirty_process_done.ows의 Feature Statistics (정리 전) 창 — 온도_C 행의 Missing 3과 Max 557.73, 압력_Pa 행 Min -42.91, 가스유량_slm 행 Min -5와 Max 250이 보이게">
+         alt="공장 기록의 Column Statistics 정리 전 창"
+         data-shot="week05_2_dirty_process_done.ows의 Column Statistics (정리 전) 창 — 온도_C 행의 Missing 3과 Max 557.73, 압력_Pa 행 Min -42.91, 가스유량_slm 행 Min -5와 Max 250이 보이게">
     <div class="step"><div class="num">2</div><div class="content"><b>빈칸 채우기 + 결과 빈 행 지우기</b> — File에 <code>Impute</code>를 잇고 Default Method를 <b>Average/Most frequent</b>로 고른다.
     그다음 아래쪽 <b>Individual Attribute Settings</b> 칸의 <b>왼쪽 열 목록</b>에서 <code>합격여부</code>를 누르고, <b>오른쪽 버튼</b> 중 <b>Remove instances with unknown values</b>를 고른다. 검사 결과는 지어내 채우면 안 되기 때문이다.</div></div>
     <div class="callout warn"><b class="tag">주의</b> 같은 이름의 버튼이 위쪽 Default Method 칸에도 있다. 위쪽에서 Remove instances with unknown values를 누르면 빈칸이 하나라도 있는 행이 모두 지워져 98행이 남는다. 반대로 아래쪽 합격여부 설정을 빠뜨리면 합격여부 빈칸 2개가 "합격(1)"으로 채워져 107행이 남는다. 위쪽은 Average/Most frequent, 아래쪽은 합격여부만 Remove instances다.</div>
@@ -446,14 +429,14 @@ print(hot)</code></pre>
     <img class="chart-img" src="../../assets/images/orange3/week05_08_process_select_rows.png"
          alt="Select Rows 창의 조건 네 줄"
          data-shot="week05_2_dirty_process_done.ows의 Select Rows (행 고르기) 창 — 조건 네 줄(온도_C is at most 400, 압력_Pa is at least 0, 가스유량_slm is at least 0, 가스유량_slm is below 200)이 모두 보이게">
-    <div class="step"><div class="num">4</div><div class="content"><b>정리 결과 읽기</b> — Select Rows에 <code>Data Table</code>과 <code>Feature Statistics</code>를 각각 잇는다.
-    Data Table 왼쪽 Info에서 <b>105</b>행, Feature Statistics에서 <code>온도_C</code> Mean <b>300.75</b>(화면에 300.7로 보일 수 있다)를 읽는다.</div></div>
+    <div class="step"><div class="num">4</div><div class="content"><b>정리 결과 읽기</b> — Select Rows에 <code>Data Table</code>과 <code>Column Statistics</code>를 각각 잇는다.
+    Data Table 왼쪽 Info에서 <b>105</b>행, Column Statistics에서 <code>온도_C</code> Mean <b>300.75</b>(화면에 300.7로 보일 수 있다)를 읽는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week05_09_process_table_after.png"
          alt="정리 결과 Data Table 왼쪽 Info에 105행이 보이는 모습"
          data-shot="week05_2_dirty_process_done.ows의 Data Table (정리 결과) 창 — 왼쪽 Info 칸의 행 수 105가 보이게">
     <img class="chart-img" src="../../assets/images/orange3/week05_10_process_stats_after.png"
-         alt="정리 후 Feature Statistics에서 온도_C Mean 300.75"
-         data-shot="week05_2_dirty_process_done.ows의 Feature Statistics (정리 후) 창 — 온도_C 행의 Mean 300.75(또는 300.7), Min 291.3, Max 310.9가 보이게">
+         alt="정리 후 Column Statistics에서 온도_C Mean 300.75"
+         data-shot="week05_2_dirty_process_done.ows의 Column Statistics (정리 후) 창 — 온도_C 행의 Mean 300.75(또는 300.7), Min 291.3, Max 310.9가 보이게">
     <p>Orange 흐름은 113행 → Impute 뒤 111행(합격여부 빈 2행 삭제) → Select Rows 뒤 <b>105행</b>이다. 정리 후 온도는 Min 291.3, Max 310.9로 평소 범위 근처에 모였다.
     압력 빈칸은 음수 값에 끌려 내려간 평균(994.36)으로 채워졌다 — 클린룸에서 본 것과 같은 일이다.</p>
 
@@ -667,7 +650,7 @@ for col in data.columns:
   <section class="block">
     <h2>다음 차시 예고</h2>
     <p>6차시에는 정리한 숫자를 <b>그래프</b>로 본다. 표로는 안 보이던 공정의 모습을 막대·히스토그램·산점도로 본다. Orange에서는 웨이퍼 위 어디에 불량이 생겼는지 웨이퍼 맵을 그린다.</p>
-    <p><b>다음 날 미션</b> — 내일 회의에서 쓸 그래프 3장을 만들자: 설비별 건수, 온도 분포, 온도와 두께의 관계.</p>
+    <p><b>다음 미션</b> — 다음 회의에서 쓸 그래프 3장을 만들자: 설비별 건수, 온도 분포, 온도와 두께의 관계.</p>
   </section>
 
   <div class="nav-buttons">

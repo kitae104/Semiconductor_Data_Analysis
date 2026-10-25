@@ -50,7 +50,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ### 클린룸(Orange 워밍업) — `week05_orange_cleanroom_env.csv`(교육용 가상 데이터, 72행 6열)
 - 공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸(특정 공정 단계가 아님. ① 웨이퍼 제조는 보통 웨이퍼 제조사, ⑦⑧도 별도의 청정 공간).
-- Feature Statistics(정리 전): Missing 파티클 4 · 습도 3 · 차압 2. 파티클 Mean 2543.66, Median 1095.5, Max 99999(08:00 B구역 기록), 차압 Min -5.0(01:00 A구역).
+- Column Statistics(정리 전): Missing 파티클 4 · 습도 3 · 차압 2. 파티클 Mean 2543.66, Median 1095.5, Max 99999(08:00 B구역 기록), 차압 Min -5.0(01:00 A구역).
 - 오류 코드를 뺀 정상 파티클 평균 1,089.1.
 - Impute(Average) 뒤 Data Table(채운 뒤): 파티클 빈칸 4칸 = **2543.66**(정상 평균의 2배 넘음), 습도 44.907, 차압 11.881.
 - Select Rows(파티클 is below 10000, 차압 is at least 0) 뒤 **70행**: 파티클 Mean 1180.0, Median 1101, Min 636, **Max 2543.66(채운 값)**, 차압 Min 9.6.
@@ -75,12 +75,12 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 ## Orange 시연 체크리스트
 
 - [ ] `week05_1_cleanroom_start.ows`를 연다. File 위젯을 더블클릭해 72행이 들어왔는지 확인한다. 빨간 파일 이름이 보이면 데이터 파일을 찾지 못한 것이다 — `.ows`를 원래 폴더에서 다시 연다.
-- [ ] File → Feature Statistics: 파티클 Missing 4, Max 99999 / 습도 Missing 3 / 차압 Missing 2, Min -5.0.
+- [ ] File → Column Statistics: 파티클 Missing 4, Max 99999 / 습도 Missing 3 / 차압 Missing 2, Min -5.0.
 - [ ] File → Impute(Transform 묶음): Default Method를 **Average/Most frequent**로 바꾼다(기본값은 Don't impute). Impute → Data Table: `파티클_count_per_m3` 열 머리글을 눌러 큰 값부터 정렬하면 99999 아래에 2543.66 4칸이 모인다. 강의의 "채운 값 확인 보기"는 학생이 찾은 뒤 연다.
-- [ ] Impute → Select Rows(`파티클_count_per_m3` is below 10000, `차압_Pa` is at least 0) → Feature Statistics: 70행, 파티클 Max 2543.66.
-- [ ] `week05_2_dirty_process_start.ows`(113행) → Feature Statistics: 온도 Missing 3, Max 557.73.
+- [ ] Impute → Select Rows(`파티클_count_per_m3` is below 10000, `차압_Pa` is at least 0) → Column Statistics: 70행, 파티클 Max 2543.66.
+- [ ] `week05_2_dirty_process_start.ows`(113행) → Column Statistics: 온도 Missing 3, Max 557.73.
 - [ ] File → Impute: 위쪽 Default Method = Average/Most frequent. 아래쪽 Individual Attribute Settings의 **왼쪽 열 목록**에서 `합격여부`를 누르고 **오른쪽 버튼**에서 Remove instances with unknown values. 위쪽 Default Method 칸의 같은 이름 버튼은 누르지 않는다고 말로 경고한다.
-- [ ] Impute → Select Rows 네 줄(`온도_C` is at most 400, `압력_Pa` is at least 0, `가스유량_slm` is at least 0, `가스유량_slm` is below 200) → Data Table(105행) + Feature Statistics(온도 Mean 300.75).
+- [ ] Impute → Select Rows 네 줄(`온도_C` is at most 400, `압력_Pa` is at least 0, `가스유량_slm` is at least 0, `가스유량_slm` is below 200) → Data Table(105행) + Column Statistics(온도 Mean 300.75).
 - [ ] Data Table 뒤에 위젯을 잇지 않는다(출력은 선택 행뿐). 보기 위젯은 File·Impute·Select Rows에서 갈래로 잇는다.
 - [ ] 늦은 학생은 `_done.ows`를 열어 따라잡게 한다.
 - [ ] **알려진 차이(학생에게 묻지 않는다)**: Orange는 글자 앞뒤 공백을 지우고 읽어 `"식각 "`(뒤 공백 오타)를 `"식각"`과 합친다. 그래서 `공정명` 종류 수가 pandas 8종, Orange 7종으로 다르다. 학생이 발견하면 "Orange가 읽을 때 공백을 지우기 때문"이라고만 답하고 넘어간다. 공정명 종류 수는 오늘 다루지 않는다.
@@ -130,7 +130,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 
 ## 빨리 끝낸 학생용 과제
 
-- 클린룸 Feature Statistics(정리 전)에서 파티클의 Mean(2543.66)과 Median(1095.5)을 비교하고, 어느 쪽이 평소 값(1,000 안팎)에 가까운지, 왜 그런지 한 문장으로 적는다.
+- 클린룸 Column Statistics(정리 전)에서 파티클의 Mean(2543.66)과 Median(1095.5)을 비교하고, 어느 쪽이 평소 값(1,000 안팎)에 가까운지, 왜 그런지 한 문장으로 적는다.
 - 6단계 `hot`과 같은 모양으로 `df[df["압력_Pa"] < 0]`을 출력해 설비번호·공정명·합격여부를 보고, "기록 오류를 먼저 의심할 만한 이유"를 한 문장으로 적는다(2행: EQ-04 식각 -42.9, EQ-02 산화 -27.0, 둘 다 합격).
 
 ## 느린 학습자용 최소 과제

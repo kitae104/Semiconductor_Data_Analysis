@@ -372,44 +372,16 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
     오늘의 미션은 PART 3에서 다른 값으로 같은 비교를 해서 완성한다.</p>
   </section>
 
-  <section class="block">
-    <h2>실습 따라 하기</h2>
-    <p>학생용 노트북을 위에서 아래로 실행한다. 1~6단계는 코드가 완성돼 있고, 4단계 첫 셀(냉동고 산점도) 하나만 직접 쓴다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>기준선</b> — 가게 기록을 읽고 불만인 날의 비율 26.7%를 구한다. (노트북 1단계)</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>산점도와 상관계수</b> — 기온–아이스크림 산점도를 그리고 <code>corr()</code>로 0.97, -0.89를 얻는다. (노트북 2단계)</div></div>
-    <div class="step"><div class="num">3</div><div class="content"><b>관계없는 열과 비교</b> — 습도–아이스크림 0.02를 0.97 옆에 놓는다. (노트북 3단계)</div></div>
-    <div class="step"><div class="num">4</div><div class="content"><b>범위 밖 값과 원인 후보 문장</b> — 냉동고 산점도를 직접 그리고, 상관계수 -0.06과 범위 밖 불만률 75.0%를 비교한 뒤 원인 후보 문장을 출력한다. (노트북 4~5단계)</div></div>
-    <div class="step"><div class="num">5</div><div class="content"><b>공정 기록으로 확인</b> — 같은 코드로 압력–두께 0.09, 온도 범위 밖·안 불합격률을 본다. (노트북 6단계)</div></div>
-    <div class="step"><div class="num">6</div><div class="content"><b>반도체 데이터 실습</b> — 7단계의 문제 1~3은 PART 3에서 실습지를 보며 푼다. (노트북 7단계)</div></div>
-    <div class="callout warn"><b class="tag">체크포인트</b> 숫자가 위 결과와 다르면 셀을 건너뛰었거나 순서가 꼬인 것이다. "막혔을 때" 셀대로 Kernel → Restart Kernel and Run All Cells…로 위에서부터 다시 실행한다.</div>
-  </section>
-
   <section class="block" id="part2">
     <h2><span class="step-badge">PART 2</span> Orange3 — 상관 순위로 모든 쌍을 한 번에 보기</h2>
     <p>PART 1에서는 <code>corr()</code>로 한 쌍씩 계산했다. Orange의 <b>Correlations</b>(상관 순위)는 숫자 열의 <b>모든 쌍</b>을 한 번에 계산해 크기순으로 줄 세운다. 오늘 새 위젯은 <code>Correlations</code> 하나다.</p>
-
-    <h3>Orange 말 사전</h3>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>말</th><th>뜻</th></tr></thead>
-        <tbody>
-          <tr><td>캔버스</td><td>위젯을 놓고 선으로 잇는 가운데 하얀 작업판</td></tr>
-          <tr><td>위젯</td><td>한 가지 일을 하는 기능 상자. 더블클릭하면 자기 창이 열린다</td></tr>
-          <tr><td>워크플로(<code>.ows</code>)</td><td>캔버스에 놓은 위젯과 연결을 통째로 저장한 파일</td></tr>
-          <tr><td><code>.tab</code></td><td>Orange가 읽는 표 파일. CSV와 내용은 같고, 열마다 종류·역할이 적혀 있다</td></tr>
-          <tr><td>툴팁</td><td>마우스를 올리고 잠시 기다리면 뜨는 작은 설명 상자</td></tr>
-        </tbody>
-      </table>
-    </div>
 
     <h3>위젯 이름표</h3>
     <div class="tablewrap">
       <table>
         <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
         <tbody>
-          <tr><td><code>File</code></td><td>Data</td><td>파일 불러오기</td><td>표 파일을 연다. <code>_start.ows</code>에 이미 들어 있다</td></tr>
           <tr><td><code>Correlations</code></td><td>Unsupervised</td><td>상관 순위</td><td><b>오늘 새 위젯.</b> 숫자 열의 모든 쌍의 상관계수를 구해 크기순으로 줄 세운다. 파이썬 <code>corr()</code>를 모든 쌍에 한 것과 같다</td></tr>
-          <tr><td><code>Scatter Plot</code></td><td>Visualize</td><td>산점도</td><td>두 열로 점을 찍는다(6차시에 써 봤다). 색으로 합격·불합격을 나눠 본다</td></tr>
         </tbody>
       </table>
     </div>
@@ -422,7 +394,6 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
         <li>숫자 열끼리만 계산한다. 글자·범주 열(<code>합격여부</code>, <code>설비번호</code>, <code>공정명</code>)은 목록에 나오지 않는다. 시간 열 <code>측정시간</code>은 숫자로 바꿔 계산해 목록에 들어간다.</li>
       </ul>
     </div>
-    <div class="callout warn"><b class="tag">주의</b> 오늘 위젯은 모두 File에서 갈래로 잇는다. Data Table 뒤에는 위젯을 잇지 않는다(Data Table이 내보내는 것은 화면에서 고른 행뿐이다).</div>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
@@ -747,7 +718,7 @@ print(df[cols].corr().round(2))</code></pre>
     <h2>다음 차시 예고</h2>
     <p>9차시에는 공정 값 여러 개로 합격/불합격을 <b>미리 맞히는</b> 예측 모델을 만든다. Orange로 결정 트리를 먼저 만들고, 파이썬은 몇 줄만 쓴다.
     오늘 "관련 있다 ≠ 원인"을 배웠듯, 9차시에는 "잘 맞힌다 ≠ 원인을 안다"를 배운다.</p>
-    <p><b>다음 날 미션</b> — 검사 전에 합격/불합격을 미리 맞히는 모델을 만들자. 그런데 '무조건 합격'이라고 찍는 것보다 나을까?</p>
+    <p><b>다음 미션</b> — 검사 전에 합격/불합격을 미리 맞히는 모델을 만들자. 그런데 '무조건 합격'이라고 찍는 것보다 나을까?</p>
   </section>
 
   <div class="nav-buttons">
