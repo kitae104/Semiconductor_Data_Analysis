@@ -80,7 +80,7 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 빈칸·중복·튀는 값 정리하기</h2>
-    <p>개념은 <b>반 학생 기록</b>(<code>week05_easy_class_records.csv</code>, 15행 5열, 생활 예제용 가상 데이터)으로 익힌다.</p>
+    <p>개념은 <b>반 학생 기록</b>(<code><a href="../../data/weekly/week05/week05_easy_class_records.csv" target="_blank" rel="noopener">week05_easy_class_records.csv</a></code>, 15행 5열, 생활 예제용 가상 데이터)으로 익힌다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -143,6 +143,212 @@ max    1720.000000  70.300000  98.000000
   <section class="block">
     <h2>빈칸 세고 지우기 — isna(), dropna()</h2>
     <p>빈칸은 pandas에서 <code>NaN</code>(값 없음)으로 읽힌다. 키를 안 잰 학생은 0cm가 아니다 — 0과 빈칸은 다르다.</p>
+
+  <!-- mg:w5-dropna -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week05_easy_class_records.csv) 앞 9행</p>
+    <svg class="mg-svg" viewBox="0 0 720 340" role="img" aria-label="학생 기록 표에서 NaN이 든 세 행이 표시된 뒤 dropna로 지워지고 남은 행이 위로 붙는 그림">
+      <rect x="20" y="40" width="70" height="26" class="mg-ink"/>
+      <text x="55" y="57.5" class="mg-c mg-tw mg-b mg-s">이름</text>
+      <rect x="90" y="40" width="50" height="26" class="mg-ink"/>
+      <text x="115" y="57.5" class="mg-c mg-tw mg-b mg-s">반</text>
+      <rect x="140" y="40" width="76" height="26" class="mg-ink"/>
+      <text x="178" y="57.5" class="mg-c mg-tw mg-b mg-s">키_cm</text>
+      <rect x="216" y="40" width="86" height="26" class="mg-ink"/>
+      <text x="259" y="57.5" class="mg-c mg-tw mg-b mg-s">몸무게_kg</text>
+      <rect x="302" y="40" width="96" height="26" class="mg-ink"/>
+      <text x="350" y="57.5" class="mg-c mg-tw mg-b mg-s">수학점수_pt</text>
+      <g class="mg-slide3" style="--dx:0px;--dy:0px">
+      <rect x="20" y="66" width="70" height="24" class="mg-box"/>
+      <text x="55" y="82.5" class="mg-c mg-s">김민준</text>
+      <rect x="90" y="66" width="50" height="24" class="mg-box"/>
+      <text x="115" y="82.5" class="mg-c mg-s">1반</text>
+      <rect x="140" y="66" width="76" height="24" class="mg-box"/>
+      <text x="178" y="82.5" class="mg-c mg-s">165.2</text>
+      <rect x="216" y="66" width="86" height="24" class="mg-box"/>
+      <text x="259" y="82.5" class="mg-c mg-s">55.1</text>
+      <rect x="302" y="66" width="96" height="24" class="mg-box"/>
+      <text x="350" y="82.5" class="mg-c mg-s">85</text>
+      </g>
+      <g class="mg-slide3" style="--dx:0px;--dy:0px">
+      <rect x="20" y="90" width="70" height="24" class="mg-box"/>
+      <text x="55" y="106.5" class="mg-c mg-s">이서연</text>
+      <rect x="90" y="90" width="50" height="24" class="mg-box"/>
+      <text x="115" y="106.5" class="mg-c mg-s">1반</text>
+      <rect x="140" y="90" width="76" height="24" class="mg-box"/>
+      <text x="178" y="106.5" class="mg-c mg-s">158.4</text>
+      <rect x="216" y="90" width="86" height="24" class="mg-box"/>
+      <text x="259" y="106.5" class="mg-c mg-s">48.3</text>
+      <rect x="302" y="90" width="96" height="24" class="mg-box"/>
+      <text x="350" y="106.5" class="mg-c mg-s">92</text>
+      </g>
+      <g class="mg-slide3" style="--dx:0px;--dy:0px">
+      <rect x="20" y="114" width="70" height="24" class="mg-box"/>
+      <text x="55" y="130.5" class="mg-c mg-s">박지호</text>
+      <rect x="90" y="114" width="50" height="24" class="mg-box"/>
+      <text x="115" y="130.5" class="mg-c mg-s">1반</text>
+      <rect x="140" y="114" width="76" height="24" class="mg-box"/>
+      <text x="178" y="130.5" class="mg-c mg-s">171.0</text>
+      <rect x="216" y="114" width="86" height="24" class="mg-box"/>
+      <text x="259" y="130.5" class="mg-c mg-s">63.5</text>
+      <rect x="302" y="114" width="96" height="24" class="mg-box"/>
+      <text x="350" y="130.5" class="mg-c mg-s">78</text>
+      </g>
+      <g class="mg-win02">
+      <rect x="20" y="138" width="70" height="24" class="mg-box"/>
+      <text x="55" y="154.5" class="mg-c mg-s">최수아</text>
+      <rect x="90" y="138" width="50" height="24" class="mg-box"/>
+      <text x="115" y="154.5" class="mg-c mg-s">1반</text>
+      <rect x="140" y="138" width="76" height="24" class="mg-box"/>
+      <text x="178" y="154.5" class="mg-c mg-s">NaN</text>
+      <rect x="216" y="138" width="86" height="24" class="mg-box"/>
+      <text x="259" y="154.5" class="mg-c mg-s">50.2</text>
+      <rect x="302" y="138" width="96" height="24" class="mg-box"/>
+      <text x="350" y="154.5" class="mg-c mg-s">88</text>
+      </g>
+      <g class="mg-win12">
+      <rect x="20" y="138" width="70" height="24" class="mg-orange"/>
+      <text x="55" y="154.5" class="mg-c mg-s">최수아</text>
+      <rect x="90" y="138" width="50" height="24" class="mg-orange"/>
+      <text x="115" y="154.5" class="mg-c mg-s">1반</text>
+      <rect x="140" y="138" width="76" height="24" class="mg-red"/>
+      <text x="178" y="154.5" class="mg-c mg-s mg-tred mg-b">NaN</text>
+      <rect x="216" y="138" width="86" height="24" class="mg-orange"/>
+      <text x="259" y="154.5" class="mg-c mg-s">50.2</text>
+      <rect x="302" y="138" width="96" height="24" class="mg-orange"/>
+      <text x="350" y="154.5" class="mg-c mg-s">88</text>
+      </g>
+      <g class="mg-slide3" style="--dx:0px;--dy:-24px">
+      <rect x="20" y="162" width="70" height="24" class="mg-box"/>
+      <text x="55" y="178.5" class="mg-c mg-s">정도윤</text>
+      <rect x="90" y="162" width="50" height="24" class="mg-box"/>
+      <text x="115" y="178.5" class="mg-c mg-s">2반</text>
+      <rect x="140" y="162" width="76" height="24" class="mg-box"/>
+      <text x="178" y="178.5" class="mg-c mg-s">1720.0</text>
+      <rect x="216" y="162" width="86" height="24" class="mg-box"/>
+      <text x="259" y="178.5" class="mg-c mg-s">66.0</text>
+      <rect x="302" y="162" width="96" height="24" class="mg-box"/>
+      <text x="350" y="178.5" class="mg-c mg-s">74</text>
+      </g>
+      <g class="mg-slide3" style="--dx:0px;--dy:-24px">
+      <rect x="20" y="186" width="70" height="24" class="mg-box"/>
+      <text x="55" y="202.5" class="mg-c mg-s">강하린</text>
+      <rect x="90" y="186" width="50" height="24" class="mg-box"/>
+      <text x="115" y="202.5" class="mg-c mg-s">2반</text>
+      <rect x="140" y="186" width="76" height="24" class="mg-box"/>
+      <text x="178" y="202.5" class="mg-c mg-s">160.5</text>
+      <rect x="216" y="186" width="86" height="24" class="mg-box"/>
+      <text x="259" y="202.5" class="mg-c mg-s">51.8</text>
+      <rect x="302" y="186" width="96" height="24" class="mg-box"/>
+      <text x="350" y="202.5" class="mg-c mg-s">95</text>
+      </g>
+      <g class="mg-win02">
+      <rect x="20" y="210" width="70" height="24" class="mg-box"/>
+      <text x="55" y="226.5" class="mg-c mg-s">조예준</text>
+      <rect x="90" y="210" width="50" height="24" class="mg-box"/>
+      <text x="115" y="226.5" class="mg-c mg-s">NaN</text>
+      <rect x="140" y="210" width="76" height="24" class="mg-box"/>
+      <text x="178" y="226.5" class="mg-c mg-s">168.3</text>
+      <rect x="216" y="210" width="86" height="24" class="mg-box"/>
+      <text x="259" y="226.5" class="mg-c mg-s">59.4</text>
+      <rect x="302" y="210" width="96" height="24" class="mg-box"/>
+      <text x="350" y="226.5" class="mg-c mg-s">81</text>
+      </g>
+      <g class="mg-win12">
+      <rect x="20" y="210" width="70" height="24" class="mg-orange"/>
+      <text x="55" y="226.5" class="mg-c mg-s">조예준</text>
+      <rect x="90" y="210" width="50" height="24" class="mg-red"/>
+      <text x="115" y="226.5" class="mg-c mg-s mg-tred mg-b">NaN</text>
+      <rect x="140" y="210" width="76" height="24" class="mg-orange"/>
+      <text x="178" y="226.5" class="mg-c mg-s">168.3</text>
+      <rect x="216" y="210" width="86" height="24" class="mg-orange"/>
+      <text x="259" y="226.5" class="mg-c mg-s">59.4</text>
+      <rect x="302" y="210" width="96" height="24" class="mg-orange"/>
+      <text x="350" y="226.5" class="mg-c mg-s">81</text>
+      </g>
+      <g class="mg-slide3" style="--dx:0px;--dy:-48px">
+      <rect x="20" y="234" width="70" height="24" class="mg-box"/>
+      <text x="55" y="250.5" class="mg-c mg-s">윤지우</text>
+      <rect x="90" y="234" width="50" height="24" class="mg-box"/>
+      <text x="115" y="250.5" class="mg-c mg-s">2반</text>
+      <rect x="140" y="234" width="76" height="24" class="mg-box"/>
+      <text x="178" y="250.5" class="mg-c mg-s">155.9</text>
+      <rect x="216" y="234" width="86" height="24" class="mg-box"/>
+      <text x="259" y="250.5" class="mg-c mg-s">46.7</text>
+      <rect x="302" y="234" width="96" height="24" class="mg-box"/>
+      <text x="350" y="250.5" class="mg-c mg-s">69</text>
+      </g>
+      <g class="mg-win02">
+      <rect x="20" y="258" width="70" height="24" class="mg-box"/>
+      <text x="55" y="274.5" class="mg-c mg-s">장서준</text>
+      <rect x="90" y="258" width="50" height="24" class="mg-box"/>
+      <text x="115" y="274.5" class="mg-c mg-s">2반</text>
+      <rect x="140" y="258" width="76" height="24" class="mg-box"/>
+      <text x="178" y="274.5" class="mg-c mg-s">174.6</text>
+      <rect x="216" y="258" width="86" height="24" class="mg-box"/>
+      <text x="259" y="274.5" class="mg-c mg-s">NaN</text>
+      <rect x="302" y="258" width="96" height="24" class="mg-box"/>
+      <text x="350" y="274.5" class="mg-c mg-s">90</text>
+      </g>
+      <g class="mg-win12">
+      <rect x="20" y="258" width="70" height="24" class="mg-orange"/>
+      <text x="55" y="274.5" class="mg-c mg-s">장서준</text>
+      <rect x="90" y="258" width="50" height="24" class="mg-orange"/>
+      <text x="115" y="274.5" class="mg-c mg-s">2반</text>
+      <rect x="140" y="258" width="76" height="24" class="mg-orange"/>
+      <text x="178" y="274.5" class="mg-c mg-s">174.6</text>
+      <rect x="216" y="258" width="86" height="24" class="mg-red"/>
+      <text x="259" y="274.5" class="mg-c mg-s mg-tred mg-b">NaN</text>
+      <rect x="302" y="258" width="96" height="24" class="mg-orange"/>
+      <text x="350" y="274.5" class="mg-c mg-s">90</text>
+      </g>
+      <text x="440" y="54" class="mg-m mg-b mg-from1">students.isna().sum()</text>
+      <g class="mg-from1">
+      <rect x="440" y="68" width="110" height="24" class="mg-gray"/>
+      <text x="450" y="85" class="mg-m mg-s">이름</text>
+      <rect x="550" y="68" width="50" height="24" class="mg-box"/>
+      <text x="575" y="85" class="mg-m mg-s mg-c mg-b">0</text>
+      <rect x="440" y="94" width="110" height="24" class="mg-gray"/>
+      <text x="450" y="111" class="mg-m mg-s">반</text>
+      <rect x="550" y="94" width="50" height="24" class="mg-red"/>
+      <text x="575" y="111" class="mg-m mg-s mg-c mg-b mg-tred">1</text>
+      <rect x="440" y="120" width="110" height="24" class="mg-gray"/>
+      <text x="450" y="137" class="mg-m mg-s">키_cm</text>
+      <rect x="550" y="120" width="50" height="24" class="mg-red"/>
+      <text x="575" y="137" class="mg-m mg-s mg-c mg-b mg-tred">1</text>
+      <rect x="440" y="146" width="110" height="24" class="mg-gray"/>
+      <text x="450" y="163" class="mg-m mg-s">몸무게_kg</text>
+      <rect x="550" y="146" width="50" height="24" class="mg-red"/>
+      <text x="575" y="163" class="mg-m mg-s mg-c mg-b mg-tred">1</text>
+      <rect x="440" y="172" width="110" height="24" class="mg-gray"/>
+      <text x="450" y="189" class="mg-m mg-s">수학점수_pt</text>
+      <rect x="550" y="172" width="50" height="24" class="mg-box"/>
+      <text x="575" y="189" class="mg-m mg-s mg-c mg-b">0</text>
+      </g>
+      <text x="440" y="226" class="mg-b mg-tred mg-win24">빈칸이 든 행은 3개</text>
+      <text x="440" y="226" class="mg-m mg-s mg-b mg-tblue mg-from3">students.dropna() → 3개 행이 사라진다</text>
+      <rect x="14" y="302" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="322" class="mg-only0 mg-b" style="font-size:14px">① 표에 빈칸(NaN)이 섞여 있다</text>
+      <text x="28" y="322" class="mg-only1 mg-b" style="font-size:14px">② isna().sum() → 열마다 빈칸 개수</text>
+      <text x="28" y="322" class="mg-only2 mg-b" style="font-size:14px">③ 빈칸이 든 행을 빨간색으로 표시했다</text>
+      <text x="28" y="322" class="mg-only3 mg-b" style="font-size:14px">④ dropna() → 빈칸이 든 행을 지운다</text>
+      <text x="28" y="322" class="mg-only4 mg-b" style="font-size:14px">⑤ 남은 행이 위로 붙는다</text>
+      <text x="28" y="322" class="mg-only5 mg-b" style="font-size:14px">결과: 빈칸(값 없음)은 0이 아니라서 세고 지운다</text>
+    </svg>
+    <figcaption class="img-caption"><b>빈칸 세고 지우기 — isna(), dropna()</b> 빈칸은 pandas에서 <code>NaN</code>(값 없음)으로 읽힌다. <code>isna().sum()</code>이 열마다 빈칸 수를 세고, <code>dropna()</code>는 빈칸이 하나라도 든 행을 통째로 지운다. 그림은 앞 9행만 보여 준다.</figcaption>
+  </figure>
+  <!-- /mg:w5-dropna -->
+
+
+
+
+
+
+
+
+
+
+
     <ul class="pt-list">
       <li><code>isna().sum()</code> — 칸마다 "비었나?"를 확인하고, 열마다 빈칸 개수를 센다.</li>
       <li><code>dropna()</code> — 빈칸이 하나라도 있는 행을 지운다. 결과를 <code>students =</code>로 다시 저장해야 남는다.</li>
@@ -178,6 +384,116 @@ dtype: int64
   <section class="block">
     <h2>중복 행 찾고 지우기 — duplicated(), drop_duplicates()</h2>
     <p><code>duplicated()</code>는 앞의 행과 <b>모든 칸이 같은</b> 행을 찾고, <code>.sum()</code>이 그 개수를 센다. <code>drop_duplicates()</code>는 그 복사본만 지운다.</p>
+
+  <!-- mg:w5-dup -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week05_easy_class_records.csv) 중 일부 행</p>
+    <svg class="mg-svg" viewBox="0 0 720 280" role="img" aria-label="학생 기록 표에서 박지호 행이 두 번 나타나 두 번째 행이 True로 표시된 뒤 삭제되는 그림">
+      <rect x="20" y="40" width="70" height="26" class="mg-ink"/>
+      <text x="55" y="57.5" class="mg-c mg-tw mg-b mg-s">이름</text>
+      <rect x="90" y="40" width="50" height="26" class="mg-ink"/>
+      <text x="115" y="57.5" class="mg-c mg-tw mg-b mg-s">반</text>
+      <rect x="140" y="40" width="76" height="26" class="mg-ink"/>
+      <text x="178" y="57.5" class="mg-c mg-tw mg-b mg-s">키_cm</text>
+      <rect x="216" y="40" width="86" height="26" class="mg-ink"/>
+      <text x="259" y="57.5" class="mg-c mg-tw mg-b mg-s">몸무게_kg</text>
+      <rect x="302" y="40" width="96" height="26" class="mg-ink"/>
+      <text x="350" y="57.5" class="mg-c mg-tw mg-b mg-s">수학점수_pt</text>
+      <g class="mg-win12">
+      <rect x="398" y="40" width="110" height="26" class="mg-ink"/>
+      <text x="453" y="57.5" class="mg-c mg-tw mg-b mg-s">duplicated()</text>
+      </g>
+      <rect x="20" y="66" width="70" height="26" class="mg-box"/>
+      <text x="55" y="83.5" class="mg-c mg-s">김민준</text>
+      <rect x="90" y="66" width="50" height="26" class="mg-box"/>
+      <text x="115" y="83.5" class="mg-c mg-s">1반</text>
+      <rect x="140" y="66" width="76" height="26" class="mg-box"/>
+      <text x="178" y="83.5" class="mg-c mg-s">165.2</text>
+      <rect x="216" y="66" width="86" height="26" class="mg-box"/>
+      <text x="259" y="83.5" class="mg-c mg-s">55.1</text>
+      <rect x="302" y="66" width="96" height="26" class="mg-box"/>
+      <text x="350" y="83.5" class="mg-c mg-s">85</text>
+      <g class="mg-win12">
+      <rect x="398" y="66" width="110" height="26" class="mg-box"/>
+      <text x="453" y="84" class="mg-c mg-mu">False</text>
+      </g>
+      <rect x="20" y="92" width="70" height="26" class="mg-box"/>
+      <text x="55" y="109.5" class="mg-c mg-s">이서연</text>
+      <rect x="90" y="92" width="50" height="26" class="mg-box"/>
+      <text x="115" y="109.5" class="mg-c mg-s">1반</text>
+      <rect x="140" y="92" width="76" height="26" class="mg-box"/>
+      <text x="178" y="109.5" class="mg-c mg-s">158.4</text>
+      <rect x="216" y="92" width="86" height="26" class="mg-box"/>
+      <text x="259" y="109.5" class="mg-c mg-s">48.3</text>
+      <rect x="302" y="92" width="96" height="26" class="mg-box"/>
+      <text x="350" y="109.5" class="mg-c mg-s">92</text>
+      <g class="mg-win12">
+      <rect x="398" y="92" width="110" height="26" class="mg-box"/>
+      <text x="453" y="110" class="mg-c mg-mu">False</text>
+      </g>
+      <rect x="20" y="118" width="70" height="26" class="mg-box"/>
+      <text x="55" y="135.5" class="mg-c mg-s">박지호</text>
+      <rect x="90" y="118" width="50" height="26" class="mg-box"/>
+      <text x="115" y="135.5" class="mg-c mg-s">1반</text>
+      <rect x="140" y="118" width="76" height="26" class="mg-box"/>
+      <text x="178" y="135.5" class="mg-c mg-s">171.0</text>
+      <rect x="216" y="118" width="86" height="26" class="mg-box"/>
+      <text x="259" y="135.5" class="mg-c mg-s">63.5</text>
+      <rect x="302" y="118" width="96" height="26" class="mg-box"/>
+      <text x="350" y="135.5" class="mg-c mg-s">78</text>
+      <g class="mg-win12">
+      <rect x="398" y="118" width="110" height="26" class="mg-box"/>
+      <text x="453" y="136" class="mg-c mg-mu">False</text>
+      </g>
+      <text x="40" y="162" class="mg-b mg-mu">⋮</text>
+      <text x="80" y="162" class="mg-s mg-mu">(사이 행 생략)</text>
+      <g class="mg-win02">
+      <rect x="20" y="170" width="70" height="26" class="mg-box"/>
+      <text x="55" y="187.5" class="mg-c mg-s">박지호</text>
+      <rect x="90" y="170" width="50" height="26" class="mg-box"/>
+      <text x="115" y="187.5" class="mg-c mg-s">1반</text>
+      <rect x="140" y="170" width="76" height="26" class="mg-box"/>
+      <text x="178" y="187.5" class="mg-c mg-s">171.0</text>
+      <rect x="216" y="170" width="86" height="26" class="mg-box"/>
+      <text x="259" y="187.5" class="mg-c mg-s">63.5</text>
+      <rect x="302" y="170" width="96" height="26" class="mg-box"/>
+      <text x="350" y="187.5" class="mg-c mg-s">78</text>
+      </g>
+      <g class="mg-win12">
+      <rect x="398" y="170" width="110" height="26" class="mg-red"/>
+      <text x="453" y="188" class="mg-c mg-tred mg-b">True</text>
+      </g>
+      <rect x="17" y="115" width="384" height="32" class="mg-hl mg-win24"/>
+      <rect x="17" y="167" width="384" height="32" class="mg-hl mg-win23"/>
+      <text x="520" y="136" class="mg-s mg-b mg-torange mg-win24">모든 칸이 같다</text>
+      <g class="mg-win23">
+      <line x1="500" y1="140" x2="500" y2="165" class="mg-lnm"/>
+      <polygon points="500,174 495.5,165 504.5,165" class="mg-ah"/>
+      </g>
+      <text x="20" y="236" class="mg-m mg-b mg-only2">students.duplicated().sum()   →   1</text>
+      <text x="20" y="236" class="mg-m mg-b mg-tblue mg-from3">students.drop_duplicates()   →   첫 번째 행만 남는다</text>
+      <rect x="14" y="242" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="262" class="mg-only0 mg-b" style="font-size:14px">① 똑같은 행(박지호)이 두 번 들어 있다</text>
+      <text x="28" y="262" class="mg-only1 mg-b" style="font-size:14px">② duplicated() → 앞 행과 모든 칸이 같으면 True</text>
+      <text x="28" y="262" class="mg-only2 mg-b" style="font-size:14px">③ duplicated().sum() → 중복 행 1개</text>
+      <text x="28" y="262" class="mg-only3 mg-b" style="font-size:14px">④ drop_duplicates() → 두 번째 행을 지운다</text>
+      <text x="28" y="262" class="mg-only4 mg-b" style="font-size:14px">⑤ 처음 나온 행은 그대로 남는다</text>
+      <text x="28" y="262" class="mg-only5 mg-b" style="font-size:14px">결과: 같은 기록을 두 번 세지 않도록 하나만 남긴다</text>
+    </svg>
+    <figcaption class="img-caption"><b>중복 행 찾고 지우기 — duplicated(), drop_duplicates()</b> <code>duplicated()</code>는 <b>모든 칸이 같은</b> 행에 True를 붙이고, <code>drop_duplicates()</code>는 나중에 나온 같은 행을 지운다. 그림은 중복이 있는 앞뒤 행만 골라 보여 준다.</figcaption>
+  </figure>
+  <!-- /mg:w5-dup -->
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 중복 행 세고 지우기 (노트북 3단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>print(students.duplicated().sum())
@@ -196,6 +512,67 @@ print(students.shape)</code></pre>
   <section class="block">
     <h2>튀는 값 찾고 빼기 — 범위 조건</h2>
     <p>튀는 값(이상값)은 값이 <b>있어서</b> <code>isna()</code>로는 안 잡힌다. 4차시에 배운 조건 검색으로 찾는다. 사람 키가 250cm를 넘는 일은 거의 없으니, 오늘은 250cm를 넘으면 잘못 적은 값으로 본다.</p>
+
+  <!-- mg:w5-outlier -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week05_easy_class_records.csv)의 값</p>
+    <svg class="mg-svg" viewBox="0 0 720 300" role="img" aria-label="키 값 점들이 150에서 180 사이에 모여 있고 1720.0만 멀리 떨어져 있다가 제거되자 평균이 163.8로 돌아오는 그림">
+      <line x1="50" y1="170" x2="540" y2="170" class="mg-ln"/>
+      <line x1="60" y1="166" x2="60" y2="174" class="mg-ln"/>
+      <text x="60" y="192" class="mg-m mg-s mg-c mg-mu">150</text>
+      <line x1="213.3" y1="166" x2="213.3" y2="174" class="mg-ln"/>
+      <text x="213.3" y="192" class="mg-m mg-s mg-c mg-mu">160</text>
+      <line x1="366.7" y1="166" x2="366.7" y2="174" class="mg-ln"/>
+      <text x="366.7" y="192" class="mg-m mg-s mg-c mg-mu">170</text>
+      <line x1="520" y1="166" x2="520" y2="174" class="mg-ln"/>
+      <text x="520" y="192" class="mg-m mg-s mg-c mg-mu">180</text>
+      <line x1="560" y1="170" x2="700" y2="170" class="mg-ln"/>
+      <text x="550" y="175" class="mg-b mg-c mg-mu">//</text>
+      <text x="40" y="214" class="mg-m mg-s mg-mu">키_cm</text>
+      <circle cx="293.1" cy="152" r="8" class="mg-dot"/>
+      <circle cx="188.8" cy="152" r="8" class="mg-dot"/>
+      <circle cx="382" cy="152" r="8" class="mg-dot"/>
+      <circle cx="221" cy="152" r="8" class="mg-dot"/>
+      <circle cx="150.5" cy="152" r="8" class="mg-dot"/>
+      <circle cx="245.5" cy="152" r="8" class="mg-dot"/>
+      <circle cx="363.6" cy="152" r="8" class="mg-dot"/>
+      <circle cx="171.9" cy="152" r="8" class="mg-dot"/>
+      <circle cx="461.7" cy="152" r="8" class="mg-dot"/>
+      <circle cx="239.4" cy="152" r="8" class="mg-dot"/>
+      <g class="mg-win03">
+      <circle cx="650" cy="152" r="8" class="mg-dotr"/>
+      </g>
+      <text x="650" y="192" class="mg-m mg-s mg-c mg-tred mg-win03">1720.0</text>
+      <rect x="630" y="130" width="40" height="44" class="mg-hl mg-win13"/>
+      <text x="650" y="118" class="mg-s mg-b mg-c mg-tred mg-win13">튀는 값</text>
+      <line x1="600" y1="60" x2="600" y2="176" class="mg-lnr mg-dsh mg-win23"/>
+      <text x="600" y="52" class="mg-s mg-b mg-c mg-tred mg-win23">기준 250</text>
+      <text x="40" y="52" class="mg-m mg-b mg-tred mg-win03">정리 전 평균  305.3</text>
+      <text x="40" y="52" class="mg-m mg-b mg-tgreen mg-win45">정리 후 평균  163.8</text>
+      <polygon points="271.6,164 263.6,148 279.6,148" class="mg-ahb mg-win45"/>
+      <text x="271.6" y="108" class="mg-s mg-b mg-c mg-tblue mg-win45">평균</text>
+      <rect x="14" y="262" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="282" class="mg-only0 mg-b" style="font-size:14px">① 키 11명을 cm 눈금 위에 점으로 놓았다</text>
+      <text x="28" y="282" class="mg-only1 mg-b" style="font-size:14px">② 혼자 멀리 떨어진 점 1720.0 — 입력 실수로 보이는 튀는 값</text>
+      <text x="28" y="282" class="mg-only2 mg-b" style="font-size:14px">③ 범위 조건 키_cm &gt; 250 으로 찾는다</text>
+      <text x="28" y="282" class="mg-only3 mg-b" style="font-size:14px">④ 조건에 걸린 행을 빼면 점이 한곳에 모인다</text>
+      <text x="28" y="282" class="mg-only4 mg-b" style="font-size:14px">⑤ 평균이 305.3에서 163.8로 돌아온다</text>
+      <text x="28" y="282" class="mg-only5 mg-b" style="font-size:14px">결과: 튀는 값은 평균을 크게 흔든다</text>
+    </svg>
+    <figcaption class="img-caption"><b>튀는 값 찾고 빼기 — 범위 조건</b> 한 사람만 1720.0cm로 적혀 있어 평균이 305.3cm까지 올라갔다. <code>키_cm &gt; 250</code>처럼 <b>있을 수 없는 범위</b>를 조건으로 찾아 빼면 평균이 163.8cm로 돌아온다. 눈금 중간의 // 표시는 "여기서 건너뛰었다"는 뜻이다.</figcaption>
+  </figure>
+  <!-- /mg:w5-outlier -->
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 튀는 값 찾기 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>tall = students[students["키_cm"] &gt; 250]
@@ -236,7 +613,7 @@ print("정리 후 평균 키:", after_height)</code></pre>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>공장 기록 <code>week05_dirty_process_data.csv</code>(113행 9열, 교육용 가상 데이터)에도 빈칸·중복·튀는 값을 일부러 섞었다.
+    <p>공장 기록 <code><a href="../../data/weekly/week05/week05_dirty_process_data.csv" target="_blank" rel="noopener">week05_dirty_process_data.csv</a></code>(113행 9열, 교육용 가상 데이터)에도 빈칸·중복·튀는 값을 일부러 섞었다.
     한 행 = 공정 작업 1건이다. 위 코드에서 표 이름만 <code>students</code> → <code>df</code>로 바뀐다.</p>
     <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 — 이 단계 설비들의 센서 기록이다(1차시 공정 지도 그림은 PART 2에서 다시 본다). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).</p>
     <div class="tablewrap">
@@ -335,8 +712,9 @@ print(hot)</code></pre>
       <li>캔버스에 File 위젯 하나와 ①~④ 안내 메모가 보이면 준비가 끝난 것이다. 막히면 같은 폴더의 <code>_done.ows</code>(완성본)를 연다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week05_02_cleanroom_start.png"
-         alt="week05_1_cleanroom_start.ows를 연 Orange3 캔버스"
-         data-shot="week05_1_cleanroom_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 위쪽 ①~④ 안내 메모가 보이게">
+         alt="File 위젯을 더블클릭해 연 창 — 데이터 파일 이름, 72 instances, 열 목록"
+         data-shot="week05_1_cleanroom_start.ows의 File (파일 불러오기) 위젯을 더블클릭해 연 창 — 파일 이름, Info의 72 instances, Columns 표가 보이게">
+    <p class="img-caption">File 위젯을 더블클릭하면 이 창이 열린다. 불러온 파일 이름과 72행, 열 6개(측정시간은 시간 열)를 확인한다.</p>
 
     <h3>위젯 이름표</h3>
     <div class="tablewrap">
@@ -353,14 +731,14 @@ print(hot)</code></pre>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png" alt="반도체 8대 공정 흐름을 생활 비유로 그린 공정 지도">
     <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). 클린룸은 공정 지도의 ②~⑥(웨이퍼 위에 회로를 만드는 단계)이 이루어지는 FAB의 방이다.</p>
     <ul class="pt-list">
-      <li>워밍업 <code>week05_orange_cleanroom_env.csv</code> — <b>공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸</b>(특정 공정 단계가 아니라 그 방의 공기 기록. ① 웨이퍼 제조는 보통 웨이퍼 제조사에서 하고, ⑦⑧도 별도의 청정 공간을 쓴다).</li>
-      <li>반도체 <code>week05_dirty_process_data.csv</code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비의 센서 기록.</li>
+      <li>워밍업 <code><a href="../../data/weekly/week05/week05_orange_cleanroom_env.csv" target="_blank" rel="noopener">week05_orange_cleanroom_env.csv</a></code> — <b>공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸</b>(특정 공정 단계가 아니라 그 방의 공기 기록. ① 웨이퍼 제조는 보통 웨이퍼 제조사에서 하고, ⑦⑧도 별도의 청정 공간을 쓴다).</li>
+      <li>반도체 <code><a href="../../data/weekly/week05/week05_dirty_process_data.csv" target="_blank" rel="noopener">week05_dirty_process_data.csv</a></code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비의 센서 기록.</li>
     </ul>
 
     <h3>워밍업 — 클린룸 환경 기록</h3>
     <p>반도체는 <b>클린룸</b>(먼지를 극도로 줄인 방)에서 만든다. 수술실을 떠올리면 된다. 회로가 아주 가늘어서, 공기 속 아주 작은 입자(<b>파티클</b>)가 웨이퍼에 내려앉으면 회로가 끊기거나 붙는 결함이 될 수 있다.
     그래서 공장은 클린룸의 파티클 수·온도·습도를 계속 재서 기록한다.</p>
-    <p><code>week05_orange_cleanroom_env.csv</code>(72행, 교육용 가상 데이터)는 클린룸 세 구역(A·B·C)을 하루 동안 24번씩 잰 기록이다.</p>
+    <p><code><a href="../../data/weekly/week05/week05_orange_cleanroom_env.csv" target="_blank" rel="noopener">week05_orange_cleanroom_env.csv</a></code>(72행, 교육용 가상 데이터)는 클린룸 세 구역(A·B·C)을 하루 동안 24번씩 잰 기록이다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -512,10 +890,10 @@ print(hot)</code></pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>week05_easy_class_records.csv</code> — 15행 5열, 생활 예제용 가상 데이터(PART 1). 빈칸 3칸, 중복 1행, 잘못 적은 키 1개.</li>
-      <li><code>week05_orange_cleanroom_env.csv</code> — 72행 6열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code><a href="../../data/weekly/week05/week05_easy_class_records.csv" target="_blank" rel="noopener">week05_easy_class_records.csv</a></code> — 15행 5열, 생활 예제용 가상 데이터(PART 1). 빈칸 3칸, 중복 1행, 잘못 적은 키 1개.</li>
+      <li><code><a href="../../data/weekly/week05/week05_orange_cleanroom_env.csv" target="_blank" rel="noopener">week05_orange_cleanroom_env.csv</a></code> — 72행 6열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         빈칸: 파티클 4 · 습도 3 · 차압 2, 파티클 99,999 1행, 차압 -5.0 1행. <b>공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸.</b></li>
-      <li><code>week05_dirty_process_data.csv</code> — 113행 9열, 교육용 가상 데이터(PART 1·2·3). 빈칸 10칸, 중복 3행, 튀는 값 6건.
+      <li><code><a href="../../data/weekly/week05/week05_dirty_process_data.csv" target="_blank" rel="noopener">week05_dirty_process_data.csv</a></code> — 113행 9열, 교육용 가상 데이터(PART 1·2·3). 빈칸 10칸, 중복 3행, 튀는 값 6건.
         공정명 오타 3건과 형식이 다른 측정시간 값 2건도 있지만 오늘은 다루지 않는다. <b>공정 지도 위치: ②~⑤ + 세정 설비의 센서 기록.</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week05_dictionary.html">데이터 설명서</a></li>
     </ul>

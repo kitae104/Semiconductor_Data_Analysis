@@ -180,3 +180,35 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// 모션 그래픽(.mg): 화면에 보일 때만 재생하고, 멈춤·처음부터 버튼을 붙인다
+document.addEventListener("DOMContentLoaded", function () {
+  var figs = document.querySelectorAll(".mg");
+  if (!figs.length) return;
+  var io = "IntersectionObserver" in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { en.target.classList.toggle("mg-run", en.isIntersecting); });
+  }, { threshold: 0.25 }) : null;
+  figs.forEach(function (fig) {
+    fig.classList.add("mg-js");
+    if (io) io.observe(fig); else fig.classList.add("mg-run");
+    var bar = document.createElement("div");
+    bar.className = "mg-ctrl";
+    var pause = document.createElement("button");
+    pause.type = "button"; pause.className = "mg-btn"; pause.textContent = "멈춤";
+    pause.addEventListener("click", function () {
+      var paused = fig.classList.toggle("mg-paused");
+      pause.textContent = paused ? "재생" : "멈춤";
+    });
+    var again = document.createElement("button");
+    again.type = "button"; again.className = "mg-btn"; again.textContent = "처음부터";
+    again.addEventListener("click", function () {
+      fig.classList.add("mg-restart");
+      void fig.offsetWidth;
+      fig.classList.remove("mg-restart", "mg-paused");
+      pause.textContent = "멈춤";
+    });
+    bar.appendChild(pause); bar.appendChild(again);
+    var cap = fig.querySelector("figcaption");
+    fig.insertBefore(bar, cap || null);
+  });
+});

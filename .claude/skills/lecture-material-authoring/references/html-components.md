@@ -311,6 +311,21 @@ print(df.head())</code></pre>
 <p class="illustration-note">예시 일러스트레이션 · 실제 데이터 아님</p>
 ```
 
+### 모션 그래픽(`figure.mg`)
+
+개념 설명 옆에 두는 **움직이는 SVG 그림**이다. 손으로 HTML을 고치지 않는다 — 그림은
+`scripts/motion_figures/wNN.py`에 정의하고 `python scripts/build_motion_figures.py [--week N]`로
+강의 HTML에 넣는다(`<!-- mg:id -->` 표지로 감싸 여러 번 실행해도 같은 결과).
+
+- 한 사이클(12초)을 6칸으로 나눈다. `mg-fromN`(N칸부터 나타남) · `mg-onlyN`(N칸에서만) ·
+  `mg-winAB`(A~B칸) · `mg-slideN`/`mg-growN`(N칸에서 이동·자람). 아래쪽 한 줄 설명(narr)이 칸마다 바뀐다.
+- **애니메이션을 끈 상태가 곧 마지막 장면**이 되게 그린다(움직임 줄이기·인쇄에서 그 장면만 보인다).
+  마지막 칸 설명은 `결과:`로 시작하는 한 줄 요약이다.
+- 쉬운 예제 그림은 그 차시의 `weekXX_easy_*.csv` 실제 값을 읽어 쓴다. 실제 데이터가 아니면
+  `note=`로 "예시 그림 (실제 데이터 아님)"을 남긴다(기본값).
+- `<figcaption class="img-caption">`에 무엇을 보여 주는 그림인지 1~2문장. 시간 표기(분·시간)·이모지·답 선공개 금지.
+- 재생·멈춤·처음부터 버튼과 화면 밖 일시정지는 `common.js`가 붙인다.
+
 ---
 
 ## 랜딩 전용 컴포넌트
@@ -357,7 +372,7 @@ print(df.head())</code></pre>
 
 **이미지·도해**: `chart-img` `img-caption` `photo-slot` `illustration-note` `concept-panel`
 `cp-visual` `cp-info` `oflow-wrap` `oflow-svg` `oflow-note` `obox` `oarrow` `oarrowhead` `okicker`
-`olabel` `osub` `data-preview`
+`olabel` `osub` `data-preview` `mg`(+`mg-svg` `mg-ctrl` `mg-btn` `mg-paused` `mg-run` `mg-js`와 SVG용 `mg-*` 도형·글자·애니메이션 클래스)
 
 **랜딩**: `outcome-grid` `outcome-card` `telemetry-grid` `telemetry-card` `tstats` `tsub`
 `stat-panel` `stat` `journey` `jstep` `journey-arrow` `jcode` `jnum` `j1` `j2` `j3` `j4`

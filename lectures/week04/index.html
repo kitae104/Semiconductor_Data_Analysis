@@ -81,7 +81,7 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 표 읽고, 고르고, 줄 세우기</h2>
-    <p>개념은 <b>카페 주문 기록</b>(<code>week04_easy_cafe_orders.csv</code>, 12행 7열, 생활 예제용 가상 데이터)으로 익힌다.</p>
+    <p>개념은 <b>카페 주문 기록</b>(<code><a href="../../data/weekly/week04/week04_easy_cafe_orders.csv" target="_blank" rel="noopener">week04_easy_cafe_orders.csv</a></code>, 12행 7열, 생활 예제용 가상 데이터)으로 익힌다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -114,6 +114,132 @@
   <section class="block">
     <h2>CSV 파일 읽기 — read_csv</h2>
     <p><b>CSV</b>는 칸을 쉼표(,)로 나눠 적은 표 파일이다. <code>pd.read_csv()</code>로 읽으면 행과 열이 있는 표가 된다. 이 표를 <b>DataFrame</b>이라고 부른다.</p>
+
+  <!-- mg:w4-table -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week04_easy_cafe_orders.csv)의 값</p>
+    <svg class="mg-svg" viewBox="0 0 720 336" role="img" aria-label="카페 주문 표에서 가격 열 한 줄을 열로, 주문 한 건의 가로 한 줄을 행으로 표시하고 shape가 12행 7열임을 보여 주는 그림">
+      <rect x="30" y="44" width="76" height="28" class="mg-ink"/>
+      <text x="68" y="62.5" class="mg-c mg-tw mg-b mg-s">주문번호</text>
+      <rect x="106" y="44" width="62" height="28" class="mg-ink"/>
+      <text x="137" y="62.5" class="mg-c mg-tw mg-b mg-s">매장</text>
+      <rect x="168" y="44" width="96" height="28" class="mg-ink"/>
+      <text x="216" y="62.5" class="mg-c mg-tw mg-b mg-s">메뉴</text>
+      <rect x="264" y="44" width="62" height="28" class="mg-ink"/>
+      <text x="295" y="62.5" class="mg-c mg-tw mg-b mg-s">종류</text>
+      <rect x="326" y="44" width="90" height="28" class="mg-ink"/>
+      <text x="371" y="62.5" class="mg-c mg-tw mg-b mg-s">가격_KRW</text>
+      <rect x="416" y="44" width="96" height="28" class="mg-ink"/>
+      <text x="464" y="62.5" class="mg-c mg-tw mg-b mg-s">수량_count</text>
+      <rect x="512" y="44" width="56" height="28" class="mg-ink"/>
+      <text x="540" y="62.5" class="mg-c mg-tw mg-b mg-s">평가</text>
+      <rect x="30" y="72" width="76" height="26" class="mg-box"/>
+      <text x="68" y="89.5" class="mg-c mg-s">C-001</text>
+      <rect x="106" y="72" width="62" height="26" class="mg-box"/>
+      <text x="137" y="89.5" class="mg-c mg-s">강남점</text>
+      <rect x="168" y="72" width="96" height="26" class="mg-box"/>
+      <text x="216" y="89.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="264" y="72" width="62" height="26" class="mg-box"/>
+      <text x="295" y="89.5" class="mg-c mg-s">커피</text>
+      <rect x="326" y="72" width="90" height="26" class="mg-box"/>
+      <text x="371" y="89.5" class="mg-c mg-s">4,500</text>
+      <rect x="416" y="72" width="96" height="26" class="mg-box"/>
+      <text x="464" y="89.5" class="mg-c mg-s">2</text>
+      <rect x="512" y="72" width="56" height="26" class="mg-box"/>
+      <text x="540" y="89.5" class="mg-c mg-s">1</text>
+      <rect x="30" y="98" width="76" height="26" class="mg-box"/>
+      <text x="68" y="115.5" class="mg-c mg-s">C-002</text>
+      <rect x="106" y="98" width="62" height="26" class="mg-box"/>
+      <text x="137" y="115.5" class="mg-c mg-s">홍대점</text>
+      <rect x="168" y="98" width="96" height="26" class="mg-box"/>
+      <text x="216" y="115.5" class="mg-c mg-s">카페라테</text>
+      <rect x="264" y="98" width="62" height="26" class="mg-box"/>
+      <text x="295" y="115.5" class="mg-c mg-s">커피</text>
+      <rect x="326" y="98" width="90" height="26" class="mg-box"/>
+      <text x="371" y="115.5" class="mg-c mg-s">5,000</text>
+      <rect x="416" y="98" width="96" height="26" class="mg-box"/>
+      <text x="464" y="115.5" class="mg-c mg-s">1</text>
+      <rect x="512" y="98" width="56" height="26" class="mg-box"/>
+      <text x="540" y="115.5" class="mg-c mg-s">1</text>
+      <rect x="30" y="124" width="76" height="26" class="mg-box"/>
+      <text x="68" y="141.5" class="mg-c mg-s">C-003</text>
+      <rect x="106" y="124" width="62" height="26" class="mg-box"/>
+      <text x="137" y="141.5" class="mg-c mg-s">강남점</text>
+      <rect x="168" y="124" width="96" height="26" class="mg-box"/>
+      <text x="216" y="141.5" class="mg-c mg-s">녹차</text>
+      <rect x="264" y="124" width="62" height="26" class="mg-box"/>
+      <text x="295" y="141.5" class="mg-c mg-s">차</text>
+      <rect x="326" y="124" width="90" height="26" class="mg-box"/>
+      <text x="371" y="141.5" class="mg-c mg-s">4,800</text>
+      <rect x="416" y="124" width="96" height="26" class="mg-box"/>
+      <text x="464" y="141.5" class="mg-c mg-s">1</text>
+      <rect x="512" y="124" width="56" height="26" class="mg-box"/>
+      <text x="540" y="141.5" class="mg-c mg-s">-1</text>
+      <rect x="30" y="150" width="76" height="26" class="mg-box"/>
+      <text x="68" y="167.5" class="mg-c mg-s">C-004</text>
+      <rect x="106" y="150" width="62" height="26" class="mg-box"/>
+      <text x="137" y="167.5" class="mg-c mg-s">강남점</text>
+      <rect x="168" y="150" width="96" height="26" class="mg-box"/>
+      <text x="216" y="167.5" class="mg-c mg-s">치즈케이크</text>
+      <rect x="264" y="150" width="62" height="26" class="mg-box"/>
+      <text x="295" y="167.5" class="mg-c mg-s">디저트</text>
+      <rect x="326" y="150" width="90" height="26" class="mg-box"/>
+      <text x="371" y="167.5" class="mg-c mg-s">6,500</text>
+      <rect x="416" y="150" width="96" height="26" class="mg-box"/>
+      <text x="464" y="167.5" class="mg-c mg-s">1</text>
+      <rect x="512" y="150" width="56" height="26" class="mg-box"/>
+      <text x="540" y="167.5" class="mg-c mg-s">-1</text>
+      <rect x="30" y="176" width="76" height="26" class="mg-box"/>
+      <text x="68" y="193.5" class="mg-c mg-s">C-005</text>
+      <rect x="106" y="176" width="62" height="26" class="mg-box"/>
+      <text x="137" y="193.5" class="mg-c mg-s">홍대점</text>
+      <rect x="168" y="176" width="96" height="26" class="mg-box"/>
+      <text x="216" y="193.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="264" y="176" width="62" height="26" class="mg-box"/>
+      <text x="295" y="193.5" class="mg-c mg-s">커피</text>
+      <rect x="326" y="176" width="90" height="26" class="mg-box"/>
+      <text x="371" y="193.5" class="mg-c mg-s">4,500</text>
+      <rect x="416" y="176" width="96" height="26" class="mg-box"/>
+      <text x="464" y="193.5" class="mg-c mg-s">3</text>
+      <rect x="512" y="176" width="56" height="26" class="mg-box"/>
+      <text x="540" y="193.5" class="mg-c mg-s">1</text>
+      <text x="40" y="222" class="mg-b mg-mu">⋮</text>
+      <text x="66" y="222" class="mg-s mg-mu">(모두 12행)</text>
+      <rect x="324" y="42" width="94" height="162" class="mg-hl mg-only1"/>
+      <text x="371" y="34" class="mg-s mg-b mg-c mg-torange mg-only1">열 (column)</text>
+      <rect x="28" y="122" width="542" height="30" class="mg-hl mg-only2"/>
+      <text x="580" y="142" class="mg-s mg-b mg-torange mg-only2">행 = 주문 1건</text>
+      <text x="30" y="252" class="mg-m mg-b mg-win35">print(cafe.shape)   →   (12, 7)</text>
+      <text x="390" y="252" class="mg-b mg-tblue mg-win35">12행 × 7열</text>
+      <text x="30" y="280" class="mg-m mg-b mg-win45">print(cafe.columns)   →   열 이름 7개 (주문번호 … 평가)</text>
+      <rect x="14" y="298" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="318" class="mg-only0 mg-b" style="font-size:14px">① cafe 표: 주문 한 건이 한 줄, 항목이 한 칸</text>
+      <text x="28" y="318" class="mg-only1 mg-b" style="font-size:14px">② 세로 한 줄 = 열(column): 같은 종류의 값</text>
+      <text x="28" y="318" class="mg-only2 mg-b" style="font-size:14px">③ 가로 한 줄 = 행(row): 기록 한 건</text>
+      <text x="28" y="318" class="mg-only3 mg-b" style="font-size:14px">④ cafe.shape → (12, 7) : 12행 7열</text>
+      <text x="28" y="318" class="mg-only4 mg-b" style="font-size:14px">⑤ cafe.columns → 열 이름 7개</text>
+      <text x="28" y="318" class="mg-only5 mg-b" style="font-size:14px">결과: 표는 행(기록)과 열(항목)로 읽는다</text>
+    </svg>
+    <figcaption class="img-caption"><b>표 읽기 — 행과 열, shape</b> CSV를 <code>read_csv()</code>로 읽으면 행과 열이 있는 표(DataFrame)가 된다. 그림은 <code>cafe.head()</code>처럼 앞 5행만 보여 주고, 전체는 12행이다.</figcaption>
+  </figure>
+  <!-- /mg:w4-table -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <ul class="pt-list">
       <li><code>import pandas as pd</code> — Pandas를 불러와 짧은 이름 <code>pd</code>로 쓴다.</li>
       <li><code>"week04_easy_cafe_orders.csv"</code> — 읽을 파일의 이름. 노트북과 같은 곳에 있는 파일이라 이름만 쓰면 된다. 강의 코드 그대로 쓴다.</li>
@@ -178,6 +304,167 @@ Index(['주문번호', '매장', '메뉴', '종류', '가격_KRW', '수량_count
   <section class="block">
     <h2>열 고르기 — 대괄호 한 겹, 두 겹</h2>
     <p>열 하나는 <code>cafe["열 이름"]</code>, 여러 열은 <b>대괄호 두 겹</b> <code>cafe[["열1", "열2"]]</code>로 고른다. 안쪽 대괄호는 2차시에 배운 리스트다 — "이 열들"을 리스트로 묶어 건넨다.</p>
+
+  <!-- mg:w4-select -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week04_easy_cafe_orders.csv)의 값</p>
+    <svg class="mg-svg" viewBox="0 0 720 440" role="img" aria-label="카페 주문 표에서 가격 열 하나를 고르면 한 줄 목록이 되고 메뉴, 가격, 평가 세 열을 고르면 작은 표가 되는 그림">
+      <rect x="30" y="40" width="100" height="26" class="mg-ink"/>
+      <text x="80" y="57.5" class="mg-c mg-tw mg-b mg-s">메뉴</text>
+      <rect x="130" y="40" width="64" height="26" class="mg-ink"/>
+      <text x="162" y="57.5" class="mg-c mg-tw mg-b mg-s">종류</text>
+      <rect x="194" y="40" width="90" height="26" class="mg-ink"/>
+      <text x="239" y="57.5" class="mg-c mg-tw mg-b mg-s">가격_KRW</text>
+      <rect x="284" y="40" width="96" height="26" class="mg-ink"/>
+      <text x="332" y="57.5" class="mg-c mg-tw mg-b mg-s">수량_count</text>
+      <rect x="380" y="40" width="56" height="26" class="mg-ink"/>
+      <text x="408" y="57.5" class="mg-c mg-tw mg-b mg-s">평가</text>
+      <rect x="30" y="66" width="100" height="24" class="mg-box"/>
+      <text x="80" y="82.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="130" y="66" width="64" height="24" class="mg-box"/>
+      <text x="162" y="82.5" class="mg-c mg-s">커피</text>
+      <rect x="194" y="66" width="90" height="24" class="mg-box"/>
+      <text x="239" y="82.5" class="mg-c mg-s">4,500</text>
+      <rect x="284" y="66" width="96" height="24" class="mg-box"/>
+      <text x="332" y="82.5" class="mg-c mg-s">2</text>
+      <rect x="380" y="66" width="56" height="24" class="mg-box"/>
+      <text x="408" y="82.5" class="mg-c mg-s">1</text>
+      <rect x="30" y="90" width="100" height="24" class="mg-box"/>
+      <text x="80" y="106.5" class="mg-c mg-s">카페라테</text>
+      <rect x="130" y="90" width="64" height="24" class="mg-box"/>
+      <text x="162" y="106.5" class="mg-c mg-s">커피</text>
+      <rect x="194" y="90" width="90" height="24" class="mg-box"/>
+      <text x="239" y="106.5" class="mg-c mg-s">5,000</text>
+      <rect x="284" y="90" width="96" height="24" class="mg-box"/>
+      <text x="332" y="106.5" class="mg-c mg-s">1</text>
+      <rect x="380" y="90" width="56" height="24" class="mg-box"/>
+      <text x="408" y="106.5" class="mg-c mg-s">1</text>
+      <rect x="30" y="114" width="100" height="24" class="mg-box"/>
+      <text x="80" y="130.5" class="mg-c mg-s">녹차</text>
+      <rect x="130" y="114" width="64" height="24" class="mg-box"/>
+      <text x="162" y="130.5" class="mg-c mg-s">차</text>
+      <rect x="194" y="114" width="90" height="24" class="mg-box"/>
+      <text x="239" y="130.5" class="mg-c mg-s">4,800</text>
+      <rect x="284" y="114" width="96" height="24" class="mg-box"/>
+      <text x="332" y="130.5" class="mg-c mg-s">1</text>
+      <rect x="380" y="114" width="56" height="24" class="mg-box"/>
+      <text x="408" y="130.5" class="mg-c mg-s">-1</text>
+      <rect x="30" y="138" width="100" height="24" class="mg-box"/>
+      <text x="80" y="154.5" class="mg-c mg-s">치즈케이크</text>
+      <rect x="130" y="138" width="64" height="24" class="mg-box"/>
+      <text x="162" y="154.5" class="mg-c mg-s">디저트</text>
+      <rect x="194" y="138" width="90" height="24" class="mg-box"/>
+      <text x="239" y="154.5" class="mg-c mg-s">6,500</text>
+      <rect x="284" y="138" width="96" height="24" class="mg-box"/>
+      <text x="332" y="154.5" class="mg-c mg-s">1</text>
+      <rect x="380" y="138" width="56" height="24" class="mg-box"/>
+      <text x="408" y="154.5" class="mg-c mg-s">-1</text>
+      <rect x="30" y="162" width="100" height="24" class="mg-box"/>
+      <text x="80" y="178.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="130" y="162" width="64" height="24" class="mg-box"/>
+      <text x="162" y="178.5" class="mg-c mg-s">커피</text>
+      <rect x="194" y="162" width="90" height="24" class="mg-box"/>
+      <text x="239" y="178.5" class="mg-c mg-s">4,500</text>
+      <rect x="284" y="162" width="96" height="24" class="mg-box"/>
+      <text x="332" y="178.5" class="mg-c mg-s">3</text>
+      <rect x="380" y="162" width="56" height="24" class="mg-box"/>
+      <text x="408" y="178.5" class="mg-c mg-s">1</text>
+      <rect x="192" y="38" width="94" height="150" class="mg-hl mg-win12"/>
+      <rect x="28" y="38" width="104" height="150" class="mg-hl mg-win34"/>
+      <rect x="192" y="38" width="94" height="150" class="mg-hl mg-win34"/>
+      <rect x="378" y="38" width="60" height="150" class="mg-hl mg-win34"/>
+      <text x="30" y="214" class="mg-m mg-b mg-from1">cafe[&quot;가격_KRW&quot;]</text>
+      <text x="30" y="232" class="mg-s mg-mu mg-from1">한 줄 목록(번호 + 값)</text>
+      <g class="mg-from1">
+      <rect x="30" y="242" width="30" height="24" class="mg-gray"/>
+      <text x="45" y="259" class="mg-m mg-s mg-c mg-mu">0</text>
+      <rect x="60" y="242" width="90" height="24" class="mg-box"/>
+      <text x="105" y="259" class="mg-s mg-c">4,500</text>
+      <rect x="30" y="266" width="30" height="24" class="mg-gray"/>
+      <text x="45" y="283" class="mg-m mg-s mg-c mg-mu">1</text>
+      <rect x="60" y="266" width="90" height="24" class="mg-box"/>
+      <text x="105" y="283" class="mg-s mg-c">5,000</text>
+      <rect x="30" y="290" width="30" height="24" class="mg-gray"/>
+      <text x="45" y="307" class="mg-m mg-s mg-c mg-mu">2</text>
+      <rect x="60" y="290" width="90" height="24" class="mg-box"/>
+      <text x="105" y="307" class="mg-s mg-c">4,800</text>
+      <rect x="30" y="314" width="30" height="24" class="mg-gray"/>
+      <text x="45" y="331" class="mg-m mg-s mg-c mg-mu">3</text>
+      <rect x="60" y="314" width="90" height="24" class="mg-box"/>
+      <text x="105" y="331" class="mg-s mg-c">6,500</text>
+      <rect x="30" y="338" width="30" height="24" class="mg-gray"/>
+      <text x="45" y="355" class="mg-m mg-s mg-c mg-mu">4</text>
+      <rect x="60" y="338" width="90" height="24" class="mg-box"/>
+      <text x="105" y="355" class="mg-s mg-c">4,500</text>
+      </g>
+      <text x="260" y="214" class="mg-m mg-b mg-from3">cafe[[&quot;메뉴&quot;, &quot;가격_KRW&quot;, &quot;평가&quot;]]</text>
+      <text x="260" y="232" class="mg-s mg-mu mg-from3">고른 열만 있는 작은 표</text>
+      <g class="mg-from3">
+      <rect x="260" y="242" width="100" height="24" class="mg-ink"/>
+      <text x="310" y="258.5" class="mg-c mg-tw mg-b mg-s">메뉴</text>
+      <rect x="360" y="242" width="90" height="24" class="mg-ink"/>
+      <text x="405" y="258.5" class="mg-c mg-tw mg-b mg-s">가격_KRW</text>
+      <rect x="450" y="242" width="56" height="24" class="mg-ink"/>
+      <text x="478" y="258.5" class="mg-c mg-tw mg-b mg-s">평가</text>
+      <rect x="260" y="266" width="100" height="24" class="mg-box"/>
+      <text x="310" y="282.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="360" y="266" width="90" height="24" class="mg-box"/>
+      <text x="405" y="282.5" class="mg-c mg-s">4,500</text>
+      <rect x="450" y="266" width="56" height="24" class="mg-box"/>
+      <text x="478" y="282.5" class="mg-c mg-s">1</text>
+      <rect x="260" y="290" width="100" height="24" class="mg-box"/>
+      <text x="310" y="306.5" class="mg-c mg-s">카페라테</text>
+      <rect x="360" y="290" width="90" height="24" class="mg-box"/>
+      <text x="405" y="306.5" class="mg-c mg-s">5,000</text>
+      <rect x="450" y="290" width="56" height="24" class="mg-box"/>
+      <text x="478" y="306.5" class="mg-c mg-s">1</text>
+      <rect x="260" y="314" width="100" height="24" class="mg-box"/>
+      <text x="310" y="330.5" class="mg-c mg-s">녹차</text>
+      <rect x="360" y="314" width="90" height="24" class="mg-box"/>
+      <text x="405" y="330.5" class="mg-c mg-s">4,800</text>
+      <rect x="450" y="314" width="56" height="24" class="mg-box"/>
+      <text x="478" y="330.5" class="mg-c mg-s">-1</text>
+      <rect x="260" y="338" width="100" height="24" class="mg-box"/>
+      <text x="310" y="354.5" class="mg-c mg-s">치즈케이크</text>
+      <rect x="360" y="338" width="90" height="24" class="mg-box"/>
+      <text x="405" y="354.5" class="mg-c mg-s">6,500</text>
+      <rect x="450" y="338" width="56" height="24" class="mg-box"/>
+      <text x="478" y="354.5" class="mg-c mg-s">-1</text>
+      <rect x="260" y="362" width="100" height="24" class="mg-box"/>
+      <text x="310" y="378.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="360" y="362" width="90" height="24" class="mg-box"/>
+      <text x="405" y="378.5" class="mg-c mg-s">4,500</text>
+      <rect x="450" y="362" width="56" height="24" class="mg-box"/>
+      <text x="478" y="378.5" class="mg-c mg-s">1</text>
+      </g>
+      <rect x="14" y="402" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="422" class="mg-only0 mg-b" style="font-size:14px">① cafe 표에서 필요한 열만 꺼낸다</text>
+      <text x="28" y="422" class="mg-only1 mg-b" style="font-size:14px">② cafe[&quot;가격_KRW&quot;] — 대괄호 한 겹: 열 하나</text>
+      <text x="28" y="422" class="mg-only2 mg-b" style="font-size:14px">③ 결과는 번호 붙은 한 줄 목록이다</text>
+      <text x="28" y="422" class="mg-only3 mg-b" style="font-size:14px">④ cafe[[&quot;메뉴&quot;,&quot;가격_KRW&quot;,&quot;평가&quot;]] — 대괄호 두 겹</text>
+      <text x="28" y="422" class="mg-only4 mg-b" style="font-size:14px">⑤ 안쪽 [ ]는 열 이름을 담은 리스트다</text>
+      <text x="28" y="422" class="mg-only5 mg-b" style="font-size:14px">결과: 한 겹은 열 하나, 두 겹은 여러 열의 표</text>
+    </svg>
+    <figcaption class="img-caption"><b>열 고르기 — 대괄호 한 겹, 두 겹</b> 표의 위쪽에서 오렌지색 테두리가 고른 열이다. 아래 결과를 보면 한 겹은 <b>한 줄 목록</b>이, 두 겹은 <b>고른 열만 있는 작은 표</b>가 나온다.</figcaption>
+  </figure>
+  <!-- /mg:w4-select -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 열 하나, 여러 열 (노트북 3단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>print(cafe["가격_KRW"].head())
@@ -202,13 +489,233 @@ Name: 가격_KRW, dtype: int64
     <ul class="pt-list">
       <li>열 하나를 고르면 끝에 <code>Name: 가격_KRW, dtype: int64</code>가 붙는다. "이 열의 이름은 가격_KRW, 값은 정수"라는 뜻이다.</li>
       <li>여러 열을 고르면 고른 열만 있는 작은 표가 된다.</li>
-      <li>(구경만) 노트북 3단계 마지막 셀 <code>print(cafe.loc[0, "가격_KRW"])</code>는 0번 행의 가격 칸 하나를 꺼내 <code>4500</code>을 보여 준다. 오늘은 실행해서 결과만 본다.</li>
+      <li>(확인) 노트북 3단계 마지막 셀 <code>print(cafe.loc[0, "가격_KRW"])</code>는 0번 행의 가격 칸 하나를 꺼내 <code>4500</code>을 보여 준다. 오늘은 실행해서 결과만 본다.</li>
     </ul>
   </section>
 
   <section class="block">
     <h2>조건 검색 — 원하는 행만 골라내기</h2>
     <p><code>cafe["종류"] == "커피"</code>는 행마다 "커피인가?"를 물어 <code>True</code>/<code>False</code>를 만든다. 그것을 다시 <code>cafe[ ]</code>에 넣으면 <code>True</code>인 행만 남는다.</p>
+
+  <!-- mg:w4-filter -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week04_easy_cafe_orders.csv)의 값</p>
+    <svg class="mg-svg" viewBox="0 0 720 394" role="img" aria-label="카페 주문 12건 중 종류가 커피인 5건만 True가 되어 오른쪽 새 표로 옮겨 가는 그림">
+      <rect x="20" y="28" width="96" height="26" class="mg-ink"/>
+      <text x="68" y="45.5" class="mg-c mg-tw mg-b mg-s">메뉴</text>
+      <rect x="116" y="28" width="60" height="26" class="mg-ink"/>
+      <text x="146" y="45.5" class="mg-c mg-tw mg-b mg-s">종류</text>
+      <rect x="176" y="28" width="84" height="26" class="mg-ink"/>
+      <text x="218" y="45.5" class="mg-c mg-tw mg-b mg-s">가격_KRW</text>
+      <rect x="260" y="28" width="100" height="26" class="mg-ink"/>
+      <text x="310" y="45.5" class="mg-c mg-tw mg-b mg-s">종류 == 커피</text>
+      <rect x="430" y="28" width="96" height="26" class="mg-ink"/>
+      <text x="478" y="45.5" class="mg-c mg-tw mg-b mg-s">메뉴</text>
+      <rect x="526" y="28" width="60" height="26" class="mg-ink"/>
+      <text x="556" y="45.5" class="mg-c mg-tw mg-b mg-s">종류</text>
+      <rect x="586" y="28" width="84" height="26" class="mg-ink"/>
+      <text x="628" y="45.5" class="mg-c mg-tw mg-b mg-s">가격_KRW</text>
+      <rect x="430" y="54" width="240" height="110" class="mg-gray mg-dsh mg-from3"/>
+      <text x="430" y="20" class="mg-m mg-s mg-b mg-tblue mg-from3">coffee (새 표)</text>
+      <rect x="20" y="54" width="96" height="22" class="mg-box"/>
+      <text x="68" y="69.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="116" y="54" width="60" height="22" class="mg-box"/>
+      <text x="146" y="69.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="54" width="84" height="22" class="mg-box"/>
+      <text x="218" y="69.5" class="mg-c mg-s">4,500</text>
+      <g class="mg-from1">
+      <rect x="260" y="54" width="100" height="22" class="mg-green"/>
+      <text x="310" y="70" class="mg-c mg-s mg-tgreen mg-b">True</text>
+      </g>
+      <g class="mg-from2">
+      <g class="mg-slide3" style="--dx:410px;--dy:0px">
+      <rect x="20" y="54" width="96" height="22" class="mg-green"/>
+      <text x="68" y="69.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="116" y="54" width="60" height="22" class="mg-green"/>
+      <text x="146" y="69.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="54" width="84" height="22" class="mg-green"/>
+      <text x="218" y="69.5" class="mg-c mg-s">4,500</text>
+      </g>
+      </g>
+      <rect x="20" y="76" width="96" height="22" class="mg-box"/>
+      <text x="68" y="91.5" class="mg-c mg-s">카페라테</text>
+      <rect x="116" y="76" width="60" height="22" class="mg-box"/>
+      <text x="146" y="91.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="76" width="84" height="22" class="mg-box"/>
+      <text x="218" y="91.5" class="mg-c mg-s">5,000</text>
+      <g class="mg-from1">
+      <rect x="260" y="76" width="100" height="22" class="mg-green"/>
+      <text x="310" y="92" class="mg-c mg-s mg-tgreen mg-b">True</text>
+      </g>
+      <g class="mg-from2">
+      <g class="mg-slide3" style="--dx:410px;--dy:0px">
+      <rect x="20" y="76" width="96" height="22" class="mg-green"/>
+      <text x="68" y="91.5" class="mg-c mg-s">카페라테</text>
+      <rect x="116" y="76" width="60" height="22" class="mg-green"/>
+      <text x="146" y="91.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="76" width="84" height="22" class="mg-green"/>
+      <text x="218" y="91.5" class="mg-c mg-s">5,000</text>
+      </g>
+      </g>
+      <rect x="20" y="98" width="96" height="22" class="mg-box"/>
+      <text x="68" y="113.5" class="mg-c mg-s">녹차</text>
+      <rect x="116" y="98" width="60" height="22" class="mg-box"/>
+      <text x="146" y="113.5" class="mg-c mg-s">차</text>
+      <rect x="176" y="98" width="84" height="22" class="mg-box"/>
+      <text x="218" y="113.5" class="mg-c mg-s">4,800</text>
+      <g class="mg-from1">
+      <rect x="260" y="98" width="100" height="22" class="mg-red"/>
+      <text x="310" y="114" class="mg-c mg-s mg-tred">False</text>
+      </g>
+      <rect x="20" y="120" width="96" height="22" class="mg-box"/>
+      <text x="68" y="135.5" class="mg-c mg-s">치즈케이크</text>
+      <rect x="116" y="120" width="60" height="22" class="mg-box"/>
+      <text x="146" y="135.5" class="mg-c mg-s">디저트</text>
+      <rect x="176" y="120" width="84" height="22" class="mg-box"/>
+      <text x="218" y="135.5" class="mg-c mg-s">6,500</text>
+      <g class="mg-from1">
+      <rect x="260" y="120" width="100" height="22" class="mg-red"/>
+      <text x="310" y="136" class="mg-c mg-s mg-tred">False</text>
+      </g>
+      <rect x="20" y="142" width="96" height="22" class="mg-box"/>
+      <text x="68" y="157.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="116" y="142" width="60" height="22" class="mg-box"/>
+      <text x="146" y="157.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="142" width="84" height="22" class="mg-box"/>
+      <text x="218" y="157.5" class="mg-c mg-s">4,500</text>
+      <g class="mg-from1">
+      <rect x="260" y="142" width="100" height="22" class="mg-green"/>
+      <text x="310" y="158" class="mg-c mg-s mg-tgreen mg-b">True</text>
+      </g>
+      <g class="mg-from2">
+      <g class="mg-slide3" style="--dx:410px;--dy:-44px">
+      <rect x="20" y="142" width="96" height="22" class="mg-green"/>
+      <text x="68" y="157.5" class="mg-c mg-s">아메리카노</text>
+      <rect x="116" y="142" width="60" height="22" class="mg-green"/>
+      <text x="146" y="157.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="142" width="84" height="22" class="mg-green"/>
+      <text x="218" y="157.5" class="mg-c mg-s">4,500</text>
+      </g>
+      </g>
+      <rect x="20" y="164" width="96" height="22" class="mg-box"/>
+      <text x="68" y="179.5" class="mg-c mg-s">바닐라라테</text>
+      <rect x="116" y="164" width="60" height="22" class="mg-box"/>
+      <text x="146" y="179.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="164" width="84" height="22" class="mg-box"/>
+      <text x="218" y="179.5" class="mg-c mg-s">5,500</text>
+      <g class="mg-from1">
+      <rect x="260" y="164" width="100" height="22" class="mg-green"/>
+      <text x="310" y="180" class="mg-c mg-s mg-tgreen mg-b">True</text>
+      </g>
+      <g class="mg-from2">
+      <g class="mg-slide3" style="--dx:410px;--dy:-44px">
+      <rect x="20" y="164" width="96" height="22" class="mg-green"/>
+      <text x="68" y="179.5" class="mg-c mg-s">바닐라라테</text>
+      <rect x="116" y="164" width="60" height="22" class="mg-green"/>
+      <text x="146" y="179.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="164" width="84" height="22" class="mg-green"/>
+      <text x="218" y="179.5" class="mg-c mg-s">5,500</text>
+      </g>
+      </g>
+      <rect x="20" y="186" width="96" height="22" class="mg-box"/>
+      <text x="68" y="201.5" class="mg-c mg-s">캐모마일</text>
+      <rect x="116" y="186" width="60" height="22" class="mg-box"/>
+      <text x="146" y="201.5" class="mg-c mg-s">차</text>
+      <rect x="176" y="186" width="84" height="22" class="mg-box"/>
+      <text x="218" y="201.5" class="mg-c mg-s">4,800</text>
+      <g class="mg-from1">
+      <rect x="260" y="186" width="100" height="22" class="mg-red"/>
+      <text x="310" y="202" class="mg-c mg-s mg-tred">False</text>
+      </g>
+      <rect x="20" y="208" width="96" height="22" class="mg-box"/>
+      <text x="68" y="223.5" class="mg-c mg-s">마카롱</text>
+      <rect x="116" y="208" width="60" height="22" class="mg-box"/>
+      <text x="146" y="223.5" class="mg-c mg-s">디저트</text>
+      <rect x="176" y="208" width="84" height="22" class="mg-box"/>
+      <text x="218" y="223.5" class="mg-c mg-s">2,500</text>
+      <g class="mg-from1">
+      <rect x="260" y="208" width="100" height="22" class="mg-red"/>
+      <text x="310" y="224" class="mg-c mg-s mg-tred">False</text>
+      </g>
+      <rect x="20" y="230" width="96" height="22" class="mg-box"/>
+      <text x="68" y="245.5" class="mg-c mg-s">카페모카</text>
+      <rect x="116" y="230" width="60" height="22" class="mg-box"/>
+      <text x="146" y="245.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="230" width="84" height="22" class="mg-box"/>
+      <text x="218" y="245.5" class="mg-c mg-s">5,500</text>
+      <g class="mg-from1">
+      <rect x="260" y="230" width="100" height="22" class="mg-green"/>
+      <text x="310" y="246" class="mg-c mg-s mg-tgreen mg-b">True</text>
+      </g>
+      <g class="mg-from2">
+      <g class="mg-slide3" style="--dx:410px;--dy:-88px">
+      <rect x="20" y="230" width="96" height="22" class="mg-green"/>
+      <text x="68" y="245.5" class="mg-c mg-s">카페모카</text>
+      <rect x="116" y="230" width="60" height="22" class="mg-green"/>
+      <text x="146" y="245.5" class="mg-c mg-s">커피</text>
+      <rect x="176" y="230" width="84" height="22" class="mg-green"/>
+      <text x="218" y="245.5" class="mg-c mg-s">5,500</text>
+      </g>
+      </g>
+      <rect x="20" y="252" width="96" height="22" class="mg-box"/>
+      <text x="68" y="267.5" class="mg-c mg-s">초코케이크</text>
+      <rect x="116" y="252" width="60" height="22" class="mg-box"/>
+      <text x="146" y="267.5" class="mg-c mg-s">디저트</text>
+      <rect x="176" y="252" width="84" height="22" class="mg-box"/>
+      <text x="218" y="267.5" class="mg-c mg-s">6,800</text>
+      <g class="mg-from1">
+      <rect x="260" y="252" width="100" height="22" class="mg-red"/>
+      <text x="310" y="268" class="mg-c mg-s mg-tred">False</text>
+      </g>
+      <rect x="20" y="274" width="96" height="22" class="mg-box"/>
+      <text x="68" y="289.5" class="mg-c mg-s">유자차</text>
+      <rect x="116" y="274" width="60" height="22" class="mg-box"/>
+      <text x="146" y="289.5" class="mg-c mg-s">차</text>
+      <rect x="176" y="274" width="84" height="22" class="mg-box"/>
+      <text x="218" y="289.5" class="mg-c mg-s">5,200</text>
+      <g class="mg-from1">
+      <rect x="260" y="274" width="100" height="22" class="mg-red"/>
+      <text x="310" y="290" class="mg-c mg-s mg-tred">False</text>
+      </g>
+      <rect x="20" y="296" width="96" height="22" class="mg-box"/>
+      <text x="68" y="311.5" class="mg-c mg-s">쿠키</text>
+      <rect x="116" y="296" width="60" height="22" class="mg-box"/>
+      <text x="146" y="311.5" class="mg-c mg-s">디저트</text>
+      <rect x="176" y="296" width="84" height="22" class="mg-box"/>
+      <text x="218" y="311.5" class="mg-c mg-s">2,000</text>
+      <g class="mg-from1">
+      <rect x="260" y="296" width="100" height="22" class="mg-red"/>
+      <text x="310" y="312" class="mg-c mg-s mg-tred">False</text>
+      </g>
+      <text x="430" y="186" class="mg-m mg-s mg-b mg-from4">coffee.shape → (5, 7)</text>
+      <rect x="14" y="356" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="376" class="mg-only0 mg-b" style="font-size:14px">① cafe 표에서 종류가 커피인 주문만 찾고 싶다</text>
+      <text x="28" y="376" class="mg-only1 mg-b" style="font-size:14px">② cafe[&quot;종류&quot;] == &quot;커피&quot; → 행마다 True/False</text>
+      <text x="28" y="376" class="mg-only2 mg-b" style="font-size:14px">③ True인 행(초록)만 통과한다</text>
+      <text x="28" y="376" class="mg-only3 mg-b" style="font-size:14px">④ 통과한 행이 새 표 coffee가 된다</text>
+      <text x="28" y="376" class="mg-only4 mg-b" style="font-size:14px">⑤ coffee.shape → (5, 7)</text>
+      <text x="28" y="376" class="mg-only5 mg-b" style="font-size:14px">결과: 조건이 True인 행만 남겨 새 표를 만든다</text>
+    </svg>
+    <figcaption class="img-caption"><b>조건 검색 — True인 행만 남기기</b> <code>cafe["종류"] == "커피"</code>는 행마다 True/False 줄을 만든다. 그 줄을 <code>cafe[ ... ]</code> 안에 넣으면 True인 행만 새 표로 나온다. 그림은 열 3개만 보여 준다.</figcaption>
+  </figure>
+  <!-- /mg:w4-filter -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 커피 주문만 고르기 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>check = cafe["종류"] == "커피"
@@ -272,6 +779,82 @@ print(len(pricey_bad))</code></pre>
   <section class="block">
     <h2>정렬하기 — sort_values</h2>
     <p><code>sort_values("열 이름")</code>은 그 열의 값 순서로 행을 줄 세운다. <code>ascending=False</code>는 큰 값부터(내림차순)다. 빼면 작은 값부터 정렬한다.</p>
+
+  <!-- mg:w4-sort -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week04_easy_cafe_orders.csv) 중 5건</p>
+    <svg class="mg-svg" viewBox="0 0 720 330" role="img" aria-label="카페 주문 5건이 가격이 큰 순서로 줄 전체가 자리를 바꿔 치즈케이크가 맨 위로 오는 그림">
+      <text x="60" y="34" class="mg-s mg-b mg-mu">메뉴</text>
+      <text x="210" y="34" class="mg-s mg-b mg-mu">가격_KRW</text>
+      <text x="520" y="34" class="mg-s"></text>
+      <text x="300" y="34" class="mg-s mg-mu">막대 길이 = 가격</text>
+      <text x="700" y="34" class="mg-s mg-b mg-e mg-tblue mg-win01">정렬 전: 주문 순서</text>
+      <text x="700" y="34" class="mg-s mg-b mg-e mg-torange mg-win25">정렬 후: 비싼 순서</text>
+      <text x="50" y="270" class="mg-m mg-s mg-b mg-from1">cafe.sort_values(&quot;가격_KRW&quot;, ascending=False)</text>
+      <g class="mg-slide2" style="--dx:0px;--dy:152px">
+      <rect x="50" y="46" width="130" height="32" class="mg-box"/>
+      <text x="115" y="69" class="mg-c">아메리카노</text>
+      <rect x="180" y="46" width="100" height="32" class="mg-blue"/>
+      <text x="230" y="69" class="mg-m mg-c mg-b mg-tblue">4,500</text>
+      <rect x="290" y="46" width="221.5" height="32" class="mg-orange"/>
+      </g>
+      <g class="mg-slide2" style="--dx:0px;--dy:38px">
+      <rect x="50" y="84" width="130" height="32" class="mg-box"/>
+      <text x="115" y="107" class="mg-c">카페라테</text>
+      <rect x="180" y="84" width="100" height="32" class="mg-blue"/>
+      <text x="230" y="107" class="mg-m mg-c mg-b mg-tblue">5,000</text>
+      <rect x="290" y="84" width="246.2" height="32" class="mg-orange"/>
+      </g>
+      <g class="mg-slide2" style="--dx:0px;--dy:38px">
+      <rect x="50" y="122" width="130" height="32" class="mg-box"/>
+      <text x="115" y="145" class="mg-c">녹차</text>
+      <rect x="180" y="122" width="100" height="32" class="mg-blue"/>
+      <text x="230" y="145" class="mg-m mg-c mg-b mg-tblue">4,800</text>
+      <rect x="290" y="122" width="236.3" height="32" class="mg-orange"/>
+      </g>
+      <g class="mg-slide2" style="--dx:0px;--dy:-114px">
+      <rect x="50" y="160" width="130" height="32" class="mg-box"/>
+      <text x="115" y="183" class="mg-c">치즈케이크</text>
+      <rect x="180" y="160" width="100" height="32" class="mg-blue"/>
+      <text x="230" y="183" class="mg-m mg-c mg-b mg-tblue">6,500</text>
+      <rect x="290" y="160" width="320" height="32" class="mg-orange"/>
+      </g>
+      <g class="mg-slide2" style="--dx:0px;--dy:-114px">
+      <rect x="50" y="198" width="130" height="32" class="mg-box"/>
+      <text x="115" y="221" class="mg-c">바닐라라테</text>
+      <rect x="180" y="198" width="100" height="32" class="mg-blue"/>
+      <text x="230" y="221" class="mg-m mg-c mg-b mg-tblue">5,500</text>
+      <rect x="290" y="198" width="270.8" height="32" class="mg-orange"/>
+      </g>
+      <rect x="44" y="40" width="574" height="36" class="mg-hl mg-only3"/>
+      <rect x="14" y="292" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="312" class="mg-only0 mg-b" style="font-size:14px">① 정렬 전: 주문 번호 순서로 놓여 있다</text>
+      <text x="28" y="312" class="mg-only1 mg-b" style="font-size:14px">② sort_values(&quot;가격_KRW&quot;, ascending=False)</text>
+      <text x="28" y="312" class="mg-only2 mg-b" style="font-size:14px">③ 줄 전체가 가격이 큰 순서로 자리를 바꾼다</text>
+      <text x="28" y="312" class="mg-only3 mg-b" style="font-size:14px">④ 가장 비싼 행이 맨 위로 온다</text>
+      <text x="28" y="312" class="mg-only4 mg-b" style="font-size:14px">⑤ ascending=True면 작은 값부터 정렬한다</text>
+      <text x="28" y="312" class="mg-only5 mg-b" style="font-size:14px">결과: 한 열의 순서대로 행 전체가 따라 움직인다</text>
+    </svg>
+    <figcaption class="img-caption"><b>정렬 — sort_values()</b> 정렬해도 <b>행은 통째로</b> 움직인다. 메뉴 이름과 가격이 짝을 유지한 채 자리만 바뀐다. 막대 길이는 가격이다. 그림은 가격이 서로 다른 5건만 뽑았다.</figcaption>
+  </figure>
+  <!-- /mg:w4-sort -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 비싼 주문 5건 (노트북 6단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>cafe.sort_values("가격_KRW", ascending=False).head(5)</code></pre>
@@ -296,7 +879,7 @@ print(len(pricey_bad))</code></pre>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>오늘의 공정 기록 <code>week04_process_filtering.csv</code>(100행 8열, 교육용 가상 데이터)를 같은 코드로 본다. 파일 이름·표 이름(<code>cafe</code> → <code>df</code>)·열 이름만 바뀐다. (노트북 7단계)</p>
+    <p>오늘의 공정 기록 <code><a href="../../data/weekly/week04/week04_process_filtering.csv" target="_blank" rel="noopener">week04_process_filtering.csv</a></code>(100행 8열, 교육용 가상 데이터)를 같은 코드로 본다. 파일 이름·표 이름(<code>cafe</code> → <code>df</code>)·열 이름만 바뀐다. (노트북 7단계)</p>
     <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 공정의 기록이다. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 공정 지도 그림은 PART 2에서 다시 본다.</p>
     <div class="tablewrap">
       <table>
@@ -382,8 +965,8 @@ print(len(fail) / len(df) * 100)</code></pre>
          alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
     <p class="img-caption">공정 지도 — 반도체 8대 공정. ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다(교육용 단순화). 오늘 Orange로 여는 공정 흐름표가 이 그림을 그린 원천 데이터다.</p>
     <ul class="pt-list">
-      <li>워밍업 <code>week04_orange_process_flow.csv</code> — <b>공정 지도 위치: 공정 지도 전체(①~⑧)를 표로 만든 것.</b></li>
-      <li>반도체 <code>week04_process_filtering.csv</code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 공정의 기록(설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록).</li>
+      <li>워밍업 <code><a href="../../data/weekly/week04/week04_orange_process_flow.csv" target="_blank" rel="noopener">week04_orange_process_flow.csv</a></code> — <b>공정 지도 위치: 공정 지도 전체(①~⑧)를 표로 만든 것.</b></li>
+      <li>반도체 <code><a href="../../data/weekly/week04/week04_process_filtering.csv" target="_blank" rel="noopener">week04_process_filtering.csv</a></code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 공정의 기록(설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록).</li>
     </ul>
 
     <h3>워밍업 — 반도체 8대 공정 흐름표</h3>
@@ -519,10 +1102,10 @@ print(len(fail) / len(df) * 100)</code></pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>week04_easy_cafe_orders.csv</code> — 12행 7열, 생활 예제용 가상 데이터(PART 1 개념).</li>
-      <li><code>week04_orange_process_flow.csv</code> — 8행 9열, 교육용으로 직접 만든 표(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code><a href="../../data/weekly/week04/week04_easy_cafe_orders.csv" target="_blank" rel="noopener">week04_easy_cafe_orders.csv</a></code> — 12행 7열, 생활 예제용 가상 데이터(PART 1 개념).</li>
+      <li><code><a href="../../data/weekly/week04/week04_orange_process_flow.csv" target="_blank" rel="noopener">week04_orange_process_flow.csv</a></code> — 8행 9열, 교육용으로 직접 만든 표(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         <code>반복여부</code>가 "여러 번"인 단계 5개. <b>공정 지도 위치: 공정 지도 전체(①~⑧)를 표로 만든 것.</b></li>
-      <li><code>week04_process_filtering.csv</code> — 100행 8열, 교육용 가상 데이터(PART 1·2·3). 설비 EQ-01~EQ-04, 전체 불합격 13건.
+      <li><code><a href="../../data/weekly/week04/week04_process_filtering.csv" target="_blank" rel="noopener">week04_process_filtering.csv</a></code> — 100행 8열, 교육용 가상 데이터(PART 1·2·3). 설비 EQ-01~EQ-04, 전체 불합격 13건.
         <b>공정 지도 위치: ②~⑤ + 세정 공정의 기록(설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록).</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week04_dictionary.html">데이터 설명서</a></li>
     </ul>

@@ -319,7 +319,7 @@ table.data-preview tr:nth-child(even){background:var(--purple-bg);}
 }
 /* 캡션은 그림과 붙지 않도록 위 간격을 둔다 */
 .img-caption{text-align:center; color:var(--muted); font-size:.85rem; margin:.9rem auto 1.4rem; max-width:720px; line-height:1.6;}
-.chart-img{max-width:100%; border:1px solid var(--line); display:block; margin:0 auto; box-shadow:var(--shadow-card);}
+.chart-img{max-width:min(100%,780px); max-height:520px; width:auto; height:auto; border:1px solid var(--line); display:block; margin:0 auto; box-shadow:var(--shadow-card);}
 /* 좁은 화면 가로 넘침 방지: 인라인 style의 고정 max-width를 덮고, 긴 파일 경로 같은 인라인 코드는 줄바꿈 허용 */
 @media (max-width:640px){ .chart-img{max-width:100% !important; height:auto !important;} }
 :not(pre) > code{overflow-wrap:anywhere;}
@@ -530,3 +530,189 @@ pre{max-width:100%; overflow-x:auto;}
   .cta-banner .btn-row{flex-direction:column;}
   .cta-banner .btn-row a{width:100%; justify-content:center;}
 }
+
+/* ---------- 모션 그래픽 (mg) ----------
+   <figure class="mg"> 안에 인라인 SVG(.mg-svg) 하나와 설명(figcaption.img-caption)을 둔다.
+   한 번 도는 길이(--mg-t, 기본 12초)를 6칸으로 나눠 칸마다 장면이 바뀐다.
+   mg-fromN: N칸부터 나타남 / mg-onlyN: N칸에서만 보임 / mg-slideN, mg-growN: N칸에서 움직임·자람
+   움직임을 줄인 환경과 인쇄에서는 마지막 장면(mg-only5와 항상 보이는 요소)만 정지 화면으로 보인다. */
+.mg{margin:1.2rem auto; max-width:760px; border:1px solid var(--line); background:var(--card); padding:.7rem .8rem .2rem; box-shadow:var(--shadow-card);}
+.mg .illustration-note{margin-bottom:.5rem;}
+.mg .img-caption{margin:.5rem auto .8rem; text-align:left; max-width:700px;}
+.mg .img-caption b{color:var(--ink);}
+.mg-svg{display:block; width:100%; max-width:700px; height:auto; margin:0 auto;}
+.mg-ctrl{display:flex; gap:.4rem; justify-content:flex-end; margin:.35rem auto 0; max-width:700px;}
+.mg-btn{font:600 .74rem var(--font-mono); border:1px solid var(--ink); background:var(--card); color:var(--ink); padding:.2rem .65rem; cursor:pointer; border-radius:0;}
+.mg-btn:hover,.mg-btn:focus-visible{background:var(--ink); color:#fff;}
+
+/* SVG 글자 */
+.mg-svg text{font-family:var(--font); font-size:15px; fill:var(--ink);}
+.mg-svg text.mg-m{font-family:var(--font-mono);}
+.mg-svg text.mg-s{font-size:12.5px;}
+.mg-svg text.mg-l{font-size:19px;}
+.mg-svg text.mg-b{font-weight:700;}
+.mg-svg text.mg-c{text-anchor:middle;}
+.mg-svg text.mg-e{text-anchor:end;}
+.mg-svg text.mg-mu{fill:var(--muted);}
+.mg-svg text.mg-tw{fill:#fff;}
+.mg-svg text.mg-tblue{fill:var(--blue);}
+.mg-svg text.mg-tgreen{fill:var(--green);}
+.mg-svg text.mg-tred{fill:var(--red);}
+.mg-svg text.mg-torange{fill:var(--orange);}
+/* SVG 도형(채움+테두리) */
+.mg-svg .mg-box{fill:var(--card); stroke:var(--ink); stroke-width:1.5;}
+.mg-svg .mg-gray{fill:var(--purple-bg); stroke:var(--purple-line); stroke-width:1.5;}
+.mg-svg .mg-blue{fill:var(--blue-bg); stroke:var(--blue); stroke-width:1.5;}
+.mg-svg .mg-green{fill:var(--green-bg); stroke:var(--green); stroke-width:1.5;}
+.mg-svg .mg-orange{fill:var(--orange-bg); stroke:var(--orange); stroke-width:1.5;}
+.mg-svg .mg-red{fill:var(--red-bg); stroke:var(--red); stroke-width:1.5;}
+.mg-svg .mg-ink{fill:var(--ink); stroke:var(--ink); stroke-width:1.5;}
+.mg-svg .mg-dot{fill:var(--blue); stroke:none;}
+.mg-svg .mg-dotg{fill:var(--green); stroke:none;}
+.mg-svg .mg-dotr{fill:var(--red); stroke:none;}
+.mg-svg .mg-doto{fill:var(--orange); stroke:none;}
+.mg-svg .mg-dotm{fill:var(--muted); stroke:none;}
+/* SVG 선·화살표 */
+.mg-svg .mg-ln{fill:none; stroke:var(--ink); stroke-width:1.5;}
+.mg-svg .mg-lnb{fill:none; stroke:var(--blue); stroke-width:2.5;}
+.mg-svg .mg-lnr{fill:none; stroke:var(--red); stroke-width:2.5;}
+.mg-svg .mg-lng{fill:none; stroke:var(--green); stroke-width:2.5;}
+.mg-svg .mg-lnm{fill:none; stroke:var(--muted); stroke-width:1.2;}
+.mg-svg .mg-dsh{stroke-dasharray:6 5;}
+.mg-svg .mg-hl{fill:none; stroke:var(--orange); stroke-width:3;}
+.mg-svg .mg-ah{fill:var(--ink);}
+.mg-svg .mg-ahb{fill:var(--blue);}
+.mg-svg .mg-flow{stroke-dasharray:6 6; animation:mg-dash 1s linear infinite;}
+.mg-svg .mg-blink{animation:mg-blink 1.3s ease-in-out infinite;}
+.mg-svg [class*="mg-grow"]{transform-box:fill-box; transform-origin:50% 100%;}
+.mg-svg [class*="mg-growx"]{transform-origin:0% 50%;}
+
+/* 칸별 등장·이동 */
+.mg-svg [class*="mg-from"],.mg-svg [class*="mg-only"],.mg-svg [class*="mg-slide"],.mg-svg [class*="mg-grow"]{animation-duration:var(--mg-t,12s); animation-iteration-count:infinite; animation-timing-function:ease-in-out; animation-fill-mode:both;}
+.mg-svg .mg-from1{animation-name:mg-from1;} .mg-svg .mg-from2{animation-name:mg-from2;} .mg-svg .mg-from3{animation-name:mg-from3;}
+.mg-svg .mg-from4{animation-name:mg-from4;} .mg-svg .mg-from5{animation-name:mg-from5;}
+.mg-svg .mg-only0{animation-name:mg-only0;} .mg-svg .mg-only1{animation-name:mg-only1;} .mg-svg .mg-only2{animation-name:mg-only2;}
+.mg-svg .mg-only3{animation-name:mg-only3;} .mg-svg .mg-only4{animation-name:mg-only4;} .mg-svg .mg-only5{animation-name:mg-only5;}
+.mg-svg .mg-slide0{animation-name:mg-slide0;} .mg-svg .mg-slide1{animation-name:mg-slide1;} .mg-svg .mg-slide2{animation-name:mg-slide2;}
+.mg-svg .mg-slide3{animation-name:mg-slide3;} .mg-svg .mg-slide4{animation-name:mg-slide4;}
+.mg-svg .mg-grow0{animation-name:mg-grow0;} .mg-svg .mg-grow1{animation-name:mg-grow1;} .mg-svg .mg-grow2{animation-name:mg-grow2;}
+.mg-svg .mg-grow3{animation-name:mg-grow3;} .mg-svg .mg-grow4{animation-name:mg-grow4;}
+.mg-svg .mg-growx0{animation-name:mg-growx0;} .mg-svg .mg-growx1{animation-name:mg-growx1;} .mg-svg .mg-growx2{animation-name:mg-growx2;}
+.mg-svg .mg-growx3{animation-name:mg-growx3;} .mg-svg .mg-growx4{animation-name:mg-growx4;}
+@keyframes mg-dash{to{stroke-dashoffset:-24;}}
+@keyframes mg-blink{50%{opacity:.25;}}
+@keyframes mg-from1{0%,15%{opacity:0} 18.4%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg-from2{0%,31.6%{opacity:0} 35%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg-from3{0%,48.3%{opacity:0} 51.7%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg-from4{0%,65%{opacity:0} 68.4%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg-from5{0%,81.6%{opacity:0} 85%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg-only0{0%,14.9%{opacity:1} 16.7%,96.5%{opacity:0} 100%{opacity:1}}
+@keyframes mg-only1{0%,15%{opacity:0} 16.9%,31.3%{opacity:1} 33.3%,100%{opacity:0}}
+@keyframes mg-only2{0%,31.6%{opacity:0} 33.5%,48%{opacity:1} 50%,100%{opacity:0}}
+@keyframes mg-only3{0%,48.3%{opacity:0} 50.2%,64.7%{opacity:1} 66.7%,100%{opacity:0}}
+@keyframes mg-only4{0%,65%{opacity:0} 66.9%,81.3%{opacity:1} 83.3%,100%{opacity:0}}
+@keyframes mg-only5{0%,81.6%{opacity:0} 83.5%,94%{opacity:1} 97%,100%{opacity:0}}
+@keyframes mg-slide0{0%,1.5%{transform:translate(0,0);opacity:1} 12.5%,94%{transform:translate(var(--dx,0),var(--dy,0));opacity:1} 96%{transform:translate(var(--dx,0),var(--dy,0));opacity:0} 96.1%,98%{transform:translate(0,0);opacity:0} 100%{transform:translate(0,0);opacity:1}}
+@keyframes mg-slide1{0%,18.2%{transform:translate(0,0);opacity:1} 29.2%,94%{transform:translate(var(--dx,0),var(--dy,0));opacity:1} 96%{transform:translate(var(--dx,0),var(--dy,0));opacity:0} 96.1%,98%{transform:translate(0,0);opacity:0} 100%{transform:translate(0,0);opacity:1}}
+@keyframes mg-slide2{0%,34.8%{transform:translate(0,0);opacity:1} 45.8%,94%{transform:translate(var(--dx,0),var(--dy,0));opacity:1} 96%{transform:translate(var(--dx,0),var(--dy,0));opacity:0} 96.1%,98%{transform:translate(0,0);opacity:0} 100%{transform:translate(0,0);opacity:1}}
+@keyframes mg-slide3{0%,51.5%{transform:translate(0,0);opacity:1} 62.5%,94%{transform:translate(var(--dx,0),var(--dy,0));opacity:1} 96%{transform:translate(var(--dx,0),var(--dy,0));opacity:0} 96.1%,98%{transform:translate(0,0);opacity:0} 100%{transform:translate(0,0);opacity:1}}
+@keyframes mg-slide4{0%,68.2%{transform:translate(0,0);opacity:1} 79.2%,94%{transform:translate(var(--dx,0),var(--dy,0));opacity:1} 96%{transform:translate(var(--dx,0),var(--dy,0));opacity:0} 96.1%,98%{transform:translate(0,0);opacity:0} 100%{transform:translate(0,0);opacity:1}}
+@keyframes mg-grow0{0%,1.5%{transform:scaleY(0);opacity:1} 10.5%,94%{transform:scaleY(1);opacity:1} 96%{transform:scaleY(1);opacity:0} 96.1%,98%{transform:scaleY(0);opacity:0} 100%{transform:scaleY(0);opacity:1}}
+@keyframes mg-growx0{0%,1.5%{transform:scaleX(0);opacity:1} 10.5%,94%{transform:scaleX(1);opacity:1} 96%{transform:scaleX(1);opacity:0} 96.1%,98%{transform:scaleX(0);opacity:0} 100%{transform:scaleX(0);opacity:1}}
+@keyframes mg-grow1{0%,18.2%{transform:scaleY(0);opacity:1} 27.2%,94%{transform:scaleY(1);opacity:1} 96%{transform:scaleY(1);opacity:0} 96.1%,98%{transform:scaleY(0);opacity:0} 100%{transform:scaleY(0);opacity:1}}
+@keyframes mg-growx1{0%,18.2%{transform:scaleX(0);opacity:1} 27.2%,94%{transform:scaleX(1);opacity:1} 96%{transform:scaleX(1);opacity:0} 96.1%,98%{transform:scaleX(0);opacity:0} 100%{transform:scaleX(0);opacity:1}}
+@keyframes mg-grow2{0%,34.8%{transform:scaleY(0);opacity:1} 43.8%,94%{transform:scaleY(1);opacity:1} 96%{transform:scaleY(1);opacity:0} 96.1%,98%{transform:scaleY(0);opacity:0} 100%{transform:scaleY(0);opacity:1}}
+@keyframes mg-growx2{0%,34.8%{transform:scaleX(0);opacity:1} 43.8%,94%{transform:scaleX(1);opacity:1} 96%{transform:scaleX(1);opacity:0} 96.1%,98%{transform:scaleX(0);opacity:0} 100%{transform:scaleX(0);opacity:1}}
+@keyframes mg-grow3{0%,51.5%{transform:scaleY(0);opacity:1} 60.5%,94%{transform:scaleY(1);opacity:1} 96%{transform:scaleY(1);opacity:0} 96.1%,98%{transform:scaleY(0);opacity:0} 100%{transform:scaleY(0);opacity:1}}
+@keyframes mg-growx3{0%,51.5%{transform:scaleX(0);opacity:1} 60.5%,94%{transform:scaleX(1);opacity:1} 96%{transform:scaleX(1);opacity:0} 96.1%,98%{transform:scaleX(0);opacity:0} 100%{transform:scaleX(0);opacity:1}}
+@keyframes mg-grow4{0%,68.2%{transform:scaleY(0);opacity:1} 77.2%,94%{transform:scaleY(1);opacity:1} 96%{transform:scaleY(1);opacity:0} 96.1%,98%{transform:scaleY(0);opacity:0} 100%{transform:scaleY(0);opacity:1}}
+@keyframes mg-growx4{0%,68.2%{transform:scaleX(0);opacity:1} 77.2%,94%{transform:scaleX(1);opacity:1} 96%{transform:scaleX(1);opacity:0} 96.1%,98%{transform:scaleX(0);opacity:0} 100%{transform:scaleX(0);opacity:1}}
+/* 8장면 그림(mg8-*): 한 번 도는 길이(--mg-t, figure의 style로 지정)를 8칸으로 나눈다. 쓰는 법은 mg-*와 같다. */
+.mg-svg [class*="mg8-"]{animation-duration:var(--mg-t,20s); animation-iteration-count:infinite; animation-timing-function:ease-in-out; animation-fill-mode:both;}
+.mg-svg .mg8-from1{animation-name:mg8-from1;}
+.mg-svg .mg8-from2{animation-name:mg8-from2;}
+.mg-svg .mg8-from3{animation-name:mg8-from3;}
+.mg-svg .mg8-from4{animation-name:mg8-from4;}
+.mg-svg .mg8-from5{animation-name:mg8-from5;}
+.mg-svg .mg8-from6{animation-name:mg8-from6;}
+.mg-svg .mg8-from7{animation-name:mg8-from7;}
+.mg-svg .mg8-only0{animation-name:mg8-only0;}
+.mg-svg .mg8-only1{animation-name:mg8-only1;}
+.mg-svg .mg8-only2{animation-name:mg8-only2;}
+.mg-svg .mg8-only3{animation-name:mg8-only3;}
+.mg-svg .mg8-only4{animation-name:mg8-only4;}
+.mg-svg .mg8-only5{animation-name:mg8-only5;}
+.mg-svg .mg8-only6{animation-name:mg8-only6;}
+.mg-svg .mg8-only7{animation-name:mg8-only7;}
+@keyframes mg8-from1{0%,12.4%{opacity:0} 14%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg8-from2{0%,24.9%{opacity:0} 26.5%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg8-from3{0%,37.4%{opacity:0} 39%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg8-from4{0%,49.9%{opacity:0} 51.5%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg8-from5{0%,62.4%{opacity:0} 64%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg8-from6{0%,74.9%{opacity:0} 76.5%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg8-from7{0%,87.4%{opacity:0} 89%,94%{opacity:1} 98%,100%{opacity:0}}
+@keyframes mg8-only0{0%,10.8%{opacity:1} 12.5%,96.5%{opacity:0} 100%{opacity:1}}
+@keyframes mg8-only1{0%,12.1%{opacity:0} 14%,23.3%{opacity:1} 25%,100%{opacity:0}}
+@keyframes mg8-only2{0%,24.6%{opacity:0} 26.5%,35.8%{opacity:1} 37.5%,100%{opacity:0}}
+@keyframes mg8-only3{0%,37.1%{opacity:0} 39%,48.3%{opacity:1} 50%,100%{opacity:0}}
+@keyframes mg8-only4{0%,49.6%{opacity:0} 51.5%,60.8%{opacity:1} 62.5%,100%{opacity:0}}
+@keyframes mg8-only5{0%,62.1%{opacity:0} 64%,73.3%{opacity:1} 75%,100%{opacity:0}}
+@keyframes mg8-only6{0%,74.6%{opacity:0} 76.5%,85.8%{opacity:1} 87.5%,100%{opacity:0}}
+@keyframes mg8-only7{0%,87.1%{opacity:0} 89%,94%{opacity:1} 97%,100%{opacity:0}}
+/* 화면 밖이거나 사용자가 멈추면 정지, 처음부터 누르면 다시 시작 */
+.mg-js:not(.mg-run) .mg-svg *,.mg-paused .mg-svg *{animation-play-state:paused !important;}
+.mg-restart .mg-svg *{animation:none !important;}
+@media (prefers-reduced-motion:reduce){
+  .mg-svg *{animation:none !important;}
+  .mg-svg [class*="mg-only"]:not(.mg-only5){display:none;}
+  .mg-svg [class*="mg8-only"]:not(.mg8-only7){display:none;}
+  .mg-svg [class*="mg-slide"]{transform:translate(var(--dx,0),var(--dy,0));}
+  .mg-ctrl{display:none;}
+}
+@media print{
+  .mg-svg *{animation:none !important;}
+  .mg-svg [class*="mg-only"]:not(.mg-only5){display:none;}
+  .mg-svg [class*="mg8-only"]:not(.mg8-only7){display:none;}
+  .mg-svg [class*="mg-slide"]{transform:translate(var(--dx,0),var(--dy,0));}
+  .mg-ctrl{display:none;}
+  .mg{box-shadow:none; break-inside:avoid;}
+}
+/* 좁은 화면: 글자가 너무 작아지지 않도록 그림 폭을 지키고 가로로 밀어 본다 */
+@media (max-width:640px){ .mg{padding:.7rem .5rem .2rem; overflow-x:auto;} .mg-svg{min-width:560px;} .mg-ctrl{position:sticky; left:0;} }
+
+/* 여러 칸에 걸쳐 보이는 요소: mg-winAB = A칸부터 B칸까지 */
+.mg-svg [class*="mg-win"]{animation-duration:var(--mg-t,12s); animation-iteration-count:infinite; animation-timing-function:ease-in-out; animation-fill-mode:both;}
+.mg-svg .mg-win01{animation-name:mg-win01;}
+.mg-svg .mg-win02{animation-name:mg-win02;}
+.mg-svg .mg-win03{animation-name:mg-win03;}
+.mg-svg .mg-win04{animation-name:mg-win04;}
+.mg-svg .mg-win12{animation-name:mg-win12;}
+.mg-svg .mg-win13{animation-name:mg-win13;}
+.mg-svg .mg-win14{animation-name:mg-win14;}
+.mg-svg .mg-win15{animation-name:mg-win15;}
+.mg-svg .mg-win23{animation-name:mg-win23;}
+.mg-svg .mg-win24{animation-name:mg-win24;}
+.mg-svg .mg-win25{animation-name:mg-win25;}
+.mg-svg .mg-win34{animation-name:mg-win34;}
+.mg-svg .mg-win35{animation-name:mg-win35;}
+.mg-svg .mg-win45{animation-name:mg-win45;}
+@keyframes mg-win01{0%,31.3%{opacity:1} 33.3%,96.5%{opacity:0} 100%{opacity:1}}
+@keyframes mg-win02{0%,48%{opacity:1} 50%,96.5%{opacity:0} 100%{opacity:1}}
+@keyframes mg-win03{0%,64.7%{opacity:1} 66.7%,96.5%{opacity:0} 100%{opacity:1}}
+@keyframes mg-win04{0%,81.3%{opacity:1} 83.3%,96.5%{opacity:0} 100%{opacity:1}}
+@keyframes mg-win12{0%,15%{opacity:0} 16.9%,48%{opacity:1} 50%,100%{opacity:0}}
+@keyframes mg-win13{0%,15%{opacity:0} 16.9%,64.7%{opacity:1} 66.7%,100%{opacity:0}}
+@keyframes mg-win14{0%,15%{opacity:0} 16.9%,81.3%{opacity:1} 83.3%,100%{opacity:0}}
+@keyframes mg-win15{0%,15%{opacity:0} 16.9%,94%{opacity:1} 97%,100%{opacity:0}}
+@keyframes mg-win23{0%,31.6%{opacity:0} 33.5%,64.7%{opacity:1} 66.7%,100%{opacity:0}}
+@keyframes mg-win24{0%,31.6%{opacity:0} 33.5%,81.3%{opacity:1} 83.3%,100%{opacity:0}}
+@keyframes mg-win25{0%,31.6%{opacity:0} 33.5%,94%{opacity:1} 97%,100%{opacity:0}}
+@keyframes mg-win34{0%,48.3%{opacity:0} 50.2%,81.3%{opacity:1} 83.3%,100%{opacity:0}}
+@keyframes mg-win35{0%,48.3%{opacity:0} 50.2%,94%{opacity:1} 97%,100%{opacity:0}}
+@keyframes mg-win45{0%,65%{opacity:0} 66.9%,94%{opacity:1} 97%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){ .mg-svg [class*="mg-win"]{display:none;} .mg-svg .mg-win15, .mg-svg .mg-win25, .mg-svg .mg-win35, .mg-svg .mg-win45{display:inline;} }
+@media print{ .mg-svg [class*="mg-win"]{display:none;} .mg-svg .mg-win15, .mg-svg .mg-win25, .mg-svg .mg-win35, .mg-svg .mg-win45{display:inline;} }
+
+/* 본문에 나온 데이터 파일 이름 링크(data/weekly): 사이트 색으로, 눌러서 파일을 열어 볼 수 있음을 밑줄로 알린다 */
+a[href*="data/weekly/"]{color:var(--blue); text-decoration:underline; text-decoration-style:dotted; text-underline-offset:3px; font-weight:600;}
+a[href*="data/weekly/"]:hover,a[href*="data/weekly/"]:focus-visible{color:var(--blue-hover); text-decoration-style:solid;}

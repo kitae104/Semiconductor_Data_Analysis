@@ -166,6 +166,72 @@ False
   <section class="block">
     <h2>if/else — 둘 중 하나 고르기</h2>
     <p>조건이 참이면 <code>if</code> 아래를, 거짓이면 <code>else</code> 아래를 실행한다. <code>36.0 &lt;= body_temp &lt;= 37.5</code>는 "36.0 이상이고 37.5 이하인가?"를 한 번에 묻는다. 범위 안인지 묻는 모양이다.</p>
+
+  <!-- mg:w3-ifelse -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 330" role="img" aria-label="체온 36.5가 조건 36.0 이상 37.5 이하를 통과해 정상 체온 상자로 가고, 38.2는 조건에 걸려 다시 재 보세요 상자로 가는 갈림길 그림">
+      <polygon points="300,70 410,130 300,190 190,130" class="mg-blue"/>
+      <text x="300" y="124" class="mg-m mg-s mg-c mg-tblue">36.0 &lt;= body_temp</text>
+      <text x="300" y="144" class="mg-m mg-s mg-c mg-tblue">&lt;= 37.5 ?</text>
+      <rect x="520" y="50" width="170" height="50" class="mg-green"/>
+      <text x="605" y="80" class="mg-c mg-tgreen mg-b">정상 체온입니다.</text>
+      <rect x="520" y="190" width="170" height="50" class="mg-orange"/>
+      <text x="605" y="220" class="mg-c mg-torange mg-b">다시 재 보세요.</text>
+      <line x1="352" y1="100" x2="507.1" y2="77.3" class="mg-lng"/>
+      <polygon points="516,76 507.7,81.8 506.4,72.9" class="mg-ah"/>
+      <text x="380" y="78" class="mg-s mg-tgreen mg-b">참 (if)</text>
+      <line x1="352" y1="160" x2="507.5" y2="211.2" class="mg-lnr"/>
+      <polygon points="516,214 506,215.5 508.9,206.9" class="mg-ah"/>
+      <text x="376" y="200" class="mg-s mg-tred mg-b">거짓 (else)</text>
+      <line x1="120" y1="130" x2="179" y2="130" class="mg-ln"/>
+      <polygon points="188,130 179,134.5 179,125.5" class="mg-ah"/>
+      <rect x="516" y="46" width="178" height="58" class="mg-hl mg-only2"/>
+      <rect x="516" y="186" width="178" height="58" class="mg-hl mg-only5"/>
+      <text x="30" y="100" class="mg-m mg-s mg-mu">body_temp</text>
+      <g class="mg-slide0" style="--dx:245px;--dy:0px">
+      <g class="mg-slide1" style="--dx:175px;--dy:-55px">
+      <rect x="20" y="112" width="70" height="36" class="mg-ink"/>
+      <text x="55" y="135" class="mg-c mg-tw mg-m mg-b">36.5</text>
+      </g>
+      </g>
+      <g class="mg-from3">
+      <g class="mg-slide3" style="--dx:245px;--dy:0px">
+      <g class="mg-slide4" style="--dx:175px;--dy:85px">
+      <rect x="20" y="112" width="70" height="36" class="mg-ink"/>
+      <text x="55" y="135" class="mg-c mg-tw mg-m mg-b">38.2</text>
+      </g>
+      </g>
+      </g>
+      <rect x="14" y="292" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="312" class="mg-only0 mg-b" style="font-size:14px">① body_temp = 36.5 가 질문 앞에 선다</text>
+      <text x="28" y="312" class="mg-only1 mg-b" style="font-size:14px">② 36.0 ≤ 36.5 ≤ 37.5 → 참(True): 위쪽 길</text>
+      <text x="28" y="312" class="mg-only2 mg-b" style="font-size:14px">③ 실행 결과: 정상 체온입니다.</text>
+      <text x="28" y="312" class="mg-only3 mg-b" style="font-size:14px">④ 이번에는 body_temp = 38.2</text>
+      <text x="28" y="312" class="mg-only4 mg-b" style="font-size:14px">⑤ 37.5를 넘으니 거짓(False): else 쪽 길</text>
+      <text x="28" y="312" class="mg-only5 mg-b" style="font-size:14px">결과: 질문 하나로 두 길 중 한 길만 실행된다</text>
+    </svg>
+    <figcaption class="img-caption"><b>if / else — 질문하고 갈림길 고르기</b> 값이 질문(조건)을 만나 <b>참</b>이면 if 쪽, <b>거짓</b>이면 else 쪽 길로 간다. 두 길 중 한 길만 실행된다. 36.5와 38.2가 차례로 지나간다.</figcaption>
+  </figure>
+  <!-- /mg:w3-ifelse -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 쉬운 예제: 체온 판정 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>body_temp = 36.5
@@ -185,6 +251,85 @@ else:
   <section class="block">
     <h2>for — 하나씩 꺼내 개수 세기</h2>
     <p><code>for score in scores:</code>는 "리스트 <code>scores</code>에서 값을 하나씩 꺼내 <code>score</code>라는 이름으로 부르며, 아래 줄을 되풀이하라"는 뜻이다.</p>
+
+  <!-- mg:w3-for -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 340" role="img" aria-label="scores 리스트의 72, 85, 90, 64, 88을 화살표가 하나씩 가리키며 80점 이상이면 pass_count가 늘어나 최종 3이 되는 그림">
+      <rect x="40" y="44" width="90" height="50" class="mg-box"/>
+      <text x="85" y="76" class="mg-m mg-b mg-c mg-l">72</text>
+      <text x="85" y="36" class="mg-m mg-s mg-c mg-mu">scores[0]</text>
+      <polygon points="85,104 76,120 94,120" class="mg-ahb mg-only0"/>
+      <rect x="144" y="44" width="90" height="50" class="mg-box"/>
+      <text x="189" y="76" class="mg-m mg-b mg-c mg-l">85</text>
+      <text x="189" y="36" class="mg-m mg-s mg-c mg-mu">scores[1]</text>
+      <rect x="144" y="44" width="90" height="50" class="mg-green mg-from1"/>
+      <text x="189" y="76" class="mg-m mg-b mg-c mg-l mg-tgreen mg-from1">85</text>
+      <polygon points="189,104 180,120 198,120" class="mg-ahb mg-only1"/>
+      <rect x="248" y="44" width="90" height="50" class="mg-box"/>
+      <text x="293" y="76" class="mg-m mg-b mg-c mg-l">90</text>
+      <text x="293" y="36" class="mg-m mg-s mg-c mg-mu">scores[2]</text>
+      <rect x="248" y="44" width="90" height="50" class="mg-green mg-from2"/>
+      <text x="293" y="76" class="mg-m mg-b mg-c mg-l mg-tgreen mg-from2">90</text>
+      <polygon points="293,104 284,120 302,120" class="mg-ahb mg-only2"/>
+      <rect x="352" y="44" width="90" height="50" class="mg-box"/>
+      <text x="397" y="76" class="mg-m mg-b mg-c mg-l">64</text>
+      <text x="397" y="36" class="mg-m mg-s mg-c mg-mu">scores[3]</text>
+      <polygon points="397,104 388,120 406,120" class="mg-ahb mg-only3"/>
+      <rect x="456" y="44" width="90" height="50" class="mg-box"/>
+      <text x="501" y="76" class="mg-m mg-b mg-c mg-l">88</text>
+      <text x="501" y="36" class="mg-m mg-s mg-c mg-mu">scores[4]</text>
+      <rect x="456" y="44" width="90" height="50" class="mg-green mg-from4"/>
+      <text x="501" y="76" class="mg-m mg-b mg-c mg-l mg-tgreen mg-from4">88</text>
+      <polygon points="501,104 492,120 510,120" class="mg-ahb mg-only4"/>
+      <text x="40" y="170" class="mg-m mg-b mg-only0">score = 72</text>
+      <text x="40" y="200" class="mg-m mg-tred mg-only0">72 &gt;= 80 ?  →  아니오 (False)</text>
+      <text x="40" y="170" class="mg-m mg-b mg-only1">score = 85</text>
+      <text x="40" y="200" class="mg-m mg-tgreen mg-only1">85 &gt;= 80 ?  →  예 (True)</text>
+      <text x="40" y="170" class="mg-m mg-b mg-only2">score = 90</text>
+      <text x="40" y="200" class="mg-m mg-tgreen mg-only2">90 &gt;= 80 ?  →  예 (True)</text>
+      <text x="40" y="170" class="mg-m mg-b mg-only3">score = 64</text>
+      <text x="40" y="200" class="mg-m mg-tred mg-only3">64 &gt;= 80 ?  →  아니오 (False)</text>
+      <text x="40" y="170" class="mg-m mg-b mg-only4">score = 88</text>
+      <text x="40" y="200" class="mg-m mg-tgreen mg-only4">88 &gt;= 80 ?  →  예 (True)</text>
+      <text x="40" y="170" class="mg-b mg-only5">다 꺼냈다 — for 끝</text>
+      <rect x="440" y="150" width="240" height="100" class="mg-orange"/>
+      <text x="560" y="176" class="mg-m mg-b mg-c mg-torange">pass_count</text>
+      <text x="560" y="232" class="mg-m mg-b mg-c mg-torange mg-only0" style="font-size:40px">0</text>
+      <text x="560" y="232" class="mg-m mg-b mg-c mg-torange mg-only1" style="font-size:40px">1</text>
+      <text x="560" y="232" class="mg-m mg-b mg-c mg-torange mg-only2" style="font-size:40px">2</text>
+      <text x="560" y="232" class="mg-m mg-b mg-c mg-torange mg-only3" style="font-size:40px">2</text>
+      <text x="560" y="232" class="mg-m mg-b mg-c mg-torange mg-only4" style="font-size:40px">3</text>
+      <text x="560" y="232" class="mg-m mg-b mg-c mg-torange mg-only5" style="font-size:40px">3</text>
+      <rect x="14" y="302" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="322" class="mg-only0 mg-b" style="font-size:14px">① scores에서 하나씩 꺼낸다: 72 → 80 이상? 아니오</text>
+      <text x="28" y="322" class="mg-only1 mg-b" style="font-size:14px">② 85 → 80 이상? 예 → pass_count 1</text>
+      <text x="28" y="322" class="mg-only2 mg-b" style="font-size:14px">③ 90 → 예 → pass_count 2</text>
+      <text x="28" y="322" class="mg-only3 mg-b" style="font-size:14px">④ 64 → 아니오 → pass_count 그대로 2</text>
+      <text x="28" y="322" class="mg-only4 mg-b" style="font-size:14px">⑤ 88 → 예 → pass_count 3</text>
+      <text x="28" y="322" class="mg-only5 mg-b" style="font-size:14px">결과: for가 끝나면 pass_count = 3</text>
+    </svg>
+    <figcaption class="img-caption"><b>for — 하나씩 꺼내 개수 세기</b> <code>for score in scores:</code>는 리스트에서 값을 하나씩 꺼내 <code>score</code>라 부르고, 들여쓴 줄을 매번 실행한다. 80점 이상일 때만 <code>pass_count</code>가 1 늘어난다.</figcaption>
+  </figure>
+  <!-- /mg:w3-for -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <svg class="loop-svg" viewBox="0 0 520 110" role="img"
          aria-label="for 반복문이 리스트의 다섯 칸을 왼쪽부터 순서대로 하나씩 방문하는 모습">
       <rect class="cell" x="0" y="20" width="92" height="60" rx="10"/>
@@ -251,6 +396,77 @@ for score in scores:
   <section class="block">
     <h2>함수 — 판정 규칙에 이름 붙이기</h2>
     <p><code>def</code>로 규칙에 이름을 붙이고, <code>return</code>으로 결과를 돌려준다. 정의만 하면 아무것도 실행되지 않는다. 이름을 불러야 실행된다.</p>
+
+  <!-- mg:w3-function -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 320" role="img" aria-label="judge_score 상자에 85를 넣으면 합격이, 64를 넣으면 불합격이 나오는 입력과 출력 그림">
+      <rect x="250" y="40" width="220" height="200" class="mg-blue"/>
+      <text x="360" y="66" class="mg-m mg-b mg-c mg-tblue">judge_score(point)</text>
+      <text x="360" y="108" class="mg-s mg-c">point &gt;= 80 이면</text>
+      <text x="360" y="128" class="mg-m mg-s mg-c mg-tgreen">return &quot;합격&quot;</text>
+      <text x="360" y="162" class="mg-s mg-c">아니면</text>
+      <text x="360" y="182" class="mg-m mg-s mg-c mg-tred">return &quot;불합격&quot;</text>
+      <text x="150" y="100" class="mg-s mg-c mg-mu">입력</text>
+      <text x="580" y="100" class="mg-s mg-c mg-mu">출력</text>
+      <line x1="130" y1="118" x2="239" y2="118" class="mg-lnm"/>
+      <polygon points="248,118 239,122.5 239,113.5" class="mg-ah"/>
+      <line x1="472" y1="118" x2="581" y2="118" class="mg-lnm"/>
+      <polygon points="590,118 581,122.5 581,113.5" class="mg-ah"/>
+      <line x1="130" y1="198" x2="239" y2="198" class="mg-lnm"/>
+      <polygon points="248,198 239,202.5 239,193.5" class="mg-ah"/>
+      <line x1="472" y1="198" x2="581" y2="198" class="mg-lnm"/>
+      <polygon points="590,198 581,202.5 581,193.5" class="mg-ah"/>
+      <rect x="246" y="36" width="228" height="208" class="mg-hl mg-only1"/>
+      <rect x="246" y="36" width="228" height="208" class="mg-hl mg-only4"/>
+      <g class="mg-from2">
+      <rect x="594" y="100" width="100" height="36" class="mg-green"/>
+      <text x="644" y="123" class="mg-c mg-tgreen mg-b">합격</text>
+      </g>
+      <g class="mg-from4">
+      <rect x="594" y="180" width="100" height="36" class="mg-red"/>
+      <text x="644" y="203" class="mg-c mg-tred mg-b">불합격</text>
+      </g>
+      <g class="mg-slide0" style="--dx:90px;--dy:0px">
+      <rect x="20" y="100" width="60" height="36" class="mg-ink"/>
+      <text x="50" y="123" class="mg-c mg-tw mg-m mg-b">85</text>
+      </g>
+      <g class="mg-from3">
+      <g class="mg-slide3" style="--dx:90px;--dy:0px">
+      <rect x="20" y="180" width="60" height="36" class="mg-ink"/>
+      <text x="50" y="203" class="mg-c mg-tw mg-m mg-b">64</text>
+      </g>
+      </g>
+      <text x="40" y="270" class="mg-m mg-s mg-mu">judge_score(85)  →  &quot;합격&quot;        judge_score(64)  →  &quot;불합격&quot;</text>
+      <rect x="14" y="282" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="302" class="mg-only0 mg-b" style="font-size:14px">① 판정 규칙에 judge_score라는 이름을 붙여 둔다</text>
+      <text x="28" y="302" class="mg-only1 mg-b" style="font-size:14px">② 85를 넣으면 규칙이 실행된다</text>
+      <text x="28" y="302" class="mg-only2 mg-b" style="font-size:14px">③ 결과로 &#x27;합격&#x27;이 돌아온다 (return)</text>
+      <text x="28" y="302" class="mg-only3 mg-b" style="font-size:14px">④ 같은 이름에 64를 넣는다</text>
+      <text x="28" y="302" class="mg-only4 mg-b" style="font-size:14px">⑤ 이번에는 &#x27;불합격&#x27;이 돌아온다</text>
+      <text x="28" y="302" class="mg-only5 mg-b" style="font-size:14px">결과: 이름만 부르면 같은 규칙을 몇 번이고 쓴다</text>
+    </svg>
+    <figcaption class="img-caption"><b>함수 — 규칙에 이름을 붙여 다시 쓰기</b> <code>def</code>로 규칙(점수가 80 이상이면 합격)에 이름을 붙여 두면, 값만 바꿔 넣어 같은 규칙을 몇 번이고 쓸 수 있다. 상자 안에서 규칙이 실행되고 <code>return</code>이 결과를 내보낸다.</figcaption>
+  </figure>
+  <!-- /mg:w3-function -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 쉬운 예제: 합격 판정 함수 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>def judge_score(point):
@@ -307,7 +523,7 @@ print(f"불합격 판정을 받은 학생: {fail_count}명")</code></pre>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>오늘 반도체 데이터는 설비 기록표 <code>week03_python_basics_2.csv</code>(30행, 교육용 가상 데이터)다. 공정 지도 ②~⑤와 세정에서 남긴 기록이다. 오늘 파이썬은 표 파일을 직접 읽지 않는다(4차시에 배운다). 그래서 노트북에는 표에서 옮겨 적은 값이 딕셔너리의 리스트로 들어 있다. (노트북 6단계)</p>
+    <p>오늘 반도체 데이터는 설비 기록표 <code><a href="../../data/weekly/week03/week03_python_basics_2.csv" target="_blank" rel="noopener">week03_python_basics_2.csv</a></code>(30행, 교육용 가상 데이터)다. 공정 지도 ②~⑤와 세정에서 남긴 기록이다. 오늘 파이썬은 표 파일을 직접 읽지 않는다(4차시에 배운다). 그래서 노트북에는 표에서 옮겨 적은 값이 딕셔너리의 리스트로 들어 있다. (노트북 6단계)</p>
     <ul class="pt-list">
       <li>열: <code>로트번호</code>, <code>공정명</code>, <code>설비번호</code>, <code>온도_C</code>, <code>합격여부</code>. <code>_C</code> = 섭씨 도. 노트북 딕셔너리에는 오늘 쓰는 네 열(<code>공정명</code> 제외)만 옮겼다.</li>
       <li><code>합격여부</code>는 그 공정을 마친 뒤 검사에서 나온 <b>실제 결과</b>로, 기록(행)마다 따로 매긴 값이다. <code>1</code> = 합격, <code>-1</code> = 불합격.</li>
@@ -443,7 +659,7 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
       </div>
     </div>
 
-    <div class="step"><div class="num">1</div><div class="content">Orange를 켜고 맨 위 메뉴 File &gt; Open으로 <code>week03_1_air_start.ows</code>를 연다. File 위젯을 더블클릭해 <code>week03_orange_air_quality.tab</code>이 들어왔는지 확인하고 창을 닫는다.</div></div>
+    <div class="step"><div class="num">1</div><div class="content">Orange를 켜고 맨 위 메뉴 File &gt; Open으로 <code>week03_1_air_start.ows</code>를 연다. File 위젯을 더블클릭해 <code><a href="../../data/weekly/week03/orange/week03_orange_air_quality.tab" target="_blank" rel="noopener">week03_orange_air_quality.tab</a></code>이 들어왔는지 확인하고 창을 닫는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week03_01_air_start_canvas.png"
          alt="시작 파일을 연 Orange 화면. 가운데 캔버스에 File 위젯 하나와 ①~④ 안내 메모가 있다"
          data-shot="week03_1_air_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 ①~④ 안내 메모가 보이게">
@@ -481,7 +697,7 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
 
     <h3>반도체 데이터 — 설비 기록 30건</h3>
     <p>PART 1에서 딕셔너리의 리스트로 옮겨 적은 그 표다. 공정 지도 ②~⑤와 세정에서 남긴 기록이고, 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 오늘은 PART 1 확인 2처럼 설비 EQ-04의 기록에서 연습용 기준 밖 기록을 고른다.</p>
-    <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>week03_2_records_start.ows</code>를 연다. File을 더블클릭해 <code>week03_python_basics_2.tab</code>이 들어왔는지 확인한다.</div></div>
+    <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>week03_2_records_start.ows</code>를 연다. File을 더블클릭해 <code><a href="../../data/weekly/week03/orange/week03_python_basics_2.tab" target="_blank" rel="noopener">week03_python_basics_2.tab</a></code>이 들어왔는지 확인한다.</div></div>
     <div class="step"><div class="num">2</div><div class="content">File에 <code>Select Rows</code>를 잇고 더블클릭한다. 이미 있는 조건 한 줄을 <code>설비번호</code> · <code>is</code> · <code>EQ-04</code>로 바꾼다. Select Rows에 <code>Data Table</code>을 이어 몇 행인지 센다.</div></div>
     <div class="step"><div class="num">3</div><div class="content">Select Rows로 돌아가 Add Condition을 누르고 <code>온도_C</code> · <code>is outside</code> · 왼쪽 칸 <code>295</code>, 오른쪽 칸 <code>305</code>로 정한다. Data Table의 행 수와 <code>합격여부</code> 열을 본다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week03_06_records_select_rows_eq04.png"
@@ -564,8 +780,8 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
       <table>
         <thead><tr><th>파일</th><th>크기</th><th>쓰는 곳</th></tr></thead>
         <tbody>
-          <tr><td><code>week03_python_basics_2.csv</code></td><td>30행 5열</td><td>설비 기록표(공정 지도 ②~⑤와 세정). 파이썬 확인 1·2와 실습(값을 옮겨 적은 리스트), Orange 반도체 데이터(<code>orange/</code> 폴더의 같은 이름 <code>.tab</code>)</td></tr>
-          <tr><td><code>week03_orange_air_quality.csv</code></td><td>30행 6열</td><td>Orange 워밍업 — 우리 동네 대기환경</td></tr>
+          <tr><td><code><a href="../../data/weekly/week03/week03_python_basics_2.csv" target="_blank" rel="noopener">week03_python_basics_2.csv</a></code></td><td>30행 5열</td><td>설비 기록표(공정 지도 ②~⑤와 세정). 파이썬 확인 1·2와 실습(값을 옮겨 적은 리스트), Orange 반도체 데이터(<code>orange/</code> 폴더의 같은 이름 <code>.tab</code>)</td></tr>
+          <tr><td><code><a href="../../data/weekly/week03/week03_orange_air_quality.csv" target="_blank" rel="noopener">week03_orange_air_quality.csv</a></code></td><td>30행 6열</td><td>Orange 워밍업 — 우리 동네 대기환경</td></tr>
         </tbody>
       </table>
     </div>

@@ -119,6 +119,84 @@
       <li><b>리스트</b>: 대괄호 <code>[ ]</code> 안에 값을 쉼표로 늘어놓은 묶음. 칸마다 번호가 붙은 약통과 같다.</li>
       <li><b>인덱스</b>: 칸 번호. <code>리스트[번호]</code>로 값 하나를 꺼낸다. 번호는 <b>0부터</b> 센다. <code>-1</code>은 마지막 칸이다.</li>
     </ul>
+
+  <!-- mg:w2-list -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 270" role="img" aria-label="7칸짜리 리스트에서 0번, 2번, -1번 칸의 값을 꺼내고 len으로 칸 수 7을 세는 그림">
+      <text x="38" y="32" class="mg-m mg-b mg-tblue">week_temps = [ … ]</text>
+      <text x="80" y="66" class="mg-s mg-c mg-mu">월</text>
+      <rect x="38" y="74" width="84" height="50" class="mg-blue"/>
+      <text x="80" y="106" class="mg-m mg-b mg-c mg-tblue">21.5</text>
+      <text x="80" y="146" class="mg-m mg-b mg-c mg-tblue">0</text>
+      <text x="80" y="164" class="mg-m mg-s mg-c mg-mu">-7</text>
+      <text x="172" y="66" class="mg-s mg-c mg-mu">화</text>
+      <rect x="130" y="74" width="84" height="50" class="mg-blue"/>
+      <text x="172" y="106" class="mg-m mg-b mg-c mg-tblue">23.0</text>
+      <text x="172" y="146" class="mg-m mg-b mg-c mg-tblue">1</text>
+      <text x="172" y="164" class="mg-m mg-s mg-c mg-mu">-6</text>
+      <text x="264" y="66" class="mg-s mg-c mg-mu">수</text>
+      <rect x="222" y="74" width="84" height="50" class="mg-blue"/>
+      <text x="264" y="106" class="mg-m mg-b mg-c mg-tblue">30.5</text>
+      <text x="264" y="146" class="mg-m mg-b mg-c mg-tblue">2</text>
+      <text x="264" y="164" class="mg-m mg-s mg-c mg-mu">-5</text>
+      <text x="356" y="66" class="mg-s mg-c mg-mu">목</text>
+      <rect x="314" y="74" width="84" height="50" class="mg-blue"/>
+      <text x="356" y="106" class="mg-m mg-b mg-c mg-tblue">24.0</text>
+      <text x="356" y="146" class="mg-m mg-b mg-c mg-tblue">3</text>
+      <text x="356" y="164" class="mg-m mg-s mg-c mg-mu">-4</text>
+      <text x="448" y="66" class="mg-s mg-c mg-mu">금</text>
+      <rect x="406" y="74" width="84" height="50" class="mg-blue"/>
+      <text x="448" y="106" class="mg-m mg-b mg-c mg-tblue">22.5</text>
+      <text x="448" y="146" class="mg-m mg-b mg-c mg-tblue">4</text>
+      <text x="448" y="164" class="mg-m mg-s mg-c mg-mu">-3</text>
+      <text x="540" y="66" class="mg-s mg-c mg-mu">토</text>
+      <rect x="498" y="74" width="84" height="50" class="mg-blue"/>
+      <text x="540" y="106" class="mg-m mg-b mg-c mg-tblue">25.0</text>
+      <text x="540" y="146" class="mg-m mg-b mg-c mg-tblue">5</text>
+      <text x="540" y="164" class="mg-m mg-s mg-c mg-mu">-2</text>
+      <text x="632" y="66" class="mg-s mg-c mg-mu">일</text>
+      <rect x="590" y="74" width="84" height="50" class="mg-blue"/>
+      <text x="632" y="106" class="mg-m mg-b mg-c mg-tblue">23.5</text>
+      <text x="632" y="146" class="mg-m mg-b mg-c mg-tblue">6</text>
+      <text x="632" y="164" class="mg-m mg-s mg-c mg-mu">-1</text>
+      <text x="704" y="146" class="mg-s mg-e mg-mu">번호</text>
+      <text x="704" y="164" class="mg-s mg-e mg-mu">뒤에서</text>
+      <rect x="34" y="70" width="92" height="58" class="mg-hl mg-only1"/>
+      <rect x="218" y="70" width="92" height="58" class="mg-hl mg-only2"/>
+      <rect x="586" y="70" width="92" height="58" class="mg-hl mg-only3"/>
+      <text x="40" y="208" class="mg-m mg-only1">print(week_temps[0])   →   21.5</text>
+      <text x="40" y="208" class="mg-m mg-only2">print(week_temps[2])   →   30.5</text>
+      <text x="40" y="208" class="mg-m mg-only3">print(week_temps[-1])   →   23.5</text>
+      <text x="40" y="208" class="mg-m mg-only4">print(len(week_temps))   →   7</text>
+      <line x1="38" y1="178" x2="674" y2="178" class="mg-lnb mg-only4"/>
+      <rect x="14" y="232" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="252" class="mg-only0 mg-b" style="font-size:14px">① 요일별 낮 기온 7개가 번호 붙은 칸에 들어 있다</text>
+      <text x="28" y="252" class="mg-only1 mg-b" style="font-size:14px">② [0] → 첫 번째 칸(월요일) 21.5 · 번호는 0부터</text>
+      <text x="28" y="252" class="mg-only2 mg-b" style="font-size:14px">③ [2] → 세 번째 칸(수요일) 30.5</text>
+      <text x="28" y="252" class="mg-only3 mg-b" style="font-size:14px">④ [-1] → 맨 뒤 칸(일요일) 23.5</text>
+      <text x="28" y="252" class="mg-only4 mg-b" style="font-size:14px">⑤ len(week_temps)는 칸의 개수 7</text>
+      <text x="28" y="252" class="mg-only5 mg-b" style="font-size:14px">결과: 번호(인덱스)로 칸을 찾는다. 번호는 0부터 센다</text>
+    </svg>
+    <figcaption class="img-caption"><b>리스트 — 번호 붙은 칸</b> <code>week_temps</code>는 칸 7개짜리 약통이다. 칸 번호는 <b>0부터</b> 시작하고, <code>-1</code>은 맨 뒤 칸이다. 오렌지색 테두리가 지금 꺼내는 칸이다.</figcaption>
+  </figure>
+  <!-- /mg:w2-list -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 쉬운 예제: 일주일 기온 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>week_temps = [21.5, 23.0, 30.5, 24.0, 22.5, 25.0, 23.5]   # 월~일 낮 기온
@@ -160,7 +238,7 @@ print(week_temps[-1])   # 마지막 값(일요일)</code></pre>
     </svg>
     <p class="img-caption">첫 칸(월요일)의 번호는 1이 아니라 <b>0</b>이다. 칸이 7개면 번호는 0~6번이다. 칸 위의 음수는 뒤에서부터 센 번호로, 마지막 칸이 <b>[-1]</b>이다.</p>
     <div class="callout concept">
-      <b class="tag">구경만 — 슬라이싱</b>
+      <b class="tag">확인 — 슬라이싱</b>
       <code>week_temps[0:5]</code>처럼 쓰면 0번 칸부터 4번 칸까지(5번 칸은 빠진다) 여러 칸을 한 번에 꺼낸다. 결과는 <code>[21.5, 23.0, 30.5, 24.0, 22.5]</code>(평일 기온)다. 오늘 실습에는 쓰지 않는다.
     </div>
     <div class="callout concept">
@@ -176,6 +254,60 @@ print(week_temps[-1])   # 마지막 값(일요일)</code></pre>
   <section class="block">
     <h2>개수 세고 값 더하기 — len(), append()</h2>
     <p><code>print()</code>, <code>type()</code>처럼 이름 뒤에 괄호를 붙여 일을 시키는 것을 <b>함수</b>라고 한다. 괄호 안에 일감(값이나 리스트)을 넣는다. 노트북의 "함수 이름을 채우세요"는 괄호 앞 이름을 쓰라는 뜻이다.</p>
+
+  <!-- mg:w2-append -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 270" role="img" aria-label="장바구니 리스트에 우유, 빵, 계란이 들어 있고 사과가 위에서 내려와 네 번째 칸에 붙으면 len이 3에서 4로 바뀌는 그림">
+      <text x="60" y="30" class="mg-m mg-b mg-tblue">cart = [&quot;우유&quot;, &quot;빵&quot;, &quot;계란&quot;]</text>
+      <rect x="60" y="100" width="130" height="54" class="mg-blue"/>
+      <text x="125" y="133" class="mg-b mg-c mg-tblue">우유</text>
+      <text x="125" y="176" class="mg-m mg-c mg-b mg-tblue">0</text>
+      <rect x="210" y="100" width="130" height="54" class="mg-blue"/>
+      <text x="275" y="133" class="mg-b mg-c mg-tblue">빵</text>
+      <text x="275" y="176" class="mg-m mg-c mg-b mg-tblue">1</text>
+      <rect x="360" y="100" width="130" height="54" class="mg-blue"/>
+      <text x="425" y="133" class="mg-b mg-c mg-tblue">계란</text>
+      <text x="425" y="176" class="mg-m mg-c mg-b mg-tblue">2</text>
+      <rect x="510" y="100" width="130" height="54" class="mg-gray mg-dsh"/>
+      <text x="575" y="133" class="mg-s mg-c mg-mu mg-win02">(빈자리)</text>
+      <text x="575" y="176" class="mg-m mg-c mg-b mg-tblue mg-from3">3</text>
+      <text x="300" y="56" class="mg-m mg-b mg-from1">cart.append(&quot;사과&quot;)</text>
+      <g class="mg-from1">
+      <g class="mg-slide2" style="--dx:0px;--dy:74px">
+      <rect x="510" y="26" width="130" height="54" class="mg-orange"/>
+      <text x="575" y="58" class="mg-c mg-torange mg-b">사과</text>
+      </g>
+      </g>
+      <text x="60" y="218" class="mg-m mg-b mg-win01">len(cart)  →  3</text>
+      <text x="60" y="218" class="mg-m mg-b mg-torange mg-win45">len(cart)  →  4</text>
+      <rect x="14" y="232" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="252" class="mg-only0 mg-b" style="font-size:14px">① cart에는 3칸이 있다 → len(cart)는 3</text>
+      <text x="28" y="252" class="mg-only1 mg-b" style="font-size:14px">② cart.append(&quot;사과&quot;) — 새 값을 보낸다</text>
+      <text x="28" y="252" class="mg-only2 mg-b" style="font-size:14px">③ 값이 맨 뒤 칸에 들어간다</text>
+      <text x="28" y="252" class="mg-only3 mg-b" style="font-size:14px">④ 칸이 하나 늘어 4칸이 된다</text>
+      <text x="28" y="252" class="mg-only4 mg-b" style="font-size:14px">⑤ 다시 세면 len(cart)는 4</text>
+      <text x="28" y="252" class="mg-only5 mg-b" style="font-size:14px">결과: append()는 뒤에 붙이고 len()은 칸 수를 센다</text>
+    </svg>
+    <figcaption class="img-caption"><b>append()와 len() — 뒤에 붙이고 칸 수 세기</b> <code>append()</code>는 값을 맨 뒤 칸에 붙인다. 점선 칸이 새로 생길 자리이고, <code>len()</code>은 지금 칸이 몇 개인지 센다.</figcaption>
+  </figure>
+  <!-- /mg:w2-append -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <ul class="pt-list">
       <li><code>len(리스트)</code>: 리스트에 값이 몇 개 있는지 센다. len은 length(길이)의 줄임말이다.</li>
       <li><code>리스트.append(값)</code>: 리스트 맨 뒤에 값을 하나 더한다. 장바구니에 물건 하나를 더 담는 것과 같다.</li>
@@ -236,6 +368,93 @@ print(f"이번 주 평균 기온은 {average}도입니다.")</code></pre>
       <li>리스트 <code>["지민", 15, 3]</code>은 "2번 칸이 반이었지?"를 외워야 한다. <b>딕셔너리</b>는 칸 번호 대신 <b>이름표(키)</b>로 값을 찾는다. 이름표 붙은 사물함과 같다.</li>
       <li>중괄호 <code>{ }</code> 안에 <code>"이름표": 값</code>을 쌍으로 적는다. 꺼낼 때는 <code>딕셔너리["이름표"]</code>처럼 대괄호에 키를 쓴다.</li>
     </ul>
+
+  <!-- mg:w2-dict -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 330" role="img" aria-label="student 사물함의 이름표 이름, 나이, 반에 값 지민, 15, 3이 들어 있고 코드가 이름표로 값을 꺼내며 없는 이름표는 KeyError가 나는 그림">
+      <text x="250" y="40" class="mg-m mg-b mg-tblue">student = {</text>
+      <rect x="250" y="56" width="90" height="40" class="mg-blue"/>
+      <text x="295" y="81" class="mg-b mg-c mg-tblue">이름</text>
+      <rect x="340" y="56" width="130" height="40" class="mg-box"/>
+      <text x="405" y="81" class="mg-m mg-c">&quot;지민&quot;</text>
+      <text x="20" y="82" class="mg-m mg-b mg-only1">student[&quot;이름&quot;]</text>
+      <g class="mg-only1">
+      <line x1="190" y1="76" x2="237" y2="76" class="mg-lnb"/>
+      <polygon points="246,76 237,80.5 237,71.5" class="mg-ahb"/>
+      </g>
+      <rect x="246" y="52" width="228" height="48" class="mg-hl mg-only1"/>
+      <g class="mg-only1">
+      <line x1="474" y1="76" x2="511" y2="76" class="mg-lng"/>
+      <polygon points="520,76 511,80.5 511,71.5" class="mg-ah"/>
+      </g>
+      <text x="530" y="83" class="mg-m mg-b mg-tgreen mg-only1">지민</text>
+      <rect x="250" y="106" width="90" height="40" class="mg-blue"/>
+      <text x="295" y="131" class="mg-b mg-c mg-tblue">나이</text>
+      <rect x="340" y="106" width="130" height="40" class="mg-box"/>
+      <text x="405" y="131" class="mg-m mg-c">15</text>
+      <text x="20" y="132" class="mg-m mg-b mg-only2">student[&quot;나이&quot;]</text>
+      <g class="mg-only2">
+      <line x1="190" y1="126" x2="237" y2="126" class="mg-lnb"/>
+      <polygon points="246,126 237,130.5 237,121.5" class="mg-ahb"/>
+      </g>
+      <rect x="246" y="102" width="228" height="48" class="mg-hl mg-only2"/>
+      <g class="mg-only2">
+      <line x1="474" y1="126" x2="511" y2="126" class="mg-lng"/>
+      <polygon points="520,126 511,130.5 511,121.5" class="mg-ah"/>
+      </g>
+      <text x="530" y="133" class="mg-m mg-b mg-tgreen mg-only2">15</text>
+      <rect x="250" y="156" width="90" height="40" class="mg-blue"/>
+      <text x="295" y="181" class="mg-b mg-c mg-tblue">반</text>
+      <rect x="340" y="156" width="130" height="40" class="mg-box"/>
+      <text x="405" y="181" class="mg-m mg-c">3</text>
+      <text x="20" y="182" class="mg-m mg-b mg-only3">student[&quot;반&quot;]</text>
+      <g class="mg-only3">
+      <line x1="190" y1="176" x2="237" y2="176" class="mg-lnb"/>
+      <polygon points="246,176 237,180.5 237,171.5" class="mg-ahb"/>
+      </g>
+      <rect x="246" y="152" width="228" height="48" class="mg-hl mg-only3"/>
+      <g class="mg-only3">
+      <line x1="474" y1="176" x2="511" y2="176" class="mg-lng"/>
+      <polygon points="520,176 511,180.5 511,171.5" class="mg-ah"/>
+      </g>
+      <text x="530" y="183" class="mg-m mg-b mg-tgreen mg-only3">3</text>
+      <rect x="250" y="206" width="90" height="40" class="mg-gray mg-dsh mg-win45"/>
+      <text x="295" y="231" class="mg-s mg-c mg-mu mg-win45">(없음)</text>
+      <text x="20" y="232" class="mg-m mg-b mg-win45">student[&quot;키&quot;]</text>
+      <g class="mg-win45">
+      <line x1="190" y1="226" x2="237" y2="226" class="mg-lnb"/>
+      <polygon points="246,226 237,230.5 237,221.5" class="mg-ahb"/>
+      </g>
+      <text x="300" y="233" class="mg-m mg-b mg-tred mg-win45">KeyError</text>
+      <text x="250" y="268" class="mg-m mg-b mg-tblue">}</text>
+      <rect x="14" y="292" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="312" class="mg-only0 mg-b" style="font-size:14px">① student는 이름표(키)와 값 쌍으로 된 사물함</text>
+      <text x="28" y="312" class="mg-only1 mg-b" style="font-size:14px">② student[&quot;이름&quot;] → 이름표 &#x27;이름&#x27;을 찾아 값 &#x27;지민&#x27;</text>
+      <text x="28" y="312" class="mg-only2 mg-b" style="font-size:14px">③ student[&quot;나이&quot;] → 15</text>
+      <text x="28" y="312" class="mg-only3 mg-b" style="font-size:14px">④ student[&quot;반&quot;] → 3</text>
+      <text x="28" y="312" class="mg-only4 mg-b" style="font-size:14px">⑤ 없는 이름표 student[&quot;키&quot;] → KeyError</text>
+      <text x="28" y="312" class="mg-only5 mg-b" style="font-size:14px">결과: 번호가 아니라 이름표(키)로 값을 찾는다</text>
+    </svg>
+    <figcaption class="img-caption"><b>딕셔너리 — 이름표로 찾는 사물함</b> 왼쪽 코드가 이름표를 부르면 같은 줄의 칸에서 값이 나온다. 이름표 목록에 없는 이름표(<code>"키"</code>)를 부르면 <code>KeyError</code>가 난다.</figcaption>
+  </figure>
+  <!-- /mg:w2-dict -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 쉬운 예제: 학생 한 명의 정보 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>student = {
@@ -286,10 +505,91 @@ print(student["반"])
   </section>
 
   <section class="block">
-    <h2>구경만 — 딕셔너리의 리스트</h2>
+    <h2>확인 — 딕셔너리의 리스트</h2>
     <p>딕셔너리 여러 개를 리스트에 담으면 "표"가 된다. 딕셔너리 하나가 표의 한 행이고, 키가 열 이름이다. 4차시에 배우는 표(Pandas)가 이 모양을 한 번에 다룬다. 오늘은 실행해서 모양만 본다.</p>
+
+  <!-- mg:w2-listdict -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 290" role="img" aria-label="friends 리스트의 0, 1, 2번 카드 중 1번 카드를 고르고 그 카드의 이름 값 서준을 꺼내는 그림">
+      <text x="130" y="36" class="mg-m mg-c mg-b mg-tblue">friends[0]</text>
+      <rect x="40" y="46" width="180" height="100" class="mg-box"/>
+      <rect x="46" y="54" width="56" height="26" class="mg-blue"/>
+      <text x="74" y="72" class="mg-s mg-c mg-tblue mg-b">이름</text>
+      <rect x="102" y="54" width="106" height="26" class="mg-gray"/>
+      <text x="155" y="72" class="mg-s mg-c">지민</text>
+      <rect x="46" y="84" width="56" height="26" class="mg-blue"/>
+      <text x="74" y="102" class="mg-s mg-c mg-tblue mg-b">나이</text>
+      <rect x="102" y="84" width="106" height="26" class="mg-gray"/>
+      <text x="155" y="102" class="mg-s mg-c">15</text>
+      <rect x="46" y="114" width="56" height="26" class="mg-blue"/>
+      <text x="74" y="132" class="mg-s mg-c mg-tblue mg-b">동네</text>
+      <rect x="102" y="114" width="106" height="26" class="mg-gray"/>
+      <text x="155" y="132" class="mg-s mg-c">서울</text>
+      <text x="350" y="36" class="mg-m mg-c mg-b mg-tblue">friends[1]</text>
+      <rect x="260" y="46" width="180" height="100" class="mg-box"/>
+      <rect x="266" y="54" width="56" height="26" class="mg-blue"/>
+      <text x="294" y="72" class="mg-s mg-c mg-tblue mg-b">이름</text>
+      <rect x="322" y="54" width="106" height="26" class="mg-gray"/>
+      <text x="375" y="72" class="mg-s mg-c">서준</text>
+      <rect x="266" y="84" width="56" height="26" class="mg-blue"/>
+      <text x="294" y="102" class="mg-s mg-c mg-tblue mg-b">나이</text>
+      <rect x="322" y="84" width="106" height="26" class="mg-gray"/>
+      <text x="375" y="102" class="mg-s mg-c">16</text>
+      <rect x="266" y="114" width="56" height="26" class="mg-blue"/>
+      <text x="294" y="132" class="mg-s mg-c mg-tblue mg-b">동네</text>
+      <rect x="322" y="114" width="106" height="26" class="mg-gray"/>
+      <text x="375" y="132" class="mg-s mg-c">부산</text>
+      <text x="570" y="36" class="mg-m mg-c mg-b mg-tblue">friends[2]</text>
+      <rect x="480" y="46" width="180" height="100" class="mg-box"/>
+      <rect x="486" y="54" width="56" height="26" class="mg-blue"/>
+      <text x="514" y="72" class="mg-s mg-c mg-tblue mg-b">이름</text>
+      <rect x="542" y="54" width="106" height="26" class="mg-gray"/>
+      <text x="595" y="72" class="mg-s mg-c">하은</text>
+      <rect x="486" y="84" width="56" height="26" class="mg-blue"/>
+      <text x="514" y="102" class="mg-s mg-c mg-tblue mg-b">나이</text>
+      <rect x="542" y="84" width="106" height="26" class="mg-gray"/>
+      <text x="595" y="102" class="mg-s mg-c">15</text>
+      <rect x="486" y="114" width="56" height="26" class="mg-blue"/>
+      <text x="514" y="132" class="mg-s mg-c mg-tblue mg-b">동네</text>
+      <rect x="542" y="114" width="106" height="26" class="mg-gray"/>
+      <text x="595" y="132" class="mg-s mg-c">대전</text>
+      <rect x="256" y="42" width="188" height="108" class="mg-hl mg-win13"/>
+      <rect x="262" y="50" width="170" height="34" class="mg-hl mg-win23"/>
+      <text x="40" y="196" class="mg-m mg-only1">friends[1]   →   카드 한 장</text>
+      <text x="40" y="196" class="mg-m mg-only2">friends[1][&quot;이름&quot;]</text>
+      <text x="40" y="196" class="mg-m mg-b mg-tgreen mg-only3">print(friends[1][&quot;이름&quot;])   →   서준</text>
+      <text x="40" y="196" class="mg-m mg-only4">print(len(friends))   →   3</text>
+      <line x1="40" y1="164" x2="640" y2="164" class="mg-lnb mg-only4"/>
+      <rect x="14" y="252" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="272" class="mg-only0 mg-b" style="font-size:14px">① friends는 딕셔너리 카드 3장이 든 리스트</text>
+      <text x="28" y="272" class="mg-only1 mg-b" style="font-size:14px">② friends[1] → 번호 1번 카드(두 번째 장)를 고른다</text>
+      <text x="28" y="272" class="mg-only2 mg-b" style="font-size:14px">③ 그 카드에서 [&quot;이름&quot;] 이름표로 값을 찾는다</text>
+      <text x="28" y="272" class="mg-only3 mg-b" style="font-size:14px">④ 결과는 &#x27;서준&#x27;</text>
+      <text x="28" y="272" class="mg-only4 mg-b" style="font-size:14px">⑤ len(friends)는 카드 장 수 3</text>
+      <text x="28" y="272" class="mg-only5 mg-b" style="font-size:14px">결과: 먼저 번호로 카드를, 다음에 이름표로 값을 찾는다</text>
+    </svg>
+    <figcaption class="img-caption"><b>딕셔너리의 리스트 — 번호로 카드, 이름표로 값</b> 딕셔너리 한 개가 표의 한 행이고, 키가 열 이름이다. 리스트 번호로 한 행(카드)을 고른 뒤 이름표로 한 칸을 꺼낸다. 4차시의 표(Pandas)가 이 모양을 한 번에 다룬다.</figcaption>
+  </figure>
+  <!-- /mg:w2-listdict -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="code-block">
-      <div class="code-label"><span>Python — 구경만: 친구 세 명 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
+      <div class="code-label"><span>Python — 확인: 친구 세 명 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>friends = [
     {"이름": "지민", "나이": 15, "동네": "서울"},
     {"이름": "서준", "나이": 16, "동네": "부산"},
@@ -308,7 +608,7 @@ print(friends[1]["이름"])</code></pre>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>오늘 반도체 데이터는 설비 온도 기록표 <code>week02_python_basics_1.csv</code>(20행, 교육용 가상 데이터)다. 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정에서 설비 네 대(EQ-01~EQ-04)가 잰 온도다. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 오늘 파이썬은 표 파일을 직접 읽지 않는다(4차시에 배운다). 그래서 노트북에는 표에서 옮겨 적은 값이 들어 있다. (노트북 6단계)</p>
+    <p>오늘 반도체 데이터는 설비 온도 기록표 <code><a href="../../data/weekly/week02/week02_python_basics_1.csv" target="_blank" rel="noopener">week02_python_basics_1.csv</a></code>(20행, 교육용 가상 데이터)다. 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정에서 설비 네 대(EQ-01~EQ-04)가 잰 온도다. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 오늘 파이썬은 표 파일을 직접 읽지 않는다(4차시에 배운다). 그래서 노트북에는 표에서 옮겨 적은 값이 들어 있다. (노트북 6단계)</p>
     <ul class="pt-list">
       <li>열: <code>로트번호</code>, <code>공정명</code>, <code>설비번호</code>, <code>온도_C</code>, <code>합격여부</code>. <code>_C</code> = 섭씨 도(1차시와 같은 규칙 — 밑줄 뒤가 단위).</li>
       <li><b>설비번호</b>는 어느 기계의 기록인지 구분하는 번호다. 피자 가게에 오븐이 여러 대면 오븐에 번호를 붙여 "몇 번 오븐에서 구운 판인지" 적는 것과 같다.</li>
@@ -400,7 +700,7 @@ print(first["온도_C"])</code></pre>
       <b class="tag">공장과 잇기</b>
       공장에서는 설비 온도 기록이 그렇다. 평균 승차인원만 보면 유난히 붐비는 중앙역·출근이 안 보이듯, 설비 온도도 평균만 보면 유난히 높은 기록이 안 보인다. 그래서 반도체 표에서도 Mean과 함께 Min.·Max.를 본다.
     </div>
-    <div class="step"><div class="num">1</div><div class="content">Orange를 켜고 맨 위 메뉴 File &gt; Open으로 <code>week02_1_subway_start.ows</code>를 연다. File 위젯을 더블클릭해 <code>week02_orange_subway_ridership.tab</code>이 들어왔는지 확인하고 창을 닫는다.</div></div>
+    <div class="step"><div class="num">1</div><div class="content">Orange를 켜고 맨 위 메뉴 File &gt; Open으로 <code>week02_1_subway_start.ows</code>를 연다. File 위젯을 더블클릭해 <code><a href="../../data/weekly/week02/orange/week02_orange_subway_ridership.tab" target="_blank" rel="noopener">week02_orange_subway_ridership.tab</a></code>이 들어왔는지 확인하고 창을 닫는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week02_01_subway_start_canvas.png"
          alt="시작 파일을 연 Orange 화면. 가운데 캔버스에 File 위젯 하나와 ①~③ 안내 메모가 있다"
          data-shot="week02_1_subway_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 ①~③ 안내 메모가 보이게">
@@ -423,7 +723,7 @@ print(first["온도_C"])</code></pre>
 
     <h3>반도체 데이터 — 설비 온도 기록표 20건</h3>
     <p>PART 1에서 값을 옮겨 적은 그 표다. 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정에서 남긴 설비 온도 기록이다(교육용 가상 데이터).</p>
-    <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>week02_2_temps_start.ows</code>를 연다. File을 더블클릭해 <code>week02_python_basics_1.tab</code>이 들어왔는지 확인한다.</div></div>
+    <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>week02_2_temps_start.ows</code>를 연다. File을 더블클릭해 <code><a href="../../data/weekly/week02/orange/week02_python_basics_1.tab" target="_blank" rel="noopener">week02_python_basics_1.tab</a></code>이 들어왔는지 확인한다.</div></div>
     <div class="step"><div class="num">2</div><div class="content">File에 <code>Column Statistics</code>를 잇고 <code>온도_C</code> 행의 <b>Mean</b>과 <b>Max.</b>를 읽는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week02_05_temps_feature_statistics.png"
          alt="설비 온도 기록의 Column Statistics 창. 온도_C 행이 보인다"
@@ -510,8 +810,8 @@ print(first["온도_C"])</code></pre>
       <table>
         <thead><tr><th>파일</th><th>크기</th><th>쓰는 곳</th></tr></thead>
         <tbody>
-          <tr><td><code>week02_python_basics_1.csv</code></td><td>20행 5열</td><td>설비 온도 기록표. 파이썬은 값을 옮겨 적어 쓰고(EQ-02, EQ-03, EQ-04), Orange는 <code>orange/</code> 폴더의 같은 이름 <code>.tab</code>을 연다</td></tr>
-          <tr><td><code>week02_orange_subway_ridership.csv</code></td><td>24행 5열</td><td>Orange 워밍업 — 지하철 역별 승하차</td></tr>
+          <tr><td><code><a href="../../data/weekly/week02/week02_python_basics_1.csv" target="_blank" rel="noopener">week02_python_basics_1.csv</a></code></td><td>20행 5열</td><td>설비 온도 기록표. 파이썬은 값을 옮겨 적어 쓰고(EQ-02, EQ-03, EQ-04), Orange는 <code>orange/</code> 폴더의 같은 이름 <code>.tab</code>을 연다</td></tr>
+          <tr><td><code><a href="../../data/weekly/week02/week02_orange_subway_ridership.csv" target="_blank" rel="noopener">week02_orange_subway_ridership.csv</a></code></td><td>24행 5열</td><td>Orange 워밍업 — 지하철 역별 승하차</td></tr>
         </tbody>
       </table>
     </div>

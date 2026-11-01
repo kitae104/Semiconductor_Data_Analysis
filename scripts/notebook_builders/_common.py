@@ -127,7 +127,7 @@ class NotebookPair:
     def notebook(self, variant):
         # 첫 마크다운 셀 = 제목 + "막혔을 때"(스펙 0-5: 맨 위 셀이 막혔을 때 안내)
         title = f"# {self.title}" + (" (정답)" if variant == "solution" else "")
-        cells = [md(title + "\n\n" + STUCK_CELL)] + self.cells
+        cells = [md(title)] + self.cells
         nb = new_notebook()
         nb.metadata = {
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},

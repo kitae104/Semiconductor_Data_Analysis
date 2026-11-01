@@ -83,6 +83,71 @@
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> Orange3 — 모델 셋 비교와 새 데이터 예측</h2>
     <p>오늘 새로 쓰는 말은 세 개다. 나머지 위젯은 9차시에 써 봤다.</p>
+
+  <!-- mg:w10-flow -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 330" role="img" aria-label="지난 기록이 Tree, Logistic Regression, kNN 세 모델을 거쳐 Test and Score에서 점수가 비교되고 고른 모델에 새 로트를 넣어 Predictions로 예측을 얻는 그림">
+      <rect x="20" y="50" width="130" height="70" class="mg-box"/>
+      <text x="85" y="80" class="mg-b mg-c">지난 기록</text>
+      <text x="85" y="100" class="mg-s mg-c mg-mu">(정답 있음)</text>
+      <rect x="240" y="38" width="190" height="28" class="mg-blue"/>
+      <text x="335" y="57" class="mg-c mg-s mg-tblue mg-m">Tree</text>
+      <rect x="240" y="72" width="190" height="28" class="mg-blue"/>
+      <text x="335" y="91" class="mg-c mg-s mg-tblue mg-m">Logistic Regression</text>
+      <rect x="240" y="106" width="190" height="28" class="mg-blue"/>
+      <text x="335" y="125" class="mg-c mg-s mg-tblue mg-m">kNN</text>
+      <rect x="236" y="34" width="198" height="108" class="mg-hl mg-only1"/>
+      <rect x="510" y="50" width="190" height="70" class="mg-box"/>
+      <text x="605" y="80" class="mg-b mg-c mg-m" style="font-size:14px">Test and Score</text>
+      <text x="605" y="100" class="mg-s mg-c mg-mu">모델별 점수 비교</text>
+      <rect x="506" y="46" width="198" height="78" class="mg-hl mg-only2"/>
+      <line x1="152" y1="85" x2="229" y2="85" class="mg-lnb"/>
+      <polygon points="238,85 229,89.5 229,80.5" class="mg-ahb"/>
+      <line x1="432" y1="85" x2="499" y2="85" class="mg-lnb"/>
+      <polygon points="508,85 499,89.5 499,80.5" class="mg-ahb"/>
+      <text x="330" y="168" class="mg-s mg-b mg-c mg-torange mg-from3">점수가 높고 기준선보다 나은 모델을 고른다</text>
+      <g class="mg-from3">
+      <line x1="335" y1="144" x2="335" y2="187" class="mg-lnm"/>
+      <polygon points="335,196 330.5,187 339.5,187" class="mg-ah"/>
+      </g>
+      <g class="mg-from3">
+      <rect x="240" y="202" width="190" height="40" class="mg-blue"/>
+      <text x="335" y="227" class="mg-c mg-tblue mg-b">고른 모델</text>
+      </g>
+      <rect x="20" y="198" width="150" height="48" class="mg-orange mg-from4"/>
+      <text x="95" y="218" class="mg-b mg-c mg-torange mg-from4">새 로트</text>
+      <text x="95" y="236" class="mg-s mg-c mg-mu mg-from4">(정답 없음)</text>
+      <g class="mg-from4">
+      <line x1="172" y1="222" x2="229" y2="222" class="mg-lnb"/>
+      <polygon points="238,222 229,226.5 229,217.5" class="mg-ahb"/>
+      </g>
+      <rect x="510" y="198" width="190" height="48" class="mg-green mg-from5"/>
+      <text x="605" y="218" class="mg-b mg-c mg-m mg-tgreen mg-from5" style="font-size:14px">Predictions</text>
+      <text x="605" y="236" class="mg-s mg-c mg-mu mg-from5">합격/불합격 예측</text>
+      <g class="mg-from5">
+      <line x1="432" y1="222" x2="499" y2="222" class="mg-lnb"/>
+      <polygon points="508,222 499,226.5 499,217.5" class="mg-ahb"/>
+      </g>
+      <rect x="14" y="292" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="312" class="mg-only0 mg-b" style="font-size:14px">① 지난 기록으로 모델 셋을 학습시킨다</text>
+      <text x="28" y="312" class="mg-only1 mg-b" style="font-size:14px">② Test and Score가 모델마다 점수를 매긴다</text>
+      <text x="28" y="312" class="mg-only2 mg-b" style="font-size:14px">③ 기준선과 비교해 쓸 모델을 고른다</text>
+      <text x="28" y="312" class="mg-only3 mg-b" style="font-size:14px">④ 새 로트(합격 여부를 아직 모름)를 넣는다</text>
+      <text x="28" y="312" class="mg-only4 mg-b" style="font-size:14px">⑤ Predictions가 합격/불합격 예측을 붙인다</text>
+      <text x="28" y="312" class="mg-only5 mg-b" style="font-size:14px">결과: 학습 → 점수 비교 → 새 데이터 예측 순서로 쓴다</text>
+    </svg>
+    <figcaption class="img-caption"><b>모델 비교에서 새 데이터 예측까지</b> 위 줄은 <b>지난 기록</b>으로 모델 셋을 만들고 점수를 비교하는 단계, 아래 줄은 고른 모델에 <b>새 데이터</b>를 넣어 예측을 얻는 단계다. 점수는 기준선과 함께 읽고, 예측은 "원인"이 아니라 "확인해 볼 후보"로 쓴다.</figcaption>
+  </figure>
+  <!-- /mg:w10-flow -->
+
+
+
+
+
+
+
+
+
     <ul class="pt-list">
       <li><b>새 데이터</b> — 정답(<code>불량패턴</code>, <code>합격여부</code>) 열이 없는 표. 모델이 맞혀야 할 대상이다.</li>
       <li><b>kNN</b>(이웃 투표) — 처음 보는 데이터와 숫자가 가장 비슷한 학습 데이터 몇 개(Orange 기본 5개)를 찾아, 그들의 답으로 다수결을 한다.</li>
@@ -114,10 +179,10 @@
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png" alt="반도체 8대 공정 흐름을 생활 비유로 그린 공정 지도">
     <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ② 산화부터 ⑥ 금속 배선까지는 층마다 되풀이하고, ⑦ EDS에서 칩마다 전기 검사를 한다.</p>
     <ul class="pt-list">
-      <li>워밍업 학습용 <code>week09_orange_wafer_patterns.csv</code>(9차시 웨이퍼 240장) — <b>공정 지도 위치: ⑦ EDS</b> 웨이퍼 맵 요약.</li>
-      <li>워밍업 새 데이터 <code>week10_orange_new_wafers.csv</code>(새 웨이퍼 10장) — <b>공정 지도 위치: ⑦ EDS</b> 새 웨이퍼 맵 요약.</li>
-      <li>반도체 학습용 <code>week09_pass_fail_train.csv</code>(공정 기록 750행) — <b>공정 지도 위치: ②~⑤ + 세정</b> 공정 조건 → <b>⑦</b> 결과.</li>
-      <li>반도체 새 데이터 <code>week09_new_lots_to_predict.csv</code>(새 로트 9개) — <b>공정 지도 위치: ②~⑤ + 세정</b>을 마쳤지만 아직 <b>⑦</b> 검사 전인 새 로트.</li>
+      <li>워밍업 학습용 <code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code>(9차시 웨이퍼 240장) — <b>공정 지도 위치: ⑦ EDS</b> 웨이퍼 맵 요약.</li>
+      <li>워밍업 새 데이터 <code><a href="../../data/weekly/week10/week10_orange_new_wafers.csv" target="_blank" rel="noopener">week10_orange_new_wafers.csv</a></code>(새 웨이퍼 10장) — <b>공정 지도 위치: ⑦ EDS</b> 새 웨이퍼 맵 요약.</li>
+      <li>반도체 학습용 <code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code>(공정 기록 750행) — <b>공정 지도 위치: ②~⑤ + 세정</b> 공정 조건 → <b>⑦</b> 결과.</li>
+      <li>반도체 새 데이터 <code><a href="../../data/weekly/week09/week09_new_lots_to_predict.csv" target="_blank" rel="noopener">week09_new_lots_to_predict.csv</a></code>(새 로트 9개) — <b>공정 지도 위치: ②~⑤ + 세정</b>을 마쳤지만 아직 <b>⑦</b> 검사 전인 새 로트.</li>
     </ul>
 
     <h3>워밍업 — 새 웨이퍼 10장은 어떤 불량 모양일까</h3>
@@ -432,13 +497,13 @@ print(new_lots[new_lots["예측"] == -1][["공정명", "설비번호", "온도_C
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>week09_orange_wafer_patterns.csv</code> — 240행 6열, 교육용 가상 데이터(PART 1 워밍업 학습용, 9차시와 같은 파일. Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code> — 240행 6열, 교육용 가상 데이터(PART 1 워밍업 학습용, 9차시와 같은 파일. Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         <b>공정 지도 위치: ⑦ EDS 웨이퍼 맵 요약.</b></li>
-      <li><code>week10_orange_new_wafers.csv</code> — 10행 5열, 교육용 가상 데이터(PART 1 워밍업 새 데이터, 정답 열 없음).
+      <li><code><a href="../../data/weekly/week10/week10_orange_new_wafers.csv" target="_blank" rel="noopener">week10_orange_new_wafers.csv</a></code> — 10행 5열, 교육용 가상 데이터(PART 1 워밍업 새 데이터, 정답 열 없음).
         <b>공정 지도 위치: ⑦ EDS 새 웨이퍼 맵 요약.</b></li>
-      <li><code>week09_pass_fail_train.csv</code> — 750행 9열(빈칸 있는 행을 지우면 735행), 교육용 가상 데이터(PART 1·2·3 학습용). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+      <li><code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code> — 750행 9열(빈칸 있는 행을 지우면 735행), 교육용 가상 데이터(PART 1·2·3 학습용). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
         <b>공정 지도 위치: ②~⑤ + 세정 공정 조건 → ⑦ 결과.</b></li>
-      <li><code>week09_new_lots_to_predict.csv</code> — 9행 8열, 교육용 가상 데이터(PART 1·2·3 새 데이터, 정답 열 없음).
+      <li><code><a href="../../data/weekly/week09/week09_new_lots_to_predict.csv" target="_blank" rel="noopener">week09_new_lots_to_predict.csv</a></code> — 9행 8열, 교육용 가상 데이터(PART 1·2·3 새 데이터, 정답 열 없음).
         <b>공정 지도 위치: ②~⑤ + 세정을 마쳤지만 아직 ⑦ 검사 전인 새 로트.</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week10_dictionary.html">10차시 데이터 설명서</a>, <a href="../../data/data_dictionary/week09_dictionary.html">9차시 데이터 설명서</a></li>
     </ul>

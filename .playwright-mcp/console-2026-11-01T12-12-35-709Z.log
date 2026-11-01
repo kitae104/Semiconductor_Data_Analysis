@@ -1,0 +1,10 @@
+[      46ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_01_mission_before_after.png:0
+[      64ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_02_cleanroom_start.png:0
+[      75ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_03_cleanroom_stats_before.png:0
+[      75ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_04_cleanroom_filled_table.png:0
+[      99ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_05_cleanroom_stats_after.png:0
+[     108ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_06_process_stats_before.png:0
+[     108ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_08_process_select_rows.png:0
+[     108ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_07_process_impute.png:0
+[     109ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_09_process_table_after.png:0
+[     109ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/assets/images/orange3/week05_10_process_stats_after.png:0

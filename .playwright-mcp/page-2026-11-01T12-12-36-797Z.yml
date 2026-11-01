@@ -1,0 +1,1091 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "반도체 데이터 분석 10차시 과정 Semiconductor Process Data Analysis" [ref=e4] [cursor=pointer]:
+        - /url: ../../index.html
+        - text: 반도체 데이터 분석 10차시 과정
+        - generic [ref=e6]: Semiconductor Process Data Analysis
+      - navigation [ref=e7]:
+        - link "1차시" [ref=e8] [cursor=pointer]:
+          - /url: ../week01/index.html
+        - link "2차시" [ref=e9] [cursor=pointer]:
+          - /url: ../week02/index.html
+        - link "3차시" [ref=e10] [cursor=pointer]:
+          - /url: ../week03/index.html
+        - link "4차시" [ref=e11] [cursor=pointer]:
+          - /url: ../week04/index.html
+        - link "5차시" [ref=e12] [cursor=pointer]:
+          - /url: ../week05/index.html
+        - link "6차시" [ref=e13] [cursor=pointer]:
+          - /url: ../week06/index.html
+        - link "7차시" [ref=e14] [cursor=pointer]:
+          - /url: ../week07/index.html
+        - link "8차시" [ref=e15] [cursor=pointer]:
+          - /url: ../week08/index.html
+        - link "9차시" [ref=e16] [cursor=pointer]:
+          - /url: ../week09/index.html
+        - link "10차시" [ref=e17] [cursor=pointer]:
+          - /url: ../week10/index.html
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]: 5차시
+      - heading "데이터 훑어보기와 정리(EDA)" [level=1] [ref=e23]
+      - paragraph [ref=e24]: "오늘의 질문: \"공장 기록에 섞인 빈칸·중복·튀는 값을 정리하면, 평균은 얼마나 달라질까?\""
+      - paragraph [ref=e25]: 오늘의 미션 — 입사 다섯째 날, 센서 기록에 빈칸·중복·튀는 값이 섞여 있다. 정리해서 믿을 수 있는 평균 온도를 보고하자. (신입 데이터 담당자의 10일 이야기와 공장·데이터는 모두 교육용 가상이다.)
+      - generic [ref=e26]:
+        - generic [ref=e27]: 캡처 예정 — week05_2_dirty_process_done.ows에서 Column Statistics (정리 전) 창과 Column Statistics (정리 후) 창을 나란히 띄운 화면 — 두 창 모두 온도_C 행의 Mean(정리 전 304.94, 정리 후 300.75)이 보이게
+        - text: "저장 위치:"
+        - code [ref=e28]: assets/images/orange3/week05_01_mission_before_after.png
+    - generic [ref=e29]:
+      - navigation "이 페이지 목차" [ref=e30]:
+        - generic [ref=e31]:
+          - generic [ref=e32]: 이 페이지 목차
+          - button "목차 접기/펼치기" [ref=e33] [cursor=pointer]: ❮
+        - generic [ref=e34]:
+          - link "학습 목표" [ref=e35] [cursor=pointer]:
+            - /url: "#sec-1"
+          - link "왜 이걸 배워야 할까?" [ref=e36] [cursor=pointer]:
+            - /url: "#sec-2"
+          - link "지난 시간 복습" [ref=e37] [cursor=pointer]:
+            - /url: "#sec-3"
+          - link "PART 1 파이썬 — 빈칸·중복·튀는 값 정리하기" [ref=e38] [cursor=pointer]:
+            - /url: "#part1"
+          - link "숫자 요약 보기 — describe()" [ref=e39] [cursor=pointer]:
+            - /url: "#sec-5"
+          - link "빈칸 세고 지우기 — isna(), dropna()" [ref=e40] [cursor=pointer]:
+            - /url: "#sec-6"
+          - link "중복 행 찾고 지우기 — duplicated(), drop_duplicates()" [ref=e41] [cursor=pointer]:
+            - /url: "#sec-7"
+          - link "튀는 값 찾고 빼기 — 범위 조건" [ref=e42] [cursor=pointer]:
+            - /url: "#sec-8"
+          - link "반도체 데이터로 확인하기" [ref=e43] [cursor=pointer]:
+            - /url: "#sec-9"
+          - link "PART 2 Orange3 — 빈칸 채우기와 튀는 값" [ref=e44] [cursor=pointer]:
+            - /url: "#part2"
+          - link "PART 3 실습지" [ref=e45] [cursor=pointer]:
+            - /url: "#part3"
+          - link "핵심 용어 카드" [ref=e46] [cursor=pointer]:
+            - /url: "#sec-12"
+          - link "데이터" [ref=e47] [cursor=pointer]:
+            - /url: "#sec-13"
+          - link "주의할 점 & 자주 발생하는 오류" [ref=e48] [cursor=pointer]:
+            - /url: "#sec-14"
+          - link "결과 정리 & 퀴즈" [ref=e49] [cursor=pointer]:
+            - /url: "#sec-15"
+          - link "AI로 한 걸음 더 — 질문하고 코드 받아보기" [ref=e50] [cursor=pointer]:
+            - /url: "#sec-16"
+          - link "과제(다음 차시까지)" [ref=e51] [cursor=pointer]:
+            - /url: "#sec-17"
+          - link "핵심 질문 → 데이터 연결" [ref=e52] [cursor=pointer]:
+            - /url: "#sec-18"
+          - link "다음 차시 예고" [ref=e53] [cursor=pointer]:
+            - /url: "#sec-19"
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - heading "학습 목표" [level=2] [ref=e56]
+          - list [ref=e57]:
+            - listitem [ref=e58]: 빈칸·중복·튀는 값이 왜 생기고, 평균을 어떻게 틀어지게 하는지 설명할 수 있다.
+            - listitem [ref=e59]:
+              - code [ref=e60]: describe()
+              - text: 와
+              - code [ref=e61]: isna().sum()
+              - text: 으로 문제가 있는 열을 찾을 수 있다.
+            - listitem [ref=e62]:
+              - code [ref=e63]: dropna()
+              - text: ·
+              - code [ref=e64]: drop_duplicates()
+              - text: ·범위 조건으로 표를 정리하고, 정리 전후의 행 수와 평균을 비교할 수 있다.
+            - listitem [ref=e65]: Orange3 Impute로 빈칸을 채워 보고, 튀는 값이 남은 채로 평균을 채우면 생기는 문제를 말할 수 있다.
+          - paragraph [ref=e66]:
+            - text: "선수 지식: 4차시 —"
+            - code [ref=e67]: read_csv
+            - text: ", 조건 검색 / 3차시 — Orange Select Rows / 2차시 — Orange Column Statistics"
+        - generic [ref=e68]:
+          - heading "왜 이걸 배워야 할까?" [level=2] [ref=e69]
+          - paragraph [ref=e70]: 공장 기록에는 빈칸·중복·튀는 값이 끼어든다. 정리하지 않으면 코드는 돌아가도 숫자가 틀린다.
+          - paragraph [ref=e71]: 오늘 쓰는 반 학생 기록에서도, 키를 잘못 적은 값(1720cm) 하나 때문에 평균 키가 276.6cm로 나온다. 정리하면 163.8cm다.
+          - generic [ref=e72]:
+            - generic [ref=e73]: 비유 — 가계부
+            - text: 같은 영수증을 두 번 적은 가계부로는 지출을 믿을 수 없다. 분석 전에 데이터를 훑어보고 정리하는 일을 EDA(탐색적 데이터 분석)라고 한다.
+        - generic [ref=e74]:
+          - heading "지난 시간 복습" [level=2] [ref=e75]
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - text: Q1. 4차시 기록 100건에서
+              - code [ref=e78]: df[df["설비번호"] == "EQ-02"]
+              - text: 를 실행하면 무엇이 나올까?
+            - button "정답 보기" [ref=e79] [cursor=pointer]
+          - generic [ref=e80]:
+            - generic [ref=e81]: Q2. 파이썬의 조건 검색과 같은 일을 하는 Orange 위젯은?
+            - button "정답 보기" [ref=e82] [cursor=pointer]
+        - generic [ref=e83]:
+          - heading "PART 1 파이썬 — 빈칸·중복·튀는 값 정리하기" [level=2] [ref=e84]:
+            - generic [ref=e85]: PART 1
+            - text: 파이썬 — 빈칸·중복·튀는 값 정리하기
+          - paragraph [ref=e86]:
+            - text: 개념은 반 학생 기록(
+            - code [ref=e87]:
+              - link "week05_easy_class_records.csv" [ref=e88] [cursor=pointer]:
+                - /url: ../../data/weekly/week05/week05_easy_class_records.csv
+            - text: ", 15행 5열, 생활 예제용 가상 데이터)으로 익힌다."
+          - table [ref=e90]:
+            - rowgroup [ref=e91]:
+              - row [ref=e92]:
+                - columnheader "열" [ref=e93]
+                - columnheader "뜻" [ref=e94]
+            - rowgroup [ref=e95]:
+              - row [ref=e96]:
+                - cell [ref=e97]:
+                  - code [ref=e98]: 이름
+                  - text: ","
+                  - code [ref=e99]: 반
+                - cell "학생 이름과 반" [ref=e100]
+              - row [ref=e101]:
+                - cell [ref=e102]:
+                  - code [ref=e103]: 키_cm
+                  - text: ","
+                  - code [ref=e104]: 몸무게_kg
+                - cell "키(센티미터), 몸무게(킬로그램). 밑줄 뒤가 단위다" [ref=e105]
+              - row [ref=e106]:
+                - cell [ref=e107]:
+                  - code [ref=e108]: 수학점수_pt
+                - cell [ref=e109]:
+                  - text: 수학 점수.
+                  - code [ref=e110]: _pt
+                  - text: 는 점수(points)라는 뜻
+          - paragraph [ref=e111]: 이 표에는 빈칸 3칸, 두 번 적은 학생 1명, 잘못 적은 키 1개가 일부러 섞여 있다. 하나씩 찾아서 정리한다.
+        - generic [ref=e112]:
+          - heading "숫자 요약 보기 — describe()" [level=2] [ref=e113]
+          - paragraph [ref=e114]:
+            - code [ref=e115]: describe()
+            - text: 는 숫자 열마다 개수·평균·최솟값·최댓값을 한 번에 보여 준다. 2차시 Orange Column Statistics의 코드판이다.
+          - generic [ref=e116]:
+            - generic [ref=e117]:
+              - generic [ref=e118]: Python — 읽고 요약하고, 정리 전 값 기억하기 (노트북 1단계)
+              - button "복사" [ref=e119] [cursor=pointer]
+            - code [ref=e121]: import pandas as pd students = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8-sig") print(students.shape) print(students.describe()) before_count = len(students) before_height = round(students["키_cm"].mean(), 1) print(before_count, before_height)
+          - generic [ref=e122]:
+            - generic [ref=e123]: 실행 결과
+            - generic [ref=e124]: (15, 5) 키_cm 몸무게_kg 수학점수_pt count 14.000000 14.000000 15.000000 mean 276.571429 56.428571 83.066667 std 415.497775 7.537132 8.639334 min 155.900000 46.700000 69.000000 25% 160.800000 50.600000 77.000000 50% 166.750000 54.350000 83.000000 75% 171.000000 62.925000 89.000000 max 1720.000000 70.300000 98.000000 15 276.6
+          - list [ref=e125]:
+            - listitem [ref=e126]:
+              - text: ▸
+              - code [ref=e127]: count
+              - text: 가 14다 → 15명 중 키·몸무게가 하나씩 비어 있다.
+              - code [ref=e128]: max
+              - text: 1720.0 → 튀는 값이다.
+            - listitem [ref=e129]:
+              - text: ▸
+              - code [ref=e130]: mean
+              - text: (평균) 276.6과
+              - code [ref=e131]: 50%
+              - text: (중앙값, 크기순 한가운데 값) 166.75가 크게 다르다 → 튀는 값 하나가 평균만 끌어올렸다.
+            - listitem [ref=e132]:
+              - text: ▸
+              - code [ref=e133]: round(값, 1)
+              - text: 은 소수 첫째 자리까지 반올림한다. 정리 전 값은 마지막에 비교하려고 변수에 담아 둔다.
+            - listitem [ref=e134]:
+              - text: ▸
+              - code [ref=e135]: std
+              - text: ·
+              - code [ref=e136]: 25%
+              - text: ·
+              - code [ref=e137]: 75%
+              - text: 줄과, 다른 출력 끝에 붙는
+              - code [ref=e138]: dtype
+              - text: 줄은 오늘 보지 않는다. 글자 열(이름·반)은
+              - code [ref=e139]: describe()
+              - text: 에 나오지 않는다.
+          - generic [ref=e140]:
+            - generic [ref=e141]: 찾아보기
+            - paragraph [ref=e142]:
+              - text: 검색어
+              - code [ref=e143]: 평균 중앙값 차이
+            - generic [ref=e144]:
+              - generic [ref=e145]:
+                - generic [ref=e146]: ChatGPT에 물어보기 — 복사해서 붙여 넣기
+                - button "복사" [ref=e147] [cursor=pointer]
+              - code [ref=e149]: 데이터 분석을 처음 배우는 사람에게 평균과 중앙값의 차이를 반 학생 키 예시로 3문장 안에 설명해줘. 키를 잘못 적은 값이 하나 섞였을 때 둘 중 어느 쪽이 더 크게 흔들리는지도 알려줘.
+        - generic [ref=e150]:
+          - heading "빈칸 세고 지우기 — isna(), dropna()" [level=2] [ref=e151]
+          - paragraph [ref=e152]:
+            - text: 빈칸은 pandas에서
+            - code [ref=e153]: NaN
+            - text: (값 없음)으로 읽힌다. 키를 안 잰 학생은 0cm가 아니다 — 0과 빈칸은 다르다.
+          - figure [ref=e154]:
+            - paragraph [ref=e155]: 이 차시 예제 파일(week05_easy_class_records.csv) 앞 9행
+            - img "학생 기록 표에서 NaN이 든 세 행이 표시된 뒤 dropna로 지워지고 남은 행이 위로 붙는 그림" [ref=e156]:
+              - generic [ref=e158]: 이름
+              - generic [ref=e160]: 반
+              - generic [ref=e162]: 키_cm
+              - generic [ref=e164]: 몸무게_kg
+              - generic [ref=e166]: 수학점수_pt
+              - generic [ref=e167]:
+                - generic [ref=e169]: 김민준
+                - generic [ref=e171]: 1반
+                - generic [ref=e173]: "165.2"
+                - generic [ref=e175]: "55.1"
+                - generic [ref=e177]: "85"
+              - generic [ref=e178]:
+                - generic [ref=e180]: 이서연
+                - generic [ref=e182]: 1반
+                - generic [ref=e184]: "158.4"
+                - generic [ref=e186]: "48.3"
+                - generic [ref=e188]: "92"
+              - generic [ref=e189]:
+                - generic [ref=e191]: 박지호
+                - generic [ref=e193]: 1반
+                - generic [ref=e195]: "171.0"
+                - generic [ref=e197]: "63.5"
+                - generic [ref=e199]: "78"
+              - generic [ref=e200]:
+                - generic [ref=e202]: 최수아
+                - generic [ref=e204]: 1반
+                - generic [ref=e206]: NaN
+                - generic [ref=e208]: "50.2"
+                - generic [ref=e210]: "88"
+              - generic [ref=e211]:
+                - generic [ref=e213]: 최수아
+                - generic [ref=e215]: 1반
+                - generic [ref=e217]: NaN
+                - generic [ref=e219]: "50.2"
+                - generic [ref=e221]: "88"
+              - generic [ref=e222]:
+                - generic [ref=e224]: 정도윤
+                - generic [ref=e226]: 2반
+                - generic [ref=e228]: "1720.0"
+                - generic [ref=e230]: "66.0"
+                - generic [ref=e232]: "74"
+              - generic [ref=e233]:
+                - generic [ref=e235]: 강하린
+                - generic [ref=e237]: 2반
+                - generic [ref=e239]: "160.5"
+                - generic [ref=e241]: "51.8"
+                - generic [ref=e243]: "95"
+              - generic [ref=e244]:
+                - generic [ref=e246]: 조예준
+                - generic [ref=e248]: NaN
+                - generic [ref=e250]: "168.3"
+                - generic [ref=e252]: "59.4"
+                - generic [ref=e254]: "81"
+              - generic [ref=e255]:
+                - generic [ref=e257]: 조예준
+                - generic [ref=e259]: NaN
+                - generic [ref=e261]: "168.3"
+                - generic [ref=e263]: "59.4"
+                - generic [ref=e265]: "81"
+              - generic [ref=e266]:
+                - generic [ref=e268]: 윤지우
+                - generic [ref=e270]: 2반
+                - generic [ref=e272]: "155.9"
+                - generic [ref=e274]: "46.7"
+                - generic [ref=e276]: "69"
+              - generic [ref=e277]:
+                - generic [ref=e279]: 장서준
+                - generic [ref=e281]: 2반
+                - generic [ref=e283]: "174.6"
+                - generic [ref=e285]: NaN
+                - generic [ref=e287]: "90"
+              - generic [ref=e288]:
+                - generic [ref=e290]: 장서준
+                - generic [ref=e292]: 2반
+                - generic [ref=e294]: "174.6"
+                - generic [ref=e296]: NaN
+                - generic [ref=e298]: "90"
+              - generic [ref=e299]: students.isna().sum()
+              - generic [ref=e300]:
+                - generic [ref=e302]: 이름
+                - generic [ref=e304]: "0"
+                - generic [ref=e306]: 반
+                - generic [ref=e308]: "1"
+                - generic [ref=e310]: 키_cm
+                - generic [ref=e312]: "1"
+                - generic [ref=e314]: 몸무게_kg
+                - generic [ref=e316]: "1"
+                - generic [ref=e318]: 수학점수_pt
+                - generic [ref=e320]: "0"
+              - generic [ref=e321]: 빈칸이 든 행은 3개
+              - generic [ref=e322]: students.dropna() → 3개 행이 사라진다
+              - generic [ref=e324]: ① 표에 빈칸(NaN)이 섞여 있다
+              - generic [ref=e325]: ② isna().sum() → 열마다 빈칸 개수
+              - generic [ref=e326]: ③ 빈칸이 든 행을 빨간색으로 표시했다
+              - generic [ref=e327]: ④ dropna() → 빈칸이 든 행을 지운다
+              - generic [ref=e328]: ⑤ 남은 행이 위로 붙는다
+              - generic [ref=e329]: "결과: 빈칸(값 없음)은 0이 아니라서 세고 지운다"
+            - generic [ref=e330]:
+              - button "멈춤" [ref=e331] [cursor=pointer]
+              - button "처음부터" [ref=e332] [cursor=pointer]
+            - generic [ref=e333]:
+              - text: 빈칸 세고 지우기 — isna(), dropna() 빈칸은 pandas에서
+              - code [ref=e334]: NaN
+              - text: (값 없음)으로 읽힌다.
+              - code [ref=e335]: isna().sum()
+              - text: 이 열마다 빈칸 수를 세고,
+              - code [ref=e336]: dropna()
+              - text: 는 빈칸이 하나라도 든 행을 통째로 지운다. 그림은 앞 9행만 보여 준다.
+          - list [ref=e337]:
+            - listitem [ref=e338]:
+              - text: ▸
+              - code [ref=e339]: isna().sum()
+              - text: — 칸마다 "비었나?"를 확인하고, 열마다 빈칸 개수를 센다.
+            - listitem [ref=e340]:
+              - text: ▸
+              - code [ref=e341]: dropna()
+              - text: — 빈칸이 하나라도 있는 행을 지운다. 결과를
+              - code [ref=e342]: students =
+              - text: 로 다시 저장해야 남는다.
+          - generic [ref=e343]:
+            - generic [ref=e344]:
+              - generic [ref=e345]: Python — 빈칸 세고 지우기 (노트북 2단계)
+              - button "복사" [ref=e346] [cursor=pointer]
+            - code [ref=e348]: print(students.isna().sum()) students = students.dropna() print(students.shape)
+          - generic [ref=e349]:
+            - generic [ref=e350]: 실행 결과
+            - generic [ref=e351]: "이름 0 반 1 키_cm 1 몸무게_kg 1 수학점수_pt 0 dtype: int64 (12, 5)"
+          - paragraph [ref=e352]: 빈칸이 있는 3행이 지워져 15행 → 12행이 됐다.
+          - generic [ref=e353]:
+            - generic [ref=e354]: 찾아보기
+            - paragraph [ref=e355]:
+              - text: 검색어
+              - code [ref=e356]: pandas NaN 뜻
+            - generic [ref=e357]:
+              - generic [ref=e358]:
+                - generic [ref=e359]: ChatGPT에 물어보기 — 복사해서 붙여 넣기
+                - button "복사" [ref=e360] [cursor=pointer]
+              - code [ref=e362]: pandas에서 NaN이 무엇인지 프로그래밍을 처음 배우는 사람에게 쉬운 말로 설명해줘. 숫자 0과 무엇이 다른지도 예를 들어 알려줘.
+        - generic [ref=e363]:
+          - heading "중복 행 찾고 지우기 — duplicated(), drop_duplicates()" [level=2] [ref=e364]
+          - paragraph [ref=e365]:
+            - code [ref=e366]: duplicated()
+            - text: 는 앞의 행과 모든 칸이 같은 행을 찾고,
+            - code [ref=e367]: .sum()
+            - text: 이 그 개수를 센다.
+            - code [ref=e368]: drop_duplicates()
+            - text: 는 그 복사본만 지운다.
+          - figure [ref=e369]:
+            - paragraph [ref=e370]: 이 차시 예제 파일(week05_easy_class_records.csv) 중 일부 행
+            - img "학생 기록 표에서 박지호 행이 두 번 나타나 두 번째 행이 True로 표시된 뒤 삭제되는 그림" [ref=e371]:
+              - generic [ref=e373]: 이름
+              - generic [ref=e375]: 반
+              - generic [ref=e377]: 키_cm
+              - generic [ref=e379]: 몸무게_kg
+              - generic [ref=e381]: 수학점수_pt
+              - generic [ref=e382]: duplicated()
+              - generic [ref=e386]: 김민준
+              - generic [ref=e388]: 1반
+              - generic [ref=e390]: "165.2"
+              - generic [ref=e392]: "55.1"
+              - generic [ref=e394]: "85"
+              - generic [ref=e395]: "False"
+              - generic [ref=e399]: 이서연
+              - generic [ref=e401]: 1반
+              - generic [ref=e403]: "158.4"
+              - generic [ref=e405]: "48.3"
+              - generic [ref=e407]: "92"
+              - generic [ref=e408]: "False"
+              - generic [ref=e412]: 박지호
+              - generic [ref=e414]: 1반
+              - generic [ref=e416]: "171.0"
+              - generic [ref=e418]: "63.5"
+              - generic [ref=e420]: "78"
+              - generic [ref=e421]: "False"
+              - generic [ref=e424]: ⋮
+              - generic [ref=e425]: (사이 행 생략)
+              - generic [ref=e426]:
+                - generic [ref=e428]: 박지호
+                - generic [ref=e430]: 1반
+                - generic [ref=e432]: "171.0"
+                - generic [ref=e434]: "63.5"
+                - generic [ref=e436]: "78"
+              - generic [ref=e437]: "True"
+              - generic [ref=e442]: 모든 칸이 같다
+              - generic [ref=e445]: students.duplicated().sum() → 1
+              - generic [ref=e446]: students.drop_duplicates() → 첫 번째 행만 남는다
+              - generic [ref=e448]: ① 똑같은 행(박지호)이 두 번 들어 있다
+              - generic [ref=e449]: ② duplicated() → 앞 행과 모든 칸이 같으면 True
+              - generic [ref=e450]: ③ duplicated().sum() → 중복 행 1개
+              - generic [ref=e451]: ④ drop_duplicates() → 두 번째 행을 지운다
+              - generic [ref=e452]: ⑤ 처음 나온 행은 그대로 남는다
+              - generic [ref=e453]: "결과: 같은 기록을 두 번 세지 않도록 하나만 남긴다"
+            - generic [ref=e454]:
+              - button "멈춤" [ref=e455] [cursor=pointer]
+              - button "처음부터" [ref=e456] [cursor=pointer]
+            - generic [ref=e457]:
+              - text: 중복 행 찾고 지우기 — duplicated(), drop_duplicates()
+              - code [ref=e458]: duplicated()
+              - text: 는 모든 칸이 같은 행에 True를 붙이고,
+              - code [ref=e459]: drop_duplicates()
+              - text: 는 나중에 나온 같은 행을 지운다. 그림은 중복이 있는 앞뒤 행만 골라 보여 준다.
+          - generic [ref=e460]:
+            - generic [ref=e461]:
+              - generic [ref=e462]: Python — 중복 행 세고 지우기 (노트북 3단계)
+              - button "복사" [ref=e463] [cursor=pointer]
+            - code [ref=e465]: print(students.duplicated().sum()) students = students.drop_duplicates() print(students.shape)
+          - generic [ref=e466]:
+            - generic [ref=e467]: 실행 결과
+            - generic [ref=e468]: 1 (11, 5)
+          - paragraph [ref=e469]: 두 번 적은 박지호의 복사본 1행만 지워져 12행 → 11행이 됐다. 원래 행은 남는다.
+        - generic [ref=e470]:
+          - heading "튀는 값 찾고 빼기 — 범위 조건" [level=2] [ref=e471]
+          - paragraph [ref=e472]:
+            - text: 튀는 값(이상값)은 값이 있어서
+            - code [ref=e473]: isna()
+            - text: 로는 안 잡힌다. 4차시에 배운 조건 검색으로 찾는다. 사람 키가 250cm를 넘는 일은 거의 없으니, 오늘은 250cm를 넘으면 잘못 적은 값으로 본다.
+          - figure [ref=e474]:
+            - paragraph [ref=e475]: 이 차시 예제 파일(week05_easy_class_records.csv)의 값
+            - img "키 값 점들이 150에서 180 사이에 모여 있고 1720.0만 멀리 떨어져 있다가 제거되자 평균이 163.8로 돌아오는 그림" [ref=e476]:
+              - generic [ref=e477]: "150"
+              - generic [ref=e478]: "160"
+              - generic [ref=e479]: "170"
+              - generic [ref=e480]: "180"
+              - generic [ref=e481]: //
+              - generic [ref=e482]: 키_cm
+              - generic [ref=e495]: "1720.0"
+              - generic [ref=e497]: 튀는 값
+              - generic [ref=e498]: 기준 250
+              - generic [ref=e499]: 정리 전 평균 305.3
+              - generic [ref=e500]: 정리 후 평균 163.8
+              - generic [ref=e502]: 평균
+              - generic [ref=e504]: ① 키 11명을 cm 눈금 위에 점으로 놓았다
+              - generic [ref=e505]: ② 혼자 멀리 떨어진 점 1720.0 — 입력 실수로 보이는 튀는 값
+              - generic [ref=e506]: ③ 범위 조건 키_cm > 250 으로 찾는다
+              - generic [ref=e507]: ④ 조건에 걸린 행을 빼면 점이 한곳에 모인다
+              - generic [ref=e508]: ⑤ 평균이 305.3에서 163.8로 돌아온다
+              - generic [ref=e509]: "결과: 튀는 값은 평균을 크게 흔든다"
+            - generic [ref=e510]:
+              - button "멈춤" [ref=e511] [cursor=pointer]
+              - button "처음부터" [ref=e512] [cursor=pointer]
+            - generic [ref=e513]:
+              - text: 튀는 값 찾고 빼기 — 범위 조건 한 사람만 1720.0cm로 적혀 있어 평균이 305.3cm까지 올라갔다.
+              - code [ref=e514]: 키_cm > 250
+              - text: 처럼 있을 수 없는 범위를 조건으로 찾아 빼면 평균이 163.8cm로 돌아온다. 눈금 중간의 // 표시는 "여기서 건너뛰었다"는 뜻이다.
+          - generic [ref=e515]:
+            - generic [ref=e516]:
+              - generic [ref=e517]: Python — 튀는 값 찾기 (노트북 4단계)
+              - button "복사" [ref=e518] [cursor=pointer]
+            - code [ref=e520]: tall = students[students["키_cm"] > 250] print(tall)
+          - generic [ref=e521]:
+            - generic [ref=e522]: 실행 결과
+            - generic [ref=e523]: 이름 반 키_cm 몸무게_kg 수학점수_pt 4 정도윤 2반 1720.0 66.0 74
+          - paragraph [ref=e524]: 몸무게 66.0kg은 평범하다 → 172.0을 적다가 소수점을 빠뜨린 입력 실수로 볼 수 있다. 지우기 전에 이렇게 다른 열과 함께 본다.
+          - paragraph [ref=e525]:
+            - text: 찾을 때 쓴 조건의 반대(
+            - code [ref=e526]: <=
+            - text: )로 남길 행만 고르고, 정리 전후 평균을 비교한다.
+          - generic [ref=e527]:
+            - generic [ref=e528]:
+              - generic [ref=e529]: Python — 튀는 값 빼고 전후 비교하기 (노트북 5단계)
+              - button "복사" [ref=e530] [cursor=pointer]
+            - code [ref=e532]: students = students[students["키_cm"] <= 250] print(students.shape) after_height = round(students["키_cm"].mean(), 1) print("정리 전 평균 키:", before_height) print("정리 후 평균 키:", after_height)
+          - generic [ref=e533]:
+            - generic [ref=e534]: 실행 결과
+            - generic [ref=e535]: "(10, 5) 정리 전 평균 키: 276.6 정리 후 평균 키: 163.8"
+          - paragraph [ref=e536]: 15행이 10행이 되고, 평균 키가 276.6 → 163.8로 바뀌었다. 튀는 값 하나가 평균을 이만큼 흔들었다.
+          - generic [ref=e537]:
+            - generic [ref=e538]: 찾아보기
+            - paragraph [ref=e539]:
+              - text: 검색어
+              - code [ref=e540]: 센서 측정값 튀는 이유
+            - generic [ref=e541]:
+              - generic [ref=e542]:
+                - generic [ref=e543]: ChatGPT에 물어보기 — 복사해서 붙여 넣기
+                - button "복사" [ref=e544] [cursor=pointer]
+              - code [ref=e546]: 공장 센서 기록에 갑자기 튀는 값이 찍히는 흔한 이유를 데이터 분석을 처음 배우는 사람에게 3가지로 설명해줘. 튀는 값이 있으면 곧 불량이라는 뜻인지도 알려줘.
+        - generic [ref=e547]:
+          - heading "반도체 데이터로 확인하기" [level=2] [ref=e548]
+          - paragraph [ref=e549]:
+            - text: 공장 기록
+            - code [ref=e550]:
+              - link "week05_dirty_process_data.csv" [ref=e551] [cursor=pointer]:
+                - /url: ../../data/weekly/week05/week05_dirty_process_data.csv
+            - text: (113행 9열, 교육용 가상 데이터)에도 빈칸·중복·튀는 값을 일부러 섞었다. 한 행 = 공정 작업 1건이다. 위 코드에서 표 이름만
+            - code [ref=e552]: students
+            - text: →
+            - code [ref=e553]: df
+            - text: 로 바뀐다.
+          - paragraph [ref=e554]: "공정 지도 위치: ② 산화 ~ ⑤ 증착/이온주입 + 세정 — 이 단계 설비들의 센서 기록이다(1차시 공정 지도 그림은 PART 2에서 다시 본다). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록)."
+          - table [ref=e556]:
+            - rowgroup [ref=e557]:
+              - row [ref=e558]:
+                - columnheader "열" [ref=e559]
+                - columnheader "공장에서의 뜻" [ref=e560]
+            - rowgroup [ref=e561]:
+              - row [ref=e562]:
+                - cell [ref=e563]:
+                  - code [ref=e564]: 측정시간
+                  - text: ","
+                  - code [ref=e565]: 로트번호
+                  - text: ","
+                  - code [ref=e566]: 설비번호
+                  - text: ","
+                  - code [ref=e567]: 공정명
+                - cell "언제, 어느 웨이퍼 묶음을, 어느 기계(EQ-01~EQ-04)에서, 어떤 작업(산화·포토·식각·증착·세정)으로" [ref=e568]
+              - row [ref=e569]:
+                - cell [ref=e570]:
+                  - code [ref=e571]: 온도_C
+                - cell [ref=e572]:
+                  - text: 설비 안의 온도.
+                  - code [ref=e573]: _C
+                  - text: = 섭씨 도(℃)
+              - row [ref=e574]:
+                - cell [ref=e575]:
+                  - code [ref=e576]: 압력_Pa
+                  - text: ","
+                  - code [ref=e577]: 가스유량_slm
+                - cell [ref=e578]:
+                  - text: 설비 안의 압력(파스칼), 흘려 넣은 가스의 양(
+                  - code [ref=e579]: slm
+                  - text: 은 가스 흐름 양의 단위)
+              - row [ref=e580]:
+                - cell [ref=e581]:
+                  - code [ref=e582]: 처리시간_sec
+                - cell [ref=e583]:
+                  - text: 작업에 걸린 초(
+                  - code [ref=e584]: sec
+                  - text: = second)
+              - row [ref=e585]:
+                - cell [ref=e586]:
+                  - code [ref=e587]: 합격여부
+                - cell "검사 결과. 1 = 합격, -1 = 불합격" [ref=e588]
+          - paragraph [ref=e589]: 값과 연습용 기준(온도 295~305, 압력 995~1025, 가스유량 47~53)은 학습용이라 실제 공정 조건으로 해석하지 않는다.
+          - heading "확인 1 — 숫자 요약으로 이상한 열 찾기" [level=3] [ref=e590]
+          - generic [ref=e591]:
+            - generic [ref=e592]:
+              - generic [ref=e593]: Python — 공장 기록 읽고 요약하기 (노트북 6단계)
+              - button "복사" [ref=e594] [cursor=pointer]
+            - code [ref=e596]: df = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig") print(df.shape) print(df.describe())
+          - generic [ref=e597]:
+            - generic [ref=e598]: 실행 결과
+            - generic [ref=e599]: (113, 9) 온도_C 압력_Pa 가스유량_slm 처리시간_sec 합격여부 count 110.000000 111.000000 110.000000 113.000000 111.000000 mean 304.941298 994.361336 51.350000 119.922124 0.585586 std 33.576979 140.252613 19.933578 5.191128 0.814287 min 291.300000 -42.910520 -5.000000 107.300000 -1.000000 25% 298.100000 1007.850000 48.755000 116.500000 1.000000 50% 300.450000 1013.100000 49.940000 119.800000 1.000000 75% 302.500000 1017.500000 51.377500 123.400000 1.000000 max 557.727366 1033.100000 250.000000 132.300000 1.000000
+          - paragraph [ref=e600]:
+            - text: 공장 말로 읽기 — 온도 최댓값 557.7도는 평소(300도 안팎)와 동떨어진다. 압력이 음수(-42.9)이고 가스유량에 -5와 250이 있다. 반 기록의 키 1720cm와 같은 "튀는 값 후보"다.
+            - code [ref=e601]: 합격여부
+            - text: 의 mean 0.59는 1과 -1의 평균일 뿐 합격률(59%)이 아니다.
+          - heading "확인 2 — 빈칸과 중복은 몇 개일까" [level=3] [ref=e602]
+          - generic [ref=e603]:
+            - generic [ref=e604]:
+              - generic [ref=e605]: Python — 빈칸과 중복 세기 (노트북 6단계)
+              - button "복사" [ref=e606] [cursor=pointer]
+            - code [ref=e608]: print(df.isna().sum()) print(df.duplicated().sum())
+          - generic [ref=e609]:
+            - generic [ref=e610]: 실행 결과
+            - generic [ref=e611]: "측정시간 0 로트번호 0 설비번호 0 공정명 0 온도_C 3 압력_Pa 2 가스유량_slm 3 처리시간_sec 0 합격여부 2 dtype: int64 3"
+          - paragraph [ref=e612]: 공장 말로 읽기 — 센서 값(온도·압력·가스유량)과 검사 결과에 빈칸이 모두 10칸 있고, 같은 기록이 두 번 저장된 행이 3개다. 이대로 평균을 내면 믿을 수 없다.
+          - heading "확인 3 — 크게 튀는 온도는 어떤 기록일까" [level=3] [ref=e613]
+          - paragraph [ref=e614]: 반 기록에서 키 250 초과를 찾았던 것과 같은 모양으로, 온도 400 초과 기록을 찾아 다른 열과 함께 본다.
+          - generic [ref=e615]:
+            - generic [ref=e616]:
+              - generic [ref=e617]: Python — 튀는 온도 찾기 (노트북 6단계)
+              - button "복사" [ref=e618] [cursor=pointer]
+            - code [ref=e620]: hot = df[df["온도_C"] > 400] print(hot)
+          - generic [ref=e621]:
+            - generic [ref=e622]: 실행 결과
+            - generic [ref=e623]: 측정시간 로트번호 설비번호 공정명 온도_C 압력_Pa 가스유량_slm \ 17 2024-03-08 16:00 LOT-0096 EQ-03 식각 540.315405 1009.6 49.59 67 2024-03-23 19:00 LOT-0322 EQ-03 증착 557.727366 1017.0 48.94 처리시간_sec 합격여부 17 120.3 1.0 67 121.1 1.0
+          - paragraph [ref=e624]:
+            - text: 공장 말로 읽기 — 540도·557도 기록 2건은 이 기록의 평소 범위(295~305도)에서 크게 벗어났다. 그런데 압력·가스유량은 평범하고 둘 다 합격(1)이다. 키 1720cm·몸무게 66kg처럼 온도 기록 쪽을 먼저 의심해 볼 만하다. 표가 넓으면 pandas가 두 덩어리로 나눠 보여 준다(
+            - code [ref=e625]: \
+            - text: 는 "다음 줄에 이어짐").
+            - code [ref=e626]: "1.0"
+            - text: 은 1(합격)과 같다. 정리해서 평균 온도가 얼마나 바뀌는지는 PART 3 실습지 문제 2·3에서 직접 구한다.
+        - generic [ref=e627]:
+          - heading "PART 2 Orange3 — 빈칸 채우기와 튀는 값" [level=2] [ref=e628]:
+            - generic [ref=e629]: PART 2
+            - text: Orange3 — 빈칸 채우기와 튀는 값
+          - paragraph [ref=e630]: PART 1에서는 빈칸 행을 지웠다. Orange에서는 빈칸을 채우는 방법을 본다. 채울 때 무엇을 조심해야 하는지가 오늘의 핵심이다.
+          - heading "워크플로 열기" [level=3] [ref=e631]
+          - list [ref=e632]:
+            - listitem [ref=e633]: 실습 환경의 폴더 구조를 그대로 둔다(데이터 경로가 폴더 구조에 맞춰져 있다).
+            - listitem [ref=e634]:
+              - text: Orange3에서 File → Open을 누르고
+              - code [ref=e635]: week05_1_cleanroom_start.ows
+              - text: 를 연다.
+            - listitem [ref=e636]:
+              - text: 캔버스에 File 위젯 하나와 ①~④ 안내 메모가 보이면 준비가 끝난 것이다. 막히면 같은 폴더의
+              - code [ref=e637]: _done.ows
+              - text: (완성본)를 연다.
+          - generic [ref=e638]:
+            - generic [ref=e639]: 캡처 예정 — week05_1_cleanroom_start.ows를 연 캔버스 전체 — File (파일 불러오기) 위젯 하나와 위쪽 ①~④ 안내 메모가 보이게
+            - text: "저장 위치:"
+            - code [ref=e640]: assets/images/orange3/week05_02_cleanroom_start.png
+          - heading "위젯 이름표" [level=3] [ref=e641]
+          - table [ref=e643]:
+            - rowgroup [ref=e644]:
+              - row [ref=e645]:
+                - columnheader "위젯(화면 이름)" [ref=e646]
+                - columnheader "어느 묶음에 있나" [ref=e647]
+                - columnheader "한국어 뜻" [ref=e648]
+                - columnheader "오늘 하는 일" [ref=e649]
+            - rowgroup [ref=e650]:
+              - row [ref=e651]:
+                - cell [ref=e652]:
+                  - code [ref=e653]: Impute
+                - cell "Transform" [ref=e654]
+                - cell "빈칸 채우기" [ref=e655]
+                - cell "오늘 새 위젯. 빈칸을 그 열의 평균으로 채운다(Average/Most frequent)" [ref=e656]
+          - paragraph [ref=e657]: 행 수는 어디서 보나 — 위젯 창 맨 아래 상태 표시줄에 들어온 행 수와 내보낸 행 수가 숫자로 보인다. Data Table은 왼쪽 Info 칸에도 행 수가 나온다.
+          - heading "오늘 데이터는 공정 지도의 어디일까" [level=3] [ref=e658]
+          - img "반도체 8대 공정 흐름을 생활 비유로 그린 공정 지도" [ref=e659]
+          - paragraph [ref=e660]: 1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). 클린룸은 공정 지도의 ②~⑥(웨이퍼 위에 회로를 만드는 단계)이 이루어지는 FAB의 방이다.
+          - list [ref=e661]:
+            - listitem [ref=e662]:
+              - text: ▸ 워밍업
+              - code [ref=e663]:
+                - link "week05_orange_cleanroom_env.csv" [ref=e664] [cursor=pointer]:
+                  - /url: ../../data/weekly/week05/week05_orange_cleanroom_env.csv
+              - text: "— 공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸(특정 공정 단계가 아니라 그 방의 공기 기록. ① 웨이퍼 제조는 보통 웨이퍼 제조사에서 하고, ⑦⑧도 별도의 청정 공간을 쓴다)."
+            - listitem [ref=e665]:
+              - text: ▸ 반도체
+              - code [ref=e666]:
+                - link "week05_dirty_process_data.csv" [ref=e667] [cursor=pointer]:
+                  - /url: ../../data/weekly/week05/week05_dirty_process_data.csv
+              - text: "— 공정 지도 위치: ②~⑤ + 세정 설비의 센서 기록."
+          - heading "워밍업 — 클린룸 환경 기록" [level=3] [ref=e668]
+          - paragraph [ref=e669]: 반도체는 클린룸(먼지를 극도로 줄인 방)에서 만든다. 수술실을 떠올리면 된다. 회로가 아주 가늘어서, 공기 속 아주 작은 입자(파티클)가 웨이퍼에 내려앉으면 회로가 끊기거나 붙는 결함이 될 수 있다. 그래서 공장은 클린룸의 파티클 수·온도·습도를 계속 재서 기록한다.
+          - paragraph [ref=e670]:
+            - code [ref=e671]:
+              - link "week05_orange_cleanroom_env.csv" [ref=e672] [cursor=pointer]:
+                - /url: ../../data/weekly/week05/week05_orange_cleanroom_env.csv
+            - text: (72행, 교육용 가상 데이터)는 클린룸 세 구역(A·B·C)을 하루 동안 24번씩 잰 기록이다.
+          - table [ref=e674]:
+            - rowgroup [ref=e675]:
+              - row [ref=e676]:
+                - columnheader "열" [ref=e677]
+                - columnheader "뜻" [ref=e678]
+            - rowgroup [ref=e679]:
+              - row [ref=e680]:
+                - cell [ref=e681]:
+                  - code [ref=e682]: 측정시간
+                  - text: ","
+                  - code [ref=e683]: 구역
+                - cell "언제, 어느 구역에서 쟀나" [ref=e684]
+              - row [ref=e685]:
+                - cell [ref=e686]:
+                  - code [ref=e687]: 파티클_count_per_m3
+                - cell "공기 1세제곱미터(m³) 안의 입자 개수. 평소 1,000개 안팎(실제로는 일정 크기 이상 입자만 센다. 이 데이터는 크기를 정하지 않은 교육용 값이다)" [ref=e688]
+              - row [ref=e689]:
+                - cell [ref=e690]:
+                  - code [ref=e691]: 온도_C
+                  - text: ","
+                  - code [ref=e692]: 습도_pct
+                - cell "방 온도(섭씨 도), 습도(퍼센트)" [ref=e693]
+              - row [ref=e694]:
+                - cell [ref=e695]:
+                  - code [ref=e696]: 차압_Pa
+                - cell "방 안과 바깥의 공기 압력 차이(파스칼). 안쪽을 바깥보다 높게(양수) 유지해야 바깥 먼지가 들어오지 않는다. 평소 12 안팎" [ref=e697]
+          - img "클린룸 세 구역의 하루 파티클 수 선 그래프. B구역 한 시각에 99,999 센서 오류 코드가 있다" [ref=e698]
+          - paragraph [ref=e699]: 클린룸 세 구역의 하루 먼지 입자 수. 08:00 B구역 기록의 99,999는 이 기록의 오류 코드(축 밖), 세로 점선은 기록이 빈 시각이다(교육용 가상 데이터, 실제 등급 기준 아님).
+          - paragraph [ref=e700]: 그래프의 99,999는 실제 먼지 수가 아니다. 이 기록에서는 센서가 측정에 실패하면 99,999를 남기도록 정해 두었다(오류 코드). 이 값을 그대로 두고 빈칸을 채우면 무슨 일이 생기는지 Orange로 본다.
+          - generic [ref=e701]:
+            - generic [ref=e702]: 찾아보기
+            - paragraph [ref=e703]:
+              - text: 검색어
+              - code [ref=e704]: 반도체 클린룸 왜 필요
+            - generic [ref=e705]:
+              - generic [ref=e706]:
+                - generic [ref=e707]: ChatGPT에 물어보기 — 복사해서 붙여 넣기
+                - button "복사" [ref=e708] [cursor=pointer]
+              - code [ref=e710]: 반도체 공장에 클린룸이 왜 필요한지 반도체를 처음 배우는 사람에게 3문장으로 설명해줘. 공기 속 먼지 입자를 어떻게 관리하는지도 알려줘.
+          - generic [ref=e711]:
+            - generic [ref=e712]: "1"
+            - generic [ref=e713]:
+              - text: 정리 전 훑어보기 — 왼쪽 Data 묶음에서
+              - code [ref=e714]: Column Statistics
+              - text: 를 끌어 와 File과 잇고 더블클릭한다. Missing 칸에서 파티클 4 · 습도 3 · 차압 2, 파티클 Max 99999, 차압 Min -5.0을 찾는다.
+          - generic [ref=e715]:
+            - generic [ref=e716]: 캡처 예정 — week05_1_cleanroom_done.ows의 Column Statistics (정리 전) 창 — 파티클_count_per_m3 행의 Max 99999와 Missing 4, 습도_pct 행 Missing 3, 차압_Pa 행 Min -5.0과 Missing 2가 보이게
+            - text: "저장 위치:"
+            - code [ref=e717]: assets/images/orange3/week05_03_cleanroom_stats_before.png
+          - generic [ref=e718]:
+            - generic [ref=e719]: "2"
+            - generic [ref=e720]:
+              - text: 빈칸 채우기 — 왼쪽 Transform 묶음에서
+              - code [ref=e721]: Impute
+              - text: 를 끌어 와 File과 잇고 더블클릭한다. 위쪽 Default Method에서 Average/Most frequent를 고른다 (숫자 열은 평균, 글자 열은 가장 흔한 값으로 채운다는 뜻). Impute에
+              - code [ref=e722]: Data Table
+              - text: 을 이어 연다. 채운 칸에는 표시가 없으니,
+              - code [ref=e723]: 파티클_count_per_m3
+              - text: 열 머리글을 눌러 큰 값부터 정렬하면 99999 바로 아래에 똑같은 값 4개가 모여 보인다. 그 값이 빈칸에 채워진 숫자다.
+          - generic [ref=e724]:
+            - generic [ref=e725]: 캡처 예정 — week05_1_cleanroom_done.ows의 Data Table (채운 뒤) 창 — 파티클_count_per_m3 열에서 2543.66으로 채워진 칸 하나 이상이, 위아래 행의 1,000 안팎 값과 함께 보이게
+            - text: "저장 위치:"
+            - code [ref=e726]: assets/images/orange3/week05_04_cleanroom_filled_table.png
+          - button "채운 값 확인 보기" [ref=e727] [cursor=pointer]
+          - generic [ref=e728]:
+            - generic [ref=e729]: "3"
+            - generic [ref=e730]:
+              - text: 튀는 값 거르기 — Transform 묶음의
+              - code [ref=e731]: Select Rows
+              - text: "를 Impute에 잇는다. 창에서 Add Condition을 누르고 열 → 연산자 → 숫자 순서로 고르는 일을 조건마다 되풀이해 두 줄을 넣는다:"
+              - code [ref=e732]: 파티클_count_per_m3
+              - text: is below 10000,
+              - code [ref=e733]: 차압_Pa
+              - text: is at least 0. Select Rows에
+              - code [ref=e734]: Column Statistics
+              - text: 를 하나 더 잇는다.
+          - generic [ref=e735]:
+            - generic [ref=e736]: 캡처 예정 — week05_1_cleanroom_done.ows의 Column Statistics (정리 후) 창 — 파티클_count_per_m3 행의 Mean 1180.0과 Max 2543.66이 보이고, 창 아래 상태 표시줄에 들어온 행 수 70이 보이게
+            - text: "저장 위치:"
+            - code [ref=e737]: assets/images/orange3/week05_05_cleanroom_stats_after.png
+          - paragraph [ref=e738]: 읽을 것 — 72행 중 오류 코드 행과 음수 차압 행이 빠져 70행이 남는다. 그런데 정리 후 파티클 Max가 2543.66, 바로 아까 채운 값이다. 99,999는 지웠지만, 그 값으로 계산해 채운 숫자는 표에 그대로 남았다. 튀는 값을 먼저 확인하고 채웠다면 채운 값이 이렇게 끌려 올라가지 않았다.
+          - paragraph [ref=e739]: 차압 -5.0은 바깥 공기가 밀려 들어올 수 있는 방향이라, 센서 오류인지 실제 상황인지 따로 확인할 값이다. 오늘은 평균 계산에서만 뺀다.
+          - heading "반도체 — 지저분한 공장 기록 정리하기" [level=3] [ref=e740]
+          - generic [ref=e741]:
+            - generic [ref=e742]: 강사 화면 보며 확인
+            - text: 이 절은 강사가 화면으로 보여 준다. 학생은 따라 누르지 않고 순서와 숫자만 눈으로 확인한다. 직접 해 보는 것은 PART 3 실습지 문제 4에서 한 번 한다.
+          - paragraph [ref=e743]:
+            - text: 같은 위젯으로 PART 1의 공장 기록(113행)을 정리한다. File → Open으로
+            - code [ref=e744]: week05_2_dirty_process_start.ows
+            - text: 를 연다.
+          - generic [ref=e745]:
+            - generic [ref=e746]: "1"
+            - generic [ref=e747]:
+              - text: 정리 전 훑어보기 — File에
+              - code [ref=e748]: Column Statistics
+              - text: 를 잇는다.
+              - code [ref=e749]: 온도_C
+              - text: 의 Missing 3, Max 557.73,
+              - code [ref=e750]: 압력_Pa
+              - text: Min -42.91,
+              - code [ref=e751]: 가스유량_slm
+              - text: Min -5 · Max 250을 찾는다. PART 1의
+              - code [ref=e752]: describe()
+              - text: 와 같은 숫자다.
+          - generic [ref=e753]:
+            - generic [ref=e754]: 캡처 예정 — week05_2_dirty_process_done.ows의 Column Statistics (정리 전) 창 — 온도_C 행의 Missing 3과 Max 557.73, 압력_Pa 행 Min -42.91, 가스유량_slm 행 Min -5와 Max 250이 보이게
+            - text: "저장 위치:"
+            - code [ref=e755]: assets/images/orange3/week05_06_process_stats_before.png
+          - generic [ref=e756]:
+            - generic [ref=e757]: "2"
+            - generic [ref=e758]:
+              - text: 빈칸 채우기 + 결과 빈 행 지우기 — File에
+              - code [ref=e759]: Impute
+              - text: 를 잇고 Default Method를 Average/Most frequent로 고른다. 그다음 아래쪽 Individual Attribute Settings 칸의 왼쪽 열 목록에서
+              - code [ref=e760]: 합격여부
+              - text: 를 누르고, 오른쪽 버튼 중 Remove instances with unknown values를 고른다. 검사 결과는 지어내 채우면 안 되기 때문이다.
+          - generic [ref=e761]:
+            - generic [ref=e762]: 주의
+            - text: 같은 이름의 버튼이 위쪽 Default Method 칸에도 있다. 위쪽에서 Remove instances with unknown values를 누르면 빈칸이 하나라도 있는 행이 모두 지워져 98행이 남는다. 반대로 아래쪽 합격여부 설정을 빠뜨리면 합격여부 빈칸 2개가 "합격(1)"으로 채워져 107행이 남는다. 위쪽은 Average/Most frequent, 아래쪽은 합격여부만 Remove instances다.
+          - generic [ref=e763]:
+            - generic [ref=e764]: 캡처 예정 — week05_2_dirty_process_done.ows의 Impute (빈칸 채우기) 창 — 위쪽 Default Method가 Average/Most frequent이고, 아래쪽 Individual Attribute Settings의 왼쪽 열 목록에서 합격여부를 고른 채 오른쪽 버튼 Remove instances with unknown values가 선택된 상태
+            - text: "저장 위치:"
+            - code [ref=e765]: assets/images/orange3/week05_07_process_impute.png
+          - generic [ref=e766]:
+            - generic [ref=e767]: "3"
+            - generic [ref=e768]:
+              - text: 평소 범위를 크게 벗어난 값 거르기 — Impute에
+              - code [ref=e769]: Select Rows
+              - text: "를 잇고 Add Condition으로 조건 네 줄을 넣는다(가스유량은 같은 열을 두 번 넣는다):"
+              - code [ref=e770]: 온도_C
+              - text: is at most 400,
+              - code [ref=e771]: 압력_Pa
+              - text: is at least 0,
+              - code [ref=e772]: 가스유량_slm
+              - text: is at least 0,
+              - code [ref=e773]: 가스유량_slm
+              - text: is below 200.
+          - generic [ref=e774]:
+            - generic [ref=e775]: 캡처 예정 — week05_2_dirty_process_done.ows의 Select Rows (행 고르기) 창 — 조건 네 줄(온도_C is at most 400, 압력_Pa is at least 0, 가스유량_slm is at least 0, 가스유량_slm is below 200)이 모두 보이게
+            - text: "저장 위치:"
+            - code [ref=e776]: assets/images/orange3/week05_08_process_select_rows.png
+          - generic [ref=e777]:
+            - generic [ref=e778]: "4"
+            - generic [ref=e779]:
+              - text: 정리 결과 읽기 — Select Rows에
+              - code [ref=e780]: Data Table
+              - text: 과
+              - code [ref=e781]: Column Statistics
+              - text: 를 각각 잇는다. Data Table 왼쪽 Info에서 105행, Column Statistics에서
+              - code [ref=e782]: 온도_C
+              - text: Mean 300.75(화면에 300.7로 보일 수 있다)를 읽는다.
+          - generic [ref=e783]:
+            - generic [ref=e784]: 캡처 예정 — week05_2_dirty_process_done.ows의 Data Table (정리 결과) 창 — 왼쪽 Info 칸의 행 수 105가 보이게
+            - text: "저장 위치:"
+            - code [ref=e785]: assets/images/orange3/week05_09_process_table_after.png
+          - generic [ref=e786]:
+            - generic [ref=e787]: 캡처 예정 — week05_2_dirty_process_done.ows의 Column Statistics (정리 후) 창 — 온도_C 행의 Mean 300.75(또는 300.7), Min 291.3, Max 310.9가 보이게
+            - text: "저장 위치:"
+            - code [ref=e788]: assets/images/orange3/week05_10_process_stats_after.png
+          - paragraph [ref=e789]: Orange 흐름은 113행 → Impute 뒤 111행(합격여부 빈 2행 삭제) → Select Rows 뒤 105행이다. 정리 후 온도는 Min 291.3, Max 310.9로 평소 범위 근처에 모였다. 압력 빈칸은 음수 값에 끌려 내려간 평균(994.36)으로 채워졌다 — 클린룸에서 본 것과 같은 일이다.
+          - heading "파이썬 결과와 비교" [level=3] [ref=e790]
+          - table [ref=e792]:
+            - rowgroup [ref=e793]:
+              - row [ref=e794]:
+                - columnheader [ref=e795]
+                - columnheader "파이썬(실습지 문제 2·3)" [ref=e796]
+                - columnheader "Orange(오늘 PART 2)" [ref=e797]
+            - rowgroup [ref=e798]:
+              - row [ref=e799]:
+                - cell "빈칸" [ref=e800]
+                - cell "빈칸이 있는 행을 지운다" [ref=e801]
+                - cell "측정값 빈칸은 평균으로 채우고, 합격여부가 빈 행만 지운다" [ref=e802]
+              - row [ref=e803]:
+                - cell "중복 행" [ref=e804]
+                - cell "지운다" [ref=e805]
+                - cell "남긴다(중복을 지우는 위젯을 넣지 않았다)" [ref=e806]
+              - row [ref=e807]:
+                - cell "튀는 값" [ref=e808]
+                - cell "범위 조건으로 뺀다" [ref=e809]
+                - cell "Select Rows로 뺀다" [ref=e810]
+              - row [ref=e811]:
+                - cell "남은 행 / 평균 온도" [ref=e812]
+                - cell "○○행 / ○○○.○도 (실습지에서 직접 구한다)" [ref=e813]
+                - cell "105행 / 300.75도" [ref=e814]
+          - paragraph [ref=e815]: 한 문장으로 — 파이썬은 빈칸 행과 중복 행을 지우고, Orange는 빈칸을 평균으로 채우고 중복을 남긴다. 무엇을 지우고 무엇을 채웠는지에 따라 남는 행 수와 평균이 달라진다. 두 도구의 결과가 같지 않은 것이 정상이다.
+        - generic [ref=e816]:
+          - heading "PART 3 실습지" [level=2] [ref=e817]:
+            - generic [ref=e818]: PART 3
+            - text: 실습지
+          - paragraph [ref=e819]:
+            - link "5차시 실습지" [ref=e820] [cursor=pointer]:
+              - /url: worksheet.html
+            - text: 를 열고 순서대로 푼다.
+          - list [ref=e821]:
+            - listitem [ref=e822]:
+              - text: 문제 1~3 (파이썬) — 노트북 7단계의
+              - code [ref=e823]: ____
+              - text: 를 채운다. 공장 기록을 요약하고, 빈칸·중복 행을 지우고, 교육용 기준 밖의 값을 뺀 뒤 평균 온도를 비교한다.
+            - listitem [ref=e824]:
+              - text: 문제 4 (Orange) —
+              - code [ref=e825]: week05_2_dirty_process_start.ows
+              - text: 에서 위젯을 이어 105행과 평균 온도를 읽고, 문제 3과 다른 이유를 한 줄로 쓴다.
+            - listitem [ref=e826]: 문제 5 (해석 문장) — 정리 전후 평균 온도를 한 문장으로 보고한다.
+          - paragraph [ref=e827]: 다 풀면 실습지의 "정답 보기"로 확인하고, 문제 5의 문장을 옆 사람에게 읽어 준다.
+        - generic [ref=e828]:
+          - heading "핵심 용어 카드" [level=2] [ref=e829]
+          - generic [ref=e830]:
+            - generic [ref=e831]:
+              - heading "결측값" [level=4] [ref=e832]
+              - generic [ref=e833]: Missing Value (NaN)
+              - generic [ref=e834]:
+                - term [ref=e835]: 한 줄 설명
+                - definition [ref=e836]:
+                  - text: 값이 있어야 할 칸이 비어 있는 것. pandas에서는
+                  - code [ref=e837]: NaN
+                  - text: ", Orange에서는"
+                  - code [ref=e838]: "?"
+                  - text: 로 보인다.
+                - term [ref=e839]: 쉬운 비유
+                - definition [ref=e840]: 출석부에 체크도 결석 표시도 없는 칸.
+                - term [ref=e841]: 데이터에서의 예
+                - definition [ref=e842]:
+                  - code [ref=e843]: df.isna().sum()
+                  - text: → 온도 3, 압력 2, 가스유량 3, 합격여부 2
+                - term [ref=e844]: 자주 하는 오해
+                - definition [ref=e845]: 빈칸을 0과 같다고 생각한다. 0은 "잰 값이 0", 빈칸은 "기록이 없음"이다.
+            - generic [ref=e846]:
+              - heading "중복 행" [level=4] [ref=e847]
+              - generic [ref=e848]: Duplicate
+              - generic [ref=e849]:
+                - term [ref=e850]: 한 줄 설명
+                - definition [ref=e851]: 모든 칸이 똑같은 행이 두 번 이상 저장된 것.
+                - term [ref=e852]: 쉬운 비유
+                - definition [ref=e853]: 가계부에 같은 영수증을 두 번 적은 것.
+                - term [ref=e854]: 데이터에서의 예
+                - definition [ref=e855]:
+                  - code [ref=e856]: df.duplicated().sum()
+                  - text: → 3
+                - term [ref=e857]: 자주 하는 오해
+                - definition [ref=e858]: 중복 3건을 지우면 6행이 사라진다고 생각한다. 복사본 3행만 지워진다.
+            - generic [ref=e859]:
+              - heading "튀는 값(이상값)" [level=4] [ref=e860]
+              - generic [ref=e861]: Outlier
+              - generic [ref=e862]:
+                - term [ref=e863]: 한 줄 설명
+                - definition [ref=e864]: 다른 값들과 동떨어지게 큰 값이나 작은 값.
+                - term [ref=e865]: 쉬운 비유
+                - definition [ref=e866]: 건강검진에서 혈압 300 — 지우기 전에 다시 재고 다른 결과와 함께 본다.
+                - term [ref=e867]: 데이터에서의 예
+                - definition [ref=e868]: 키 1720cm, 온도 557.7도, 클린룸 기록의 파티클 99,999(이 기록에서 정한 센서 오류 코드)
+                - term [ref=e869]: 자주 하는 오해
+                - definition [ref=e870]:
+                  - code [ref=e871]: isna()
+                  - text: 로 잡힌다고 생각한다. 값이 있으므로 범위 조건으로 찾는다.
+            - generic [ref=e872]:
+              - heading "빈칸 채우기" [level=4] [ref=e873]
+              - generic [ref=e874]: Impute
+              - generic [ref=e875]:
+                - term [ref=e876]: 한 줄 설명
+                - definition [ref=e877]: 빈칸을 지우지 않고 어떤 값(오늘은 그 열의 평균)으로 채우는 것.
+                - term [ref=e878]: 쉬운 비유
+                - definition [ref=e879]: 결석한 날 점수를 반 평균으로 적어 두기.
+                - term [ref=e880]: 데이터에서의 예
+                - definition [ref=e881]: 클린룸 파티클 빈칸 4칸 → 2543.66
+                - term [ref=e882]: 자주 하는 오해
+                - definition [ref=e883]: 채운 값은 늘 믿을 만하다고 생각한다. 튀는 값이 섞인 평균으로 채우면 채운 값도 튄다.
+        - generic [ref=e884]:
+          - heading "데이터" [level=2] [ref=e885]
+          - list [ref=e886]:
+            - listitem [ref=e887]:
+              - text: ▸
+              - code [ref=e888]:
+                - link "week05_easy_class_records.csv" [ref=e889] [cursor=pointer]:
+                  - /url: ../../data/weekly/week05/week05_easy_class_records.csv
+              - text: — 15행 5열, 생활 예제용 가상 데이터(PART 1). 빈칸 3칸, 중복 1행, 잘못 적은 키 1개.
+            - listitem [ref=e890]:
+              - text: ▸
+              - code [ref=e891]:
+                - link "week05_orange_cleanroom_env.csv" [ref=e892] [cursor=pointer]:
+                  - /url: ../../data/weekly/week05/week05_orange_cleanroom_env.csv
+              - text: — 72행 6열, 교육용 가상 데이터(PART 2 워밍업, Orange는
+              - code [ref=e893]: orange/
+              - text: 폴더의
+              - code [ref=e894]: .tab
+              - text: "을 연다). 빈칸: 파티클 4 · 습도 3 · 차압 2, 파티클 99,999 1행, 차압 -5.0 1행. 공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸."
+            - listitem [ref=e895]:
+              - text: ▸
+              - code [ref=e896]:
+                - link "week05_dirty_process_data.csv" [ref=e897] [cursor=pointer]:
+                  - /url: ../../data/weekly/week05/week05_dirty_process_data.csv
+              - text: "— 113행 9열, 교육용 가상 데이터(PART 1·2·3). 빈칸 10칸, 중복 3행, 튀는 값 6건. 공정명 오타 3건과 형식이 다른 측정시간 값 2건도 있지만 오늘은 다루지 않는다. 공정 지도 위치: ②~⑤ + 세정 설비의 센서 기록."
+            - listitem [ref=e898]:
+              - text: "▸ 열 설명:"
+              - link "데이터 설명서" [ref=e899] [cursor=pointer]:
+                - /url: ../../data/data_dictionary/week05_dictionary.html
+        - generic [ref=e900]:
+          - heading "주의할 점 & 자주 발생하는 오류" [level=2] [ref=e901]
+          - generic [ref=e902]:
+            - generic [ref=e903]: 오류 1 — 지운 결과를 저장하지 않음
+            - code [ref=e904]: students.dropna()
+            - text: 만 쓰면 오류 없이 지나가지만
+            - code [ref=e905]: print(students.shape)
+            - text: 는 그대로
+            - code [ref=e906]: (15, 5)
+            - text: 다.
+            - code [ref=e907]: students = students.dropna()
+            - text: 처럼 앞에
+            - code [ref=e908]: =
+            - text: 로 다시 저장한다.
+          - generic [ref=e909]:
+            - generic [ref=e910]: 오류 2 — isna 뒤 괄호 빠뜨림
+            - code [ref=e911]: students.isna.sum()
+            - text: →
+            - code [ref=e912]: "AttributeError: 'function' object has no attribute 'sum'"
+            - text: .
+            - code [ref=e913]: isna().sum()
+            - text: 처럼 함수마다
+            - code [ref=e914]: ()
+            - text: 를 붙인다.
+          - generic [ref=e915]:
+            - generic [ref=e916]: 오류 3 — 조건 방향 반대
+            - text: 남길 행을 고를 때
+            - code [ref=e917]: clean[clean["온도_C"] >= 400]
+            - text: 처럼 부등호를 거꾸로 쓰면 오류 없이
+            - code [ref=e918]: (2, 9)
+            - text: 가 나온다. 정상 행이 다 지워지고 튀는 값 2행만 남은 것이다. "찾을 때는
+            - code [ref=e919]: ">"
+            - text: ", 남길 때는 그 반대"
+            - code [ref=e920]: <=
+            - text: "\"를 떠올린다."
+          - generic [ref=e921]:
+            - generic [ref=e922]: 빈칸을 그대로 두고 실행하면
+            - text: 노트북의
+            - code [ref=e923]: ____
+            - text: 를 채우지 않으면
+            - code [ref=e924]: "AttributeError: 'Series' object has no attribute '____'"
+            - text: (
+            - code [ref=e925]: Series
+            - text: = 표의 열 하나)나
+            - code [ref=e926]: "SyntaxError: invalid syntax. Perhaps you forgot a comma?"
+            - text: 가 난다. 쉼표 문제가 아니라 빈칸을 아직 안 채웠다는 뜻이다.
+        - generic [ref=e927]:
+          - heading "결과 정리 & 퀴즈" [level=2] [ref=e928]
+          - list [ref=e929]:
+            - listitem [ref=e930]: "▸ 반 기록: 15행 → 빈칸 행 지우기 12 → 중복 지우기 11 → 튀는 값 빼기 10행. 평균 키 276.6 → 163.8."
+            - listitem [ref=e931]: "▸ 공장 기록(파이썬): 빈칸 행 → 중복 행 → 범위 밖 행 순서로 지웠다. 남은 행 수와 평균 온도는 실습지 문제 2·3에서 직접 구한 값이다(아래 \"핵심 질문 → 데이터 연결\"에서 확인)."
+            - listitem [ref=e932]: "▸ 공장 기록(Orange): 빈칸을 평균으로 채우고 중복을 남겨 105행, 평균 온도 300.75. 정리 방법이 달라 숫자가 다른 것이 정상이다."
+            - listitem [ref=e933]: "▸ 클린룸: 99,999가 남은 채로 평균을 내 채웠더니 빈칸이 2543.66으로 채워졌다 → 채우기 전에 튀는 값부터 확인한다."
+          - generic [ref=e934]:
+            - generic [ref=e935]: 오늘의 반도체 이해 포인트
+            - list [ref=e936]:
+              - listitem [ref=e937]: ▸ 반도체는 클린룸(먼지를 극도로 줄인 방)에서 만들고, 공기 속 입자(파티클)·온도·습도를 계속 감시한다. 입자가 웨이퍼에 내려앉으면 가는 회로에 결함이 생길 수 있기 때문이다.
+              - listitem [ref=e938]: ▸ 센서 기록에는 빈칸과 99,999 같은 오류 코드가 섞인다. 정리한 뒤에야 평균을 믿을 수 있다.
+          - paragraph [ref=e939]:
+            - text: 복습 문제 전체는
+            - code [ref=e940]: quiz.json
+            - text: (수업 후 자율 복습)에 있다. 아래는 그중 일부다.
+          - generic [ref=e941]:
+            - generic [ref=e942]:
+              - text: Q1. (객관식)
+              - code [ref=e943]: describe()
+              - text: 결과에서 키_cm의
+              - code [ref=e944]: count
+              - text: 가 14였다(전체 15명). 이것이 뜻하는 것은?
+            - list [ref=e945]:
+              - listitem [ref=e946]: A. 키가 14cm인 학생이 있다
+              - listitem [ref=e947]: B. 키 칸 하나가 비어 있다
+              - listitem [ref=e948]: C. 같은 학생이 14번 적혔다
+              - listitem [ref=e949]: D. 키 평균이 14다
+            - button "정답 보기" [ref=e950] [cursor=pointer]
+          - generic [ref=e951]:
+            - generic [ref=e952]: Q2. (객관식) 클린룸 기록에서 Impute로 파티클 빈칸을 평균으로 채웠더니 2543.66이 들어갔다. 평소 값은 1,000 안팎이다. 왜 이렇게 큰 값이 들어갔을까?
+            - list [ref=e953]:
+              - listitem [ref=e954]: A. Impute는 그 열의 가장 큰 값으로 채우기 때문에
+              - listitem [ref=e955]: B. 센서 오류 코드 99,999가 평균 계산에 들어가 평균을 끌어올렸기 때문에
+              - listitem [ref=e956]: C. 빈칸이 4칸이라 평균에 4를 곱했기 때문에
+              - listitem [ref=e957]: D. B구역 먼지가 실제로 많았기 때문에
+            - button "정답 보기" [ref=e958] [cursor=pointer]
+          - generic [ref=e959]:
+            - generic [ref=e960]: Q3. (서술) 실습지 문제 3에서 정리 전과 정리 후의 평균 온도가 달랐다. 왜 달라졌는지 한 문장으로 설명해 보자.
+            - button "예시 답안 보기" [ref=e961] [cursor=pointer]
+        - generic [ref=e962]:
+          - heading "AI로 한 걸음 더 — 질문하고 코드 받아보기" [level=2] [ref=e963]
+          - paragraph [ref=e964]:
+            - text: ChatGPT에 아래처럼 물어 받은 코드의 예시다.
+            - code [ref=e965]: for
+            - text: 는 3차시에 배운 반복문이다. 노트북 8단계에서 실행해 확인 2의
+            - code [ref=e966]: isna().sum()
+            - text: 결과와 같은지 비교한다.
+          - generic [ref=e967]:
+            - generic [ref=e968]:
+              - generic [ref=e969]: ChatGPT에 물어보기 — 복사해서 붙여 넣기
+              - button "복사" [ref=e970] [cursor=pointer]
+            - code [ref=e972]: week05_dirty_process_data.csv를 pandas로 읽어서(encoding="utf-8-sig"), 열마다 빈칸 개수와 빈칸 비율(%)을 한 줄씩 출력하는 짧은 코드를 만들어 줘.
+          - generic [ref=e973]:
+            - generic [ref=e974]:
+              - generic [ref=e975]: Python — AI가 만들어 준 코드 예시 (노트북 8단계)
+              - button "복사" [ref=e976] [cursor=pointer]
+            - code [ref=e978]: "import pandas as pd data = pd.read_csv(\"week05_dirty_process_data.csv\", encoding=\"utf-8-sig\") for col in data.columns: count = data[col].isna().sum() rate = count / len(data) * 100 print(f\"{col}: 빈칸 {count}개 ({rate:.1f}%)\")"
+          - generic [ref=e979]:
+            - generic [ref=e980]: 실행 결과
+            - generic [ref=e981]: "측정시간: 빈칸 0개 (0.0%) 로트번호: 빈칸 0개 (0.0%) 설비번호: 빈칸 0개 (0.0%) 공정명: 빈칸 0개 (0.0%) 온도_C: 빈칸 3개 (2.7%) 압력_Pa: 빈칸 2개 (1.8%) 가스유량_slm: 빈칸 3개 (2.7%) 처리시간_sec: 빈칸 0개 (0.0%) 합격여부: 빈칸 2개 (1.8%)"
+          - generic [ref=e982]:
+            - generic [ref=e983]: AI 코드를 다룰 때
+            - text: 직접 실행해 숫자를 확인하고, 경로와
+            - code [ref=e984]: encoding="utf-8-sig"
+            - text: 를 맞춘다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.
+        - generic [ref=e985]:
+          - heading "과제(다음 차시까지)" [level=2] [ref=e986]
+          - generic [ref=e987]:
+            - generic [ref=e988]: 과제 1 — 가스유량 평균도 비교하기
+            - text: 실습지 문제 3과 같은 모양으로, 정리 전
+            - code [ref=e989]: df
+            - text: 와 정리 후
+            - code [ref=e990]: clean
+            - text: 의 평균 가스유량(
+            - code [ref=e991]: 가스유량_slm
+            - text: )을
+            - code [ref=e992]: round(값, 1)
+            - text: 로 출력하고 한 문장으로 비교한다.
+          - generic [ref=e993]:
+            - generic [ref=e994]: 과제 2 — 내 말로 설명하기(코드 없음)
+            - text: "\"빈칸을 지우는 방법과 채우는 방법은 각각 무엇이 좋고 무엇이 위험한가\"를 클린룸 2543.66 장면을 예로 들어 두세 문장으로 적는다."
+        - generic [ref=e995]:
+          - heading "핵심 질문 → 데이터 연결" [level=2] [ref=e996]
+          - list [ref=e997]:
+            - listitem [ref=e998]: "▸ 질문: 공장 기록에 섞인 빈칸·중복·튀는 값을 정리하면, 평균은 얼마나 달라질까?"
+            - listitem [ref=e999]:
+              - text: "▸ 답(파이썬): 실습지 문제 2·3에서 직접 구한다."
+              - button "실습지 결과 보기" [ref=e1000] [cursor=pointer]
+            - listitem [ref=e1001]: "▸ 답(Orange): 빈칸을 채우고 중복을 남기면 105행, 평균 온도 300.75. 무엇을 지우고 채우는지에 따라 결과가 달라진다."
+        - generic [ref=e1002]:
+          - heading "다음 차시 예고" [level=2] [ref=e1003]
+          - paragraph [ref=e1004]: 6차시에는 정리한 숫자를 그래프로 본다. 표로는 안 보이던 공정의 모습을 막대·히스토그램·산점도로 본다. Orange에서는 웨이퍼 위 어디에 불량이 생겼는지 웨이퍼 맵을 그린다.
+          - paragraph [ref=e1005]: "다음 미션 — 다음 회의에서 쓸 그래프 3장을 만들자: 설비별 건수, 온도 분포, 온도와 두께의 관계."
+        - generic [ref=e1006]:
+          - 'link "← 이전 차시: 4차시" [ref=e1007] [cursor=pointer]':
+            - /url: ../week04/index.html
+          - link "전체 목차" [ref=e1008] [cursor=pointer]:
+            - /url: ../../index.html
+          - 'link "다음 차시: 6차시 →" [ref=e1009] [cursor=pointer]':
+            - /url: ../week06/index.html
+  - contentinfo [ref=e1010]: 반도체 및 반도체 공정 데이터 분석 10차시 과정 · 5차시 · 교육용 자료(가상 데이터 사용)

@@ -80,7 +80,7 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 비율 구하고 묶어서 비교하기</h2>
-    <p>개념은 <b>쪽지시험 기록</b>(<code>week07_easy_quiz_results.csv</code>, 24행 6열, 생활 예제용 가상 데이터)으로 익힌다. 세 반에서 두 명씩, 6명이 4문항씩 풀었다. 한 행 = 학생 1명이 푼 문항 1개다.</p>
+    <p>개념은 <b>쪽지시험 기록</b>(<code><a href="../../data/weekly/week07/week07_easy_quiz_results.csv" target="_blank" rel="noopener">week07_easy_quiz_results.csv</a></code>, 24행 6열, 생활 예제용 가상 데이터)으로 익힌다. 세 반에서 두 명씩, 6명이 4문항씩 풀었다. 한 행 = 학생 1명이 푼 문항 1개다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -98,6 +98,116 @@
     <h2>수율과 정답률 — 무엇 중에 무엇의 비율일까</h2>
     <p><b>수율</b>은 만든 것 중 합격한 것의 비율이다. 피자 조각 100개를 만들어 92개를 팔 수 있으면 수율 92%, 나머지 8%가 <b>불량률</b>이다.
     쪽지시험이라면 "푼 문항 중 맞힌 문항의 비율", 곧 정답률이 같은 계산이다. 비율을 말할 때는 늘 "무엇 중에"(분모)를 먼저 정한다.</p>
+
+  <!-- mg:w7-ratio -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week07_easy_quiz_results.csv)의 값</p>
+    <svg class="mg-svg" viewBox="0 0 720 300" role="img" aria-label="쪽지시험 24문항 중 정답 18개가 초록 칸으로 표시되고 정답을 전체로 나눠 75.0퍼센트를 구하는 그림">
+      <text x="20" y="75" class="mg-b mg-mu">A반</text>
+      <rect x="70" y="50" width="32" height="36" class="mg-gray"/>
+      <rect x="70" y="50" width="32" height="36" class="mg-green"/>
+      <rect x="108" y="50" width="32" height="36" class="mg-gray"/>
+      <rect x="108" y="50" width="32" height="36" class="mg-green"/>
+      <rect x="146" y="50" width="32" height="36" class="mg-gray"/>
+      <rect x="146" y="50" width="32" height="36" class="mg-green"/>
+      <rect x="184" y="50" width="32" height="36" class="mg-gray"/>
+      <rect x="184" y="50" width="32" height="36" class="mg-green"/>
+      <rect x="222" y="50" width="32" height="36" class="mg-gray"/>
+      <rect x="222" y="50" width="32" height="36" class="mg-green"/>
+      <rect x="260" y="50" width="32" height="36" class="mg-gray"/>
+      <rect x="260" y="50" width="32" height="36" class="mg-green"/>
+      <rect x="298" y="50" width="32" height="36" class="mg-gray"/>
+      <rect x="298" y="50" width="32" height="36" class="mg-red"/>
+      <rect x="336" y="50" width="32" height="36" class="mg-gray"/>
+      <rect x="336" y="50" width="32" height="36" class="mg-green"/>
+      <text x="20" y="127" class="mg-b mg-mu">B반</text>
+      <rect x="70" y="102" width="32" height="36" class="mg-gray"/>
+      <rect x="70" y="102" width="32" height="36" class="mg-green"/>
+      <rect x="108" y="102" width="32" height="36" class="mg-gray"/>
+      <rect x="108" y="102" width="32" height="36" class="mg-green"/>
+      <rect x="146" y="102" width="32" height="36" class="mg-gray"/>
+      <rect x="146" y="102" width="32" height="36" class="mg-green"/>
+      <rect x="184" y="102" width="32" height="36" class="mg-gray"/>
+      <rect x="184" y="102" width="32" height="36" class="mg-green"/>
+      <rect x="222" y="102" width="32" height="36" class="mg-gray"/>
+      <rect x="222" y="102" width="32" height="36" class="mg-red"/>
+      <rect x="260" y="102" width="32" height="36" class="mg-gray"/>
+      <rect x="260" y="102" width="32" height="36" class="mg-red"/>
+      <rect x="298" y="102" width="32" height="36" class="mg-gray"/>
+      <rect x="298" y="102" width="32" height="36" class="mg-green"/>
+      <rect x="336" y="102" width="32" height="36" class="mg-gray"/>
+      <rect x="336" y="102" width="32" height="36" class="mg-red"/>
+      <text x="20" y="179" class="mg-b mg-mu">C반</text>
+      <rect x="70" y="154" width="32" height="36" class="mg-gray"/>
+      <rect x="70" y="154" width="32" height="36" class="mg-green"/>
+      <rect x="108" y="154" width="32" height="36" class="mg-gray"/>
+      <rect x="108" y="154" width="32" height="36" class="mg-red"/>
+      <rect x="146" y="154" width="32" height="36" class="mg-gray"/>
+      <rect x="146" y="154" width="32" height="36" class="mg-green"/>
+      <rect x="184" y="154" width="32" height="36" class="mg-gray"/>
+      <rect x="184" y="154" width="32" height="36" class="mg-green"/>
+      <rect x="222" y="154" width="32" height="36" class="mg-gray"/>
+      <rect x="222" y="154" width="32" height="36" class="mg-green"/>
+      <rect x="260" y="154" width="32" height="36" class="mg-gray"/>
+      <rect x="260" y="154" width="32" height="36" class="mg-green"/>
+      <rect x="298" y="154" width="32" height="36" class="mg-gray"/>
+      <rect x="298" y="154" width="32" height="36" class="mg-green"/>
+      <rect x="336" y="154" width="32" height="36" class="mg-gray"/>
+      <rect x="336" y="154" width="32" height="36" class="mg-red"/>
+      <rect x="70" y="50" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="108" y="50" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="146" y="50" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="184" y="50" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="222" y="50" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="260" y="50" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="298" y="50" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="336" y="50" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="70" y="102" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="108" y="102" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="146" y="102" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="184" y="102" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="222" y="102" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="260" y="102" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="298" y="102" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="336" y="102" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="70" y="154" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="108" y="154" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="146" y="154" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="184" y="154" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="222" y="154" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="260" y="154" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="298" y="154" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="336" y="154" width="32" height="36" class="mg-gray mg-only0"/>
+      <rect x="432" y="46" width="270" height="150" class="mg-box"/>
+      <text x="446" y="74" class="mg-s mg-mu">정답</text>
+      <text x="494" y="74" class="mg-tgreen">■</text>
+      <text x="512" y="74" class="mg-s mg-mu">초록</text>
+      <text x="570" y="74" class="mg-s mg-mu">오답</text>
+      <text x="618" y="74" class="mg-tred">■</text>
+      <text x="636" y="74" class="mg-s mg-mu">빨강</text>
+      <text x="446" y="112" class="mg-m mg-b mg-from2">정답 18개  /  전체 24개</text>
+      <text x="446" y="142" class="mg-m mg-b mg-tblue mg-from3">18 ÷ 24 = 0.75</text>
+      <text x="446" y="172" class="mg-m mg-b mg-torange mg-from4">0.75 × 100 = 75.0 %</text>
+      <rect x="14" y="262" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="282" class="mg-only0 mg-b" style="font-size:14px">① 쪽지시험 24문항의 결과를 한 칸씩 늘어놓았다</text>
+      <text x="28" y="282" class="mg-only1 mg-b" style="font-size:14px">② 정답은 초록, 오답은 빨강으로 칠한다</text>
+      <text x="28" y="282" class="mg-only2 mg-b" style="font-size:14px">③ 정답 18개 ÷ 전체 24개 = 0.75</text>
+      <text x="28" y="282" class="mg-only3 mg-b" style="font-size:14px">④ 0.75 × 100 = 75.0 (%)</text>
+      <text x="28" y="282" class="mg-only4 mg-b" style="font-size:14px">⑤ 수율도 같은 식: 합격 웨이퍼 ÷ 만든 웨이퍼</text>
+      <text x="28" y="282" class="mg-only5 mg-b" style="font-size:14px">결과: 정답률 = 정답 ÷ 전체 × 100 = 75.0%</text>
+    </svg>
+    <figcaption class="img-caption"><b>비율 — 무엇 중에 무엇인가</b> 비율은 <b>(조건에 맞는 것의 수) ÷ (전체 수)</b>다. 정답률의 분모는 전체 문항이다. 반도체 수율도 분모는 만든 웨이퍼 전체, 분자는 합격한 웨이퍼다. 파이썬에서는 True/False 열에 <code>.mean()</code>을 쓰면 한 번에 계산된다.</figcaption>
+  </figure>
+  <!-- /mg:w7-ratio -->
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 쪽지시험 기록 읽기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
@@ -147,6 +257,134 @@ print(quiz["정답"].mean() * 100)</code></pre>
   <section class="block">
     <h2>groupby — 반별로 묶어서 비교하기</h2>
     <p><code>groupby("반")</code>은 같은 반끼리 행을 묶고, 뒤의 <code>["정답"].mean()</code>은 묶음마다 <code>정답</code> 열의 평균을 낸다. 피자 가게에서 판을 오븐별로 모아 오븐마다 탄 비율을 따로 세는 것과 같다.</p>
+
+  <!-- mg:w7-groupby -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week07_easy_quiz_results.csv)의 값</p>
+    <svg class="mg-svg" viewBox="0 0 720 300" role="img" aria-label="섞여 있던 24문항이 A반, B반, C반으로 나뉘어 모이고 반마다 정답률이 계산되는 그림">
+      <g class="mg-slide1" style="--dx:306px;--dy:-66px">
+      <rect x="66" y="122" width="30" height="30" class="mg-green"/>
+      <text x="81" y="142" class="mg-b mg-c mg-s">A</text>
+      </g>
+      <g class="mg-slide1" style="--dx:342px;--dy:-102px">
+      <rect x="66" y="158" width="30" height="30" class="mg-green"/>
+      <text x="81" y="178" class="mg-b mg-c mg-s">A</text>
+      </g>
+      <g class="mg-slide1" style="--dx:414px;--dy:-102px">
+      <rect x="30" y="158" width="30" height="30" class="mg-green"/>
+      <text x="45" y="178" class="mg-b mg-c mg-s">A</text>
+      </g>
+      <g class="mg-slide1" style="--dx:306px;--dy:-66px">
+      <rect x="174" y="122" width="30" height="30" class="mg-green"/>
+      <text x="189" y="142" class="mg-b mg-c mg-s">A</text>
+      </g>
+      <g class="mg-slide1" style="--dx:342px;--dy:-102px">
+      <rect x="174" y="158" width="30" height="30" class="mg-green"/>
+      <text x="189" y="178" class="mg-b mg-c mg-s">A</text>
+      </g>
+      <g class="mg-slide1" style="--dx:522px;--dy:6px">
+      <rect x="30" y="50" width="30" height="30" class="mg-green"/>
+      <text x="45" y="70" class="mg-b mg-c mg-s">A</text>
+      </g>
+      <g class="mg-slide1" style="--dx:486px;--dy:-30px">
+      <rect x="102" y="86" width="30" height="30" class="mg-red"/>
+      <text x="117" y="106" class="mg-b mg-c mg-s">A</text>
+      </g>
+      <g class="mg-slide1" style="--dx:450px;--dy:6px">
+      <rect x="174" y="50" width="30" height="30" class="mg-green"/>
+      <text x="189" y="70" class="mg-b mg-c mg-s">A</text>
+      </g>
+      <g class="mg-slide1" style="--dx:342px;--dy:-4px">
+      <rect x="30" y="122" width="30" height="30" class="mg-green"/>
+      <text x="45" y="142" class="mg-b mg-c mg-s">B</text>
+      </g>
+      <g class="mg-slide1" style="--dx:306px;--dy:-4px">
+      <rect x="102" y="122" width="30" height="30" class="mg-green"/>
+      <text x="117" y="142" class="mg-b mg-c mg-s">B</text>
+      </g>
+      <g class="mg-slide1" style="--dx:234px;--dy:-40px">
+      <rect x="210" y="158" width="30" height="30" class="mg-green"/>
+      <text x="225" y="178" class="mg-b mg-c mg-s">B</text>
+      </g>
+      <g class="mg-slide1" style="--dx:342px;--dy:-4px">
+      <rect x="138" y="122" width="30" height="30" class="mg-green"/>
+      <text x="153" y="142" class="mg-b mg-c mg-s">B</text>
+      </g>
+      <g class="mg-slide1" style="--dx:378px;--dy:-40px">
+      <rect x="138" y="158" width="30" height="30" class="mg-red"/>
+      <text x="153" y="178" class="mg-b mg-c mg-s">B</text>
+      </g>
+      <g class="mg-slide1" style="--dx:378px;--dy:32px">
+      <rect x="174" y="86" width="30" height="30" class="mg-red"/>
+      <text x="189" y="106" class="mg-b mg-c mg-s">B</text>
+      </g>
+      <g class="mg-slide1" style="--dx:378px;--dy:68px">
+      <rect x="210" y="50" width="30" height="30" class="mg-green"/>
+      <text x="225" y="70" class="mg-b mg-c mg-s">B</text>
+      </g>
+      <g class="mg-slide1" style="--dx:486px;--dy:68px">
+      <rect x="138" y="50" width="30" height="30" class="mg-red"/>
+      <text x="153" y="70" class="mg-b mg-c mg-s">B</text>
+      </g>
+      <g class="mg-slide1" style="--dx:162px;--dy:94px">
+      <rect x="210" y="86" width="30" height="30" class="mg-green"/>
+      <text x="225" y="106" class="mg-b mg-c mg-s">C</text>
+      </g>
+      <g class="mg-slide1" style="--dx:198px;--dy:58px">
+      <rect x="210" y="122" width="30" height="30" class="mg-red"/>
+      <text x="225" y="142" class="mg-b mg-c mg-s">C</text>
+      </g>
+      <g class="mg-slide1" style="--dx:378px;--dy:130px">
+      <rect x="66" y="50" width="30" height="30" class="mg-green"/>
+      <text x="81" y="70" class="mg-b mg-c mg-s">C</text>
+      </g>
+      <g class="mg-slide1" style="--dx:342px;--dy:94px">
+      <rect x="138" y="86" width="30" height="30" class="mg-green"/>
+      <text x="153" y="106" class="mg-b mg-c mg-s">C</text>
+      </g>
+      <g class="mg-slide1" style="--dx:414px;--dy:22px">
+      <rect x="102" y="158" width="30" height="30" class="mg-green"/>
+      <text x="117" y="178" class="mg-b mg-c mg-s">C</text>
+      </g>
+      <g class="mg-slide1" style="--dx:486px;--dy:94px">
+      <rect x="66" y="86" width="30" height="30" class="mg-green"/>
+      <text x="81" y="106" class="mg-b mg-c mg-s">C</text>
+      </g>
+      <g class="mg-slide1" style="--dx:486px;--dy:130px">
+      <rect x="102" y="50" width="30" height="30" class="mg-green"/>
+      <text x="117" y="70" class="mg-b mg-c mg-s">C</text>
+      </g>
+      <g class="mg-slide1" style="--dx:594px;--dy:94px">
+      <rect x="30" y="86" width="30" height="30" class="mg-red"/>
+      <text x="45" y="106" class="mg-b mg-c mg-s">C</text>
+      </g>
+      <text x="330" y="76" class="mg-b mg-c mg-s mg-from1">A반</text>
+      <text x="668" y="76" class="mg-m mg-b mg-torange mg-s mg-from2">87.5%</text>
+      <text x="330" y="138" class="mg-b mg-c mg-s mg-from1">B반</text>
+      <text x="668" y="138" class="mg-m mg-b mg-torange mg-s mg-from3">62.5%</text>
+      <text x="330" y="200" class="mg-b mg-c mg-s mg-from1">C반</text>
+      <text x="668" y="200" class="mg-m mg-b mg-torange mg-s mg-from4">75.0%</text>
+      <text x="30" y="42" class="mg-s mg-mu mg-win01">섞여 있는 문항</text>
+      <rect x="14" y="262" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="282" class="mg-only0 mg-b" style="font-size:14px">① 24문항이 반 구분 없이 섞여 있다</text>
+      <text x="28" y="282" class="mg-only1 mg-b" style="font-size:14px">② groupby(&quot;반&quot;) — 같은 반끼리 모은다</text>
+      <text x="28" y="282" class="mg-only2 mg-b" style="font-size:14px">③ A반: 정답 7/8 → 87.5%</text>
+      <text x="28" y="282" class="mg-only3 mg-b" style="font-size:14px">④ B반: 정답 5/8 → 62.5%</text>
+      <text x="28" y="282" class="mg-only4 mg-b" style="font-size:14px">⑤ C반: 정답 6/8 → 75.0%</text>
+      <text x="28" y="282" class="mg-only5 mg-b" style="font-size:14px">결과: groupby는 묶음마다 같은 계산을 한 번에 한다</text>
+    </svg>
+    <figcaption class="img-caption"><b>groupby — 묶어서 비교하기</b> 칸 안의 글자는 반이고, 초록은 정답, 빨강은 오답이다. <code>groupby("반")</code>이 같은 반끼리 모으고, 뒤의 <code>["정답"].mean()</code>이 묶음마다 정답률을 계산한다.</figcaption>
+  </figure>
+  <!-- /mg:w7-groupby -->
+
+
+
+
+
+
+
+
+
     <div class="tablewrap">
       <table>
         <thead><tr><th>반</th><th>푼 문항</th><th>맞힌 문항</th><th>정답률</th></tr></thead>
@@ -188,6 +426,45 @@ Name: 정답, dtype: float64</pre>
   <section class="block">
     <h2>오답 유형 줄 세우기 — 무엇부터 고칠까</h2>
     <p>틀린 문항(-1)만 고른 뒤(4차시 조건 검색) <code>오답유형</code>을 센다. 많은 순으로 세워 막대로 그리면 "무엇부터 고칠지"가 보인다. 막대는 6차시의 4줄 틀 그대로다.</p>
+
+  <!-- mg:w7-pareto -->
+  <figure class="mg">
+    <p class="illustration-note">이 차시 예제 파일(week07_easy_quiz_results.csv)의 값</p>
+    <svg class="mg-svg" viewBox="0 0 720 270" role="img" aria-label="오답 6개가 오답유형별로 줄을 이루고 계산 실수가 가장 긴 줄로 맨 위에 놓이는 그림">
+      <text x="20" y="72" class="mg-b mg-from1">계산 실수</text>
+      <rect x="190" y="46" width="38" height="38" class="mg-red mg-from1"/>
+      <rect x="234" y="46" width="38" height="38" class="mg-red mg-from1"/>
+      <rect x="278" y="46" width="38" height="38" class="mg-red mg-from1"/>
+      <text x="328" y="72" class="mg-m mg-b mg-tred mg-from1">3건</text>
+      <text x="20" y="128" class="mg-b mg-from2">문제 잘못 읽음</text>
+      <rect x="190" y="102" width="38" height="38" class="mg-red mg-from2"/>
+      <rect x="234" y="102" width="38" height="38" class="mg-red mg-from2"/>
+      <text x="284" y="128" class="mg-m mg-b mg-tred mg-from2">2건</text>
+      <text x="20" y="184" class="mg-b mg-from3">개념 부족</text>
+      <rect x="190" y="158" width="38" height="38" class="mg-red mg-from3"/>
+      <text x="240" y="184" class="mg-m mg-b mg-tred mg-from3">1건</text>
+      <rect x="12" y="40" width="400" height="50" class="mg-hl mg-win45"/>
+      <text x="430" y="76" class="mg-b mg-torange mg-win45">먼저 고칠 후보</text>
+      <rect x="14" y="232" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="252" class="mg-only0 mg-b" style="font-size:14px">① 틀린 문항(-1) 6개만 고른다</text>
+      <text x="28" y="252" class="mg-only1 mg-b" style="font-size:14px">② 오답유형별로 센다 — value_counts()</text>
+      <text x="28" y="252" class="mg-only2 mg-b" style="font-size:14px">③ 많은 순서로 줄을 세운다</text>
+      <text x="28" y="252" class="mg-only3 mg-b" style="font-size:14px">④ 가장 긴 줄이 먼저 고칠 후보</text>
+      <text x="28" y="252" class="mg-only4 mg-b" style="font-size:14px">⑤ 막대그래프로 그리면 한눈에 보인다</text>
+      <text x="28" y="252" class="mg-only5 mg-b" style="font-size:14px">결과: 많은 것부터 고치면 효과가 가장 크다</text>
+    </svg>
+    <figcaption class="img-caption"><b>오답 유형 줄 세우기 — 무엇부터 고칠까</b> 틀린 문항 하나가 칸 하나이고, 같은 유형끼리 줄을 이루면 그 길이가 막대 길이다. <code>value_counts()</code>는 이미 많은 순서로 세어 준다.</figcaption>
+  </figure>
+  <!-- /mg:w7-pareto -->
+
+
+
+
+
+
+
+
+
     <div class="code-block">
       <div class="code-label"><span>Python — 오답 유형 세기 (노트북 3단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>wrong_counts = quiz[quiz["정답여부"] == -1]["오답유형"].value_counts()
@@ -225,7 +502,7 @@ plt.show()</code></pre>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>공장 기록 <code>week07_equipment_yield.csv</code>(300행 11열, 교육용 가상 데이터)는 로트 75개 × 웨이퍼 4장 = 웨이퍼 300장의 기록이다(실제 로트는 보통 25장 안팎, 이 기록은 연습용으로 4장). 한 행 = 웨이퍼 1장이다.
+    <p>공장 기록 <code><a href="../../data/weekly/week07/week07_equipment_yield.csv" target="_blank" rel="noopener">week07_equipment_yield.csv</a></code>(300행 11열, 교육용 가상 데이터)는 로트 75개 × 웨이퍼 4장 = 웨이퍼 300장의 기록이다(실제 로트는 보통 25장 안팎, 이 기록은 연습용으로 4장). 한 행 = 웨이퍼 1장이다.
     위 코드에서 표 이름이 <code>quiz</code> → <code>df</code>로, 열 이름만 바뀐다.</p>
     <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 설비의 기록과, ⑦ EDS(전기 검사)까지 마친 뒤의 최종 합격 여부다(1차시 공정 지도 그림은 PART 2에서 다시 본다).</p>
     <div class="tablewrap">
@@ -322,12 +599,12 @@ print((lot_fail &gt; 20).sum())</code></pre>
          alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
     <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
     <ul class="pt-list">
-      <li>워밍업 <code>week07_orange_wafer_lots.csv</code> — <b>공정 지도 위치: ④ 식각</b> 설비 3대를 거친 웨이퍼의 <b>⑦ EDS(전기 검사)</b> 결과. ④ 식각은 그림대로 필요 없는 부분을 깎아 내는 단계다.</li>
-      <li>반도체 <code>week07_equipment_yield.csv</code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비 기록과 <b>⑦</b> 뒤 최종 합격 여부(PART 1에서 본 그 기록).</li>
+      <li>워밍업 <code><a href="../../data/weekly/week07/week07_orange_wafer_lots.csv" target="_blank" rel="noopener">week07_orange_wafer_lots.csv</a></code> — <b>공정 지도 위치: ④ 식각</b> 설비 3대를 거친 웨이퍼의 <b>⑦ EDS(전기 검사)</b> 결과. ④ 식각은 그림대로 필요 없는 부분을 깎아 내는 단계다.</li>
+      <li>반도체 <code><a href="../../data/weekly/week07/week07_equipment_yield.csv" target="_blank" rel="noopener">week07_equipment_yield.csv</a></code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비 기록과 <b>⑦</b> 뒤 최종 합격 여부(PART 1에서 본 그 기록).</li>
     </ul>
 
     <h3>워밍업 — 식각 설비 3대의 웨이퍼 12장</h3>
-    <p><code>week07_orange_wafer_lots.csv</code>(3,804행 7열, 교육용 가상 데이터)는 식각 설비 3대가 4장씩 처리한 웨이퍼 12장을 ⑦ EDS에서 검사한 결과다.
+    <p><code><a href="../../data/weekly/week07/week07_orange_wafer_lots.csv" target="_blank" rel="noopener">week07_orange_wafer_lots.csv</a></code>(3,804행 7열, 교육용 가상 데이터)는 식각 설비 3대가 4장씩 처리한 웨이퍼 12장을 ⑦ EDS에서 검사한 결과다.
     이 연습용 웨이퍼는 다이가 317개라(교육용 가상 격자 — 실제 다이 수는 칩 크기에 따라 다르다) 12 × 317 = 3,804행이고, <b>한 행 = 다이 1개</b>다.</p>
     <div class="tablewrap">
       <table>
@@ -480,10 +757,10 @@ print((lot_fail &gt; 20).sum())</code></pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>week07_easy_quiz_results.csv</code> — 24행 6열, 생활 예제용 가상 데이터(PART 1 개념). 정답 18 · 오답 6.</li>
-      <li><code>week07_orange_wafer_lots.csv</code> — 3,804행 7열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code><a href="../../data/weekly/week07/week07_easy_quiz_results.csv" target="_blank" rel="noopener">week07_easy_quiz_results.csv</a></code> — 24행 6열, 생활 예제용 가상 데이터(PART 1 개념). 정답 18 · 오답 6.</li>
+      <li><code><a href="../../data/weekly/week07/week07_orange_wafer_lots.csv" target="_blank" rel="noopener">week07_orange_wafer_lots.csv</a></code> — 3,804행 7열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         식각 설비 3대 × 웨이퍼 4장 × 다이 317개. <b>공정 지도 위치: ④ 식각 설비 3대를 거친 웨이퍼의 ⑦ EDS(전기 검사) 결과.</b></li>
-      <li><code>week07_equipment_yield.csv</code> — 300행 11열, 교육용 가상 데이터(PART 1·2·3). 로트 75개 × 웨이퍼 4장. 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.
+      <li><code><a href="../../data/weekly/week07/week07_equipment_yield.csv" target="_blank" rel="noopener">week07_equipment_yield.csv</a></code> — 300행 11열, 교육용 가상 데이터(PART 1·2·3). 로트 75개 × 웨이퍼 4장. 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.
         <b>공정 지도 위치: ②~⑤ + 세정 설비 기록과 ⑦ 뒤 최종 합격 여부.</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week07_dictionary.html">데이터 설명서</a></li>
     </ul>
@@ -576,7 +853,7 @@ print((lot_fail &gt; 20).sum())</code></pre>
     else:
         print(f"{eq} 합격률 {round(rate, 1)}% → 연습용 기준 이상")</code></pre>
     </div>
-    <p><code>eq_rate</code>는 실습지 문제 2에서 만드는 변수라, 문제 2를 먼저 풀어야 실행된다(안 풀었으면 <code>NameError: name 'eq_rate' is not defined</code>). <code>.items()</code>는 설비 이름과 값을 한 쌍씩 꺼내는 함수다(처음 보는 함수라 구경만 한다).</p>
+    <p><code>eq_rate</code>는 실습지 문제 2에서 만드는 변수라, 문제 2를 먼저 풀어야 실행된다(안 풀었으면 <code>NameError: name 'eq_rate' is not defined</code>). <code>.items()</code>는 설비 이름과 값을 한 쌍씩 꺼내는 함수다(처음 보는 함수라 확인만 한다).</p>
     <button class="reveal-btn">실행 결과 보기</button>
     <div class="callout success answer-box">
       <b class="tag">실행 결과</b>

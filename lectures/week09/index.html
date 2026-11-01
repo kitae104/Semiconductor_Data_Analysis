@@ -114,8 +114,8 @@
          alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
     <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이하고, ⑦ EDS에서 다이마다 전기를 흘려 합격·불합격을 가린다.</p>
     <ul class="pt-list">
-      <li>워밍업 <code>week09_orange_wafer_patterns.csv</code> — <b>공정 지도 위치: ⑦ EDS(전기 검사)</b> 결과로 그린 웨이퍼 맵을 웨이퍼마다 숫자 넷으로 요약한 표.</li>
-      <li>반도체 <code>week09_pass_fail_train.csv</code> — <b>공정 지도 위치: ②~⑤ + 세정</b>의 공정 조건과 검사 결과(공정 중간 검사 + <b>⑦</b> EDS 결과를 모은 교육용 설정). 공정 조건만 보고 검사 결과를 미리 맞혀 본다.</li>
+      <li>워밍업 <code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code> — <b>공정 지도 위치: ⑦ EDS(전기 검사)</b> 결과로 그린 웨이퍼 맵을 웨이퍼마다 숫자 넷으로 요약한 표.</li>
+      <li>반도체 <code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code> — <b>공정 지도 위치: ②~⑤ + 세정</b>의 공정 조건과 검사 결과(공정 중간 검사 + <b>⑦</b> EDS 결과를 모은 교육용 설정). 공정 조건만 보고 검사 결과를 미리 맞혀 본다.</li>
     </ul>
   </section>
 
@@ -138,6 +138,58 @@
   <section class="block">
     <h2>결정 트리 — 스무고개로 나누기</h2>
     <p><b>결정 트리</b>는 "예/아니요"로 답할 수 있는 질문을 차례로 던져 기록을 나누는 모델이다. 스무고개와 같다. 피자 가게라면 "오븐 온도가 230도 이하인가?"처럼 묻고, 답에 따라 두 갈래로 나눈 뒤, 갈래마다 다시 묻는다.</p>
+
+  <!-- mg:w9-tree -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 352" role="img" aria-label="오븐 온도 질문에서 시작해 반죽 두께 질문을 거쳐 안 탈 것 같음이라는 잎에 도착하는 결정 트리 그림">
+      <rect x="20" y="40" width="190" height="58" class="mg-gray"/>
+      <text x="32" y="62" class="mg-s mg-b mg-mu">새 피자 한 판</text>
+      <text x="32" y="84" class="mg-s">오븐 220도 · 반죽 두께 5mm</text>
+      <line x1="360" y1="80" x2="190" y2="150" class="mg-lnm"/>
+      <line x1="360" y1="80" x2="540" y2="150" class="mg-lnm"/>
+      <line x1="190" y1="176" x2="110" y2="250" class="mg-lnm"/>
+      <line x1="190" y1="176" x2="290" y2="250" class="mg-lnm"/>
+      <line x1="360" y1="80" x2="190" y2="150" class="mg-lng mg-from1"/>
+      <line x1="190" y1="176" x2="110" y2="250" class="mg-lng mg-from2"/>
+      <text x="250" y="108" class="mg-b mg-tgreen">예</text>
+      <text x="470" y="108" class="mg-b mg-tred">아니요</text>
+      <text x="134" y="204" class="mg-b mg-tgreen">예</text>
+      <text x="262" y="204" class="mg-b mg-tred">아니요</text>
+      <rect x="235" y="36" width="250" height="44" class="mg-blue"/>
+      <text x="360" y="63" class="mg-c mg-b mg-tblue" style="font-size:14px">오븐 온도가 230도 이하인가?</text>
+      <rect x="75" y="141" width="230" height="44" class="mg-blue"/>
+      <text x="190" y="168" class="mg-c mg-b mg-tblue" style="font-size:14px">반죽 두께가 4mm 이상인가?</text>
+      <rect x="465" y="143" width="150" height="40" class="mg-red"/>
+      <text x="540" y="168" class="mg-c mg-b mg-tred" style="font-size:14px">탈 것 같음</text>
+      <rect x="35" y="252" width="150" height="40" class="mg-green"/>
+      <text x="110" y="277" class="mg-c mg-b mg-tgreen" style="font-size:14px">안 탈 것 같음</text>
+      <rect x="225" y="252" width="130" height="40" class="mg-red"/>
+      <text x="290" y="277" class="mg-c mg-b mg-tred" style="font-size:14px">탈 것 같음</text>
+      <rect x="231" y="33" width="258" height="50" class="mg-hl mg-only1"/>
+      <rect x="70" y="140" width="240" height="50" class="mg-hl mg-only2"/>
+      <rect x="30" y="250" width="160" height="44" class="mg-hl mg-win35"/>
+      <text x="500" y="52" class="mg-s mg-mu">← 뿌리: 첫 질문</text>
+      <text x="612" y="214" class="mg-s mg-mu">잎: 예측이 적힌</text>
+      <text x="612" y="232" class="mg-s mg-mu">끝 상자</text>
+      <line x1="560" y1="184" x2="600" y2="210" class="mg-lnm"/>
+      <rect x="14" y="314" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="334" class="mg-only0 mg-b" style="font-size:14px">① 질문을 차례로 던져 기록을 나눈다 (스무고개)</text>
+      <text x="28" y="334" class="mg-only1 mg-b" style="font-size:14px">② 첫 질문: 오븐 220도 ≤ 230도? → 예</text>
+      <text x="28" y="334" class="mg-only2 mg-b" style="font-size:14px">③ 다음 질문: 반죽 두께 5mm ≥ 4mm? → 예</text>
+      <text x="28" y="334" class="mg-only3 mg-b" style="font-size:14px">④ 끝 상자(잎)의 &#x27;안 탈 것 같음&#x27;이 예측이 된다</text>
+      <text x="28" y="334" class="mg-only4 mg-b" style="font-size:14px">⑤ 답이 다르면 다른 길로 내려가 다른 잎에 닿는다</text>
+      <text x="28" y="334" class="mg-only5 mg-b" style="font-size:14px">결과: 질문의 답을 따라 내려가면 예측이 나온다</text>
+    </svg>
+    <figcaption class="img-caption"><b>결정 트리 — 스무고개로 나누기</b> <b>맨 위 질문(뿌리)</b>에서 시작해 "예/아니요"를 따라 내려가면 <b>끝 상자(잎)</b>에서 예측이 나온다. 초록 길은 오븐 220도·반죽 두께 5mm인 피자 한 판이 지나간 길이다.</figcaption>
+  </figure>
+  <!-- /mg:w9-tree -->
+
+
+
+
+
+
+
     <ul class="pt-list">
       <li><b>맨 위 질문</b>(뿌리, 첫 갈림길)은 기록을 가장 잘 나누는 질문이다.</li>
       <li>더 묻지 않는 끝 상자를 <b>잎</b>이라고 한다. 잎에서 가장 많은 답이 그 갈래의 예측이 된다.</li>
@@ -156,6 +208,128 @@
   <section class="block">
     <h2>학습용과 시험용 — 연습문제와 모의고사</h2>
     <p>모델을 학습시킨 기록으로 다시 채점하면 점수가 부풀려진다. 연습문제 답을 외운 학생에게 같은 문제로 시험을 보는 것과 같다. 그래서 기록을 나눈다.</p>
+
+  <!-- mg:w9-split -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 350" role="img" aria-label="기록 20칸 중 4칸을 시험용으로 뽑아 오른쪽 상자로, 나머지 16칸은 학습용 상자로 나누고 학습용으로 모델을 만든 뒤 시험용으로 채점하는 그림">
+      <rect x="30" y="150" width="290" height="112" class="mg-blue mg-from2"/>
+      <text x="40" y="144" class="mg-s mg-b mg-tblue mg-from2">학습용 (train) 16건 — 연습문제</text>
+      <rect x="440" y="150" width="250" height="112" class="mg-orange mg-from2"/>
+      <text x="450" y="144" class="mg-s mg-b mg-torange mg-from2">시험용 (test) 4건 — 모의고사</text>
+      <g class="mg-slide2" style="--dx:0px;--dy:104px">
+      <rect x="40" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="53" y="78" class="mg-m mg-s mg-c">1</text>
+      </g>
+      <g class="mg-slide2" style="--dx:2px;--dy:104px">
+      <rect x="72" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="85" y="78" class="mg-m mg-s mg-c">2</text>
+      </g>
+      <g class="mg-slide2" style="--dx:4px;--dy:104px">
+      <rect x="104" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="117" y="78" class="mg-m mg-s mg-c">3</text>
+      </g>
+      <g class="mg-slide2" style="--dx:374px;--dy:104px">
+      <rect x="136" y="56" width="26" height="34" class="mg-orange"/>
+      <text x="149" y="78" class="mg-m mg-s mg-c">4</text>
+      </g>
+      <rect x="133" y="53" width="32" height="40" class="mg-hl mg-only1"/>
+      <g class="mg-slide2" style="--dx:-26px;--dy:104px">
+      <rect x="168" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="181" y="78" class="mg-m mg-s mg-c">5</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-24px;--dy:104px">
+      <rect x="200" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="213" y="78" class="mg-m mg-s mg-c">6</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-22px;--dy:104px">
+      <rect x="232" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="245" y="78" class="mg-m mg-s mg-c">7</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-20px;--dy:104px">
+      <rect x="264" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="277" y="78" class="mg-m mg-s mg-c">8</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-18px;--dy:104px">
+      <rect x="296" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="309" y="78" class="mg-m mg-s mg-c">9</text>
+      </g>
+      <g class="mg-slide2" style="--dx:220px;--dy:104px">
+      <rect x="328" y="56" width="26" height="34" class="mg-orange"/>
+      <text x="341" y="78" class="mg-m mg-s mg-c">10</text>
+      </g>
+      <rect x="325" y="53" width="32" height="40" class="mg-hl mg-only1"/>
+      <g class="mg-slide2" style="--dx:-320px;--dy:148px">
+      <rect x="360" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="373" y="78" class="mg-m mg-s mg-c">11</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-318px;--dy:148px">
+      <rect x="392" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="405" y="78" class="mg-m mg-s mg-c">12</text>
+      </g>
+      <g class="mg-slide2" style="--dx:86px;--dy:148px">
+      <rect x="424" y="56" width="26" height="34" class="mg-orange"/>
+      <text x="437" y="78" class="mg-m mg-s mg-c">13</text>
+      </g>
+      <rect x="421" y="53" width="32" height="40" class="mg-hl mg-only1"/>
+      <g class="mg-slide2" style="--dx:-348px;--dy:148px">
+      <rect x="456" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="469" y="78" class="mg-m mg-s mg-c">14</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-346px;--dy:148px">
+      <rect x="488" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="501" y="78" class="mg-m mg-s mg-c">15</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-344px;--dy:148px">
+      <rect x="520" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="533" y="78" class="mg-m mg-s mg-c">16</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-342px;--dy:148px">
+      <rect x="552" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="565" y="78" class="mg-m mg-s mg-c">17</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-36px;--dy:148px">
+      <rect x="584" y="56" width="26" height="34" class="mg-orange"/>
+      <text x="597" y="78" class="mg-m mg-s mg-c">18</text>
+      </g>
+      <rect x="581" y="53" width="32" height="40" class="mg-hl mg-only1"/>
+      <g class="mg-slide2" style="--dx:-372px;--dy:148px">
+      <rect x="616" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="629" y="78" class="mg-m mg-s mg-c">19</text>
+      </g>
+      <g class="mg-slide2" style="--dx:-370px;--dy:148px">
+      <rect x="648" y="56" width="26" height="34" class="mg-blue"/>
+      <text x="661" y="78" class="mg-m mg-s mg-c">20</text>
+      </g>
+      <rect x="340" y="176" width="80" height="60" class="mg-ink mg-from3"/>
+      <text x="380" y="211" class="mg-b mg-c mg-tw mg-from3">모델</text>
+      <g class="mg-from3">
+      <line x1="322" y1="206" x2="329" y2="206" class="mg-lnb"/>
+      <polygon points="338,206 329,210.5 329,201.5" class="mg-ahb"/>
+      </g>
+      <text x="380" y="258" class="mg-s mg-b mg-c mg-tblue mg-from3">fit: 규칙 찾기</text>
+      <g class="mg-from4">
+      <line x1="438" y1="206" x2="431" y2="206" class="mg-lnr"/>
+      <polygon points="422,206 431,201.5 431,210.5" class="mg-ah"/>
+      </g>
+      <text x="380" y="278" class="mg-s mg-b mg-c mg-torange mg-from4">채점</text>
+      <rect x="14" y="312" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="332" class="mg-only0 mg-b" style="font-size:14px">① 지난 기록 20건이 한 줄로 있다</text>
+      <text x="28" y="332" class="mg-only1 mg-b" style="font-size:14px">② 무작위로 20%(4건)를 시험용으로 정한다</text>
+      <text x="28" y="332" class="mg-only2 mg-b" style="font-size:14px">③ 16건은 학습용, 4건은 시험용으로 갈라 둔다</text>
+      <text x="28" y="332" class="mg-only3 mg-b" style="font-size:14px">④ 학습용으로만 규칙을 찾는다 (fit)</text>
+      <text x="28" y="332" class="mg-only4 mg-b" style="font-size:14px">⑤ 시험용으로 채점한다 (accuracy_score)</text>
+      <text x="28" y="332" class="mg-only5 mg-b" style="font-size:14px">결과: 학습에 쓴 기록과 채점에 쓰는 기록을 따로 둔다</text>
+    </svg>
+    <figcaption class="img-caption"><b>학습용·시험용 나누기 — 연습문제와 모의고사</b> 모델이 이미 본 기록으로 채점하면 점수가 부풀려진다. 그래서 기록 일부(여기서는 20%)를 <b>시험용</b>으로 떼어 두고, 나머지 <b>학습용</b>으로만 규칙을 찾은 뒤 시험용으로 채점한다. 칸 하나가 기록 한 건이다.</figcaption>
+  </figure>
+  <!-- /mg:w9-split -->
+
+
+
+
+
+
+
     <ul class="pt-list">
       <li><b>학습용</b>(train) — 모델이 규칙을 찾는 데 쓰는 기록(연습문제).</li>
       <li><b>시험용</b>(test) — 학습에 쓰지 않고 떼어 두었다가 채점에만 쓰는 기록(모의고사). PART 2 파이썬에서는 전체의 20%를 시험용으로 뗀다.</li>
@@ -174,6 +348,137 @@
   <section class="block">
     <h2>정확도와 기준선 — '무조건 합격'과 비교하기</h2>
     <p><b>정확도</b>는 시험용 기록 중 맞힌 비율이다. Orange Test and Score에서는 <b>CA</b>(Classification Accuracy) 열에 0~1 사이 소수로 나온다. 0.80이면 80%다.</p>
+
+  <!-- mg:w9-baseline -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 300" role="img" aria-label="100칸 중 5칸이 탄 피자이고 무조건 안 탄다고 찍는 기준선 정확도 95퍼센트와 모델 정확도 96퍼센트를 막대로 비교하는 그림">
+      <rect x="30" y="46" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="46" width="18" height="18" class="mg-gray"/>
+      <rect x="74" y="46" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="46" width="18" height="18" class="mg-gray"/>
+      <rect x="118" y="46" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="46" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="46" width="18" height="18" class="mg-gray"/>
+      <rect x="184" y="46" width="18" height="18" class="mg-red"/>
+      <rect x="206" y="46" width="18" height="18" class="mg-gray"/>
+      <rect x="228" y="46" width="18" height="18" class="mg-gray"/>
+      <rect x="30" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="74" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="118" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="184" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="206" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="228" y="68" width="18" height="18" class="mg-gray"/>
+      <rect x="30" y="90" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="90" width="18" height="18" class="mg-gray"/>
+      <rect x="74" y="90" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="90" width="18" height="18" class="mg-red"/>
+      <rect x="118" y="90" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="90" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="90" width="18" height="18" class="mg-gray"/>
+      <rect x="184" y="90" width="18" height="18" class="mg-gray"/>
+      <rect x="206" y="90" width="18" height="18" class="mg-gray"/>
+      <rect x="228" y="90" width="18" height="18" class="mg-gray"/>
+      <rect x="30" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="74" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="118" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="184" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="206" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="228" y="112" width="18" height="18" class="mg-gray"/>
+      <rect x="30" y="134" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="134" width="18" height="18" class="mg-red"/>
+      <rect x="74" y="134" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="134" width="18" height="18" class="mg-gray"/>
+      <rect x="118" y="134" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="134" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="134" width="18" height="18" class="mg-gray"/>
+      <rect x="184" y="134" width="18" height="18" class="mg-gray"/>
+      <rect x="206" y="134" width="18" height="18" class="mg-gray"/>
+      <rect x="228" y="134" width="18" height="18" class="mg-gray"/>
+      <rect x="30" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="74" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="118" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="184" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="206" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="228" y="156" width="18" height="18" class="mg-gray"/>
+      <rect x="30" y="178" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="178" width="18" height="18" class="mg-gray"/>
+      <rect x="74" y="178" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="178" width="18" height="18" class="mg-gray"/>
+      <rect x="118" y="178" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="178" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="178" width="18" height="18" class="mg-red"/>
+      <rect x="184" y="178" width="18" height="18" class="mg-gray"/>
+      <rect x="206" y="178" width="18" height="18" class="mg-gray"/>
+      <rect x="228" y="178" width="18" height="18" class="mg-gray"/>
+      <rect x="30" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="74" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="118" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="184" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="206" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="228" y="200" width="18" height="18" class="mg-gray"/>
+      <rect x="30" y="222" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="222" width="18" height="18" class="mg-gray"/>
+      <rect x="74" y="222" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="222" width="18" height="18" class="mg-gray"/>
+      <rect x="118" y="222" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="222" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="222" width="18" height="18" class="mg-gray"/>
+      <rect x="184" y="222" width="18" height="18" class="mg-gray"/>
+      <rect x="206" y="222" width="18" height="18" class="mg-red"/>
+      <rect x="228" y="222" width="18" height="18" class="mg-gray"/>
+      <rect x="30" y="244" width="18" height="18" class="mg-gray"/>
+      <rect x="52" y="244" width="18" height="18" class="mg-gray"/>
+      <rect x="74" y="244" width="18" height="18" class="mg-gray"/>
+      <rect x="96" y="244" width="18" height="18" class="mg-gray"/>
+      <rect x="118" y="244" width="18" height="18" class="mg-gray"/>
+      <rect x="140" y="244" width="18" height="18" class="mg-gray"/>
+      <rect x="162" y="244" width="18" height="18" class="mg-gray"/>
+      <rect x="184" y="244" width="18" height="18" class="mg-gray"/>
+      <rect x="206" y="244" width="18" height="18" class="mg-gray"/>
+      <rect x="228" y="244" width="18" height="18" class="mg-gray"/>
+      <text x="30" y="38" class="mg-s mg-mu">피자 100판 (빨강 = 탄 판)</text>
+      <text x="300" y="80" class="mg-s mg-b mg-from1">기준선: &#x27;무조건 안 탄다&#x27;</text>
+      <rect x="300" y="88" width="247" height="26" class="mg-gray mg-growx1"/>
+      <text x="555" y="107" class="mg-m mg-b mg-from1">95%</text>
+      <text x="300" y="144" class="mg-s mg-b mg-from2">모델</text>
+      <rect x="300" y="152" width="249.6" height="26" class="mg-blue mg-growx2"/>
+      <text x="557.6" y="171" class="mg-m mg-b mg-tblue mg-from2">96%</text>
+      <text x="300" y="214" class="mg-s mg-b mg-from4">탄 5판 중 잡은 수:</text>
+      <text x="300" y="238" class="mg-m mg-s mg-b mg-torange mg-from4">기준선 0판   /   모델 2판</text>
+      <rect x="14" y="262" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="282" class="mg-only0 mg-b" style="font-size:14px">① 피자 100판 중 95판은 안 탔고 5판이 탔다</text>
+      <text x="28" y="282" class="mg-only1 mg-b" style="font-size:14px">② &#x27;무조건 안 탄다&#x27;라고만 해도 95판을 맞힌다 → 95%</text>
+      <text x="28" y="282" class="mg-only2 mg-b" style="font-size:14px">③ 모델이 96판을 맞혔다 → 96%</text>
+      <text x="28" y="282" class="mg-only3 mg-b" style="font-size:14px">④ 차이는 1%p뿐이다. 탄 5판 중 잡은 수는?</text>
+      <text x="28" y="282" class="mg-only4 mg-b" style="font-size:14px">⑤ 기준선 0판, 모델 2판 — 이 차이를 따로 본다</text>
+      <text x="28" y="282" class="mg-only5 mg-b" style="font-size:14px">결과: 정확도는 기준선과 비교하고, 불량은 따로 센다</text>
+    </svg>
+    <figcaption class="img-caption"><b>정확도와 기준선 — 점수만 보면 속는다</b> 숫자는 이해를 돕는 <b>예시 값</b>이다. 안 타는 판이 95%인 가게에서는 "무조건 안 탄다"만 말해도 정확도가 95%다. 그래서 정확도는 <b>기준선</b>과 비교하고, 잡아야 할 불량(탄 판)을 몇 판 잡았는지를 따로 센다.</figcaption>
+  </figure>
+  <!-- /mg:w9-baseline -->
+
+
+
+
+
+
+
     <p>정확도 하나로는 좋고 나쁨을 모른다. 8차시처럼 <b>기준선</b>과 비교한다. 오늘의 기준선은 "늘 가장 흔한 답만 찍었을 때의 정확도"다. 합격이 대부분인 기록이라면 "무조건 합격"만 말해도 정확도가 높게 나온다.</p>
     <p>그런데 "무조건 합격"은 불합격을 <b>하나도</b> 잡지 못한다. 그래서 정확도가 기준선과 비슷해도, 모델이 불합격을 몇 건 잡았는지는 따로 세어 봐야 한다. 그 일을 하는 것이 아래 헷갈림 표다.</p>
     <h3>헷갈림 표(Confusion Matrix) 읽는 법</h3>
@@ -182,6 +487,54 @@
       <li>실제와 예측이 같은 칸(왼쪽 위에서 오른쪽 아래로 내려가는 대각선)이 맞힌 수, 나머지 칸이 헷갈린 수다.</li>
       <li>공장에서는 특히 "실제 불합격인데 합격으로 예측한" 칸을 본다. 놓친 불량이기 때문이다.</li>
     </ul>
+
+  <!-- mg:w9-confusion -->
+  <figure class="mg">
+    <svg class="mg-svg" viewBox="0 0 720 330" role="img" aria-label="실제 합격과 불합격, 예측 합격과 불합격으로 이루어진 2행 2열 표에서 대각선 맞힌 칸과 놓친 불량 칸을 차례로 강조하는 그림">
+      <text x="420" y="42" class="mg-b mg-c">예측 (Predicted)</text>
+      <text x="20" y="172" class="mg-b">실제</text>
+      <text x="20" y="192" class="mg-s mg-mu">(Actual)</text>
+      <rect x="300" y="56" width="140" height="30" class="mg-ink"/>
+      <text x="370" y="76" class="mg-c mg-tw mg-b">합격(1)</text>
+      <rect x="450" y="56" width="140" height="30" class="mg-ink"/>
+      <text x="520" y="76" class="mg-c mg-tw mg-b">불합격(-1)</text>
+      <rect x="150" y="94" width="140" height="70" class="mg-ink"/>
+      <text x="220" y="134" class="mg-c mg-tw mg-b">실제 합격(1)</text>
+      <rect x="300" y="94" width="140" height="70" class="mg-green"/>
+      <text x="370" y="134" class="mg-c mg-l mg-tgreen mg-b mg-m">87</text>
+      <rect x="450" y="94" width="140" height="70" class="mg-orange"/>
+      <text x="520" y="134" class="mg-c mg-l mg-torange mg-b mg-m">3</text>
+      <rect x="150" y="170" width="140" height="70" class="mg-ink"/>
+      <text x="220" y="210" class="mg-c mg-tw mg-b">실제 불합격(-1)</text>
+      <rect x="300" y="170" width="140" height="70" class="mg-red"/>
+      <text x="370" y="210" class="mg-c mg-l mg-tred mg-b mg-m">5</text>
+      <rect x="450" y="170" width="140" height="70" class="mg-green"/>
+      <text x="520" y="210" class="mg-c mg-l mg-tgreen mg-b mg-m">5</text>
+      <rect x="296" y="90" width="148" height="78" class="mg-hl mg-only2"/>
+      <rect x="446" y="168" width="148" height="78" class="mg-hl mg-only2"/>
+      <rect x="446" y="90" width="148" height="78" class="mg-hl mg-only4"/>
+      <rect x="296" y="168" width="148" height="78" class="mg-hl mg-only4"/>
+      <rect x="296" y="168" width="148" height="78" class="mg-hl mg-only5"/>
+      <text x="300" y="270" class="mg-s mg-b mg-win35">정확도 = 맞힌 수 ÷ 전체 = 92 ÷ 100</text>
+      <text x="604" y="212" class="mg-s mg-b mg-tred mg-from5">놓친 불량</text>
+      <rect x="14" y="292" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="312" class="mg-only0 mg-b" style="font-size:14px">① 헷갈림 표: 세로가 실제, 가로가 예측이다</text>
+      <text x="28" y="312" class="mg-only1 mg-b" style="font-size:14px">② 대각선 두 칸(87, 5)은 맞힌 수다</text>
+      <text x="28" y="312" class="mg-only2 mg-b" style="font-size:14px">③ 정확도 = (87 + 5) ÷ 100 = 92%</text>
+      <text x="28" y="312" class="mg-only3 mg-b" style="font-size:14px">④ 나머지 두 칸(3, 5)은 헷갈린 수다</text>
+      <text x="28" y="312" class="mg-only4 mg-b" style="font-size:14px">⑤ 실제 불합격인데 합격으로 본 5건 = 놓친 불량</text>
+      <text x="28" y="312" class="mg-only5 mg-b" style="font-size:14px">결과: 정확도와 별개로 &#x27;놓친 불량&#x27;을 따로 읽는다</text>
+    </svg>
+    <figcaption class="img-caption"><b>헷갈림 표(Confusion Matrix) 읽는 법</b> 숫자는 이해를 돕는 <b>예시 값</b>이다. 세로 줄은 실제 답, 가로 줄은 모델의 예측이다. 대각선은 맞힌 칸이고, 공장에서는 <b>실제 불합격인데 합격으로 예측한 칸</b>(놓친 불량)을 특히 본다.</figcaption>
+  </figure>
+  <!-- /mg:w9-confusion -->
+
+
+
+
+
+
+
     <div class="callout concept">
       <b class="tag">찾아보기</b>
       <p><b>검색어</b> <code>정확도의 함정 불균형 데이터</code></p>
@@ -198,7 +551,7 @@
     <img class="chart-img" src="../../assets/images/generated/week09_wafer_pattern_examples.png"
          alt="웨이퍼 맵 네 장. 정상은 빨간 불량 다이가 몇 개 흩어져 있고, 중심형은 가운데에, 가장자리형은 테두리에, 스크래치형은 비스듬한 한 줄로 모여 있다">
     <p class="img-caption">웨이퍼 맵 불량 모양 4가지 — 정상·중심형·가장자리형·스크래치형(P-001, P-002, P-008, P-004). 빨강 = 불합격 다이, 옅은 초록 = 합격 다이. 이 가상 웨이퍼 한 장에는 다이가 317개다(실제 다이 수는 칩 크기에 따라 다르다). 교육용 가상 데이터로 그린 그림.</p>
-    <p><code>week09_orange_wafer_patterns.csv</code>(240행 6열, 교육용 가상 데이터)는 웨이퍼 240장의 맵을 한 장에 한 행씩 숫자 넷으로 요약했다. 한 행 = 웨이퍼 1장이다.</p>
+    <p><code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code>(240행 6열, 교육용 가상 데이터)는 웨이퍼 240장의 맵을 한 장에 한 행씩 숫자 넷으로 요약했다. 한 행 = 웨이퍼 1장이다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -264,7 +617,7 @@
 
   <section class="block">
     <h2>반도체 — 공정 기록으로 합격/불합격 맞히기</h2>
-    <p>같은 위젯으로 공정 기록 <code>week09_pass_fail_train.csv</code>(750행 9열, 교육용 가상 데이터)를 본다. 한 행 = 공정 작업 기록 1건과 그 뒤 검사 결과다.</p>
+    <p>같은 위젯으로 공정 기록 <code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code>(750행 9열, 교육용 가상 데이터)를 본다. 한 행 = 공정 작업 기록 1건과 그 뒤 검사 결과다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
@@ -543,9 +896,9 @@ print("정확도:", accuracy_score(y_te, clf.predict(X_te)))</code></pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code>week09_orange_wafer_patterns.csv</code> — 240행 6열, 교육용 가상 데이터(PART 1 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다). 정상 120 · 중심형 40 · 가장자리형 40 · 스크래치형 40장(정상도 불량 다이가 3~8개 있다).
+      <li><code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code> — 240행 6열, 교육용 가상 데이터(PART 1 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다). 정상 120 · 중심형 40 · 가장자리형 40 · 스크래치형 40장(정상도 불량 다이가 3~8개 있다).
         <b>공정 지도 위치: ⑦ EDS(전기 검사) 웨이퍼 맵의 요약.</b></li>
-      <li><code>week09_pass_fail_train.csv</code> — 750행 9열, 교육용 가상 데이터(PART 1·2·3). 빈칸 15칸(<code>dropna()</code> 뒤 735행). 합격이 불합격보다 훨씬 많다. 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+      <li><code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code> — 750행 9열, 교육용 가상 데이터(PART 1·2·3). 빈칸 15칸(<code>dropna()</code> 뒤 735행). 합격이 불합격보다 훨씬 많다. 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
         <b>공정 지도 위치: ②~⑤ + 세정의 공정 조건과 검사 결과(공정 중간 검사 + ⑦ EDS 결과를 모은 교육용 설정).</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week09_dictionary.html">데이터 설명서</a></li>
     </ul>
