@@ -586,7 +586,7 @@ print(round(r_press, 2))</code></pre>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(450, 12)
 0.09</pre>
     </div>
-    <p><b>공장 말로 읽기</b> — 압력–두께는 <b>0.09</b>로 "약함"이다. 압력이 달라져도 두께가 한 방향으로 함께 움직이지 않았다. 두께와 강하게 함께 움직이는 값이 있는지는 실습지 문제 2에서 찾는다.</p>
+    <p><b>확인하기</b> — 압력–두께는 <b>0.09</b>로 "약함"이다. 압력이 달라져도 두께가 한 방향으로 함께 움직이지 않았다. 두께와 강하게 함께 움직이는 값이 있는지는 실습지 문제 2에서 찾는다.</p>
 
     <h3>확인 2 — 온도가 연습용 기준 밖이면 불합격이 많을까</h3>
     <p>가게 기록의 <code>freezer_out</code>과 같은 모양으로, 온도 295~305℃ 밖인 기록을 골라 불합격률을 센다.</p>
@@ -602,7 +602,7 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
     </div>
     <p><code>92 9.8</code>은 "범위 밖 기록 수, 불합격률(%)"이다. 노트북 6단계 마지막 셀은 4차시처럼 한 번 고른 표에서 한 번 더 골라 <b>범위 안</b> 기록을 센다. 결과는 <code>358 11.5</code>다.</p>
     <div class="callout concept"><b class="tag">비교 기준은 하나</b> 오늘 보고서의 비교 기준은 <b>기준선</b>(전체 불합격률) 하나다. 범위 안 비율(11.5%)은 참고로만 본다. 공정 기록의 기준선은 PART 3 실습지 문제 1에서 직접 구한다.</div>
-    <p><b>공장 말로 읽기</b> — 온도가 연습용 기준 밖인 92건의 불합격률은 9.8%로, 참고로 본 범위 안(11.5%)보다도 낮다. 기준선과 비교해도 높지 않은지는 실습지 문제 1에서 기준선을 구한 뒤 확인한다. <b>범위 밖이라고 다 원인 후보가 되는 것은 아니다.</b>
+    <p><b>확인하기</b> — 온도가 연습용 기준 밖인 92건의 불합격률은 9.8%로, 참고로 본 범위 안(11.5%)보다도 낮다. 기준선과 비교해도 높지 않은지는 실습지 문제 1에서 기준선을 구한 뒤 확인한다. <b>범위 밖이라고 다 원인 후보가 되는 것은 아니다.</b>
     오늘의 미션은 PART 3에서 다른 값으로 같은 비교를 해서 완성한다.</p>
   </section>
 
@@ -694,22 +694,21 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
     </div>
 
     <h3>반도체 — 공정 센서 기록을 Orange로 보기</h3>
-    <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 이 절은 강사가 화면으로 보여 준다. 학생은 따라 누르지 않고 순서와 그림만 눈으로 확인한다. Correlations로 1위 쌍을 읽는 일은 PART 3 실습지 문제 4에서 직접 한다.</div>
-    <p>강사가 <b>File → Open</b>으로 <code>week08_2_anomaly_start.ows</code>를 연다. File에는 PART 1의 공정 센서 기록 450행이 들어 있다. 캔버스 메모 ②는 학생이 실습지 문제 4에서 하고, ③④는 지금 강사 화면에서 본다.</p>
-    <div class="step"><div class="num">1</div><div class="content"><b>온도와 두께를 합격 여부 색으로 보기</b> — 강사가 File에 <code>Scatter Plot</code>을 잇고 <b>Axis x</b> = <code>온도_C</code>, <b>Axis y</b> = <code>두께_nm</code>, <b>Color</b> = <code>합격여부</code>로 고른다(새로 이으면 처음에는 x 설비번호 · y 공정명으로 뜬다. Color는 처음부터 합격여부다).</div></div>
+    <p><b>File → Open</b>으로 <code>week08_2_anomaly_start.ows</code>를 연다. File에는 PART 1의 공정 센서 기록 450행이 들어 있다. 캔버스 메모 ②는 실습지 문제 4에서 하고, ③④는 지금 직접 해 본다.</p>
+    <div class="step"><div class="num">1</div><div class="content"><b>온도와 두께를 합격 여부 색으로 보기</b> — File에 <code>Scatter Plot</code>을 잇고 <b>Axis x</b> = <code>온도_C</code>, <b>Axis y</b> = <code>두께_nm</code>, <b>Color</b> = <code>합격여부</code>로 고른다(새로 이으면 처음에는 x 설비번호 · y 공정명으로 뜬다. Color는 처음부터 합격여부다).</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week08_05_anomaly_scatter.png"
          alt="공정 센서 기록의 Scatter Plot. 온도가 높을수록 두께가 큰 띠 위에 합격·불합격 점이 색으로 나뉘어 있다"
          data-shot="week08_2_anomaly_done.ows의 Scatter Plot (산점도) 창 전체 — 왼쪽 Axis x 온도_C, Axis y 두께_nm, Color 합격여부와 오른쪽 그림이 함께 보이게">
     <p><b>읽을 것</b> — 점들은 오른쪽 위로 올라가는 띠를 이룬다. 온도와 두께는 함께 움직인다. 그런데 빨간 점(불합격, -1)은 띠의 한쪽 끝에 몰리지 않고 띠 전체에 흩어져 있다.
     PART 1 확인 2(온도 범위 밖 9.8%, 안 11.5%)와 같은 이야기다. <b>온도는 두께와 함께 움직이지만, 불합격과는 뚜렷하게 함께 움직이지 않는다.</b></p>
-    <div class="step"><div class="num">2</div><div class="content"><b>합격·불합격이 잘 갈리는 짝 찾기(강사 화면)</b> — 강사가 Scatter Plot 창에서 Axis y 바로 아래의 <b>Find Informative Projections</b> 버튼을 누르고, 새 창의 <b>Start</b>를 누른다.
+    <div class="step"><div class="num">2</div><div class="content"><b>합격·불합격이 잘 갈리는 짝 찾기</b> — Scatter Plot 창에서 Axis y 바로 아래의 <b>Find Informative Projections</b> 버튼을 누르고, 새 창의 <b>Start</b>를 누른다.
     Orange가 여러 열 짝으로 산점도를 그려 보고, 합격·불합격 색이 잘 갈리는 짝부터 목록으로 보여 준다. 목록의 줄을 누르면 산점도가 그 짝으로 바뀐다.
     이 기능은 결과 열(<code>합격여부</code>)이 있어야 켜진다. 워밍업 데이터에서는 버튼이 꺼져 있다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week08_06_anomaly_projections.png"
          alt="Find Informative Projections 창. 합격·불합격 색이 잘 갈리는 열 짝이 위에서부터 줄 서 있다"
          data-shot="week08_2_anomaly_done.ows의 Scatter Plot에서 Find Informative Projections 창을 열고 Start를 누른 뒤 — 목록 위쪽 다섯 줄이 보이게">
     <p><b>볼 것</b> — 위쪽 추천 짝에 <b>어떤 열이 자주 나오는지</b> 메모해 둔다. 이것은 "먼저 살펴볼 곳"을 알려 주는 단서일 뿐이고, 정말 불합격과 관련 있어 보이는지는 PART 3에서 숫자로 확인한다.</p>
-    <button class="reveal-btn">강사 화면 결과 보기</button>
+    <button class="reveal-btn">결과 보기</button>
     <div class="answer-box">위쪽 다섯 짝 가운데 네 짝에 같은 열 하나가 들어 있다 — 그 열이 무엇인지와 범위 밖 불합격률은 실습지 문제 3에서 직접 구한다.
       1위 짝에 함께 나온 <code>습도_pct</code>는 다른 값과 관계없게 만든 비교용 열이다. 짝으로 함께 그려졌을 뿐이라 원인 후보로 올리지 않는다.</div>
 

@@ -545,7 +545,7 @@ B조    15.5
 C조     9.7
 Name: 불합격, dtype: float64</pre>
     </div>
-    <p><b>공장 말로 읽기</b> — B조가 일한 웨이퍼의 불합격률이 15.5%로, A조·C조(약 10%)보다 높다. 그렇다고 "B조 때문"이라고 단정할 수는 없다.
+    <p><b>확인하기</b> — B조가 일한 웨이퍼의 불합격률이 15.5%로, A조·C조(약 10%)보다 높다. 그렇다고 "B조 때문"이라고 단정할 수는 없다.
     B조가 일한 시간에 어느 설비·어떤 로트가 몰렸는지에 따라서도 이 숫자는 달라진다(실제로 B조는 EQ-04 기록을 36장 맡았다). 지금 말할 수 있는 것은 "B조 시간대는 <b>원인 후보</b>로 더 살펴볼 곳"까지다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
@@ -567,7 +567,7 @@ print((lot_fail &gt; 20).sum())</code></pre>
       <b class="tag">실행 결과</b>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">21</pre>
     </div>
-    <p><b>공장 말로 읽기</b> — 로트 75개 중 <b>21개</b>에 불합격 웨이퍼가 섞여 있다(로트 안 합격률 80% 미만).
+    <p><b>확인하기</b> — 로트 75개 중 <b>21개</b>에 불합격 웨이퍼가 섞여 있다(로트 안 합격률 80% 미만).
     설비별 합격률과 가장 많은 불량 유형 — 오늘의 미션 — 은 PART 3 실습지 문제 1~3에서 직접 구한다.</p>
   </section>
 
@@ -677,7 +677,6 @@ print((lot_fail &gt; 20).sum())</code></pre>
     </div>
 
     <h3>반도체 — 공장 기록을 Orange로 보기</h3>
-    <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 이 절은 강사가 화면으로 보여 준다(캔버스 메모 ③). 학생은 따라 누르지 않고 순서만 눈으로 확인한다. 메모 ②의 Pivot Table은 PART 3 실습지 문제 4에서 직접 한다.</div>
     <p><b>File → Open</b>으로 <code>week07_2_yield_start.ows</code>를 연다. PART 1의 공장 기록(300행)이 File에 들어 있다.</p>
     <div class="step"><div class="num">1</div><div class="content"><b>설비마다 온도의 퍼짐 — 상자 그림</b>(캔버스 메모 ③) — File에 <code>Box Plot</code>을 잇는다. 처음에는 Variable이 <code>웨이퍼번호</code>, Subgroups가 <code>합격여부</code>로 잡혀 있다. Variable 목록에서 <code>온도_C</code>, Subgroups 목록에서 <code>설비번호</code>를 클릭한다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week07_06_yield_boxplot.png"

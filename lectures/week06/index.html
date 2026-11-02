@@ -548,7 +548,7 @@ plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_bar_process.png" alt="공정명별 기록 건수 막대그래프. 증착 39, 포토 39, 세정 37, 식각 34, 산화 31">
     <p class="img-caption">노트북 5단계 실행 결과 — 공정명별 기록 건수(교육용 가상 데이터)</p>
-    <p><b>공장 말로 읽기</b> — 다섯 공정의 기록이 31~39건으로 비슷하게 섞여 있다(증착 39 · 포토 39 · 세정 37 · 식각 34 · 산화 31). 가게 기록의 "날씨별 날 수"와 같은 모양이다.</p>
+    <p><b>확인하기</b> — 다섯 공정의 기록이 31~39건으로 비슷하게 섞여 있다(증착 39 · 포토 39 · 세정 37 · 식각 34 · 산화 31). 가게 기록의 "날씨별 날 수"와 같은 모양이다.</p>
 
     <h3>확인 2 — 막 두께는 어디에 몰렸을까 (히스토그램)</h3>
     <div class="code-block">
@@ -560,7 +560,7 @@ plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_hist_thickness.png" alt="두께 히스토그램. 약 94~108nm를 열 구간으로 나눴고 101~103nm 근처 막대가 가장 높으며 양쪽으로 갈수록 낮아진다">
     <p class="img-caption">노트북 5단계 실행 결과 — 막 두께 히스토그램, 구간 10개(교육용 가상 데이터)</p>
-    <p><b>공장 말로 읽기</b> — 두께는 약 94~108nm 사이에 있고, 가장 높은 막대는 약 101~103nm 근처다. 가운데가 높고 양쪽으로 갈수록 낮아지는 산 모양이다.
+    <p><b>확인하기</b> — 두께는 약 94~108nm 사이에 있고, 가장 높은 막대는 약 101~103nm 근처다. 가운데가 높고 양쪽으로 갈수록 낮아지는 산 모양이다.
     가운데에서 먼 양 끝의 기록은 "평소보다 얇거나 두꺼운 막"이라 눈여겨볼 대상이다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
@@ -581,7 +581,7 @@ plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_scatter_temp_pressure.png" alt="온도와 압력 산점도. 점 180개가 한쪽으로 기울지 않고 넓은 구름처럼 흩어져 있다">
     <p class="img-caption">노트북 5단계 실행 결과 — 온도와 압력(교육용 가상 데이터)</p>
-    <p><b>공장 말로 읽기</b> — 점 180개가 한쪽으로 기울지 않은 구름처럼 흩어져 있다. 이 기록에서는 온도가 높은 작업이라고 압력도 높거나 낮은 모습이 안 보인다.
+    <p><b>확인하기</b> — 점 180개가 한쪽으로 기울지 않은 구름처럼 흩어져 있다. 이 기록에서는 온도가 높은 작업이라고 압력도 높거나 낮은 모습이 안 보인다.
     가게 기록의 "오른쪽 위로 올라가는 점들"과 비교해 보자. 온도와 <b>두께</b>는 어떤 모양일지 PART 3 실습지 문제 3에서 직접 그린다.</p>
   </section>
 
@@ -688,7 +688,6 @@ plt.show()</code></pre>
          data-shot="week06_1_wafermap_done.ows의 Distributions (분포 막대) 창 — Variable 중심거리_mm, Split by 합격여부. 오른쪽(먼 거리) 막대에 빨간 불합격 부분이 커지는 모습이 보이게">
 
     <h3>반도체 — 공정 기록을 Orange로 그리기</h3>
-    <div class="callout practice"><b class="tag">강사 화면 보며 확인</b> 1~2단계는 강사가 화면으로 보여 준다. 학생은 따라 누르지 않고 순서만 눈으로 확인한다. 3단계(상자 그림)는 PART 3 실습지 문제 4에서 직접 한다.</div>
     <p><b>File → Open</b>으로 <code>week06_2_process_start.ows</code>를 연다. PART 1의 공정 기록(180행)이 File에 들어 있다.</p>
     <div class="step"><div class="num">1</div><div class="content"><b>온도 분포</b> — File에 <code>Distributions</code>를 잇는다. Variable 목록에서 <code>온도_C</code>를 클릭하고, 왼쪽 아래 <b>Split by</b>를 <code>None</code>으로 바꾼다(처음에는 <code>합격여부</code>로 잡혀 막대 색이 나뉜다).
     파이썬 <code>plt.hist</code>와 같은 질문 — "온도가 어디에 몰렸나" — 에 답하는 그림이다.</div></div>
