@@ -13,17 +13,36 @@ nb = NotebookPair("week01", "1차시 실습 — 변수와 출력")
 # --- 생활 예제(완성 코드, 실행하며 관찰) -------------------------------------------
 nb.add(
     step(1, "첫 셀 실행하기(환경 확인)"),
-    md("셀을 한 번 클릭하고 **Shift + Enter**를 누르세요. 아래에 문장이 나오면 준비 끝입니다."),
-    code('print("파이썬 준비 완료!")'),
+    md("셀을 한 번 클릭하고 **Shift + Enter**를 누르세요. 아래에 문장이 나오면 준비 끝입니다.",
+       student="**빈칸 채우기**: 괄호 안의 값을 화면에 보여 주는 함수 이름을 채운 뒤, 셀을 클릭하고 **Shift + Enter**를 누르세요. "
+               "아래에 `파이썬 준비 완료!`가 나오면 준비 끝입니다. 힌트: 값을 화면에 보여 주는 함수는 `p`로 시작하는 다섯 글자입니다."),
+    code('print("파이썬 준비 완료!")',
+         "# TODO: 화면에 출력하는 함수 이름을 채우세요. (결과: 파이썬 준비 완료!)\n"
+         '____("파이썬 준비 완료!")'),
 
     step(2, "변수에 값 저장하기"),
-    md("`=`는 \"같다\"가 아니라 \"오른쪽 값을 왼쪽 이름표에 저장하라\"는 뜻입니다."),
+    md("`=`는 \"같다\"가 아니라 \"오른쪽 값을 왼쪽 이름표에 저장하라\"는 뜻입니다.",
+       student="`=`는 \"같다\"가 아니라 \"오른쪽 값을 왼쪽 이름표에 저장하라\"는 뜻입니다.\n\n"
+               "**빈칸 채우기**: 커피 한 잔 값 `coffee_price`에 4500, 잔 수 `cups`에 3을 저장하세요. "
+               "힌트: 숫자는 따옴표 없이 씁니다."),
     code("coffee_price = 4500\n"
          "cups = 3\n"
          "\n"
          "print(coffee_price)\n"
+         "print(cups)",
+         "# TODO: coffee_price에 4500, cups에 3을 저장하세요. (결과: 4500, 3이 한 줄씩)\n"
+         "coffee_price = ____\n"
+         "cups = ____\n"
+         "\n"
+         "print(coffee_price)\n"
          "print(cups)"),
+    md("커피 한 잔 값(`coffee_price`)과 잔 수(`cups`)로 총 금액을 구하세요.",
+       student="**빈칸 채우기**: 커피 한 잔 값(`coffee_price`)과 잔 수(`cups`)를 곱해 총 금액 `total_price`에 저장하세요. "
+               "힌트: 곱하기 기호는 `*`"),
     code("total_price = coffee_price * cups\n"
+         "print(total_price)",
+         "# TODO: 한 잔 값과 잔 수가 든 변수 이름을 채우세요. (결과: 13500)\n"
+         "total_price = ____ * ____\n"
          "print(total_price)"),
     look_up("파이썬 변수 뜻"),
 
@@ -34,13 +53,22 @@ nb.add(
          '\n'
          'print(type(cups))\n'
          'print(type(rating))\n'
-         'print(type(menu))'),
+         'print(type(menu))',
+         "# TODO: 마지막 줄에 \"아메리카노\"가 든 변수 이름을 넣어 자료형을 확인하세요. (결과: <class 'str'>)\n"
+         'rating = 4.5\n'
+         'menu = "아메리카노"\n'
+         '\n'
+         'print(type(cups))\n'
+         'print(type(rating))\n'
+         'print(type(____))'),
 
     step(4, "print()와 f-string으로 문장 만들기"),
     md("f-string은 따옴표 앞에 `f`를 붙이고, 값이 들어갈 자리에 `{변수 이름}`을 씁니다. "
        "**주의**: `f`를 빼먹으면 중괄호가 글자 그대로 나옵니다."),
     code('print("메뉴:", menu, "잔 수:", cups)'),
-    code('print(f"{menu} {cups}잔 주문이 들어왔습니다.")'),
+    code('print(f"{menu} {cups}잔 주문이 들어왔습니다.")',
+         "# TODO: 따옴표 앞에 붙일 글자 하나와, 잔 수가 든 변수 이름을 채우세요.\n"
+         'print(____"{menu} {____}잔 주문이 들어왔습니다.")'),
 
     step(5, "계산한 값을 문장에 넣기"),
     md("따뜻한 커피 6잔, 아이스 4잔이 팔렸습니다."),
@@ -49,6 +77,13 @@ nb.add(
          "\n"
          "total = hot_count + ice_count\n"
          "ice_rate = ice_count / total * 100\n"
+         "print(total, ice_rate)",
+         "# TODO: 전체 잔 수(total)와 아이스 비율(ice_rate)을 구하는 식의 빈칸을 채우세요. (결과: 10 40.0)\n"
+         "hot_count = 6\n"
+         "ice_count = 4\n"
+         "\n"
+         "total = ____ + ice_count\n"
+         "ice_rate = ____ / total * 100\n"
          "print(total, ice_rate)"),
     code('print(f"전체 {total}잔 중 아이스는 {ice_rate}%입니다.")'),
 )
@@ -61,6 +96,12 @@ nb.add(
     code("pass_count = 32\n"
          "fail_count = 8\n"
          "total_count = pass_count + fail_count\n"
+         "\n"
+         'print(f"오늘 기록 {total_count}건 중 합격은 {pass_count}건, 불합격은 {fail_count}건입니다.")',
+         "# TODO: 합격 건수와 불합격 건수를 더해 전체 건수를 구하세요. (결과: 오늘 기록 40건 중 …)\n"
+         "pass_count = 32\n"
+         "fail_count = 8\n"
+         "total_count = ____ + ____\n"
          "\n"
          'print(f"오늘 기록 {total_count}건 중 합격은 {pass_count}건, 불합격은 {fail_count}건입니다.")'),
     code("fail_rate = fail_count / total_count * 100\n"
