@@ -91,7 +91,7 @@ print(f"온도_C 한 열 정확도: {round(acc1 * 100, 1)}%")</pre>
 
   <section class="block">
     <h2>문제 3 — Orange: 웨이퍼 패턴 트리의 첫 질문과 정확도 읽기</h2>
-    <p>PART 1에서 만든 <code>week09_1_patterns</code> 캔버스를 그대로 쓴다. 닫았다면 <code>week09_1_patterns_start.ows</code>를 열어 캔버스 메모 ②·③대로 다시 잇는다(막히면 <code>week09_1_patterns_done.ows</code>).</p>
+    <p>PART 1에서 만든 <code>week09_1_patterns</code> 캔버스를 그대로 쓴다. 닫았다면 <code>week09_1_patterns_start.ows</code>를 열어 캔버스 메모 ②·③대로 다시 잇는다.</p>
     <ol>
       <li><code>Tree Viewer</code>를 열어 맨 위 상자(뿌리)의 <b>첫 질문</b>을 읽는다 — 상자 맨 아래 열 이름과, 아래로 뻗은 선 옆의 조건. 상자 안 숫자까지 보려면 왼쪽 <b>Show details in non-leaves</b>에 체크한다.</li>
       <li><code>Test and Score</code>를 열어 Number of folds가 <b>10</b>인지 확인하고, Tree 줄의 <b>CA</b>를 읽는다. 표에는 AUC·CA·F1·Prec·Recall·MCC가 나오는데, <b>CA 한 칸만 읽는다</b> — 첫 숫자 칸 AUC는 정확도가 아니다.</li>
@@ -151,7 +151,7 @@ print(f"온도_C 한 열 정확도: {round(acc1 * 100, 1)}%")</pre>
     <button class="reveal-btn">체크포인트 보기</button>
     <div class="callout warn answer-box">
       <b class="tag">체크포인트</b> Confusion Matrix 표가 비어 있으면 Tree에서 Test and Score로 가는 선이 빠졌다. CA가 0.783과 조금 다르면 Number of folds를 10으로 바꿨는지 본다. CA가 0.739쯤이면 Tree 깊이가 100으로 남아 있다(Tree Viewer 정보 줄이 <code>171 nodes</code>쯤으로 크다) — 깊이를 4로 바꾼다. 0.68쯤을 적었다면 AUC 칸을 읽은 것이다.
-      Orange는 빈칸 행을 지우지 않고 750행을 모두 쓴다 — 표의 합계(∑)가 750이면 맞다. 막히면 <code>week09_2_passfail_done.ows</code>를 연다.
+      Orange는 빈칸 행을 지우지 않고 750행을 모두 쓴다 — 표의 합계(∑)가 750이면 맞다.
     </div>
   </section>
 

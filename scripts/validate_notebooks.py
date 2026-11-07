@@ -10,6 +10,7 @@
 """
 import os
 import glob
+import re
 import shutil
 import tempfile
 import nbformat
@@ -28,12 +29,28 @@ def check(name, condition, detail=""):
     return condition
 
 
-def execute_notebook(path):
+PRACTICE_HEADER = re.compile(r"^## \d+단계\. 반도체 데이터 실습$", re.M)
+STEP_HEADER = re.compile(r"^## \d+단계\. ", re.M)
+
+
+def practice_split(nb):
+    """(실습 단계 앞 셀 목록, 실습 단계 셀 목록, 실습 단계 뒤 셀 목록). 실습 단계가 없으면 (전체, [], [])."""
+    before, inside, after, state = [], [], [], 0
+    for c in nb.cells:
+        if c.cell_type == "markdown" and STEP_HEADER.search(c.source):
+            state = 1 if PRACTICE_HEADER.search(c.source) else (2 if state else 0)
+        (before, inside, after)[state].append(c)
+    return before, inside, after
+
+
+def execute_notebook(path, stop_at_practice=False):
     try:
         from nbclient import NotebookClient
     except ImportError:
         from nbconvert.preprocessors import ExecutePreprocessor as NotebookClient  # fallback name
     nb = nbformat.read(path, as_version=4)
+    if stop_at_practice:   # 정답 노트북의 실습 단계는 빈칸이라 그 앞까지만 실행한다
+        nb.cells = practice_split(nb)[0]
     # 노트북은 CSV 파일 이름만 쓴다. 실습 환경처럼 CSV를 모아 둔 임시 폴더에서 실행한다.
     with tempfile.TemporaryDirectory() as work:
         for csv in glob.glob(os.path.join(BASE, "data", "weekly", "week*", "week*.csv")):
@@ -63,11 +80,18 @@ def validate_folder(folder, label, must_run=True, must_not_contain_todo=False):
         nb = nbformat.read(path, as_version=4)
         check(f"{label}/{name}: nbformat 유효", True)
         if must_not_contain_todo:
-            src = "\n".join(c.get("source", "") for c in nb.cells)
-            check(f"{label}/{name}: TODO 잔존 없음", "TODO" not in src)
+            # 정답 노트북: '반도체 데이터 실습' 단계는 학생용과 같은 빈칸, 그 밖의 셀에는 TODO가 없어야 한다
+            before, inside, after = practice_split(nb)
+            src = "\n".join(c.get("source", "") for c in before + after)
+            check(f"{label}/{name}: 실습 단계 밖 TODO 잔존 없음", "TODO" not in src and "____" not in src)
+            inside_src = "\n".join(c.get("source", "") for c in inside if c.cell_type == "code")
+            check(f"{label}/{name}: 실습 단계는 빈칸 형태", "TODO" in inside_src)
+            has_error = any(o.get("output_type") == "error" for c in nb.cells if c.cell_type == "code"
+                            for o in c.get("outputs", []))
+            check(f"{label}/{name}: 저장된 출력에 오류 없음", not has_error)
         if must_run:
             try:
-                execute_notebook(path)
+                execute_notebook(path, stop_at_practice=must_not_contain_todo)
                 check(f"{label}/{name}: 실행 성공", True)
             except Exception as e:
                 check(f"{label}/{name}: 실행 성공", False, str(e)[:200])

@@ -16,42 +16,68 @@ from _common import MPL_KOREAN, NotebookPair, code, look_up, md, step
 
 nb = NotebookPair("week07", "7차시 실습 — 설비·공정 비교와 수율·불량 분석")
 
-# --- 생활 예제: 반별 쪽지시험 24문항(완성 코드, 실행하며 관찰) -------------------------------
+# --- 생활 예제: 반별 쪽지시험 24문항(빈칸을 채우며 따라 하기) -------------------------------
 nb.add(
     step(1, "정답 열 만들기 — 비교로 새 열"),
     md("세 반 학생 6명의 쪽지시험 기록(교육용 가상 데이터)입니다. `정답여부`는 1 = 정답, -1 = 오답입니다."),
     code('import pandas as pd\n'
          '\n'
          'quiz = pd.read_csv("week07_easy_quiz_results.csv", encoding="utf-8-sig")\n'
-         'print(quiz.shape)'),
-    code("quiz.head()"),
+         'print(quiz.shape)',
+         '# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요.\n'
+         'import pandas as pd\n'
+         '\n'
+         'quiz = pd.____("week07_easy_quiz_results.csv", encoding="utf-8-sig")\n'
+         'print(quiz.____)'),
+    code("quiz.head()",
+         "# TODO: 앞 5행을 보여 주는 함수 이름을 채우세요.\n"
+         "quiz.____()"),
     md("`quiz[\"정답여부\"] == 1`은 행마다 True/False를 만듭니다. 이것을 새 열 `정답`에 저장합니다. "
        "True는 1, False는 0으로 계산되므로 **평균 × 100 = 정답률(%)**입니다."),
     code('quiz["정답"] = quiz["정답여부"] == 1\n'
          'print(quiz["정답"].sum())\n'
+         'print(quiz["정답"].mean() * 100)',
+         '# TODO: "같은가?"를 묻는 비교 기호와, 정답 개수를 더하는 함수 이름을 채우세요.\n'
+         'quiz["정답"] = quiz["정답여부"] ____ 1\n'
+         'print(quiz["정답"].____())\n'
          'print(quiz["정답"].mean() * 100)'),
 
     step(2, "묶어서 비교하기 — groupby"),
     md("`groupby(\"반\")`은 같은 반끼리 묶고, 뒤의 `[\"정답\"].mean()`은 묶음마다 평균을 냅니다. `.round(1)`은 소수 첫째 자리까지 반올림입니다."),
     code('class_rate = quiz.groupby("반")["정답"].mean() * 100\n'
-         'print(class_rate.round(1))'),
-    code('print(class_rate.sort_values())'),
+         'print(class_rate.round(1))',
+         '# TODO: 묶을 열 이름(따옴표 포함)과, 반올림 함수 이름을 채우세요.\n'
+         'class_rate = quiz.groupby(____)["정답"].mean() * 100\n'
+         'print(class_rate.____(1))'),
+    code('print(class_rate.sort_values())',
+         '# TODO: 작은 값부터 줄 세우는 함수 이름을 채우세요.\n'
+         'print(class_rate.____())'),
     look_up("반도체 수율 뜻"),
 
     step(3, "오답 유형 줄 세우기"),
     md("오답(-1)인 행만 고른 뒤 `오답유형`을 셉니다. 많은 순으로 세워 막대로 그리면 \"무엇부터 고칠지\"가 보입니다(6차시 막대 4줄 틀)."),
     code('wrong_counts = quiz[quiz["정답여부"] == -1]["오답유형"].value_counts()\n'
+         'print(wrong_counts)',
+         '# TODO: 오답을 뜻하는 숫자와, 값마다 개수를 세는 함수 이름을 채우세요.\n'
+         'wrong_counts = quiz[quiz["정답여부"] == ____]["오답유형"].____()\n'
          'print(wrong_counts)'),
     code("import matplotlib.pyplot as plt\n" + MPL_KOREAN + "\n"
          "\n"
          "plt.bar(wrong_counts.index, wrong_counts)\n"
          'plt.xlabel("오답유형")\n'
          'plt.ylabel("오답 수")\n'
+         "plt.show()",
+         "# TODO: 막대그래프를 그리는 함수 이름과, y축 이름을 붙이는 함수 이름을 채우세요.\n"
+         "import matplotlib.pyplot as plt\n" + MPL_KOREAN + "\n"
+         "\n"
+         "plt.____(wrong_counts.index, wrong_counts)\n"
+         'plt.xlabel("오답유형")\n'
+         'plt.____("오답 수")\n'
          "plt.show()"),
     look_up("파레토 차트"),
 )
 
-# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 완성 코드) ----------------------------
+# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 코드, 빈칸 채우기) ---------------------
 nb.add(
     step(4, "반도체 데이터로 확인하기 — 웨이퍼 300장"),
     md("로트 75개 × 웨이퍼 4장 = 300장의 공정 기록(교육용 가상 데이터)입니다. 1~2단계와 같은 코드에서 표 이름과 열 이름만 바뀝니다. "
@@ -60,18 +86,24 @@ nb.add(
        student="로트 75개 × 웨이퍼 4장 = 300장의 공정 기록(교육용 가상 데이터)입니다. 1~2단계와 같은 코드에서 표 이름과 열 이름만 바뀝니다. "
                "오늘은 비교 결과를 \"원인\"이 아니라 \"원인 후보\"로 말합니다.\n\n"
                "`합격여부`: 1 = 합격, -1 = 불합격. 설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록입니다.\n\n"
-               "- 빈칸 하나: 2단계 `\"반\"`이 있던 자리에 작업조 열 이름을 넣습니다. 열 이름은 따옴표로 감쌉니다 — 따옴표가 없으면 `NameError`가 납니다."),
+               "- 묶을 열 이름 빈칸은 2단계 `\"반\"`이 있던 자리입니다. 열 이름은 따옴표로 감쌉니다 — 따옴표가 없으면 `NameError`가 납니다."),
     code('df = pd.read_csv("week07_equipment_yield.csv", encoding="utf-8-sig")\n'
-         'print(df.shape)'),
+         'print(df.shape)',
+         '# TODO: 읽을 파일 이름(따옴표 포함)과, 크기를 보여 주는 이름을 채우세요.\n'
+         'df = pd.read_csv(____, encoding="utf-8-sig")\n'
+         'print(df.____)'),
     code('df["불합격"] = df["합격여부"] == -1\n'
          'shift_fail = df.groupby("작업조")["불합격"].mean() * 100\n'
          'print(shift_fail.round(1))',
-         'df["불합격"] = df["합격여부"] == -1\n'
-         '# TODO: 작업조별로 묶도록 열 이름을 채우세요(2단계 "반"이 있던 자리).\n'
+         '# TODO: 불합격을 뜻하는 숫자와, 작업조별로 묶을 열 이름(따옴표 포함)을 채우세요(2단계 "반"이 있던 자리).\n'
+         'df["불합격"] = df["합격여부"] == ____\n'
          'shift_fail = df.groupby(____)["불합격"].mean() * 100\n'
          'print(shift_fail.round(1))'),
     code('lot_fail = df.groupby("로트번호")["불합격"].mean() * 100\n'
-         'print((lot_fail > 20).sum())'),
+         'print((lot_fail > 20).sum())',
+         '# TODO: 로트별로 묶을 열 이름(따옴표 포함)과, 불합격률 기준 숫자 20을 채우세요. (결과: 21)\n'
+         'lot_fail = df.groupby(____)["불합격"].mean() * 100\n'
+         'print((lot_fail > ____).sum())'),
 )
 
 # --- 반도체 데이터 실습(실습지 문제 1~3과 같은 번호, PART 3에서 채운다) -----------------------
@@ -139,6 +171,12 @@ nb.add(
        "`eq_rate`는 문제 2에서 만드는 변수라, 문제 2를 먼저 풀어야 실행됩니다(안 풀었으면 `NameError: name 'eq_rate' is not defined`)."),
     code('for eq, rate in eq_rate.items():\n'
          '    if rate < 90:\n'
+         '        print(f"{eq} 합격률 {round(rate, 1)}% → 원인 후보 — 더 살펴보기")\n'
+         '    else:\n'
+         '        print(f"{eq} 합격률 {round(rate, 1)}% → 연습용 기준 이상")',
+         '# TODO: 기준 숫자(90)와, 이름과 값을 한 쌍씩 꺼내는 함수 이름을 채우세요. (문제 2를 먼저 푼 뒤 실행)\n'
+         'for eq, rate in eq_rate.____():\n'
+         '    if rate < ____:\n'
          '        print(f"{eq} 합격률 {round(rate, 1)}% → 원인 후보 — 더 살펴보기")\n'
          '    else:\n'
          '        print(f"{eq} 합격률 {round(rate, 1)}% → 연습용 기준 이상")'),

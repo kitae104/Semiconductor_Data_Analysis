@@ -11,56 +11,99 @@ from _common import NotebookPair, code, look_up, md, step
 
 nb = NotebookPair("week05", "5차시 실습 — 데이터 훑어보기와 정리(EDA)")
 
-# --- 생활 예제: 반 학생 기록(완성 코드, 실행하며 관찰) -------------------------------------
+# --- 생활 예제: 반 학생 기록(빈칸을 채우며 따라 하기) -------------------------------------
 nb.add(
     step(1, "숫자 요약 보기 — describe()"),
     md("반 학생 15명의 기록(교육용 가상 데이터)입니다. 빈칸 3칸, 똑같이 두 번 적은 행 1개, 잘못 적은 키 1개가 섞여 있습니다."),
     code('import pandas as pd\n'
          '\n'
          'students = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8-sig")\n'
-         'print(students.shape)'),
-    code("print(students.describe())"),
+         'print(students.shape)',
+         '# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요. (결과: (15, 5))\n'
+         'import pandas as pd\n'
+         '\n'
+         'students = pd.____("week05_easy_class_records.csv", encoding="utf-8-sig")\n'
+         'print(students.____)'),
+    code("print(students.describe())",
+         "# TODO: 숫자 요약을 보여 주는 함수 이름을 채우세요. (결과: count, mean, std, min … max 표)\n"
+         "print(students.____())"),
     code('before_count = len(students)\n'
          'before_height = round(students["키_cm"].mean(), 1)\n'
+         'print(before_count, before_height)',
+         '# TODO: 행 수를 세는 함수 이름과, 평균을 구하는 함수 이름을 채우세요. 정리 전 값을 저장해 두는 셀입니다.\n'
+         'before_count = ____(students)\n'
+         'before_height = round(students["키_cm"].____(), 1)\n'
          'print(before_count, before_height)'),
 
     step(2, "빈칸 세고 지우기 — isna(), dropna()"),
     md("`isna().sum()`은 열마다 빈칸(NaN) 개수를 셉니다. `dropna()`는 빈칸이 하나라도 있는 행을 지웁니다. "
        "**주의**: 지운 결과를 `students =`로 다시 저장해야 남습니다."),
-    code("print(students.isna().sum())"),
+    code("print(students.isna().sum())",
+         "# TODO: 빈칸인지 확인하는 함수 이름을 채우세요. (결과: 열마다 빈칸 개수)\n"
+         "print(students.____().sum())"),
     code("students = students.dropna()\n"
-         "print(students.shape)"),
+         "print(students.shape)",
+         "# TODO: 빈칸이 있는 행을 지우는 함수 이름과, 크기를 보여 주는 이름을 채우세요.\n"
+         "students = students.____()\n"
+         "print(students.____)"),
 
     step(3, "중복 행 찾고 지우기 — duplicated(), drop_duplicates()"),
-    code("print(students.duplicated().sum())"),
+    code("print(students.duplicated().sum())",
+         "# TODO: 중복 행인지 확인하는 함수 이름을 채우세요. (결과: 1)\n"
+         "print(students.____().sum())"),
     code("students = students.drop_duplicates()\n"
-         "print(students.shape)"),
+         "print(students.shape)",
+         "# TODO: 중복 행을 지우는 함수 이름과, 크기를 보여 주는 이름을 채우세요.\n"
+         "students = students.____()\n"
+         "print(students.____)"),
 
     step(4, "튀는 값 찾기 — 범위 조건"),
     md("사람 키가 250cm를 넘는 일은 거의 없습니다. 오늘은 250cm를 넘으면 잘못 적은 값으로 보고, 4차시에 배운 조건 검색으로 찾아봅니다."),
     code('tall = students[students["키_cm"] > 250]\n'
-         'print(tall)'),
+         'print(tall)',
+         '# TODO: "250보다 큰"을 뜻하는 비교 기호와, 출력할 표 이름을 채우세요.\n'
+         'tall = students[students["키_cm"] ____ 250]\n'
+         'print(____)'),
 
     step(5, "튀는 값 빼고 전후 비교하기"),
     code('students = students[students["키_cm"] <= 250]\n'
-         'print(students.shape)'),
+         'print(students.shape)',
+         '# TODO: "250 이하"를 뜻하는 비교 기호와, 크기를 보여 주는 이름을 채우세요.\n'
+         'students = students[students["키_cm"] ____ 250]\n'
+         'print(students.____)'),
     code('after_height = round(students["키_cm"].mean(), 1)\n'
          'print("정리 전 평균 키:", before_height)\n'
-         'print("정리 후 평균 키:", after_height)'),
+         'print("정리 후 평균 키:", after_height)',
+         '# TODO: 평균을 구하는 함수 이름과, 정리 후 평균을 담은 변수 이름을 채우세요.\n'
+         'after_height = round(students["키_cm"].____(), 1)\n'
+         'print("정리 전 평균 키:", before_height)\n'
+         'print("정리 후 평균 키:", ____)'),
     look_up("평균과 중앙값 차이"),
 )
 
-# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 완성 코드) ----------------------------
+# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 코드, 빈칸 채우기) ---------------------
 nb.add(
     step(6, "반도체 데이터로 확인하기 — 지저분한 공장 기록"),
     md("공정 기록 113행(교육용 가상 데이터)에 빈칸·중복·튀는 값을 일부러 섞었습니다. 1~3단계와 같은 코드에서 표 이름만 바뀝니다."),
     code('df = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig")\n'
-         'print(df.shape)'),
-    code("print(df.describe())"),
-    code("print(df.isna().sum())"),
-    code("print(df.duplicated().sum())"),
+         'print(df.shape)',
+         '# TODO: 읽을 파일 이름(따옴표 포함)과, 크기를 보여 주는 이름을 채우세요. (결과: (113, 9))\n'
+         'df = pd.read_csv(____, encoding="utf-8-sig")\n'
+         'print(df.____)'),
+    code("print(df.describe())",
+         "# TODO: 숫자 요약을 보여 주는 함수 이름을 채우세요.\n"
+         "print(df.____())"),
+    code("print(df.isna().sum())",
+         "# TODO: 빈칸인지 확인하는 함수 이름을 채우세요.\n"
+         "print(df.____().sum())"),
+    code("print(df.duplicated().sum())",
+         "# TODO: 중복 행인지 확인하는 함수 이름을 채우세요.\n"
+         "print(df.____().sum())"),
     code('hot = df[df["온도_C"] > 400]\n'
-         'print(hot)'),
+         'print(hot)',
+         '# TODO: "400보다 큰"을 뜻하는 비교 기호와, 출력할 표 이름을 채우세요.\n'
+         'hot = df[df["온도_C"] ____ 400]\n'
+         'print(____)'),
 )
 
 # --- 반도체 데이터 실습(실습지 문제 1~3과 같은 번호, PART 3에서 채운다) -----------------------
@@ -129,6 +172,15 @@ nb.add(
          'for col in data.columns:\n'
          '    count = data[col].isna().sum()\n'
          '    rate = count / len(data) * 100\n'
+         '    print(f"{col}: 빈칸 {count}개 ({rate:.1f}%)")',
+         '# TODO: 빈칸인지 확인하는 함수 이름과, 비율의 분모가 될 표 이름을 채우세요. (결과: 열마다 한 줄)\n'
+         'import pandas as pd\n'
+         '\n'
+         'data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig")\n'
+         '\n'
+         'for col in data.columns:\n'
+         '    count = data[col].____().sum()\n'
+         '    rate = count / len(____) * 100\n'
          '    print(f"{col}: 빈칸 {count}개 ({rate:.1f}%)")'),
 )
 

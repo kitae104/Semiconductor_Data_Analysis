@@ -16,7 +16,7 @@ from _common import MPL_KOREAN, NotebookPair, code, look_up, md, step
 
 nb = NotebookPair("week08", "8차시 실습 — 공정 이상과 원인 후보 찾기")
 
-# --- 생활 예제: 아이스크림 가게 30일 날씨·판매(완성 코드, 실행하며 관찰) -----------------------
+# --- 생활 예제: 아이스크림 가게 30일 날씨·판매(빈칸을 채우며 따라 하기) -----------------------
 nb.add(
     step(1, "데이터 읽고 기준선 구하기"),
     md("아이스크림 가게 30일 기록(교육용 가상 데이터)입니다. `손님평가`는 1 = 좋음, -1 = 불만. "
@@ -24,10 +24,21 @@ nb.add(
     code('import pandas as pd\n'
          '\n'
          'shop = pd.read_csv("week08_easy_weather_sales.csv", encoding="utf-8-sig")\n'
-         'print(shop.shape)'),
-    code("shop.head()"),
+         'print(shop.shape)',
+         '# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요.\n'
+         'import pandas as pd\n'
+         '\n'
+         'shop = pd.____("week08_easy_weather_sales.csv", encoding="utf-8-sig")\n'
+         'print(shop.____)'),
+    code("shop.head()",
+         "# TODO: 앞 5행을 보여 주는 함수 이름을 채우세요.\n"
+         "shop.____()"),
     code('bad_all = shop[shop["손님평가"] == -1]\n'
          'base_rate = round(len(bad_all) / len(shop) * 100, 1)\n'
+         'print(base_rate)',
+         '# TODO: 불만을 뜻하는 숫자와, 나누는 전체 표 이름을 채우세요. 기준선 = 불만인 날 ÷ 전체 날 × 100\n'
+         'bad_all = shop[shop["손님평가"] == ____]\n'
+         'base_rate = round(len(bad_all) / len(____) * 100, 1)\n'
          'print(base_rate)'),
 
     step(2, "산점도와 상관계수 — corr()"),
@@ -38,16 +49,32 @@ nb.add(
          'plt.scatter(shop["최고기온_C"], shop["아이스크림판매량_count"])\n'
          'plt.xlabel("최고기온_C")\n'
          'plt.ylabel("아이스크림판매량_count")\n'
-         "plt.show()"),
+         "plt.show()",
+         "# TODO: 산점도를 그리는 함수 이름과, 그래프를 화면에 보여 주는 함수 이름을 채우세요.\n"
+         "import matplotlib.pyplot as plt\n" + MPL_KOREAN + "\n"
+         "\n"
+         'plt.____(shop["최고기온_C"], shop["아이스크림판매량_count"])\n'
+         'plt.xlabel("최고기온_C")\n'
+         'plt.ylabel("아이스크림판매량_count")\n'
+         "plt.____()"),
     code('r_ice = shop["최고기온_C"].corr(shop["아이스크림판매량_count"])\n'
-         'print(round(r_ice, 2))'),
+         'print(round(r_ice, 2))',
+         '# TODO: 상관계수를 구하는 함수 이름과, 반올림할 소수 자리 수를 채우세요.\n'
+         'r_ice = shop["최고기온_C"].____(shop["아이스크림판매량_count"])\n'
+         'print(round(r_ice, ____))'),
     code('r_choco = shop["최고기온_C"].corr(shop["핫초코판매량_cup"])\n'
-         'print(round(r_choco, 2))'),
+         'print(round(r_choco, 2))',
+         '# TODO: 짝지을 열 이름(따옴표 포함)과, 반올림할 소수 자리 수를 채우세요.\n'
+         'r_choco = shop["최고기온_C"].corr(shop[____])\n'
+         'print(round(r_choco, ____))'),
     look_up("상관계수 읽는 법"),
 
     step(3, "관계없는 열과 나란히 비교하기"),
     md("상관계수 하나만 보면 큰지 작은지 감이 오지 않습니다. 관계없을 것 같은 열(습도)과 나란히 놓고 비교합니다."),
     code('r_humid = shop["습도_pct"].corr(shop["아이스크림판매량_count"])\n'
+         'print(round(r_humid, 2))',
+         '# TODO: 습도 열 이름(따옴표 포함)과, 상관계수를 구하는 함수 이름을 채우세요.\n'
+         'r_humid = shop[____].____(shop["아이스크림판매량_count"])\n'
          'print(round(r_humid, 2))'),
 
     step(4, "범위 밖 값 찾기 — 상관계수가 놓치는 경우"),
@@ -65,37 +92,64 @@ nb.add(
          "plt.show()",
          "# TODO: 2단계 산점도 4줄과 같은 모양으로, x = 냉동고온도_C, y = 손님평가 산점도를 직접 그리세요.\n"),
     code('r_freezer = shop["냉동고온도_C"].corr(shop["손님평가"])\n'
+         'print(round(r_freezer, 2))',
+         '# TODO: 상관계수를 구하는 함수 이름과, 짝지을 열 이름(따옴표 포함)을 채우세요.\n'
+         'r_freezer = shop["냉동고온도_C"].____(shop[____])\n'
          'print(round(r_freezer, 2))'),
     code('freezer_out = shop[(shop["냉동고온도_C"] < -20) | (shop["냉동고온도_C"] > -16)]\n'
          'bad_out = freezer_out[freezer_out["손님평가"] == -1]\n'
+         'print(len(freezer_out), len(bad_out))',
+         '# TODO: "또는"을 뜻하는 기호와, 불만을 뜻하는 숫자를 채우세요.\n'
+         'freezer_out = shop[(shop["냉동고온도_C"] < -20) ____ (shop["냉동고온도_C"] > -16)]\n'
+         'bad_out = freezer_out[freezer_out["손님평가"] == ____]\n'
          'print(len(freezer_out), len(bad_out))'),
     code('out_rate = round(len(bad_out) / len(freezer_out) * 100, 1)\n'
+         'print(out_rate)',
+         '# TODO: 범위 밖 불만률 = 범위 밖 불만 수 ÷ 범위 밖 날 수 × 100. 나누는 표 이름을 채우세요.\n'
+         'out_rate = round(len(bad_out) / len(____) * 100, 1)\n'
          'print(out_rate)'),
 
     step(5, "원인 후보 문장 쓰기"),
     md("숫자를 문장으로 옮깁니다. \"원인이다\"가 아니라 **\"원인 후보다\"**라고 씁니다 — 함께 움직이는 것만으로는 원인을 확정할 수 없습니다. "
        "이 문장의 \"높다\"와 \"원인 후보다\"는 숫자를 보고 사람이 정한 결론을 코드에 적은 것입니다. 숫자가 바뀌면 문장이 맞는지 다시 확인합니다."),
-    code('print(f"냉동고 온도가 범위 밖인 날 불만률은 {out_rate}%로, 기준선 {base_rate}%보다 높다. 냉동고 온도는 불만의 원인 후보다.")'),
+    code('print(f"냉동고 온도가 범위 밖인 날 불만률은 {out_rate}%로, 기준선 {base_rate}%보다 높다. 냉동고 온도는 불만의 원인 후보다.")',
+         '# TODO: 문장에 넣을 기준선 변수 이름(중괄호 안)을 채우세요.\n'
+         'print(f"냉동고 온도가 범위 밖인 날 불만률은 {out_rate}%로, 기준선 {____}%보다 높다. 냉동고 온도는 불만의 원인 후보다.")'),
     look_up("상관관계 인과관계 차이"),
 )
 
-# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 완성 코드) ----------------------------
+# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 코드, 빈칸 채우기) ---------------------
 nb.add(
     step(6, "반도체 데이터로 확인하기 — 공정 센서 기록 450건"),
     md("공정 센서 기록 450건(교육용 가상 데이터)입니다. 2~4단계와 같은 코드에서 표 이름과 열 이름만 바뀝니다. "
        "온도 295~305℃는 이 과정의 연습용 기준입니다(실제 공정 규격 아님). "
        "`합격여부`: 1 = 합격, -1 = 불합격. 설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록입니다."),
     code('df = pd.read_csv("week08_anomaly_root_cause.csv", encoding="utf-8-sig")\n'
-         'print(df.shape)'),
+         'print(df.shape)',
+         '# TODO: 읽을 파일 이름(따옴표 포함)과, 크기를 보여 주는 이름을 채우세요.\n'
+         'df = pd.read_csv(____, encoding="utf-8-sig")\n'
+         'print(df.____)'),
     code('r_press = df["압력_Pa"].corr(df["두께_nm"])\n'
+         'print(round(r_press, 2))',
+         '# TODO: 상관계수를 구하는 함수 이름과, 짝지을 열 이름(따옴표 포함)을 채우세요.\n'
+         'r_press = df["압력_Pa"].____(df[____])\n'
          'print(round(r_press, 2))'),
     code('temp_out = df[(df["온도_C"] < 295) | (df["온도_C"] > 305)]\n'
+         'temp_out_fail = temp_out[temp_out["합격여부"] == -1]\n'
+         'print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))',
+         '# TODO: "또는"을 뜻하는 기호와, 범위의 위 끝 숫자를 채우세요. (결과: 92 9.8)\n'
+         'temp_out = df[(df["온도_C"] < 295) ____ (df["온도_C"] > ____)]\n'
          'temp_out_fail = temp_out[temp_out["합격여부"] == -1]\n'
          'print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))'),
     md("범위 **안**은 4차시처럼 한 번 고른 표에서 한 번 더 고릅니다. "
        "범위 안 비율은 참고용이고, 오늘 보고서의 비교 기준은 **기준선**(전체 불합격률) 하나입니다 — 7단계 문제 1에서 구합니다."),
     code('temp_in = df[df["온도_C"] >= 295]\n'
          'temp_in = temp_in[temp_in["온도_C"] <= 305]\n'
+         'temp_in_fail = temp_in[temp_in["합격여부"] == -1]\n'
+         'print(len(temp_in), round(len(temp_in_fail) / len(temp_in) * 100, 1))',
+         '# TODO: 범위의 아래 끝과 위 끝 숫자를 채우세요. (결과: 358 11.5)\n'
+         'temp_in = df[df["온도_C"] >= ____]\n'
+         'temp_in = temp_in[temp_in["온도_C"] <= ____]\n'
          'temp_in_fail = temp_in[temp_in["합격여부"] == -1]\n'
          'print(len(temp_in), round(len(temp_in_fail) / len(temp_in) * 100, 1))'),
 )
@@ -172,7 +226,10 @@ nb.add(
        "아래는 받은 코드의 예시입니다. 4차시의 여러 열 고르기(대괄호 두 겹) 뒤에 `corr()`를 붙였습니다. "
        "실행해서 문제 2의 두 숫자를 표에서 찾아보세요. 이 표에는 `합격여부`가 없어 진공도와 불합격의 관계는 처음부터 나올 수 없습니다. 진공도 줄이 0에 가까운 것은 진공도가 다른 센서와 따로 움직였다는 뜻입니다."),
     code('cols = ["온도_C", "압력_Pa", "진공도_mTorr", "두께_nm", "습도_pct"]\n'
-         'print(df[cols].corr().round(2))'),
+         'print(df[cols].corr().round(2))',
+         '# TODO: 상관계수 표를 만드는 함수 이름과, 반올림할 소수 자리 수를 채우세요. (결과: 5×5 표)\n'
+         'cols = ["온도_C", "압력_Pa", "진공도_mTorr", "두께_nm", "습도_pct"]\n'
+         'print(df[cols].____().round(____))'),
 )
 
 if __name__ == "__main__":

@@ -13,37 +13,52 @@ from _common import MPL_KOREAN, NotebookPair, code, look_up, md, step
 
 nb = NotebookPair("week06", "6차시 실습 — 그래프로 공정 상태 이해하기")
 
-# --- 생활 예제: 아이스크림 가게 21일(완성 코드, 실행하며 관찰) -----------------------------
+# --- 생활 예제: 아이스크림 가게 21일(빈칸을 채우며 따라 하기) -----------------------------
 nb.add(
     step(1, "준비하기 — 라이브러리와 데이터"),
     md("아이스크림 가게 3주(21일) 기록(교육용 가상 데이터)입니다. 첫 셀의 두 줄 `plt.rcParams[...]`는 그래프의 한글이 깨지지 않게 합니다(Windows)."),
     code("import pandas as pd\n"
          "import matplotlib.pyplot as plt\n"
+         "\n" + MPL_KOREAN,
+         "# TODO: matplotlib.pyplot의 짧은 이름(별명)을 채우세요. 아래 줄에서 그 이름을 씁니다.\n"
+         "import pandas as pd\n"
+         "import matplotlib.pyplot as ____\n"
          "\n" + MPL_KOREAN),
     code('ice = pd.read_csv("week06_easy_icecream_daily.csv", encoding="utf-8-sig")\n'
-         'ice.head()'),
+         'ice.head()',
+         '# TODO: CSV를 읽는 함수 이름과, 앞 5행을 보여 주는 함수 이름을 채우세요. (결과: 표의 앞 5행)\n'
+         'ice = pd.____("week06_easy_icecream_daily.csv", encoding="utf-8-sig")\n'
+         'ice.____()'),
 
     step(2, "막대그래프 — 날씨별 날 수"),
     md("그래프는 늘 **4줄 틀**입니다: ① 그리기 ② x축 이름 ③ y축 이름 ④ `plt.show()`. "
        "막대는 먼저 `value_counts()`로 개수를 센 뒤 그립니다."),
     code('counts = ice["날씨"].value_counts()\n'
+         'print(counts)',
+         '# TODO: 세는 열 이름을 따옴표와 함께 채우세요. (결과: 날씨별 날 수)\n'
+         'counts = ice[____].value_counts()\n'
          'print(counts)'),
     code('plt.bar(counts.index, counts)\n'
          'plt.xlabel("날씨")\n'
          'plt.ylabel("날 수")\n'
+         'plt.show()',
+         '# TODO: 막대그래프를 그리는 함수 이름과, y축 이름을 붙이는 함수 이름을 채우세요.\n'
+         'plt.____(counts.index, counts)\n'
+         'plt.xlabel("날씨")\n'
+         'plt.____("날 수")\n'
          'plt.show()'),
     md("### 직접 해 보기 — 요일별 날 수",
        student="### 직접 해 보기 — 요일별 날 수\n\n"
-               "- 세는 열 이름을 따옴표와 함께 넣으세요. 나머지 줄은 위와 같은 4줄 틀입니다."),
+               "- 세는 열 이름을 따옴표와 함께 넣고, x축 이름을 붙이는 함수 이름을 채우세요. 나머지 줄은 위와 같은 4줄 틀입니다."),
     code('day_counts = ice["요일"].value_counts()\n'
          'plt.bar(day_counts.index, day_counts)\n'
          'plt.xlabel("요일")\n'
          'plt.ylabel("날 수")\n'
          'plt.show()',
-         '# TODO: 세는 열 이름을 따옴표와 함께 채우세요.\n'
+         '# TODO: 세는 열 이름을 따옴표와 함께, x축 이름을 붙이는 함수 이름을 채우세요.\n'
          'day_counts = ice[____].value_counts()\n'
          'plt.bar(day_counts.index, day_counts)\n'
-         'plt.xlabel("요일")\n'
+         'plt.____("요일")\n'
          'plt.ylabel("날 수")\n'
          'plt.show()'),
     look_up("막대그래프 히스토그램 차이"),
@@ -53,16 +68,21 @@ nb.add(
     code('plt.hist(ice["판매량_count"], bins=5)\n'
          'plt.xlabel("판매량_count")\n'
          'plt.ylabel("날 수")\n'
-         'plt.show()'),
+         'plt.show()',
+         '# TODO: 히스토그램을 그리는 함수 이름과, 그래프를 화면에 보여 주는 함수 이름을 채우세요.\n'
+         'plt.____(ice["판매량_count"], bins=5)\n'
+         'plt.xlabel("판매량_count")\n'
+         'plt.ylabel("날 수")\n'
+         'plt.____()'),
     md("### 직접 해 보기 — 구간 10개로 다시 그리기"),
     code('plt.hist(ice["판매량_count"], bins=10)\n'
          'plt.xlabel("판매량_count")\n'
          'plt.ylabel("날 수")\n'
          'plt.show()',
-         '# TODO: 구간 수 10을 채우세요.\n'
+         '# TODO: 구간 수 10과, y축 이름을 붙이는 함수 이름을 채우세요.\n'
          'plt.hist(ice["판매량_count"], bins=____)\n'
          'plt.xlabel("판매량_count")\n'
-         'plt.ylabel("날 수")\n'
+         'plt.____("날 수")\n'
          'plt.show()'),
 
     step(4, "산점도 — 기온과 판매량"),
@@ -70,25 +90,49 @@ nb.add(
     code('plt.scatter(ice["최고기온_C"], ice["판매량_count"])\n'
          'plt.xlabel("최고기온_C")\n'
          'plt.ylabel("판매량_count")\n'
+         'plt.show()',
+         '# TODO: 산점도를 그리는 함수 이름과, y축에 놓을 열 이름(따옴표 포함)을 채우세요.\n'
+         'plt.____(ice["최고기온_C"], ice[____])\n'
+         'plt.xlabel("최고기온_C")\n'
+         'plt.ylabel("판매량_count")\n'
          'plt.show()'),
 )
 
-# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 완성 코드) ----------------------------
+# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 코드, 빈칸 채우기) ---------------------
 nb.add(
     step(5, "반도체 데이터로 확인하기 — 공정 기록 180건"),
     md("공정 기록 180건(교육용 가상 데이터)입니다. 2~4단계와 같은 4줄 틀에서 표 이름과 열 이름만 바뀝니다."),
     code('df = pd.read_csv("week06_process_visualization.csv", encoding="utf-8-sig")\n'
-         'print(df.shape)'),
+         'print(df.shape)',
+         '# TODO: 읽을 파일 이름(따옴표 포함)과, 크기를 보여 주는 이름을 채우세요. (결과: (180, 10))\n'
+         'df = pd.read_csv(____, encoding="utf-8-sig")\n'
+         'print(df.____)'),
     code('process_counts = df["공정명"].value_counts()\n'
          'plt.bar(process_counts.index, process_counts)\n'
+         'plt.xlabel("공정명")\n'
+         'plt.ylabel("기록 건수")\n'
+         'plt.show()',
+         '# TODO: 값마다 개수를 세는 함수 이름과, 막대그래프를 그리는 함수 이름을 채우세요.\n'
+         'process_counts = df["공정명"].____()\n'
+         'plt.____(process_counts.index, process_counts)\n'
          'plt.xlabel("공정명")\n'
          'plt.ylabel("기록 건수")\n'
          'plt.show()'),
     code('plt.hist(df["두께_nm"], bins=10)\n'
          'plt.xlabel("두께_nm")\n'
          'plt.ylabel("기록 건수")\n'
+         'plt.show()',
+         '# TODO: 히스토그램을 그리는 함수 이름과, 구간 수 10을 채우세요.\n'
+         'plt.____(df["두께_nm"], bins=____)\n'
+         'plt.xlabel("두께_nm")\n'
+         'plt.ylabel("기록 건수")\n'
          'plt.show()'),
     code('plt.scatter(df["온도_C"], df["압력_Pa"])\n'
+         'plt.xlabel("온도_C")\n'
+         'plt.ylabel("압력_Pa")\n'
+         'plt.show()',
+         '# TODO: 산점도를 그리는 함수 이름과, y축에 놓을 열 이름(따옴표 포함)을 채우세요.\n'
+         'plt.____(df["온도_C"], df[____])\n'
          'plt.xlabel("온도_C")\n'
          'plt.ylabel("압력_Pa")\n'
          'plt.show()'),
@@ -165,6 +209,15 @@ nb.add(
          '\n'
          'plt.scatter(df["온도_C"], df["두께_nm"], label="전체")\n'
          'plt.scatter(fail["온도_C"], fail["두께_nm"], color="red", label="불합격")\n'
+         'plt.xlabel("온도_C")\n'
+         'plt.ylabel("두께_nm")\n'
+         'plt.legend()\n'
+         'plt.show()',
+         '# TODO: 불합격을 뜻하는 숫자와, 점 색 이름(따옴표 포함)을 채우세요. (결과: 전체 점 위에 빨간 불합격 점)\n'
+         'fail = df[df["합격여부"] == ____]\n'
+         '\n'
+         'plt.scatter(df["온도_C"], df["두께_nm"], label="전체")\n'
+         'plt.scatter(fail["온도_C"], fail["두께_nm"], color=____, label="불합격")\n'
          'plt.xlabel("온도_C")\n'
          'plt.ylabel("두께_nm")\n'
          'plt.legend()\n'

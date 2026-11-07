@@ -287,7 +287,20 @@ def check_notebooks(scope: str, week: int) -> None:
             check(scope, f"{rel} 학생용 빈칸(TODO/____) 존재", has_todo,
                   "학생용은 핵심 코드가 비어 있어야 한다(README 9장)")
         else:
-            check(scope, f"{rel} 빈칸 잔존 없음", not has_todo, "완성본에 TODO/____가 남아 있다")
+            # 정답 노트북의 '반도체 데이터 실습' 단계는 학생용과 같은 빈칸 형태(2026-11-07)
+            nb_json = json.load(open(path, encoding="utf-8"))
+            outside, inside, state = [], [], False
+            for c in nb_json["cells"]:
+                text = "".join(c["source"]) if isinstance(c["source"], list) else c["source"]
+                if c["cell_type"] == "markdown" and re.search(r"^## \d+단계\. ", text, re.M):
+                    state = bool(re.search(r"^## \d+단계\. 반도체 데이터 실습$", text, re.M))
+                if c["cell_type"] == "code":
+                    (inside if state else outside).append(text)
+            out_joined = "\n".join(outside)
+            check(scope, f"{rel} 실습 단계 밖 빈칸 잔존 없음", "TODO" not in out_joined and "____" not in out_joined,
+                  "실습 단계 밖에 TODO/____가 남아 있다")
+            check(scope, f"{rel} 실습 단계는 빈칸 형태", "TODO" in "\n".join(inside),
+                  "정답 노트북의 반도체 데이터 실습 단계도 빈칸이어야 한다")
         check_csv_refs(scope, rel, joined)
         paths_in_code = set(re.findall(r'"(\.\./\.\./[^"]+)"', joined))
         missing = [p for p in paths_in_code if not os.path.exists(os.path.normpath(os.path.join(os.path.dirname(path), p)))]
@@ -511,8 +524,6 @@ def check_v3(scope: str, week: int) -> None:
     student = os.path.join(BASE, "notebooks", "student", f"{scope}_student.ipynb")
     if os.path.exists(student):
         _, md_cells = notebook_sources(student)
-        warn_if(scope, f"notebooks/student/{scope}_student.ipynb 첫 마크다운 셀이 '막혔을 때'",
-                bool(md_cells) and "막혔을 때" in md_cells[0])
         problems = len(re.findall(r"^### 문제 \d", "\n".join(md_cells), re.M))
         want = 2 if week >= 9 else 3
         warn_if(scope, f"notebooks/student/{scope}_student.ipynb 반도체 실습 문제 {want}개", problems == want, f"{problems}개")

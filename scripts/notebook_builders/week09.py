@@ -4,7 +4,7 @@
 활성 개념 4개: Feature/Label(X, y) · train_test_split · DecisionTreeClassifier().fit · accuracy_score.
 재사용: read_csv·dropna(5차시). 노출 전용: model.predict(정확도 계산 안에서 — 10차시 활성 개념).
 빼는 것: 생활 예제 단계, confusion_matrix, feature_importances_, zip, 기준선 코드(기준선 78.9%는 값으로만).
-노트북: 막혔을 때 → 1 읽고 빈칸 정리 → 2 결정 트리 모델 만들기(강의 PART 2 따라 하기, 6개 열 80.3%)
+노트북: 1 읽고 빈칸 정리 → 2 결정 트리 모델 만들기(강의 PART 2 따라 하기, 6개 열 80.3%)
 → 3 ChatGPT 코드 실행·검증(빈 셀 + 응답 예시 셀 + stratify 빼 보기 셀) → 4 반도체 데이터 실습(문제 1·2: 온도_C 한 열 모델 78.2%).
 ChatGPT 체험이 PART 2 안에 있어서 3·4단계를 강의 순서(PART 2 → PART 3)대로 두었다(Run All 순서 = 수업 순서).
 PART 2가 수동적이지 않게 1·2단계에 학생 빈칸 4개(dropna, "합격여부", fit, y_test)를 두고, 실습 문제는 다른 Feature(온도_C 한 열)로
@@ -52,8 +52,15 @@ nb.add(
     code('import pandas as pd\n'
          '\n'
          f'df = pd.read_csv("{DATA}", encoding="utf-8-sig")\n'
-         'print(df.shape)'),
-    code("print(df.isna().sum())"),
+         'print(df.shape)',
+         '# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요. (결과: (750, 9))\n'
+         'import pandas as pd\n'
+         '\n'
+         f'df = pd.____("{DATA}", encoding="utf-8-sig")\n'
+         'print(df.____)'),
+    code("print(df.isna().sum())",
+         "# TODO: 빈칸인지 확인하는 함수 이름을 채우세요. (결과: 열마다 빈칸 개수)\n"
+         "print(df.____().sum())"),
     code("df = df.dropna()\n"
          "print(df.shape)",
          "# TODO: 빈칸이 있는 행을 지우는 함수 이름을 채우세요.\n"
@@ -75,14 +82,19 @@ nb.add(
          'X = df[features]\n'
          'y = df["합격여부"]\n'
          'print(X.shape, y.shape)',
+         '# TODO: X에 넣을 열 목록 변수 이름과, 정답(Label) 열 이름(따옴표 포함)을 채우세요. (결과: (735, 6) (735,))\n'
          'features = ["온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]\n'
-         'X = df[features]\n'
-         '# TODO: 정답(Label) 열 이름을 채우세요.\n'
+         'X = df[____]\n'
          'y = df[____]\n'
          'print(X.shape, y.shape)'),
     code("from sklearn.model_selection import train_test_split\n"
          "\n"
          "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)\n"
+         "print(len(X_train), len(X_test))",
+         "# TODO: 시험용으로 떼어 둘 비율 0.2와, 합격·불합격 비율을 맞춰 나누기 위한 stratify 값(y)을 채우세요. (결과: 588 147)\n"
+         "from sklearn.model_selection import train_test_split\n"
+         "\n"
+         "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=____, random_state=42, stratify=____)\n"
          "print(len(X_train), len(X_test))"),
     look_up("결정 트리 스무고개"),
     code("from sklearn.tree import DecisionTreeClassifier\n"
@@ -91,8 +103,8 @@ nb.add(
          "model.fit(X_train, y_train)",
          "from sklearn.tree import DecisionTreeClassifier\n"
          "\n"
-         "model = DecisionTreeClassifier(max_depth=4, random_state=42)\n"
-         "# TODO: 학습시키는 함수 이름을 채우세요.\n"
+         "# TODO: 나무 깊이 4와, 학습시키는 함수 이름을 채우세요.\n"
+         "model = DecisionTreeClassifier(max_depth=____, random_state=42)\n"
          "model.____(X_train, y_train)"),
     code("from sklearn.metrics import accuracy_score\n"
          "\n"
@@ -100,8 +112,8 @@ nb.add(
          'print(f"정확도: {round(acc * 100, 1)}%")',
          "from sklearn.metrics import accuracy_score\n"
          "\n"
-         "# TODO: 채점에 쓰는 정답은 시험용 y입니다. 그 이름을 채우세요.\n"
-         "acc = accuracy_score(____, model.predict(X_test))\n"
+         "# TODO: 채점에 쓰는 정답은 시험용 y입니다. 그 이름과, 예측하는 함수 이름을 채우세요. (결과: 정확도: 80.3%)\n"
+         "acc = accuracy_score(____, model.____(X_test))\n"
          'print(f"정확도: {round(acc * 100, 1)}%")'),
     md("이 모델은 시험용 불합격 31개 중 9개만 잡고 22개를 합격으로 놓쳤습니다. '무조건 합격'은 31개를 모두 놓칩니다. "
        "정확도가 비슷해도 하는 일은 다릅니다 — 실습지 문제 4에서 Orange 헷갈림 표로 같은 것을 셉니다."),
@@ -148,6 +160,9 @@ nb.add(
          'X1 = df[____]\n'
          'print(X1.shape)'),
     code("X1_train, X1_test, y1_train, y1_test = train_test_split(X1, y, test_size=0.2, random_state=42, stratify=y)\n"
+         "print(len(X1_train), len(X1_test))",
+         "# TODO: 2단계와 같은 모양입니다. 정답 y의 변수 이름을 두 곳에 채우세요. (결과: 588 147)\n"
+         "X1_train, X1_test, y1_train, y1_test = train_test_split(X1, ____, test_size=0.2, random_state=42, stratify=____)\n"
          "print(len(X1_train), len(X1_test))"),
 
     md("### 문제 2 — 결정 트리 학습하고 정확도 구하기 (직접 쓰기)",

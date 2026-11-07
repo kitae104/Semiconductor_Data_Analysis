@@ -106,8 +106,8 @@ Orange3의 캔버스 화면 구성, 위젯을 놓고 연결하는 법, 차시별
 ### Orange 워크플로(.ows) 열기
 
 - `orange3/weekXX/`에는 차시마다 워크플로 4개가 있습니다. ① 워밍업 데이터, ② 반도체 데이터 각각
-  `_start.ows`(데이터가 연결된 File 위젯 하나 + 한국어 안내 메모)와 `_done.ows`(완성본)입니다.
-  수업은 `_start.ows`에서 시작하고, 막히면 `_done.ows`를 열어 따라잡습니다.
+  `_start.ows`(데이터가 연결된 File 위젯 하나 + 한국어 안내 메모)와 `_done.ows`(교수용 완성본)입니다.
+  수업은 `_start.ows`에서 시작합니다. `_done.ows`는 학생에게 제공하지 않습니다.
 - `.ows` 파일을 더블클릭합니다. 열리지 않으면 Orange를 먼저 실행하고 **File → Open**에서 고릅니다.
 - File 위젯에 "파일을 찾을 수 없다"는 오류가 나면 `.ows`를 원래 폴더에서 다시 열고, 그래도 안 되면 File 위젯의
   폴더 아이콘으로 `orange` 폴더의 `.tab` 파일을 직접 고릅니다.
@@ -160,9 +160,9 @@ start index.html
 
 | 구분 | 위치 | 특징 |
 | --- | --- | --- |
-| 학생용 | `notebooks/student/` | 맨 위 "막혔을 때" 안내, 반도체 실습 문제가 `____` 빈칸으로 비어 있어 직접 채워야 함 |
-| 정답 | `notebooks/solutions/` | 학생용의 모든 빈칸이 채워진 완성본(실행 결과 저장). 강사 시연에도 사용 |
-| Orange 워크플로 | `orange3/weekXX/` | `_start.ows`로 시작, `_done.ows`는 완성본(따라잡기·정답) |
+| 학생용 | `notebooks/student/` | 반도체 실습 문제가 `____` 빈칸으로 비어 있어 직접 채워야 함 |
+| 정답 | `notebooks/solutions/` | 학생용에서 '반도체 데이터 실습' 단계를 뺀 모든 빈칸이 채워진 완성본(실행 결과 저장). 실습 단계는 학생용과 같은 빈칸이며 답은 실습지의 확인 부분으로 본다 |
+| Orange 워크플로 | `orange3/weekXX/` | `_start.ows`로 시작, `_done.ows`는 교수용 완성본(정답, 학생에게 제공하지 않음) |
 | 강의 운영안 | `lectures/weekXX/instructor-guide.md` | 수업 흐름(순서와 "여기서 쉬기"), 발문, 예상 오개념 |
 | 공통 운영 가이드 | [`docs/instructor-operation-guide.md`](docs/instructor-operation-guide.md) | 전 차시 공통 v3 운영 방법 |
 

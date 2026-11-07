@@ -10,12 +10,12 @@
 
 9·10차시는 PART 1 Orange3 → PART 2 파이썬 + ChatGPT → PART 3 실습지 순서다. 노트북은 단계 번호로 지시한다.
 
-1. 오늘의 질문·오늘의 미션(입사 열째 날, 마지막 날) → 지난 시간 복습 2문항(80.3% vs 78.9%, Confusion Matrix 114칸)
+1. 오늘의 질문·오늘의 미션(입사 열째 날, 마지막 날)
 2. PART 1 시작: 위젯 이름표(새 위젯 kNN·Logistic Regression·Predictions), 공정 지도 위치 네 줄
 3. 워밍업 `week10_1_newwafers_start.ows`(학생이 직접): 세 모델 → Test and Score(10겹) CA 읽기 → Predictions에서 답이 갈린 웨이퍼 찾기 → "읽은 숫자 확인 보기"는 학생이 찾은 뒤 연다
 4. 반도체 `week10_2_newlots_start.ows`는 **교수 시연** 1~2(Test and Score CA + 기준선 79.3%, Confusion Matrix에서 Logistic Regression 불합격 예측 0) — 3(Predictions)은 실습지 문제 4로 남긴다
 5. **여기서 쉬기**
-6. PART 2 파이썬: Jupyter 켜기, "막혔을 때" 셀 → 노트북 1단계(모델 다시 만들기, 80.3%) → 노트북 2단계(새 로트 읽기 (9, 8) → `predict` 빈칸 2개 → 불합격 예측 1개)
+6. PART 2 파이썬: Jupyter 켜기 → 노트북 1단계(모델 다시 만들기, 80.3%) → 노트북 2단계(새 로트 읽기 (9, 8) → `predict` 빈칸 2개 → 불합격 예측 1개)
 7. ChatGPT 체험(노트북 4단계): 프롬프트 붙여 넣기(못 쓰면 강의 응답 예시) → 틀린 곳 찾기 → 노트북 4단계 숫자 대조 셀 실행 → "틀린 곳 정답 보기"
 8. 파이썬 vs Orange 표 한 문장
 9. **여기서 쉬기**(필요하면)
@@ -100,7 +100,6 @@
 - [ ] Test and Score 표는 CA 한 칸만 읽게 한다(AUC·F1 등 다른 열은 오늘 보지 않는다).
 - [ ] Test and Score → Confusion Matrix: 왼쪽 목록에서 Tree(114) → kNN(135) → **Logistic Regression(불합격 예측 열 0)** 순서로 눌러 보여 준다. Logistic Regression 위젯에 학습 관련 경고 표시가 보일 수 있다 — 결과를 읽는 데는 지장이 없다고 말하고 넘어간다.
 - [ ] Predictions(아래 File + Tree)는 시연하지 않는다 — 실습지 문제 4에서 학생이 직접 한다. 학생 화면 기대값: 9개 모두 1, 3번째 줄 `0.74 : 0.26 → 1`.
-- [ ] 늦은 학생은 `_done.ows`를 열어 따라잡게 한다. `_done.ows`의 위젯 이름에는 한국어 뜻이 괄호로 붙어 있다(예: Tree (결정 트리)).
 
 ## 학생들이 자주 찾아볼 질문과 보충 설명
 
@@ -135,7 +134,7 @@
 
 ## 실습 중 오류 대응
 
-- `NameError: name 'model' is not defined`: 노트북 1단계 셀을 실행하지 않았다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.
+- `NameError: name 'model' is not defined`: 노트북 1단계 셀을 실행하지 않았다. 위에서부터 다시 실행한다.
 - `ValueError: The feature names should match those that were passed during fit.`: `model.predict(new_lots)`처럼 표를 통째로 넣었거나 열이 다르다. `new_lots[features]`로 고친다.
 - `KeyError: 'features'`: `new_lots["features"]`처럼 변수 이름을 따옴표로 감쌌다.
 - `AttributeError: 'DecisionTreeClassifier' object has no attribute '____'`: 노트북 2단계 빈칸을 채우지 않았다.

@@ -134,7 +134,6 @@ description: 차시의 강의 자료(lectures/weekXX/index.html), 실습지(work
 학습 목표 (3~4개)
 ("오늘 수업 구성" 표는 두지 않는다 — 2026-10-24 제거)
 왜 이걸 배워야 할까?
-지난 시간 복습 — 지난 퀴즈 1~2문항 다시 묻기
 PART 1 머리 섹션 (id="part1")
   개념 설명 (여러 섹션, 생활 예제 + 찾아보기)
   반도체 데이터로 확인하기
@@ -152,7 +151,7 @@ AI로 한 걸음 더
 ```
 
 9·10차시는 PART 1 = Orange3, PART 2 = 파이썬 최소 + ChatGPT 체험으로 내용이 바뀐다. 앵커 id는 위치 기준 그대로
-`part1`·`part2`·`part3`다. 1차시만 복습 자리에 "반도체와 공장 데이터 한눈에 보기" 섹션을 둔다.
+`part1`·`part2`·`part3`다. 1차시는 "왜 이걸 배워야 할까?" 다음에 "반도체와 공장 데이터 한눈에 보기" 섹션을 둔다.
 PART 머리 섹션은 `<section class="block" id="partN">`에 `<h2><span class="step-badge">PART N</span> 파이썬 — {주제}</h2>`
 형식이다(`references/html-components.md`「PART 섹션」).
 
@@ -193,7 +192,7 @@ PART 머리 섹션은 `<section class="block" id="partN">`에 `<h2><span class="
 `references/quiz-schema.md`를 읽는다. 핵심만:
 
 - 최상위: `week`(숫자, 폴더와 일치), `title`, `questions`(**8~10개**, 그중 Orange 문항 1~2개 — v3)
-- 퀴즈는 **수업 후 자율 복습**이다. 다음 차시 "지난 시간 복습"에서 1~2문항을 다시 묻는다. 찾아보기 내용은 출제하지 않는다.
+- 퀴즈는 **수업 후 자율 복습**이다. 찾아보기 내용은 출제하지 않는다.
 - 문항 타입 7종: `multiple_choice`, `true_false`, `fill_blank`, `result_prediction`,
   `term_matching`, `chart_choice`, `short_answer`
 - `answer`가 인덱스인 타입은 **0부터** 센다. 보기 개수를 넘으면 검사에서 FAIL이다.
@@ -227,8 +226,8 @@ PART 머리 섹션은 `<section class="block" id="partN">`에 `<h2><span class="
 "예상 오개념"과 "실습 중 오류 대응"은 실제로 학생이 겪을 것을 쓴다. 노트북을 돌려보다 만난 오류가 가장 좋은 재료다.
 
 v3 추가 섹션(2026-10-23):
-- **Orange 시연 체크리스트** — `_start.ows` 열기, File 위젯에 데이터가 들어왔는지, 이어 붙일 위젯과 설정, 학생이 읽을 숫자,
-  `_done.ows`로 따라잡기. 경로 오류가 나면 키트 폴더 구조를 확인하게 한다.
+- **Orange 시연 체크리스트** — `_start.ows` 열기, File 위젯에 데이터가 들어왔는지, 이어 붙일 위젯과 설정, 학생이 읽을 숫자.
+  경로 오류가 나면 키트 폴더 구조를 확인하게 한다.
 - **학생들이 자주 찾아볼 질문과 보충 설명** — 그 차시 찾아보기 질문에 대해 AI가 흔히 틀리거나 과장하는 지점과 강사 보충 한두 줄.
 - **막히는 지점 TOP3와 대처** — 파이썬·Orange·실습지를 통틀어 가장 많이 멈추는 곳 3개.
 - **빨리 끝낸 학생용 과제** — 실습지 밖 추가 과제(실습지에는 넣지 않는다).

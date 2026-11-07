@@ -4,7 +4,8 @@
 이 모듈이 두 노트북을 함께 만든다.
 
 - 정답본 = 학생용의 빈칸을 채운 것. code(정답, 학생용)로 한 셀에 두 버전을 같이 적는다.
-- 맨 위 마크다운 셀에 제목과 "막혔을 때" 안내가 자동으로 들어간다.
+  단, 저장하는 정답 노트북의 '반도체 데이터 실습' 단계는 학생용과 같은 빈칸 형태다(2026-11-07). 정답은 실습지의 확인 부분으로 본다.
+- 맨 위 마크다운 셀에 제목이 자동으로 들어간다.
 - 저장 뒤 자체 점검: 정답에 TODO/____ 없음, 학생용에 빈칸 1개 이상, `## N단계.` 제목이 두 노트북에서 같고
   1부터 차례대로, read_csv에 encoding="utf-8-sig", 파일 이름만 쓰고(경로 없음) 그 이름이 data/weekly/에 실제로 있음.
 - 정답본은 nbclient로 실행해(주차 CSV를 모아 둔 임시 작업 폴더에서) 출력을 저장한다. 노트북에는 파일 이름만 적혀 있다. 실행 시각 메타데이터는 남기지 않고,
@@ -45,16 +46,10 @@ NOTEBOOKS = os.path.join(BASE, "notebooks")
 
 BLANK = "____"
 STEP_RE = re.compile(r"^## (\d+)단계\. (.+)$", re.M)
+PRACTICE_TITLE = "반도체 데이터 실습"
 DATA_REF_RE = re.compile(r"(week\d\d_[A-Za-z0-9_]+\.csv)")
 READ_CSV_PATH_RE = re.compile(r"""read_csv\(\s*["']([^"']*)["']""")
 READ_CSV_RE = re.compile(r"read_csv\(([^)]*)\)")
-
-STUCK_CELL = """## 막혔을 때
-
-- 결과가 이상하거나 오류가 계속 나면 메뉴에서 **Kernel → Restart Kernel and Run All Cells…**(옛 화면은 Kernel → Restart & Run All)를 눌러 위에서부터 다시 실행하세요. 학생용은 아직 채우지 않은 **첫 빈칸에서 멈춥니다. 정상입니다.** 그 빈칸을 채우고 그 셀부터 Shift + Enter로 이어 가세요.
-- 밑줄로 된 빈칸 표시는 채울 자리만 알려 줍니다. 밑줄 개수와 상관없이 밑줄을 모두 지우고 필요한 만큼(글자 하나든 이름 전체든) 씁니다.
-- 셀을 지웠거나 망가뜨렸다면 **Edit → Undo**(셀 바깥을 누른 뒤 `z` 키)로 되돌립니다. 안 되면 실습 키트에서 이 노트북 파일만 다시 꺼내 쓰세요(폴더 구조는 그대로 둡니다).
-- 빨간 오류 메시지는 **마지막 줄**부터 읽으세요. 오류 이름(`NameError`, `KeyError` …)과 문제가 된 이름이 거기 있습니다."""
 
 # 그래프가 있는 차시의 첫 그래프 셀에 넣는 두 줄(강의 코드와 같게)
 MPL_KOREAN = 'plt.rcParams["font.family"] = "Malgun Gothic"\nplt.rcParams["axes.unicode_minus"] = False'
@@ -124,18 +119,32 @@ class NotebookPair:
     def _cell_id(self, i):
         return hashlib.md5(f"{self.week}:{i}".encode("utf-8")).hexdigest()[:8]
 
+    def practice_flags(self, cells):
+        """각 셀이 '반도체 데이터 실습' 단계 안에 있는지(단계 제목 셀부터 다음 단계 제목 셀 전까지)."""
+        flags, inside = [], False
+        for cell in cells:
+            if cell.kind == "markdown":
+                m = STEP_RE.search(cell.solution)
+                if m:
+                    inside = m.group(2) == PRACTICE_TITLE
+            flags.append(inside)
+        return flags
+
     def notebook(self, variant):
-        # 첫 마크다운 셀 = 제목 + "막혔을 때"(스펙 0-5: 맨 위 셀이 막혔을 때 안내)
-        title = f"# {self.title}" + (" (정답)" if variant == "solution" else "")
+        """variant: student(학생용) / answers(실습 정답까지 채운 내부용, 실행·점검에만 쓴다) /
+        solution(저장하는 정답 노트북 — '반도체 데이터 실습' 단계는 학생용과 같은 빈칸 형태)."""
+        title = f"# {self.title}" + (" (정답)" if variant in ("solution", "answers") else "")
         cells = [md(title)] + self.cells
+        flags = self.practice_flags(cells)
         nb = new_notebook()
         nb.metadata = {
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
             "language_info": {"name": "python"},
         }
-        for i, cell in enumerate(cells):
+        for i, (cell, in_practice) in enumerate(zip(cells, flags)):
             maker = new_markdown_cell if cell.kind == "markdown" else new_code_cell
-            nb_cell = maker(cell.text(variant))
+            text = cell.text("student" if variant == "student" or (variant == "solution" and in_practice) else "solution")
+            nb_cell = maker(text)
             nb_cell["id"] = self._cell_id(i)
             nb.cells.append(nb_cell)
         return nb
@@ -196,8 +205,9 @@ class NotebookPair:
 
     def build(self, execute=True):
         paths = self.paths()
-        student_nb, solution_nb = self.notebook("student"), self.notebook("solution")
-        errors, warnings = self.self_check(student_nb, solution_nb)
+        student_nb, answers_nb = self.notebook("student"), self.notebook("answers")
+        solution_nb = self.notebook("solution")
+        errors, warnings = self.self_check(student_nb, answers_nb)
         for w in warnings:
             print(f"[WARN] {self.week}: {w}")
         if errors:
@@ -205,18 +215,26 @@ class NotebookPair:
                 print(f"[FAIL] {self.week}: {e}")
             raise SystemExit(f"{self.week}: 자체 점검 실패 {len(errors)}건 — 노트북을 쓰지 않았습니다.")
 
+        # 정답 노트북의 '반도체 데이터 실습' 단계는 빈칸이다. 그 뒤 셀(AI 단계 등)이 실습 변수를 쓰므로,
+        # 실습 정답을 채운 내부용 노트북(answers)을 실행해 출력만 정답 노트북에 옮긴다. 실습 정답 코드는 저장하지 않는다.
+        flags = self.practice_flags([md("")] + self.cells)
+        if execute:
+            try:
+                self.execute_solution(answers_nb, paths["solution"])
+            except Exception as e:  # noqa: BLE001
+                print(f"[FAIL] {self.week}: 정답 노트북 실행 오류 — 노트북을 쓰지 않았습니다\n{e}")
+                raise SystemExit(1)
+            for cell, ran, in_practice in zip(solution_nb.cells, answers_nb.cells, flags):
+                if cell.cell_type == "code" and not in_practice:
+                    cell["outputs"] = ran["outputs"]
+                    cell["execution_count"] = ran["execution_count"]
+
         for variant, nb in (("student", student_nb), ("solution", solution_nb)):
             os.makedirs(os.path.dirname(paths[variant]), exist_ok=True)
             nbformat.write(nb, paths[variant])
             print(f"[생성] {_show(paths[variant])}")
         if execute:
-            try:
-                self.execute_solution(solution_nb, paths["solution"])
-            except Exception as e:  # noqa: BLE001
-                print(f"[FAIL] {self.week}: 정답 노트북 실행 오류 — 출력 없는 정답본만 저장됨\n{e}")
-                raise SystemExit(1)
-            nbformat.write(solution_nb, paths["solution"])
-            print(f"[실행] {_show(paths['solution'])} 출력 저장")
+            print(f"[실행] {_show(paths['solution'])} 출력 저장(실습 단계 제외)")
         n_steps = len(STEP_RE.findall("\n".join(c.source for c in solution_nb.cells if c.cell_type == "markdown")))
         n_blanks = sum(c.source.count(BLANK) for c in student_nb.cells if c.cell_type == "code")
         print(f"[PASS] {self.week}: 자체 점검 통과 (단계 {n_steps}개, 학생용 빈칸 {n_blanks}개)")

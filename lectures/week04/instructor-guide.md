@@ -12,8 +12,8 @@
 
 PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은 단계 번호로 지시한다.
 
-1. 오늘의 질문·오늘의 미션(입사 넷째 날, 답은 묻기만 한다) → 지난 시간 복습 2문항(`pass_count` 3, Select Rows 조건 두 줄이면 같거나 줄어든다)
-2. PART 1 시작: 학생용 노트북 "막혔을 때" 셀 읽기. "Orange에서 하던 일을 코드로" 표를 짚는다.
+1. 오늘의 질문·오늘의 미션(입사 넷째 날, 답은 묻기만 한다)
+2. PART 1 시작: 학생용 노트북 열기. "Orange에서 하던 일을 코드로" 표를 짚는다.
 3. 노트북 1단계: 카페 주문 읽기(`read_csv`, `head()`) — 행 번호는 0부터
 4. 노트북 2단계: `shape` (12, 7), `columns`(끝의 `dtype='str'` 설명)
 5. 노트북 3단계: 열 하나 / 여러 열(대괄호 두 겹), `loc`은 구경 셀만 실행(4500)
@@ -132,7 +132,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 - `SyntaxError: leading zeros in decimal integer literals are not permitted`로 시작하는 오류: `== EQ-02`처럼 글자 값에 따옴표를 빠뜨렸다.
 - `NameError: name '____' is not defined`: 노트북 빈칸을 아직 채우지 않았다.
 - `NameError: name 'small' is not defined` / `NameError: name 'eq02_fail' is not defined`: 문제 1·2의 앞 셀(빈칸 셀)이 실패해서 다음 셀에서 연쇄로 난다. 앞 셀부터 고친다.
-- `NameError: name 'df' is not defined`: 7단계 셀을 실행하지 않고 8단계로 왔다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.
+- `NameError: name 'df' is not defined`: 7단계 셀을 실행하지 않고 8단계로 왔다. 위에서부터 다시 실행한다.
 - 오류 없이 낮은 온도 5건(맨 위 287.0): 문제 3에서 `ascending=True`로 썼다. 문제 3은 빈칸 없이 직접 쓰는 문제라, 6단계 `cafe.sort_values("가격_KRW", ascending=False).head(5)`를 보고 표 이름·열 이름만 바꾸게 한다.
 - Orange File에 파일 이름이 빨갛게 보임: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 

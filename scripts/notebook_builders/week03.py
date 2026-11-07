@@ -60,7 +60,7 @@ EQ03_TEMPS = "[304.4, 304.3, 293.8, 296.7, 308.0, 298.8, 299.5, 297.8, 306.3, 30
 
 nb = NotebookPair("week03", "3차시 실습 — 조건문·반복문·함수")
 
-# --- 생활 예제(코드 속 값, 완성 코드를 실행하며 관찰) ---------------------------------------
+# --- 생활 예제(코드 속 값, 빈칸을 채우며 따라 하기) ---------------------------------------
 nb.add(
     step(1, "비교 연산자와 if"),
     md("비교 연산자(`>`, `<=`, `==`, `!=`)의 결과는 `True`(참) 또는 `False`(거짓)입니다. "
@@ -69,10 +69,23 @@ nb.add(
          'subject = "수학"\n'
          '\n'
          'print(score > 80)\n'
-         'print(score <= 80)\n'
-         'print(subject == "수학")\n'
-         'print(subject != "수학")'),
+         'print(score <= 80)',
+         '# TODO: 비교 연산자를 채우세요. 위는 "80보다 큰가?", 아래는 "80 이하인가?" (결과: True, False)\n'
+         'score = 85\n'
+         'subject = "수학"\n'
+         '\n'
+         'print(score ____ 80)\n'
+         'print(score ____ 80)'),
+    code('print(subject == "수학")\n'
+         'print(subject != "수학")',
+         '# TODO: 위는 "같은가?", 아래는 "다른가?"를 묻는 연산자를 채우세요. (결과: True, False)\n'
+         'print(subject ____ "수학")\n'
+         'print(subject ____ "수학")'),
     code('if score > 80:\n'
+         '    print("80점을 넘었습니다!")\n'
+         'print("채점 끝")',
+         '# TODO: "80보다 크면"이 되도록 비교 연산자를 채우세요. (결과: 80점을 넘었습니다!, 채점 끝)\n'
+         'if score ____ 80:\n'
          '    print("80점을 넘었습니다!")\n'
          'print("채점 끝")'),
     look_up("파이썬 들여쓰기 이유"),
@@ -84,19 +97,39 @@ nb.add(
          'if 36.0 <= body_temp <= 37.5:\n'
          '    print("정상 체온입니다.")\n'
          'else:\n'
+         '    print("다시 재 보세요.")',
+         '# TODO: 위 끝 숫자와, "아니면"을 뜻하는 낱말을 채우세요. (결과: 정상 체온입니다.)\n'
+         'body_temp = 36.5\n'
+         '\n'
+         'if 36.0 <= body_temp <= ____:\n'
+         '    print("정상 체온입니다.")\n'
+         '____:\n'
          '    print("다시 재 보세요.")'),
 
     step(3, "for로 하나씩 꺼내 개수 세기"),
     code('scores = [72, 85, 90, 64, 88]\n'
          '\n'
          'for score in scores:\n'
-         '    print(score)'),
+         '    print(score)',
+         '# TODO: 하나씩 꺼낼 리스트 이름과, 꺼낸 값을 출력할 변수 이름을 채우세요. (결과: 72, 85, 90, 64, 88이 한 줄씩)\n'
+         'scores = [72, 85, 90, 64, 88]\n'
+         '\n'
+         'for score in ____:\n'
+         '    print(____)'),
     md("세는 변수는 `for` 바깥에서 0으로 시작합니다."),
     code('pass_count = 0\n'
          '\n'
          'for score in scores:\n'
          '    if score >= 80:\n'
          '        pass_count = pass_count + 1\n'
+         '\n'
+         'print(f"80점 이상인 학생은 {pass_count}명입니다.")',
+         '# TODO: 세기 시작할 값과, 한 명 찾을 때마다 더할 값을 채우세요. (결과: 80점 이상인 학생은 3명입니다.)\n'
+         'pass_count = ____\n'
+         '\n'
+         'for score in scores:\n'
+         '    if score >= 80:\n'
+         '        pass_count = pass_count + ____\n'
          '\n'
          'print(f"80점 이상인 학생은 {pass_count}명입니다.")'),
     md("같은 코드에 `print` 한 줄을 넣으면 한 바퀴 돌 때마다 `pass_count`가 어떻게 바뀌는지 보입니다."),
@@ -105,7 +138,14 @@ nb.add(
          'for score in scores:\n'
          '    if score >= 80:\n'
          '        pass_count = pass_count + 1\n'
-         '    print(f"{score}점 | 80점 이상? {score >= 80} | pass_count = {pass_count}")'),
+         '    print(f"{score}점 | 80점 이상? {score >= 80} | pass_count = {pass_count}")',
+         '# TODO: 한 바퀴마다 보여 줄 세는 변수 이름을 채우세요. (결과: 5줄, 마지막 줄은 pass_count = 3)\n'
+         'pass_count = 0\n'
+         '\n'
+         'for score in scores:\n'
+         '    if score >= 80:\n'
+         '        pass_count = pass_count + 1\n'
+         '    print(f"{score}점 | 80점 이상? {score >= 80} | pass_count = {____}")'),
 
     step(4, "함수 만들기 — def와 return"),
     md("`def`로 판정 규칙에 이름을 붙이고, `return`으로 결과를 돌려줍니다. 정의만 하면 아무것도 실행되지 않고, "
@@ -117,29 +157,53 @@ nb.add(
          '        return "불합격"\n'
          '\n'
          'print(judge_score(85))\n'
+         'print(judge_score(64))',
+         '# TODO: 함수 이름과, 결과를 돌려주는 낱말을 채우세요. (결과: 합격, 불합격)\n'
+         'def ____(point):\n'
+         '    if point >= 80:\n'
+         '        ____ "합격"\n'
+         '    else:\n'
+         '        return "불합격"\n'
+         '\n'
+         'print(judge_score(85))\n'
          'print(judge_score(64))'),
 
     step(5, "함수와 for 함께 쓰기"),
     code('for score in scores:\n'
          '    result = judge_score(score)\n'
-         '    print(f"{score}점 → {result}")'),
+         '    print(f"{score}점 → {result}")',
+         '# TODO: 함수에 넣을 값과, 문장에 넣을 판정 결과 변수 이름을 채우세요. (결과: 72점 → 불합격 … 88점 → 합격)\n'
+         'for score in scores:\n'
+         '    result = judge_score(____)\n'
+         '    print(f"{score}점 → {____}")'),
     code('fail_count = 0\n'
          '\n'
          'for score in scores:\n'
          '    if judge_score(score) == "불합격":\n'
          '        fail_count = fail_count + 1\n'
          '\n'
+         'print(f"불합격 판정을 받은 학생: {fail_count}명")',
+         '# TODO: 비교할 글자와, 한 명 찾을 때마다 더할 값을 채우세요. (결과: 불합격 판정을 받은 학생: 2명)\n'
+         'fail_count = 0\n'
+         '\n'
+         'for score in scores:\n'
+         '    if judge_score(score) == ____:\n'
+         '        fail_count = fail_count + ____\n'
+         '\n'
          'print(f"불합격 판정을 받은 학생: {fail_count}명")'),
 )
 
-# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 완성 코드) ----------------------------
+# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 코드, 빈칸 채우기) ---------------------
 nb.add(
     step(6, "반도체 데이터로 확인하기 — EQ-04 기록 8건"),
     md("`week03_python_basics_2.csv`(교육용 가상 데이터)에서 설비 EQ-04의 기록 8건을 딕셔너리의 리스트로 옮겨 적었습니다. "
        "`합격여부`는 그 공정 뒤 검사에서 나온 실제 결과(행마다)로, `1` = 합격, `-1` = 불합격입니다. "
        "295~305도는 이 과정에서 쓰는 연습용 기준입니다."),
     code(EQ04_RECORDS + "\n"
-         "print(len(eq04_records))"),
+         "print(len(eq04_records))",
+         "# TODO: 기록 개수를 세는 함수 이름을 채우세요. (결과: 8)\n"
+         + EQ04_RECORDS + "\n"
+         "print(____(eq04_records))"),
     code('out_count = 0\n'
          '\n'
          'for record in eq04_records:\n'
@@ -148,6 +212,17 @@ nb.add(
          '    else:\n'
          '        print(record["로트번호"], record["온도_C"], "범위 밖 / 합격여부", record["합격여부"])\n'
          '        out_count = out_count + 1\n'
+         '\n'
+         'print(f"EQ-04 기록 8건 중 범위 밖은 {out_count}건입니다.")',
+         '# TODO: 범위의 위 끝 숫자와, 범위 밖을 찾을 때마다 더할 값을 채우세요. (결과: 8줄, 범위 밖은 4건)\n'
+         'out_count = 0\n'
+         '\n'
+         'for record in eq04_records:\n'
+         '    if 295 <= record["온도_C"] <= ____:\n'
+         '        print(record["로트번호"], record["온도_C"], "범위 안")\n'
+         '    else:\n'
+         '        print(record["로트번호"], record["온도_C"], "범위 밖 / 합격여부", record["합격여부"])\n'
+         '        out_count = out_count + ____\n'
          '\n'
          'print(f"EQ-04 기록 8건 중 범위 밖은 {out_count}건입니다.")'),
     look_up("공정 규격 스펙 뜻"),
@@ -276,6 +351,20 @@ nb.add(
          '        if temp > 305:\n'
          '            high = high + 1\n'
          '        if temp < 295:\n'
+         '            low = low + 1\n'
+         '\n'
+         'print(f"높음 {high}건, 낮음 {low}건")',
+         '# 문제 3을 푼 뒤 실행하세요.\n'
+         '# TODO: 높음의 기준(위 끝)과 낮음의 기준(아래 끝) 숫자를 채우세요. (결과: 높음 + 낮음 = 문제 3의 범위 밖 건수)\n'
+         'high = 0\n'
+         'low = 0\n'
+         '\n'
+         'for record in records:\n'
+         '    temp = record["온도_C"]\n'
+         '    if check_range(temp) == "범위 밖":\n'
+         '        if temp > ____:\n'
+         '            high = high + 1\n'
+         '        if temp < ____:\n'
          '            low = low + 1\n'
          '\n'
          'print(f"높음 {high}건, 낮음 {low}건")'),

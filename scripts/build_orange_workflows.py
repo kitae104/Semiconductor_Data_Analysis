@@ -4,7 +4,7 @@
   Orange 파이썬(환경변수 ORANGE_PYTHON 또는 기본 설치 경로)으로 스스로 다시 실행된다.
 - 출력: orange3/weekXX/weekXX_<번호>_<주제>_start.ows / _done.ows
   - _start: 데이터가 이미 연결된 File 위젯 + 다음에 붙일 위젯을 안내하는 캔버스 메모
-  - _done : 위젯 체인 전체(막혔을 때 따라잡기·정답)
+  - _done : 위젯 체인 전체(교수용 정답·실측 기준, 학생에게 제공하지 않음)
 - File 위젯 경로는 이식 가능하게 저장한다(다른 PC·키트 압축 해제 위치에서도 열리게).
   - 과정 데이터: RecentPath(prefix="basedir", relpath="../../data/weekly/weekXX/orange/<이름>.tab")
     (basedir = .ows 파일이 있는 폴더. Orange가 워크플로를 열 때 정해 준다)

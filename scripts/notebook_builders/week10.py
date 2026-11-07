@@ -3,7 +3,7 @@
 스펙: _workspace/01_architect_spec.md 「10차시」. 파이썬 PART만 담는다(Orange kNN·Logistic Regression·Predictions는 .ows). 생활 예제 단계 없음.
 활성 개념 1개: model.predict(X_new). 재사용: 9차시 모델 코드(완성 셀), 새 열 만들기, 조건으로 세기, f-string.
 빼는 것: predict_proba(→ Orange Predictions 확률 열), risk_level, confusion_matrix 코드.
-노트북: 막혔을 때 → 1 9차시 모델 다시 만들기(완성) → 2 새 로트 예측하기(강의 PART 2 따라 하기, 학생 빈칸 2개)
+노트북: 1 9차시 모델 다시 만들기(완성) → 2 새 로트 예측하기(강의 PART 2 따라 하기, 학생 빈칸 2개)
 → 3 반도체 데이터 실습(문제 1·2: 시험용 147개 예측, 문제 2는 전이 문제 — 2단계 f-string 모양을 빈칸 없이 직접 쓰기)
 → 4 ChatGPT 보고서 숫자 검증 → 5 과정 회고.
 ChatGPT 체험은 코드가 아니라 보고서(글)를 받으므로, 붙여 넣는 칸은 마크다운 셀이고 "응답 예시" 자리에는 숫자 대조용 완성 코드 셀을 둔다.
@@ -22,7 +22,9 @@ nb = NotebookPair("week10", "10차시 실습 — 모델 평가와 새 데이터 
 nb.add(
     step(1, "9차시 모델 다시 만들기"),
     md("9차시 2단계(6개 열 결정 트리)와 같은 코드를 한 셀에 모았습니다(완성 코드). **이 셀을 먼저 실행해야** 아래에서 `model`을 쓸 수 있습니다. "
-       "정확도가 9차시와 같은 80.3%인지 확인하세요."),
+       "정확도가 9차시와 같은 80.3%인지 확인하세요.",
+       student="9차시 2단계(6개 열 결정 트리)와 같은 코드를 한 셀에 모았습니다. 빈칸 2개를 채워 실행하세요. **이 셀을 먼저 실행해야** 아래에서 `model`을 쓸 수 있습니다. "
+               "정확도가 9차시와 같은 80.3%인지 확인하세요."),
     code("import pandas as pd\n"
          "from sklearn.model_selection import train_test_split\n"
          "from sklearn.tree import DecisionTreeClassifier\n"
@@ -36,6 +38,22 @@ nb.add(
          "\n"
          "model = DecisionTreeClassifier(max_depth=4, random_state=42)\n"
          "model.fit(X_train, y_train)\n"
+         "acc = accuracy_score(y_test, model.predict(X_test))\n"
+         'print(f"정확도: {round(acc * 100, 1)}%")',
+         "# TODO: 빈칸 행을 지우는 함수 이름과, 학습시키는 함수 이름을 채우세요. (결과: 정확도: 80.3%)\n"
+         "import pandas as pd\n"
+         "from sklearn.model_selection import train_test_split\n"
+         "from sklearn.tree import DecisionTreeClassifier\n"
+         "from sklearn.metrics import accuracy_score\n"
+         "\n"
+         f'df = pd.read_csv("{TRAIN}", encoding="utf-8-sig").____()\n'
+         'features = ["온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]\n'
+         "X = df[features]\n"
+         'y = df["합격여부"]\n'
+         "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)\n"
+         "\n"
+         "model = DecisionTreeClassifier(max_depth=4, random_state=42)\n"
+         "model.____(X_train, y_train)\n"
          "acc = accuracy_score(y_test, model.predict(X_test))\n"
          'print(f"정확도: {round(acc * 100, 1)}%")'),
 )
@@ -54,13 +72,18 @@ nb.add(
                "**주의**: 1단계 셀을 실행하지 않았으면 `NameError: name 'model' is not defined`가 납니다. "
                "`new_lots` 전체를 넣거나 열이 하나라도 다르면 `ValueError: The feature names should match those that were passed during fit.`가 납니다."),
     code(f'new_lots = pd.read_csv("{NEW}", encoding="utf-8-sig")\n'
-         "print(new_lots.shape)"),
+         "print(new_lots.shape)",
+         "# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요. (결과: (9, 8))\n"
+         f'new_lots = pd.____("{NEW}", encoding="utf-8-sig")\n'
+         "print(new_lots.____)"),
     code('new_lots["예측"] = model.predict(new_lots[features])\n'
          'print(new_lots[["공정명", "설비번호", "온도_C", "예측"]])',
          '# TODO: 예측하는 함수 이름과, 학습 때와 같은 열 목록 변수 이름을 채우세요.\n'
          'new_lots["예측"] = model.____(new_lots[____])\n'
          'print(new_lots[["공정명", "설비번호", "온도_C", "예측"]])'),
-    code("print(f\"새 로트 {len(new_lots)}개 중 불합격 예측 {(new_lots['예측'] == -1).sum()}개\")"),
+    code("print(f\"새 로트 {len(new_lots)}개 중 불합격 예측 {(new_lots['예측'] == -1).sum()}개\")",
+         "# TODO: 불합격을 뜻하는 숫자를 채우세요. (결과: 새 로트 9개 중 불합격 예측 1개)\n"
+         "print(f\"새 로트 {len(new_lots)}개 중 불합격 예측 {(new_lots['예측'] == ____).sum()}개\")"),
     look_up("kNN 이웃 투표"),
 )
 
@@ -111,6 +134,11 @@ nb.add(
        "`KeyError: '예측'`이 나면 2단계 빈칸 셀을 먼저 채워 실행하세요."),
     code('print(f"정확도: {round(acc * 100, 1)}%")\n'
          'print(f"기준선(모두 합격): {round((y_test == 1).mean() * 100, 1)}%")\n'
+         "print(f\"불합격 예측: {(new_lots['예측'] == -1).sum()}개\")\n"
+         "print(new_lots[new_lots[\"예측\"] == -1][[\"공정명\", \"설비번호\", \"온도_C\"]])",
+         "# TODO: 정확도를 반올림할 소수 자리 수와, 기준선(모두 합격)에서 합격을 뜻하는 숫자를 채우세요.\n"
+         'print(f"정확도: {round(acc * 100, ____)}%")\n'
+         'print(f"기준선(모두 합격): {round((y_test == ____).mean() * 100, 1)}%")\n'
          "print(f\"불합격 예측: {(new_lots['예측'] == -1).sum()}개\")\n"
          "print(new_lots[new_lots[\"예측\"] == -1][[\"공정명\", \"설비번호\", \"온도_C\"]])"),
     md("**고친 보고 문장**: 숫자가 틀린 곳과 \"원인\"이라고 단정한 곳을 고쳐 세 문장으로 다시 쓰세요.\n\n"

@@ -66,20 +66,6 @@
     </div>
   </section>
 
-  <section class="block">
-    <h2>지난 시간 복습</h2>
-    <div class="quiz-item">
-      <div class="q">Q1. 9차시 결정 트리의 정확도는 80.3%였고, 모두 합격이라고 찍으면 78.9%였다. 이 모델이 "잘 맞힌다"고 말할 수 있을까?</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">말하기 어렵다. 차이가 1.4%p(퍼센트포인트 — 두 퍼센트를 뺀 차이)뿐이라 "무조건 합격"과 별 차이가 없다. 정확도는 늘 기준선과 함께 읽는다. 오늘은 다른 모델 두 개도 같은지 본다.</div>
-    </div>
-    <div class="quiz-item">
-      <div class="q">Q2. Orange Confusion Matrix에서 실제 불합격(-1) 155건 중 114건이 예측 1(합격) 칸에 있었다. 무슨 뜻일까?</div>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">실제 불합격 155건 중 114건을 합격으로 놓쳤다는 뜻이다. 정확도 한 숫자만 보면 이 칸이 안 보인다. 오늘은 모델마다 이 칸을 비교한다.</div>
-    </div>
-  </section>
-
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> Orange3 — 모델 셋 비교와 새 데이터 예측</h2>
     <p>오늘 새로 쓰는 말은 세 개다. 나머지 위젯은 9차시에 써 봤다.</p>
@@ -204,7 +190,7 @@
 
     <ol>
       <li>Orange3에서 <b>File → Open</b>을 누르고 <code>week10_1_newwafers_start.ows</code>를 연다.</li>
-      <li>캔버스에 File 위젯 두 개와 ①~⑤ 안내 메모가 보이면 준비가 끝난 것이다. 막히면 같은 폴더의 <code>week10_1_newwafers_done.ows</code>(완성본)를 연다.</li>
+      <li>캔버스에 File 위젯 두 개와 ①~⑤ 안내 메모가 보이면 준비가 끝난 것이다.</li>
     </ol>
     <img class="chart-img" src="../../assets/images/orange3/week10_02_newwafers_start.png"
          alt="week10_1_newwafers_start.ows를 연 Orange3 캔버스"
@@ -517,7 +503,7 @@ print(new_lots[new_lots["예측"] == -1][["공정명", "설비번호", "온도_C
     </div>
     <div class="callout danger">
       <b class="tag">오류 2 — 1단계 셀을 실행하지 않음</b> 노트북을 새로 열고 2단계부터 실행하면 <code>NameError: name 'model' is not defined</code>가 난다.
-      "막혔을 때" 셀대로 1단계부터 위에서 아래로 다시 실행한다.
+      1단계부터 위에서 아래로 다시 실행한다.
     </div>
     <div class="callout danger">
       <b class="tag">오류 3 — Predictions에 모델을 잇지 않음(오류 메시지 없음)</b> Orange Predictions에 새 데이터 File만 이으면 데이터 표만 보이고 예측 열이 생기지 않는다.

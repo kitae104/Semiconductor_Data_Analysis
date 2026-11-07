@@ -10,8 +10,8 @@
 
 PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은 단계 번호로 지시한다.
 
-1. 오늘의 질문·오늘의 미션(입사 다섯째 날) → 지난 시간 복습 2문항(EQ-02 25행, Select Rows)
-2. PART 1 시작: 학생용 노트북 "막혔을 때" 셀 읽기
+1. 오늘의 질문·오늘의 미션(입사 다섯째 날)
+2. PART 1 시작: 학생용 노트북 열기
 3. 노트북 1단계: 반 기록 읽기·`describe()`·정리 전 값(15, 276.6)
 4. 노트북 2단계: `isna().sum()` → `dropna()`(15 → 12)
 5. 노트북 3단계: `duplicated().sum()` → `drop_duplicates()`(12 → 11)
@@ -82,7 +82,6 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 - [ ] File → Impute: 위쪽 Default Method = Average/Most frequent. 아래쪽 Individual Attribute Settings의 **왼쪽 열 목록**에서 `합격여부`를 누르고 **오른쪽 버튼**에서 Remove instances with unknown values. 위쪽 Default Method 칸의 같은 이름 버튼은 누르지 않는다고 말로 경고한다.
 - [ ] Impute → Select Rows 네 줄(`온도_C` is at most 400, `압력_Pa` is at least 0, `가스유량_slm` is at least 0, `가스유량_slm` is below 200) → Data Table(105행) + Column Statistics(온도 Mean 300.75).
 - [ ] Data Table 뒤에 위젯을 잇지 않는다(출력은 선택 행뿐). 보기 위젯은 File·Impute·Select Rows에서 갈래로 잇는다.
-- [ ] 늦은 학생은 `_done.ows`를 열어 따라잡게 한다.
 - [ ] **알려진 차이(학생에게 묻지 않는다)**: Orange는 글자 앞뒤 공백을 지우고 읽어 `"식각 "`(뒤 공백 오타)를 `"식각"`과 합친다. 그래서 `공정명` 종류 수가 pandas 8종, Orange 7종으로 다르다. 학생이 발견하면 "Orange가 읽을 때 공백을 지우기 때문"이라고만 답하고 넘어간다. 공정명 종류 수는 오늘 다루지 않는다.
 
 ## 학생들이 자주 찾아볼 질문과 보충 설명
@@ -123,7 +122,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 - `AttributeError: 'function' object has no attribute 'sum'`: `isna.sum()`처럼 괄호를 빠뜨렸다. `isna().sum()`으로 고친다.
 - 문제 3에서 `(2, 9)`가 나옴: 부등호를 거꾸로 썼다(`>= 400`). 튀는 값 2행만 남은 것이다.
 - `KeyError: '온도'`: 열 이름을 줄여 썼다. 오늘 열 이름은 `온도_C`다(`print(df.columns)`로 확인).
-- `NameError: name 'df' is not defined`: 6단계 셀을 실행하지 않고 7단계로 왔다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.
+- `NameError: name 'df' is not defined`: 6단계 셀을 실행하지 않고 7단계로 왔다. 위에서부터 다시 실행한다.
 - `____`를 채우지 않고 실행(실제 메시지): 문제 1 `AttributeError: 'Series' object has no attribute '____'` / 문제 2 `AttributeError: 'DataFrame' object has no attribute '____'` /
   문제 3 비교 기호 `SyntaxError: invalid syntax. Perhaps you forgot a comma?`, 표 이름 `NameError: name '____' is not defined`. 빈칸을 채운다.
 - Orange File에 파일 이름이 빨갛게 보임: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.

@@ -10,8 +10,8 @@
 
 PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은 단계 번호로 지시한다.
 
-1. 오늘의 질문·오늘의 미션(입사 여섯째 날, 회의용 그래프 3장) → 지난 시간 복습 2문항(`dropna()` 미저장, Missing 3)
-2. PART 1 시작: 학생용 노트북 "막혔을 때" 셀 읽기
+1. 오늘의 질문·오늘의 미션(입사 여섯째 날, 회의용 그래프 3장)
+2. PART 1 시작: 학생용 노트북 열기
 3. 노트북 1단계: `plt` 불러오기·한글 설정 두 줄·가게 기록 읽기 → 4줄 틀 표와 "질문 → 그래프" 표
 4. 노트북 2단계: `value_counts()` → `plt.bar`(맑음 12 · 흐림 6 · 비 3) → **직접 해 보기** 빈칸 `ice["요일"]`(월~일 막대 7개 모두 3)
 5. 노트북 3~4단계: 판매량 히스토그램(`bins=5`) → **직접 해 보기** 빈칸 `bins=10`(구간별 2 1 1 3 5 1 2 2 1 3, 최고 5일) → 기온-판매량 산점도(오른쪽 위로)
@@ -88,7 +88,6 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 - [ ] File → Scatter Plot: 처음에 **x 설비번호 · y 공정명**(바둑판 모양 점)으로 잡혀 학생이 당황한다 → x `온도_C`, y `두께_nm`. Color 합격여부 그대로. 기울기 해석은 실습지 문제 3 뒤로 미룬다.
 - [ ] File → Box Plot: 처음 Variable 측정시간·Subgroups 합격여부 → Variable `온도_C`, Subgroups `설비번호` 둘 다 바꾼다. 어느 설비 상자가 가장 긴지는 말하지 않고 실습지 문제 4로 넘긴다.
 - [ ] 모든 보기 위젯은 File에서 갈래로 잇는다. Data Table 뒤에는 잇지 않는다.
-- [ ] 늦은 학생은 `_done.ows`를 열어 따라잡게 한다.
 
 ## 학생들이 자주 찾아볼 질문과 보충 설명
 
@@ -128,7 +127,7 @@ PART 1 파이썬 → PART 2 Orange3 → PART 3 실습지 순서다. 노트북은
 - `KeyError: '온도_c'`: 열 이름 대소문자·철자가 다르다. 오늘 열 이름은 `온도_C`(대문자 C), `두께_nm`, `설비번호`다(`print(df.columns)`로 확인).
 - `AttributeError: module 'matplotlib.pyplot' has no attribute 'Bar'`: 함수 이름을 대문자로 썼다. `plt.bar`처럼 소문자다.
 - `____`를 채우지 않고 실행(실제 메시지): 문제 1 `AttributeError: 'Series' object has no attribute '____'`, 그리기 함수 자리 `AttributeError: module 'matplotlib.pyplot' has no attribute '____'`, 열 이름 자리 `NameError: name '____' is not defined`. 빈칸을 채운다.
-- `NameError: name 'df' is not defined`: 5단계 셀을 실행하지 않고 6단계로 왔다. "막혔을 때" 셀대로 위에서부터 다시 실행한다.
+- `NameError: name 'df' is not defined`: 5단계 셀을 실행하지 않고 6단계로 왔다. 위에서부터 다시 실행한다.
 - Orange File에 파일 이름이 빨갛게 보임: `.ows`를 원래 폴더 밖으로 옮겼거나 폴더 구조가 바뀌었다. 원래 폴더의 `_start.ows`를 다시 연다.
 
 ## 빨리 끝낸 학생용 과제

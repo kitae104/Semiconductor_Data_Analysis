@@ -14,34 +14,55 @@ from _common import NotebookPair, code, look_up, md, step
 
 nb = NotebookPair("week04", "4차시 실습 — Pandas 가장 기본적인 부분")
 
-# --- 생활 예제: 카페 주문 12건(완성 코드, 실행하며 관찰) -----------------------------------
+# --- 생활 예제: 카페 주문 12건(빈칸을 채우며 따라 하기) -----------------------------------
 nb.add(
     step(1, "CSV 파일 읽기 — read_csv"),
     md("카페 주문 12건(교육용 가상 데이터)입니다. `pd.read_csv(\"파일 이름\", encoding=\"utf-8-sig\")`로 표를 읽어 `cafe`에 담습니다."),
     code('import pandas as pd\n'
          '\n'
          'cafe = pd.read_csv("week04_easy_cafe_orders.csv", encoding="utf-8-sig")\n'
-         'cafe.head()'),
+         'cafe.head()',
+         '# TODO: CSV를 읽는 함수 이름과, 앞 5행을 보여 주는 함수 이름을 채우세요. (결과: 표의 앞 5행)\n'
+         'import pandas as pd\n'
+         '\n'
+         'cafe = pd.____("week04_easy_cafe_orders.csv", encoding="utf-8-sig")\n'
+         'cafe.____()'),
     look_up("CSV 파일이란"),
 
     step(2, "표의 크기와 열 이름 확인하기 — shape, columns"),
     md("`shape`는 (행 수, 열 수)입니다. 괄호 `()` 없이 씁니다."),
-    code("print(cafe.shape)"),
-    code("print(cafe.columns)"),
+    code("print(cafe.shape)",
+         "# TODO: 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요. 괄호는 붙이지 않습니다. (결과: (12, 7))\n"
+         "print(cafe.____)"),
+    code("print(cafe.columns)",
+         "# TODO: 열 이름을 보여 주는 이름을 채우세요.\n"
+         "print(cafe.____)"),
 
     step(3, "열 선택하기"),
     md("열 하나는 대괄호 한 겹 `cafe[\"열\"]`, 여러 열은 **대괄호 두 겹** `cafe[[\"열1\", \"열2\"]]`입니다."),
-    code('print(cafe["가격_KRW"].head())'),
-    code('print(cafe[["메뉴", "가격_KRW", "평가"]].head())'),
-    md("(구경) `loc`은 행 번호와 열 이름으로 칸 하나를 꺼냅니다. 실행해서 결과만 보세요."),
-    code('print(cafe.loc[0, "가격_KRW"])'),
+    code('print(cafe["가격_KRW"].head())',
+         '# TODO: 가격 열 이름을 따옴표와 함께 채우세요. (결과: 가격 5개)\n'
+         'print(cafe[____].head())'),
+    code('print(cafe[["메뉴", "가격_KRW", "평가"]].head())',
+         '# TODO: 첫 번째와 세 번째 열 이름을 따옴표와 함께 채우세요. (결과: 메뉴, 가격_KRW, 평가 세 열)\n'
+         'print(cafe[[____, "가격_KRW", ____]].head())'),
+    md("(확인) `loc`은 행 번호와 열 이름으로 칸 하나를 꺼냅니다. 열 이름만 채워 결과를 확인하세요."),
+    code('print(cafe.loc[0, "가격_KRW"])',
+         '# TODO: 열 이름을 따옴표와 함께 채우세요.\n'
+         'print(cafe.loc[0, ____])'),
 
     step(4, "조건 검색 — 원하는 행만 골라내기"),
     md("`cafe[\"종류\"] == \"커피\"`는 행마다 True/False를 만들고, 그것을 다시 `cafe[ ]`에 넣으면 True인 행만 남습니다."),
     code('check = cafe["종류"] == "커피"\n'
+         'print(check.head())',
+         '# TODO: "같은가?"를 묻는 비교 기호를 채우세요. (결과: True/False가 든 5줄)\n'
+         'check = cafe["종류"] ____ "커피"\n'
          'print(check.head())'),
     code('coffee = cafe[cafe["종류"] == "커피"]\n'
-         'print(coffee.shape)'),
+         'print(coffee.shape)',
+         '# TODO: 고를 종류 이름과, 크기를 보여 주는 이름을 채우세요.\n'
+         'coffee = cafe[cafe["종류"] == ____]\n'
+         'print(coffee.____)'),
     code('pricey = cafe[cafe["가격_KRW"] > 5000]\n'
          'print(len(pricey))',
          '# TODO: "5000원보다 비싼"을 뜻하는 비교 기호를 채우세요.\n'
@@ -53,29 +74,43 @@ nb.add(
     md("고른 표(`pricey`)에서 다시 조건을 걸면 두 조건을 모두 만족하는 행이 남습니다.\n\n"
        "`평가`: 1 = 좋아요, -1 = 별로예요(반도체 데이터의 `합격여부` 1 = 합격, -1 = 불합격과 같은 표기)."),
     code('pricey_bad = pricey[pricey["평가"] == -1]\n'
-         'print(len(pricey_bad))'),
+         'print(len(pricey_bad))',
+         '# TODO: "별로예요"를 뜻하는 숫자와, 개수를 셀 표 이름을 채우세요.\n'
+         'pricey_bad = pricey[pricey["평가"] == ____]\n'
+         'print(len(____))'),
 
     step(6, "정렬하기 — sort_values"),
     md("`ascending=False`는 큰 값부터(내림차순)입니다. 빼면 작은 값부터 정렬합니다."),
-    code('cafe.sort_values("가격_KRW", ascending=False).head(5)'),
+    code('cafe.sort_values("가격_KRW", ascending=False).head(5)',
+         '# TODO: 정렬 기준 열 이름과, 큰 값부터 정렬하는 설정 값을 채우세요. (결과: 비싼 5건)\n'
+         'cafe.sort_values(____, ascending=____).head(5)'),
 )
 
-# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 완성 코드) ----------------------------
+# --- 반도체 데이터로 확인하기(강의 같은 이름 절과 같은 코드, 빈칸 채우기) ---------------------
 nb.add(
     step(7, "반도체 데이터로 확인하기 — 공정 기록 100건"),
     md("공정 기록 100건(교육용 가상 데이터)입니다. 1~5단계와 같은 코드에서 파일 이름·표 이름·열 이름만 바뀝니다. "
        "`합격여부`: 1 = 합격, -1 = 불합격."),
     code('df = pd.read_csv("week04_process_filtering.csv", encoding="utf-8-sig")\n'
          'print(df.shape)',
-         'df = pd.read_csv("week04_process_filtering.csv", encoding="utf-8-sig")\n'
-         '# TODO: 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요.\n'
+         '# TODO: 읽을 파일 이름(따옴표 포함)과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요. (결과: (100, 8))\n'
+         'df = pd.read_csv(____, encoding="utf-8-sig")\n'
          'print(df.____)'),
-    code("print(df.columns)"),
+    code("print(df.columns)",
+         "# TODO: 열 이름을 보여 주는 이름을 채우세요.\n"
+         "print(df.____)"),
     code('eq01 = df[df["설비번호"] == "EQ-01"]\n'
          'eq01_fail = eq01[eq01["합격여부"] == -1]\n'
+         'print(len(eq01), len(eq01_fail))',
+         '# TODO: 고를 설비 이름과 불합격을 뜻하는 숫자를 채우세요. (결과: 31 2)\n'
+         'eq01 = df[df["설비번호"] == ____]\n'
+         'eq01_fail = eq01[eq01["합격여부"] == ____]\n'
          'print(len(eq01), len(eq01_fail))'),
     code('fail = df[df["합격여부"] == -1]\n'
-         'print(len(fail) / len(df) * 100)'),
+         'print(len(fail) / len(df) * 100)',
+         '# TODO: 고를 열 이름과, 나눌 전체 표 이름을 채우세요. (결과: 13.0)\n'
+         'fail = df[df[____] == -1]\n'
+         'print(len(fail) / len(____) * 100)'),
 )
 
 # --- 반도체 데이터 실습(실습지 문제 1~3과 같은 번호, PART 3에서 채운다) -----------------------
@@ -94,7 +129,9 @@ nb.add(
          '# TODO: 대괄호 안에 세 열 이름이 든 리스트를 채우세요.\n'
          'small = df[____]\n'
          'print(small.shape)'),
-    code("small.head()"),
+    code("small.head()",
+         "# TODO: 앞 5행을 보여 주는 함수 이름을 채우세요.\n"
+         "small.____()"),
 
     md("### 문제 2 — EQ-02 기록 고르고, 그중 불합격 세기",
        student="### 문제 2 — EQ-02 기록 고르고, 그중 불합격 세기\n\n"
@@ -136,6 +173,11 @@ nb.add(
     code('for name in ["산화", "포토", "식각", "증착", "세정"]:\n'
          '    part = df[df["공정명"] == name]\n'
          '    part_fail = part[part["합격여부"] == -1]\n'
+         '    print(f"{name}: 기록 {len(part)}건, 불합격 {len(part_fail)}건")',
+         '# TODO: 공정마다 고를 때 비교할 변수 이름과, 불합격을 뜻하는 숫자를 채우세요. (결과: 공정 5줄, 불합격 합계 13)\n'
+         'for name in ["산화", "포토", "식각", "증착", "세정"]:\n'
+         '    part = df[df["공정명"] == ____]\n'
+         '    part_fail = part[part["합격여부"] == ____]\n'
          '    print(f"{name}: 기록 {len(part)}건, 불합격 {len(part_fail)}건")'),
 )
 

@@ -11,7 +11,7 @@
 
 9·10차시는 **PART 1 Orange3 → PART 2 파이썬 + ChatGPT → PART 3 실습지** 순서다. 노트북은 단계 번호, Orange는 캔버스 메모 번호로 지시한다.
 
-1. 오늘의 질문·오늘의 미션(입사 아홉째 날) → 지난 시간 복습 2문항(진공도 = 원인 후보, Correlations에 합격여부가 없는 이유 → 오늘은 그 열이 맞힐 목표)
+1. 오늘의 질문·오늘의 미션(입사 아홉째 날)
 2. PART 1 시작: Orange 말 사전, 위젯 이름표(새 위젯 4개: Tree = Model, Tree Viewer = Visualize, Test and Score·Confusion Matrix = Evaluate), 공정 지도 위치 두 줄
 3. 개념 네 절: 머신러닝(Feature/Label, 피자 가게 표) → 결정 트리(스무고개) → 학습용·시험용(연습문제·모의고사, 10겹 교차검증) → 정확도와 기준선(헷갈림 표 읽는 법)
 4. 워밍업 `week09_1_patterns_start.ows`(학생이 직접): 메모 ② Tree(깊이 4) → Tree Viewer, "가장자리형 100%" 상자 예상하고 찾기 → 메모 ③ Test and Score(10겹) → 메모 ④ Confusion Matrix, "정상으로 헷갈린 패턴" 예상하고 확인. 메모 ⑤ Distributions는 더 해 보기
@@ -91,7 +91,6 @@
 - [ ] Tree(깊이 4) → Tree Viewer(Show details 체크). 뿌리 `1 · 79.3%, 595/750` = 방금 구한 기준선이라고 짚는다. 뿌리 아래 열 이름 `온도_C`, 왼쪽 갈래 `-1 · 56.0%, 42/75`, 한 줄 더 내려가 > 306.0 `1 · 53.8%, 43/80`(불합격 46.2%) — "양쪽 끝"을 보여 준 뒤 "원인 후보" 문장으로 연결한다.
 - [ ] 메모 ④(Test and Score + Confusion Matrix)는 이어 붙이지 않고 PART 3 실습지 문제 4로 남긴다 — 오늘의 미션 답(CA 0.783 vs 기준선 79.3%)이 거기서 나온다.
 - [ ] Data Table 뒤에 위젯을 잇지 않는다(출력은 선택 행뿐). 보기 위젯은 File에서 갈래로 잇는다.
-- [ ] 늦은 학생은 `_done.ows`를 열어 따라잡게 한다(설정이 저장돼 있어 10겹·깊이 4가 이미 맞춰져 있다).
 
 ## 학생들이 자주 찾아볼 질문과 보충 설명
 
@@ -125,7 +124,7 @@
 
 ## 막히는 지점 TOP3와 대처
 
-1. **Test and Score를 10겹으로 안 바꿈 / 선 하나 빠짐** — 새 위젯은 5겹이라 CA가 실습지 정답과 조금 다르다. Tree → Test and Score 선을 빠뜨리면 표가 빈다. 화면에서 "선 두 개(File, Tree)"와 Number of folds 칸을 손으로 짚게 한다. 그래도 안 맞으면 `_done.ows`를 열어 비교한다.
+1. **Test and Score를 10겹으로 안 바꿈 / 선 하나 빠짐** — 새 위젯은 5겹이라 CA가 실습지 정답과 조금 다르다. Tree → Test and Score 선을 빠뜨리면 표가 빈다. 화면에서 "선 두 개(File, Tree)"와 Number of folds 칸을 손으로 짚게 한다.
 2. **Tree Viewer가 너무 커서 읽지 못함 / 숫자가 안 보임** — 공정 기록은 깊이를 4로 안 바꾸면 그림이 훨씬 커진다(`171 nodes`, CA 0.739). 웨이퍼 패턴은 깊이 100이어도 조금만 커져서 그림으로는 알아채기 어렵다 — Tree 창의 Limit the maximal tree depth to 칸을 직접 확인한다. 중간 상자에 숫자가 없으면 Show details in non-leaves를 켠다. 깊이부터 확인하고, 왼쪽 Zoom 막대로 줄인다. 상자 읽는 법(굵은 글자 / % / n/N / 맨 아래 열 이름)을 칠판에 적어 둔다.
 3. **실습지 문제 2(빈칸 없는 셀)에서 멈춤** — 노트북 2단계 학습·정확도 두 셀을 복사해 이름만 바꾸게 한다: `model` → `model1`, `acc` → `acc1`, `X_train`/`y_train`/`X_test`/`y_test` → `X1_train`/`y1_train`/`X1_test`/`y1_test`, 출력 문장. `X_test`를 그대로 두면 `ValueError: The feature names should match those that were passed during fit.`가 난다. 오류 없는 오답 두 가지: 82.7% → 학습용(`X1_train`, `y1_train`)으로 채점했다. 80.3% → `X1`에 6개 열이 들어갔거나 정확도 줄에 `model`·`X_test`가 남았다.
 
