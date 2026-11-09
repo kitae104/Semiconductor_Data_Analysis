@@ -66,7 +66,7 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 빈칸·중복·튀는 값 정리하기</h2>
-    <p>개념은 <b>반 학생 기록</b>(<code><a href="../../data/weekly/week05/week05_easy_class_records.csv" target="_blank" rel="noopener">week05_easy_class_records.csv</a></code>, 15행 5열, 생활 예제용 가상 데이터)으로 익힌다.</p>
+    <p>개념은 <b>반 학생 기록</b>(<code><a href="../../data/weekly/week05/week05_easy_class_records.csv" target="_blank" rel="noopener">week05_easy_class_records.csv</a></code>, 15행 5열)으로 익힌다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -87,7 +87,7 @@
       <div class="code-label"><span>Python — 읽고 요약하고, 정리 전 값 기억하기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-students = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8-sig")
+students = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8")
 print(students.shape)
 
 print(students.describe())
@@ -599,9 +599,9 @@ print("정리 후 평균 키:", after_height)</code></pre>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>공장 기록 <code><a href="../../data/weekly/week05/week05_dirty_process_data.csv" target="_blank" rel="noopener">week05_dirty_process_data.csv</a></code>(113행 9열, 교육용 가상 데이터)에도 빈칸·중복·튀는 값을 일부러 섞었다.
+    <p>공장 기록 <code><a href="../../data/weekly/week05/week05_dirty_process_data.csv" target="_blank" rel="noopener">week05_dirty_process_data.csv</a></code>(113행 9열)에도 빈칸·중복·튀는 값을 일부러 섞었다.
     한 행 = 공정 작업 1건이다. 위 코드에서 표 이름만 <code>students</code> → <code>df</code>로 바뀐다.</p>
-    <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 — 이 단계 설비들의 센서 기록이다(1차시 공정 지도 그림은 PART 2에서 다시 본다). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).</p>
+    <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 — 이 단계 설비들의 센서 기록이다(1차시 공정 지도 그림은 PART 2에서 다시 본다). 설비 4대가 여러 공정 기록을 함께 남겼다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
@@ -619,7 +619,7 @@ print("정리 후 평균 키:", after_height)</code></pre>
     <h3>확인 1 — 숫자 요약으로 이상한 열 찾기</h3>
     <div class="code-block">
       <div class="code-label"><span>Python — 공장 기록 읽고 요약하기 (노트북 6단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig")
+      <pre><code>df = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8")
 print(df.shape)
 
 print(df.describe())</code></pre>
@@ -715,7 +715,7 @@ print(hot)</code></pre>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png" alt="반도체 8대 공정 흐름을 생활 비유로 그린 공정 지도">
-    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). 클린룸은 공정 지도의 ②~⑥(웨이퍼 위에 회로를 만드는 단계)이 이루어지는 FAB의 방이다.</p>
+    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화). 클린룸은 공정 지도의 ②~⑥(웨이퍼 위에 회로를 만드는 단계)이 이루어지는 FAB의 방이다.</p>
     <ul class="pt-list">
       <li>워밍업 <code><a href="../../data/weekly/week05/week05_orange_cleanroom_env.csv" target="_blank" rel="noopener">week05_orange_cleanroom_env.csv</a></code> — <b>공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸</b>(특정 공정 단계가 아니라 그 방의 공기 기록. ① 웨이퍼 제조는 보통 웨이퍼 제조사에서 하고, ⑦⑧도 별도의 청정 공간을 쓴다).</li>
       <li>반도체 <code><a href="../../data/weekly/week05/week05_dirty_process_data.csv" target="_blank" rel="noopener">week05_dirty_process_data.csv</a></code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비의 센서 기록.</li>
@@ -724,7 +724,7 @@ print(hot)</code></pre>
     <h3>워밍업 — 클린룸 환경 기록</h3>
     <p>반도체는 <b>클린룸</b>(먼지를 극도로 줄인 방)에서 만든다. 수술실을 떠올리면 된다. 회로가 아주 가늘어서, 공기 속 아주 작은 입자(<b>파티클</b>)가 웨이퍼에 내려앉으면 회로가 끊기거나 붙는 결함이 될 수 있다.
     그래서 공장은 클린룸의 파티클 수·온도·습도를 계속 재서 기록한다.</p>
-    <p><code><a href="../../data/weekly/week05/week05_orange_cleanroom_env.csv" target="_blank" rel="noopener">week05_orange_cleanroom_env.csv</a></code>(72행, 교육용 가상 데이터)는 클린룸 세 구역(A·B·C)을 하루 동안 24번씩 잰 기록이다.</p>
+    <p><code><a href="../../data/weekly/week05/week05_orange_cleanroom_env.csv" target="_blank" rel="noopener">week05_orange_cleanroom_env.csv</a></code>(72행)는 클린룸 세 구역(A·B·C)을 하루 동안 24번씩 잰 기록이다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -737,7 +737,7 @@ print(hot)</code></pre>
       </table>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week05_cleanroom_particles.png" alt="클린룸 세 구역의 하루 파티클 수 선 그래프. B구역 한 시각에 99,999 센서 오류 코드가 있다">
-    <p class="img-caption">클린룸 세 구역의 하루 먼지 입자 수. 08:00 B구역 기록의 99,999는 이 기록의 오류 코드(축 밖), 세로 점선은 기록이 빈 시각이다(교육용 가상 데이터, 실제 등급 기준 아님).</p>
+    <p class="img-caption">클린룸 세 구역의 하루 먼지 입자 수. 08:00 B구역 기록의 99,999는 이 기록의 오류 코드(축 밖), 세로 점선은 기록이 빈 시각이다(실제 등급 기준 아님).</p>
     <p>그래프의 99,999는 실제 먼지 수가 아니다. <b>이 기록에서는 센서가 측정에 실패하면 99,999를 남기도록 정해 두었다</b>(오류 코드). 이 값을 그대로 두고 빈칸을 채우면 무슨 일이 생기는지 Orange로 본다.</p>
     <div class="callout concept">
       <b class="tag">찾아보기</b>
@@ -875,10 +875,10 @@ print(hot)</code></pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code><a href="../../data/weekly/week05/week05_easy_class_records.csv" target="_blank" rel="noopener">week05_easy_class_records.csv</a></code> — 15행 5열, 생활 예제용 가상 데이터(PART 1). 빈칸 3칸, 중복 1행, 잘못 적은 키 1개.</li>
-      <li><code><a href="../../data/weekly/week05/week05_orange_cleanroom_env.csv" target="_blank" rel="noopener">week05_orange_cleanroom_env.csv</a></code> — 72행 6열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code><a href="../../data/weekly/week05/week05_easy_class_records.csv" target="_blank" rel="noopener">week05_easy_class_records.csv</a></code> — 15행 5열(PART 1). 빈칸 3칸, 중복 1행, 잘못 적은 키 1개.</li>
+      <li><code><a href="../../data/weekly/week05/week05_orange_cleanroom_env.csv" target="_blank" rel="noopener">week05_orange_cleanroom_env.csv</a></code> — 72행 6열(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         빈칸: 파티클 4 · 습도 3 · 차압 2, 파티클 99,999 1행, 차압 -5.0 1행. <b>공정 지도 위치: ②~⑥이 이루어지는 FAB의 클린룸.</b></li>
-      <li><code><a href="../../data/weekly/week05/week05_dirty_process_data.csv" target="_blank" rel="noopener">week05_dirty_process_data.csv</a></code> — 113행 9열, 교육용 가상 데이터(PART 1·2·3). 빈칸 10칸, 중복 3행, 튀는 값 6건.
+      <li><code><a href="../../data/weekly/week05/week05_dirty_process_data.csv" target="_blank" rel="noopener">week05_dirty_process_data.csv</a></code> — 113행 9열(PART 1·2·3). 빈칸 10칸, 중복 3행, 튀는 값 6건.
         공정명 오타 3건과 형식이 다른 측정시간 값 2건도 있지만 오늘은 다루지 않는다. <b>공정 지도 위치: ②~⑤ + 세정 설비의 센서 기록.</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week05_dictionary.html">데이터 설명서</a></li>
     </ul>
@@ -957,13 +957,13 @@ print(hot)</code></pre>
     <p>ChatGPT에 아래처럼 물어 받은 코드의 예시다. <code>for</code>는 3차시에 배운 반복문이다. 노트북 8단계에서 실행해 확인 2의 <code>isna().sum()</code> 결과와 같은지 비교한다.</p>
     <div class="code-block">
       <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>week05_dirty_process_data.csv를 pandas로 읽어서(encoding="utf-8-sig"), 열마다 빈칸 개수와 빈칸 비율(%)을 한 줄씩 출력하는 짧은 코드를 만들어 줘.</code></pre>
+      <pre style="white-space:pre-wrap;"><code>week05_dirty_process_data.csv를 pandas로 읽어서(encoding="utf-8"), 열마다 빈칸 개수와 빈칸 비율(%)을 한 줄씩 출력하는 짧은 코드를 만들어 줘.</code></pre>
     </div>
     <div class="code-block">
       <div class="code-label"><span>Python — AI가 만들어 준 코드 예시 (노트북 8단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig")
+data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8")
 
 for col in data.columns:
     count = data[col].isna().sum()
@@ -983,7 +983,7 @@ for col in data.columns:
 합격여부: 빈칸 2개 (1.8%)</pre>
     </div>
     <div class="callout warn">
-      <b class="tag">AI 코드를 다룰 때</b> 직접 실행해 숫자를 확인하고, 경로와 <code>encoding="utf-8-sig"</code>를 맞춘다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.
+      <b class="tag">AI 코드를 다룰 때</b> 직접 실행해 숫자를 확인하고, 경로와 <code>encoding="utf-8"</code>를 맞춘다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.
     </div>
   </section>
 

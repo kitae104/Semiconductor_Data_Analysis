@@ -66,7 +66,7 @@
     <h1>리스트와 딕셔너리</h1>
     <p class="today-question">오늘의 질문: <b>"여러 개의 측정값을 한 번에 담고, 각 값에 이름표까지 붙이려면 어떻게 해야 할까?"</b></p>
     <p class="lede"><b>오늘의 미션</b> — 팀장이 EQ-03 설비 온도 7개를 메모로 줬다. 최고·최저·평균을 정리해 보고하자. 가장 높은 온도와 가장 낮은 온도는 몇 도이고, 평균은 몇 도일까?</p>
-    <p class="img-caption">「신입 데이터 담당자의 10일」 둘째 날. 이야기 속 공장과 기록은 모두 교육용 가상 데이터다.</p>
+    <p class="img-caption">「신입 데이터 담당자의 10일」 둘째 날.</p>
     <img class="chart-img" src="../../assets/images/orange3/week02_04_temps_data_table_by_equipment.png"
          alt="오늘 끝에 Orange에서 보게 될 화면: 설비번호로 정렬한 온도 기록표에서 같은 설비의 행이 한데 모여 있다"
          data-shot="week02_2_temps_done.ows의 Data Table (표 보기) 창 — 설비번호 열 머리를 한 번 눌러 정렬한 상태. EQ-01 1행, EQ-02 4행, EQ-03 7행, EQ-04 8행이 차례로 모여 보이고, 왼쪽 Info 칸의 20 instances가 보이게">
@@ -94,7 +94,7 @@
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 리스트와 딕셔너리</h2>
     <ul class="pt-list">
-      <li>개념은 <b>일주일 기온·장바구니·학생 정보</b>(지어낸 값)로 배우고, 공장 기록은 "반도체 데이터로 확인하기"에서 다룬다.</li>
+      <li>개념은 <b>일주일 기온·장바구니·학생 정보</b>로 배우고, 공장 기록은 "반도체 데이터로 확인하기"에서 다룬다.</li>
       <li>1차시처럼 셀을 클릭하고 <b>Shift + Enter</b>로 실행한다. 셀은 위에서 아래로 차례대로 실행한다.</li>
     </ul>
   </section>
@@ -594,7 +594,7 @@ print(friends[1]["이름"])</code></pre>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>오늘 반도체 데이터는 설비 온도 기록표 <code><a href="../../data/weekly/week02/week02_python_basics_1.csv" target="_blank" rel="noopener">week02_python_basics_1.csv</a></code>(20행, 교육용 가상 데이터)다. 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정에서 설비 네 대(EQ-01~EQ-04)가 잰 온도다. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 오늘 파이썬은 표 파일을 직접 읽지 않는다(4차시에 배운다). 그래서 노트북에는 표에서 옮겨 적은 값이 들어 있다. (노트북 6단계)</p>
+    <p>오늘 반도체 데이터는 설비 온도 기록표 <code><a href="../../data/weekly/week02/week02_python_basics_1.csv" target="_blank" rel="noopener">week02_python_basics_1.csv</a></code>(20행)다. 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정에서 설비 네 대(EQ-01~EQ-04)가 잰 온도다. 설비 4대가 여러 공정 기록을 함께 남겼다. 오늘 파이썬은 표 파일을 직접 읽지 않는다(4차시에 배운다). 그래서 노트북에는 표에서 옮겨 적은 값이 들어 있다. (노트북 6단계)</p>
     <ul class="pt-list">
       <li>열: <code>로트번호</code>, <code>공정명</code>, <code>설비번호</code>, <code>온도_C</code>, <code>합격여부</code>. <code>_C</code> = 섭씨 도(1차시와 같은 규칙 — 밑줄 뒤가 단위).</li>
       <li><b>설비번호</b>는 어느 기계의 기록인지 구분하는 번호다. 피자 가게에 오븐이 여러 대면 오븐에 번호를 붙여 "몇 번 오븐에서 구운 판인지" 적는 것과 같다.</li>
@@ -679,7 +679,7 @@ print(first["온도_C"])</code></pre>
     </div>
 
     <h3>워밍업 — 지하철 역별 승하차</h3>
-    <p>가상 도시의 지하철 두 노선, 역 8개에서 하루 세 시간대(출근·낮·퇴근)에 타고 내린 사람 수를 센 기록이다(24행, 교육용 가상 데이터). 열은 <code>역이름</code>, <code>노선</code>, <code>시간대</code>, <code>승차인원_count</code>, <code>하차인원_count</code>다. <code>_count</code> = 센 사람 수(명).</p>
+    <p>가상 도시의 지하철 두 노선, 역 8개에서 하루 세 시간대(출근·낮·퇴근)에 타고 내린 사람 수를 센 기록이다(24행). 열은 <code>역이름</code>, <code>노선</code>, <code>시간대</code>, <code>승차인원_count</code>, <code>하차인원_count</code>다. <code>_count</code> = 센 사람 수(명).</p>
     <div class="callout concept">
       <b class="tag">공장과 잇기</b>
       공장에서는 설비 온도 기록이 그렇다. 평균 승차인원만 보면 유난히 붐비는 중앙역·출근이 안 보이듯, 설비 온도도 평균만 보면 유난히 높은 기록이 안 보인다. 그래서 반도체 표에서도 Mean과 함께 Min.·Max.를 본다.
@@ -706,7 +706,7 @@ print(first["온도_C"])</code></pre>
     </div>
 
     <h3>반도체 데이터 — 설비 온도 기록표 20건</h3>
-    <p>PART 1에서 값을 옮겨 적은 그 표다. 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정에서 남긴 설비 온도 기록이다(교육용 가상 데이터).</p>
+    <p>PART 1에서 값을 옮겨 적은 그 표다. 공정 지도 ②~⑤(산화·포토·식각·증착)와 세정에서 남긴 설비 온도 기록이다.</p>
     <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>week02_2_temps_start.ows</code>를 연다. File을 더블클릭해 <code><a href="../../data/weekly/week02/orange/week02_python_basics_1.tab" target="_blank" rel="noopener">week02_python_basics_1.tab</a></code>이 들어왔는지 확인한다.</div></div>
     <div class="step"><div class="num">2</div><div class="content">File에 <code>Column Statistics</code>를 잇고 <code>온도_C</code> 행의 <b>Mean</b>과 <b>Max.</b>를 읽는다.</div></div>
     <img class="chart-img" src="../../assets/images/orange3/week02_05_temps_feature_statistics.png"
@@ -721,7 +721,7 @@ print(first["온도_C"])</code></pre>
          alt="설비번호로 정렬한 Data Table. EQ-01, EQ-02, EQ-03, EQ-04 순서로 행이 모여 있다"
          data-shot="week02_2_temps_done.ows의 Data Table (표 보기) 창 — 설비번호 열 머리를 한 번 눌러 정렬한 상태. EQ-01 1행, EQ-02 4행, EQ-03 7행, EQ-04 8행이 차례로 모여 보이고, 왼쪽 Info 칸의 20 instances가 보이게">
     <ul class="pt-list">
-      <li>설비별 행 수: EQ-01 1 · EQ-02 4 · EQ-03 7 · EQ-04 8. 바로 옆 <code>공정명</code> 열을 보면 한 설비에 여러 공정 기록이 섞여 있다. 설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록이라서다(실제 공장은 보통 설비마다 맡는 공정이 정해져 있다).</li>
+      <li>설비별 행 수: EQ-01 1 · EQ-02 4 · EQ-03 7 · EQ-04 8. 바로 옆 <code>공정명</code> 열을 보면 한 설비에 여러 공정 기록이 섞여 있다. 설비 4대가 여러 공정 기록을 함께 남긴 기록이라서다(실제 공장은 보통 설비마다 맡는 공정이 정해져 있다).</li>
       <li>EQ-02 행 4개의 온도는 302.5 · 299.8 · 298.8 · 305.6 — PART 1 확인 1의 <code>eq02_temps</code>가 이 표에서 옮겨 온 값이다.</li>
       <li>Data Table은 열 순서가 CSV와 다르다. 결과 열 <code>합격여부</code>와 참고 열 <code>로트번호</code>가 앞에 온다.</li>
     </ul>
@@ -795,7 +795,7 @@ print(first["온도_C"])</code></pre>
         </tbody>
       </table>
     </div>
-    <p>두 파일 모두 교육용 가상 데이터다. 열 설명은 <a href="../../data/data_dictionary/week02_dictionary.html">데이터 설명서</a>에 있다. 일주일 기온·장바구니·학생 정보·친구 정보는 코드 속에 지어낸 값이다.</p>
+    <p> 열 설명은 <a href="../../data/data_dictionary/week02_dictionary.html">데이터 설명서</a>에 있다. 일주일 기온·장바구니·학생 정보·친구 정보는 코드 속에 직접 적은 값이다.</p>
   </section>
 
   <section class="block">

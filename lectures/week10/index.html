@@ -163,7 +163,7 @@
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png" alt="반도체 8대 공정 흐름을 생활 비유로 그린 공정 지도">
-    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ② 산화부터 ⑥ 금속 배선까지는 층마다 되풀이하고, ⑦ EDS에서 칩마다 전기 검사를 한다.</p>
+    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화). ② 산화부터 ⑥ 금속 배선까지는 층마다 되풀이하고, ⑦ EDS에서 칩마다 전기 검사를 한다.</p>
     <ul class="pt-list">
       <li>워밍업 학습용 <code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code>(9차시 웨이퍼 240장) — <b>공정 지도 위치: ⑦ EDS</b> 웨이퍼 맵 요약.</li>
       <li>워밍업 새 데이터 <code><a href="../../data/weekly/week10/week10_orange_new_wafers.csv" target="_blank" rel="noopener">week10_orange_new_wafers.csv</a></code>(새 웨이퍼 10장) — <b>공정 지도 위치: ⑦ EDS</b> 새 웨이퍼 맵 요약.</li>
@@ -172,7 +172,7 @@
     </ul>
 
     <h3>워밍업 — 새 웨이퍼 10장은 어떤 불량 모양일까</h3>
-    <p>9차시에 웨이퍼 240장의 불량 모양(정상·중심형·가장자리형·스크래치형)을 결정 트리로 나눴다. 오늘은 ⑦ 전기 검사를 막 마친 <b>새 웨이퍼 10장</b>(교육용 가상 데이터)이 들어왔다. 불량 모양 이름은 아직 아무도 붙이지 않았다.
+    <p>9차시에 웨이퍼 240장의 불량 모양(정상·중심형·가장자리형·스크래치형)을 결정 트리로 나눴다. 오늘은 ⑦ 전기 검사를 막 마친 <b>새 웨이퍼 10장</b>이 들어왔다. 불량 모양 이름은 아직 아무도 붙이지 않았다.
     "정상"은 불량 다이가 몇 개 흩어져 있을 뿐 뚜렷한 모양이 없는 웨이퍼라는 뜻이다(불량 0개라는 뜻이 아니다).</p>
     <div class="tablewrap">
       <table>
@@ -186,7 +186,7 @@
       </table>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week10_new_wafer_maps.png" alt="새 웨이퍼 10장의 웨이퍼 맵. 빨간 칸이 불합격 다이이고, 웨이퍼마다 불량 다이 수가 적혀 있다">
-    <p class="img-caption">새로 들어온 웨이퍼 10장(빨간 칸 = 불합격 다이, 불량 다이 수만 표시). 세 모델은 어떤 모양이라고 답할까? 모델끼리 답이 갈리는 웨이퍼를 찾아보자(교육용 가상 데이터).</p>
+    <p class="img-caption">새로 들어온 웨이퍼 10장(빨간 칸 = 불합격 다이, 불량 다이 수만 표시). 세 모델은 어떤 모양이라고 답할까? 모델끼리 답이 갈리는 웨이퍼를 찾아보자.</p>
 
     <ol>
       <li>Orange3에서 <b>File → Open</b>을 누르고 <code>week10_1_newwafers_start.ows</code>를 연다.</li>
@@ -228,7 +228,7 @@
 
     <h3>반도체 — 공정 기록 모델 셋을 기준선과 함께 읽기</h3>
     <p>9차시 공정 기록(학습용 750행)과 아직 검사하지 않은 새 로트 9개다. <b>File → Open</b>으로 <code>week10_2_newlots_start.ows</code>를 연다. 위 File = 학습용, 아래 File = 새 로트다.
-    설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).</p>
+    설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
@@ -286,7 +286,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 
-df = pd.read_csv("week09_pass_fail_train.csv", encoding="utf-8-sig").dropna()
+df = pd.read_csv("week09_pass_fail_train.csv", encoding="utf-8").dropna()
 features = ["온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]
 X = df[features]
 y = df["합격여부"]
@@ -307,10 +307,10 @@ print(f"정확도: {round(acc * 100, 1)}%")</code></pre>
     </ul>
 
     <h3>새 로트 예측하기 — predict()</h3>
-    <p>새 로트 파일(교육용 가상 데이터)에는 정답(<code>합격여부</code>) 열이 없다. 모델이 맞혀야 할 대상이다.</p>
+    <p>새 로트 파일에는 정답(<code>합격여부</code>) 열이 없다. 모델이 맞혀야 할 대상이다.</p>
     <div class="code-block">
       <div class="code-label"><span>Python — 새 로트 읽기 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>new_lots = pd.read_csv("week09_new_lots_to_predict.csv", encoding="utf-8-sig")
+      <pre><code>new_lots = pd.read_csv("week09_new_lots_to_predict.csv", encoding="utf-8")
 print(new_lots.shape)</code></pre>
     </div>
     <div class="callout success">
@@ -482,13 +482,13 @@ print(new_lots[new_lots["예측"] == -1][["공정명", "설비번호", "온도_C
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code> — 240행 6열, 교육용 가상 데이터(PART 1 워밍업 학습용, 9차시와 같은 파일. Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code> — 240행 6열(PART 1 워밍업 학습용, 9차시와 같은 파일. Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         <b>공정 지도 위치: ⑦ EDS 웨이퍼 맵 요약.</b></li>
-      <li><code><a href="../../data/weekly/week10/week10_orange_new_wafers.csv" target="_blank" rel="noopener">week10_orange_new_wafers.csv</a></code> — 10행 5열, 교육용 가상 데이터(PART 1 워밍업 새 데이터, 정답 열 없음).
+      <li><code><a href="../../data/weekly/week10/week10_orange_new_wafers.csv" target="_blank" rel="noopener">week10_orange_new_wafers.csv</a></code> — 10행 5열(PART 1 워밍업 새 데이터, 정답 열 없음).
         <b>공정 지도 위치: ⑦ EDS 새 웨이퍼 맵 요약.</b></li>
-      <li><code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code> — 750행 9열(빈칸 있는 행을 지우면 735행), 교육용 가상 데이터(PART 1·2·3 학습용). 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+      <li><code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code> — 750행 9열(빈칸 있는 행을 지우면 735행)(PART 1·2·3 학습용). 설비 4대가 여러 공정 기록을 함께 남겼다.
         <b>공정 지도 위치: ②~⑤ + 세정 공정 조건 → ⑦ 결과.</b></li>
-      <li><code><a href="../../data/weekly/week09/week09_new_lots_to_predict.csv" target="_blank" rel="noopener">week09_new_lots_to_predict.csv</a></code> — 9행 8열, 교육용 가상 데이터(PART 1·2·3 새 데이터, 정답 열 없음).
+      <li><code><a href="../../data/weekly/week09/week09_new_lots_to_predict.csv" target="_blank" rel="noopener">week09_new_lots_to_predict.csv</a></code> — 9행 8열(PART 1·2·3 새 데이터, 정답 열 없음).
         <b>공정 지도 위치: ②~⑤ + 세정을 마쳤지만 아직 ⑦ 검사 전인 새 로트.</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week10_dictionary.html">10차시 데이터 설명서</a>, <a href="../../data/data_dictionary/week09_dictionary.html">9차시 데이터 설명서</a></li>
     </ul>
@@ -561,7 +561,7 @@ print(new_lots[new_lots["예측"] == -1][["공정명", "설비번호", "온도_C
     <div class="quiz-item">
       <div class="q">Q3. (서술) 오늘 새 로트 예측 결과를 팀장에게 한 문장으로 보고해 보자. "원인 후보"와 가상 데이터 고지를 넣는다.</div>
       <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">"새 로트 9개 중 결정 트리가 불합격으로 예측한 로트는 1개(3번째 로트, 식각·EQ-04)라 먼저 살펴보겠으며, 모델 정확도가 기준선과 큰 차이가 없어 참고로만 쓰고 온도는 불합격의 원인 후보로 확인하겠습니다(교육용 가상 데이터)."</div>
+      <div class="answer-box">"새 로트 9개 중 결정 트리가 불합격으로 예측한 로트는 1개(3번째 로트, 식각·EQ-04)라 먼저 살펴보겠으며, 모델 정확도가 기준선과 큰 차이가 없어 참고로만 쓰고 온도는 불합격의 원인 후보로 확인하겠습니다."</div>
     </div>
   </section>
 
@@ -623,7 +623,7 @@ print(new_lots[new_lots["예측"] == -1][["공정명", "설비번호", "온도_C
         </tbody>
       </table>
     </div>
-    <p class="img-caption">공정 지도 칸은 그 차시에 쓴 데이터가 나온 곳이다(모두 교육용 가상 데이터).</p>
+    <p class="img-caption">공정 지도 칸은 그 차시에 쓴 데이터가 나온 곳이다.</p>
     <p>도구는 파이썬과 Orange 두 가지였다. 파이썬은 코드로 정확히 세고, Orange는 위젯을 이어 눈으로 확인했다. 두 도구의 숫자가 다를 때는 정리·학습한 데이터나 설정, 채점 방법이 달랐다.</p>
     <div class="callout success">
       <b class="tag">수고하셨습니다</b>

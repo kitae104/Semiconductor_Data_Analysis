@@ -19,9 +19,9 @@
   <div class="hero">
     <span class="badge purple">9차시 실습지</span>
     <h1>머신러닝 예측 모델 만들기 — 실습지</h1>
-    <p class="lede">문제 1·2·4·5는 공정 기록 <code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code>(750행 9열, 교육용 가상 데이터)로, 문제 3은 웨이퍼 맵 요약 <code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code>(240행, 교육용 가상 데이터)로 푼다.
+    <p class="lede">문제 1·2·4·5는 공정 기록 <code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code>(750행 9열)로, 문제 3은 웨이퍼 맵 요약 <code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code>(240행)로 푼다.
     공정 지도 위치: 공정 기록 = ②~⑤ + 세정의 공정 조건과 검사 결과(공정 중간 검사 + ⑦ EDS 결과를 모은 교육용 설정) / 웨이퍼 맵 요약 = ⑦ EDS 웨이퍼 맵.
-    <code>합격여부</code>는 <b>1 = 합격, -1 = 불합격</b>이다. 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).</p>
+    <code>합격여부</code>는 <b>1 = 합격, -1 = 불합격</b>이다. 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.</p>
     <p class="lede">문제 1·2는 학생용 노트북 4단계와 같다 — 노트북 1·2단계 셀을 먼저 실행해 <code>df</code>, <code>y</code>와 6개 열 모델의 정확도를 만들어 둔다(3단계 ChatGPT 체험은 PART 2에서 한 것이다). 4단계 숫자가 실습지와 다르면 Kernel → Restart Kernel and Run All Cells… 로 처음부터 다시 실행합니다(3단계에 붙여 넣은 코드가 <code>df</code>·<code>y</code>를 바꿨을 수 있다).</p>
     <p class="lede"><b>오늘의 미션</b> — 검사 전에 합격/불합격을 미리 맞히는 모델을 만들자. 그런데 '무조건 합격'이라고 찍는 것보다 나을까?</p>
   </div>

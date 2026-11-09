@@ -19,9 +19,9 @@
   <div class="hero">
     <span class="badge purple">10차시 실습지</span>
     <h1>모델 평가와 새 데이터 예측 — 실습지</h1>
-    <p class="lede">문제 1·2·4·5는 공정 기록 <code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code>(학습용 750행)와 새 로트 <code><a href="../../data/weekly/week09/week09_new_lots_to_predict.csv" target="_blank" rel="noopener">week09_new_lots_to_predict.csv</a></code>(9개)로, 문제 3은 새 웨이퍼 <code><a href="../../data/weekly/week10/week10_orange_new_wafers.csv" target="_blank" rel="noopener">week10_orange_new_wafers.csv</a></code>(10장)로 푼다. 모두 교육용 가상 데이터다.
+    <p class="lede">문제 1·2·4·5는 공정 기록 <code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code>(학습용 750행)와 새 로트 <code><a href="../../data/weekly/week09/week09_new_lots_to_predict.csv" target="_blank" rel="noopener">week09_new_lots_to_predict.csv</a></code>(9개)로, 문제 3은 새 웨이퍼 <code><a href="../../data/weekly/week10/week10_orange_new_wafers.csv" target="_blank" rel="noopener">week10_orange_new_wafers.csv</a></code>(10장)로 푼다.
     공정 지도 위치: 공정 기록 = ②~⑤ + 세정 공정 조건 → ⑦ 결과, 새 로트 = ②~⑤ + 세정을 마쳤지만 아직 ⑦ 검사 전, 새 웨이퍼 = ⑦ EDS 웨이퍼 맵 요약.
-    설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+    설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.
     문제 1~2는 학생용 노트북 3단계와 같다 — 노트북 1·2단계 셀을 먼저 실행해 <code>model</code>과 <code>X_test</code>·<code>y_test</code>를 만들어 둔다. <code>합격여부</code>·<code>예측</code>은 1 = 합격, -1 = 불합격이다.</p>
   </div>
 
@@ -87,7 +87,7 @@ print((test_pred == ____).sum())</code></pre>
       </table>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week10_new_wafer_maps.png" alt="새 웨이퍼 10장의 웨이퍼 맵. 빨간 칸이 불합격 다이다">
-    <p class="img-caption">새 웨이퍼 10장(빨간 칸 = 불합격 다이, 교육용 가상 데이터).</p>
+    <p class="img-caption">새 웨이퍼 10장(빨간 칸 = 불합격 다이).</p>
     <p>답이 갈린 웨이퍼를 위 그림에서 찾아, 불합격 다이가 어떻게 놓여 있는지 한 줄로 적자. 왜 모델들이 헷갈렸을까?</p>
     <button class="reveal-btn">정답 보기</button>
     <div class="answer-box">CA: Tree <b>0.942</b> / kNN <b>0.900</b> / Logistic Regression <b>0.971</b>(화면에 소수 셋째 자리까지 보인다). 학습용 240장 중 정상이 120장이라 기준선은 <b>50%</b>(0.50)다. 세 모델 모두 기준선보다 훨씬 높은 0.90 이상이다.<br>

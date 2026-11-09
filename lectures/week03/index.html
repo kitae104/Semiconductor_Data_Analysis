@@ -60,7 +60,7 @@
     <h1>리스트·딕셔너리로 배우는 조건문·반복문·함수</h1>
     <p class="today-question">오늘의 질문: <b>"리스트에 담긴 여러 설비 정보를 하나씩 살펴보며, 조건에 맞는 것만 컴퓨터가 골라내게 할 수 있을까?"</b></p>
     <p class="lede"><b>오늘의 미션</b> — 기록 30건을 하나씩 보는 대신, 온도가 연습용 기준 안인지 자동으로 판정해 주는 작은 도우미를 만들자. 기준 밖 기록은 몇 건이고, 그중 실제 검사에서도 불합격인 기록은 몇 건일까?</p>
-    <p class="img-caption">「신입 데이터 담당자의 10일」 셋째 날. 이야기 속 공장과 기록은 모두 교육용 가상 데이터다.</p>
+    <p class="img-caption">「신입 데이터 담당자의 10일」 셋째 날.</p>
     <img class="chart-img" src="../../assets/images/orange3/week03_06_records_select_rows_eq04.png"
          alt="PART 2에서 Orange로 만들 화면: Select Rows 창에 조건 두 줄이 걸려 있다"
          data-shot="PART 2에서 만들 Select Rows (행 고르기) 창 — 조건 두 줄 '설비번호 is EQ-04', '온도_C is outside 295, 305'">
@@ -88,7 +88,7 @@
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 조건문·반복문·함수</h2>
     <ul class="pt-list">
-      <li>개념은 <b>시험 점수·체온</b>(지어낸 값)으로 배우고, 공장 기록은 "반도체 데이터로 확인하기"에서 다룬다.</li>
+      <li>개념은 <b>시험 점수·체온</b>으로 배우고, 공장 기록은 "반도체 데이터로 확인하기"에서 다룬다.</li>
       <li>셀은 위에서 아래로 차례대로 <b>Shift + Enter</b>로 실행한다. 오늘 코드는 앞 셀에서 만든 변수를 이어서 쓴다.</li>
     </ul>
   </section>
@@ -509,12 +509,12 @@ print(f"불합격 판정을 받은 학생: {fail_count}명")</code></pre>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>오늘 반도체 데이터는 설비 기록표 <code><a href="../../data/weekly/week03/week03_python_basics_2.csv" target="_blank" rel="noopener">week03_python_basics_2.csv</a></code>(30행, 교육용 가상 데이터)다. 공정 지도 ②~⑤와 세정에서 남긴 기록이다. 오늘 파이썬은 표 파일을 직접 읽지 않는다(4차시에 배운다). 그래서 노트북에는 표에서 옮겨 적은 값이 딕셔너리의 리스트로 들어 있다. (노트북 6단계)</p>
+    <p>오늘 반도체 데이터는 설비 기록표 <code><a href="../../data/weekly/week03/week03_python_basics_2.csv" target="_blank" rel="noopener">week03_python_basics_2.csv</a></code>(30행)다. 공정 지도 ②~⑤와 세정에서 남긴 기록이다. 오늘 파이썬은 표 파일을 직접 읽지 않는다(4차시에 배운다). 그래서 노트북에는 표에서 옮겨 적은 값이 딕셔너리의 리스트로 들어 있다. (노트북 6단계)</p>
     <ul class="pt-list">
       <li>열: <code>로트번호</code>, <code>공정명</code>, <code>설비번호</code>, <code>온도_C</code>, <code>합격여부</code>. <code>_C</code> = 섭씨 도. 노트북 딕셔너리에는 오늘 쓰는 네 열(<code>공정명</code> 제외)만 옮겼다.</li>
       <li><code>합격여부</code>는 그 공정을 마친 뒤 검사에서 나온 <b>실제 결과</b>로, 기록(행)마다 따로 매긴 값이다. <code>1</code> = 합격, <code>-1</code> = 불합격.</li>
       <li>한 로트는 여러 공정을 차례로 거친다. 그래서 같은 로트번호(예: LOT-0186)가 공정마다 다른 행에 다시 나올 수 있다.</li>
-      <li>설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 실제 공장에서는 설비마다 맡는 공정이 정해져 있다.</li>
+      <li>설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다. 실제 공장에서는 설비마다 맡는 공정이 정해져 있다.</li>
       <li>온도는 교육용 값이라 실제 공정 조건과 다르다. 값의 크기는 해석하지 않고 정해 둔 범위와 비교만 한다.</li>
     </ul>
     <div class="callout concept">
@@ -680,7 +680,7 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
     </div>
 
     <h3>반도체 데이터 — 설비 기록 30건</h3>
-    <p>PART 1에서 딕셔너리의 리스트로 옮겨 적은 그 표다. 공정 지도 ②~⑤와 세정에서 남긴 기록이고, 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록). 오늘은 PART 1 확인 2처럼 설비 EQ-04의 기록에서 연습용 기준 밖 기록을 고른다.</p>
+    <p>PART 1에서 딕셔너리의 리스트로 옮겨 적은 그 표다. 공정 지도 ②~⑤와 세정에서 남긴 기록이고, 설비 4대가 여러 공정 기록을 함께 남겼다. 오늘은 PART 1 확인 2처럼 설비 EQ-04의 기록에서 연습용 기준 밖 기록을 고른다.</p>
     <div class="step"><div class="num">1</div><div class="content">File &gt; Open으로 <code>week03_2_records_start.ows</code>를 연다. File을 더블클릭해 <code><a href="../../data/weekly/week03/orange/week03_python_basics_2.tab" target="_blank" rel="noopener">week03_python_basics_2.tab</a></code>이 들어왔는지 확인한다.</div></div>
     <div class="step"><div class="num">2</div><div class="content">File에 <code>Select Rows</code>를 잇고 더블클릭한다. 이미 있는 조건 한 줄을 <code>설비번호</code> · <code>is</code> · <code>EQ-04</code>로 바꾼다. Select Rows에 <code>Data Table</code>을 이어 몇 행인지 센다.</div></div>
     <div class="step"><div class="num">3</div><div class="content">Select Rows로 돌아가 Add Condition을 누르고 <code>온도_C</code> · <code>is outside</code> · 왼쪽 칸 <code>295</code>, 오른쪽 칸 <code>305</code>로 정한다. Data Table의 행 수와 <code>합격여부</code> 열을 본다.</div></div>
@@ -769,7 +769,7 @@ EQ-04 기록 8건 중 범위 밖은 4건입니다.</pre>
         </tbody>
       </table>
     </div>
-    <p>두 파일 모두 교육용 가상 데이터다. 열 설명은 <a href="../../data/data_dictionary/week03_dictionary.html">데이터 설명서</a>에 있다. 표를 코드로 직접 여는 것은 4차시부터다.</p>
+    <p> 열 설명은 <a href="../../data/data_dictionary/week03_dictionary.html">데이터 설명서</a>에 있다. 표를 코드로 직접 여는 것은 4차시부터다.</p>
   </section>
 
   <section class="block">

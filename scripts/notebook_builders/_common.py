@@ -7,7 +7,7 @@
   단, 저장하는 정답 노트북의 '반도체 데이터 실습' 단계는 학생용과 같은 빈칸 형태다(2026-11-07). 정답은 실습지의 확인 부분으로 본다.
 - 맨 위 마크다운 셀에 제목이 자동으로 들어간다.
 - 저장 뒤 자체 점검: 정답에 TODO/____ 없음, 학생용에 빈칸 1개 이상, `## N단계.` 제목이 두 노트북에서 같고
-  1부터 차례대로, read_csv에 encoding="utf-8-sig", 파일 이름만 쓰고(경로 없음) 그 이름이 data/weekly/에 실제로 있음.
+  1부터 차례대로, read_csv에 encoding="utf-8", 파일 이름만 쓰고(경로 없음) 그 이름이 data/weekly/에 실제로 있음.
 - 정답본은 nbclient로 실행해(주차 CSV를 모아 둔 임시 작업 폴더에서) 출력을 저장한다. 노트북에는 파일 이름만 적혀 있다. 실행 시각 메타데이터는 남기지 않고,
   셀 id를 고정해 같은 정의면 같은 파일이 나온다.
 
@@ -18,7 +18,7 @@
     nb = NotebookPair("week05", "5차시 실습 — 결측값·이상값 정리")
     nb.add(step(1, "데이터 읽기"))
     nb.add(code('import pandas as pd\\n'
-                'df = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8-sig")\\n'
+                'df = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8")\\n'
                 'df.head()'))
     nb.add(look_up("평균과 중앙값 차이"))
     nb.add(step(2, "반도체 데이터 실습 — 결측값 세기"))
@@ -182,8 +182,8 @@ class NotebookPair:
                 if c.cell_type != "code":
                     continue
                 for args in READ_CSV_RE.findall(c.source):
-                    if "utf-8-sig" not in args:
-                        errors.append(f"{variant}: read_csv에 encoding=\"utf-8-sig\" 없음: read_csv({args})")
+                    if "utf-8" not in args:
+                        errors.append(f"{variant}: read_csv에 encoding=\"utf-8\" 없음: read_csv({args})")
                 for arg in READ_CSV_PATH_RE.findall(c.source):
                     if "/" in arg or "\\" in arg:
                         errors.append(f"{variant}: read_csv에 경로가 들어 있음(파일 이름만 써야 함): {arg}")

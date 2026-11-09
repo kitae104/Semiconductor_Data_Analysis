@@ -66,7 +66,7 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 막대·히스토그램·산점도</h2>
-    <p>개념은 <b>아이스크림 가게 기록</b>(<code><a href="../../data/weekly/week06/week06_easy_icecream_daily.csv" target="_blank" rel="noopener">week06_easy_icecream_daily.csv</a></code>, 21행 5열, 생활 예제용 가상 데이터)으로 익힌다. 한 행 = 하루치 기록이다.</p>
+    <p>개념은 <b>아이스크림 가게 기록</b>(<code><a href="../../data/weekly/week06/week06_easy_icecream_daily.csv" target="_blank" rel="noopener">week06_easy_icecream_daily.csv</a></code>, 21행 5열)으로 익힌다. 한 행 = 하루치 기록이다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -177,7 +177,7 @@ import matplotlib.pyplot as plt
 plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams["axes.unicode_minus"] = False
 
-ice = pd.read_csv("week06_easy_icecream_daily.csv", encoding="utf-8-sig")
+ice = pd.read_csv("week06_easy_icecream_daily.csv", encoding="utf-8")
 ice.head()</code></pre>
     </div>
     <div class="callout success">
@@ -237,7 +237,7 @@ plt.show()</code></pre>
 Name: count, dtype: int64</pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_easy_bar_weather.png" alt="날씨별 날 수 막대그래프. 맑음 12, 흐림 6, 비 3 순으로 막대가 낮아진다">
-    <p class="img-caption">노트북 2단계 실행 결과 — 날씨별 날 수(생활 예제용 가상 데이터)</p>
+    <p class="img-caption">노트북 2단계 실행 결과 — 날씨별 날 수</p>
     <ul class="pt-list">
       <li>출력 첫 줄 <code>날씨</code>는 센 열의 이름, 마지막 줄 <code>Name: count, dtype: int64</code>는 "개수를 센 정수 열"이라는 표시다.</li>
       <li>3주 중 맑은 날이 12일로 가장 많고, 비 온 날은 3일이다. 숫자 세 개를 막대 높이로 바꾸니 차이가 바로 보인다.</li>
@@ -383,7 +383,7 @@ plt.ylabel("날 수")
 plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_easy_hist_sales.png" alt="하루 판매량 히스토그램. 46~147개 범위를 다섯 구간으로 나눈 막대 다섯 개 중 가운데 막대가 가장 높다">
-    <p class="img-caption">노트북 3단계 실행 결과 — 하루 판매량 히스토그램, 구간 5개(생활 예제용 가상 데이터)</p>
+    <p class="img-caption">노트북 3단계 실행 결과 — 하루 판매량 히스토그램, 구간 5개</p>
     <p>판매량 46~147개를 다섯 구간으로 나눴다. 가운데 구간(약 86~107개)이 6일로 가장 높다. 평균 하나만으로는 "얼마나 고르게 팔렸나"를 알 수 없지만, 히스토그램은 값이 몰린 곳과 퍼진 정도를 보여 준다.</p>
     <div class="callout practice">
       <b class="tag">직접 해 보기 (노트북 3단계)</b> 노트북의 <code>plt.hist(ice["판매량_count"], bins=____)</code> 빈칸에 10을 넣어 구간을 열 개로 나눠 다시 그려 보자. 구간을 잘게 나누면 그림이 어떻게 달라질까?
@@ -491,21 +491,21 @@ plt.ylabel("판매량_count")
 plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_easy_scatter_temp_sales.png" alt="최고기온과 판매량 산점도. 점 21개가 왼쪽 아래에서 오른쪽 위로 올라간다">
-    <p class="img-caption">노트북 4단계 실행 결과 — 최고기온과 판매량(생활 예제용 가상 데이터)</p>
+    <p class="img-caption">노트북 4단계 실행 결과 — 최고기온과 판매량</p>
     <p>점들이 왼쪽 아래에서 오른쪽 위로 올라간다 → 더운 날일수록 많이 팔린 경향이다. 점이 한쪽으로 기울지 않고 흩어져 있으면 "함께 움직이는 모습이 안 보인다"고 읽는다.
     함께 움직인다고 해서 한쪽이 다른 쪽을 일으켰다고 바로 말하지는 않는다(8차시에서 자세히 다룬다).</p>
   </section>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>공정 기록 <code><a href="../../data/weekly/week06/week06_process_visualization.csv" target="_blank" rel="noopener">week06_process_visualization.csv</a></code>(180행 10열, 교육용 가상 데이터)를 같은 4줄 틀로 그린다. 한 행 = 공정 작업 1건의 기록이다.
+    <p>공정 기록 <code><a href="../../data/weekly/week06/week06_process_visualization.csv" target="_blank" rel="noopener">week06_process_visualization.csv</a></code>(180행 10열)를 같은 4줄 틀로 그린다. 한 행 = 공정 작업 1건의 기록이다.
     위 코드에서 표 이름이 <code>ice</code> → <code>df</code>로, 열 이름만 바뀐다.</p>
     <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 — 이 단계 설비들의 기록이다. <code>두께_nm</code>은 작업 뒤 잰 웨이퍼 위 막의 두께라는 설정이다(공정명과 상관없이 모든 기록에 같은 열로 남긴 교육용 가상 값. 막은 주로 ② 산화·⑤ 증착으로 생긴다). 공정 지도 그림은 PART 2에서 다시 본다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
         <tbody>
-          <tr><td><code>측정시간</code>, <code>로트번호</code>, <code>설비번호</code>, <code>공정명</code></td><td>언제, 어느 웨이퍼 묶음을, 어느 기계(EQ-01~EQ-04)에서, 어떤 작업(산화·포토·식각·증착·세정)으로. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록)</td></tr>
+          <tr><td><code>측정시간</code>, <code>로트번호</code>, <code>설비번호</code>, <code>공정명</code></td><td>언제, 어느 웨이퍼 묶음을, 어느 기계(EQ-01~EQ-04)에서, 어떤 작업(산화·포토·식각·증착·세정)으로. 설비 4대가 여러 공정 기록을 함께 남겼다</td></tr>
           <tr><td><code>온도_C</code></td><td>설비 안 작업 공간(챔버)의 온도. <code>_C</code> = 섭씨 도(℃)</td></tr>
           <tr><td><code>압력_Pa</code></td><td>챔버 압력(파스칼). 교육용 값이라 절대값은 해석하지 않는다</td></tr>
           <tr><td><code>두께_nm</code></td><td>작업 뒤 잰 웨이퍼 위 막의 두께. <code>nm</code>(나노미터)는 10억분의 1m</td></tr>
@@ -519,7 +519,7 @@ plt.show()</code></pre>
     <h3>확인 1 — 공정마다 기록은 몇 건일까 (막대)</h3>
     <div class="code-block">
       <div class="code-label"><span>Python — 공정 기록 읽고 공정명별 건수 막대 (노트북 5단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.read_csv("week06_process_visualization.csv", encoding="utf-8-sig")
+      <pre><code>df = pd.read_csv("week06_process_visualization.csv", encoding="utf-8")
 print(df.shape)
 
 process_counts = df["공정명"].value_counts()
@@ -533,7 +533,7 @@ plt.show()</code></pre>
       <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(180, 10)</pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_bar_process.png" alt="공정명별 기록 건수 막대그래프. 증착 39, 포토 39, 세정 37, 식각 34, 산화 31">
-    <p class="img-caption">노트북 5단계 실행 결과 — 공정명별 기록 건수(교육용 가상 데이터)</p>
+    <p class="img-caption">노트북 5단계 실행 결과 — 공정명별 기록 건수</p>
     <p><b>확인하기</b> — 다섯 공정의 기록이 31~39건으로 비슷하게 섞여 있다(증착 39 · 포토 39 · 세정 37 · 식각 34 · 산화 31). 가게 기록의 "날씨별 날 수"와 같은 모양이다.</p>
 
     <h3>확인 2 — 막 두께는 어디에 몰렸을까 (히스토그램)</h3>
@@ -545,7 +545,7 @@ plt.ylabel("기록 건수")
 plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_hist_thickness.png" alt="두께 히스토그램. 약 94~108nm를 열 구간으로 나눴고 101~103nm 근처 막대가 가장 높으며 양쪽으로 갈수록 낮아진다">
-    <p class="img-caption">노트북 5단계 실행 결과 — 막 두께 히스토그램, 구간 10개(교육용 가상 데이터)</p>
+    <p class="img-caption">노트북 5단계 실행 결과 — 막 두께 히스토그램, 구간 10개</p>
     <p><b>확인하기</b> — 두께는 약 94~108nm 사이에 있고, 가장 높은 막대는 약 101~103nm 근처다. 가운데가 높고 양쪽으로 갈수록 낮아지는 산 모양이다.
     가운데에서 먼 양 끝의 기록은 "평소보다 얇거나 두꺼운 막"이라 눈여겨볼 대상이다.</p>
     <div class="callout concept">
@@ -566,7 +566,7 @@ plt.ylabel("압력_Pa")
 plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_scatter_temp_pressure.png" alt="온도와 압력 산점도. 점 180개가 한쪽으로 기울지 않고 넓은 구름처럼 흩어져 있다">
-    <p class="img-caption">노트북 5단계 실행 결과 — 온도와 압력(교육용 가상 데이터)</p>
+    <p class="img-caption">노트북 5단계 실행 결과 — 온도와 압력</p>
     <p><b>확인하기</b> — 점 180개가 한쪽으로 기울지 않은 구름처럼 흩어져 있다. 이 기록에서는 온도가 높은 작업이라고 압력도 높거나 낮은 모습이 안 보인다.
     가게 기록의 "오른쪽 위로 올라가는 점들"과 비교해 보자. 온도와 <b>두께</b>는 어떤 모양일지 PART 3 실습지 문제 3에서 직접 그린다.</p>
   </section>
@@ -606,7 +606,7 @@ plt.show()</code></pre>
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
          alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
-    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
+    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
     <ul class="pt-list">
       <li>워밍업 <code><a href="../../data/weekly/week06/week06_orange_wafer_map.csv" target="_blank" rel="noopener">week06_orange_wafer_map.csv</a></code> — <b>공정 지도 위치: ⑦ EDS(전기 검사)</b>. 회로를 다 만든 웨이퍼를 자르기 전에 다이(칩이 될 작은 네모)를 하나씩 전기로 검사한 결과다.</li>
       <li>반도체 <code><a href="../../data/weekly/week06/week06_process_visualization.csv" target="_blank" rel="noopener">week06_process_visualization.csv</a></code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비 기록(PART 1에서 그린 그 기록). <code>두께_nm</code>은 작업 뒤 잰 웨이퍼 위 막의 두께라는 설정이다.</li>
@@ -615,7 +615,7 @@ plt.show()</code></pre>
     <h3>워밍업 — 웨이퍼 맵 한 장</h3>
     <p>1차시 그림에서 웨이퍼 한 장 위에 다이 317개가 바둑판처럼 놓인 모습을 봤다(교육용 가상 격자다. 실제 다이 수는 칩 크기에 따라 다르다). ⑦ EDS 단계에서는 다이 하나하나에 전기를 흘려 합격·불합격을 가린다.
     그 결과를 다이 위치대로 점을 찍어 색칠한 지도가 <b>웨이퍼 맵</b>이다.</p>
-    <p><code><a href="../../data/weekly/week06/week06_orange_wafer_map.csv" target="_blank" rel="noopener">week06_orange_wafer_map.csv</a></code>(317행 5열, 교육용 가상 데이터)는 웨이퍼 W-0601 한 장의 다이 317개 검사 결과다. 한 행 = 다이 1개다.</p>
+    <p><code><a href="../../data/weekly/week06/week06_orange_wafer_map.csv" target="_blank" rel="noopener">week06_orange_wafer_map.csv</a></code>(317행 5열)는 웨이퍼 W-0601 한 장의 다이 317개 검사 결과다. 한 행 = 다이 1개다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -658,7 +658,7 @@ plt.show()</code></pre>
            data-shot="week06_1_wafermap_done.ows의 Scatter Plot (산점도) 창 전체 — 왼쪽 설정 칸의 Axis x 다이_X, Axis y 다이_Y, Color 합격여부와 오른쪽 그림(둥근 웨이퍼, 가장자리 빨간 점)이 함께 보이게">
       <img class="chart-img" src="../../assets/images/generated/week06_wafer_map_reading.png"
            alt="웨이퍼 맵 읽는 법. 둥근 웨이퍼 위 네모 칸 317개 중 빨간 불합격 칸이 바깥 점선 고리 밖에 몰려 있다">
-      <p class="img-caption">웨이퍼 맵 읽는 법 — 네모 하나 = 다이 하나, 빨강 = 불합격, 하늘색 = 합격(Orange 화면과 같은 색). 점선 고리는 가장자리(112mm 바깥)를 나눈 선이다(교육용 가상 데이터).</p>
+      <p class="img-caption">웨이퍼 맵 읽는 법 — 네모 하나 = 다이 하나, 빨강 = 불합격, 하늘색 = 합격(Orange 화면과 같은 색). 점선 고리는 가장자리(112mm 바깥)를 나눈 선이다.</p>
     </div>
     <div class="step"><div class="num">2</div><div class="content"><b>가운데에서 얼마나 먼가 — 상자 그림</b> — Visualize 묶음의 <code>Box Plot</code>을 File에 잇고 더블클릭한다.
     처음에는 Variable이 <code>다이_X</code>로 잡혀 있다. Variable 목록에서 <code>중심거리_mm</code>를 클릭하고, Subgroups가 <code>합격여부</code>인지 확인한다.</div></div>
@@ -762,10 +762,10 @@ plt.show()</code></pre>
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code><a href="../../data/weekly/week06/week06_easy_icecream_daily.csv" target="_blank" rel="noopener">week06_easy_icecream_daily.csv</a></code> — 21행 5열, 생활 예제용 가상 데이터(PART 1 개념). 날씨별 날 수 맑음 12 · 흐림 6 · 비 3.</li>
-      <li><code><a href="../../data/weekly/week06/week06_orange_wafer_map.csv" target="_blank" rel="noopener">week06_orange_wafer_map.csv</a></code> — 317행 5열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code><a href="../../data/weekly/week06/week06_easy_icecream_daily.csv" target="_blank" rel="noopener">week06_easy_icecream_daily.csv</a></code> — 21행 5열(PART 1 개념). 날씨별 날 수 맑음 12 · 흐림 6 · 비 3.</li>
+      <li><code><a href="../../data/weekly/week06/week06_orange_wafer_map.csv" target="_blank" rel="noopener">week06_orange_wafer_map.csv</a></code> — 317행 5열(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         다이 317개 중 불합격 64개. <b>공정 지도 위치: ⑦ EDS(전기 검사) 결과.</b></li>
-      <li><code><a href="../../data/weekly/week06/week06_process_visualization.csv" target="_blank" rel="noopener">week06_process_visualization.csv</a></code> — 180행 10열, 교육용 가상 데이터(PART 1·2·3). 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+      <li><code><a href="../../data/weekly/week06/week06_process_visualization.csv" target="_blank" rel="noopener">week06_process_visualization.csv</a></code> — 180행 10열(PART 1·2·3). 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.
         <b>공정 지도 위치: ②~⑤ + 세정 설비 기록</b>(<code>두께_nm</code>은 작업 뒤 잰 웨이퍼 위 막의 두께라는 설정).</li>
       <li>열 설명: <a href="../../data/data_dictionary/week06_dictionary.html">데이터 설명서</a></li>
     </ul>
@@ -857,7 +857,7 @@ plt.legend()
 plt.show()</code></pre>
     </div>
     <img class="chart-img" src="../../assets/images/generated/week06_nb_ai_scatter_fail.png" alt="온도-두께 산점도 위에 불합격 기록 21건을 빨간 점으로 겹쳐 그린 그림">
-    <p class="img-caption">노트북 7단계 실행 결과 — 전체 180건 위에 불합격 21건을 빨간 점으로 겹침(교육용 가상 데이터)</p>
+    <p class="img-caption">노트북 7단계 실행 결과 — 전체 180건 위에 불합격 21건을 빨간 점으로 겹침</p>
     <ul class="pt-list">
       <li><code>color="red"</code>는 점 색, <code>label</code>과 <code>plt.legend()</code>는 그림 구석의 이름표(범례)다. 처음 보는 옵션이라 확인만 한다.</li>
       <li>Orange Scatter Plot은 Color 칸 하나로 같은 일을 한다. 빨간 점이 한곳에 몰렸는지, 여기저기 흩어졌는지 직접 보고 말해 보자.</li>

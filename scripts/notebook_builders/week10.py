@@ -30,7 +30,7 @@ nb.add(
          "from sklearn.tree import DecisionTreeClassifier\n"
          "from sklearn.metrics import accuracy_score\n"
          "\n"
-         f'df = pd.read_csv("{TRAIN}", encoding="utf-8-sig").dropna()\n'
+         f'df = pd.read_csv("{TRAIN}", encoding="utf-8").dropna()\n'
          'features = ["온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]\n'
          "X = df[features]\n"
          'y = df["합격여부"]\n'
@@ -46,7 +46,7 @@ nb.add(
          "from sklearn.tree import DecisionTreeClassifier\n"
          "from sklearn.metrics import accuracy_score\n"
          "\n"
-         f'df = pd.read_csv("{TRAIN}", encoding="utf-8-sig").____()\n'
+         f'df = pd.read_csv("{TRAIN}", encoding="utf-8").____()\n'
          'features = ["온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]\n'
          "X = df[features]\n"
          'y = df["합격여부"]\n'
@@ -71,10 +71,10 @@ nb.add(
                "- `model.predict(…)`에는 학습할 때와 **같은 열 6개**(`features`)를 넣습니다.\n\n"
                "**주의**: 1단계 셀을 실행하지 않았으면 `NameError: name 'model' is not defined`가 납니다. "
                "`new_lots` 전체를 넣거나 열이 하나라도 다르면 `ValueError: The feature names should match those that were passed during fit.`가 납니다."),
-    code(f'new_lots = pd.read_csv("{NEW}", encoding="utf-8-sig")\n'
+    code(f'new_lots = pd.read_csv("{NEW}", encoding="utf-8")\n'
          "print(new_lots.shape)",
          "# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요. (결과: (9, 8))\n"
-         f'new_lots = pd.____("{NEW}", encoding="utf-8-sig")\n'
+         f'new_lots = pd.____("{NEW}", encoding="utf-8")\n'
          "print(new_lots.____)"),
     code('new_lots["예측"] = model.predict(new_lots[features])\n'
          'print(new_lots[["공정명", "설비번호", "온도_C", "예측"]])',

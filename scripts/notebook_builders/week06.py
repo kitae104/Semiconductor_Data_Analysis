@@ -24,10 +24,10 @@ nb.add(
          "import pandas as pd\n"
          "import matplotlib.pyplot as ____\n"
          "\n" + MPL_KOREAN),
-    code('ice = pd.read_csv("week06_easy_icecream_daily.csv", encoding="utf-8-sig")\n'
+    code('ice = pd.read_csv("week06_easy_icecream_daily.csv", encoding="utf-8")\n'
          'ice.head()',
          '# TODO: CSV를 읽는 함수 이름과, 앞 5행을 보여 주는 함수 이름을 채우세요. (결과: 표의 앞 5행)\n'
-         'ice = pd.____("week06_easy_icecream_daily.csv", encoding="utf-8-sig")\n'
+         'ice = pd.____("week06_easy_icecream_daily.csv", encoding="utf-8")\n'
          'ice.____()'),
 
     step(2, "막대그래프 — 날씨별 날 수"),
@@ -102,10 +102,10 @@ nb.add(
 nb.add(
     step(5, "반도체 데이터로 확인하기 — 공정 기록 180건"),
     md("공정 기록 180건(교육용 가상 데이터)입니다. 2~4단계와 같은 4줄 틀에서 표 이름과 열 이름만 바뀝니다."),
-    code('df = pd.read_csv("week06_process_visualization.csv", encoding="utf-8-sig")\n'
+    code('df = pd.read_csv("week06_process_visualization.csv", encoding="utf-8")\n'
          'print(df.shape)',
          '# TODO: 읽을 파일 이름(따옴표 포함)과, 크기를 보여 주는 이름을 채우세요. (결과: (180, 10))\n'
-         'df = pd.read_csv(____, encoding="utf-8-sig")\n'
+         'df = pd.read_csv(____, encoding="utf-8")\n'
          'print(df.____)'),
     code('process_counts = df["공정명"].value_counts()\n'
          'plt.bar(process_counts.index, process_counts)\n'

@@ -78,7 +78,7 @@
 
   <section class="block" id="part1">
     <h2><span class="step-badge">PART 1</span> 파이썬 — 함께 움직이는 값과 범위 밖 값 찾기</h2>
-    <p>개념은 <b>아이스크림 가게 기록</b>(<code><a href="../../data/weekly/week08/week08_easy_weather_sales.csv" target="_blank" rel="noopener">week08_easy_weather_sales.csv</a></code>, 30행 7열, 생활 예제용 가상 데이터)으로 익힌다. 한 행 = 하루다.</p>
+    <p>개념은 <b>아이스크림 가게 기록</b>(<code><a href="../../data/weekly/week08/week08_easy_weather_sales.csv" target="_blank" rel="noopener">week08_easy_weather_sales.csv</a></code>, 30행 7열)으로 익힌다. 한 행 = 하루다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -179,7 +179,7 @@
       <div class="code-label"><span>Python — 가게 기록 읽고 첫 5행 보기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
       <pre><code>import pandas as pd
 
-shop = pd.read_csv("week08_easy_weather_sales.csv", encoding="utf-8-sig")
+shop = pd.read_csv("week08_easy_weather_sales.csv", encoding="utf-8")
 print(shop.shape)
 
 shop.head()</code></pre>
@@ -537,7 +537,7 @@ print(out_rate)</code></pre>
 
   <section class="block">
     <h2>반도체 데이터로 확인하기</h2>
-    <p>공정 센서 기록 <code><a href="../../data/weekly/week08/week08_anomaly_root_cause.csv" target="_blank" rel="noopener">week08_anomaly_root_cause.csv</a></code>(450행 12열, 교육용 가상 데이터)로 같은 방법을 써 본다. 한 행 = 설비 한 대가 작업 한 번을 하며 남긴 기록이다.
+    <p>공정 센서 기록 <code><a href="../../data/weekly/week08/week08_anomaly_root_cause.csv" target="_blank" rel="noopener">week08_anomaly_root_cause.csv</a></code>(450행 12열)로 같은 방법을 써 본다. 한 행 = 설비 한 대가 작업 한 번을 하며 남긴 기록이다.
     위 코드에서 표 이름이 <code>shop</code> → <code>df</code>로, 열 이름만 바뀐다.</p>
     <p><b>공정 지도 위치</b>: ② 산화 ~ ⑤ 증착/이온주입 + 세정 설비의 센서 기록과, 합격 여부(공정 중간 검사 + ⑦ EDS 결과를 모은 교육용 설정)다(1차시 공정 지도 그림은 PART 2에서 다시 본다).</p>
     <div class="tablewrap">
@@ -545,7 +545,7 @@ print(out_rate)</code></pre>
         <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
         <tbody>
           <tr><td><code>측정시간</code>, <code>로트번호</code></td><td>언제, 어느 웨이퍼 묶음(로트)의 기록인가</td></tr>
-          <tr><td><code>설비번호</code>, <code>공정명</code></td><td>어느 기계(EQ-01~EQ-04)에서 어떤 작업(산화·포토·식각·증착·세정)을 했나. 설비 4대가 여러 공정 기록을 함께 남겼다(교육용 가상 기록)</td></tr>
+          <tr><td><code>설비번호</code>, <code>공정명</code></td><td>어느 기계(EQ-01~EQ-04)에서 어떤 작업(산화·포토·식각·증착·세정)을 했나. 설비 4대가 여러 공정 기록을 함께 남겼다</td></tr>
           <tr><td><code>온도_C</code>, <code>압력_Pa</code></td><td>설비 안 작업 공간(<b>챔버</b>, 오븐 안쪽 같은 밀폐된 방)의 온도(섭씨 도)와 압력(파스칼). <code>진공도_mTorr</code>와는 다른 측정 설정으로 만든 교육용 값이라 두 열의 크기가 서로 맞지 않는다. 압력 절대값은 해석하지 않는다</td></tr>
           <tr><td><code>진공도_mTorr</code></td><td>챔버 안에 남은 기체의 압력. <code>mTorr</code>(밀리토르)는 아주 낮은 압력을 재는 단위이고, 숫자가 작을수록 공기를 더 많이 뺀 상태다</td></tr>
           <tr><td><code>두께_nm</code></td><td>작업 뒤 잰 웨이퍼 위 막의 두께(<code>nm</code> = 10억분의 1m). 공정명과 상관없이 모든 기록에 같은 열로 남긴 교육용 가상 값이다</td></tr>
@@ -561,7 +561,7 @@ print(out_rate)</code></pre>
     <h3>확인 1 — 압력과 두께는 함께 움직일까</h3>
     <div class="code-block">
       <div class="code-label"><span>Python — 공정 기록 읽고 압력-두께 상관계수 구하기 (노트북 6단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>df = pd.read_csv("week08_anomaly_root_cause.csv", encoding="utf-8-sig")
+      <pre><code>df = pd.read_csv("week08_anomaly_root_cause.csv", encoding="utf-8")
 print(df.shape)
 
 r_press = df["압력_Pa"].corr(df["두께_nm"])
@@ -618,7 +618,7 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
     <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png"
          alt="반도체 8대 공정 흐름도. 네 칸씩 두 줄로 ① 웨이퍼 제조부터 ⑧ 패키징까지 화살표로 이어지고, ②~⑥ 칸은 색이 있고 '여러 번 되풀이'라고 적혀 있다. ①~⑥은 전공정, ⑦~⑧은 후공정이다">
-    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화, 가상 데이터로 그린 그림). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
+    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화). ②~⑥은 층을 쌓을 때마다 여러 번 되풀이한다.</p>
     <ul class="pt-list">
       <li>워밍업 <code><a href="../../data/weekly/week08/week08_orange_chamber_sensor.csv" target="_blank" rel="noopener">week08_orange_chamber_sensor.csv</a></code> — <b>공정 지도 위치: ④ 식각</b> 챔버 안 센서 기록. ④ 식각은 필요 없는 부분을 깎아 내는 단계다(조각칼로 파내기).</li>
       <li>반도체 <code><a href="../../data/weekly/week08/week08_anomaly_root_cause.csv" target="_blank" rel="noopener">week08_anomaly_root_cause.csv</a></code> — <b>공정 지도 위치: ②~⑤ + 세정</b> 설비 센서 기록과 합격 여부(공정 중간 검사 + ⑦ EDS 결과를 모은 교육용 설정). PART 1에서 본 그 기록이다.</li>
@@ -626,7 +626,7 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
 
     <h3>워밍업 — 식각 챔버 센서 기록</h3>
     <p>식각 설비는 웨이퍼를 챔버에 넣고 가스를 흘려 넣은 뒤, 고주파 전기(<b>RF파워</b>)로 가스를 반응하기 쉬운 상태(플라즈마)로 만들어 표면을 깎는다(건식 식각의 한 방식).
-    <code><a href="../../data/weekly/week08/week08_orange_chamber_sensor.csv" target="_blank" rel="noopener">week08_orange_chamber_sensor.csv</a></code>(200행 7열, 교육용 가상 데이터)는 식각 챔버 한 대가 2시간마다 남긴 센서 기록이다.</p>
+    <code><a href="../../data/weekly/week08/week08_orange_chamber_sensor.csv" target="_blank" rel="noopener">week08_orange_chamber_sensor.csv</a></code>(200행 7열)는 식각 챔버 한 대가 2시간마다 남긴 센서 기록이다.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>열</th><th>뜻</th></tr></thead>
@@ -664,7 +664,7 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
       4위 가스유량–식각률은 +0.344다. 챔버압력·챔버온도가 들어간 쌍은 모두 0.1보다 작아 목록 아래쪽에 있다.
       <img class="chart-img" src="../../assets/images/generated/week08_correlation_signs.png"
            alt="식각률과 다른 세 값의 산점도 세 개. RF파워와는 오른쪽 위로 올라가는 띠(r = +0.78), 누적 사용 시간과는 오른쪽 아래로 내려가는 띠(r = -0.52), 챔버 온도와는 구름 모양(r = -0.03)">
-      <p class="img-caption">식각률과 RF파워(r = +0.78, 함께 오름), 누적 사용 시간(r = -0.52, 반대로 움직임), 챔버 온도(r = -0.03, 곧은 띠 관계가 거의 없음). 교육용 가상 관계이며 실제 장비의 물리 법칙이 아니다(가상 데이터로 그린 그림).</p>
+      <p class="img-caption">식각률과 RF파워(r = +0.78, 함께 오름), 누적 사용 시간(r = -0.52, 반대로 움직임), 챔버 온도(r = -0.03, 곧은 띠 관계가 거의 없음). 교육용 가상 관계이며 실제 장비의 물리 법칙이 아니다.</p>
       <p>3위 <b>+0.500 누적사용시간_hr–측정시간</b>은 왜 나왔을까? 누적사용시간은 시간이 흐르면 쌓이고, 세정하면 0으로 돌아간다. 이 기록(약 17일)에는 세정이 한 번뿐이라 두 구간 모두에서 시각과 함께 올랐고, 리셋 때문에 1이 아니라 +0.5 정도로 잡혔다.
       세정이 여러 번 있는 긴 기록이면 이 값은 0에 가까워진다. 측정시간이 목록에 들어가서 생긴 쌍이라, 식각률 이야기와는 따로 읽는다.</p>
     </div>
@@ -785,10 +785,10 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
   <section class="block">
     <h2>데이터</h2>
     <ul class="pt-list">
-      <li><code><a href="../../data/weekly/week08/week08_easy_weather_sales.csv" target="_blank" rel="noopener">week08_easy_weather_sales.csv</a></code> — 30행 7열, 생활 예제용 가상 데이터(PART 1). 아이스크림 가게 30일 기록.</li>
-      <li><code><a href="../../data/weekly/week08/week08_orange_chamber_sensor.csv" target="_blank" rel="noopener">week08_orange_chamber_sensor.csv</a></code> — 200행 7열, 교육용 가상 데이터(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
+      <li><code><a href="../../data/weekly/week08/week08_easy_weather_sales.csv" target="_blank" rel="noopener">week08_easy_weather_sales.csv</a></code> — 30행 7열(PART 1). 아이스크림 가게 30일 기록.</li>
+      <li><code><a href="../../data/weekly/week08/week08_orange_chamber_sensor.csv" target="_blank" rel="noopener">week08_orange_chamber_sensor.csv</a></code> — 200행 7열(PART 2 워밍업, Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
         열 사이 관계는 교육용 가상 관계다. <b>공정 지도 위치: ④ 식각 챔버 안 센서 기록.</b></li>
-      <li><code><a href="../../data/weekly/week08/week08_anomaly_root_cause.csv" target="_blank" rel="noopener">week08_anomaly_root_cause.csv</a></code> — 450행 12열, 교육용 가상 데이터(PART 1·2·3). 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다(교육용 가상 기록).
+      <li><code><a href="../../data/weekly/week08/week08_anomaly_root_cause.csv" target="_blank" rel="noopener">week08_anomaly_root_cause.csv</a></code> — 450행 12열(PART 1·2·3). 설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.
         <b>공정 지도 위치: ②~⑤ + 세정 설비의 센서 기록과 합격 여부(공정 중간 검사 + ⑦ EDS 결과를 모은 교육용 설정).</b></li>
       <li>열 설명: <a href="../../data/data_dictionary/week08_dictionary.html">데이터 설명서</a></li>
     </ul>
@@ -925,7 +925,7 @@ print(df[cols].corr().round(2))</code></pre>
         → "진공도는 불합격의 원인 후보다."
         <img class="chart-img" src="../../assets/images/generated/week08_vacuum_u_shape.png"
              alt="진공도 구간별 불합격률 막대 세 개. 4.5 미만 23.1%, 연습용 기준 안 8.1%, 5.5 초과 28.2%이고 기준선 11.1% 점선이 있다">
-        <p class="img-caption">진공도를 세 구간으로 나눠 본 불합격률(4.5 미만 39건 중 9건 23.1% · 기준 안 372건 중 30건 8.1% · 5.5 초과 39건 중 11건 28.2%). 양쪽 끝이 모두 높고 가운데가 낮아 한 방향 띠가 아니다 — 진공도와 합격여부의 상관계수는 약 -0.02다. 교육용 가상 데이터로 그린 그림, 연습용 기준.</p></div></li>
+        <p class="img-caption">진공도를 세 구간으로 나눠 본 불합격률(4.5 미만 39건 중 9건 23.1% · 기준 안 372건 중 30건 8.1% · 5.5 초과 39건 중 11건 28.2%). 양쪽 끝이 모두 높고 가운데가 낮아 한 방향 띠가 아니다 — 진공도와 합격여부의 상관계수는 약 -0.02다. 연습용 기준.</p></div></li>
       <li><b>Orange로 확인</b>: 실습지 문제 4에서 Correlations 1위를 문제 2와 맞춰 본다.
         <button class="reveal-btn">실습지 결과 보기</button>
         <div class="answer-box">1위는 +0.710 두께_nm–온도_C로 파이썬 0.71과 같다. 진공도가 들어간 쌍은 가장 큰 것도 -0.067로, 상관 순위로는 진공도가 드러나지 않는다.</div></li>

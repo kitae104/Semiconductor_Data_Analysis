@@ -23,12 +23,12 @@ nb.add(
        "**기준선** = 전체에서 불만인 날의 비율입니다. 나중에 \"특정 조건에서 더 높은가?\"를 이 숫자와 비교합니다."),
     code('import pandas as pd\n'
          '\n'
-         'shop = pd.read_csv("week08_easy_weather_sales.csv", encoding="utf-8-sig")\n'
+         'shop = pd.read_csv("week08_easy_weather_sales.csv", encoding="utf-8")\n'
          'print(shop.shape)',
          '# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요.\n'
          'import pandas as pd\n'
          '\n'
-         'shop = pd.____("week08_easy_weather_sales.csv", encoding="utf-8-sig")\n'
+         'shop = pd.____("week08_easy_weather_sales.csv", encoding="utf-8")\n'
          'print(shop.____)'),
     code("shop.head()",
          "# TODO: 앞 5행을 보여 주는 함수 이름을 채우세요.\n"
@@ -124,10 +124,10 @@ nb.add(
     md("공정 센서 기록 450건(교육용 가상 데이터)입니다. 2~4단계와 같은 코드에서 표 이름과 열 이름만 바뀝니다. "
        "온도 295~305℃는 이 과정의 연습용 기준입니다(실제 공정 규격 아님). "
        "`합격여부`: 1 = 합격, -1 = 불합격. 설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록입니다."),
-    code('df = pd.read_csv("week08_anomaly_root_cause.csv", encoding="utf-8-sig")\n'
+    code('df = pd.read_csv("week08_anomaly_root_cause.csv", encoding="utf-8")\n'
          'print(df.shape)',
          '# TODO: 읽을 파일 이름(따옴표 포함)과, 크기를 보여 주는 이름을 채우세요.\n'
-         'df = pd.read_csv(____, encoding="utf-8-sig")\n'
+         'df = pd.read_csv(____, encoding="utf-8")\n'
          'print(df.____)'),
     code('r_press = df["압력_Pa"].corr(df["두께_nm"])\n'
          'print(round(r_press, 2))',

@@ -25,7 +25,7 @@ RESPONSE_EXAMPLE = ("# 1) 데이터 읽기와 빈칸 정리\n"
                     "from sklearn.tree import DecisionTreeClassifier\n"
                     "from sklearn.metrics import accuracy_score\n"
                     "\n"
-                    f'data = pd.read_csv("{DATA}", encoding="utf-8-sig").dropna()\n'
+                    f'data = pd.read_csv("{DATA}", encoding="utf-8").dropna()\n'
                     "# 2) 입력(X)과 정답(y) 나누기\n"
                     'X = data[["온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]]\n'
                     'y = data["합격여부"]\n'
@@ -51,12 +51,12 @@ nb.add(
                "- 빈칸 행 지우기는 5차시에 배운 함수입니다. 결과가 `(735, 9)`이면 맞습니다."),
     code('import pandas as pd\n'
          '\n'
-         f'df = pd.read_csv("{DATA}", encoding="utf-8-sig")\n'
+         f'df = pd.read_csv("{DATA}", encoding="utf-8")\n'
          'print(df.shape)',
          '# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요. (결과: (750, 9))\n'
          'import pandas as pd\n'
          '\n'
-         f'df = pd.____("{DATA}", encoding="utf-8-sig")\n'
+         f'df = pd.____("{DATA}", encoding="utf-8")\n'
          'print(df.____)'),
     code("print(df.isna().sum())",
          "# TODO: 빈칸인지 확인하는 함수 이름을 채우세요. (결과: 열마다 빈칸 개수)\n"
@@ -123,7 +123,7 @@ nb.add(
 nb.add(
     step(3, "ChatGPT 체험 — 받은 코드 실행하고 숫자 검증하기"),
     md("ChatGPT에 아래 프롬프트를 그대로 붙여 넣으세요(강의 자료와 같은 글자입니다).\n\n"
-       f"> {DATA} 파일을 pandas로 읽어(encoding=\"utf-8-sig\") 빈칸이 있는 행을 지우고, "
+       f"> {DATA} 파일을 pandas로 읽어(encoding=\"utf-8\") 빈칸이 있는 행을 지우고, "
        "온도_C·압력_Pa·가스유량_slm·두께_nm·진공도_mTorr·습도_pct 여섯 열로 합격여부(1 = 합격, -1 = 불합격)를 예측하는 결정 트리를 만들어 줘. "
        "train_test_split(test_size=0.2, random_state=42, stratify=y)와 DecisionTreeClassifier(max_depth=4, random_state=42)를 쓰고 "
        "시험용 정확도를 출력해 줘. 10줄 이내, 한국어 주석으로. 교육용 가상 데이터야."),

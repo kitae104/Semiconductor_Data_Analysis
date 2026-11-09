@@ -22,12 +22,12 @@ nb.add(
     md("세 반 학생 6명의 쪽지시험 기록(교육용 가상 데이터)입니다. `정답여부`는 1 = 정답, -1 = 오답입니다."),
     code('import pandas as pd\n'
          '\n'
-         'quiz = pd.read_csv("week07_easy_quiz_results.csv", encoding="utf-8-sig")\n'
+         'quiz = pd.read_csv("week07_easy_quiz_results.csv", encoding="utf-8")\n'
          'print(quiz.shape)',
          '# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요.\n'
          'import pandas as pd\n'
          '\n'
-         'quiz = pd.____("week07_easy_quiz_results.csv", encoding="utf-8-sig")\n'
+         'quiz = pd.____("week07_easy_quiz_results.csv", encoding="utf-8")\n'
          'print(quiz.____)'),
     code("quiz.head()",
          "# TODO: 앞 5행을 보여 주는 함수 이름을 채우세요.\n"
@@ -87,10 +87,10 @@ nb.add(
                "오늘은 비교 결과를 \"원인\"이 아니라 \"원인 후보\"로 말합니다.\n\n"
                "`합격여부`: 1 = 합격, -1 = 불합격. 설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록입니다.\n\n"
                "- 묶을 열 이름 빈칸은 2단계 `\"반\"`이 있던 자리입니다. 열 이름은 따옴표로 감쌉니다 — 따옴표가 없으면 `NameError`가 납니다."),
-    code('df = pd.read_csv("week07_equipment_yield.csv", encoding="utf-8-sig")\n'
+    code('df = pd.read_csv("week07_equipment_yield.csv", encoding="utf-8")\n'
          'print(df.shape)',
          '# TODO: 읽을 파일 이름(따옴표 포함)과, 크기를 보여 주는 이름을 채우세요.\n'
-         'df = pd.read_csv(____, encoding="utf-8-sig")\n'
+         'df = pd.read_csv(____, encoding="utf-8")\n'
          'print(df.____)'),
     code('df["불합격"] = df["합격여부"] == -1\n'
          'shift_fail = df.groupby("작업조")["불합격"].mean() * 100\n'

@@ -17,12 +17,12 @@ nb.add(
     md("반 학생 15명의 기록(교육용 가상 데이터)입니다. 빈칸 3칸, 똑같이 두 번 적은 행 1개, 잘못 적은 키 1개가 섞여 있습니다."),
     code('import pandas as pd\n'
          '\n'
-         'students = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8-sig")\n'
+         'students = pd.read_csv("week05_easy_class_records.csv", encoding="utf-8")\n'
          'print(students.shape)',
          '# TODO: CSV를 읽는 함수 이름과, 표의 (행 수, 열 수)를 보여 주는 이름을 채우세요. (결과: (15, 5))\n'
          'import pandas as pd\n'
          '\n'
-         'students = pd.____("week05_easy_class_records.csv", encoding="utf-8-sig")\n'
+         'students = pd.____("week05_easy_class_records.csv", encoding="utf-8")\n'
          'print(students.____)'),
     code("print(students.describe())",
          "# TODO: 숫자 요약을 보여 주는 함수 이름을 채우세요. (결과: count, mean, std, min … max 표)\n"
@@ -85,10 +85,10 @@ nb.add(
 nb.add(
     step(6, "반도체 데이터로 확인하기 — 지저분한 공장 기록"),
     md("공정 기록 113행(교육용 가상 데이터)에 빈칸·중복·튀는 값을 일부러 섞었습니다. 1~3단계와 같은 코드에서 표 이름만 바뀝니다."),
-    code('df = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig")\n'
+    code('df = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8")\n'
          'print(df.shape)',
          '# TODO: 읽을 파일 이름(따옴표 포함)과, 크기를 보여 주는 이름을 채우세요. (결과: (113, 9))\n'
-         'df = pd.read_csv(____, encoding="utf-8-sig")\n'
+         'df = pd.read_csv(____, encoding="utf-8")\n'
          'print(df.____)'),
     code("print(df.describe())",
          "# TODO: 숫자 요약을 보여 주는 함수 이름을 채우세요.\n"
@@ -162,12 +162,12 @@ nb.add(
 nb.add(
     step(8, "AI로 한 걸음 더"),
     md("ChatGPT에 이렇게 물어봤습니다.\n\n"
-       "> week05_dirty_process_data.csv를 pandas로 읽어서(encoding=\"utf-8-sig\"), 열마다 빈칸 개수와 "
+       "> week05_dirty_process_data.csv를 pandas로 읽어서(encoding=\"utf-8\"), 열마다 빈칸 개수와 "
        "빈칸 비율(%)을 한 줄씩 출력하는 짧은 코드를 만들어 줘.\n\n"
        "아래는 받은 코드의 예시입니다. `for`는 3차시에 배운 반복문입니다. 실행해서 6단계 `isna().sum()` 결과와 같은지 확인하세요."),
     code('import pandas as pd\n'
          '\n'
-         'data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig")\n'
+         'data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8")\n'
          '\n'
          'for col in data.columns:\n'
          '    count = data[col].isna().sum()\n'
@@ -176,7 +176,7 @@ nb.add(
          '# TODO: 빈칸인지 확인하는 함수 이름과, 비율의 분모가 될 표 이름을 채우세요. (결과: 열마다 한 줄)\n'
          'import pandas as pd\n'
          '\n'
-         'data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8-sig")\n'
+         'data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8")\n'
          '\n'
          'for col in data.columns:\n'
          '    count = data[col].____().sum()\n'

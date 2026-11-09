@@ -19,8 +19,8 @@
   <div class="hero">
     <span class="badge purple">4차시 실습지</span>
     <h1>Pandas 가장 기본적인 부분 — 실습지</h1>
-    <p class="lede">모든 문제는 공정 기록 <code><a href="../../data/weekly/week04/week04_process_filtering.csv" target="_blank" rel="noopener">week04_process_filtering.csv</a></code>(100행 8열, 교육용 가상 데이터)로 푼다.
-    공정 지도 위치: ②~⑤ + 세정 공정의 기록(설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록). 문제 1~3은 학생용 노트북 8단계의 <code>____</code>와 같다 — 노트북 7단계 셀을 먼저 실행해 <code>df</code>를 만들어 둔다(건너뛰면 <code>NameError: name 'df' is not defined</code>가 난다).
+    <p class="lede">모든 문제는 공정 기록 <code><a href="../../data/weekly/week04/week04_process_filtering.csv" target="_blank" rel="noopener">week04_process_filtering.csv</a></code>(100행 8열)로 푼다.
+    공정 지도 위치: ②~⑤ + 세정 공정의 기록(설비 4대가 여러 공정 기록을 함께 남긴 기록). 문제 1~3은 학생용 노트북 8단계의 <code>____</code>와 같다 — 노트북 7단계 셀을 먼저 실행해 <code>df</code>를 만들어 둔다(건너뛰면 <code>NameError: name 'df' is not defined</code>가 난다).
     오늘의 미션: EQ-02에서 불합격이 몇 건인지 찾아 보고한다.</p>
   </div>
 
@@ -159,7 +159,7 @@ EQ-02 불합격률은 20.0%입니다.</pre>
     <p><b>판단해 보기</b> — 이 숫자만으로 "EQ-02 설비가 고장 났다"고 말할 수 있을까? 한 줄로 이유를 적자.</p>
     <button class="reveal-btn">예시 답안 보기</button>
     <div class="answer-box">"EQ-02는 기록 25건 중 5건이 불합격이라 불합격률 20.0%로, 전체 기록의 13.0%보다 높다."
-      판단: 말할 수 없다. 25건 중 5건이라 한 건만 달라도 비율이 4%p씩 바뀐다(4건이면 16.0%). EQ-02에는 여러 공정의 기록이 섞여 있고(교육용 가상 기록), 다른 설비도 같은 방법으로 비율을 구해 비교해 봐야 한다.
+      판단: 말할 수 없다. 25건 중 5건이라 한 건만 달라도 비율이 4%p씩 바뀐다(4건이면 16.0%). EQ-02에는 여러 공정의 기록이 섞여 있고, 다른 설비도 같은 방법으로 비율을 구해 비교해 봐야 한다.
       그래서 보고는 "EQ-02 기록을 더 살펴볼 후보로 둔다"까지만 한다.</div>
   </section>
 

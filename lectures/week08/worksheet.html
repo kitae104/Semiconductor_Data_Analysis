@@ -19,9 +19,9 @@
   <div class="hero">
     <span class="badge purple">8차시 실습지</span>
     <h1>공정 이상과 원인 후보 찾기 — 실습지</h1>
-    <p class="lede">모든 문제는 공정 센서 기록 <code><a href="../../data/weekly/week08/week08_anomaly_root_cause.csv" target="_blank" rel="noopener">week08_anomaly_root_cause.csv</a></code>(450행 12열, 교육용 가상 데이터)로 푼다.
+    <p class="lede">모든 문제는 공정 센서 기록 <code><a href="../../data/weekly/week08/week08_anomaly_root_cause.csv" target="_blank" rel="noopener">week08_anomaly_root_cause.csv</a></code>(450행 12열)로 푼다.
     공정 지도 위치: ②~⑤ + 세정 설비의 센서 기록과 합격 여부(공정 중간 검사 + ⑦ EDS 결과를 모은 교육용 설정). <code>합격여부</code>는 <b>1 = 합격, -1 = 불합격</b>이다.
-    설비 4대가 여러 공정 기록을 함께 남긴 교육용 가상 기록이다.
+    설비 4대가 여러 공정 기록을 함께 남긴 기록이다.
     문제 1~3은 학생용 노트북 7단계와 같다 — 노트북 6단계 셀을 먼저 실행해 <code>df</code>를 만들어 둔다.</p>
     <p class="lede"><b>오늘의 미션</b> — 불합격과 관련 있어 보이는 공정 값을 찾아 '원인 후보' 보고서 한 줄을 쓰자.</p>
   </div>
@@ -96,7 +96,7 @@ print(vac_rate, base_rate)</code></pre>
       ① 범위 밖 <b>78건</b> 중 불합격 <b>20건</b>. ② 범위 밖 불합격률 25.6%는 기준선 11.1%보다 높다. 25.6 ÷ 11.1 ≈ <b>2.3배</b>.
       <img class="chart-img" src="../../assets/images/generated/week08_vacuum_u_shape.png"
            alt="진공도 구간별 불합격률 막대 세 개. 4.5 미만 23.1%, 연습용 기준 안 8.1%, 5.5 초과 28.2%이고 기준선 11.1% 점선이 있다">
-      <p class="img-caption">범위 밖을 낮은 쪽과 높은 쪽으로 나눠 보면 4.5 미만 39건 중 9건(23.1%), 5.5 초과 39건 중 11건(28.2%), 기준 안 372건 중 30건(8.1%)이다. 양쪽 끝이 모두 높다. 교육용 가상 데이터로 그린 그림, 연습용 기준.</p>
+      <p class="img-caption">범위 밖을 낮은 쪽과 높은 쪽으로 나눠 보면 4.5 미만 39건 중 9건(23.1%), 5.5 초과 39건 중 11건(28.2%), 기준 안 372건 중 30건(8.1%)이다. 양쪽 끝이 모두 높다. 연습용 기준.</p>
     </div>
     <button class="reveal-btn">체크포인트 보기</button>
     <div class="callout warn answer-box">
