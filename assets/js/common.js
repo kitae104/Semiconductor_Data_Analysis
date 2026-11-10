@@ -1,5 +1,93 @@
-// 공통 스크립트: 코드 복사 버튼, 맨 위로 이동, 진행률 표시줄
+// 공통 스크립트: 파이썬 코드 색칠, 코드 복사 버튼, 맨 위로 이동, 진행률 표시줄
+
+// 파이썬 코드 색칠(VS Code 느낌). 글자는 그대로 두고 <span class="tok-…">로만 감싼다.
+// 라벨이 "Python"으로 시작하는 .code-block 의 코드만 대상으로 한다(ChatGPT 질문 상자는 제외).
+var PY_CONTROL = /^(?:if|elif|else|for|while|in|not|and|or|is|return|import|from|as|with|try|except|finally|raise|break|continue|pass|yield|assert|del|global|nonlocal|await|async)$/;
+var PY_DEF = /^(?:def|class|lambda)$/;
+var PY_CONST = /^(?:True|False|None)$/;
+var PY_BUILTIN = /^(?:print|len|range|int|float|str|bool|list|dict|set|tuple|round|sum|min|max|abs|sorted|reversed|enumerate|zip|map|filter|type|isinstance|input|open|any|all|format|repr|id)$/;
+var PY_TOKEN = new RegExp([
+  "(#[^\\n]*)",                                                   // 1 주석
+  "((?:[fFrRbBuU]{1,2})?(?:\"\"\"[\\s\\S]*?\"\"\"|'''[\\s\\S]*?'''|\"(?:\\\\.|[^\"\\\\\\n])*\"|'(?:\\\\.|[^'\\\\\\n])*'))", // 2 문자열
+  "(\\b\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?\\b|\\.\\d+)",           // 3 숫자
+  "(_{2,})",                                                      // 4 빈칸 표시 ____
+  "([A-Za-z_\\uAC00-\\uD7A3][A-Za-z0-9_\\uAC00-\\uD7A3]*)",       // 5 이름
+  "([+\\-*/%=<>!&|^~]+)"                                          // 6 연산자
+].join("|"), "g");
+
+function pySpan(cls, text) {
+  var s = document.createElement("span");
+  s.className = "tok-" + cls;
+  s.textContent = text;
+  return s;
+}
+
+function pyHighlight(src) {
+  var frag = document.createDocumentFragment();
+  var last = 0, prevWord = "", prevChar = "", m;
+  PY_TOKEN.lastIndex = 0;
+  while ((m = PY_TOKEN.exec(src)) !== null) {
+    if (m.index > last) {
+      var gap = src.slice(last, m.index);
+      frag.appendChild(document.createTextNode(gap));
+      var trimmed = gap.replace(/\s+$/, "");
+      if (trimmed) { prevChar = trimmed.charAt(trimmed.length - 1); prevWord = ""; }
+    }
+    var tok = m[0];
+    if (m[1] !== undefined) {
+      frag.appendChild(pySpan("comment", tok));
+    } else if (m[2] !== undefined) {
+      if (/^[fF]|^[rRbBuU][fF]/.test(tok)) {
+        // f-string: {표현식} 부분은 따로 색을 준다
+        tok.split(/(\{\{|\}\}|\{[^{}\n]*\})/).forEach(function (part) {
+          if (!part) return;
+          if (part.charAt(0) === "{" && part !== "{{") frag.appendChild(pySpan("fexpr", part));
+          else frag.appendChild(pySpan("string", part));
+        });
+      } else {
+        frag.appendChild(pySpan("string", tok));
+      }
+    } else if (m[3] !== undefined) {
+      frag.appendChild(pySpan("number", tok));
+    } else if (m[4] !== undefined) {
+      frag.appendChild(pySpan("blank", tok));
+    } else if (m[5] !== undefined) {
+      var after = src.charAt(PY_TOKEN.lastIndex);
+      var cls = null;
+      if (prevChar !== "." && PY_DEF.test(tok)) cls = "def";
+      else if (prevChar !== "." && PY_CONTROL.test(tok)) cls = "control";
+      else if (prevChar !== "." && PY_CONST.test(tok)) cls = "const";
+      else if (prevWord === "def") cls = "func";
+      else if (prevWord === "class") cls = "class";
+      else if (after === "(") cls = (prevChar === "." || !PY_BUILTIN.test(tok)) ? "func" : "builtin";
+      else if (prevChar === ".") cls = "attr";
+      else cls = "var";
+      frag.appendChild(pySpan(cls, tok));
+      prevWord = tok;
+    } else {
+      frag.appendChild(pySpan("op", tok));
+      prevWord = "";
+    }
+    if (m[5] === undefined) prevWord = "";
+    prevChar = m[5] !== undefined ? "a" : tok.charAt(tok.length - 1);
+    last = PY_TOKEN.lastIndex;
+  }
+  if (last < src.length) frag.appendChild(document.createTextNode(src.slice(last)));
+  return frag;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  // 파이썬 코드 색칠
+  document.querySelectorAll(".code-block").forEach(function (block) {
+    var label = block.querySelector(".code-label");
+    var codeEl = block.querySelector("pre code");
+    if (!label || !codeEl || !/^\s*Python/.test(label.textContent)) return;
+    var src = codeEl.textContent;
+    codeEl.textContent = "";
+    codeEl.appendChild(pyHighlight(src));
+    codeEl.classList.add("py-highlighted");
+  });
+
   // 코드 블록 복사 버튼
   document.querySelectorAll(".code-block").forEach(function (block) {
     var btn = block.querySelector(".copy-btn");
