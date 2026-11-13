@@ -197,32 +197,5 @@ nb.add(
     look_up("상자그림 읽는 법"),
 )
 
-# --- AI로 한 걸음 더 ----------------------------------------------------------------
-nb.add(
-    step(7, "AI로 한 걸음 더"),
-    md("ChatGPT에 이렇게 물어봤습니다.\n\n"
-       "> pandas 표 df에 \"온도_C\", \"두께_nm\", \"합격여부\"(1 = 합격, -1 = 불합격) 열이 있어. 온도-두께 산점도를 그리는데 "
-       "불합격 점만 빨간색으로 겹쳐 그리는 짧은 matplotlib 코드를 만들어 줘.\n\n"
-       "아래는 받은 코드의 예시입니다. 4차시 조건 검색으로 불합격 행을 고른 뒤 같은 산점도 위에 한 번 더 찍었습니다. "
-       "`color`·`label`·`plt.legend()`는 처음 보는 옵션입니다. 실행해서 빨간 점이 어디에 있는지 보세요."),
-    code('fail = df[df["합격여부"] == -1]\n'
-         '\n'
-         'plt.scatter(df["온도_C"], df["두께_nm"], label="전체")\n'
-         'plt.scatter(fail["온도_C"], fail["두께_nm"], color="red", label="불합격")\n'
-         'plt.xlabel("온도_C")\n'
-         'plt.ylabel("두께_nm")\n'
-         'plt.legend()\n'
-         'plt.show()',
-         '# TODO: 불합격을 뜻하는 숫자와, 점 색 이름(따옴표 포함)을 채우세요. (결과: 전체 점 위에 빨간 불합격 점)\n'
-         'fail = df[df["합격여부"] == ____]\n'
-         '\n'
-         'plt.scatter(df["온도_C"], df["두께_nm"], label="전체")\n'
-         'plt.scatter(fail["온도_C"], fail["두께_nm"], color=____, label="불합격")\n'
-         'plt.xlabel("온도_C")\n'
-         'plt.ylabel("두께_nm")\n'
-         'plt.legend()\n'
-         'plt.show()'),
-)
-
 if __name__ == "__main__":
     nb.cli()

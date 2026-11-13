@@ -875,46 +875,6 @@ print(len(temp_out), round(len(temp_out_fail) / len(temp_out) * 100, 1))</code><
   </section>
 
   <section class="block">
-    <h2>AI로 한 걸음 더 — 질문하고 코드 받아보기</h2>
-    <p>ChatGPT에 아래처럼 물어 받은 코드의 예시다. 4차시에 배운 여러 열 고르기 뒤에 <code>corr()</code>를 붙였다. 노트북 8단계에서 실행해 실습지 문제 2의 두 숫자를 표에서 찾아본다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>pandas 표 df에서 온도_C, 압력_Pa, 진공도_mTorr, 두께_nm, 습도_pct 다섯 열끼리의 상관계수를 한 번에 표로 보여 주는 짧은 코드를 만들어 줘. 소수 둘째 자리까지.</code></pre>
-    </div>
-    <div class="code-block">
-      <div class="code-label"><span>Python — AI가 만들어 준 코드 예시 (노트북 8단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>cols = ["온도_C", "압력_Pa", "진공도_mTorr", "두께_nm", "습도_pct"]
-print(df[cols].corr().round(2))</code></pre>
-    </div>
-    <button class="reveal-btn">실행 결과 보기</button>
-    <div class="callout success answer-box">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">           온도_C  압력_Pa  진공도_mTorr  두께_nm  습도_pct
-온도_C       1.00   0.04       0.05   0.71    0.02
-압력_Pa      0.04   1.00      -0.02   0.09   -0.05
-진공도_mTorr  0.05  -0.02       1.00   0.01   -0.07
-두께_nm      0.71   0.09       0.01   1.00   -0.01
-습도_pct     0.02  -0.05      -0.07  -0.01    1.00</pre>
-      대각선의 1.00은 자기 자신과의 상관계수다. 이 표에는 <code>합격여부</code>가 없어 진공도와 불합격의 관계는 처음부터 나올 수 없다. 진공도 줄이 0에 가까운 것은 진공도가 다른 센서와 따로 움직였다는 뜻이다.
-    </div>
-    <div class="callout warn">
-      <b class="tag">AI 코드를 다룰 때</b> 직접 실행해 숫자를 확인하고, 실습지에서 구한 값과 맞는지 비교한다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>과제(다음 차시까지)</h2>
-    <div class="callout practice">
-      <b class="tag">과제 1 — 진동도 같은 방법으로</b>
-      실습지 문제 2와 같은 모양으로 <code>진동_mm_s</code>와 <code>두께_nm</code>의 상관계수를 <code>round(값, 2)</code>로 출력하고, 온도–두께·습도–두께와 나란히 놓아 한 문장으로 비교한다.
-    </div>
-    <div class="callout practice">
-      <b class="tag">과제 2 — 내 말로 설명하기(코드 없음)</b>
-      "상관관계가 있다"와 "원인이다"가 같은 말이 아니라는 것을, 아이스크림·물놀이 예와 오늘 진공도 결과를 하나씩 들어 두세 문장으로 설명한다.
-    </div>
-  </section>
-
-  <section class="block">
     <h2>핵심 질문 → 데이터 연결</h2>
     <ul class="pt-list">
       <li><b>질문</b>: 여러 공정 값 중 불합격과 관련 있어 보이는 것을 어떻게 찾고, 그것을 '원인'이라고 불러도 될까?</li>

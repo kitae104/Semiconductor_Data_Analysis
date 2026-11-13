@@ -953,53 +953,6 @@ print(hot)</code></pre>
   </section>
 
   <section class="block">
-    <h2>AI로 한 걸음 더 — 질문하고 코드 받아보기</h2>
-    <p>ChatGPT에 아래처럼 물어 받은 코드의 예시다. <code>for</code>는 3차시에 배운 반복문이다. 노트북 8단계에서 실행해 확인 2의 <code>isna().sum()</code> 결과와 같은지 비교한다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>week05_dirty_process_data.csv를 pandas로 읽어서(encoding="utf-8"), 열마다 빈칸 개수와 빈칸 비율(%)을 한 줄씩 출력하는 짧은 코드를 만들어 줘.</code></pre>
-    </div>
-    <div class="code-block">
-      <div class="code-label"><span>Python — AI가 만들어 준 코드 예시 (노트북 8단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>import pandas as pd
-
-data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8")
-
-for col in data.columns:
-    count = data[col].isna().sum()
-    rate = count / len(data) * 100
-    print(f"{col}: 빈칸 {count}개 ({rate:.1f}%)")</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">측정시간: 빈칸 0개 (0.0%)
-로트번호: 빈칸 0개 (0.0%)
-설비번호: 빈칸 0개 (0.0%)
-공정명: 빈칸 0개 (0.0%)
-온도_C: 빈칸 3개 (2.7%)
-압력_Pa: 빈칸 2개 (1.8%)
-가스유량_slm: 빈칸 3개 (2.7%)
-처리시간_sec: 빈칸 0개 (0.0%)
-합격여부: 빈칸 2개 (1.8%)</pre>
-    </div>
-    <div class="callout warn">
-      <b class="tag">AI 코드를 다룰 때</b> 직접 실행해 숫자를 확인하고, 경로와 <code>encoding="utf-8"</code>를 맞춘다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>과제(다음 차시까지)</h2>
-    <div class="callout practice">
-      <b class="tag">과제 1 — 가스유량 평균도 비교하기</b>
-      실습지 문제 3과 같은 모양으로, 정리 전 <code>df</code>와 정리 후 <code>clean</code>의 평균 가스유량(<code>가스유량_slm</code>)을 <code>round(값, 1)</code>로 출력하고 한 문장으로 비교한다.
-    </div>
-    <div class="callout practice">
-      <b class="tag">과제 2 — 내 말로 설명하기(코드 없음)</b>
-      "빈칸을 지우는 방법과 채우는 방법은 각각 무엇이 좋고 무엇이 위험한가"를 클린룸 2543.66 장면을 예로 들어 두세 문장으로 적는다.
-    </div>
-  </section>
-
-  <section class="block">
     <h2>핵심 질문 → 데이터 연결</h2>
     <ul class="pt-list">
       <li><b>질문</b>: 공장 기록에 섞인 빈칸·중복·튀는 값을 정리하면, 평균은 얼마나 달라질까?</li>

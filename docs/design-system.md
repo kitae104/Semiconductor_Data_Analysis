@@ -97,7 +97,7 @@
     ```
   - 현재 `assets/images/site/`에 있는 것: `chip-die-grid.jpg`(다크 칩 격자, `.cta-banner` 배경 텍스처),
     `pcb-macro.jpg`(실제 PCB 매크로 사진, 1차시 "반도체 개념 이해하기"에 인라인 삽입),
-    `ai-circuit.jpg`(회로+AI 컨셉 이미지, 1차시 "AI로 한 걸음 더" 섹션 헤더 이미지).
+    `ai-circuit.jpg`(회로+AI 컨셉 이미지).
   - `<img>`로 삽입할 때 `width`/`height` HTML 속성과 함께 CSS `max-width`만 주면 **비율이 깨진다** —
     반드시 `height:auto`도 같이 지정한다(`style="max-width:520px; height:auto;"`처럼).
   - `images/` 폴더 자체(원본, 최적화 전)는 git에 커밋하지 않았다 — 용량이 크고 일부는 미사용/라이선스

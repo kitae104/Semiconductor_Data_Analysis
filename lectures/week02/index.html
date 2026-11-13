@@ -854,51 +854,6 @@ print(first["온도_C"])</code></pre>
   </section>
 
   <section class="block">
-    <h2>AI로 한 걸음 더</h2>
-    <p>ChatGPT에 이렇게 물어봤다. (노트북 8단계)</p>
-    <div class="code-block">
-      <div class="code-label"><span>ChatGPT에 보낸 질문 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>파이썬 리스트 eq03_temps = [303.8, 303.4, 292.2, 308.5, 307.5, 298.5, 304.0]에서 295 이상 305 이하 범위를 벗어난 값만 골라 개수와 함께 출력하는 짧은 코드를 만들어 줘.</code></pre>
-    </div>
-    <p>아래는 받은 코드의 예시다. <code>for</code>와 <code>if</code>는 3차시에 배운다. 지금은 실행해서 결과만 확인한다. 295~305는 이 과정에서 쓰는 연습용 기준이다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — AI가 만든 코드 예시</span><button class="copy-btn">복사</button></div>
-      <pre><code>eq03_temps = [303.8, 303.4, 292.2, 308.5, 307.5, 298.5, 304.0]
-
-out_of_range = []
-for t in eq03_temps:
-    if t &lt; 295 or t &gt; 305:
-        out_of_range.append(t)
-
-print(f"범위 밖 온도: {out_of_range}")
-print(f"범위 밖 개수: {len(out_of_range)}개")</code></pre>
-    </div>
-    <p>노트북 7단계를 마친 뒤 실행하고, 결과는 아래 버튼으로 확인한다(EQ-03의 최저·최고가 들어 있다).</p>
-    <button class="reveal-btn">실행 결과 보기</button>
-    <div class="callout success answer-box">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">범위 밖 온도: [292.2, 308.5, 307.5]
-범위 밖 개수: 3개</pre>
-    </div>
-    <div class="callout warn">
-      <b class="tag">AI 코드를 다룰 때</b>
-      AI가 준 코드와 숫자는 직접 실행해서 확인한다. 오늘 배운 <code>append()</code>와 <code>len()</code>이 코드 안에 들어 있다. 빈 리스트 <code>[]</code>를 만들고 조건에 맞는 값만 하나씩 더했다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>과제(다음 차시까지)</h2>
-    <div class="callout practice">
-      <b class="tag">과제 1 — 내 일주일 기온</b>
-      노트북 1단계의 <code>week_temps</code> 값을 이번 주 내가 사는 곳의 기온(일기예보에서 본 낮 기온)으로 바꿔 다시 실행하고, 3단계의 최고·최저·평균 문장이 어떻게 바뀌는지 확인한다.
-    </div>
-    <div class="callout practice">
-      <b class="tag">과제 2 — 나를 딕셔너리로</b>
-      노트북 4단계 아래에 셀을 하나 만들어 <code>me = {"좋아하는 음식": "...", "사는 동네": "...", "형제 수": 0}</code>처럼 나에 대한 딕셔너리를 만들고, 키 하나로 값을 꺼내 출력한다. 개인정보(실명·주소·연락처)는 쓰지 않는다.
-    </div>
-  </section>
-
-  <section class="block">
     <h2>핵심 질문 → 데이터 연결</h2>
     <ul class="pt-list">
       <li><b>질문</b>: 여러 개의 측정값을 한 번에 담고, 각 값에 이름표까지 붙이려면 어떻게 해야 할까?</li>

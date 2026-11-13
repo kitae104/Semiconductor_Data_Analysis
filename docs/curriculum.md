@@ -82,7 +82,7 @@
   f-string → Orange3 첫 만남(우리 동네 인구 → 1차시 공정 기록, Distributions로 가장 흔한 연령대·합격·불합격 막대).
   반도체 개요는 생활 비유(웨이퍼 = 피자 도우, 칩 = 피자 조각 등)와 공정 흐름 그림으로 짧게 하고, 공정 이해는 4차시 공정 흐름표에서 다시 연다.
 - **새 개념 예산**: 활성 4개 — `=`(계산 결과 저장 포함), `print()`, f-string, `type()`.
-  **노출 전용**: `input()`(한 줄 시연, 평가 안 함). "AI로 한 걸음 더"는 코드가 아니라 반도체 데이터 분석 이해용 질문 5개다(코드 없음).
+  **노출 전용**: `input()`(한 줄 시연, 평가 안 함).
 - **실습 흐름**: 첫 셀 실행 → 변수 만들기 → 자료형 → 문장 출력 → 계산한 값을 문장에 넣기 → 반도체 확인(합격 32·불합격 8, 불합격률)
   → Orange(동네 인구 → 공정 기록) → 실습지
 - **데이터**: `week01_semiconductor_process_overview.csv`(Orange: `orange/week01_semiconductor_process_overview.tab`), Orange 워밍업 `week01_orange_town_population.csv`

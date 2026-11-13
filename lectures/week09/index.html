@@ -968,35 +968,6 @@ print("정확도:", accuracy_score(y_te, clf.predict(X_te)))</code></pre>
   </section>
 
   <section class="block">
-    <h2>AI로 한 걸음 더 — 질문하고 코드 받아보기</h2>
-    <p>PART 2에서 받은 코드를 바탕으로 ChatGPT에 한 가지를 더 물어보자. 받은 코드는 노트북 3단계 빈 셀에 붙여 실행하고, 숫자를 위 "응답 예시 실행 결과" 표와 맞춰 본다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>방금 준 결정 트리 코드에서 max_depth를 2, 4, 깊이 제한 없음(None) 세 가지로 바꿔 가며 학습용 정확도와 시험용 정확도를 함께 출력하는 짧은 코드를 만들어 줘. 다른 조건은 그대로 두고, 한국어 주석으로.</code></pre>
-    </div>
-    <button class="reveal-btn">확인할 숫자 보기</button>
-    <div class="callout success answer-box">
-      <b class="tag">직접 실행해 얻은 값</b> 같은 조건에서 학습용 / 시험용 정확도는 깊이 2: 80.4% / 74.1%, 깊이 4: 84.7% / 80.3%, 제한 없음: 100.0% / 74.8%다.
-      깊이 제한을 풀면 학습용은 100%가 되지만 시험용은 오히려 떨어진다 — 지난 기록을 외운 것이다(과적합). 깊이 2처럼 너무 얕아도 단서를 다 쓰지 못해 시험용이 낮다. 깊이는 적당히 정한다. AI 코드의 숫자가 이와 다르면 빠진 조건을 찾는다.
-    </div>
-    <div class="callout warn">
-      <b class="tag">AI 코드를 다룰 때</b> 직접 실행해 숫자를 확인하고, 노트북에서 구한 값과 맞는지 비교한다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>과제(다음 차시까지)</h2>
-    <div class="callout practice">
-      <b class="tag">과제 1 — 진공도 한 열 모델</b>
-      실습지 문제 1·2와 같은 모양으로 <code>진공도_mTorr</code> 한 열만 보는 모델을 만들어 정확도를 구하고, 6개 열 모델(80.3%)·기준선(78.9%)과 나란히 놓아 한 문장으로 비교한다. 변수 이름은 <code>X2</code>, <code>model2</code>처럼 새로 붙인다.
-    </div>
-    <div class="callout practice">
-      <b class="tag">과제 2 — 내 말로 설명하기(코드 없음)</b>
-      "웨이퍼 패턴은 잘 맞히는데 공정 기록은 기준선과 비슷한 이유"를 오늘 본 숫자(CA, 기준선, 놓친 불합격 수)를 들어 두세 문장으로 설명한다. "원인"이 아니라 "원인 후보"로 쓴다.
-    </div>
-  </section>
-
-  <section class="block">
     <h2>핵심 질문 → 데이터 연결</h2>
     <ul class="pt-list">
       <li><b>질문</b>: 지난 기록만 보고, 아직 검사하지 않은 로트의 합격/불합격을 미리 맞힐 수 있을까?</li>

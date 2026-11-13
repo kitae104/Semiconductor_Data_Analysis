@@ -158,31 +158,5 @@ nb.add(
          'print("정리 후 평균 온도:", round(____["온도_C"].mean(), 1))'),
 )
 
-# --- AI로 한 걸음 더 ----------------------------------------------------------------
-nb.add(
-    step(8, "AI로 한 걸음 더"),
-    md("ChatGPT에 이렇게 물어봤습니다.\n\n"
-       "> week05_dirty_process_data.csv를 pandas로 읽어서(encoding=\"utf-8\"), 열마다 빈칸 개수와 "
-       "빈칸 비율(%)을 한 줄씩 출력하는 짧은 코드를 만들어 줘.\n\n"
-       "아래는 받은 코드의 예시입니다. `for`는 3차시에 배운 반복문입니다. 실행해서 6단계 `isna().sum()` 결과와 같은지 확인하세요."),
-    code('import pandas as pd\n'
-         '\n'
-         'data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8")\n'
-         '\n'
-         'for col in data.columns:\n'
-         '    count = data[col].isna().sum()\n'
-         '    rate = count / len(data) * 100\n'
-         '    print(f"{col}: 빈칸 {count}개 ({rate:.1f}%)")',
-         '# TODO: 빈칸인지 확인하는 함수 이름과, 비율의 분모가 될 표 이름을 채우세요. (결과: 열마다 한 줄)\n'
-         'import pandas as pd\n'
-         '\n'
-         'data = pd.read_csv("week05_dirty_process_data.csv", encoding="utf-8")\n'
-         '\n'
-         'for col in data.columns:\n'
-         '    count = data[col].____().sum()\n'
-         '    rate = count / len(____) * 100\n'
-         '    print(f"{col}: 빈칸 {count}개 ({rate:.1f}%)")'),
-)
-
 if __name__ == "__main__":
     nb.cli()

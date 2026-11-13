@@ -334,41 +334,5 @@ nb.add(
     look_up("온도만 보고 불량 판단 문제점"),
 )
 
-# --- AI로 한 걸음 더(문제 3의 check_range를 써서, 문제 3을 풀기 전에는 답이 보이지 않게) ---------
-nb.add(
-    step(8, "AI로 한 걸음 더"),
-    md("ChatGPT에 이렇게 물어봤습니다.\n\n"
-       "> records 리스트(딕셔너리마다 \"온도_C\" 키가 있음)에서 check_range 함수가 \"범위 밖\"을 돌려주는 기록만 골라, "
-       "305보다 높은 것과 295보다 낮은 것이 각각 몇 건인지 세는 짧은 파이썬 코드를 만들어 줘. if와 for만 써 줘.\n\n"
-       "아래는 받은 코드의 예시입니다. 문제 3을 푼 뒤 실행하고, 높음 + 낮음이 문제 3의 개수와 같은지 확인하세요."),
-    code('# 문제 3을 푼 뒤 실행하세요.\n'
-         'high = 0\n'
-         'low = 0\n'
-         '\n'
-         'for record in records:\n'
-         '    temp = record["온도_C"]\n'
-         '    if check_range(temp) == "범위 밖":\n'
-         '        if temp > 305:\n'
-         '            high = high + 1\n'
-         '        if temp < 295:\n'
-         '            low = low + 1\n'
-         '\n'
-         'print(f"높음 {high}건, 낮음 {low}건")',
-         '# 문제 3을 푼 뒤 실행하세요.\n'
-         '# TODO: 높음의 기준(위 끝)과 낮음의 기준(아래 끝) 숫자를 채우세요. (결과: 높음 + 낮음 = 문제 3의 범위 밖 건수)\n'
-         'high = 0\n'
-         'low = 0\n'
-         '\n'
-         'for record in records:\n'
-         '    temp = record["온도_C"]\n'
-         '    if check_range(temp) == "범위 밖":\n'
-         '        if temp > ____:\n'
-         '            high = high + 1\n'
-         '        if temp < ____:\n'
-         '            low = low + 1\n'
-         '\n'
-         'print(f"높음 {high}건, 낮음 {low}건")'),
-)
-
 if __name__ == "__main__":
     nb.cli()
