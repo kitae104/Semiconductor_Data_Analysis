@@ -676,12 +676,13 @@ pre{max-width:100%; overflow-x:auto;}
 /* 화면 밖이거나 사용자가 멈추면 정지, 처음부터 누르면 다시 시작 */
 .mg-js:not(.mg-run) .mg-svg *,.mg-paused .mg-svg *{animation-play-state:paused !important;}
 .mg-restart .mg-svg *{animation:none !important;}
+/* 움직임 줄이기 설정(OS의 '애니메이션 효과 끔' 등)에서는 처음에 마지막 장면만 정지 화면으로 보인다.
+   단, 재생 버튼을 눌러 .mg-play가 붙으면 사용자의 선택이 우선해 그대로 움직인다(버튼은 숨기지 않는다). */
 @media (prefers-reduced-motion:reduce){
-  .mg-svg *{animation:none !important;}
-  .mg-svg [class*="mg-only"]:not(.mg-only5){display:none;}
-  .mg-svg [class*="mg8-only"]:not(.mg8-only7){display:none;}
-  .mg-svg [class*="mg-slide"]{transform:translate(var(--dx,0),var(--dy,0));}
-  .mg-ctrl{display:none;}
+  .mg:not(.mg-play) .mg-svg *{animation:none !important;}
+  .mg:not(.mg-play) .mg-svg [class*="mg-only"]:not(.mg-only5){display:none;}
+  .mg:not(.mg-play) .mg-svg [class*="mg8-only"]:not(.mg8-only7){display:none;}
+  .mg:not(.mg-play) .mg-svg [class*="mg-slide"]{transform:translate(var(--dx,0),var(--dy,0));}
 }
 @media print{
   .mg-svg *{animation:none !important;}
@@ -724,7 +725,7 @@ pre{max-width:100%; overflow-x:auto;}
 @keyframes mg-win34{0%,48.3%{opacity:0} 50.2%,81.3%{opacity:1} 83.3%,100%{opacity:0}}
 @keyframes mg-win35{0%,48.3%{opacity:0} 50.2%,94%{opacity:1} 97%,100%{opacity:0}}
 @keyframes mg-win45{0%,65%{opacity:0} 66.9%,94%{opacity:1} 97%,100%{opacity:0}}
-@media (prefers-reduced-motion:reduce){ .mg-svg [class*="mg-win"]{display:none;} .mg-svg .mg-win15, .mg-svg .mg-win25, .mg-svg .mg-win35, .mg-svg .mg-win45{display:inline;} }
+@media (prefers-reduced-motion:reduce){ .mg:not(.mg-play) .mg-svg [class*="mg-win"]{display:none;} .mg:not(.mg-play) .mg-svg .mg-win15, .mg:not(.mg-play) .mg-svg .mg-win25, .mg:not(.mg-play) .mg-svg .mg-win35, .mg:not(.mg-play) .mg-svg .mg-win45{display:inline;} }
 @media print{ .mg-svg [class*="mg-win"]{display:none;} .mg-svg .mg-win15, .mg-svg .mg-win25, .mg-svg .mg-win35, .mg-svg .mg-win45{display:inline;} }
 
 /* 본문에 나온 데이터 파일 이름 링크(data/weekly): 사이트 색으로, 눌러서 파일을 열어 볼 수 있음을 밑줄로 알린다 */

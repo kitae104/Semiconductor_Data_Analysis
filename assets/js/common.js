@@ -273,28 +273,42 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   var figs = document.querySelectorAll(".mg");
   if (!figs.length) return;
+  // 조금이라도 보이면 재생 대상으로 본다(그림이 화면보다 크면 25% 기준을 영영 못 넘어 멈춰 있던 문제 방지)
   var io = "IntersectionObserver" in window ? new IntersectionObserver(function (entries) {
     entries.forEach(function (en) { en.target.classList.toggle("mg-run", en.isIntersecting); });
-  }, { threshold: 0.25 }) : null;
+  }, { threshold: 0 }) : null;
+  // 'OS 애니메이션 끔' 설정이면 처음엔 정지 화면이고, 버튼을 눌러야 움직인다
+  var reduceMq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
   figs.forEach(function (fig) {
     fig.classList.add("mg-js");
     if (io) io.observe(fig); else fig.classList.add("mg-run");
     var bar = document.createElement("div");
     bar.className = "mg-ctrl";
     var pause = document.createElement("button");
-    pause.type = "button"; pause.className = "mg-btn"; pause.textContent = "멈춤";
+    pause.type = "button"; pause.className = "mg-btn";
+    function isStill() {  // 지금 정지 화면인가(움직임 줄이기 + 아직 재생 안 누름, 또는 사용자가 멈춤)
+      return fig.classList.contains("mg-paused") || (reduceMq && reduceMq.matches && !fig.classList.contains("mg-play"));
+    }
+    function sync() { pause.textContent = isStill() ? "▶ 재생" : "⏸ 멈춤"; }
+    function start() {  // 사용자가 누른 재생은 화면 위치·OS 설정과 상관없이 항상 동작
+      fig.classList.add("mg-play", "mg-run");
+      fig.classList.remove("mg-paused");
+    }
     pause.addEventListener("click", function () {
-      var paused = fig.classList.toggle("mg-paused");
-      pause.textContent = paused ? "재생" : "멈춤";
+      if (isStill()) start(); else fig.classList.add("mg-paused");
+      sync();
     });
     var again = document.createElement("button");
-    again.type = "button"; again.className = "mg-btn"; again.textContent = "처음부터";
+    again.type = "button"; again.className = "mg-btn"; again.textContent = "↺ 처음부터";
     again.addEventListener("click", function () {
+      start();
       fig.classList.add("mg-restart");
       void fig.offsetWidth;
-      fig.classList.remove("mg-restart", "mg-paused");
-      pause.textContent = "멈춤";
+      fig.classList.remove("mg-restart");
+      sync();
     });
+    if (reduceMq && reduceMq.addEventListener) reduceMq.addEventListener("change", sync);
+    sync();
     bar.appendChild(pause); bar.appendChild(again);
     var cap = fig.querySelector("figcaption");
     fig.insertBefore(bar, cap || null);
