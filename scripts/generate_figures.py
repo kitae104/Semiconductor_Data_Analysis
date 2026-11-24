@@ -1,10 +1,10 @@
 """강의용 이해 그림을 데이터에서 만드는 스크립트(스펙 부록 B).
 
 - 생성된 주차 데이터(data/weekly/...)를 **읽기만** 한다. 데이터는 generate_weekly_data.py가 만든다.
-  9·10차시처럼 웨이퍼 다이 맵이 CSV에 없는 그림은 생성기와 같은 합성 함수(같은 시드)를 불러 다시 그린다.
+  9차시처럼 웨이퍼 다이 맵이 CSV에 없는 그림은 생성기와 같은 합성 함수(같은 시드)를 불러 다시 그린다.
 - 출력: assets/images/generated/weekXX_<주제>.png. 강의에는 .chart-img + .img-caption으로 넣는다.
 - 같은 데이터면 몇 번을 돌려도 같은 그림(바이트 동일)이 나온다(난수 미사용, PNG 메타데이터 고정).
-- 모든 그림에 "가상 데이터" 표기를 넣는다. 10차시 새 웨이퍼 그림에는 정답 패턴을 넣지 않는다.
+- 모든 그림에 "가상 데이터" 표기를 넣는다. 9차시 새 웨이퍼 그림에는 정답 패턴을 넣지 않는다.
 
 실행:
     python scripts/generate_figures.py              # 전부
@@ -364,7 +364,7 @@ def fig_week08_vacuum_u_shape():
 
 
 # ---------------------------------------------------------------------------
-# 9·10차시 — 합성 함수로 같은 웨이퍼 맵을 다시 만든다
+# 9차시 — 합성 함수로 같은 웨이퍼 맵을 다시 만든다
 # ---------------------------------------------------------------------------
 def fig_week09_wafer_pattern_examples():
     """정상·중심형·가장자리형·스크래치형 예시 웨이퍼 4장(A-9에서 패턴별 첫 웨이퍼)."""
@@ -381,22 +381,22 @@ def fig_week09_wafer_pattern_examples():
     return save(fig, "week09_wafer_pattern_examples.png")
 
 
-def fig_week10_new_wafer_maps():
-    """새 웨이퍼 10장 맵. 정답 패턴은 넣지 않는다(A-10)."""
+def fig_week09_new_wafer_maps():
+    """새 웨이퍼 10장 맵. 정답 패턴은 넣지 않는다(A-10, 2026-11-24 10차시 → 9차시 이관)."""
     x, y, _ = gen.die_grid()
     fig, axes = plt.subplots(2, 5, figsize=(15, 6.6))
-    for ax, (wid, fail) in zip(axes.ravel(), gen.week10_wafer_maps()):
+    for ax, (wid, fail) in zip(axes.ravel(), gen.week09_new_wafer_maps()):
         draw_wafer(ax, x, y, fail, title=f"{wid}  (불량 다이 {int(fail.sum())}개)")
     fig.suptitle("새로 들어온 웨이퍼 10장 — 모델은 어떤 패턴이라고 답할까?", fontsize=15, color=INK)
     note(fig)
-    return save(fig, "week10_new_wafer_maps.png")
+    return save(fig, "week09_new_wafer_maps.png")
 
 
 FIGURES = [
     fig_week01_process_flow, fig_week01_wafer_to_chip, fig_week03_pm10_grade_bands,
     fig_week05_cleanroom_particles, fig_week06_wafer_map_reading, fig_week06_notebook_charts,
     fig_week07_wafer_maps_by_equipment,
-    fig_week08_correlation_signs, fig_week08_vacuum_u_shape, fig_week09_wafer_pattern_examples, fig_week10_new_wafer_maps,
+    fig_week08_correlation_signs, fig_week08_vacuum_u_shape, fig_week09_wafer_pattern_examples, fig_week09_new_wafer_maps,
 ]
 
 

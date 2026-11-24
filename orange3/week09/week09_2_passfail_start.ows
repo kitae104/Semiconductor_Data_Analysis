@@ -1,14 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
-<scheme version="2.0" title="9차시 ② 공정 기록으로 합격·불합격 예측하기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+<scheme version="2.0" title="9차시 ② 공정 기록으로 합격·불합격 예측하고 새 로트 9개 예측하기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
 	<nodes>
-		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (파일 불러오기)" position="(120.0, 320.0)" />
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (학습: 공정 기록 750행)" position="(120.0, 320.0)" />
+		<node id="1" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (새 로트 9개)" position="(120.0, 740.0)" />
 	</nodes>
 	<links />
 	<annotations>
-		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭해 공정 기록(750행, 목표 열 합격여부)이 들어왔는지 확인하세요.
-② Distributions(분포 막대)를 File에 잇고 합격여부를 고르세요(Split by는 None). 합격이 전체의 몇 %인가요? 이것이 기준선입니다.
-③ Tree(결정 트리, 깊이 4) → Tree Viewer를 이으세요. Tree Viewer 왼쪽 Show details in non-leaves에 체크하세요.
-④ Test and Score(평가, Number of folds 10)를 File과 Tree에 잇고, Confusion Matrix를 Test and Score에 이으세요. Confusion Matrix의 Show가 Number of instances인지 보세요.</text>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① 위 File은 공정 기록 750행(학습용, 목표 열 합격여부), 아래 File은 검사 전인 새 로트 9개입니다. 둘 다 이미 들어 있습니다.
+② Distributions(분포 막대)를 위 File에 잇고 합격여부를 고르세요(Split by는 None). 합격이 전체의 몇 %인가요? 이것이 기준선입니다.
+③ Tree(결정 트리, 깊이 4)를 위 File에 잇고 Tree Viewer(트리 보기)를 Tree에 이으세요. Show details in non-leaves에 체크하고 첫 질문을 읽으세요.
+④ Predictions(예측)를 아래 File에 잇고 Tree도 Predictions에 이으세요. Show probabilities for를 Classes known to the model로 바꾸세요.
+⑤ (실습지 문제 4) Test and Score(평가, Number of folds 10)를 위 File과 Tree에 잇고, Confusion Matrix(헷갈림 표)를 Test and Score에 이으세요.</text>
 	</annotations>
 	<thumbnail />
 	<node_properties>
@@ -19,6 +21,14 @@ eS93ZWVrMDkvb3JhbmdlL3dlZWswOV9wYXNzX2ZhaWxfdHJhaW4udGFilIwFdGl0bGWUjACUjAVz
 aGVldJRoD4wLZmlsZV9mb3JtYXSUTnViYYwGc291cmNllEsAjAtyZWNlbnRfdXJsc5RdlIwDdXJs
 lGgPjAtzaGVldF9uYW1lc5R9lIwSY29udHJvbEFyZWFWaXNpYmxllIiMEGNvbnRleHRfc2V0dGlu
 Z3OUXZSMC19fdmVyc2lvbl9flEsBdS4=
+</properties>
+		<properties node_id="1" format="pickle">gASVagEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHndlZWswOV9uZXdfbG90c190
+b19wcmVkaWN0LnRhYpSMBnByZWZpeJSMB2Jhc2VkaXKUjAdyZWxwYXRolIw+Li4vLi4vZGF0YS93
+ZWVrbHkvd2VlazA5L29yYW5nZS93ZWVrMDlfbmV3X2xvdHNfdG9fcHJlZGljdC50YWKUjAV0aXRs
+ZZSMAJSMBXNoZWV0lGgPjAtmaWxlX2Zvcm1hdJROdWJhjAZzb3VyY2WUSwCMC3JlY2VudF91cmxz
+lF2UjAN1cmyUaA+MC3NoZWV0X25hbWVzlH2UjBJjb250cm9sQXJlYVZpc2libGWUiIwQY29udGV4
+dF9zZXR0aW5nc5RdlIwLX192ZXJzaW9uX1+USwF1Lg==
 </properties>
 	</node_properties>
 	<session_state>

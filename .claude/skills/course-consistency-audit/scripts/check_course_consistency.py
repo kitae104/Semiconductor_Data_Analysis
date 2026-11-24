@@ -263,7 +263,17 @@ def step_titles(md_cells: list[str]) -> list[str]:
     return titles
 
 
+NO_NOTEBOOK_WEEKS = {10}   # 10차시 = 종합 실습(Orange3 + ChatGPT, 파이썬 필수 아님) — 노트북 없음(2026-11-24)
+NO_WORKSHEET_WEEKS = {10}  # 10차시 = 시연형 종합 실습 — 실습지 없음(v3.2)
+
+
 def check_notebooks(scope: str, week: int) -> None:
+    if week in NO_NOTEBOOK_WEEKS:
+        record(scope, f"week{week:02d} 노트북 없음(종합 실습)", "INFO", "10차시는 노트북을 두지 않는다 — 검사 건너뜀")
+        for kind, suffix in (("student", "student"), ("solutions", "solution")):
+            stale = os.path.join(BASE, "notebooks", kind, f"week{week:02d}_{suffix}.ipynb")
+            check(scope, f"notebooks/{kind}/week{week:02d}_{suffix}.ipynb 없음(폐지)", not os.path.exists(stale))
+        return
     paths = {
         "student": os.path.join(BASE, "notebooks", "student", f"week{week:02d}_student.ipynb"),
         "solutions": os.path.join(BASE, "notebooks", "solutions", f"week{week:02d}_solution.ipynb"),
@@ -491,7 +501,7 @@ def check_v3(scope: str, week: int) -> None:
         check(scope, f'{rel_index} id="{part}" 정확히 1개', n == 1, f"{n}개")
 
     worksheet = os.path.join(folder, "worksheet.html")
-    if os.path.exists(worksheet):
+    if week not in NO_WORKSHEET_WEEKS and os.path.exists(worksheet):
         n = len(WORKSHEET_PROBLEM_RE.findall(read(worksheet)))
         warn_if(scope, f"lectures/{scope}/worksheet.html 문제 5개", n == 5, f"{n}개")
 
@@ -522,10 +532,10 @@ def check_v3(scope: str, week: int) -> None:
 
     # 노트북 v3 구조(스펙 검증 6)
     student = os.path.join(BASE, "notebooks", "student", f"{scope}_student.ipynb")
-    if os.path.exists(student):
+    if os.path.exists(student) and week not in NO_NOTEBOOK_WEEKS:
         _, md_cells = notebook_sources(student)
         problems = len(re.findall(r"^### 문제 \d", "\n".join(md_cells), re.M))
-        want = 2 if week >= 9 else 3
+        want = 2 if week == 9 else 3
         warn_if(scope, f"notebooks/student/{scope}_student.ipynb 반도체 실습 문제 {want}개", problems == want, f"{problems}개")
         warn_if(scope, f"notebooks/student/{scope}_student.ipynb 'AI에게 질문하며' 단계 없음",
                 not any("AI에게 질문하며" in c for c in md_cells))
@@ -538,7 +548,16 @@ def check_week(week: int, css_classes: set[str]) -> None:
     rel_guide = os.path.relpath(guide, BASE).replace("\\", "/")
 
     check_html(scope, os.path.join(folder, "index.html"), css_classes, week)
-    check_html(scope, os.path.join(folder, "worksheet.html"), css_classes, week)
+    ws = os.path.join(folder, "worksheet.html")
+    if week in NO_WORKSHEET_WEEKS:
+        record(scope, f"lectures/{scope}/worksheet.html", "INFO", "실습지 없음(시연형 종합 실습)")
+        check(scope, f"lectures/{scope}/worksheet.html 없음(폐지)", not os.path.exists(ws))
+        index_path = os.path.join(folder, "index.html")
+        index_text = read(index_path) if os.path.exists(index_path) else ""
+        check(scope, f"lectures/{scope}/index.html에 worksheet.html 링크 없음",
+              "worksheet.html" not in index_text)
+    else:
+        check_html(scope, ws, css_classes, week)
     check_quiz(scope, os.path.join(folder, "quiz.json"), week)
     if check(scope, f"{rel_guide} 존재", os.path.exists(guide)):
         text = read(guide)

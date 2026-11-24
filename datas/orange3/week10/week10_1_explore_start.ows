@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="10차시 ① 종합 실습 — 데이터 점검과 지난 기록 비교 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (공정 기록 480행)" position="(120.0, 320.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① File(파일 불러오기)을 더블클릭하면 공정 기록 480행(교육용 가상 데이터)이 이미 들어 있습니다.
+② 공통 점검(전원): Data Table(표 보기)과 Column Statistics(열 통계)를 File에 이어 행·열 수, 빈칸, 튀는 값을 찾으세요.
+③ 튀는 값은 Select Rows(행 고르기)로 빼고, 빈칸은 Impute(빈칸 채우기)로 처리하세요. 어떤 조건을 쓸지는 직접 정합니다.
+④ Pivot Table(피벗 표)을 Impute 뒤에 이어 설비별·작업조별 합격률을 비교하세요.
+⑤ 비교가 끝나면 ② 워크플로에서 같은 기록으로 새 로트 10개를 예측합니다.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVXgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMGHdlZWsxMF9jYXBzdG9uZV9s
+b3RzLnRhYpSMBnByZWZpeJSMB2Jhc2VkaXKUjAdyZWxwYXRolIw4Li4vLi4vZGF0YS93ZWVrbHkv
+d2VlazEwL29yYW5nZS93ZWVrMTBfY2Fwc3RvbmVfbG90cy50YWKUjAV0aXRsZZSMAJSMBXNoZWV0
+lGgPjAtmaWxlX2Zvcm1hdJROdWJhjAZzb3VyY2WUSwCMC3JlY2VudF91cmxzlF2UjAN1cmyUaA+M
+C3NoZWV0X25hbWVzlH2UjBJjb250cm9sQXJlYVZpc2libGWUiIwQY29udGV4dF9zZXR0aW5nc5Rd
+lIwLX192ZXJzaW9uX1+USwF1Lg==
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

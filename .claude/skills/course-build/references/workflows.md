@@ -109,7 +109,7 @@ Agent(subagent_type: "general-purpose", model: "opus", run_in_background: true,
 ```
 1. design-steward가 랜딩 또는 대표 차시 1개에 적용
 2. 사용자에게 보여주고 방향 확인  ← 반드시 여기서 멈춘다
-3. 승인되면 전 차시(강의 10 + 실습지 10)에 롤아웃
+3. 승인되면 전 차시(강의 10 + 실습지 9)에 롤아웃
 4. consistency-qa가 전 차시 재검증
 ```
 

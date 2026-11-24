@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>10차시. 모델 평가와 새 데이터 예측</title>
+<title>10차시. 종합 실습 — AI와 Orange3로 공정 데이터 분석하기</title>
 <link rel="icon" href="../../assets/images/site/chip-favicon.png" type="image/png">
 <link rel="stylesheet" href="../../assets/css/common.css">
 <link rel="stylesheet" href="../../assets/css/print.css">
@@ -34,577 +34,304 @@
 
   <div class="hero">
     <span class="badge blue">10차시 · 마지막 차시</span>
-    <h1>모델 평가와 새 데이터 예측</h1>
-    <p class="today-question">오늘의 질문: <b>"내가 만든 모델은 처음 보는 새로운 데이터에서도 믿을 만할까?"</b></p>
-    <p class="lede"><b>오늘의 미션</b> — 입사 열째 날, 마지막 날이다. 아직 검사하지 않은 새 로트 9개의 예측 결과와 10일간의 분석을 보고서 한 장으로 정리하자.
-    모델은 몇 개를 불합격으로 예측할까? 그 예측은 얼마나 믿을 만할까?
-    (신입 데이터 담당자의 10일 이야기와 공장·설비·데이터는 모두 교육용 가상이다.)</p>
-    <img class="chart-img" src="../../assets/images/orange3/week10_01_mission_canvas.png"
-         alt="오늘 끝에 Orange3로 완성할 워크플로. 학습용 File에서 모델 세 개를 거쳐 Test and Score와 Confusion Matrix로, 새 로트 File에서 Predictions로 선이 이어져 있다"
-         data-shot="week10_2_newlots_done.ows를 연 캔버스 전체 — 위 File (학습: 공정 기록 750행)에서 Tree·kNN·Logistic Regression을 거쳐 Test and Score → Confusion Matrix로, 아래 File (새 로트 9개)에서 Predictions로 이어진 선이 모두 보이게(위젯 창은 열지 않은 상태)">
+    <h1>종합 실습 — AI와 Orange3로 공정 데이터 분석하기</h1>
+    <p class="today-question">오늘의 질문: <b>"오늘 들어온 새 로트 10개 중 어느 것부터 점검해야 할까? 지난 기록 480건으로 근거를 찾아 보자."</b></p>
+    <p class="lede"><b>오늘의 미션</b> — 입사 열째 날, 마지막 날이다. 팀장이 말했다. "검사 전인 새 로트 10개 중 먼저 볼 로트를 골라, 근거 숫자와 함께 세 줄로 보고해 줘요." 오늘은 이 문제 하나를 AI와 Orange3로 처음부터 끝까지 풀어 본다. 데이터 분석이 어떤 순서로 진행되는지 보는 시간이다. (신입 데이터 담당자의 10일 이야기와 공장·설비·데이터는 모두 교육용 가상이다.)</p>
+    <img class="chart-img" src="../../assets/images/orange3/week10_01_explore_start.png" alt="오늘 처음 여는 Orange3 캔버스. File 위젯 하나와 ①~④ 안내 메모가 있다" data-shot="week10_1_explore_start.ows를 연 캔버스 전체 — File (공정 기록 480행) 위젯 하나와 ①~④ 안내 메모가 보이게(위젯 창은 열지 않은 상태)">
   </div>
 
   <section class="block">
     <h2>학습 목표</h2>
     <ul class="goal-list">
-      <li>Orange3 Test and Score로 모델 세 개(Tree·kNN·Logistic Regression)의 정확도를 비교하고, 기준선과 함께 읽을 수 있다.</li>
-      <li>Orange3 Predictions와 파이썬 <code>model.predict()</code>로 정답이 없는 새 데이터를 예측할 수 있다.</li>
-      <li>ChatGPT가 쓴 보고서의 숫자를 직접 실행한 결과와 맞춰 보고, 단정한 문장을 "원인 후보"로 고칠 수 있다.</li>
-      <li>10차시 동안 한 일을 공정 지도와 함께 한 문장씩 되짚을 수 있다.</li>
+      <li>데이터 분석이 "문제 → 데이터 점검 → 비교 → 예측 → 확인 → 보고" 순서로 진행됨을 오늘 예로 설명할 수 있다.</li>
+      <li>AI가 준 계획과 해석 초안의 숫자·원인 표현을 Orange 결과로 확인해 고칠 수 있다.</li>
+      <li>숫자와 비교 대상, "원인 후보", 가상 데이터 고지를 갖춘 결론 문장 3개를 쓸 수 있다.</li>
     </ul>
-    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 9차시 — 결정 트리, Test and Score·Confusion Matrix, 정확도와 기준선 / 8차시 — 원인 후보 / 7차시 — True/False로 개수 세기 / 1차시 — f-string</p>
+    <p style="margin-top:.6rem;color:var(--muted);font-size:.9rem;"><b>선수 지식</b>: 5차시 점검·정리, 7차시 Pivot Table과 합격률, 8차시 원인 후보, 9차시 Tree·기준선·헷갈림 표·Predictions. 오늘은 새 위젯도, 파이썬 코드도 없다.</p>
   </section>
 
   <section class="block">
     <h2>왜 이걸 배워야 할까?</h2>
-    <p>모델을 만드는 이유는 아직 검사하지 않은 새 로트를 미리 보기 위해서다. 그런데 9차시 모델의 정확도 80.3%는 "모두 합격"이라고 찍는 78.9%와 큰 차이가 없었다.</p>
-    <p>그래서 오늘은 새 데이터에 쓰기 전에 두 가지를 확인한다. 다른 모델도 같은 답을 내는지, 그리고 그 숫자를 보고서에 옮길 때 틀리거나 부풀리지 않았는지다.</p>
-    <div class="callout concept">
-      <b class="tag">비유 — 피자 가게의 새 주문서</b>
-      사장이 처음 보는 주문서를 아르바이트생 셋에게 보여 주고 "이 피자, 탈 것 같아?"라고 물었다. 셋 답이 같으면 그대로 굽고, 답이 갈리면 사장이 직접 본다.
-      오늘 Orange에서 모델 세 개에게 같은 질문을 한다.
-    </div>
+    <p>현장의 데이터에는 문제지가 붙어 있지 않다. 풀 문제를 정하고, 데이터를 점검하고, 숫자로 근거를 찾아 남이 읽을 문장으로 옮기는 것까지가 분석이다. AI는 계획과 문장을 빠르게 써 주지만 파일을 보지 않았으므로 숫자를 지어낼 수 있다. 그래서 숫자는 늘 Orange 화면으로 직접 확인한다.</p>
   </section>
 
   <section class="block" id="part1">
-    <h2><span class="step-badge">PART 1</span> Orange3 — 모델 셋 비교와 새 데이터 예측</h2>
-    <p>오늘 새로 쓰는 말은 세 개다. 나머지 위젯은 9차시에 써 봤다.</p>
+    <h2><span class="step-badge">PART 1</span> 오늘의 문제 — 새 로트 10개 중 어느 것부터?</h2>
 
-  <!-- mg:w10-flow -->
-  <figure class="mg">
-    <svg class="mg-svg" viewBox="0 0 720 330" role="img" aria-label="지난 기록이 Tree, Logistic Regression, kNN 세 모델을 거쳐 Test and Score에서 점수가 비교되고 고른 모델에 새 로트를 넣어 Predictions로 예측을 얻는 그림">
-      <rect x="20" y="50" width="130" height="70" class="mg-box"/>
-      <text x="85" y="80" class="mg-b mg-c">지난 기록</text>
-      <text x="85" y="100" class="mg-s mg-c mg-mu">(정답 있음)</text>
-      <rect x="240" y="38" width="190" height="28" class="mg-blue"/>
-      <text x="335" y="57" class="mg-c mg-s mg-tblue mg-m">Tree</text>
-      <rect x="240" y="72" width="190" height="28" class="mg-blue"/>
-      <text x="335" y="91" class="mg-c mg-s mg-tblue mg-m">Logistic Regression</text>
-      <rect x="240" y="106" width="190" height="28" class="mg-blue"/>
-      <text x="335" y="125" class="mg-c mg-s mg-tblue mg-m">kNN</text>
-      <rect x="236" y="34" width="198" height="108" class="mg-hl mg-only1"/>
-      <rect x="510" y="50" width="190" height="70" class="mg-box"/>
-      <text x="605" y="80" class="mg-b mg-c mg-m" style="font-size:14px">Test and Score</text>
-      <text x="605" y="100" class="mg-s mg-c mg-mu">모델별 점수 비교</text>
-      <rect x="506" y="46" width="198" height="78" class="mg-hl mg-only2"/>
-      <line x1="152" y1="85" x2="229" y2="85" class="mg-lnb"/>
-      <polygon points="238,85 229,89.5 229,80.5" class="mg-ahb"/>
-      <line x1="432" y1="85" x2="499" y2="85" class="mg-lnb"/>
-      <polygon points="508,85 499,89.5 499,80.5" class="mg-ahb"/>
-      <text x="330" y="168" class="mg-s mg-b mg-c mg-torange mg-from3">점수가 높고 기준선보다 나은 모델을 고른다</text>
-      <g class="mg-from3">
-      <line x1="335" y1="144" x2="335" y2="187" class="mg-lnm"/>
-      <polygon points="335,196 330.5,187 339.5,187" class="mg-ah"/>
-      </g>
-      <g class="mg-from3">
-      <rect x="240" y="202" width="190" height="40" class="mg-blue"/>
-      <text x="335" y="227" class="mg-c mg-tblue mg-b">고른 모델</text>
-      </g>
-      <rect x="20" y="198" width="150" height="48" class="mg-orange mg-from4"/>
-      <text x="95" y="218" class="mg-b mg-c mg-torange mg-from4">새 로트</text>
-      <text x="95" y="236" class="mg-s mg-c mg-mu mg-from4">(정답 없음)</text>
-      <g class="mg-from4">
-      <line x1="172" y1="222" x2="229" y2="222" class="mg-lnb"/>
-      <polygon points="238,222 229,226.5 229,217.5" class="mg-ahb"/>
-      </g>
-      <rect x="510" y="198" width="190" height="48" class="mg-green mg-from5"/>
-      <text x="605" y="218" class="mg-b mg-c mg-m mg-tgreen mg-from5" style="font-size:14px">Predictions</text>
-      <text x="605" y="236" class="mg-s mg-c mg-mu mg-from5">합격/불합격 예측</text>
-      <g class="mg-from5">
-      <line x1="432" y1="222" x2="499" y2="222" class="mg-lnb"/>
-      <polygon points="508,222 499,226.5 499,217.5" class="mg-ahb"/>
-      </g>
-      <rect x="14" y="292" width="692" height="30" class="mg-gray"/>
-      <text x="28" y="312" class="mg-only0 mg-b" style="font-size:14px">① 지난 기록으로 모델 셋을 학습시킨다</text>
-      <text x="28" y="312" class="mg-only1 mg-b" style="font-size:14px">② Test and Score가 모델마다 점수를 매긴다</text>
-      <text x="28" y="312" class="mg-only2 mg-b" style="font-size:14px">③ 기준선과 비교해 쓸 모델을 고른다</text>
-      <text x="28" y="312" class="mg-only3 mg-b" style="font-size:14px">④ 새 로트(합격 여부를 아직 모름)를 넣는다</text>
-      <text x="28" y="312" class="mg-only4 mg-b" style="font-size:14px">⑤ Predictions가 합격/불합격 예측을 붙인다</text>
-      <text x="28" y="312" class="mg-only5 mg-b" style="font-size:14px">결과: 학습 → 점수 비교 → 새 데이터 예측 순서로 쓴다</text>
-    </svg>
-    <figcaption class="img-caption"><b>모델 비교에서 새 데이터 예측까지</b> 위 줄은 <b>지난 기록</b>으로 모델 셋을 만들고 점수를 비교하는 단계, 아래 줄은 고른 모델에 <b>새 데이터</b>를 넣어 예측을 얻는 단계다. 점수는 기준선과 함께 읽고, 예측은 "원인"이 아니라 "확인해 볼 후보"로 쓴다.</figcaption>
-  </figure>
-  <!-- /mg:w10-flow -->
-
-
-
-
-
-
-
-
-
-    <ul class="pt-list">
-      <li><b>새 데이터</b> — 정답(<code>불량패턴</code>, <code>합격여부</code>) 열이 없는 표. 모델이 맞혀야 할 대상이다.</li>
-      <li><b>kNN</b>(이웃 투표) — 처음 보는 데이터와 숫자가 가장 비슷한 학습 데이터 몇 개(Orange 기본 5개)를 찾아, 그들의 답으로 다수결을 한다.</li>
-      <li><b>Logistic Regression</b>(로지스틱 회귀) — 단서 열(9차시의 Feature)마다 점수를 매겨 더한 값으로 답마다 확률을 계산하는 모델이다. 이름은 어렵지만 오늘은 "세 번째 의견"으로만 쓴다.</li>
-    </ul>
-    <div class="callout concept">
-      <b class="tag">찾아보기</b>
-      <p><b>검색어</b> <code>kNN 이웃 투표</code></p>
-      <div class="code-block">
-        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
-        <pre style="white-space:pre-wrap;"><code>데이터 분석을 처음 배우는 사람에게 kNN(k-최근접 이웃) 분류가 처음 보는 데이터의 답을 어떻게 정하는지 '이웃에게 물어보기' 비유로 3문장 안에 설명해줘. 이웃 수 k를 작게 하거나 크게 하면 무엇이 달라지는지도 알려줘.</code></pre>
-      </div>
-    </div>
-
-    <h3>위젯 이름표</h3>
+    <h3>팀장이 준 문제</h3>
+    <p>아래 10개 로트는 공정을 마쳤지만 아직 ⑦ 전기 검사(EDS) 전이다. 검사 결과가 나오기 전에 "어느 로트를 먼저 살펴볼지" 순서를 정하려 한다. 눈으로만 보면 어느 것이 위험한지 알기 어렵다.</p>
     <div class="tablewrap">
       <table>
-        <thead><tr><th>위젯(화면 이름)</th><th>어느 묶음에 있나</th><th>한국어 뜻</th><th>오늘 하는 일</th></tr></thead>
+        <thead><tr><th>로트번호</th><th>NEW-01</th><th>NEW-02</th><th>NEW-03</th><th>NEW-04</th><th>NEW-05</th><th>NEW-06</th><th>NEW-07</th><th>NEW-08</th><th>NEW-09</th><th>NEW-10</th></tr></thead>
         <tbody>
-          <tr><td><code>kNN</code></td><td>Model</td><td>이웃 투표</td><td><b>오늘 새 위젯.</b> 설정은 그대로 둔다</td></tr>
-          <tr><td><code>Logistic Regression</code></td><td>Model</td><td>로지스틱 회귀</td><td><b>오늘 새 위젯.</b> 설정은 그대로 둔다</td></tr>
-          <tr><td><code>Predictions</code></td><td>Evaluate</td><td>예측</td><td><b>오늘 새 위젯.</b> 새 데이터를 넣어 모델마다 답을 받는다</td></tr>
+          <tr><td><code>설비번호</code></td><td>EQ-02</td><td>EQ-03</td><td>EQ-01</td><td>EQ-01</td><td>EQ-01</td><td>EQ-04</td><td>EQ-01</td><td>EQ-02</td><td>EQ-03</td><td>EQ-03</td></tr>
+          <tr><td><code>진공도_mTorr</code></td><td>4.89</td><td>4.89</td><td>5.78</td><td>4.96</td><td>5.05</td><td>5.30</td><td>5.00</td><td>5.24</td><td>4.52</td><td>5.13</td></tr>
+          <tr><td><code>진동_mm_s</code></td><td>0.483</td><td>0.469</td><td>0.582</td><td>0.474</td><td>0.527</td><td>0.720</td><td>0.463</td><td>0.424</td><td>0.417</td><td>0.502</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="callout warn"><b class="tag">주의</b> Test and Score에는 <b>위 File(학습용)</b>만 잇는다. 새 데이터는 정답이 없어 채점할 수 없다. 새 데이터 File은 Predictions에만 잇는다.</div>
+    <p class="img-caption">새 로트 10개 중 열 3개만 옮긴 것이다(<code>week10_capstone_new_lots.csv</code>, 교육용 가상 데이터). 실제 파일에는 온도·두께·가스유량·습도 등 11열이 있다.</p>
 
     <h3>오늘 데이터는 공정 지도의 어디일까</h3>
-    <img class="chart-img" src="../../assets/images/generated/week01_process_flow.png" alt="반도체 8대 공정 흐름을 생활 비유로 그린 공정 지도">
-    <p class="img-caption">1차시에 본 공정 지도(교육용 단순화). ② 산화부터 ⑥ 금속 배선까지는 층마다 되풀이하고, ⑦ EDS에서 칩마다 전기 검사를 한다.</p>
     <ul class="pt-list">
-      <li>워밍업 학습용 <code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code>(9차시 웨이퍼 240장) — <b>공정 지도 위치: ⑦ EDS</b> 웨이퍼 맵 요약.</li>
-      <li>워밍업 새 데이터 <code><a href="../../data/weekly/week10/week10_orange_new_wafers.csv" target="_blank" rel="noopener">week10_orange_new_wafers.csv</a></code>(새 웨이퍼 10장) — <b>공정 지도 위치: ⑦ EDS</b> 새 웨이퍼 맵 요약.</li>
-      <li>반도체 학습용 <code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code>(공정 기록 750행) — <b>공정 지도 위치: ②~⑤ + 세정</b> 공정 조건 → <b>⑦</b> 결과.</li>
-      <li>반도체 새 데이터 <code><a href="../../data/weekly/week09/week09_new_lots_to_predict.csv" target="_blank" rel="noopener">week09_new_lots_to_predict.csv</a></code>(새 로트 9개) — <b>공정 지도 위치: ②~⑤ + 세정</b>을 마쳤지만 아직 <b>⑦</b> 검사 전인 새 로트.</li>
+      <li><code><a href="../../data/weekly/week10/week10_capstone_lots.csv" target="_blank" rel="noopener">week10_capstone_lots.csv</a></code> — 지난 4주 기록 480행 13열. <b>공정 지도 위치: ②~⑤ + 세정</b> 설비 기록(센서) → <b>⑦ EDS</b> 결과(<code>합격여부</code>: <b>1 = 합격, -1 = 불합격</b>).</li>
+      <li><code><a href="../../data/weekly/week10/week10_capstone_new_lots.csv" target="_blank" rel="noopener">week10_capstone_new_lots.csv</a></code> — 새 로트 10행 11열. <b>공정 지도 위치: ②~⑤ + 세정</b>을 마쳤고 <b>⑦ 검사 전</b>이라 결과 열(<code>불량유형</code>·<code>합격여부</code>)이 없다.</li>
+      <li>열 뜻: <code>설비번호</code>(기계 EQ-01~EQ-04), <code>작업조</code>(근무 조 A·B·C), <code>온도_C</code>(섭씨 도), <code>진공도_mTorr</code>(챔버 안에 남은 기체의 압력, 작을수록 공기를 더 뺀 상태), <code>진동_mm_s</code>(설비가 떨리는 정도). 나머지는 <a href="../../data/data_dictionary/week10_dictionary.html">10차시 데이터 설명서</a>에 있다.</li>
+      <li><b>연습용 기준</b>(이 과정에서 정한 연습용 범위이며 실제 공정 규격이 아니다): 진공도 4.5~5.5 mTorr, 진동 0.64 mm/s 이하.</li>
     </ul>
+    <div class="callout warn"> <b class="tag">가상 데이터 고지</b> 이 기록은 교육용으로 만든 가상 데이터이며 실제 공장의 기록이 아니다. 설비 4대가 여러 공정 기록을 함께 남겼다. 로트마다 설비 하나·공정 하나만 적어 둔 교육용 단순화다. 온도·진공도·두께 값은 다섯 공정 모두 비슷한 크기로 만든 교육용 값이라, 실제 공정 조건(공정마다 크게 다르다)으로 읽지 않는다. </div>
 
-    <h3>워밍업 — 새 웨이퍼 10장은 어떤 불량 모양일까</h3>
-    <p>9차시에 웨이퍼 240장의 불량 모양(정상·중심형·가장자리형·스크래치형)을 결정 트리로 나눴다. 오늘은 ⑦ 전기 검사를 막 마친 <b>새 웨이퍼 10장</b>이 들어왔다. 불량 모양 이름은 아직 아무도 붙이지 않았다.
-    "정상"은 불량 다이가 몇 개 흩어져 있을 뿐 뚜렷한 모양이 없는 웨이퍼라는 뜻이다(불량 0개라는 뜻이 아니다).</p>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>열</th><th>뜻</th></tr></thead>
-        <tbody>
-          <tr><td><code>웨이퍼ID</code></td><td>새 웨이퍼 이름(N-01~N-10)</td></tr>
-          <tr><td><code>불량다이수_count</code></td><td>웨이퍼 한 장에서 불합격한 다이(칩이 될 작은 네모) 수. <code>_count</code> = 센 수</td></tr>
-          <tr><td><code>중심불량비율_pct</code>, <code>가장자리불량비율_pct</code></td><td>불합격 다이 중 가운데 쪽 / 가장자리 쪽에 있는 비율(퍼센트). <code>_pct</code> = 퍼센트</td></tr>
-          <tr><td><code>직선불량비율_pct</code></td><td>불합격 다이 중 한 직선 위에 늘어선 비율. 긁힌 자국(스크래치)의 단서다. 불량 다이가 몇 개 안 되면 흩어져 있어도 우연히 한 줄에 놓인 비율이 높게 나온다(예: N-01, N-10은 그림에서 흩어져 있지만 이 값이 50%를 넘는다)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <img class="chart-img" src="../../assets/images/generated/week10_new_wafer_maps.png" alt="새 웨이퍼 10장의 웨이퍼 맵. 빨간 칸이 불합격 다이이고, 웨이퍼마다 불량 다이 수가 적혀 있다">
-    <p class="img-caption">새로 들어온 웨이퍼 10장(빨간 칸 = 불합격 다이, 불량 다이 수만 표시). 세 모델은 어떤 모양이라고 답할까? 모델끼리 답이 갈리는 웨이퍼를 찾아보자.</p>
+    <h3>AI와 함께 분석하는 5단계</h3>
+    <p>오늘은 AI에게 계획과 해석 초안을 받고, 그 사이의 실행과 확인은 Orange로 직접 한다.</p>
 
-    <ol>
-      <li>Orange3에서 <b>File → Open</b>을 누르고 <code>week10_1_newwafers_start.ows</code>를 연다.</li>
-      <li>캔버스에 File 위젯 두 개와 ①~⑤ 안내 메모가 보이면 준비가 끝난 것이다.</li>
-    </ol>
-    <img class="chart-img" src="../../assets/images/orange3/week10_02_newwafers_start.png"
-         alt="week10_1_newwafers_start.ows를 연 Orange3 캔버스"
-         data-shot="week10_1_newwafers_start.ows를 연 캔버스 전체 — 위 File (학습: 웨이퍼 240장), 아래 File (새 웨이퍼 10장) 두 위젯과 ①~⑤ 안내 메모가 보이게">
+  <!-- mg:w10-ai-steps -->
+  <figure class="mg" style="--mg-t:20s">
+    <svg class="mg-svg" viewBox="0 0 720 340" role="img" aria-label="팀장의 문제 새 로트 10개 중 어느 것부터 점검할까에서 시작해 AI에게 계획 묻기, Orange로 점검과 정리, 지난 기록 비교, 새 로트 예측, AI 해석 초안 확인을 거쳐 결론 보고 문장에 이르는 뱀 모양 흐름 그림">
+      <rect x="330" y="9" width="14" height="14" class="mg-orange"/>
+      <text x="350" y="21" class="mg-s mg-mu">AI가 주는 초안</text>
+      <rect x="470" y="9" width="14" height="14" class="mg-blue"/>
+      <text x="490" y="21" class="mg-s mg-mu">내가 하는 확인</text>
+      <rect x="610" y="9" width="14" height="14" class="mg-green"/>
+      <text x="630" y="21" class="mg-s mg-mu">결과</text>
+      <g class="">
+      <rect x="20" y="44" width="152" height="78" class="mg-box"/>
+      <text x="96" y="77" class="mg-b mg-c " style="font-size:16px">팀장의 문제</text>
+      <text x="96" y="101" class="mg-s mg-c mg-mu">어느 로트부터 점검?</text>
+      </g>
+      <rect x="16" y="40" width="160" height="86" class="mg-hl mg8-only0"/>
+      <g class="mg8-from1">
+      <rect x="196" y="44" width="152" height="78" class="mg-orange"/>
+      <text x="272" y="77" class="mg-b mg-c mg-torange" style="font-size:16px">1. 계획 묻기</text>
+      <text x="272" y="101" class="mg-s mg-c mg-mu">AI: 위젯 순서 제안</text>
+      </g>
+      <rect x="192" y="40" width="160" height="86" class="mg-hl mg8-only1"/>
+      <g class="mg8-from2">
+      <rect x="372" y="44" width="152" height="78" class="mg-blue"/>
+      <text x="448" y="77" class="mg-b mg-c mg-tblue" style="font-size:16px">2. 점검과 정리</text>
+      <text x="448" y="101" class="mg-s mg-c mg-mu">빈칸·튀는 값 정리</text>
+      </g>
+      <rect x="368" y="40" width="160" height="86" class="mg-hl mg8-only2"/>
+      <g class="mg8-from3">
+      <rect x="548" y="44" width="152" height="78" class="mg-blue"/>
+      <text x="624" y="77" class="mg-b mg-c mg-tblue" style="font-size:16px">3. 지난 기록 비교</text>
+      <text x="624" y="101" class="mg-s mg-c mg-mu">설비·작업조별 합격률</text>
+      </g>
+      <rect x="544" y="40" width="160" height="86" class="mg-hl mg8-only3"/>
+      <g class="mg8-from4">
+      <rect x="548" y="184" width="152" height="78" class="mg-blue"/>
+      <text x="624" y="217" class="mg-b mg-c mg-tblue" style="font-size:16px">4. 새 로트 예측</text>
+      <text x="624" y="241" class="mg-s mg-c mg-mu">모델로 먼저 볼 로트</text>
+      </g>
+      <rect x="544" y="180" width="160" height="86" class="mg-hl mg8-only4"/>
+      <g class="mg8-from5">
+      <rect x="372" y="184" width="152" height="78" class="mg-orange"/>
+      <text x="448" y="217" class="mg-b mg-c mg-torange" style="font-size:16px">5. 해석 초안 확인</text>
+      <text x="448" y="241" class="mg-s mg-c mg-mu">숫자·원인 직접 확인</text>
+      </g>
+      <rect x="368" y="180" width="160" height="86" class="mg-hl mg8-only5"/>
+      <g class="mg8-from6">
+      <rect x="20" y="184" width="328" height="78" class="mg-green"/>
+      <text x="184" y="217" class="mg-b mg-c mg-tgreen" style="font-size:16px">결론 보고 문장</text>
+      <text x="184" y="241" class="mg-s mg-c mg-mu">먼저 볼 로트와 확인한 숫자로 쓴다</text>
+      </g>
+      <rect x="16" y="180" width="336" height="86" class="mg-hl mg8-only6"/>
+      <g class="mg8-from1">
+      <line x1="174" y1="83" x2="185" y2="83" class="mg-lnb"/>
+      <polygon points="194,83 185,87.5 185,78.5" class="mg-ahb"/>
+      </g>
+      <g class="mg8-from2">
+      <line x1="350" y1="83" x2="361" y2="83" class="mg-lnb"/>
+      <polygon points="370,83 361,87.5 361,78.5" class="mg-ahb"/>
+      </g>
+      <g class="mg8-from3">
+      <line x1="526" y1="83" x2="537" y2="83" class="mg-lnb"/>
+      <polygon points="546,83 537,87.5 537,78.5" class="mg-ahb"/>
+      </g>
+      <g class="mg8-from4">
+      <line x1="624" y1="124" x2="624" y2="173" class="mg-lnb"/>
+      <polygon points="624,182 619.5,173 628.5,173" class="mg-ahb"/>
+      </g>
+      <g class="mg8-from5">
+      <line x1="546" y1="223" x2="535" y2="223" class="mg-lnb"/>
+      <polygon points="526,223 535,218.5 535,227.5" class="mg-ahb"/>
+      </g>
+      <g class="mg8-from6">
+      <line x1="370" y1="223" x2="359" y2="223" class="mg-lnb"/>
+      <polygon points="350,223 359,218.5 359,227.5" class="mg-ahb"/>
+      </g>
+      <text x="272" y="146" class="mg-s mg-c mg-torange mg8-from1">파일은 올리지 않고 열 설명만</text>
+      <text x="448" y="284" class="mg-s mg-c mg-tred mg8-from5">AI 숫자는 지어낸 것일 수 있다</text>
+      <text x="184" y="284" class="mg-s mg-b mg-c mg-tblue mg8-from6">원인 단정 → 근거 확인</text>
+      <rect x="14" y="302" width="692" height="30" class="mg-gray"/>
+      <text x="28" y="322" class="mg8-only0 mg-b" style="font-size:14px">출발: 팀장의 문제 — 새 로트 10개 중 어느 것부터 점검할까?</text>
+      <text x="28" y="322" class="mg8-only1 mg-b" style="font-size:14px">단계 1: AI에게 Orange 위젯 순서를 묻는다 — 파일은 올리지 않는다</text>
+      <text x="28" y="322" class="mg8-only2 mg-b" style="font-size:14px">단계 2: Orange로 빈칸·튀는 값을 점검하고 정리한다</text>
+      <text x="28" y="322" class="mg8-only3 mg-b" style="font-size:14px">단계 3: 지난 기록에서 설비별·작업조별 합격률을 비교한다</text>
+      <text x="28" y="322" class="mg8-only4 mg-b" style="font-size:14px">단계 4: 모델로 새 로트를 예측해 먼저 볼 로트를 고른다</text>
+      <text x="28" y="322" class="mg8-only5 mg-b" style="font-size:14px">단계 5: AI 해석 초안의 숫자·원인 표현을 Orange 화면과 맞춰 고친다</text>
+      <text x="28" y="322" class="mg8-only6 mg-b" style="font-size:14px">결론: 확인한 숫자로 보고 문장을 쓴다 (원인 단정 → 근거 확인)</text>
+      <text x="28" y="322" class="mg8-only7 mg-b" style="font-size:14px">결과: AI는 계획과 초안만, 실행과 확인은 내가 Orange로 한다</text>
+    </svg>
+    <figcaption class="img-caption"><b>AI와 함께 분석하는 5단계</b> 주황 칸은 AI가 주는 <b>초안</b>, 파란 칸은 내가 Orange로 하는 <b>확인</b>이다. 숫자는 늘 Orange 화면에서 읽고, 초안의 원인 단정은 근거 수치가 있으면 "원인 후보"로 고치고, 근거가 없으면 뺀다. 교육용 가상 데이터로 한 연습이다.</figcaption>
+  </figure>
+  <!-- /mg:w10-ai-steps -->
 
-    <div class="step"><div class="num">1</div><div class="content"><b>모델 세 개 놓기</b> — 왼쪽 Model 묶음에서 <code>Tree</code>·<code>kNN</code>·<code>Logistic Regression</code>을 끌어 와 각각 위 File에 잇는다.
-    Tree를 더블클릭해 <b>Limit the maximal tree depth to</b>를 4로 바꾼다(9차시와 같은 깊이). 옆 체크박스는 이미 켜져 있으니 숫자 100만 4로 바꾼다. 깊이를 그대로 두면 오류 없이 결과가 달라진다.</div></div>
-    <div class="step"><div class="num">2</div><div class="content"><b>세 모델 채점하기</b> — Evaluate 묶음의 <code>Test and Score</code>를 위 File에 잇고, 세 모델을 모두 Test and Score에 잇는다.
-    창 왼쪽 <b>Cross validation</b>의 <b>Number of folds</b>를 10으로 바꾼다(새로 놓으면 5로 시작한다). 오른쪽 표에서는 <b>CA</b>(정확도) 한 칸만 본다. AUC·F1 같은 다른 열은 오늘 보지 않는다. 세 모델의 CA를 메모해 두었다가 PART 3에서 실습지 문제 3에 옮겨 적는다.</div></div>
-    <img class="chart-img" src="../../assets/images/orange3/week10_03_newwafers_test_and_score.png"
-         alt="워밍업 Test and Score 창에서 세 모델의 CA"
-         data-shot="week10_1_newwafers_done.ows의 Test and Score (평가) 창 — 왼쪽 Number of folds 10, 오른쪽 표에 Tree·kNN·Logistic Regression 세 줄의 CA(0.942·0.900·0.971)가 보이게">
-    <div class="step"><div class="num">3</div><div class="content"><b>새 웨이퍼 예측하기</b> — Evaluate 묶음의 <code>Predictions</code>를 <b>아래 File</b>에 잇고, 세 모델도 Predictions에 잇는다.
-    창 오른쪽에 모델 이름 열 세 개가 생긴다. 줄(웨이퍼)마다 세 답이 같은지 본다.
-    새 데이터에는 정답 열이 없어 처음에는 확률이 안 보입니다. Predictions 표 위의 Show probabilities for를 Classes known to the model로 바꾸세요. 그러면 답 앞에 확률 네 개(정상 : 중심형 : 가장자리형 : 스크래치형 순서)가 보인다.</div></div>
-    <div class="callout practice"><b class="tag">해보기</b> 세 모델의 답이 서로 다른 웨이퍼를 찾아 웨이퍼ID를 메모해 둔다(PART 3에서 실습지 문제 3에 옮겨 적는다). 위 그림에서 그 웨이퍼의 맵도 찾아본다.</div>
-    <button class="reveal-btn">읽은 숫자 확인 보기</button>
-    <div class="answer-box">
-      CA: Tree <b>0.942</b> · kNN <b>0.900</b> · Logistic Regression <b>0.971</b>. 학습용 240장 중 정상이 120장이라 모두 "정상"이라고 찍으면 기준선은 <b>50%</b>(0.50)다. 단서가 뚜렷한 웨이퍼 모양은 세 모델 모두 기준선보다 훨씬 잘 맞힌다.<br>
-      답이 갈린 웨이퍼: <b>N-04</b>(Tree 스크래치형 / kNN·Logistic Regression 정상), <b>N-10</b>(Tree 중심형 / kNN·Logistic Regression 정상).
-      N-07은 세 모델 모두 중심형이지만 Tree·Logistic Regression의 중심형 확률이 0.57로 높지 않다.
-      <img class="chart-img" src="../../assets/images/orange3/week10_04_newwafers_predictions.png"
-           alt="워밍업 Predictions 창에서 N-04와 N-10의 답이 모델마다 다른 모습"
-           data-shot="week10_1_newwafers_done.ows의 Predictions (예측) 창 — Show probabilities for를 Classes known to the model로 바꾼 상태. 웨이퍼 10줄과 Tree·kNN·Logistic Regression 세 열이 보이고, N-04와 N-10 줄의 답이 모델마다 다른 것이 보이게">
-    </div>
-    <div class="callout success"><b class="tag">워밍업에서 본 것</b> 모델끼리 의견이 갈리는 웨이퍼가 사람이 다시 봐야 할 웨이퍼다. 예측은 판단을 돕는 도구이지, 사람의 확인을 대신하지 않는다.</div>
-    <div class="callout concept">
-      <b class="tag">찾아보기</b>
-      <p><b>검색어</b> <code>예측 확률의 뜻</code></p>
-      <div class="code-block">
-        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
-        <pre style="white-space:pre-wrap;"><code>분류 모델이 어떤 웨이퍼를 '중심형일 확률 0.6'이라고 답했을 때 이 숫자가 무슨 뜻인지 데이터 분석을 처음 배우는 사람에게 3문장으로 설명해줘. 이 숫자가 실제로 맞을 확률을 보장하는지도 알려줘.</code></pre>
-      </div>
-    </div>
-
-    <h3>반도체 — 공정 기록 모델 셋을 기준선과 함께 읽기</h3>
-    <p>9차시 공정 기록(학습용 750행)과 아직 검사하지 않은 새 로트 9개다. <b>File → Open</b>으로 <code>week10_2_newlots_start.ows</code>를 연다. 위 File = 학습용, 아래 File = 새 로트다.
-    설비 4대(EQ-01~EQ-04)가 여러 공정 기록을 함께 남겼다.</p>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>열</th><th>공장에서의 뜻</th></tr></thead>
-        <tbody>
-          <tr><td><code>공정명</code>, <code>설비번호</code></td><td>어떤 작업을 어느 기계에서 했나. Orange에서는 이름표(meta)로만 두고 단서로 쓰지 않는다</td></tr>
-          <tr><td><code>온도_C</code>, <code>압력_Pa</code>, <code>가스유량_slm</code>, <code>두께_nm</code>, <code>진공도_mTorr</code>, <code>습도_pct</code></td><td>단서 열 6개(Feature). <code>_C</code> = 섭씨 도, <code>_nm</code> = 나노미터, <code>_pct</code> = 퍼센트, <code>_slm</code> = 분당 가스 양, <code>_Pa</code>·<code>_mTorr</code> = 압력 단위(이 가상 데이터의 압력 값은 크기를 해석하지 않는다)</td></tr>
-          <tr><td><code>합격여부</code></td><td>⑦ 검사 결과(정답 열, Label). <b>1 = 합격, -1 = 불합격</b>. 새 로트 파일에는 이 열이 없다</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="step"><div class="num">1</div><div class="content"><b>세 모델 채점하기</b> — 워밍업과 같은 순서로 Tree(깊이 4)·kNN·Logistic Regression을 위 File에 잇고, Test and Score(Number of folds 10)에 세 모델을 모두 잇는다.
-    CA: Tree <b>0.783</b> · kNN <b>0.769</b> · Logistic Regression <b>0.793</b>.</div></div>
-    <img class="chart-img" src="../../assets/images/orange3/week10_05_newlots_test_and_score.png"
-         alt="반도체 Test and Score 창에서 세 모델의 CA"
-         data-shot="week10_2_newlots_done.ows의 Test and Score (평가) 창 — 왼쪽 Number of folds 10, 오른쪽 표에 Tree·kNN·Logistic Regression 세 줄의 CA(0.783·0.769·0.793)가 보이게">
-    <p><b>기준선과 함께 읽기</b> — 학습용 750행 중 합격(1)이 595행이다. 모두 합격이라고 찍으면 595 ÷ 750 = <b>79.3%</b>(0.793)다.
-    세 모델 모두 이 기준선 근처다. 웨이퍼 모양(CA 0.90 이상, 기준선 50%)과 달리, 공정 기록 6개 열에는 합격·불합격을 가를 단서가 약하다.</p>
-    <div class="step"><div class="num">2</div><div class="content"><b>헷갈림 표 보기</b> — Test and Score에 <code>Confusion Matrix</code>를 잇는다. 창 왼쪽 목록에서 모델을 하나씩 눌러 바꿔 본다.
-    행 = 실제 답, 열 = 예측이다. 실제 -1 행의 예측 1 칸이 <b>놓친 불합격</b>이다.</div></div>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>모델</th><th>CA</th><th>실제 불합격 155건 중 놓친 수(예측 1)</th><th>불합격으로 예측한 수(예측 -1 열 합계)</th></tr></thead>
-        <tbody>
-          <tr><td>Tree</td><td>0.783</td><td>114</td><td>90</td></tr>
-          <tr><td>kNN</td><td>0.769</td><td>135</td><td>58</td></tr>
-          <tr><td>Logistic Regression</td><td>0.793</td><td>155</td><td><b>0</b></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <img class="chart-img" src="../../assets/images/orange3/week10_06_newlots_confusion_lr.png"
-         alt="Confusion Matrix에서 Logistic Regression을 고르자 불합격 예측 열이 모두 0인 모습"
-         data-shot="week10_2_newlots_done.ows의 Confusion Matrix (헷갈림 표) 창 — 왼쪽 목록에서 Logistic Regression (로지스틱 회귀)을 고른 상태. 실제 1 행 595 · 0, 실제 -1 행 155 · 0, 예측 -1 열 합계 0이 보이게">
-    <p><b>확인하기</b> — CA가 가장 높은 Logistic Regression은 750건을 <b>모두 합격</b>으로 예측했다. 불합격을 하나도 걸러 내지 않는데 정확도는 기준선(0.793)과 똑같다.
-    정확도 한 숫자로 모델을 고르면 이런 모델을 "가장 좋다"고 고를 수 있다.</p>
-    <div class="callout concept">
-      <b class="tag">찾아보기</b>
-      <p><b>검색어</b> <code>혼동행렬 읽는 법</code></p>
-      <div class="code-block">
-        <div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div>
-        <pre style="white-space:pre-wrap;"><code>공장 검사 결과를 예측하는 모델에서, 불합격 기록(로트)을 합격으로 잘못 예측하는 것과 합격 기록(로트)을 불합격으로 잘못 예측하는 것은 각각 어떤 문제가 생길 수 있는지 혼동행렬(confusion matrix)을 처음 배우는 사람에게 3문장으로 설명해줘.</code></pre>
-      </div>
-    </div>
-    <div class="step"><div class="num">3</div><div class="content"><b>새 로트 예측하기</b> — Predictions를 아래 File에 잇고 Tree를 Predictions에 잇는다. 9개 중 불합격(-1)으로 예측된 로트가 있을까? PART 2에서 파이썬으로 같은 9개를 예측한 뒤, <b>실습지 문제 4</b>에서 직접 확인하고 비교한다.</div></div>
+    <div class="callout danger"><b class="tag">하지 말 것 — CSV 파일 올리기</b> ChatGPT에는 CSV 파일을 올리지 않고 열 설명만 붙여 넣는다. 실제 회사 데이터라면 더더욱 올리지 않는다. 파일을 보지 않은 AI가 말한 숫자는 지어낸 것일 수 있다.</div>
   </section>
 
   <section class="block" id="part2">
-    <h2><span class="step-badge">PART 2</span> 파이썬 + ChatGPT — 새 로트 예측하고 보고서 검증하기</h2>
+    <h2><span class="step-badge">PART 2</span> AI와 Orange3로 풀어 가기</h2>
+    <p>다섯 단계로 푼다. 단계마다 "무엇을 했고, 화면에서 어떤 숫자를 읽었나"를 본다. 위젯은 모두 5~9차시에 써 본 것이다.</p>
 
-    <h3>9차시 모델 다시 만들기</h3>
-    <p>9차시에 만든 결정 트리 코드를 한 셀에 모았다. <b>이 셀을 먼저 실행해야</b> 아래에서 <code>model</code>을 쓸 수 있다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 9차시 모델 다시 만들기 (노트북 1단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
-
-df = pd.read_csv("week09_pass_fail_train.csv", encoding="utf-8").dropna()
-features = ["온도_C", "압력_Pa", "가스유량_slm", "두께_nm", "진공도_mTorr", "습도_pct"]
-X = df[features]
-y = df["합격여부"]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-
-model = DecisionTreeClassifier(max_depth=4, random_state=42)
-model.fit(X_train, y_train)
-acc = accuracy_score(y_test, model.predict(X_test))
-print(f"정확도: {round(acc * 100, 1)}%")</code></pre>
+    <div class="step"><div class="num">1</div><div class="content"><b>AI에게 계획 묻기</b> — 데이터 설명과 문제를 주고, Orange3 위젯 순서를 묻는다.</div></div>
+    <div class="code-block"><div class="code-label"><span>ChatGPT에 붙여 넣기 — 계획 묻기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>아래는 교육용 가상 데이터인 반도체 공정 기록의 설명이야. 파일은 올리지 않고 열 설명만 붙여 넣을게.
+아래 문제를 풀려면 Orange3에서 어떤 위젯을 어떤 순서로 이어야 하는지 5단계 이내의 계획을 세워 줘. 위젯 이름은 Orange3 화면의 영어 이름으로 쓰고, 내가 배운 위젯(File, Data Table, Column Statistics, Select Rows, Impute, Distributions, Pivot Table, Tree, Tree Viewer, Test and Score, Confusion Matrix, Predictions) 중에서만 골라 줘.
+- 지난 기록: week10_capstone_lots.csv(480행 13열), 한 행 = 로트 하나의 공정 기록과 검사 결과
+- 열: 날짜, 로트번호, 설비번호(EQ-01~EQ-04), 공정명(5종), 작업조(A조·B조·C조), 온도_C(섭씨 도), 두께_nm(나노미터), 진공도_mTorr, 진동_mm_s, 가스유량_slm, 습도_pct(퍼센트), 불량유형(불합격일 때만 적힘), 합격여부(1 = 합격, -1 = 불합격)
+- 새 로트: week10_capstone_new_lots.csv(10행), 같은 열에서 불량유형·합격여부만 없음(검사 전)
+- 문제: 새 로트 10개 중 어느 것부터 점검해야 할까? 지난 기록에서 근거를 찾고 싶어.</code></pre>
     </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">정확도: 80.3%</pre>
-    </div>
-    <ul class="pt-list">
-      <li>빈칸 행을 지운 735행을 학습용 588행(<code>X_train</code>, 연습문제)과 시험용 147행(<code>X_test</code>, 모의고사)으로 나눠, 학습용으로만 학습했다.</li>
-      <li>끝에서 두 번째 줄의 <code>model.predict(X_test)</code>가 오늘 배우는 함수다. 시험용 147개의 답을 모델이 맞혀 본 것이고, 그 답을 정답 <code>y_test</code>와 맞춰 정확도를 냈다.</li>
-    </ul>
-
-    <h3>새 로트 예측하기 — predict()</h3>
-    <p>새 로트 파일에는 정답(<code>합격여부</code>) 열이 없다. 모델이 맞혀야 할 대상이다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 새 로트 읽기 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>new_lots = pd.read_csv("week09_new_lots_to_predict.csv", encoding="utf-8")
-print(new_lots.shape)</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">(9, 8)</pre>
-    </div>
-    <p>9행 8열이다. 학습용 표의 9열에서 <code>합격여부</code> 하나가 빠졌다.</p>
-    <ul class="pt-list">
-      <li><code>model.predict(…)</code>는 표를 받아 줄마다 답(1 또는 -1)을 돌려준다. 시험 때 <code>X_test</code>를 넣었듯, 새 로트에도 <b>학습할 때와 같은 열 6개</b>(<code>features</code>)만 골라 넣는다.</li>
-      <li>돌려받은 답을 <code>new_lots["예측"] = …</code>로 새 열에 담는다(7차시에 새 열 만들기를 했다). <code>예측</code> 열도 <code>합격여부</code>와 같은 규칙이다: 1 = 합격, -1 = 불합격.</li>
-    </ul>
-    <div class="callout practice"><b class="tag">해보기</b> 노트북 2단계의 다음 셀에는 빈칸이 두 개 있다. 예측하는 함수 이름과, 학습 때 쓴 열 목록 변수 이름을 넣는다. 아래 결과와 같게 나오면 맞다.</div>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 새 로트 예측하고 예측 열 붙이기 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code># TODO: 예측하는 함수 이름과, 학습 때와 같은 열 목록 변수 이름을 채우세요.
-new_lots["예측"] = model.____(new_lots[____])
-print(new_lots[["공정명", "설비번호", "온도_C", "예측"]])</code></pre>
-    </div>
-    <button class="reveal-btn">빈칸 정답 보기</button>
-    <div class="answer-box"><code>predict</code>, <code>features</code> — <code>features</code>는 변수 이름이라 따옴표로 감싸지 않는다. <code>"features"</code>로 쓰면 <code>KeyError: 'features'</code>가 난다.</div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">  공정명   설비번호   온도_C  예측
-0  식각  EQ-02  294.5   1
-1  산화  EQ-02  301.5   1
-2  식각  EQ-04  289.8  -1
-3  포토  EQ-04  295.6   1
-4  식각  EQ-04  299.1   1
-5  포토  EQ-03  302.0   1
-6  산화  EQ-01  305.2   1
-7  산화  EQ-03  299.1   1
-8  세정  EQ-01  300.6   1</pre>
-    </div>
-    <p>맨 왼쪽 숫자는 0부터 센 행 번호라, <b>3번째 로트</b>가 <code>2</code>로 보인다. 그 로트(식각 · EQ-04 · 289.8도)만 -1(불합격)로 예측됐다.</p>
-    <p>불합격 예측 개수를 문장으로 보고한다. 7차시에 True/False를 더해 개수를 셌던 것과 같은 원리다. f-string 안에서는 열 이름을 작은따옴표 <code>'예측'</code>으로 쓴다(바깥 큰따옴표와 겹치지 않게).</p>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 불합격 예측 개수를 문장으로 (노트북 2단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(f"새 로트 {len(new_lots)}개 중 불합격 예측 {(new_lots['예측'] == -1).sum()}개")</code></pre>
-    </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">새 로트 9개 중 불합격 예측 1개</pre>
-    </div>
-    <p><b>확인하기</b> — 이 예측은 "3번째 로트부터 먼저 살펴보자"는 참고다. 예측은 확정 판정이 아니므로 모델이 좋든 나쁘든 9개 모두 ⑦ 검사는 그대로 한다(게다가 이 모델은 정확도가 기준선과 큰 차이가 없다).</p>
-
-    <h3>ChatGPT 체험 — 보고서의 틀린 곳 찾기</h3>
-    <p>오늘의 숫자를 ChatGPT에 주고 팀장에게 보낼 보고서를 써 달라고 한다. 노트북 4단계에 같은 프롬프트가 있다.</p>
-    <div class="code-block">
-      <div class="code-label"><span>ChatGPT에 붙여 넣기 — 복사해서 붙여 넣기 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
-      <pre style="white-space:pre-wrap;"><code>아래는 교육용 가상 데이터로 만든 반도체 공정 합격/불합격 예측 결과야. 팀장에게 보낼 3문장 보고서를 써 줘. 결과를 원인으로 단정하지 말고 "원인 후보"라는 표현을 쓰고, 마지막에 가상 데이터라는 점을 밝혀 줘.
-- 결정 트리 정확도(시험용 147개): 80.3%
-- 기준선(모두 합격이라고 찍었을 때의 정확도): 78.9%
-- Orange Confusion Matrix(결정 트리, 10겹 교차검증, 750건): 실제 불합격 155건 중 114건을 합격으로 예측(놓침)
-- 새 로트 9개 예측: 불합격 1개(3번째 로트), 합격 8개</code></pre>
-    </div>
-    <p>ChatGPT를 쓸 수 없으면 아래 응답 예시(노트북 4단계에도 같은 글이 있다)로 같은 활동을 한다. 내 ChatGPT 답을 받았다면 그 답도 같은 방법으로 검증한다.</p>
-    <div class="callout warn">
+    <button class="reveal-btn">계획 응답 예시 보기</button>
+    <div class="callout warn answer-box">
       <b class="tag">응답 예시 — 실제 AI 응답 아님 · 틀린 곳이 숨어 있음</b>
-      <p>새 로트 9개 중 결정 트리가 불합격으로 예측한 로트는 2개이며, 3번째 로트(식각·EQ-04, 온도 289.8도)가 그중 하나입니다.
-      모델 정확도는 80.3%로 모두 합격이라고 찍는 기준선 78.9%와 큰 차이가 없고, Orange 교차검증에서는 실제 불합격 155건 중 114건을 합격으로 놓쳤습니다.
-      3번째 로트는 온도가 낮아서 불합격이 생깁니다(이 결과는 교육용 가상 데이터로 만든 것입니다).</p>
-    </div>
-    <div class="callout practice"><b class="tag">틀린 곳 찾기</b>
       <ol>
-        <li>보고서 속 숫자에 모두 동그라미를 친다.</li>
-        <li>숫자마다 출처와 맞춰 본다. 정확도·기준선·불합격 예측 개수·로트 정보는 아래 노트북 4단계 셀 출력(파이썬)과, "155건 중 114건"은 PART 1 Confusion Matrix 표의 Tree 줄과 맞춘다. 80.3%·78.9%는 파이썬 숫자라 Orange 화면의 0.783·79.3%와 다른 것이 정상이다(아래 "나란히 보기" 표).</li>
-        <li>"~해서 ~생긴다"처럼 결과를 원인으로 못 박은 문장을 찾는다.</li>
+        <li>File 위젯으로 week10_capstone_lots.csv를 불러옵니다.</li>
+        <li>이 데이터에는 빈칸이 없으므로 정리 단계 없이 바로 분석합니다.</li>
+        <li>Pivot Table로 설비별·작업조별 합격 수를 세어 합격률을 비교합니다.</li>
+        <li>Tree를 잇고 Test and Score로 정확도를 확인합니다.</li>
+        <li>Tree와 새 로트 File을 Predictions에 이어, 불합격으로 예측된 로트를 찾습니다.</li>
       </ol>
     </div>
-    <div class="code-block">
-      <div class="code-label"><span>Python — 보고서 숫자 대조하기 (노트북 4단계)</span><button class="copy-btn">복사</button></div>
-      <pre><code>print(f"정확도: {round(acc * 100, 1)}%")
-print(f"기준선(모두 합격): {round((y_test == 1).mean() * 100, 1)}%")
-print(f"불합격 예측: {(new_lots['예측'] == -1).sum()}개")
-print(new_lots[new_lots["예측"] == -1][["공정명", "설비번호", "온도_C"]])</code></pre>
+    <button class="reveal-btn">고친 점 보기</button>
+    <div class="callout practice answer-box">
+      <b class="tag">고친 점</b> 2단계 "빈칸이 없으므로"는 파일을 보지 않은 AI의 추측이다. 실제로는 빈칸과 튀는 값이 있다(아래 단계 2에서 확인). 그래서 <b>점검과 정리를 맨 앞에</b> 둔다.
+      또 계획에 <b>기준선(Distributions)과 헷갈림 표(Confusion Matrix)</b>를 더한다. 정확도는 이 둘과 함께 읽는다(9차시).
     </div>
-    <div class="callout success">
-      <b class="tag">실행 결과</b>
-      <pre style="margin:.3rem 0 0;white-space:pre-wrap;">정확도: 80.3%
-기준선(모두 합격): 78.9%
-불합격 예측: 1개
-  공정명   설비번호   온도_C
-2  식각  EQ-04  289.8</pre>
-    </div>
-    <p>두 번째 줄의 기준선은 시험용 147개 중 합격(1)의 비율이다. True/False의 평균이 비율이 되는 것은 7차시에 배웠다.</p>
-    <button class="reveal-btn">틀린 곳 정답 보기</button>
-    <div class="answer-box">
-      <b>이 응답 예시의 두 곳은 연습을 위해 일부러 심은 오류다.</b> 나머지 숫자(80.3%, 78.9%, 155건 중 114건, 289.8도, 식각·EQ-04)는 모두 맞다.
-      <ol>
-        <li><b>틀린 숫자</b> — "불합격으로 예측한 로트는 <b>2개</b>" → 실제 출력은 <b>1개</b>다(3번째 로트만). 고친 문장: "새 로트 9개 중 결정 트리가 불합격으로 예측한 로트는 1개(3번째 로트, 식각·EQ-04)입니다."</li>
-        <li><b>원인 단정</b> — "온도가 낮아서 불합격이 생깁니다" → 그 로트의 온도가 9개 중 가장 낮은 것은 맞다. 그러나 아직 검사하지 않은 로트의 <b>예측</b>일 뿐이고, 함께 나타난 값이라는 것만으로 원인이라 할 수 없다.
-        고친 문장: "3번째 로트는 온도가 9개 중 가장 낮아(289.8도) 먼저 살펴볼 로트이며, 온도는 불합격의 원인 후보로 확인해 볼 값입니다." (9차시 Orange 트리의 첫 갈림길도 온도_C ≤ 293.8이었다.)</li>
-      </ol>
-      프롬프트대로 세 문장인 것도 맞다. 세 문장으로 다시 쓴 보고서는 실습지 문제 5에서 직접 쓴다.
-    </div>
-    <div class="callout warn"><b class="tag">AI가 쓴 글을 다룰 때</b> AI가 준 숫자는 직접 실행한 결과와 하나씩 맞춰 본다. 프롬프트에 "원인 후보라고 쓰라"고 적어도 단정 문장이 섞일 수 있다. 회사의 실제 데이터는 AI에 붙여 넣지 않는다.</div>
+    <div class="callout concept"> <b class="tag">찾아보기</b> <p><b>검색어</b> <code>프롬프트 잘 쓰는 법</code></p> <div class="code-block"><div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div> <pre style="white-space:pre-wrap;"><code>ChatGPT에게 데이터 분석 계획을 물을 때 프롬프트에 꼭 넣어야 할 정보(데이터 설명, 열 이름, 쓸 도구, 원하는 답의 형식)를 처음 배우는 사람에게 예시와 함께 4줄로 알려줘.</code></pre></div></div>
 
-    <h3>파이썬 결과와 Orange 결과 나란히 보기</h3>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th></th><th>파이썬(오늘 PART 2)</th><th>Orange(오늘 PART 1)</th></tr></thead>
-        <tbody>
-          <tr><td>학습한 데이터</td><td>빈칸 행을 지운 735행 중 학습용 588행</td><td>750행 전체(빈칸 포함)</td></tr>
-          <tr><td>트리 기본 설정</td><td>scikit-learn 결정 트리(깊이 4)</td><td>Orange Tree(깊이 4, 잎·분할 최소 개수 같은 다른 기본값은 조금 다름)</td></tr>
-          <tr><td>채점 방법</td><td>떼어 둔 시험용 147개</td><td>10겹 교차검증(750행을 10묶음으로 나눠 돌아가며 채점)</td></tr>
-          <tr><td>결정 트리 정확도</td><td>80.3%</td><td>0.783</td></tr>
-          <tr><td>기준선(모두 합격)</td><td>78.9%(시험용 147개 기준)</td><td>79.3%(750행 기준)</td></tr>
-          <tr><td>새 로트 불합격 예측</td><td>1개(3번째 로트)</td><td>(실습지 문제 4에서 직접 확인한다)</td></tr>
-        </tbody>
-      </table>
+    <div class="step"><div class="num">2</div><div class="content"><b>데이터 점검과 정리</b> — <code>week10_1_explore_start.ows</code>를 연다. File에 Column Statistics를 이어 <b>Missing</b>(빈칸)·<b>Max</b>·<b>Mean</b> 칸을 본다. 읽은 숫자: 480행, 빈칸 <b>14칸</b>(온도_C 5 · 진공도_mTorr 5 · 습도_pct 4), 온도 최댓값 <b>3028</b>(평균 317.27 — 튀는 값 3건 때문으로 보인다. 300 근처 값에서 소수점이 빠진 입력 실수로 추정). File → Select Rows(<code>온도_C</code> · is below · 1000) → Impute(Average/Most frequent)로 정리하면 <b>472행</b>, 빈칸 0이 된다. 입력 실수 3행과 함께 온도가 빈 5행도 빠진다(Select Rows의 숫자 조건은 빈칸 행을 통과시키지 않는다).</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week10_02_explore_column_statistics.png" alt="정리하기 전 Column Statistics 창. 열마다 Mean, Min, Max, Missing 칸이 보인다" data-shot="week10_1_explore_done.ows의 Column Statistics (열 통계) 창 전체 — 열 목록과 Mean · Min · Max · Missing 칸 머리글이 보이게(숫자를 읽을 행을 표시하지 않은 상태)">
+
+    <div class="step"><div class="num">3</div><div class="content"><b>지난 기록 비교</b> — Impute 뒤에 Pivot Table을 두 개 잇는다. Rows는 <code>설비번호</code> / <code>작업조</code>, Columns는 <code>합격여부</code>다(7차시). 1 칸 ÷ Total 칸으로 합격률을 계산한다. 설비별: EQ-01 83.6% · EQ-02 78.7% · EQ-03 80.0% · <b>EQ-04 58.7%</b>(가장 높은 설비와 <b>24.9%p</b> 차이). 작업조별: A조 78.3% · <b>B조 73.1%</b> · C조 75.7%(차이 <b>5.2%p</b>). → 작업조 차이보다 <b>설비 차이가 훨씬 크다</b>. 가장 낮은 무리는 늘 있으니, 차이의 크기를 견준다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week10_03_explore_pivot.png" alt="Pivot Table 창. Rows에 설비번호, Columns에 합격여부를 놓은 표" data-shot="week10_1_explore_done.ows의 Pivot Table (설비별) 창 전체 — 왼쪽 Rows 설비번호, Columns 합격여부, 오른쪽 표(설비 4줄 + Total 줄, 1 / -1 / Total 칸)가 함께 보이게">
+
+    <div class="step"><div class="num">4</div><div class="content"><b>모델로 새 로트 고르기</b> — <code>week10_2_predict_start.ows</code>를 연다. 위 File = 지난 기록 480행, 아래 File = 새 로트 10개다(9차시와 같은 흐름). 예측 캔버스는 정리하지 않은 원본 480행으로 학습한다(그래서 기준선의 분모가 480이다). Distributions 기준선(모두 합격이라고 찍었을 때) <b>75.8%</b>(364 ÷ 480). Tree(깊이 4) → Tree Viewer의 첫 질문은 <b><code>진공도_mTorr ≤ 4.49</code></b>, 그 옆 갈래에 진공도 5.49 초과, 그 아래 <b><code>진동_mm_s ≤ 0.641</code></b>이다. Test and Score(Number of folds 10) CA <b>0.902</b>, Confusion Matrix에서 실제 불합격 <b>116건 중 27건</b>을 합격으로 놓쳤다. Predictions(Show probabilities for → Classes known to the model): <b>NEW-03 → -1(불합격 확률 1.000)</b>, <b>NEW-06 → -1(0.562, 애매)</b>, 나머지 8개는 1. 1.000은 트리의 그 갈래에 있던 지난 기록이 거의 모두 불합격이었다는 뜻이지, 이 로트가 반드시 불합격이라는 뜻은 아니다.</div></div>
+    <img class="chart-img" src="../../assets/images/orange3/week10_04_predict_canvas.png" alt="예측용 Orange3 캔버스. 지난 기록 File과 새 로트 File이 있다" data-shot="week10_2_predict_start.ows를 연 캔버스 전체 — 위 File (학습: 공정 기록 480행), 아래 File (새 로트 10개) 두 위젯과 ①~③ 안내 메모가 보이게">
+
+    <div class="step"><div class="num">5</div><div class="content"><b>AI 해석 초안 확인하고 고치기</b> — 내가 읽은 숫자를 주고 보고 초안을 받는다. 그다음 초안을 <b>숫자 → 비교 대상 → 원인 표현 → 데이터에 없는 말</b> 순서로 Orange 화면과 맞춰 본다.</div></div>
+    <div class="code-block"><div class="code-label"><span>ChatGPT에 붙여 넣기 — 해석 초안 받기</span><button class="copy-btn">복사</button></div>
+      <pre style="white-space:pre-wrap;"><code>아래는 교육용 가상 데이터를 Orange3로 분석해 내가 직접 읽은 숫자야. 이 숫자만 써서 팀장에게 보낼 보고를 3문장으로 써 줘. 숫자를 바꾸거나 새로 만들지 말고, 결과를 원인으로 단정하지 말고 "원인 후보"라는 표현을 써 줘.
+- 문제: 새 로트 10개 중 어느 것부터 점검할까?
+- 점검 뒤 지난 기록 472행의 설비별 합격률: EQ-01 83.6%, EQ-02 78.7%, EQ-03 80.0%, EQ-04 58.7%
+- 작업조별 합격률(정리 뒤 472행): A조 78.3%, B조 73.1%, C조 75.7%
+- 기준선(모두 합격이라고 찍었을 때, 원본 480행): 75.8%, 결정 트리 정확도(CA, 10겹, 원본 480행으로 학습): 0.902, 실제 불합격 116건 중 27건 놓침
+- 불합격(-1)으로 예측된 새 로트: NEW-03(불합격 확률 1.000), NEW-06(0.562)</code></pre>
     </div>
-    <p><b>한 문장으로</b> — 학습한 데이터와 트리 기본 설정이 달라 같은 결정 트리라도 예측이 달라질 수 있고, 정확도는 채점 방법까지 달라 숫자가 조금씩 다르다. 그래서 보고서에는 숫자와 함께 어디서 나온 숫자인지도 적는다.</p>
+    <button class="reveal-btn">해석 초안 응답 예시 보기</button>
+    <div class="callout warn answer-box">
+      <b class="tag">응답 예시 — 실제 AI 응답 아님 · 틀린 곳이 숨어 있음</b>
+      <p>지난 기록에서 EQ-04의 합격률이 58.7%로 가장 낮았고, 작업조별로는 B조가 73.1%로 가장 낮았습니다. B조는 야간 작업이 많아서 집중력이 떨어져 불합격이 늘어난 것이므로, B조의 근무 방식을 바꿔야 합니다. 결정 트리의 정확도는 90.2%로 높아서 이 모델은 믿을 만하며, 불합격으로 예측된 NEW-03과 NEW-06부터 점검하겠습니다(이 결과는 교육용 가상 데이터로 만든 것입니다).</p>
+    </div>
+    <button class="reveal-btn">고친 점 보기</button>
+    <div class="callout practice answer-box">
+      <b class="tag">고친 점</b>
+      <p>0. 초안의 숫자 58.7%·73.1%·90.2%·75.8%는 Orange 화면과 같다(확인함). 프롬프트에서 "원인 후보"로 쓰라고 했는데도 단정 문장이 섞였다.</p>
+      <ol>
+        <li><b>"B조는 야간 작업이 많아서 …"</b> — 근무 시간대는 데이터에 없는 말(AI가 지어냄)이고, 결과를 원인으로 단정했다. 작업조 차이(5.2%p)는 설비 차이(24.9%p)보다 훨씬 작다.</li>
+        <li><b>"정확도는 90.2%로 높아서 믿을 만하며"</b> — 비교 대상이 빠졌다. 기준선 75.8%보다 높지만 실제 불합격 116건 중 27건을 놓쳤다는 것도 함께 말한다.</li>
+      </ol>
+      고친 문장 예: "작업조 차이(5.2%p)는 설비 차이(24.9%p)보다 훨씬 작아 근거가 약하다. 결정 트리 정확도 90.2%는 기준선 75.8%보다 높지만 불합격 116건 중 27건을 놓쳤으므로, 예측은 점검 순서의 참고로만 쓴다."
+    </div>
+    <div class="callout concept"> <b class="tag">찾아보기</b> <p><b>검색어</b> <code>AI 환각 숫자 검증</code></p> <div class="code-block"><div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div> <pre style="white-space:pre-wrap;"><code>AI 챗봇이 그럴듯하지만 사실이 아닌 숫자나 내용을 말하는 현상(환각)이 왜 생기는지, 데이터 분석 보고서를 쓸 때 이것을 어떻게 확인하면 좋은지 처음 배우는 사람에게 3문장으로 설명해줘.</code></pre></div></div>
   </section>
 
   <section class="block" id="part3">
-    <h2><span class="step-badge">PART 3</span> 실습지</h2>
-    <p><a href="worksheet.html">10차시 실습지</a>를 열고 순서대로 푼다.</p>
-    <ol>
-      <li><b>문제 1~2 (파이썬)</b> — 노트북 3단계. 시험용 147개를 <code>predict()</code>로 예측해 불합격 예측 개수를 세고, 실제 불합격 개수와 함께 한 문장으로 보고한다. 문제 2는 빈칸 없이 직접 쓴다.</li>
-      <li><b>문제 3 (Orange 워밍업)</b> — 새 웨이퍼 10장에서 세 모델의 CA와, 답이 갈린 웨이퍼를 적는다.</li>
-      <li><b>문제 4 (Orange 반도체)</b> — <code>week10_2_newlots_start.ows</code>에 Predictions를 이어 새 로트 9개의 예측을 읽고, 파이썬 결과와 다른 로트가 있는지 확인한다.</li>
-      <li><b>문제 5 (보고 문장)</b> — 응답 예시의 틀린 곳을 고쳐 팀장에게 보낼 최종 보고 문장 세 개를 쓴다.</li>
-    </ol>
-    <p>다 풀면 실습지의 "정답 보기"로 확인하고, 문제 5의 보고 문장을 옆 사람에게 읽어 준다.</p>
+    <h2><span class="step-badge">PART 3</span> 문제를 이렇게 해결했다</h2>
+    <p>단계 2~4에서 읽은 숫자로 먼저 볼 로트를 정해 보자.</p>
+
+    <h3>결론 보고 문장 3개</h3>
+    <div class="callout practice"><b class="tag">해보기</b> 팀장에게 보낼 문장 세 개를 직접 써 본다. ① 숫자와 비교 대상(기준선 또는 다른 무리) ② 결론(먼저 볼 로트)과 "원인 후보" ③ 가상 데이터 고지.</div>
+    <button class="reveal-btn">결론 문장 예시 보기</button>
+    <div class="answer-box">
+      <p>답: <b>NEW-03과 NEW-06부터 점검한다.</b> NEW-03은 진공도 5.78 mTorr로 연습용 기준(4.5~5.5) 밖이고, NEW-06은 합격률이 가장 낮았던 EQ-04에서 진동 0.720 mm/s(연습용 기준 0.64 초과)로 나왔다. 트리의 갈림길도 진공도와 진동이었다. 다만 진공도·진동은 불합격의 <b>원인 후보</b>일 뿐이고, 로트의 합격·불합격은 ⑦ 검사로, 진공도·진동이 실제 원인인지는 설비 점검으로 확인한다.</p>
+      <ol>
+        <li>지난 기록(정리 뒤 472행)에서 EQ-04 합격률은 58.7%로 다른 설비(78.7~83.6%)보다 낮았고, 결정 트리 정확도(원본 480행으로 학습)는 90.2%로 '모두 합격' 기준선 75.8%(364 ÷ 480)보다 높았다(불합격 116건 중 27건은 놓쳤다).</li>
+        <li>새 로트 중 NEW-03(진공도 5.78 mTorr, 연습용 기준 4.5~5.5 밖)과 NEW-06(EQ-04, 진동 0.720 mm/s, 연습용 기준 0.64 초과, 불합격 확률 0.562로 애매)을 먼저 점검한다. 트리도 진공도(≤ 4.49)와 진동(≤ 0.641)으로 나눴으므로 진공도와 진동(진동이 큰 설비 EQ-04도 함께)은 불합격의 원인 후보이며, 로트의 합격·불합격은 ⑦ 검사로, 진공도·진동이 실제 원인인지는 설비 점검으로 확인한다.</li>
+        <li>이 결과는 교육용 가상 데이터로 연습한 것이며, 설비와 공정의 짝은 단순화한 것이다.</li>
+      </ol>
+    </div>
+
+    <h3>오늘 분석 한눈에 보기</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>단계</th><th>쓴 도구</th><th>확인한 숫자</th><th>배운 차시</th></tr></thead>
+        <tbody>
+          <tr><td>단계 1 계획 묻기</td><td>ChatGPT</td><td>"빈칸 없음" → 점검부터로 고침</td><td>9차시</td></tr>
+          <tr><td>단계 2 점검과 정리</td><td>Column Statistics, Select Rows, Impute</td><td>빈칸 14칸, 온도 3028, 480 → 472행</td><td>5차시</td></tr>
+          <tr><td>단계 3 지난 기록 비교</td><td>Pivot Table</td><td>EQ-04 58.7%, 설비 차이 24.9%p &gt; 작업조 5.2%p</td><td>7차시</td></tr>
+          <tr><td>단계 4 예측</td><td>Distributions, Tree, Test and Score, Confusion Matrix, Predictions</td><td>기준선 75.8%, CA 0.902, 놓친 27건, NEW-03·NEW-06</td><td>9차시</td></tr>
+          <tr><td>단계 5 확인하고 고치기</td><td>ChatGPT + Orange 화면</td><td>기준선 누락 보충, "B조 야간 탓" 삭제(데이터에 없는 말, 작업조 차이 5.2%p는 근거 약함)</td><td>8·9차시</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>데이터 분석은 이런 일이다 — <b>문제를 정하고, 데이터를 점검하고, 비교하고, 예측하고, 확인한 숫자로 보고한다.</b> AI는 빠른 조수이고, 숫자를 확인하는 사람은 나다.</p>
+    <div class="callout concept"> <b class="tag">찾아보기</b> <p><b>검색어</b> <code>상관관계 인과관계 차이 예시</code></p> <div class="code-block"><div class="code-label"><span>ChatGPT에 물어보기 — 복사해서 붙여 넣기</span><button class="copy-btn">복사</button></div> <pre style="white-space:pre-wrap;"><code>공장 기록에서 어떤 설비의 불합격이 많고 그 설비의 진동 값도 컸다면, 이것만으로 "진동이 불합격의 원인"이라고 말할 수 없는 이유를 데이터 분석을 처음 배우는 사람에게 3문장으로 설명해줘. "원인 후보"를 확인하려면 현장에서 무엇을 더 보면 좋을지도 알려줘.</code></pre></div></div>
   </section>
 
   <section class="block">
     <h2>핵심 용어 카드</h2>
     <div class="term-grid">
-      <div class="term-card">
-        <h4>새 데이터 예측</h4><div class="en">predict()</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>학습을 마친 모델에 정답이 없는 표를 넣어 줄마다 답을 받는 것.</dd>
-          <dt>쉬운 비유</dt><dd>연습문제로 공부한 학생이 처음 보는 문제지를 푸는 것.</dd>
-          <dt>데이터에서의 예</dt><dd><code>model.predict(new_lots[features])</code> → 9개 중 -1이 1개</dd>
-          <dt>자주 하는 오해</dt><dd>새 표를 통째로 넣어도 된다고 생각한다. 학습 때와 같은 열(<code>features</code>)만 넣어야 한다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>kNN(이웃 투표)</h4><div class="en">k-Nearest Neighbors</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>숫자가 가장 비슷한 학습 데이터 k개(Orange 기본 5개)의 답으로 다수결을 하는 모델.</dd>
-          <dt>쉬운 비유</dt><dd>처음 보는 주문서와 가장 비슷한 지난 주문서 5장을 찾아, 그 피자들이 어땠는지 보고 정하기.</dd>
-          <dt>데이터에서의 예</dt><dd>새 웨이퍼 CA 0.900, 공정 기록 CA 0.769</dd>
-          <dt>자주 하는 오해</dt><dd>복잡한 모델일수록 늘 더 잘 맞힌다고 생각한다. 데이터에 단서가 약하면 어떤 모델도 기준선 근처다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>예측 확률</h4><div class="en">Predicted Probability</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>모델이 답마다 매긴 확률. 가장 큰 답이 예측으로 나온다.</dd>
-          <dt>쉬운 비유</dt><dd>일기예보의 "비 올 확률 30%" — 30%라서 "비 안 옴"으로 말해도, 우산을 챙길지는 따로 정한다.</dd>
-          <dt>데이터에서의 예</dt><dd>Orange Predictions에서 Show probabilities for → Classes known to the model</dd>
-          <dt>자주 하는 오해</dt><dd>확률이 실제로 맞을 확률을 보장한다고 생각한다. 모델이 얼마나 확신하는지일 뿐이다.</dd>
-        </dl>
-      </div>
-      <div class="term-card">
-        <h4>기준선</h4><div class="en">Baseline</div>
-        <dl>
-          <dt>한 줄 설명</dt><dd>아무 단서 없이 가장 흔한 답(모두 합격)으로 찍었을 때의 정확도. 모델 정확도를 이 숫자와 비교한다.</dd>
-          <dt>쉬운 비유</dt><dd>시험에서 모든 문제를 3번으로 찍었을 때의 점수.</dd>
-          <dt>데이터에서의 예</dt><dd>시험용 147개 78.9%, Orange 750행 79.3%</dd>
-          <dt>자주 하는 오해</dt><dd>정확도 80%면 좋은 모델이라고 생각한다. 기준선이 79%라면 거의 찍은 것과 같다.</dd>
-        </dl>
-      </div>
+      <div class="term-card"><h4>프롬프트</h4><div class="en">Prompt</div>
+        <dl> <dt>한 줄 설명</dt><dd>AI에게 주는 요청 문장. 데이터 설명·열 이름·쓸 도구·원하는 형식을 함께 적는다.</dd> <dt>쉬운 비유</dt><dd>택배 송장 — 주소가 자세할수록 엉뚱한 곳으로 가지 않는다.</dd> <dt>데이터에서의 예</dt><dd>"교육용 가상 데이터", 열 13개 설명, "배운 위젯 중에서만", "5단계 이내"</dd> <dt>자주 하는 오해</dt><dd>"원인 후보로 써 줘"라고 적으면 AI가 꼭 지킨다고 생각한다. 그래도 단정 문장이 섞일 수 있다.</dd> </dl></div>
+      <div class="term-card"><h4>AI가 지어낸 숫자</h4><div class="en">Hallucination</div>
+        <dl> <dt>한 줄 설명</dt><dd>AI가 그럴듯하지만 데이터에 없는 숫자나 사실을 말하는 것. 흔히 "환각"이라고 부른다.</dd> <dt>쉬운 비유</dt><dd>답을 모르는데 자신 있게 말하는 친구.</dd> <dt>데이터에서의 예</dt><dd>파일을 보지 않고 말한 "빈칸 없음", 열에 없는 "야간 작업" 이야기</dd> <dt>자주 하는 오해</dt><dd>말투가 자신 있으면 맞는 숫자라고 생각한다. 숫자는 Orange 화면으로 하나씩 확인한다.</dd> </dl></div>
+      <div class="term-card"><h4>원인 후보</h4><div class="en">Candidate Cause</div>
+        <dl> <dt>한 줄 설명</dt><dd>결과와 함께 나타나서 원인일 수도 있지만, 데이터만으로는 확정할 수 없는 값.</dd> <dt>쉬운 비유</dt><dd>용의자 — 범인일 수 있지만, 확인 전까지는 범인이 아니다.</dd> <dt>데이터에서의 예</dt><dd>합격률이 낮은 설비 EQ-04, 트리 갈림길에 나온 진공도·진동</dd> <dt>자주 하는 오해</dt><dd>모델이 갈림길에 쓴 열이면 원인이라고 생각한다. 함께 나타났다는 뜻까지다.</dd> </dl></div>
     </div>
-  </section>
-
-  <section class="block">
-    <h2>데이터</h2>
-    <ul class="pt-list">
-      <li><code><a href="../../data/weekly/week09/week09_orange_wafer_patterns.csv" target="_blank" rel="noopener">week09_orange_wafer_patterns.csv</a></code> — 240행 6열(PART 1 워밍업 학습용, 9차시와 같은 파일. Orange는 <code>orange/</code> 폴더의 <code>.tab</code>을 연다).
-        <b>공정 지도 위치: ⑦ EDS 웨이퍼 맵 요약.</b></li>
-      <li><code><a href="../../data/weekly/week10/week10_orange_new_wafers.csv" target="_blank" rel="noopener">week10_orange_new_wafers.csv</a></code> — 10행 5열(PART 1 워밍업 새 데이터, 정답 열 없음).
-        <b>공정 지도 위치: ⑦ EDS 새 웨이퍼 맵 요약.</b></li>
-      <li><code><a href="../../data/weekly/week09/week09_pass_fail_train.csv" target="_blank" rel="noopener">week09_pass_fail_train.csv</a></code> — 750행 9열(빈칸 있는 행을 지우면 735행)(PART 1·2·3 학습용). 설비 4대가 여러 공정 기록을 함께 남겼다.
-        <b>공정 지도 위치: ②~⑤ + 세정 공정 조건 → ⑦ 결과.</b></li>
-      <li><code><a href="../../data/weekly/week09/week09_new_lots_to_predict.csv" target="_blank" rel="noopener">week09_new_lots_to_predict.csv</a></code> — 9행 8열(PART 1·2·3 새 데이터, 정답 열 없음).
-        <b>공정 지도 위치: ②~⑤ + 세정을 마쳤지만 아직 ⑦ 검사 전인 새 로트.</b></li>
-      <li>열 설명: <a href="../../data/data_dictionary/week10_dictionary.html">10차시 데이터 설명서</a>, <a href="../../data/data_dictionary/week09_dictionary.html">9차시 데이터 설명서</a></li>
-    </ul>
   </section>
 
   <section class="block">
     <h2>주의할 점 &amp; 자주 발생하는 오류</h2>
-    <div class="callout danger">
-      <b class="tag">오류 1 — 새 데이터의 열 구성이 학습 때와 다름</b> <code>model.predict(new_lots)</code>처럼 표를 통째로 넣으면
-      <code>ValueError: The feature names should match those that were passed during fit.</code>가 난다. 열이 하나 빠지거나 순서가 바뀌어도 같다.
-      학습 때와 같은 열 목록 <code>features</code>로 골라 넣는다.
-    </div>
-    <div class="callout danger">
-      <b class="tag">오류 2 — 1단계 셀을 실행하지 않음</b> 노트북을 새로 열고 2단계부터 실행하면 <code>NameError: name 'model' is not defined</code>가 난다.
-      1단계부터 위에서 아래로 다시 실행한다.
-    </div>
-    <div class="callout danger">
-      <b class="tag">오류 3 — Predictions에 모델을 잇지 않음(오류 메시지 없음)</b> Orange Predictions에 새 데이터 File만 이으면 데이터 표만 보이고 예측 열이 생기지 않는다.
-      모델 위젯(Tree 등)에서 Predictions로 선을 하나 더 잇는다. 확률이 안 보이면 Predictions 표 위의 Show probabilities for를 Classes known to the model로 바꾼다.
-    </div>
-    <div class="callout warn">
-      <b class="tag">빈칸을 그대로 두고 실행하면</b> 노트북의 <code>____</code>를 채우지 않으면 <code>AttributeError: 'DecisionTreeClassifier' object has no attribute '____'</code>나
-      <code>NameError: name '____' is not defined</code>가 난다. 빈칸을 아직 안 채웠다는 뜻이다.
-      2단계 빈칸을 채우지 않고 아래 셀까지 실행하면 <code>KeyError: '예측'</code>가 이어서 난다(<code>예측</code> 열이 아직 없다). 4단계 숫자 대조 셀도 두 줄만 찍고 같은 오류로 멈춘다. 2단계 빈칸 셀을 먼저 채워 실행한다.
-      불합격 숫자를 <code>"-1"</code>처럼 따옴표로 감싸면 오류 없이 0개가 나온다. <code>예측</code> 열의 값은 글자가 아니라 숫자 -1이다.
-    </div>
+    <div class="callout danger"> <b class="tag">1 — Select Rows 뒤 행이 생각보다 더 줄었다(오류 메시지 없음)</b> 숫자 조건은 그 열이 빈칸인 행도 함께 뺀다. 튀는 값 3행만 빼려 했는데 472행이 된 것은 이 때문이다. <code>불량유형</code>의 빈칸은 합격 로트라 비어 있는 것이 정상이다. </div>
+    <div class="callout danger"> <b class="tag">2 — Predictions에 확률이 안 보인다</b> 표 위의 Show probabilities for를 Classes known to the model로 바꾼다. 새 로트 File은 Test and Score에 잇지 않는다(채점할 정답이 없다). </div>
   </section>
 
   <section class="block">
     <h2>결과 정리 &amp; 퀴즈</h2>
-    <ul class="pt-list">
-      <li>새 웨이퍼(워밍업): 세 모델 모두 CA 0.90 이상으로 기준선 50%(정상 120/240)보다 훨씬 높았지만, 몇몇 웨이퍼에서는 답이 갈렸다 → 그 웨이퍼는 사람이 다시 본다.</li>
-      <li>공정 기록(반도체): 세 모델 CA 0.769~0.793이 모두 기준선 79.3% 근처였다. CA가 가장 높은 Logistic Regression은 불합격을 하나도 걸러 내지 않았다.</li>
-      <li>파이썬 <code>predict()</code>: 새 로트 9개 중 불합격 예측 1개(3번째 로트, 식각 · EQ-04 · 289.8도).</li>
-      <li>ChatGPT 응답 예시: 틀린 숫자 1곳과 원인 단정 1곳을 찾아 고쳤다. AI가 준 숫자는 직접 실행해 확인한다.</li>
-    </ul>
     <div class="callout success">
       <b class="tag">오늘의 반도체 이해 포인트</b>
       <ul class="pt-list">
-        <li>새 로트 예측은 ⑦ 검사 전에 "어느 로트부터 먼저 살펴볼지" 정하는 데 쓰는 참고 도구다. 모델이 좋든 나쁘든 ⑦ 검사는 그대로 한다 — 모델은 순서를 정하는 일을 돕지, 검사를 대신하지 않는다.</li>
-        <li>모델끼리 답이 갈리는 웨이퍼는 사람이 웨이퍼 맵을 다시 본다. 웨이퍼 불량 모양은 어느 공정·설비를 살펴볼지 가리키는 단서이고, 그 공정·설비도 원인 후보일 뿐이다. 새 로트 예측이 맞더라도 모델이 참고한 값(새 로트의 온도 등)은 불합격의 원인 후보다.</li>
+        <li>설비 차이와 센서 값(진공도·진동)을 함께 보면 원인 후보를 좁힐 수 있다. 하지만 합격률이 낮은 설비에서 진동도 컸다면, 이 기록만으로는 어느 쪽인지 가를 수 없다 — 확정은 현장 확인으로 한다.</li>
+        <li>예측은 ⑦ EDS 검사 <b>전에</b> 어느 로트를 먼저 볼지 정하는 참고다. 예측이 -1이어도 불합격이 확정된 것은 아니고, ⑦ 검사는 그대로 한다.</li>
       </ul>
     </div>
     <p>복습 문제 전체는 <code>quiz.json</code>(수업 후 자율 복습)에 있다. 아래는 그중 일부다.</p>
-
-    <div class="quiz-item">
-      <div class="q">Q1. (객관식) 반도체 Test and Score에서 Logistic Regression의 CA가 0.793으로 세 모델 중 가장 높았다. Confusion Matrix를 보니 불합격 예측 열이 모두 0이었다. 가장 알맞은 해석은?</div>
-      <ul class="options">
-        <li>A. 불합격을 가장 잘 걸러 내는 모델이다</li>
-        <li>B. 모두 합격이라고 찍은 것과 같아서, 정확도가 기준선(79.3%)과 똑같이 나왔다</li>
-        <li>C. 불합격 기록이 데이터에 하나도 없다</li>
-        <li>D. Confusion Matrix가 잘못 연결됐다</li>
-      </ul>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: B. 750건을 모두 합격으로 예측하면 맞히는 수는 합격 595건이다. 595 ÷ 750 = 0.793 = 기준선. 정확도 한 숫자로 모델을 고르면 이런 모델을 고를 수 있다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q2. (객관식) 새 웨이퍼 N-04를 Tree는 스크래치형, kNN과 Logistic Regression은 정상이라고 답했다. 가장 알맞은 행동은?</div>
-      <ul class="options">
-        <li>A. 다수결로 정상이라고 확정한다</li>
-        <li>B. CA가 가장 높은 Logistic Regression의 답을 정답으로 기록한다</li>
-        <li>C. 모델끼리 의견이 갈린 웨이퍼이므로 사람이 웨이퍼 맵을 다시 본다</li>
-        <li>D. 모델 셋 다 틀렸으니 이 웨이퍼는 버린다</li>
-      </ul>
-      <button class="reveal-btn">정답 보기</button>
-      <div class="answer-box">정답: C. 모델끼리 답이 갈리는 웨이퍼가 사람이 다시 봐야 할 웨이퍼다. 예측은 판단을 돕는 도구다.</div>
-    </div>
-
-    <div class="quiz-item">
-      <div class="q">Q3. (서술) 오늘 새 로트 예측 결과를 팀장에게 한 문장으로 보고해 보자. "원인 후보"와 가상 데이터 고지를 넣는다.</div>
-      <button class="reveal-btn">예시 답안 보기</button>
-      <div class="answer-box">"새 로트 9개 중 결정 트리가 불합격으로 예측한 로트는 1개(3번째 로트, 식각·EQ-04)라 먼저 살펴보겠으며, 모델 정확도가 기준선과 큰 차이가 없어 참고로만 쓰고 온도는 불합격의 원인 후보로 확인하겠습니다."</div>
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>핵심 질문 → 데이터 연결</h2>
-    <ul class="pt-list">
-      <li><b>질문</b>: 내가 만든 모델은 처음 보는 새로운 데이터에서도 믿을 만할까?</li>
-      <li><b>모델끼리 비교(Orange)</b>: 웨이퍼 모양처럼 단서가 뚜렷하면 세 모델 모두 CA 0.90 이상으로 기준선 50%보다 훨씬 높다. 공정 기록은 세 모델 모두 기준선(79.3%) 근처였다.</li>
-      <li><b>새 데이터 예측(파이썬·Orange)</b>: 실습지 문제 1~4에서 직접 구한다.
-        <button class="reveal-btn">실습지 결과 보기</button>
-        <div class="answer-box">시험용 147개 중 실제 불합격 31개, 불합격 예측 16개다. 새 로트는 파이썬이 3번째 로트 1개를 불합격으로 예측했고, Orange Tree는 9개 모두 합격으로 예측했다(3번째 로트의 불합격 확률 0.26이 9개 중 가장 높다).
-        새 웨이퍼는 N-04·N-10에서 모델끼리 답이 갈렸다.</div></li>
-      <li><b>답</b>: "믿을 만하다"고 한마디로 말할 수 없다. 기준선과 함께 읽고, 모델끼리 답이 갈리거나 도구마다 결과가 다른 곳은 사람이 다시 본다. 예측은 어느 로트부터 살펴볼지 정하는 참고이고, 그 단서는 원인 후보다.</li>
-    </ul>
+    <div class="quiz-item"> <div class="q">Q1. (객관식) AI가 "이 데이터에는 빈칸이 없으므로 정리 없이 분석합니다"라고 했다. 가장 먼저 확인할 Orange 화면은?</div> <ul class="options"><li>A. Tree Viewer의 첫 질문</li><li>B. Column Statistics의 Missing 칸</li><li>C. Predictions의 확률</li><li>D. AI가 말했으니 확인하지 않는다</li></ul> <button class="reveal-btn">정답 보기</button> <div class="answer-box">정답: B. 열마다 빈칸 개수는 Missing 칸에 나온다. 파일을 보지 않은 AI의 "빈칸 없음"은 확인 전까지 믿지 않는다.</div> </div>
+    <div class="quiz-item"> <div class="q">Q2. (객관식) 결정 트리 정확도(CA)가 0.902였다. 보고 문장에 함께 넣어야 할 숫자는?</div> <ul class="options"><li>A. 기준선(모두 합격이라고 찍었을 때 75.8%)과 놓친 불합격 수</li><li>B. 트리의 nodes 수</li><li>C. 새 로트의 개수만</li><li>D. 없다 — 90%가 넘으면 믿을 만하다</li></ul> <button class="reveal-btn">정답 보기</button> <div class="answer-box">정답: A. 정확도는 기준선과 함께 읽고(9차시), Confusion Matrix에서 놓친 불합격이 몇 건인지도 함께 말한다.</div> </div>
   </section>
 
   <section class="block">
     <h2>과정을 마치며</h2>
-    <p>신입 데이터 담당자의 10일이 끝났다. 공장 기록 40건을 손으로 세던 첫날부터, 처음 보는 로트를 예측하고 그 보고서를 검증한 오늘까지의 큰 줄기다.</p>
-    <p><b>기록 → 표 → 정리 → 그림 → 비교 → 원인 후보 → 예측</b></p>
+    <p>신입 데이터 담당자의 10일이 끝났다. 공장 기록 40건을 손으로 세던 첫날부터, 새 로트 중 먼저 볼 로트를 숫자로 골라 보고한 오늘까지의 큰 줄기다.</p>
     <div class="tablewrap">
       <table>
-        <thead><tr><th>차시</th><th>큰 줄기</th><th>한 문장</th><th>공정 지도에서</th></tr></thead>
+        <thead><tr><th>차시</th><th>큰 줄기</th><th>한 문장</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td>기록</td><td>공장 기록표 40건의 합격·불합격을 변수와 f-string으로 한 문장에 담았다.</td><td>②~⑤ + 세정 설비 기록(①~⑧ 공정 지도 첫 소개)</td></tr>
-          <tr><td>2</td><td>기록</td><td>설비 온도 여러 개를 리스트에, 이름표 붙은 값을 딕셔너리에 담았다.</td><td>②~⑤ + 세정 설비 기록</td></tr>
-          <tr><td>3</td><td>기록</td><td><code>if</code>·<code>for</code>·함수로 연습용 기준 판정을 컴퓨터에 맡겼다.</td><td>②~⑤ + 세정 설비 기록</td></tr>
-          <tr><td>4</td><td>표</td><td>Pandas로 CSV를 표로 읽고, 조건으로 필요한 행만 골랐다.</td><td>①~⑧ 공정 흐름표, ②~⑤ + 세정</td></tr>
-          <tr><td>5</td><td>정리</td><td>빈칸·중복·튀는 값을 정리하고, 채우기 전에 튀는 값부터 확인했다.</td><td>②~⑥의 클린룸, ②~⑤ + 세정</td></tr>
-          <tr><td>6</td><td>그림</td><td>그래프와 웨이퍼 맵으로 표에서 안 보이던 모양을 봤다.</td><td>⑦ EDS 웨이퍼 맵, ②~⑤ + 세정 설비 기록</td></tr>
-          <tr><td>7</td><td>비교</td><td>설비별로 묶어 합격률과 불량 유형을 비교했다.</td><td>④ 식각 설비 → ⑦ EDS 결과, ②~⑤ + 세정 → ⑦</td></tr>
-          <tr><td>8</td><td>원인 후보</td><td>상관계수와 범위 밖 비교로 원인 후보를 골랐다.</td><td>④ 식각 챔버 센서, ②~⑤ + 세정 → ⑦</td></tr>
-          <tr><td>9</td><td>예측</td><td>결정 트리로 합격·불합격을 미리 맞히고, 기준선과 비교했다.</td><td>⑦ EDS 웨이퍼 패턴, ②~⑤ + 세정 → ⑦</td></tr>
-          <tr><td>10</td><td>예측</td><td>모델 셋을 비교해 새 데이터를 예측하고, AI 보고서의 숫자와 표현을 검증했다.</td><td>⑦ EDS 새 웨이퍼, ②~⑤ + 세정을 마친 ⑦ 검사 전 새 로트</td></tr>
+          <tr><td>1</td><td>기록</td><td>공장 기록표 40건의 합격·불합격을 변수와 f-string으로 한 문장에 담았다.</td></tr>
+          <tr><td>2</td><td>기록</td><td>설비 온도 여러 개를 리스트에, 이름표 붙은 값을 딕셔너리에 담았다.</td></tr>
+          <tr><td>3</td><td>기록</td><td><code>if</code>·<code>for</code>·함수로 연습용 기준 판정을 컴퓨터에 맡겼다.</td></tr>
+          <tr><td>4</td><td>표</td><td>Pandas로 CSV를 표로 읽고, 조건으로 필요한 행만 골랐다.</td></tr>
+          <tr><td>5</td><td>정리</td><td>빈칸·중복·튀는 값을 정리하고, 채우기 전에 튀는 값부터 확인했다.</td></tr>
+          <tr><td>6</td><td>그림</td><td>그래프와 웨이퍼 맵으로 표에서 안 보이던 모양을 봤다.</td></tr>
+          <tr><td>7</td><td>비교</td><td>설비별로 묶어 합격률과 불량 유형을 비교했다.</td></tr>
+          <tr><td>8</td><td>원인 후보</td><td>상관계수와 범위 밖 비교로 원인 후보를 골랐다.</td></tr>
+          <tr><td>9</td><td>예측</td><td>결정 트리로 새 로트의 합격·불합격을 미리 맞히고, 기준선과 함께 읽고, AI 보고서의 숫자와 표현을 검증했다.</td></tr>
+          <tr><td>10</td><td>종합</td><td>새 로트 10개 중 먼저 볼 로트를 AI와 Orange3로 골라, 확인한 숫자로 결론 문장을 썼다.</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="img-caption">공정 지도 칸은 그 차시에 쓴 데이터가 나온 곳이다.</p>
-    <p>도구는 파이썬과 Orange 두 가지였다. 파이썬은 코드로 정확히 세고, Orange는 위젯을 이어 눈으로 확인했다. 두 도구의 숫자가 다를 때는 정리·학습한 데이터나 설정, 채점 방법이 달랐다.</p>
-    <div class="callout success">
-      <b class="tag">수고하셨습니다</b>
-      데이터는 "무엇이 함께 움직였는지"까지 알려 준다. "왜 그랬는지"는 원인 후보를 들고 현장에서 확인한다. 숫자는 직접 실행해 확인하고, 어디서 나온 숫자인지 함께 말한다 — 이 두 가지가 10일 동안 연습한 습관이다.
-    </div>
+    <div class="callout success"> <b class="tag">수고하셨습니다</b> 데이터는 "무엇이 함께 움직였는지"까지 알려 준다. "왜 그랬는지"는 원인 후보를 들고 현장에서 확인한다. 숫자는 직접 확인하고, 어디서 나온 숫자인지 함께 말한다 — 이 두 가지가 10일 동안 연습한 습관이다. </div>
   </section>
 
   <div class="nav-buttons">

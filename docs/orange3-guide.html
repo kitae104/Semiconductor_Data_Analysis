@@ -59,9 +59,9 @@
       프로그램이다.
     </div>
     <p>이 과정에서 Orange3는 1차시부터 매 차시 쓰는 <b>본 활동</b>이다. 1~8차시는 PART 1에서 파이썬으로 배운 것을
-    PART 2 Orange3에서 다른 데이터와 더 넓은 화면으로 넓혀 보고, 9·10차시는 순서를 바꿔 PART 1에서 Orange3로 모델을
-    먼저 눈으로 본 뒤 PART 2에서 파이썬 몇 줄로 확인한다. Orange 실습은 언제나 <b>워밍업 데이터 → 반도체 데이터</b>
-    순서다.</p>
+    PART 2 Orange3에서 다른 데이터와 더 넓은 화면으로 넓혀 보고, 9차시는 순서를 바꿔 PART 1에서 Orange3로 모델을
+    먼저 눈으로 본 뒤 PART 2에서 파이썬 몇 줄로 확인한다. 1~9차시 Orange 실습은 언제나 <b>워밍업 데이터 → 반도체 데이터</b>
+    순서다. 10차시 종합 실습은 새 위젯 없이 1~9차시 위젯으로, 새 로트 10개 중 먼저 점검할 로트를 AI와 함께 찾아 가는 과정을 강사가 시연한다.</p>
     <div class="callout concept">
       <b class="tag">쉬운 비유 — 레고 블록으로 만드는 분석 공장</b>
       위젯 하나하나는 "파일 열기", "표로 보기", "그래프 그리기", "모델 만들기"처럼 한 가지 일만 하는
@@ -135,7 +135,7 @@
       <b class="tag">알아두기 — Orange는 CSV가 아니라 .tab을 연다</b>
       Orange 파일이 여는 데이터는 <code>orange</code> 폴더의 <code>.tab</code> 파일이다. 같은 차시 CSV와
       값은 같고, 열마다 Orange가 쓸 종류(숫자·범주·결과 열·참고용 meta)가 미리 정해져 있다. 예를 들어 <code>합격여부</code>는
-      결과 열(target)로 정해져 있어 Orange가 합격·불합격 막대를 바로 그리고, 9·10차시 모델도 따로 설정하지 않고 바로 만든다.
+      결과 열(target)로 정해져 있어 Orange가 합격·불합격 막대를 바로 그리고, 9차시 모델(10차시 종합 실습의 새 로트 고르기도 같다)도 따로 설정하지 않고 바로 만든다.
     </div>
   </section>
 
@@ -314,8 +314,8 @@
         <tr><td><b>Transform</b></td><td>Select Rows · Select Columns · Impute · Pivot Table</td><td>3·4·5 · 4 · 5 · 7</td></tr>
         <tr><td><b>Visualize</b></td><td>Distributions · Scatter Plot · Box Plot · Tree Viewer</td><td>1·6·7·9 · 6·8 · 6·7 · 9</td></tr>
         <tr><td><b>Unsupervised</b></td><td>Correlations</td><td>8</td></tr>
-        <tr><td><b>Model</b></td><td>Tree · kNN · Logistic Regression</td><td>9·10 · 10 · 10</td></tr>
-        <tr><td><b>Evaluate</b></td><td>Test and Score · Confusion Matrix · Predictions</td><td>9·10 · 9 · 10</td></tr>
+        <tr><td><b>Model</b></td><td>Tree · (선택) kNN · Logistic Regression</td><td>9 · 9차시 빨리 끝낸 학생용 선택 과제</td></tr>
+        <tr><td><b>Evaluate</b></td><td>Test and Score · Confusion Matrix · Predictions</td><td>9 · 9 · 9</td></tr>
       </table>
     </div>
     <div class="callout warn">
@@ -390,19 +390,20 @@
     target으로 정해진 <code>.tab</code>을 연결하면 나머지 feature 열로 모델을 만든다. 파이썬의
     <code>DecisionTreeClassifier</code>와 같은 원리다. <b>Tree Viewer</b>에 연결하면 모델이 어떤 질문으로 나눴는지 나무 그림으로 보여준다.</div>
 
-    <h3>Test and Score · Confusion Matrix — 9·10차시 (Evaluate)</h3>
+    <h3>Test and Score · Confusion Matrix — 9차시 (Evaluate)</h3>
     <div class="callout concept"><b>Test and Score</b>는 File과 모델 위젯을 함께 연결하면 정확도(CA) 등 성능 지표를 표로 보여준다.
     기본 설정은 데이터를 5조각으로 나눠 번갈아 시험하는 방식(5-fold)이다. <b>Confusion Matrix</b>를 Test and Score 뒤에 이으면
     실제 합격/불합격과 예측이 몇 건씩 맞고 틀렸는지 칸으로 보여준다.</div>
 
-    <h3>kNN · Logistic Regression — 10차시 (Model)</h3>
-    <div class="callout concept">Tree와 다른 방식의 분류 모델이다. kNN은 "가장 비슷한 이웃 몇 개가 무엇이었나"로, Logistic
-    Regression은 열 값에 가중치를 곱해 더한 점수로 맞힌다. 세 모델을 한 Test and Score에 함께 연결해 점수를 비교한다.</div>
-
-    <h3>Predictions — 10차시 (Evaluate)</h3>
+    <h3>Predictions — 9차시 (Evaluate)</h3>
     <div class="callout concept">학습된 모델과 정답을 모르는 새 데이터를 함께 연결하면, 각
     행에 대한 예측 결과(합격/불합격)와 확률을 표로 보여준다. 파이썬의 <code>model.predict()</code>와 같은 역할이고,
     확률은 이 표에서만 본다.</div>
+
+    <h3>(선택) kNN · Logistic Regression — 9차시 빨리 끝낸 학생용 과제 (Model)</h3>
+    <div class="callout concept">수업 본 활동에서는 쓰지 않는다. Tree와 다른 방식의 분류 모델이다. kNN은 "가장 비슷한 이웃 몇 개가 무엇이었나"로, Logistic
+    Regression은 열 값에 가중치를 곱해 더한 점수로 맞힌다. 9차시 실습을 빨리 끝냈다면 Test and Score에 Tree와 함께 연결해
+    CA를 비교하고, 기준선과도 나란히 놓아 본다.</div>
   </section>
 
   <section class="block">
@@ -418,8 +419,8 @@
         <tr><td>6차시</td><td>웨이퍼 맵 한 장 → 공정 기록 180건</td><td>Scatter Plot · Box Plot (+ Distributions)</td></tr>
         <tr><td>7차시</td><td>식각 설비 3대의 웨이퍼 12장 → 설비·수율</td><td>Pivot Table (+ Distributions 분할, Box Plot 그룹)</td></tr>
         <tr><td>8차시</td><td>식각 챔버 센서 기록 → 이상·원인 후보</td><td>Correlations (+ Scatter Plot)</td></tr>
-        <tr><td>9차시</td><td>웨이퍼 맵 패턴 분류 → 합격/불합격 학습 데이터</td><td>Tree · Tree Viewer · Test and Score · Confusion Matrix</td></tr>
-        <tr><td>10차시</td><td>웨이퍼 패턴 + 새 웨이퍼 10장 → 새 로트 9개</td><td>kNN · Logistic Regression · Predictions</td></tr>
+        <tr><td>9차시</td><td>웨이퍼 맵 패턴 분류 + 새 웨이퍼 10장 → 합격/불합격 학습 데이터 + 새 로트 9개</td><td>Tree · Tree Viewer · Test and Score · Confusion Matrix · Predictions</td></tr>
+        <tr><td>10차시</td><td>종합 실습(시연): 캡스톤 공정 기록 480건 + 새 로트 10개 — 새 로트 10개 중 먼저 점검할 로트 찾기</td><td>새 위젯 없음(1~9차시 위젯 복습)</td></tr>
       </table>
     </div>
   </section>

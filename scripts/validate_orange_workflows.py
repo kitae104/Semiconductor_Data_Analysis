@@ -1,7 +1,7 @@
 """Orange3 워크플로(.ows) 검증 스크립트.
 
 orange3/week*/*.ows 전부에 대해 확인한다.
-1. 파싱: Orange 캔버스 읽기 함수로 열리고, 모든 위젯이 Orange 3.35 위젯 목록에 있다.
+1. 파싱: Orange 캔버스 읽기 함수로 열리고, 모든 위젯이 Orange 3.40 위젯 목록에 있다.
 2. 이식성: File 위젯 경로가 prefix(basedir / sample-datasets) + 상대경로로 저장돼 있고,
    다른 PC의 절대경로가 남아 있지 않다. 그 상대경로가 .ows 폴더(또는 Orange 내장 데이터 폴더) 기준으로 실제 파일을 가리킨다.
 3. 데이터: Orange.data.Table로 열리고, 열 이름에 BOM이 없으며, 결과 열(합격여부 등)이 범주형이다.

@@ -1,6 +1,6 @@
 """Orange3 전용 스크립트가 Orange 파이썬에서 돌도록 맞춰 주는 공통 도우미.
 
-프로젝트 파이썬(`python`)에는 Orange가 없다. Orange 3.35 설치본에 딸린 파이썬으로 다시 실행한다.
+프로젝트 파이썬(`python`)에는 Orange가 없다. Orange 3.40 설치본에 딸린 파이썬으로 다시 실행한다.
 - 환경변수 ORANGE_PYTHON이 있으면 그 경로를, 없으면 이 PC의 기본 설치 경로를 쓴다.
 - 화면 없이 위젯을 만들 수 있게 QT_QPA_PLATFORM=offscreen을 기본값으로 둔다.
 """
@@ -9,7 +9,7 @@ import subprocess
 import sys
 
 DEFAULT_ORANGE_PYTHON = r"C:/Users/PC/AppData/Local/Programs/Orange/python.exe"
-ORANGE_VERSION = "3.35.0"
+ORANGE_VERSION = "3.40.0"
 
 
 def orange_python():

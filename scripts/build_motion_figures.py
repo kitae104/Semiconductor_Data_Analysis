@@ -31,7 +31,8 @@ def find_block_end(html, pos):
 
 def inject(html, anchor, block, fid):
     nl = "\r\n" if "\r\n" in html else "\n"
-    html = re.sub(rf"[ \t]*<!-- mg:{re.escape(fid)} -->.*?<!-- /mg:{re.escape(fid)} -->(?:\r?\n)?", "", html, flags=re.S)
+    # 넣을 때 앞에 붙인 빈 줄(nl 2개)까지 함께 지워야 재실행 시 빈 줄이 쌓이지 않는다(멱등)
+    html = re.sub(rf"(?:\r?\n)?(?:\r?\n)?[ \t]*<!-- mg:{re.escape(fid)} -->.*?<!-- /mg:{re.escape(fid)} -->(?:\r?\n)?", "", html, flags=re.S)
     hs = [m for m in re.finditer(r"<h([23])\b[^>]*>(.*?)</h\1>", html, re.S) if anchor in re.sub(r"<[^>]+>", "", m.group(2))]
     if len(hs) != 1:
         raise RuntimeError(f"앵커 '{anchor}' 일치 {len(hs)}건")

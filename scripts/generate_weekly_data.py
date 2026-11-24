@@ -37,13 +37,9 @@ RENAMED_COLUMNS = {
     "week08_anomaly_root_cause": {"온도_섭씨": "온도_C", "냉각수온도_섭씨": "냉각수온도_C"},
     "week08_easy_weather_sales": {"최고기온_섭씨": "최고기온_C", "아이스크림_판매량_개": "아이스크림판매량_count",
                                   "핫초코_판매량_잔": "핫초코판매량_cup", "냉동고온도_섭씨": "냉동고온도_C"},
-    # 9·10차시는 같은 파일을 함께 쓰므로 한 묶음으로 바꾼다
     "week09_pass_fail_train": {"온도_섭씨": "온도_C"},
     "week09_new_lots_to_predict": {"온도_섭씨": "온도_C"},
-    "week10_mini_project_dataset": {"온도_섭씨": "온도_C", "냉각수온도_섭씨": "냉각수온도_C"},
     "week09_easy_outdoor_class": {"최고기온_섭씨": "최고기온_C"},
-    "week10_easy_outdoor_class_train": {"최고기온_섭씨": "최고기온_C"},
-    "week10_easy_outdoor_class_new_days": {"최고기온_섭씨": "최고기온_C"},
     "week05_dirty_process_data": {"온도_섭씨": "온도_C"},
     "week05_easy_class_records": {"수학_점수": "수학점수_pt"},
 }
@@ -458,76 +454,118 @@ def gen_week09():
 
 
 # ---------------------------------------------------------------------------
-# Week 10
+# Week 10 — 종합 실습(캡스톤) 데이터 (2026-11-24, 9·10차시 통합 재설계)
 # ---------------------------------------------------------------------------
-def gen_week10():
-    rng = np.random.default_rng(110)
-    n = 600
-    ts = sorted(pd.Timestamp("2024-03-01") + pd.to_timedelta(rng.choice(range(0, 3000), size=n, replace=False), unit="h"))
+# 새 10차시는 파이썬 없이 Orange3 + ChatGPT로 "새 로트 10개 중 어느 것부터 점검할까?"를 시연한다(v3.2). 1~9차시에 배운 것을 모두 쓸 수 있게
+# 패턴을 심는다(설계: _workspace/08_architect_spec_merge910.md B-2).
+#   - 설비: EQ-04 합격률이 가장 낮다(7차시 Pivot Table). 작업조는 효과 없음(대조군, "야간조 탓" 함정 확인용).
+#   - 온도: N(300, 3.5), EQ-02만 sd 6.5(6차시 Box Plot 흩어짐). 두께 = 100 + 0.5·(온도 − 300) + 잡음(Scatter Plot).
+#   - 진공도: 연습용 기준 4.5~5.5 밖이면 불합격 위험이 크다(8차시 U자 — 상관은 약하지만 범위 밖 합격률이 낮다).
+#   - 진동: EQ-04가 높고 0.64를 넘으면 불합격 위험(설비 차이와 센서 값이 함께 나타나는 원인 후보).
+#   - 가스유량·습도·공정명: 효과 없음(대조군).
+#   - 빈칸 14칸(온도 5 · 진공도 5 · 습도 4, 서로 다른 14행), 입력 실수 3건(온도 소수점 누락: 299.8 → 2998.0).
+#     빈칸과 입력 실수는 합격여부를 추첨한 뒤에 넣는다. 중복 행은 넣지 않는다(Orange에서 지우려면 배우지 않은 위젯이 필요).
+# 시드: 다른 차시와 겹치지 않는 3xx 계열의 독립 Generator. 310부터 차례로 시험해 아래를 모두 만족한 첫 시드 330을 쓴다
+# (2026-11-24 확정. 확인: validate_datasets.py + Orange 3.40 Tree 실측).
+#   - 스펙 B-2 목표 수치 전부(전체 합격률, EQ-04 최저, 작업조 차이, 상관 범위, 진공도 범위 밖 합격률, CA ≥ 기준선 + 8%p,
+#     놓친 불합격 > 0, 새 로트 불합격 예측 2개 이상)
+#   - 추가: 효과 없는 공정명의 합격률 차이 ≤ 10%p(310은 17.6%p라 "산화 공정 탓" 같은 엉뚱한 원인 후보가 생겼다),
+#     새 로트 중 Tree 불합격 확률이 0.4~0.6인 행이 있음
+# 스펙의 "경계 행(진공도 4.52)의 확률 0.4~0.6"은 시드 310~429 어디서도 나오지 않았다 — 4.52는 연습용 기준 안이라 생성 규칙상
+# 불합격 확률이 0.04이고 트리도 합격으로 본다. 확률이 애매한 행은 EQ-04·진동 0.72 행(6번째)이다.
+CAPSTONE_SEED = 330
+CAPSTONE_VACUUM_RANGE = (4.5, 5.5)    # 연습용 기준(실제 공정 규격 아님)
+CAPSTONE_VIBRATION_LIMIT = 0.64       # 연습용 기준
+
+# 예측용 새 로트 10개 중 값을 고정하는 3행(행 번호 → 열 값). 나머지 7행은 같은 규칙으로 뽑되 정상 범위 안에 둔다.
+CAPSTONE_NEW_FIXED = {
+    2: {"설비번호": "EQ-01", "진공도_mTorr": 5.78},                       # 진공도 범위 밖
+    5: {"설비번호": "EQ-04", "진동_mm_s": 0.72},                          # EQ-04 + 진동 큼
+    8: {"진공도_mTorr": 4.52},                                            # 경계값(범위 안 끝자락)
+}
+
+
+def _capstone_features(rng, n):
     equip = rng.choice(EQUIPMENT, size=n)
+    process = rng.choice(PROCESS, size=n)
     shift = rng.choice(SHIFT, size=n)
-
-    temp = np.empty(n)
-    pressure = np.empty(n)
-    fail_prob = np.empty(n)
-    for i, e in enumerate(equip):
-        if e == "EQ-01":
-            temp[i] = rng.normal(300, 3)
-            pressure[i] = rng.normal(1010, 8)
-            fail_prob[i] = 0.06
-        elif e == "EQ-02":
-            temp[i] = rng.normal(300, 6.5)
-            pressure[i] = rng.normal(1010, 8)
-            fail_prob[i] = 0.11
-        elif e == "EQ-03":
-            temp[i] = rng.normal(300, 3.5)
-            pressure[i] = rng.normal(1025, 8)
-            fail_prob[i] = 0.09
-        else:
-            temp[i] = rng.normal(301, 4.5)
-            pressure[i] = rng.normal(1013, 9)
-            fail_prob[i] = 0.16
-
-    vacuum = rng.normal(5.0, 0.35, size=n)
-    thickness = 100 + (temp - 300) * 0.45 + rng.normal(0, 2.2, size=n)
-    vibration = np.where(equip == "EQ-02", rng.normal(0.63, 0.07, size=n), rng.normal(0.5, 0.05, size=n))
-    proc_time = rng.normal(120, 6, size=n)
-    cooling = rng.normal(20, 1.2, size=n)
-    humidity = rng.normal(45, 3.5, size=n)
-
-    result = np.array([rng.choice([0, 1], p=[1 - p, p]) for p in fail_prob])  # 난수 순서 유지용 0/1 추첨
-    defect = np.where(result == 1, rng.choice(DEFECT_TYPES, size=n), "")
-    passfail = np.where(result == 1, -1, 1)  # 1~8차시와 같은 규약(1=합격, -1=불합격)
-
-    df = pd.DataFrame({
-        "측정시간": [t.strftime("%Y-%m-%d %H:%M") for t in ts],
-        "로트번호": [f"LOT-{i:04d}" for i in rng.integers(1, 900, size=n)],
-        "웨이퍼번호": rng.integers(1, 26, size=n),
-        "설비번호": equip,
-        "공정명": rng.choice(PROCESS, size=n),
-        "작업조": shift,
-        "온도_섭씨": np.round(temp, 1),
-        "압력_Pa": np.round(pressure, 1),
-        "진공도_mTorr": np.round(vacuum, 2),
-        "두께_nm": np.round(thickness, 2),
-        "진동_mm_s": np.round(vibration, 3),
-        "처리시간_sec": np.round(proc_time, 1),
-        "냉각수온도_섭씨": np.round(cooling, 2),
-        "습도_pct": np.round(humidity, 1),
-        "불량유형": defect,
-        "합격여부": passfail,
+    temp_wide = rng.normal(300, 6.5, size=n)
+    temp_narrow = rng.normal(300, 3.5, size=n)
+    temp = np.round(np.where(equip == "EQ-02", temp_wide, temp_narrow), 1)
+    thickness = np.round(100 + 0.5 * (temp - 300) + rng.normal(0, 2.0, size=n), 2)
+    vacuum = np.round(rng.normal(5.0, 0.35, size=n), 2)
+    vib_high = rng.normal(0.63, 0.06, size=n)
+    vib_base = rng.normal(0.50, 0.05, size=n)
+    vibration = np.round(np.where(equip == "EQ-04", vib_high, vib_base), 3)
+    gas = np.round(rng.normal(50, 3, size=n), 2)
+    humidity = np.round(rng.normal(45, 3.5, size=n), 1)
+    return pd.DataFrame({
+        "설비번호": equip, "공정명": process, "작업조": shift,
+        "온도_C": temp, "두께_nm": thickness, "진공도_mTorr": vacuum, "진동_mm_s": vibration,
+        "가스유량_slm": gas, "습도_pct": humidity,
     })
-    save_csv(df.rename(columns=RENAMED_COLUMNS["week10_mini_project_dataset"]), "week10", "week10_mini_project_dataset.csv")  # 열 이름만 바꾼다(값·난수 흐름 그대로)
-    return df
+
+
+def capstone_fail_prob(f):
+    """불합격 확률 = 0.04 + 0.75·[진공도 범위 밖] + 0.60·[진동 > 0.64] + 0.30·[|온도 − 300| > 9], 상한 0.9."""
+    lo, hi = CAPSTONE_VACUUM_RANGE
+    vac_out = ((f["진공도_mTorr"] < lo) | (f["진공도_mTorr"] > hi)).astype(float)
+    vib_hi = (f["진동_mm_s"] > CAPSTONE_VIBRATION_LIMIT).astype(float)
+    temp_off = ((f["온도_C"] - 300).abs() > 9).astype(float)
+    return np.minimum(0.04 + 0.75 * vac_out + 0.60 * vib_hi + 0.30 * temp_off, 0.9).to_numpy()
+
+
+def capstone_frames(seed=None):
+    """(본 데이터 480행, 예측용 새 로트 10행). 저장하지 않는다 — 시드 시험·실측 스크립트도 이 함수를 쓴다."""
+    rng = np.random.default_rng(CAPSTONE_SEED if seed is None else seed)
+    n = 480
+    days = np.sort(rng.integers(0, 28, size=n))                       # 4주
+    dates = (pd.Timestamp("2024-06-03") + pd.to_timedelta(days, unit="D")).strftime("%Y-%m-%d")
+    lots = lot_ids(rng, n)
+    f = _capstone_features(rng, n)
+    fail = rng.random(n) < capstone_fail_prob(f)
+    defect = np.where(fail, rng.choice(DEFECT_TYPES, size=n), "")
+
+    df = pd.concat([pd.DataFrame({"날짜": dates, "로트번호": lots}), f], axis=1)
+    df["불량유형"] = defect
+    df["합격여부"] = np.where(fail, -1, 1)
+
+    # 합격여부를 추첨한 뒤 빈칸 14칸(서로 다른 14행)과 입력 실수 3건(다른 3행)을 넣는다
+    rows = rng.choice(n, size=17, replace=False)
+    for i, col in zip(rows[:14], ["온도_C"] * 5 + ["진공도_mTorr"] * 5 + ["습도_pct"] * 4):
+        df.loc[i, col] = np.nan
+    for i in rows[14:]:
+        df.loc[i, "온도_C"] = round(df.loc[i, "온도_C"] * 10, 1)       # 소수점 누락(299.8 → 2998.0)
+
+    # 예측용 새 로트 10개: 같은 규칙으로 뽑되 정상 범위 안에 들 때까지 다시 뽑고, 고정 3행은 그 위에 값을 덮어쓴다
+    new_rows = []
+    for k in range(10):
+        while True:
+            row = _capstone_features(rng, 1).iloc[0].to_dict()
+            if 4.6 <= row["진공도_mTorr"] <= 5.4 and row["진동_mm_s"] <= 0.60 and abs(row["온도_C"] - 300) <= 7:
+                break
+        row.update(CAPSTONE_NEW_FIXED.get(k, {}))
+        new_rows.append(row)
+    new_df = pd.DataFrame(new_rows)
+    new_df.insert(0, "로트번호", [f"NEW-{k:02d}" for k in range(1, 11)])
+    new_df.insert(0, "날짜", "2024-07-01")
+    return df, new_df
+
+
+def gen_week10_capstone():
+    df, new_df = capstone_frames()
+    save_csv(df, "week10", "week10_capstone_lots.csv")
+    save_csv(new_df, "week10", "week10_capstone_new_lots.csv")
+    return df, new_df
 
 
 # ===========================================================================
-# 생활 예제(easy) 데이터 — 4~10차시 (2026-10-08 추가)
+# 생활 예제(easy) 데이터 — 4~9차시 (2026-10-08 추가, 10차시 예보 데이터는 2026-11-24 삭제)
 # ---------------------------------------------------------------------------
 # 초보자가 먼저 생활 소재(카페·학급·아이스크림·날씨)로 같은 Pandas/scikit-learn 연산을 익힌 뒤
 # 같은 모양의 코드를 반도체 데이터에 적용하도록 만든 작은 CSV다.
 # - 위의 반도체 데이터 생성기(gen_week01~10)와 난수 흐름을 공유하지 않는다. 각 함수는 자기 시드로
-#   새 Generator를 만들거나(6·8·9차시), 손으로 고정한 값을 쓴다(4·5·7·10차시 예보). 그래서 이 절을
+#   새 Generator를 만들거나(6·8·9차시), 손으로 고정한 값을 쓴다(4·5·7차시). 그래서 이 절을
 #   추가·수정해도 기존 반도체 CSV는 한 바이트도 바뀌지 않는다.
 # - 4~8차시 결과값(1/-1) 열은 반도체 `합격여부`와 같은 규약(1 = 좋은 쪽, -1 = 나쁜 쪽)을 따른다.
 # ===========================================================================
@@ -699,12 +737,12 @@ EASY_OUTDOOR_FEATURES = ["최고기온_섭씨", "습도_pct", "풍속_m_s", "강
 
 
 def _easy_outdoor_class_df():
-    """야외 체육 수업 진행 여부 120일 — 9·10차시 공용 학습 데이터.
+    """야외 체육 수업 진행 여부 120일 — 9차시 생활 예제 데이터(현재 강의·노트북에서 쓰지 않음).
 
     시드 1142는 다음 조건을 모두 만족하도록 고른 값이다(시드 1009~1199 비교):
     진행 비율 70~80%, max_depth=4 결정트리(random_state=42) 정확도가 "무조건 진행" 기준선보다
     8%p 이상 높음, 관계없는 비교용 열(습도) 중요도 0%, max_depth=8의 test 정확도가 4보다 높지 않음,
-    "약한 비" 날의 취소 확률(predict_proba)이 0.3~0.7 사이로 나와 10차시 "애매한 날" 설명이 가능함.
+    "약한 비" 날의 취소 확률(predict_proba)이 0.3~0.7 사이로 나와 "애매한 날" 설명이 가능함(옛 10차시 예보 설명용 조건, 현재 쓰지 않음).
     """
     rng = np.random.default_rng(1142)
     n = 120
@@ -743,26 +781,6 @@ def gen_easy_week09():
     return df
 
 
-def gen_easy_week10():
-    """10차시: 9차시와 같은 학습 데이터(10차시 폴더에 따로 저장) + 정답 없는 예보 7일(손으로 고정한 값)."""
-    train = _easy_outdoor_class_df()
-    save_csv(train.rename(columns=RENAMED_COLUMNS["week10_easy_outdoor_class_train"]), "week10", "week10_easy_outdoor_class_train.csv")  # 열 이름만 바꾼다(값·난수 흐름 그대로)
-
-    rows = [
-        # 날짜, 최고기온_섭씨, 습도_pct, 풍속_m_s, 강수량_mm
-        ("2024-07-30", 26.0, 60.0, 3.0, 0.0),    # 맑고 선선함
-        ("2024-07-31", 24.5, 85.0, 4.2, 15.0),   # 비가 많이 옴
-        ("2024-08-01", 33.5, 55.0, 2.0, 0.0),    # 폭염
-        ("2024-08-02", 22.0, 70.0, 10.5, 0.0),   # 강풍
-        ("2024-08-03", 27.5, 75.0, 5.0, 3.0),    # 약한 비(애매한 날)
-        ("2024-08-04", 30.5, 65.0, 8.5, 0.0),    # 덥고 바람이 꽤 붊(애매한 날)
-        ("2024-08-05", 25.0, 50.0, 2.5, 0.0),    # 맑음
-    ]
-    new_days = pd.DataFrame(rows, columns=["날짜"] + EASY_OUTDOOR_FEATURES)
-    save_csv(new_days.rename(columns=RENAMED_COLUMNS["week10_easy_outdoor_class_new_days"]), "week10", "week10_easy_outdoor_class_new_days.csv")  # 열 이름만 바꾼다(값·난수 흐름 그대로)
-    return train, new_days
-
-
 def gen_easy_all():
     gen_easy_week04()
     gen_easy_week05()
@@ -770,7 +788,6 @@ def gen_easy_all():
     gen_easy_week07()
     gen_easy_week08()
     gen_easy_week09()
-    gen_easy_week10()
 
 
 # ===========================================================================
@@ -785,7 +802,7 @@ def gen_easy_all():
 # - 새 함수를 만들면 ORANGE_WARMUP_GENERATORS에 추가한다.
 # ===========================================================================
 # ---------------------------------------------------------------------------
-# 웨이퍼 다이 합성기 — 6·7·9·10차시 웨이퍼 데이터와 generate_figures.py가 함께 쓰는 공통 부품
+# 웨이퍼 다이 합성기 — 6·7·9차시 웨이퍼 데이터와 generate_figures.py가 함께 쓰는 공통 부품
 # ---------------------------------------------------------------------------
 # 격자: 다이_X, 다이_Y ∈ [-10, 10], X² + Y² ≤ 100 → 웨이퍼 한 장 = 다이 317개.
 # 다이 간격 14mm 가정: 중심거리_mm = round(√(X²+Y²) × 14, 1), 최대 140mm(300mm 웨이퍼 반지름 150mm 안쪽).
@@ -873,7 +890,7 @@ def _line_ratio(fx, fy, tol=0.6):
 
 
 def wafer_summary(fail):
-    """다이 맵에서 9·10차시 웨이퍼 요약 특징을 계산한다."""
+    """다이 맵에서 9차시 웨이퍼 요약 특징을 계산한다."""
     x, y, dist = die_grid()
     n_fail = int(fail.sum())
     if n_fail == 0:
@@ -1124,7 +1141,7 @@ def gen_orange_week08():
     return df
 
 
-# --- A-9. 웨이퍼 맵 패턴 분류 (시드 209) / A-10. 새 웨이퍼 10장 (시드 210) -----------
+# --- A-9. 웨이퍼 맵 패턴 분류 (시드 209) / A-10. 새 웨이퍼 10장 (시드 210, 2026-11-24 10차시 → 9차시로 이관) ---
 def _pattern_wafer(rng, label):
     """A-9 학습용 웨이퍼 한 장. 패턴 세기를 웨이퍼마다 달리해 일부가 헷갈리게 한다(완벽 분류 방지)."""
     if label == "정상":
@@ -1157,7 +1174,7 @@ def gen_orange_week09():
 # 의도 패턴(운영안에만 적는다. 데이터·그림에는 넣지 않는다):
 # N-01 정상, N-02 가장자리형, N-03 중심형, N-04 애매(중심+가장자리), N-05 스크래치형,
 # N-06 정상, N-07 애매(중심+가장자리), N-08 가장자리형, N-09 중심형, N-10 애매(중심+가장자리)
-WEEK10_NEW = [
+WEEK09_NEW = [
     ("N-01", ("count", {"n": 5})),
     ("N-02", ("edge", {"p_edge": 0.45, "p_base": 0.008})),
     ("N-03", ("center", {"p_center": 0.6, "p_ring": 0.08, "p_base": 0.008})),
@@ -1171,21 +1188,21 @@ WEEK10_NEW = [
 ]
 
 
-def week10_wafer_maps():
-    """A-10 새 웨이퍼 10장: (웨이퍼ID, 불합격 배열). generate_figures.py도 이 함수를 쓴다."""
+def week09_new_wafer_maps():
+    """A-10 새 웨이퍼 10장: (웨이퍼ID, 불합격 배열). generate_figures.py도 이 함수를 쓴다. 값·시드는 이관 전과 같다."""
     rng = np.random.default_rng(210)
-    return [(wid, wafer_fail_mask(rng, kind, **params)) for wid, (kind, params) in WEEK10_NEW]
+    return [(wid, wafer_fail_mask(rng, kind, **params)) for wid, (kind, params) in WEEK09_NEW]
 
 
-def gen_orange_week10():
-    df = pd.DataFrame([{"웨이퍼ID": wid, **wafer_summary(fail)} for wid, fail in week10_wafer_maps()])
-    save_orange_warmup(df, "week10", "new_wafers")
+def gen_orange_week09_new():
+    df = pd.DataFrame([{"웨이퍼ID": wid, **wafer_summary(fail)} for wid, fail in week09_new_wafer_maps()])
+    save_orange_warmup(df, "week09", "new_wafers")
     return df
 
 
 ORANGE_WARMUP_GENERATORS = [
     gen_orange_week01, gen_orange_week02, gen_orange_week03, gen_orange_week04, gen_orange_week05,
-    gen_orange_week06, gen_orange_week07, gen_orange_week08, gen_orange_week09, gen_orange_week10,
+    gen_orange_week06, gen_orange_week07, gen_orange_week08, gen_orange_week09, gen_orange_week09_new,
 ]
 
 
@@ -1205,11 +1222,11 @@ ORANGE_CLASS_COLUMNS = {"합격여부", "진행여부", "정답여부", "평가"
 # 행을 구별하는 열 → meta(표에는 보이지만 분석·모델 입력에서 빠진다)
 ORANGE_META_COLUMNS = {"로트번호", "웨이퍼번호", "이름", "주문번호", "측정시간", "날짜"}
 # 결과가 나온 뒤에만 채워지는 열(불합격일 때만 값이 있음) → 범주형 meta.
-# 입력(attribute)에 두면 9·10차시 모델이 이 열로 정답을 그대로 맞혀 버린다(정답 누설).
+# 입력(attribute)에 두면 9차시 모델이 이 열로 정답을 그대로 맞혀 버린다(정답 누설).
 ORANGE_RESULT_DETAIL_COLUMNS = {"불량유형", "오답유형"}
 # 특정 파일만 예외로 지정: {"파일 이름(확장자 제외)": {"열": ("형식", "역할")}}  (열은 원래 이름·바꾼 이름 모두 가능)
 ORANGE_ROLE_OVERRIDES = {
-    # 9·10차시: 파이썬 모델이 숫자 열 6개만 쓰므로 Orange도 같은 입력으로 맞춘다(스펙 0-11)
+    # 9차시: 파이썬 모델이 숫자 열 6개만 쓰므로 Orange도 같은 입력으로 맞춘다(스펙 0-11)
     "week09_pass_fail_train": {"공정명": ("d", "meta"), "설비번호": ("d", "meta")},
     "week09_new_lots_to_predict": {"공정명": ("d", "meta"), "설비번호": ("d", "meta")},
     # Orange 워밍업 데이터(스펙 부록 A). 이름·설명 열은 표에서만 보는 meta
@@ -1219,7 +1236,7 @@ ORANGE_ROLE_OVERRIDES = {
     "week06_orange_wafer_map": {"웨이퍼ID": ("s", "meta")},
     # 7차시 웨이퍼ID·불량패턴은 Pivot Table·Select Rows에 쓰도록 일반 범주형(기본 규칙)으로 둔다
     "week09_orange_wafer_patterns": {"웨이퍼ID": ("s", "meta"), "불량패턴": ("정상 중심형 가장자리형 스크래치형", "class")},
-    "week10_orange_new_wafers": {"웨이퍼ID": ("s", "meta")},
+    "week09_orange_new_wafers": {"웨이퍼ID": ("s", "meta")},
 }
 
 # 차시별 열 이름 바꾸기(.tab에만 적용, CSV는 그대로): {"week05": {"온도_섭씨": "온도_C"}}
@@ -1308,7 +1325,7 @@ def main():
     gen_week07()
     gen_week08()
     gen_week09()
-    gen_week10()
+    gen_week10_capstone()
     gen_easy_all()  # 생활 예제 데이터(별도 시드·고정 값) — 반도체 데이터 뒤에 만들어 기존 결과에 영향 없음
     for gen in ORANGE_WARMUP_GENERATORS:  # Orange 워밍업 데이터(별도 시드·고정 값) — 마찬가지로 맨 뒤
         gen()

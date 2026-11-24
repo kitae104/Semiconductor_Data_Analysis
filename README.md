@@ -23,6 +23,7 @@
 - 수율과 불량률을 계산하고, 공정 이상의 원인 후보를 데이터로 탐색한다.
 - 간단한 머신러닝으로 합격/불합격을 예측하는 모델을 직접 만들고, 새 데이터를 예측해본다.
 - Orange3에서 위젯을 이어 같은 데이터를 코드 없이 살펴보고, 파이썬 결과와 비교한다.
+- AI와 Orange3로 질문을 계획·검증·보고한다(AI가 쓴 숫자와 원인 표현은 직접 확인한다).
 - 분석 결과를 비전공자도 이해할 수 있는 문장으로 설명한다.
 
 ## 3. 10차시 전체 목차 (v3)
@@ -31,13 +32,14 @@
 
 매 차시는 세 부분으로 진행합니다. 강의 HTML에는 PART마다 앵커(`#part1`·`#part2`·`#part3`)가 있습니다.
 
-| | 1~8차시 | 9·10차시 (순서 예외) |
-| --- | --- | --- |
-| PART 1 | **파이썬** — 생활 예제로 개념 → 반도체 데이터로 확인하기 | **Orange3** — 모델을 먼저 눈으로 본다 |
-| PART 2 | **Orange3** — 워밍업 데이터 → 반도체 데이터 → 파이썬 결과와 비교 | **파이썬 최소 + ChatGPT 체험** — 같은 결과를 코드 몇 줄로 확인하고, AI가 준 코드·문장을 실제 숫자로 검증 |
-| PART 3 | **실습지** — 파이썬 3문제 + Orange 1문제 + 해석 문장 1 | **실습지** — 파이썬 2문제 + Orange 2문제 + 해석 문장 1 |
+| | 1~8차시 | 9차시 (순서 예외) | 10차시 (종합 실습) |
+| --- | --- | --- | --- |
+| PART 1 | **파이썬** — 생활 예제로 개념 → 반도체 데이터로 확인하기 | **Orange3** — 모델을 먼저 눈으로 보고 새 데이터를 예측한다 | **오늘의 문제** — 새 로트 10개 중 어느 것부터 점검할까? 데이터 소개와 AI 4단계 흐름(계획 → Orange 실행 → 해석 → 검증) |
+| PART 2 | **Orange3** — 워밍업 데이터 → 반도체 데이터 → 파이썬 결과와 비교 | **파이썬 최소 + ChatGPT 체험** — 같은 결과를 코드 몇 줄로 확인하고, AI가 쓴 보고 문장을 실제 숫자로 검증 | **AI와 Orange3로 풀어 가기(시연)** — 데이터 점검 → 지난 기록 비교 → 모델로 새 로트 고르기 → AI 해석 초안 확인하고 고치기 |
+| PART 3 | **실습지** — 파이썬 3문제 + Orange 1문제 + 해석 문장 1 | **실습지** — 파이썬 2문제 + Orange 2문제 + 해석 문장 1 | **문제를 이렇게 해결했다** — 결론 문장 3개 써 보기, 과정을 마치며(실습지 없음) |
 
-9·10차시는 모델을 먼저 Orange3 화면으로 본 뒤 코드로 확인하도록 PART 1과 PART 2의 순서를 바꿨습니다.
+9차시는 모델을 먼저 Orange3 화면으로 본 뒤 코드로 확인하도록 PART 1과 PART 2의 순서를 바꿨습니다.
+10차시는 파이썬·노트북·실습지 없이 Orange3와 ChatGPT로 문제 하나를 푸는 과정을 강사가 보여 주는 종합 실습이며, 새 위젯과 새 파이썬 개념이 없습니다.
 
 ### 차시별 내용
 
@@ -51,8 +53,8 @@
 | 6 | 그래프로 공정 상태 이해하기 | 그래프 틀, 막대, 히스토그램, 산점도 | 웨이퍼 맵 한 장 → 공정 기록 180건 (Scatter Plot, Box Plot) |
 | 7 | 설비·공정 비교와 수율·불량 분석 | 비교로 새 열, `groupby().mean()` | 식각 설비 3대의 웨이퍼 12장 → 설비·수율 (Pivot Table) |
 | 8 | 공정 이상과 원인 후보 찾기 | `corr`, 상관계수 읽기, 범위 밖 조건 | 식각 챔버 센서 기록 → 이상·원인 후보 (Correlations) |
-| 9 | 머신러닝 예측 모델 만들기 | Feature/Label, `train_test_split`, `fit`, `accuracy_score` | 웨이퍼 맵 패턴 분류 → 합격/불합격 학습 데이터 (Tree, Tree Viewer, Test and Score, Confusion Matrix) |
-| 10 | 모델 평가와 새 데이터 예측 | `predict` | 웨이퍼 패턴 + 새 웨이퍼 10장 → 새 로트 9개 (kNN, Logistic Regression, Predictions) |
+| 9 | 머신러닝 예측 모델 만들고 새 로트 예측하기 | Feature/Label, `train_test_split`, `fit` → `predict`, `accuracy_score` | 웨이퍼 맵 패턴 분류 + 새 웨이퍼 10장 → 합격/불합격 학습 데이터 + 새 로트 9개 (Tree, Tree Viewer, Test and Score, Confusion Matrix, Predictions) |
+| 10 | 종합 실습 — AI와 Orange3로 공정 데이터 분석하기 | 없음(노트북 없음) | 캡스톤 공정 기록 480건 + 새 로트 10개 — 먼저 점검할 로트 찾기 시연 (새 위젯 없음, 1~9차시 위젯 복습) |
 
 자세한 설계 근거는 [`docs/curriculum.md`](docs/curriculum.md), v1 → v2 → v3 변경 배경은
 [`docs/restructure-plan.md`](docs/restructure-plan.md), 데이터 생성 규칙은
@@ -71,7 +73,7 @@ semiconductor-data-analysis-course/
 │  ├─ weekly/week01~week10/   # 차시별 실습 데이터(CSV)
 │  │  └─ orange/              # 같은 데이터를 Orange용으로 바꾼 .tab 파일
 │  └─ data_dictionary/        # 차시별 데이터 설명서
-├─ notebooks/
+├─ notebooks/                 # 1~9차시(10차시 종합 실습은 노트북 없음)
 │  ├─ student/                # 학생용(TODO 포함)
 │  └─ solutions/              # 정답본(완성본, 강사 시연용)
 ├─ orange3/week01~week10/     # Orange 워크플로(_start.ows / _done.ows)
@@ -105,7 +107,7 @@ Orange3의 캔버스 화면 구성, 위젯을 놓고 연결하는 법, 차시별
 
 ### Orange 워크플로(.ows) 열기
 
-- `orange3/weekXX/`에는 차시마다 워크플로 4개가 있습니다. ① 워밍업 데이터, ② 반도체 데이터 각각
+- `orange3/weekXX/`에는 차시마다 워크플로 4개가 있습니다. ① 워밍업 데이터, ② 반도체 데이터(10차시는 ① 점검·탐색, ② 예측) 각각
   `_start.ows`(데이터가 연결된 File 위젯 하나 + 한국어 안내 메모)와 `_done.ows`(교수용 완성본)입니다.
   수업은 `_start.ows`에서 시작합니다. `_done.ows`는 학생에게 제공하지 않습니다.
 - `.ows` 파일을 더블클릭합니다. 열리지 않으면 Orange를 먼저 실행하고 **File → Open**에서 고릅니다.
@@ -132,7 +134,7 @@ Orange 내장 데이터(zoo·iris·titanic 등)는 쓰지 않고, 워밍업도 �
 | `scripts/generate_figures.py` | 강의용 이해 그림(공정 흐름도·웨이퍼 맵 등)을 데이터에서 생성(`assets/images/generated/`) |
 | `scripts/build_orange_workflows.py` | 차시별 `_start.ows`·`_done.ows` 생성(Orange 파이썬으로 실행) |
 | `scripts/validate_orange_workflows.py` | `.ows` 파싱·상대경로·데이터 로드·화면 없이 위젯 실행 검증 |
-| `scripts/notebook_builders/weekXX.py` | 학생용·정답 노트북 2종을 한 정의에서 생성(노트북 JSON은 손으로 고치지 않음) |
+| `scripts/notebook_builders/weekXX.py` | 1~9차시 학생용·정답 노트북 2종을 한 정의에서 생성(노트북 JSON은 손으로 고치지 않음) |
 | `scripts/validate_notebooks.py` | 노트북 실행 검증 |
 | `scripts/build_data_dictionary_html.py` | 데이터 설명서 `.md` → 강의 디자인 `.html` 변환 |
 
@@ -142,7 +144,7 @@ python scripts/validate_datasets.py
 python scripts/generate_figures.py
 python scripts/build_orange_workflows.py      # Orange 파이썬으로 스스로 다시 실행된다
 python scripts/validate_orange_workflows.py
-python scripts/notebook_builders/week01.py    # 차시마다
+python scripts/notebook_builders/week01.py    # 1~9차시마다
 python scripts/validate_notebooks.py
 ```
 
@@ -160,8 +162,8 @@ start index.html
 
 | 구분 | 위치 | 특징 |
 | --- | --- | --- |
-| 학생용 | `notebooks/student/` | 반도체 실습 문제가 `____` 빈칸으로 비어 있어 직접 채워야 함 |
-| 정답 | `notebooks/solutions/` | 학생용에서 '반도체 데이터 실습' 단계를 뺀 모든 빈칸이 채워진 완성본(실행 결과 저장). 실습 단계는 학생용과 같은 빈칸이며 답은 실습지의 확인 부분으로 본다 |
+| 학생용 | `notebooks/student/` | 1~9차시. 반도체 실습 문제가 `____` 빈칸으로 비어 있어 직접 채워야 함 |
+| 정답 | `notebooks/solutions/` | 1~9차시. 학생용에서 '반도체 데이터 실습' 단계를 뺀 모든 빈칸이 채워진 완성본(실행 결과 저장). 실습 단계는 학생용과 같은 빈칸이며 답은 실습지의 확인 부분으로 본다 |
 | Orange 워크플로 | `orange3/weekXX/` | `_start.ows`로 시작, `_done.ows`는 교수용 완성본(정답, 학생에게 제공하지 않음) |
 | 강의 운영안 | `lectures/weekXX/instructor-guide.md` | 수업 흐름(순서와 "여기서 쉬기"), 발문, 예상 오개념 |
 | 공통 운영 가이드 | [`docs/instructor-operation-guide.md`](docs/instructor-operation-guide.md) | 전 차시 공통 v3 운영 방법 |

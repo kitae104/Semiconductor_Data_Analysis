@@ -20,6 +20,8 @@ STUDENT = os.path.join(BASE, "notebooks", "student")
 SOLUTIONS = os.path.join(BASE, "notebooks", "solutions")
 
 RESULTS = []
+# 노트북이 있는 차시. 10차시는 종합 실습(Orange3 + ChatGPT, 파이썬 필수 아님)이라 노트북이 없다(2026-11-24).
+NOTEBOOK_WEEKS = range(1, 10)
 
 
 def check(name, condition, detail=""):
@@ -74,7 +76,9 @@ def check_data_paths(nb, path):
 
 def validate_folder(folder, label, must_run=True, must_not_contain_todo=False):
     files = sorted(glob.glob(os.path.join(folder, "week*_*.ipynb")))
-    check(f"{label}: notebook 파일 존재(10개)", len(files) == 10, f"{len(files)}개 발견")
+    want = [f"week{w:02d}" for w in NOTEBOOK_WEEKS]
+    found = [os.path.basename(f)[:6] for f in files]
+    check(f"{label}: notebook 파일 존재({len(want)}개, {want[0]}~{want[-1]})", found == want, f"{len(files)}개 발견: {found}")
     for path in files:
         name = os.path.basename(path)
         nb = nbformat.read(path, as_version=4)
@@ -108,4 +112,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    results = main()
+    # FAIL이 하나라도 있으면 종료 코드 1(CI·연속 명령에서 실패를 알 수 있게)
+    sys.exit(1 if any(s == "FAIL" for _, s, _ in results) else 0)

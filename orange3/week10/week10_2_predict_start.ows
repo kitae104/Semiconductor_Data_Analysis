@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="10차시 ② 종합 실습 — 새 로트 10개 중 먼저 살펴볼 로트 고르기 (시작)" description="교육용 가상 데이터 실습 워크플로. data/weekly 폴더와 orange3 폴더를 키트의 폴더 구조 그대로 두고 여세요.">
+	<nodes>
+		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (학습: 공정 기록 480행)" position="(120.0, 320.0)" />
+		<node id="1" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File (새 로트 10개)" position="(120.0, 740.0)" />
+	</nodes>
+	<links />
+	<annotations>
+		<text id="0" type="text/plain" rect="(40.0, 30.0, 760.0, 190.0)" font-size="16">① 위 File은 공정 기록 480행(학습용, 목표 열 합격여부), 아래 File은 검사 전인 새 로트 10개입니다. 둘 다 이미 들어 있습니다.
+② 9차시에 쓴 위젯(Distributions, Tree, Tree Viewer, Test and Score, Confusion Matrix, Predictions)으로 계획을 세워 직접 이으세요.
+③ 정확도는 기준선과 함께 읽고, Predictions에서는 Show probabilities for를 Classes known to the model로 바꿔 확률도 보세요.</text>
+	</annotations>
+	<thumbnail />
+	<node_properties>
+		<properties node_id="0" format="pickle">gASVXgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMGHdlZWsxMF9jYXBzdG9uZV9s
+b3RzLnRhYpSMBnByZWZpeJSMB2Jhc2VkaXKUjAdyZWxwYXRolIw4Li4vLi4vZGF0YS93ZWVrbHkv
+d2VlazEwL29yYW5nZS93ZWVrMTBfY2Fwc3RvbmVfbG90cy50YWKUjAV0aXRsZZSMAJSMBXNoZWV0
+lGgPjAtmaWxlX2Zvcm1hdJROdWJhjAZzb3VyY2WUSwCMC3JlY2VudF91cmxzlF2UjAN1cmyUaA+M
+C3NoZWV0X25hbWVzlH2UjBJjb250cm9sQXJlYVZpc2libGWUiIwQY29udGV4dF9zZXR0aW5nc5Rd
+lIwLX192ZXJzaW9uX1+USwF1Lg==
+</properties>
+		<properties node_id="1" format="pickle">gASVZgEAAAAAAAB9lCiMDHJlY2VudF9wYXRoc5RdlIweb3Jhbmdld2lkZ2V0LnV0aWxzLmZpbGVk
+aWFsb2dzlIwKUmVjZW50UGF0aJSTlCmBlH2UKIwHYWJzcGF0aJSMHHdlZWsxMF9jYXBzdG9uZV9u
+ZXdfbG90cy50YWKUjAZwcmVmaXiUjAdiYXNlZGlylIwHcmVscGF0aJSMPC4uLy4uL2RhdGEvd2Vl
+a2x5L3dlZWsxMC9vcmFuZ2Uvd2VlazEwX2NhcHN0b25lX25ld19sb3RzLnRhYpSMBXRpdGxllIwA
+lIwFc2hlZXSUaA+MC2ZpbGVfZm9ybWF0lE51YmGMBnNvdXJjZZRLAIwLcmVjZW50X3VybHOUXZSM
+A3VybJRoD4wLc2hlZXRfbmFtZXOUfZSMEmNvbnRyb2xBcmVhVmlzaWJsZZSIjBBjb250ZXh0X3Nl
+dHRpbmdzlF2UjAtfX3ZlcnNpb25fX5RLAXUu
+</properties>
+	</node_properties>
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

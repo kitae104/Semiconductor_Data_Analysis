@@ -165,13 +165,6 @@ def validate_easy():
         except ImportError as e:
             check("easy09 모델 검증(scikit-learn 필요)", False, str(e))
 
-    e10 = validate_week("week10", "week10_easy_outdoor_class_train.csv", ["날짜"] + feature_cols + ["진행여부"])
-    if e10 is not None and e9 is not None:
-        check("easy10 학습 데이터가 9차시 easy 데이터와 같은 내용", e10.equals(e9))
-    e10n = validate_week("week10", "week10_easy_outdoor_class_new_days.csv", ["날짜"] + feature_cols)
-    if e10n is not None:
-        check("easy10 예보 데이터 5~8행", 5 <= len(e10n) <= 8, str(len(e10n)))
-        check("easy10 예보 데이터에 정답(진행여부) 없음", "진행여부" not in e10n.columns)
 
 
 def validate_orange_warmups():
@@ -243,10 +236,10 @@ def validate_orange_warmups():
               a9["불량패턴"].value_counts().to_dict() == {"정상": 120, "중심형": 40, "가장자리형": 40, "스크래치형": 40})
         normal = a9[a9["불량패턴"] == "정상"]["불량다이수_count"]
         check("A-9 정상 웨이퍼 불량 다이 3~8개", normal.between(3, 8).all())
-    a10 = validate_week("week10", "week10_orange_new_wafers.csv", ["웨이퍼ID"] + feats)
+    a10 = validate_week("week09", "week09_orange_new_wafers.csv", ["웨이퍼ID"] + feats)   # 2026-11-24 10차시 → 9차시 이관(값 그대로)
     if a10 is not None:
         check("A-10 10행, 정답 열(불량패턴) 없음", len(a10) == 10 and "불량패턴" not in a10.columns)
-    # A-9 Tree 교차검증 정확도와 A-10 모델 의견 갈림은 Orange가 필요해 validate_orange_workflows 쪽 실측 보고로 확인한다.
+    # A-9 Tree 교차검증 정확도와 A-10 Predictions 확률은 Orange가 필요해 validate_orange_workflows 쪽 실측 보고로 확인한다.
 
 
 def validate_orange_tabs():
@@ -285,6 +278,61 @@ def validate_orange_tabs():
                 if not a.equals(b):
                     diff.append(col)
             check(f"{stem}.tab 값이 CSV와 같음", not diff, f"다른 열: {diff}")
+
+
+def validate_capstone():
+    """10차시 종합 실습(캡스톤) 데이터 — 스펙 B-2 목표 수치를 실측으로 확인한다(시드 330)."""
+    print("\n=== 10차시 종합 실습(캡스톤) 데이터 ===")
+    cols = ["날짜", "로트번호", "설비번호", "공정명", "작업조", "온도_C", "두께_nm", "진공도_mTorr", "진동_mm_s",
+            "가스유량_slm", "습도_pct", "불량유형", "합격여부"]
+    cap = validate_week("week10", "week10_capstone_lots.csv", cols)
+    if cap is not None:
+        ok = cap["합격여부"] == 1
+        check("캡스톤 480행 × 13열, 합격여부 1/-1", cap.shape == (480, 13) and set(cap["합격여부"].unique()) <= {1, -1},
+              str(cap.shape))
+        check("캡스톤 전체 합격률(기준선) 74~82%", 0.74 <= ok.mean() <= 0.82, f"{ok.mean():.1%}")
+        na = cap.drop(columns="불량유형").isna()
+        check("캡스톤 빈칸 14칸(온도 5 · 진공도 5 · 습도 4, 서로 다른 14행)",
+              na.sum().sum() == 14 and na.any(axis=1).sum() == 14
+              and (na["온도_C"].sum(), na["진공도_mTorr"].sum(), na["습도_pct"].sum()) == (5, 5, 4),
+              str(na.sum()[na.sum() > 0].to_dict()))
+        typo = cap["온도_C"] > 1000
+        check("캡스톤 입력 실수 3건(온도 소수점 누락, 2,000 이상)", typo.sum() == 3 and (cap.loc[typo, "온도_C"] > 2000).all(),
+              str(cap.loc[typo, "온도_C"].tolist()))
+        check("캡스톤 중복 행 없음", not cap.duplicated().any())
+        check("캡스톤 불량유형은 불합격 행에만 있음", cap["불량유형"].notna().eq(cap["합격여부"] == -1).all())
+        eq = ok.groupby(cap["설비번호"]).mean().sort_values()
+        check("캡스톤 EQ-04 합격률이 가장 낮고 다음 설비보다 10%p 이상 낮음",
+              eq.index[0] == "EQ-04" and eq.iloc[1] - eq.iloc[0] >= 0.10, str((eq * 100).round(1).to_dict()))
+        sh = ok.groupby(cap["작업조"]).mean()
+        check("캡스톤 작업조 합격률 차이 5%p 이하(설비 차이의 절반 이하)",
+              sh.max() - sh.min() <= 0.05 and sh.max() - sh.min() <= (eq.max() - eq.min()) / 2,
+              str((sh * 100).round(1).to_dict()))
+        pr = ok.groupby(cap["공정명"]).mean()
+        check("캡스톤 공정명(효과 없음) 합격률 차이 10%p 이하", pr.max() - pr.min() <= 0.10, str((pr * 100).round(1).to_dict()))
+        clean = cap[~typo]
+        r_tt = clean["온도_C"].corr(clean["두께_nm"])
+        check("캡스톤 온도–두께 상관 0.65~0.85(입력 실수 제외)", 0.65 <= r_tt <= 0.85, f"r={r_tt:.3f}")
+        pf = cap["합격여부"]
+        r = {c: cap[c].corr(pf) for c in ["진공도_mTorr", "습도_pct", "가스유량_slm", "진동_mm_s"]}
+        check("캡스톤 상관: 진공도–합격여부 |r|<0.2, 습도·가스유량 |r|<0.12, 진동 −0.35~−0.15",
+              abs(r["진공도_mTorr"]) < 0.2 and abs(r["습도_pct"]) < 0.12 and abs(r["가스유량_slm"]) < 0.12
+              and -0.35 <= r["진동_mm_s"] <= -0.15, str({k: round(v, 3) for k, v in r.items()}))
+        v = cap["진공도_mTorr"]
+        out, inside = (v < 4.5) | (v > 5.5), v.between(4.5, 5.5)
+        check("캡스톤 진공도 연습용 기준(4.5~5.5) 밖 합격률 ≤30%, 안 ≥85%",
+              ok[out].mean() <= 0.30 and ok[inside].mean() >= 0.85,
+              f"밖 {ok[out].mean():.1%}({out.sum()}건), 안 {ok[inside].mean():.1%}")
+    new = validate_week("week10", "week10_capstone_new_lots.csv",
+                        [c for c in cols if c not in ("불량유형", "합격여부")])
+    if new is not None:
+        check("캡스톤 새 로트 10행, 정답 열(합격여부·불량유형) 없음, 빈칸 없음",
+              len(new) == 10 and "합격여부" not in new.columns and "불량유형" not in new.columns
+              and not new.isna().any().any())
+        check("캡스톤 새 로트 고정 3행(3번째 진공도 5.78 · 6번째 EQ-04 진동 0.72 · 9번째 진공도 4.52)",
+              new.loc[2, "진공도_mTorr"] == 5.78 and (new.loc[5, "설비번호"], new.loc[5, "진동_mm_s"]) == ("EQ-04", 0.72)
+              and new.loc[8, "진공도_mTorr"] == 4.52)
+    # Tree CA(기준선 + 8%p 이상)·Confusion Matrix·Predictions는 Orange가 필요해 validate_orange_workflows 쪽 실측으로 확인한다.
 
 
 def main():
@@ -386,11 +434,7 @@ def main():
     if w9new is not None:
         check("week09_new 정답 레이블(합격여부) 미포함", "합격여부" not in w9new.columns)
 
-    w10 = validate_week("week10", "week10_mini_project_dataset.csv",
-                         ["측정시간", "로트번호", "웨이퍼번호", "설비번호", "공정명", "작업조", "온도_C", "압력_Pa",
-                          "진공도_mTorr", "두께_nm", "진동_mm_s", "처리시간_sec", "냉각수온도_C", "습도_pct", "불량유형", "합격여부"])
-    if w10 is not None:
-        check("week10 합격여부 값 범위(1/-1)", set(w10["합격여부"].unique()) <= {1, -1})
+    validate_capstone()
 
     validate_easy()
     validate_orange_warmups()

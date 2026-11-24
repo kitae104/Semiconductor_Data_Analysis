@@ -6,12 +6,13 @@ description: 반도체 데이터 분석 10차시 강의 콘텐츠를 만들고 �
 # 강의 콘텐츠 제작 오케스트레이터
 
 이 저장소는 프로그래밍 경험이 거의 없는 일반인을 위한 「반도체 및 반도체 공정 데이터 분석
-10차시 과정」이다. 한 차시는 **7종 산출물**로 이뤄지고, 이들은 서로를 참조한다.
+10차시 과정」이다. 한 차시는 **7종 산출물**로 이뤄지고, 이들은 서로를 참조한다(10차시는 노트북 2종·실습지 없이
+강의·퀴즈·운영안·데이터+데이터사전 — v3.2 시연형 종합 실습).
 
 | # | 산출물 | 경로 | 담당 |
 |---|---|---|---|
 | 1 | 강의 자료 | `lectures/weekXX/index.html` | content-writer |
-| 2 | 실습지 | `lectures/weekXX/worksheet.html` | content-writer |
+| 2 | 실습지 | `lectures/weekXX/worksheet.html`(1~9차시) | content-writer |
 | 3 | 퀴즈 | `lectures/weekXX/quiz.json` | content-writer |
 | 4 | 강사 운영안 | `lectures/weekXX/instructor-guide.md` | content-writer |
 | 5 | 학생용 노트북 | `notebooks/student/weekXX_student.ipynb` | notebook-engineer |

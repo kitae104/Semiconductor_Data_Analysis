@@ -1,11 +1,12 @@
 ---
 name: orange-workflow-authoring
-description: 차시별 Orange3 워크플로(orange3/weekXX/*.ows)와 Orange용 데이터(data/weekly/weekXX/orange/*.tab)를 만들거나 고칠 때 반드시 사용한다. 새 차시의 _start/_done 워크플로를 추가하거나, 위젯 체인·설정(Distributions 변수, Select Rows 조건, Impute 방법)을 바꾸거나, File 위젯 경로가 다른 PC에서 깨지거나, Orange에서 합격여부가 숫자로 보이거나 열 이름에 BOM이 붙거나, validate_orange_workflows.py 실패를 고칠 때 사용할 것. Orange 3.35.0 기준. notebook-engineer 에이전트의 스킬.
+description: 차시별 Orange3 워크플로(orange3/weekXX/*.ows)와 Orange용 데이터(data/weekly/weekXX/orange/*.tab)를 만들거나 고칠 때 반드시 사용한다. 새 차시의 _start/_done 워크플로를 추가하거나, 위젯 체인·설정(Distributions 변수, Select Rows 조건, Impute 방법)을 바꾸거나, File 위젯 경로가 다른 PC에서 깨지거나, Orange에서 합격여부가 숫자로 보이거나 열 이름에 BOM이 붙거나, validate_orange_workflows.py 실패를 고칠 때 사용할 것. 강의 수치는 Orange 3.40 실측 기준(2026-11-24). notebook-engineer 에이전트의 스킬.
 ---
 
 # Orange3 워크플로 작성
 
-Orange 3.35.0(이 PC 설치본) 기준으로 만들고 검증한다. `.ows`는 손으로 만들거나 Orange 화면에서 저장해
+**강의·운영안에 쓰는 Orange 수치는 Orange 3.40 실측으로 통일한다**(2026-11-24 사용자 결정, 이 PC 설치본 3.40.0). 3.35.0에서 만들기
+시작했고 `.ows` 형식은 두 버전에서 모두 열린다(아래 「버전 차이」). `.ows`는 손으로 만들거나 Orange 화면에서 저장해
 커밋하지 않는다. **`scripts/build_orange_workflows.py`의 선언형 정의(`WORKFLOWS`)에서 생성한다.**
 Orange 화면에서 저장하면 File 경로가 그 PC의 절대경로로 바뀌어 다른 PC에서 깨진다(옛 `orange3/ch05~07.ows`가
 `C:/Users/USER/Downloads/...`를 담고 있어 삭제한 이유).
@@ -20,6 +21,9 @@ Orange 화면에서 저장하면 File 경로가 그 PC의 절대경로로 바뀌
 | 공통 도우미 | `scripts/_orange_env.py`(Orange 파이썬 찾기·재실행, 위젯 레지스트리) | — |
 
 차시당 워크플로 2개(①워밍업 데이터, ②반도체 데이터) × start/done = `.ows` 4개가 기본이다.
+10차시(종합 실습, v3.2 시연형)는 워밍업이 없고 캡스톤 데이터로 ① `week10_1_explore`(데이터 점검과 지난 기록 비교 — 설비별·작업조별
+합격률, 그 밖의 가지는 "(참고)") ② `week10_2_predict`(새 로트 고르기, File 2개: 학습 480행 + 새 로트 10행) 두 쌍이다. 위젯 title·메모에
+질문 메뉴 표현을 쓰지 않는다. 9차시는 ①·② 모두 File(새 데이터) → Predictions(← Tree) 갈래가 있다.
 번호는 고정이다. 워밍업이 아직 없어도 반도체 워크플로는 `_2_`로 둔다(나중에 ①을 넣어도 이름이 바뀌지 않게).
 `<주제>`는 영문 소문자·숫자·밑줄(`cleanroom`, `dirty_process`). 검사 스크립트가 이름 규칙을 확인한다.
 
@@ -32,10 +36,12 @@ Orange 화면에서 저장하면 File 경로가 그 PC의 절대경로로 바뀌
 
 프로젝트 `python`에는 Orange가 없다. Orange 전용 스크립트는 Orange 설치본의 파이썬으로 돈다.
 
-- 기본 경로 `C:/Users/PC/AppData/Local/Programs/Orange/python.exe`(Python 3.9). 다른 PC는 환경변수 `ORANGE_PYTHON`.
+- `_orange_env.py`의 기본 경로는 `C:/Users/PC/AppData/Local/Programs/Orange/python.exe`, 버전 상수는 `"3.35.0"`으로 **아직 옛 값**이다
+  (이 PC 설치본은 `C:/Users/USER/AppData/Local/Programs/Orange/python.exe`, Orange 3.40.0 · Python 3.12). 환경변수 `ORANGE_PYTHON`으로
+  지정해 실행한다. 버전 상수가 달라 실행할 때 "[주의] Orange 3.40.0에서 실행 중" 안내가 나오지만 동작에는 영향이 없다.
 - `python scripts/build_orange_workflows.py`처럼 프로젝트 `python`으로 실행해도 `_orange_env.ensure_orange_python()`이
   Orange 파이썬으로 스스로 다시 실행한다. `QT_QPA_PLATFORM=offscreen`이 기본이라 창이 뜨지 않는다.
-- Orange 파이썬은 3.9다. 두 Orange 스크립트에서는 3.10+ 문법(`match`, `X | Y` 타입 표기)을 쓰지 않는다.
+- Orange 3.35의 파이썬은 3.9다. 두 버전에서 모두 돌도록 Orange 스크립트에서는 3.10+ 문법(`match`, `X | Y` 타입 표기)을 쓰지 않는다.
 
 ## 데이터: CSV가 아니라 .tab을 연다
 
@@ -156,6 +162,22 @@ python scripts/validate_orange_workflows.py [--week N]                   # 파�
 출력한다. 강의·운영안에 적는 Orange 쪽 수치는 이 출력에서 가져온다(예: 5차시 ② 113 → 111 → 105행).
 FAIL이 있으면 종료 코드 1.
 
+## 버전 차이(3.35 → 3.40, 2026-11-24 실측)
+
+학습기 설정(`max_depth 4, min_samples_split 5, min_samples_leaf 2, binarize True, sufficient_majority 0.95`, 10겹 층화, random_state 42)이
+같아도 결과가 달라진다. 그래서 숫자는 한 버전(3.40)으로만 쓴다.
+
+| 9차시 항목 | 3.35 | 3.40(기준) |
+|---|---|---|
+| 반도체 첫 질문 | `온도_C ≤ 293.8` | `온도_C ≤ 293.9` |
+| 반도체 CA / 놓친 불합격 | 0.783 / 114 | 0.777 / 119 |
+| 새 로트 불합격 확률 최고 | 3번째(0.26) | 1·7번째(0.356) |
+| 워밍업 첫 질문 / CA | `불량다이수_count ≤ 11` / 0.942 | `≤ 8` / 0.946 |
+
+- AI 응답 예시처럼 "맞는 숫자"로 둔 값이 버전에 따라 바뀌면 **심지 않은 오류**가 된다. 응답 예시 속 Orange 숫자도 3.40으로 맞춘다.
+- 1~8차시 운영안의 Orange 수치는 3.35 시절 실측이다. 그 차시를 다시 고칠 때 3.40으로 다시 재고, 다르면 이 표에 더한다.
+- 아래 함정 표의 "3.35 실측" 항목(Impute 메서드 목록, Test and Score 기본 겹 수 등)은 3.40에서 다시 확인하지 않았다.
+
 ## 실측한 함정
 
 | 증상 | 원인 / 대처 |
@@ -170,6 +192,12 @@ FAIL이 있으면 종료 코드 1.
 | Select Rows 범위 조건과 빈칸 | 조건 열이 빈 행은 조건을 통과하지 못해 **지워진다**(5차시 Impute 없이 113 → 99 = 빈칸 8행 + 범위 밖 6행) |
 | Select Rows가 빈 칸 행을 지움 | 범위 조건은 결측을 통과시키지 않는다. 빈 칸을 먼저 Impute하고 거른다 |
 | 9·10차시 Tree 정확도가 비정상적으로 100% | 불량유형 같은 결과 열이 입력에 들어갔다. meta로 둔다 |
+| Predictions에 확률 열이 없음 | Show probabilities for 기본값은 확률을 보여 주지 않는다. `Classes known to the model`로 바꾼다(9차시 강의 지시) |
+| 새 데이터 File을 Test and Score에 이음 | 새 로트·새 웨이퍼에는 정답 열이 없어 채점할 수 없다. 새 데이터 File은 Predictions에만 잇는다 |
+| 10차시 Correlations 목록에 `날짜`가 나오고 `합격여부`는 없음 | `날짜`(time meta)는 목록에 끼고(8차시 `측정시간`과 같은 동작), 목표 열(범주형 class)은 Pearson 목록에 없다. 진공도·진동–합격여부 r은 Orange 화면에 없는 파이썬 값이므로 강의에 Orange 값처럼 쓰지 않는다 |
+| 10차시 Column Statistics에서 `불량유형`이 빈칸 364칸 | meta 열도 보인다. 합격 행이라 비어 있는 것이므로 데이터 점검의 빈칸(14칸)에 넣지 않는다 |
+| 10차시 Select Rows(`온도_C` is below 1000) 뒤 472행 | 입력 실수 3행 + 온도 빈칸 5행이 함께 빠진다(범위 조건은 빈칸을 통과시키지 않는다). "튀는 값 3건만 뺐다"고 쓰지 않는다 |
+| `datas/orange3/weekXX/` 평평한 배포 사본이 "File not found" | 사본의 `.ows`는 abspath가 파일 이름뿐이라 **Orange 작업 폴더가 `.ows` 폴더일 때만**(탐색기에서 더블클릭) 열린다. 빌더 출력 `orange3/`과 구조가 다르다 |
 | 저장 시 "Using pickle fallback" 경고 | 위젯 설정(Context, RecentPath)은 파이썬 리터럴로 못 써서 Orange도 pickle로 저장한다. 정상이라 빌드 스크립트가 로그를 숨긴다 |
 | 위젯 설정에 Method enum이 pickle됨 | `set_default_method(int(Method[...]))`처럼 int로 넣는다 |
 | 검증에서 File이 데이터를 안 내보냄 | File은 `QTimer`로 늦게 읽는다. 이벤트 루프를 돌리며 조용해질 때까지 기다린다(검증 스크립트가 처리) |
