@@ -167,6 +167,8 @@ body:has(#progressFill, .tab-strip) .toc-list a::before{content:counter(toc,deci
   content:"▸"; position:absolute; left:0; top:0; color:var(--blue); font-size:.8rem;
 }
 .pt-list > li > b{color:var(--ink);}
+/* 목록 안 접기 버튼은 글 아래 줄로 — 같은 줄에 두면 줄이 높아져 ▸와 글자가 어긋난다 */
+.pt-list > li > .reveal-btn{display:block; margin-top:.45rem;}
 .pt-list ul{
   list-style:none; margin:.4rem 0 0; padding:0; display:flex; flex-direction:column; gap:.35rem;
 }
